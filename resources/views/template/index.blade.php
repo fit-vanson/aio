@@ -41,17 +41,21 @@
         <div class="col-12">
             <div class="card">
                 <div class="card-body">
-                    <table class="table table-bordered data-table">
+{{--                    <table class="table table-bordered data-table">--}}
+                     <table class="table table-bordered dt-responsive nowrap data-table" style="border-collapse: collapse; border-spacing: 0; width: 100%;">
                         <thead>
                         <tr>
-{{--                            <th>No</th>--}}
                             <th>Tên Template</th>
                             <th>Version</th>
                             <th>Phân loại</th>
-                            <th>Thời gian tạo</th>
-                            <th>Update</th>
-                            <th>Update</th>
-                            <th width="300px">Action</th>
+                            <th>Link CHPlay</th>
+                            <th>script_copy</th>
+                            <th>script_img loại</th>
+                            <th>Phân script_svg2xml</th>
+{{--                            <th>Thời gian tạo</th>--}}
+{{--                            <th>Update</th>--}}
+{{--                            <th>Time Get</th>--}}
+                            <th width="5%">Action</th>
                         </tr>
                         </thead>
                         <tbody>
@@ -103,11 +107,16 @@
                 {data: 'template'},
                 {data: 'ver_build'},
                 {data: 'category'},
-                {data: 'time_create'},
-                {data: 'time_update'},
-
+                {data: 'link_chplay'},
+                {data: 'script_copy'},
+                {data: 'script_img'},
+                {data: 'script_svg2xml'},
+                // {data: 'time_create'},
+                // {data: 'time_update'},
+                // {data: 'time_get'},
                 {data: 'action', name: 'action', orderable: false, searchable: false},
-            ]
+            ],
+
         });
 
         $('#createNewTemplate').click(function () {
@@ -224,11 +233,16 @@
                     swal("Đã xóa!", "Your imaginary file has been deleted.", "success");
                 });
         });
+
     });
 </script>
 
 
 
 @endsection
+
+
+
+
 
 

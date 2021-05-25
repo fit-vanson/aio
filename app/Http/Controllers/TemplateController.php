@@ -13,16 +13,12 @@ class TemplateController extends Controller
 {
     public function index(Request $request)
     {
-
         $template = Template::all();
-//        dd($request);
-
-
         if ($request->ajax()) {
             $data = Template::all();
+
             return Datatables::of($data)
                 ->addIndexColumn()
-
                 ->addColumn('action', function($row){
                     $btn = ' <a href="javascript:void(0)" data-toggle="tooltip"  data-id="'.$row->template.'" data-original-title="Edit" class="btn btn-warning btn-sm editTemplate"><i class="ti-pencil-alt"></i></a>';
 //                    $btn = $btn.' <a href="javascript:void(0)" data-toggle="tooltip"  data-id="'.$row->projectid.'" data-original-title="Quick Edit" class="btn btn-success btn-sm quickEditProject"><i class="mdi mdi-playlist-edit"></i></a>';
@@ -38,7 +34,33 @@ class TemplateController extends Controller
                 ->editColumn('time_get', function($data) {
                     return date( 'd/m/Y - H:i:s ',$data->time_get);
                 })
-                ->rawColumns(['action'])
+
+                ->editColumn('link_chplay', function($data){
+                    if ($data->link_chplay !== null){
+                        return "<a href='$data->link_chplay'>Link</a>";
+                    }
+                    return null;
+                })
+                ->editColumn('script_copy', function($data){
+                    if ($data->script_copy !== null){
+                        return "<i style='color:green; ' class='ti-check-box h5'></i>";
+                    }
+                    return null;
+                })
+                ->editColumn('script_img', function($data){
+                    if ($data->script_img !== null){
+                        return "<i style='color:green; ' class='ti-check-box h5'></i> ";
+                    }
+                    return null;
+                })
+                ->editColumn('script_svg2xml', function($data){
+                    if ($data->script_svg2xml !== null){
+                        return "<i style='color:green; ' class='ti-check-box h5'></i>";
+                    }
+                    return null;
+                })
+
+                ->rawColumns(['action','link_chplay','script_copy','script_img','script_svg2xml'])
                 ->make(true);
         }
         return view('template.index',compact('template'));
