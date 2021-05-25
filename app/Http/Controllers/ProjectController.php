@@ -18,7 +18,7 @@ class ProjectController extends Controller
      */
     public function index(Request $request)
     {
-//        $this->AuthLogin();
+
         $project = ProjectModel::latest()->get();
         if ($request->ajax()) {
             $data = ProjectModel::latest()->get();

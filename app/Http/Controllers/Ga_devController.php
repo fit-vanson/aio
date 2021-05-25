@@ -19,16 +19,75 @@ class Ga_devController extends Controller
 
 
         if ($request->ajax()) {
-            $data = Template::all();
+            $data = Ga_dev::all();
             return Datatables::of($data)
                 ->addIndexColumn()
                 ->addColumn('action', function($row){
-                    $btn = ' <a href="javascript:void(0)" data-toggle="tooltip"  data-id="'.$row->template.'" data-original-title="Edit" class="btn btn-warning btn-sm editTemplate"><i class="ti-pencil-alt"></i></a>';
-//                    $btn = $btn.' <a href="javascript:void(0)" data-toggle="tooltip"  data-id="'.$row->projectid.'" data-original-title="Quick Edit" class="btn btn-success btn-sm quickEditProject"><i class="mdi mdi-playlist-edit"></i></a>';
-                    $btn = $btn.' <a href="javascript:void(0)" data-toggle="tooltip"  data-id="'.$row->template.'" data-original-title="Delete" class="btn btn-danger btn-sm deleteTemplate"><i class="ti-trash"></i></a>';
+                    $btn = ' <a href="javascript:void(0)" data-toggle="tooltip"  data-id="'.$row->gmail.'" data-original-title="Edit" class="btn btn-warning btn-sm editGadev"><i class="ti-pencil-alt"></i></a>';
+                    $btn = $btn.' <a href="javascript:void(0)" data-toggle="tooltip"  data-id="'.$row->gmail.'" data-original-title="Delete" class="btn btn-danger btn-sm deleteGadev"><i class="ti-trash"></i></a>';
                     return $btn;
                 })
-                ->rawColumns(['action'])
+                ->editColumn('bk1', function($data){
+                    if ($data->bk_1 !== null){
+                        return "<i style='color:green;' class='ti-check-box h5'></i>";
+                    }
+                    return "<i style='color:red;' class='ti-close h5'></i>";
+                })
+                ->editColumn('bk2', function($data){
+                    if ($data->bk_2 !== null){
+                        return "<i style='color:green;' class='ti-check-box h5'></i>";
+                    }
+                    return "<i style='color:red;' class='ti-close h5'></i>";
+                })
+                ->editColumn('bk3', function($data){
+                    if ($data->bk_3 !== null){
+                        return "<i style='color:green;' class='ti-check-box h5'></i>";
+                    }
+                    return "<i style='color:red;' class='ti-close h5'></i>";
+                })
+                ->editColumn('bk4', function($data){
+                    if ($data->bk_4 !== null){
+                        return "<i style='color:green;' class='ti-check-box h5'></i>";
+                    }
+                    return "<i style='color:red;' class='ti-close h5'></i>";
+                })
+                ->editColumn('bk5', function($data){
+                    if ($data->bk_5 !== null){
+                        return "<i style='color:green;' class='ti-check-box h5'></i>";
+                    }
+                    return "<i style='color:red;' class='ti-close h5'></i>";
+                })
+                ->editColumn('bk6', function($data){
+                    if ($data->bk_6 !== null){
+                        return "<i style='color:green;' class='ti-check-box h5'></i>";
+                    }
+                    return "<i style='color:red;' class='ti-close h5'></i>";
+                })
+                ->editColumn('bk7', function($data){
+                    if ($data->bk_7 !== null){
+                        return "<i style='color:green;' class='ti-check-box h5'></i>";
+                    }
+                    return "<i style='color:red;' class='ti-close h5'></i>";
+                })
+                ->editColumn('bk8', function($data){
+                    if ($data->bk_8 !== null){
+                        return "<i style='color:green;' class='ti-check-box h5'></i>";
+                    }
+                    return "<i style='color:red;' class='ti-close h5'></i>";
+                })
+                ->editColumn('bk9', function($data){
+                    if ($data->bk_9 !== null){
+                        return "<i style='color:green;' class='ti-check-box h5'></i>";
+                    }
+                    return "<i style='color:red;' class='ti-close h5'></i>";
+                })
+                ->editColumn('bk10', function($data){
+                    if ($data->bk_10 !== null){
+                        return "<i style='color:green;' class='ti-check-box h5'></i>";
+                    }
+                    return "<i style='color:red;' class='ti-close h5'></i>";
+                })
+                ->rawColumns(['action','bk1','bk2','bk3','bk4','bk5','bk6','bk7','bk8','bk9','bk10'])
                 ->make(true);
         }
         return view('gadev.index',compact('ga_dev'));
@@ -42,10 +101,10 @@ class Ga_devController extends Controller
     public function create(Request  $request)
     {
         $rules = [
-            'template' =>'unique:ngocphandang_template,template'
+            'gmail' =>'unique:ngocphandang_gadev,gmail'
         ];
         $message = [
-            'template.unique'=>'Tên Template đã tồn tại',
+            'gmail.unique'=>'Gmail đã tồn tại',
         ];
 
         $error = Validator::make($request->all(),$rules, $message );
@@ -53,18 +112,10 @@ class Ga_devController extends Controller
         if($error->fails()){
             return response()->json(['errors'=> $error->errors()->all()]);
         }
-        $data = new Template();
-        $data['template'] = $request->template;
-        $data['ver_build'] = $request->ver_build;
-        $data['script_copy'] = $request->script_copy;
-        $data['script_img'] = $request->script_img;
-        $data['script_svg2xml'] = $request->script_svg2xml;
-        $data['time_create'] =  time();
-        $data['time_update'] = time();
-        $data['time_get'] = time();
-        $data['note'] = $request->note;
-        $data['link_chplay'] = $request->link_chplay;
-        $data['category'] =  $request->category;
+        $data = new Ga_dev();
+        $data['gmail'] = $request->gmail;
+        $data['mailrecovery'] = $request->mailrecovery;
+        $data['vpn_iplogin'] = $request->vpn_iplogin;
         $data->save();
         return response()->json(['success'=>'Thêm mới thành công']);
     }
@@ -99,8 +150,8 @@ class Ga_devController extends Controller
      */
     public function edit($id)
     {
-        $project = Template::find($id);
-        return response()->json($project);
+        $gadev = Ga_dev::find($id);
+        return response()->json($gadev);
     }
 
     /**
@@ -112,12 +163,12 @@ class Ga_devController extends Controller
      */
     public function update(Request $request)
     {
-        $id = $request->template_id;
+        $id = $request->gadev_id;
         $rules = [
-            'template' =>'unique:ngocphandang_template,template,'.$id.',template',
+            'gmail' =>'unique:ngocphandang_gadev,gmail,'.$id.',gmail',
         ];
         $message = [
-            'template.unique'=>'Tên template đã tồn tại',
+            'gmail.unique'=>'Tên Gmail đã tồn tại',
         ];
 
         $error = Validator::make($request->all(),$rules, $message );
@@ -125,16 +176,21 @@ class Ga_devController extends Controller
         if($error->fails()){
             return response()->json(['errors'=> $error->errors()->all()]);
         }
-        $data = Template::find($id);
-        $data->template = $request->template;
-        $data->ver_build = $request->ver_build;
-        $data->script_copy = $request->script_copy;
-        $data->script_img= $request->script_img;
-        $data->script_svg2xml = $request->script_svg2xml;
-        $data->time_update = time();
-        $data->note = $request->note;
-        $data->link_chplay = $request->link_chplay;
-        $data->category =  $request->category;
+        $data = Ga_dev::find($id);
+        $data->gmail = $request->gmail;
+        $data->mailrecovery = $request->mailrecovery;
+        $data->vpn_iplogin= $request->vpn_iplogin;
+        $data->bk_1= $request->bk_1;
+        $data->bk_2= $request->bk_2;
+        $data->bk_3= $request->bk_3;
+        $data->bk_4= $request->bk_4;
+        $data->bk_5= $request->bk_5;
+        $data->bk_6= $request->bk_6;
+        $data->bk_7= $request->bk_7;
+        $data->bk_8= $request->bk_8;
+        $data->bk_9= $request->bk_9;
+        $data->bk_10= $request->bk_10;
+        $data->note= $request->note;
         $data->save();
         return response()->json(['success'=>'Cập nhật thành công']);
     }
@@ -147,8 +203,7 @@ class Ga_devController extends Controller
      */
     public function delete($id)
     {
-
-        Template::find($id)->delete();
+        Ga_dev::find($id)->delete();
 
         return response()->json(['success'=>'Xóa thành công.']);
     }
