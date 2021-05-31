@@ -19,8 +19,9 @@ class TemplateController extends Controller
             return Datatables::of($data)
                 ->addIndexColumn()
                 ->addColumn('action', function($row){
-                    $btn = ' <a href="javascript:void(0)" data-toggle="tooltip"  data-id="'.$row->id.'" data-original-title="Edit" class="btn btn-warning btn-sm editTemplate"><i class="ti-pencil-alt"></i></a>';
-                    $btn = $btn.' <a href="javascript:void(0)" data-toggle="tooltip"  data-id="'.$row->id.'" data-original-title="Delete" class="btn btn-danger btn-sm deleteTemplate"><i class="ti-trash"></i></a>';
+                    $btn = ' <a href="javascript:void(0)" onclick="editTemplate('.$row->id.')" class="btn btn-warning"><i class="ti-pencil-alt"></i></a>';
+
+                    $btn = $btn.' <a href="javascript:void(0)" data-toggle="tooltip"  data-id="'.$row->projectid.'" data-original-title="Delete" class="btn btn-danger deleteProject"><i class="ti-trash"></i></a>';
                     return $btn;
                 })
                 ->editColumn('time_create', function($data) {

@@ -175,32 +175,7 @@
             }
 
         });
-        $(document).on('click','.editTemplate', function (data){
-            var template_id = $(this).data('id');
-            $('#modelHeading').html("Edit template");
-            $('#saveBtn').val("edit-template");
-            $('#ajaxModel').modal('show');
 
-            $.ajax({
-                data: $('#templateForm').serialize(),
-                url: "{{ asset("template/edit") }}/" + template_id,
-                type: "get",
-                dataType: 'json',
-                success: function (data) {
-                    $('#template_id').val(data.id);
-                    $('#template').val(data.template);
-                    $('#ver_build').val(data.ver_build);
-                    $('#script_copy').val(data.script_copy);
-                    $('#script_img').val(data.script_img);
-                    $('#script_svg2xml').val(data.script_svg2xml);
-                    $('#note').val(data.note);
-                    $('#link_chplay').val(data.link_chplay);
-                    $('#category').val(data.category);
-
-                }
-            });
-
-        });
 
         $(document).on('click','.deleteTemplate', function (data){
             var template_id = $(this).data("id");
@@ -229,6 +204,30 @@
         });
 
     });
+</script>
+
+<script>
+    function editTemplate(id) {
+        $.get('{{asset('template/edit')}}/'+id,function (data) {
+            $('#template_id').val(data.id);
+            $('#template').val(data.template);
+            $('#ver_build').val(data.ver_build);
+            $('#script_copy').val(data.script_copy);
+            $('#script_img').val(data.script_img);
+            $('#script_svg2xml').val(data.script_svg2xml);
+            $('#note').val(data.note);
+            $('#link_chplay').val(data.link_chplay);
+            $('#category').val(data.category);
+
+            $('#modelHeading').html("Edit");
+            $('#saveBtn').val("edit-ga");
+            $('#ajaxModel').modal('show');
+            $('.modal').on('hidden.bs.modal', function (e) {
+                $('body').addClass('modal-open');
+            });
+        })
+    }
+
 </script>
 
 
