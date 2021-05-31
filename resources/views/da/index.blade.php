@@ -23,10 +23,10 @@
     </div>
     <div class="col-sm-6">
         <div class="float-right">
-            <a class="btn btn-success" href="javascript:void(0)" id="createNewGadev"> Create New</a>
+            <a class="btn btn-success" href="javascript:void(0)" id="createNewDa"> Create New</a>
         </div>
     </div>
-    @include('modals.gadev')
+    @include('modals.da')
 @endsection
 @section('content')
     <?php
@@ -45,12 +45,8 @@
                     <table class="table table-bordered dt-responsive nowrap data-table" style="border-collapse: collapse; border-spacing: 0; width: 100%;">
                         <thead>
                         <tr>
-                            <th>STT</th>
-                            <th>Gmail</th>
-                            <th>Gmail Recover</th>
-                            <th>VPN</th>
-                            <th>Backup Code</th>
-                            <th>Ghi chú</th>
+                            <th width="5%">STT</th>
+                            <th>Mã dự án</th>
                             <th width="5%">Action</th>
                         </tr>
                         </thead>
@@ -84,10 +80,6 @@
     <!-- Moment.js: -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.24.0/moment.min.js"></script>
     <script type="text/javascript" charset="utf8" src="https://cdn.datatables.net/plug-ins/1.10.20/sorting/datetime-moment.js"></script>
-
-
-
-
     <script type="text/javascript">
         $(function () {
             $.ajaxSetup({
@@ -98,43 +90,36 @@
             var table = $('.data-table').DataTable({
                 processing: true,
                 serverSide: true,
-                ajax: "{{ route('gadev.index') }}",
+                ajax: "{{ route('da.index') }}",
                 columns: [
                     { "data": null,"sortable": true,
                         render: function (data, type, row, meta) {
                             return meta.row + meta.settings._iDisplayStart + 1;
                         }
                     },
-                    {data: 'gmail'},
-                    {data: 'mailrecovery'},
-                    {data: 'vpn_iplogin'},
-                    {data: 'backup_code'},
-                    {data: 'note'},
+                    {data: 'ma_da'},
                     {data: 'action', name: 'action', orderable: false, searchable: false},
                 ],
-
-
             });
-
-            $('#createNewGadev').click(function () {
-                $('#saveBtn').val("create-gedev");
-                $('#gedev_id').val('');
-                $('#gadevForm').trigger("reset");
+            $('#createNewDa').click(function () {
+                $('#saveBtn').val("create-da");
+                $('#da_id').val('');
+                $('#daForm').trigger("reset");
                 $('#modelHeading').html("Thêm mới");
                 $('#ajaxModel').modal('show');
             });
-            $('#gadevForm').on('submit',function (event){
+            $('#daForm').on('submit',function (event){
                 event.preventDefault();
-                if($('#saveBtn').val() == 'create-gedev'){
+                if($('#saveBtn').val() == 'create-da'){
                     $.ajax({
-                        data: $('#gadevForm').serialize(),
-                        url: "{{ route('gadev.create') }}",
+                        data: $('#daForm').serialize(),
+                        url: "{{ route('da.create') }}",
                         type: "POST",
                         dataType: 'json',
                         success: function (data) {
                             if(data.errors){
                                 for( var count=0 ; count <data.errors.length; count++){
-                                    $("#gadevForm").notify(
+                                    $("#daForm").notify(
                                         data.errors[count],"error",
                                         { position:"right" }
                                     );
@@ -142,23 +127,23 @@
                             }
                             if(data.success){
                                 $.notify(data.success, "success");
-                                $('#gadevForm').trigger("reset");
+                                $('#daForm').trigger("reset");
                                 $('#ajaxModel').modal('hide');
                                 table.draw();
                             }
                         },
                     });
                 }
-                if($('#saveBtn').val() == 'edit-gedev'){
+                if($('#saveBtn').val() == 'edit-da'){
                     $.ajax({
-                        data: $('#gadevForm').serialize(),
-                        url: "{{ route('gadev.update') }}",
+                        data: $('#daForm').serialize(),
+                        url: "{{ route('da.update') }}",
                         type: "post",
                         dataType: 'json',
                         success: function (data) {
                             if(data.errors){
                                 for( var count=0 ; count <data.errors.length; count++){
-                                    $("#gadevForm").notify(
+                                    $("#daForm").notify(
                                         data.errors[count],"error",
                                         { position:"right" }
                                     );
@@ -166,7 +151,7 @@
                             }
                             if(data.success){
                                 $.notify(data.success, "success");
-                                $('#gadevForm').trigger("reset");
+                                $('#daForm').trigger("reset");
                                 $('#ajaxModel').modal('hide');
                                 table.draw();
                             }
@@ -175,59 +160,52 @@
                 }
 
             });
-            $(document).on('click','.editGadev', function (data){
-                var gadev_id = $(this).data('id');
+            $(document).on('click','.editDa', function (data){
+                var da_id = $(this).data('id');
+
                 $('#modelHeading').html("Edit");
-                $('#saveBtn').val("edit-gedev");
+                $('#saveBtn').val("edit-da");
                 $('#ajaxModel').modal('show');
                 $.ajax({
-                    data: $('#gadevForm').serialize(),
-                    url: "{{ asset("ga_dev/edit") }}/" + gadev_id,
+                    data: $('#daForm').serialize(),
+                    url: "{{ asset("da/edit") }}/" + da_id,
                     type: "get",
                     dataType: 'json',
                     success: function (data) {
-                        $('#gadev_id').val(data.id);
-                        $('#gmail').val(data.gmail);
-                        $('#mailrecovery').val(data.mailrecovery);
-                        $('#vpn_iplogin').val(data.vpn_iplogin);
-                        $('#note').val(data.note);
+                        $('#da_id').val(data.id);
+                        $('#ma_da').val(data.ma_da);
                     }
                 });
 
             });
 
-            $(document).on('click','.deleteGadev', function (data){
-                var gadev_id = $(this).data("id");
-
+            $(document).on('click','.deleteDa', function (data){
+                var da_id = $(this).data("id");
                 swal({
-                        title: "Bạn có chắc muốn xóa?",
-                        text: "Your will not be able to recover this imaginary file!",
-                        type: "warning",
-                        showCancelButton: true,
-                        confirmButtonClass: "btn-danger",
-                        confirmButtonText: "Xác nhận xóa!",
-                        closeOnConfirm: false
-                    },
-                    function(){
-                        $.ajax({
-                            type: "get",
-                            url: "{{ asset("ga_dev/delete") }}/" + gadev_id,
-                            success: function (data) {
-                                table.draw();
-                            },
-                            error: function (data) {
-                                console.log('Error:', data);
-                            }
-                        });
-                        swal("Đã xóa!", "Your imaginary file has been deleted.", "success");
+                    title: "Bạn có chắc muốn xóa?",
+                    text: "Your will not be able to recover this imaginary file!",
+                    type: "warning",
+                    showCancelButton: true,
+                    confirmButtonClass: "btn-danger",
+                    confirmButtonText: "Xác nhận xóa!",
+                    closeOnConfirm: false
+                },
+                function(){
+                    $.ajax({
+                        type: "get",
+                        url: "{{ asset("da/delete") }}/" + da_id,
+                        success: function (data) {
+                            table.draw();
+                        },
+                        error: function (data) {
+                            console.log('Error:', data);
+                        }
                     });
+                    swal("Đã xóa!", "Your imaginary file has been deleted.", "success");
+                });
             });
-
         });
     </script>
-
-
-
 @endsection
 
 

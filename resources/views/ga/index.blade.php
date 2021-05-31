@@ -14,29 +14,21 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/sweetalert/1.1.3/sweetalert.min.js"></script>
 
 
-
+    <!-- Select2 Js  -->
+    <link href="plugins/select2/css/select2.min.css" rel="stylesheet" type="text/css" />
 @endsection
-
 @section('breadcrumb')
     <div class="col-sm-6">
-        <h4 class="page-title">Quản lý GaDev</h4>
+        <h4 class="page-title">Quản lý Ga</h4>
     </div>
     <div class="col-sm-6">
         <div class="float-right">
-            <a class="btn btn-success" href="javascript:void(0)" id="createNewGadev"> Create New</a>
+            <a class="btn btn-success" href="javascript:void(0)" id="createNewGa"> Create New</a>
         </div>
     </div>
-    @include('modals.gadev')
+    @include('modals.ga')
 @endsection
 @section('content')
-    <?php
-    $message =Session::get('message');
-    if($message){
-        echo  '<span class="splash-message" style="color:#2a75f3">'.$message.'</span>';
-        Session::put('message',null);
-    }
-    ?>
-
     <div class="row">
         <div class="col-12">
             <div class="card">
@@ -45,12 +37,12 @@
                     <table class="table table-bordered dt-responsive nowrap data-table" style="border-collapse: collapse; border-spacing: 0; width: 100%;">
                         <thead>
                         <tr>
-                            <th>STT</th>
-                            <th>Gmail</th>
-                            <th>Gmail Recover</th>
-                            <th>VPN</th>
-                            <th>Backup Code</th>
-                            <th>Ghi chú</th>
+                            <th>Ga name</th>
+                            <th>Gmail </th>
+                            <th>Điện thoại</th>
+                            <th>Địa chỉ</th>
+                            <th>Phương thức thanh tóan</th>
+                            <th>Trạng thái</th>
                             <th width="5%">Action</th>
                         </tr>
                         </thead>
@@ -85,9 +77,7 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.24.0/moment.min.js"></script>
     <script type="text/javascript" charset="utf8" src="https://cdn.datatables.net/plug-ins/1.10.20/sorting/datetime-moment.js"></script>
 
-
-
-
+    <script src="plugins/select2/js/select2.min.js"></script>
     <script type="text/javascript">
         $(function () {
             $.ajaxSetup({
@@ -98,43 +88,58 @@
             var table = $('.data-table').DataTable({
                 processing: true,
                 serverSide: true,
-                ajax: "{{ route('gadev.index') }}",
+                ajax: "{{ route('ga.index') }}",
                 columns: [
-                    { "data": null,"sortable": true,
-                        render: function (data, type, row, meta) {
-                            return meta.row + meta.settings._iDisplayStart + 1;
-                        }
+                    {data: 'ga_name'},
+                    {data: 'gmail_gadev_chinh'},
+                    {data: 'info_phone'},
+                    {data: 'info_andress'},
+                    {data: 'payment'},
+                    {
+                        "data": "status",
+                        "render" : function(data)
+                        {
+                            if(data == 0){
+                                return '<span class="badge badge-dark">Chưa xử dụng</span>';
+                            }
+                            if(data == 1){
+                                return '<span class="badge badge-primary">Đang phát triển</span>';
+                            }
+                            if(data == 2){
+                                return '<span class="badge badge-warning">Đóng</span>';
+                            }
+                            if(data == 3){
+                                return '<span class="badge badge-danger">Suspend</span>';
+                            }
+                        },
+
+                        "name": "status", "autoWidth": true
                     },
-                    {data: 'gmail'},
-                    {data: 'mailrecovery'},
-                    {data: 'vpn_iplogin'},
-                    {data: 'backup_code'},
-                    {data: 'note'},
                     {data: 'action', name: 'action', orderable: false, searchable: false},
                 ],
-
-
             });
-
-            $('#createNewGadev').click(function () {
-                $('#saveBtn').val("create-gedev");
-                $('#gedev_id').val('');
-                $('#gadevForm').trigger("reset");
+            $('#createNewGa').click(function () {
+                $('#saveBtn').val("create-ga");
+                $('#ga_id').val('');
+                $('#gaForm').trigger("reset");
                 $('#modelHeading').html("Thêm mới");
                 $('#ajaxModel').modal('show');
+                $("#gmail_gadev_chinh").select2({});
+                $("#gmail_gadev_phu_1").select2({});
+                $("#gmail_gadev_phu_2").select2({});
             });
-            $('#gadevForm').on('submit',function (event){
+            $('#gaForm').on('submit',function (event){
                 event.preventDefault();
-                if($('#saveBtn').val() == 'create-gedev'){
+                if($('#saveBtn').val() == 'create-ga'){
                     $.ajax({
-                        data: $('#gadevForm').serialize(),
-                        url: "{{ route('gadev.create') }}",
+                        data: $('#gaForm').serialize(),
+                        url: "{{ route('ga.create') }}",
                         type: "POST",
                         dataType: 'json',
                         success: function (data) {
                             if(data.errors){
                                 for( var count=0 ; count <data.errors.length; count++){
-                                    $("#gadevForm").notify(
+                                    $("#gaForm").notify(
                                         data.errors[count],"error",
                                         { position:"right" }
                                     );
@@ -142,23 +147,23 @@
                             }
                             if(data.success){
                                 $.notify(data.success, "success");
-                                $('#gadevForm').trigger("reset");
+                                $('#gaForm').trigger("reset");
                                 $('#ajaxModel').modal('hide');
                                 table.draw();
                             }
                         },
                     });
                 }
-                if($('#saveBtn').val() == 'edit-gedev'){
+                if($('#saveBtn').val() == 'edit-ga'){
                     $.ajax({
-                        data: $('#gadevForm').serialize(),
-                        url: "{{ route('gadev.update') }}",
+                        data: $('#gaForm').serialize(),
+                        url: "{{ route('ga.update') }}",
                         type: "post",
                         dataType: 'json',
                         success: function (data) {
                             if(data.errors){
                                 for( var count=0 ; count <data.errors.length; count++){
-                                    $("#gadevForm").notify(
+                                    $("#gaForm").notify(
                                         data.errors[count],"error",
                                         { position:"right" }
                                     );
@@ -166,7 +171,7 @@
                             }
                             if(data.success){
                                 $.notify(data.success, "success");
-                                $('#gadevForm').trigger("reset");
+                                $('#gaForm').trigger("reset");
                                 $('#ajaxModel').modal('hide');
                                 table.draw();
                             }
@@ -175,29 +180,35 @@
                 }
 
             });
-            $(document).on('click','.editGadev', function (data){
-                var gadev_id = $(this).data('id');
+            $(document).on('click','.editGa', function (data){
+                var ga_id = $(this).data('id');
                 $('#modelHeading').html("Edit");
-                $('#saveBtn').val("edit-gedev");
+                $('#saveBtn').val("edit-ga");
                 $('#ajaxModel').modal('show');
                 $.ajax({
-                    data: $('#gadevForm').serialize(),
-                    url: "{{ asset("ga_dev/edit") }}/" + gadev_id,
+                    data: $('#gaForm').serialize(),
+                    url: "{{ asset("ga/edit") }}/" + ga_id,
                     type: "get",
                     dataType: 'json',
                     success: function (data) {
-                        $('#gadev_id').val(data.id);
-                        $('#gmail').val(data.gmail);
-                        $('#mailrecovery').val(data.mailrecovery);
-                        $('#vpn_iplogin').val(data.vpn_iplogin);
+                        $('#ga_id').val(data.id);
+                        $('#ga_name').val(data.ga_name);
+                        $("#gmail_gadev_chinh").select2().select2("val", data.gmail_gadev_chinh);
+                        $("#gmail_gadev_phu_1").select2().select2("val", data.gmail_gadev_phu_1);
+                        $("#gmail_gadev_phu_2").select2().select2("val", data.gmail_gadev_phu_2);
+                        $('#info_phone').val(data.info_phone);
+                        $('#info_andress').val(data.info_andress);
+                        $('#payment').val(data.payment);
+                        $('#app_ads').val(data.app_ads);
                         $('#note').val(data.note);
+                        $('#startus').val(data.status);
                     }
                 });
 
             });
 
-            $(document).on('click','.deleteGadev', function (data){
-                var gadev_id = $(this).data("id");
+            $(document).on('click','.deleteGa', function (data){
+                var ga_id = $(this).data("id");
 
                 swal({
                         title: "Bạn có chắc muốn xóa?",
@@ -211,7 +222,7 @@
                     function(){
                         $.ajax({
                             type: "get",
-                            url: "{{ asset("ga_dev/delete") }}/" + gadev_id,
+                            url: "{{ asset("ga/delete") }}/" + ga_id,
                             success: function (data) {
                                 table.draw();
                             },
@@ -226,8 +237,77 @@
         });
     </script>
 
+    <script>
+        $("#addGaDevForm").submit(function (e) {
+            e.preventDefault();
+            let data = new FormData(document.getElementById('addGaDevForm'));
+            $.ajax({
+                url:"{{route('gadev.create')}}",
+                type: "post",
+                data:data,
+                processData: false,
+                contentType: false,
+                dataType: 'json',
+                beForeSend : () => {
 
+                },
+                success:function (data) {
+                    if(data.errors){
+                        for( var count=0 ; count <data.errors.length; count++){
+                            $("#addGaDevForm").notify(
+                                data.errors[count],"error",
+                                { position:"right" }
+                            );
+                        }
+                    }
+                    $.notify(data.success, "success");
+                    $('#addGaDevForm').trigger("reset");
+                    $('#addGaDev').modal('hide');
+                    console.log(data)
 
+                    if(typeof data.allGa_dev == 'undefined'){
+                        data.allGa_dev = {};
+                    }
+                    if(typeof rebuildMailOption == 'function'){
+                        rebuildMailOption(data.allGa_dev)
+                    }
+                }
+            });
+
+        });
+
+    </script>
+    <script>
+        function rebuildMailOption(mails){
+            var elementSelect = $("#gmail_gadev_chinh");
+            var elementSelect1 = $("#gmail_gadev_phu_1");
+            var elementSelect2 = $("#gmail_gadev_phu_2");
+
+            if(elementSelect.length <= 0 || elementSelect1.length <= 0  || elementSelect2.length <= 0){
+                return false;
+            }
+            elementSelect.empty();
+            elementSelect1.empty();
+            elementSelect2.empty();
+            for(var m of mails){
+                elementSelect.append(
+                    $("<option></option>", {
+                        value : m.id
+                    }).text(m.gmail)
+                );
+                elementSelect1.append(
+                    $("<option></option>", {
+                        value : m.id
+                    }).text(m.gmail)
+                );
+                elementSelect2.append(
+                    $("<option></option>", {
+                        value : m.id
+                    }).text(m.gmail)
+                );
+            }
+        }
+    </script>
 @endsection
 
 

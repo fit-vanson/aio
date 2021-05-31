@@ -1,11 +1,15 @@
 <?php
 
+use App\Http\Controllers\DaController;
+use App\Http\Controllers\DevController;
 use App\Http\Controllers\Ga_devController;
+use App\Http\Controllers\GaController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\ProjectController;
 use App\Http\Controllers\TemplateController;
 use App\Http\Controllers\UserController;
 use App\Http\Middleware\CheckLogout;
+use Illuminate\Support\Facades\Artisan;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -18,6 +22,9 @@ use Illuminate\Support\Facades\Route;
 | contains the "web" middleware group. Now create something great!
 |
 */
+Route::get('/clear-cache',function (){
+    $exitCode = Artisan::call('cache:clear');
+});
 
 Route::group(['prefix'=>'login','middleware'=>'CheckUser'], function (){
     Route::get('/',[HomeController::class,'getLogin']);
@@ -59,6 +66,31 @@ Route::group(['prefix'=>'ga_dev','middleware'=>'CheckLogout'], function (){
     Route::get('/edit/{id}',[Ga_devController::class,'edit'])->name('gadev.edit');
     Route::post('/update',[Ga_devController::class,'update'])->name('gadev.update');
     Route::get('/delete/{id}',[Ga_devController::class,'delete'])->name('gadev.delete');
+});
+
+Route::group(['prefix'=>'dev','middleware'=>'CheckLogout'], function (){
+    Route::get('/',[DevController::class,'index'])->name('dev.index');
+    Route::post('/create',[DevController::class,'create'])->name('dev.create');
+    Route::get('/edit/{id}',[DevController::class,'edit'])->name('dev.edit');
+    Route::post('/update',[DevController::class,'update'])->name('dev.update');
+    Route::get('/delete/{id}',[DevController::class,'delete'])->name('dev.delete');
+});
+
+Route::group(['prefix'=>'ga','middleware'=>'CheckLogout'], function (){
+    Route::get('/',[GaController::class,'index'])->name('ga.index');
+    Route::post('/create',[GaController::class,'create'])->name('ga.create');
+    Route::get('/edit/{id}',[GaController::class,'edit'])->name('ga.edit');
+    Route::post('/update',[GaController::class,'update'])->name('ga.update');
+    Route::get('/delete/{id}',[GaController::class,'delete'])->name('ga.delete');
+});
+
+
+Route::group(['prefix'=>'da','middleware'=>'CheckLogout'], function (){
+    Route::get('/',[DaController::class,'index'])->name('da.index');
+    Route::post('/create',[DaController::class,'create'])->name('da.create');
+    Route::get('/edit/{id}',[DaController::class,'edit'])->name('da.edit');
+    Route::post('/update',[DaController::class,'update'])->name('da.update');
+    Route::get('/delete/{id}',[DaController::class,'delete'])->name('da.delete');
 });
 
 

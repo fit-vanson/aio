@@ -49,12 +49,10 @@
                             <th>Version</th>
                             <th>Phân loại</th>
                             <th>Link CHPlay</th>
-                            <th>script_copy</th>
-                            <th>script_img loại</th>
-                            <th>Phân script_svg2xml</th>
-{{--                            <th>Thời gian tạo</th>--}}
-{{--                            <th>Update</th>--}}
-{{--                            <th>Time Get</th>--}}
+                            <th>script_copy | IMG | svg2xml</th>
+                            <th>Thời gian tạo</th>
+                            <th>Update</th>
+                            <th>Time Get</th>
                             <th width="5%">Action</th>
                         </tr>
                         </thead>
@@ -108,12 +106,10 @@
                 {data: 'ver_build'},
                 {data: 'category'},
                 {data: 'link_chplay'},
-                {data: 'script_copy'},
-                {data: 'script_img'},
-                {data: 'script_svg2xml'},
-                // {data: 'time_create'},
-                // {data: 'time_update'},
-                // {data: 'time_get'},
+                {data: 'script'},
+                {data: 'time_create'},
+                {data: 'time_update'},
+                {data: 'time_get'},
                 {data: 'action', name: 'action', orderable: false, searchable: false},
             ],
 
@@ -193,7 +189,7 @@
                 type: "get",
                 dataType: 'json',
                 success: function (data) {
-                    $('#template_id').val(data.template);
+                    $('#template_id').val(data.id);
                     $('#template').val(data.template);
                     $('#ver_build').val(data.ver_build);
                     $('#script_copy').val(data.script_copy);

@@ -4,6 +4,7 @@
         <div class="modal-content">
             <div class="modal-header">
                 <h4 class="modal-title" id="modelHeading"></h4>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
             </div>
             <div class="modal-body">
                 <form id="userForm" name="userForm" class="form-horizontal">
@@ -35,7 +36,6 @@
                             @foreach($roles as $role)
                                 <option value="{{$role->id}}">{{$role->name}}</option>
                             @endforeach
-
                         </select>
                         </div>
 
@@ -43,6 +43,7 @@
                     <div class="col-sm-offset-2 col-sm-10">
                         <button type="submit" class="btn btn-primary" id="saveBtn" value="create">Save changes
                         </button>
+                        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
                     </div>
                 </form>
             </div>

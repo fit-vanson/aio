@@ -13,26 +13,33 @@ class TemplateController extends Controller
 {
     public function index(Request $request)
     {
-        $template = Template::all();
+        $template = Template::latest('id')->get();
         if ($request->ajax()) {
-            $data = Template::all();
-
+            $data = Template::latest('id')->get();
             return Datatables::of($data)
                 ->addIndexColumn()
                 ->addColumn('action', function($row){
-                    $btn = ' <a href="javascript:void(0)" data-toggle="tooltip"  data-id="'.$row->template.'" data-original-title="Edit" class="btn btn-warning btn-sm editTemplate"><i class="ti-pencil-alt"></i></a>';
-//                    $btn = $btn.' <a href="javascript:void(0)" data-toggle="tooltip"  data-id="'.$row->projectid.'" data-original-title="Quick Edit" class="btn btn-success btn-sm quickEditProject"><i class="mdi mdi-playlist-edit"></i></a>';
-                    $btn = $btn.' <a href="javascript:void(0)" data-toggle="tooltip"  data-id="'.$row->template.'" data-original-title="Delete" class="btn btn-danger btn-sm deleteTemplate"><i class="ti-trash"></i></a>';
+                    $btn = ' <a href="javascript:void(0)" data-toggle="tooltip"  data-id="'.$row->id.'" data-original-title="Edit" class="btn btn-warning btn-sm editTemplate"><i class="ti-pencil-alt"></i></a>';
+                    $btn = $btn.' <a href="javascript:void(0)" data-toggle="tooltip"  data-id="'.$row->id.'" data-original-title="Delete" class="btn btn-danger btn-sm deleteTemplate"><i class="ti-trash"></i></a>';
                     return $btn;
                 })
                 ->editColumn('time_create', function($data) {
-                    return date( 'd/m/Y - H:i:s ',$data->time_create);
+                    if($data->time_create = 0 ){
+                        return  null;
+                    }
+                    return date( 'd/m/Y',$data->time_create);
                 })
                 ->editColumn('time_update', function($data) {
                     return date( 'd/m/Y - H:i:s ',$data->time_update);
                 })
                 ->editColumn('time_get', function($data) {
                     return date( 'd/m/Y - H:i:s ',$data->time_get);
+                })
+                ->editColumn('template', function($data){
+                    return '
+                                    <span>'.$data->template.'</span>
+                                    <p class="text-muted m-b-30 ">'.$data->ver_build.'</p>
+                                ';
                 })
 
                 ->editColumn('link_chplay', function($data){
@@ -41,26 +48,26 @@ class TemplateController extends Controller
                     }
                     return null;
                 })
-                ->editColumn('script_copy', function($data){
-                    if ($data->script_copy !== null){
-                        return "<i style='color:green; ' class='ti-check-box h5'></i>";
+                ->addColumn('script', function($row){
+                    if($row['script_copy'] !== Null){
+                        $script_copy = "<i style='color:green;' class='ti-check-box h5'></i>";
+                    } else {
+                        $script_copy = "<i style='color:red;' class='ti-close h5'></i>";
                     }
-                    return null;
-                })
-                ->editColumn('script_img', function($data){
-                    if ($data->script_img !== null){
-                        return "<i style='color:green; ' class='ti-check-box h5'></i> ";
+                    if($row['script_img'] !== Null){
+                        $script_img = "<i style='color:green;' class='ti-check-box h5'></i>";
+                    } else {
+                        $script_img = "<i style='color:red;' class='ti-close h5'></i>";
                     }
-                    return null;
-                })
-                ->editColumn('script_svg2xml', function($data){
-                    if ($data->script_svg2xml !== null){
-                        return "<i style='color:green; ' class='ti-check-box h5'></i>";
+                    if($row['script_svg2xml'] !== Null){
+                        $script_svg2xml = "<i style='color:green;' class='ti-check-box h5'></i>";
+                    } else {
+                        $script_svg2xml = "<i style='color:red;' class='ti-close h5'></i>";
                     }
-                    return null;
+                    return $script_copy .' '. $script_img.' '. $script_svg2xml ;
                 })
 
-                ->rawColumns(['action','link_chplay','script_copy','script_img','script_svg2xml'])
+                ->rawColumns(['action','link_chplay','script','template'])
                 ->make(true);
         }
         return view('template.index',compact('template'));
@@ -98,7 +105,11 @@ class TemplateController extends Controller
         $data['link_chplay'] = $request->link_chplay;
         $data['category'] =  $request->category;
         $data->save();
-        return response()->json(['success'=>'Thêm mới thành công']);
+        $allTemp  = Template::latest('time_create')->get();
+        return response()->json([
+            'success'=>'Thêm mới thành công',
+            'temp'=>$allTemp
+        ]);
     }
 
     /**
@@ -131,8 +142,8 @@ class TemplateController extends Controller
      */
     public function edit($id)
     {
-        $project = Template::find($id);
-        return response()->json($project);
+        $temp = Template::find($id);
+        return response()->json($temp);
     }
 
     /**
@@ -151,9 +162,7 @@ class TemplateController extends Controller
         $message = [
             'template.unique'=>'Tên template đã tồn tại',
         ];
-
         $error = Validator::make($request->all(),$rules, $message );
-
         if($error->fails()){
             return response()->json(['errors'=> $error->errors()->all()]);
         }
@@ -179,15 +188,12 @@ class TemplateController extends Controller
      */
     public function delete($id)
     {
-
         Template::find($id)->delete();
-
         return response()->json(['success'=>'Xóa thành công.']);
     }
 
     public function callAction($method, $parameters)
     {
-//        $this->AuthLogin();
         return parent::callAction($method, array_values($parameters));
     }
 }

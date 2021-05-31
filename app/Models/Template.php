@@ -10,9 +10,8 @@ class Template extends Model
     use HasFactory;
     public $timestamps = false;
     protected $table = 'ngocphandang_template';
-    protected $keyType = 'string';
-    protected $primaryKey = 'template';
-    protected $fillable = [
+
+    protected $fillable = [ 'template',
         'ver_build', 'script_img','script_svg2xml',
         'time_create', 'time_update','time_get','note','link_chplay','category'
     ];

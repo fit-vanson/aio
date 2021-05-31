@@ -97,6 +97,7 @@
             }
         });
         var table = $('.data-table').DataTable({
+
             processing: true,
             serverSide: true,
             ajax: "{{ route('user.index') }}",

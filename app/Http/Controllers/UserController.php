@@ -210,7 +210,6 @@ class UserController extends Controller
 
     public function callAction($method, $parameters)
     {
-//        $this->AuthLogin();
         return parent::callAction($method, array_values($parameters));
     }
 

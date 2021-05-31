@@ -11,9 +11,7 @@ class Ga_dev extends Model
 
     public $timestamps = false;
     protected $table = 'ngocphandang_gadev';
-    protected $keyType = 'string';
-    protected $primaryKey = 'gmail';
     protected $fillable = [
-        'mailrecovery','vpn_iplogin'
+        'gmail','mailrecovery','vpn_iplogin'
     ];
 }

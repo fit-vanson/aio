@@ -2,10 +2,15 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Da;
+use App\Models\Dev;
+use App\Models\Ga_dev;
 use App\Models\ProjectModel;
+use App\Models\Template;
 use App\Models\UserModel;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Validator;
 use Yajra\DataTables\Facades\DataTables;
 
@@ -18,7 +23,9 @@ class ProjectController extends Controller
      */
     public function index(Request $request)
     {
-
+        $da =  Da::latest('id')->get();
+        $template =  Template::latest('id')->get();
+        $store_name=  Dev::latest('id')->get();
         $project = ProjectModel::latest()->get();
         if ($request->ajax()) {
             $data = ProjectModel::latest()->get();
@@ -30,10 +37,42 @@ class ProjectController extends Controller
                     $btn = $btn.' <a href="javascript:void(0)" data-toggle="tooltip"  data-id="'.$row->projectid.'" data-original-title="Delete" class="btn btn-danger btn-sm deleteProject"><i class="ti-trash"></i></a>';
                     return $btn;
                 })
-                ->rawColumns(['action'])
+                ->editColumn('title_app', function($data){
+                        return '
+                                    <span>'.$data->title_app.'</span>
+                                    <p class="text-muted m-b-30 ">'.$data->package.'</p>
+                                ';
+                })
+                ->editColumn('bot_imglogo', function($data){
+                    if($data->bot_imglogo == null ){
+                        return '<img width="60px" height="60px" src="assets\images\logo.png">';
+                    }
+                    return '<a  target= _blank href='.$data->buildinfo_link_store.'><img width="60px" height="60px" src='.$data->bot_imglogo.'></a>';
+                })
+
+                ->editColumn('ma_da', function($data){
+                    $ma_da = DB::table('ngocphandang_project')
+                        ->join('ngocphandang_da','ngocphandang_da.id','=','ngocphandang_project.ma_da')
+                        ->where('ngocphandang_da.id',$data->ma_da)
+                        ->first();
+                    if($ma_da != null){
+                        return $ma_da->ma_da;
+                    }
+                })
+                ->editColumn('template', function($data){
+                    $template = DB::table('ngocphandang_project')
+                        ->join('ngocphandang_template','ngocphandang_template.id','=','ngocphandang_project.template')
+                        ->where('ngocphandang_template.id',$data->template)
+                        ->first();
+                    if($template != null){
+                        return $template->template;
+                    }
+                })
+
+                ->rawColumns(['action','title_app','bot_imglogo'])
                 ->make(true);
         }
-        return view('project.index',compact('project'));
+        return view('project.index',compact(['project','template','da','store_name']));
     }
 
     /**
@@ -44,10 +83,21 @@ class ProjectController extends Controller
     public function create(Request  $request)
     {
         $rules = [
-            'projectname' =>'unique:ngocphandang_project,projectname'
+            'projectname' =>'required|unique:ngocphandang_project,projectname',
+            'ma_da' => 'required',
+            'template' => 'required',
+            'title_app' =>'required',
+            'buildinfo_vernum' =>'required',
+            'buildinfo_verstr' =>'required',
         ];
         $message = [
             'projectname.unique'=>'Tên Project đã tồn tại',
+            'projectname.required'=>'Tên Project không để trống',
+            'ma_da.required'=>'Mã dự án không để trống',
+            'template.required'=>'Mã template không để trống',
+            'title_app.required'=>'Tiêu đề ứng không để trống',
+            'buildinfo_vernum.required'=>'Version Number không để trống',
+            'buildinfo_verstr.required'=>'Version String không để trống',
         ];
 
         $error = Validator::make($request->all(),$rules, $message );
@@ -76,8 +126,11 @@ class ProjectController extends Controller
         $data['ads_reward'] = $request->ads_reward;
         $data['ads_native'] = $request->ads_native;
         $data['ads_open'] = $request->ads_open;
-        $data['buildinfo_console'] = $request->buildinfo_console;
-
+        $data['buildinfo_console'] = 0;
+        $data['buildinfo_api_key_x'] = $request->buildinfo_api_key_x;
+        $data['buildinfo_link_youtube_x'] = $request->buildinfo_link_youtube_x;
+        $data['buildinfo_api_key_x'] = $request->buildinfo_api_key_x;
+        $data['status'] = 0;
         $data->save();
         return response()->json(['success'=>'Thêm mới thành công']);
     }
@@ -91,36 +144,6 @@ class ProjectController extends Controller
     public function store(Request $request)
     {
 
-
-
-        ProjectModel::updateOrCreate(
-            ['projectid' => $request->project_id],
-            [
-                'projectid' => $request->project_id,
-                'projectname' => $request->projectname,
-                'template' => $request->template,
-                'ma_da' => $request->ma_da,
-                'package' => $request->package,
-                'title_app' =>$request->title_app,
-                'buildinfo_app_name_x' => $request->buildinfo_app_name_x,
-                'buildinfo_store_name_x' => $request->buildinfo_store_name_x,
-                'buildinfo_link_policy_x' => $request->buildinfo_link_policy_x,
-                'buildinfo_link_fanpage' => $request->buildinfo_link_fanpage,
-                'buildinfo_link_website' => $request->buildinfo_link_website,
-                'buildinfo_link_store' => $request->buildinfo_link_store,
-                'buildinfo_vernum' => $request->buildinfo_vernum,
-                'buildinfo_verstr' => $request->buildinfo_verstr,
-                'buildinfo_keystore' => $request->buildinfo_keystore,
-                'ads_id' => $request->ads_id,
-                'ads_banner' => $request->banner,
-                'ads_inter' => $request->ads_inter,
-                'ads_reward' => $request->ads_reward,
-                'ads_native' => $request->ads_native,
-                'ads_open' => $request->ads_open,
-                'buildinfo_console' => $request->buildinfo_console,
-            ]);
-
-        return response()->json(['success'=>'Book saved successfully.']);
     }
 
     /**
@@ -143,7 +166,8 @@ class ProjectController extends Controller
     public function edit($id)
     {
 
-        $project = ProjectModel::find($id);
+//        $project = ProjectModel::find($id);
+        $project = ProjectModel::where('projectid',$id)->first();
         return response()->json($project);
     }
 
@@ -157,12 +181,24 @@ class ProjectController extends Controller
     public function update(Request $request)
     {
 
+
         $id = $request->project_id;
         $rules = [
             'projectname' =>'unique:ngocphandang_project,projectname,'.$id.',projectid',
+            'ma_da' => 'required',
+            'template' => 'required',
+            'title_app' =>'required',
+            'buildinfo_vernum' =>'required',
+            'buildinfo_verstr' =>'required',
         ];
         $message = [
             'projectname.unique'=>'Tên Project đã tồn tại',
+            'projectname.required'=>'Tên Project không để trống',
+            'ma_da.required'=>'Mã dự án không để trống',
+            'template.required'=>'Mã template không để trống',
+            'title_app.required'=>'Tiêu đề ứng không để trống',
+            'buildinfo_vernum.required'=>'Version Number không để trống',
+            'buildinfo_verstr.required'=>'Version String không để trống',
         ];
 
         $error = Validator::make($request->all(),$rules, $message );
@@ -192,7 +228,10 @@ class ProjectController extends Controller
         $data->ads_native = $request->ads_native;
         $data->ads_open = $request->ads_open;
         $data->buildinfo_console = $request->buildinfo_console;
-
+        $data->buildinfo_api_key_x = $request->buildinfo_api_key_x;
+        $data->buildinfo_link_youtube_x = $request->buildinfo_link_youtube_x;
+        $data->buildinfo_api_key_x = $request->buildinfo_api_key_x;
+        $data->status = $request->status;
         $data->save();
         return response()->json(['success'=>'Cập nhật thành công']);
     }
@@ -205,9 +244,7 @@ class ProjectController extends Controller
      */
     public function delete($id)
     {
-
         ProjectModel::find($id)->delete();
-
         return response()->json(['success'=>'Xóa thành công.']);
     }
 

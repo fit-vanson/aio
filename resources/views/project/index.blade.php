@@ -6,13 +6,12 @@
 <link href="plugins/datatables/buttons.bootstrap4.min.css" rel="stylesheet" type="text/css" />
 <!-- Responsive datatable examples -->
 <link href="plugins/datatables/responsive.bootstrap4.min.css" rel="stylesheet" type="text/css" />
-
-
-
 <!-- Sweet-Alert  -->
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/sweetalert/1.1.3/sweetalert.min.css">
 <script src="https://cdnjs.cloudflare.com/ajax/libs/sweetalert/1.1.3/sweetalert.min.js"></script>
 
+<!-- Select2 Js  -->
+<link href="plugins/select2/css/select2.min.css" rel="stylesheet" type="text/css" />
 
 
 @endsection
@@ -27,6 +26,7 @@
     </div>
 </div>
 @include('modals.project')
+
 @endsection
 @section('content')
     <?php
@@ -41,18 +41,17 @@
         <div class="col-12">
             <div class="card">
                 <div class="card-body">
-                    <table class="table table-bordered data-table">
+                    <table class="table table-bordered dt-responsive nowrap data-table" style="border-collapse: collapse; border-spacing: 0; width: 100%;">
                         <thead>
                         <tr>
-                            <th>No</th>
+
+                            <th width="100px">Logo</th>
                             <th>Mã dự án</th>
                             <th>Tên Project</th>
                             <th>Tên Template</th>
-                            <th>Tên Package</th>
                             <th>Tiêu đề</th>
-                            <th>Trạng thái</th>
-
-                            <th width="300px">Action</th>
+                            <th>Trạng thái Ứng dụng</th>
+                            <th width="10%">Action</th>
                         </tr>
                         </thead>
                         <tbody>
@@ -62,6 +61,7 @@
             </div>
         </div> <!-- end col -->
     </div> <!-- end row -->
+
 @endsection
 @section('script')
 <!-- Required datatable js -->
@@ -80,8 +80,19 @@
 <script src="plugins/datatables/dataTables.responsive.min.js"></script>
 <script src="plugins/datatables/responsive.bootstrap4.min.js"></script>
 
+
 <!-- Datatable init js -->
 <script src="assets/pages/datatables.init.js"></script>
+
+
+<script src="plugins/select2/js/select2.min.js"></script>
+
+
+<script>
+    $("#template").select2({});
+    $("#ma_da").select2({});
+
+</script>
 
 
 <script type="text/javascript">
@@ -96,31 +107,38 @@
             serverSide: true,
             ajax: "{{ route('project.index') }}",
             columns: [
-                {data: 'projectid', name: 'projectid'},
+
+                {data: 'bot_imglogo', name: 'bot_imglogo'},
                 {data: 'ma_da', name: 'ma_da'},
                 {data: 'projectname', name: 'projectname'},
                 {data: 'template', name: 'template'},
-                {data: 'package', name: 'package'},
+                // {data: 'package', name: 'package'},
                 {data: 'title_app', name: 'title_app'},
                 {
-                    "data": "buildinfo_console",
+                    "data": "status",
                     "render" : function(data)
                     {
                         if (data==0) {
-                            return '<span class="badge badge-dark">Mặc định</span>'
+                            return 'Mặc định'
                         }if (data==1){
-                            return '<span class="badge badge-success">Public</span>'
+                            return '<span class="badge badge-dark">Build App</span>'
                         }if (data==2){
-                        return '<span class="badge badge-info">Remove</span>'
+                            return '<span class="badge badge-warning">Suppend</span>'
                         }if (data==3){
-                        return '<span class="badge badge-warning">Reject</span>'
+                            return '<span class="badge badge-info">UnPublish</span>'
+                        }if (data==4){
+                            return '<span class="badge badge-primary">Remove</span>'
+                        }if (data==5){
+                            return '<span class="badge badge-success">Reject</span>'
                         }else {
-                        return '<span class="badge badge-danger">Suspend</span>'
+                            return '<span class="badge badge-danger">Check</span>'
                         }
                     },
 
                     "name": "status", "autoWidth": true
                 },
+
+
                 {data: 'action', name: 'action', orderable: false, searchable: false},
             ]
         });
@@ -131,9 +149,17 @@
             $('#projectForm').trigger("reset");
             $('#modelHeading').html("Thêm mới Project");
             $('#ajaxModel').modal('show');
-            $('.input_buildinfo_console').hide();
+            $('.input_status').hide();
             $('.input_api').hide();
+            $('.modal').on('hidden.bs.modal', function (e) {
+                $('body').addClass('modal-open');
+            });
+            $("#template").select2({});
+            $("#ma_da").select2({});
+            $("#buildinfo_store_name_x").select2({});
+
         });
+
         $('#projectForm').on('submit',function (event){
             event.preventDefault();
             if($('#saveBtn').val() == 'create-project'){
@@ -183,16 +209,14 @@
                         }
                     },
                 });
-
             }
-
         });
         $(document).on('click','.editProject', function (data){
             var project_id = $(this).data('id');
             $('#modelHeading').html("Edit Project");
             $('#saveBtn').val("edit-project");
             $('#ajaxModel').modal('show');
-            $('.input_buildinfo_console').show();
+            $('.input_status').show();
             $('.input_api').show();
 
             $.ajax({
@@ -203,8 +227,9 @@
                 success: function (data) {
                     $('#project_id').val(data.projectid);
                     $('#projectname').val(data.projectname);
-                    $('#template').val(data.template);
-                    $('#ma_da').val(data.ma_da);
+                    $("#template").select2().select2("val", data.template);
+                    $("#ma_da").select2().select2("val", data.ma_da);
+                    $("#buildinfo_store_name_x").select2().select2("val", data.buildinfo_store_name_x);
                     $('#package').val(data.package);
                     $('#title_app').val(data.title_app);
                     $('#buildinfo_link_policy_x').val(data.buildinfo_link_policy_x);
@@ -212,7 +237,6 @@
                     $('#buildinfo_link_website').val(data.buildinfo_link_website);
                     $('#buildinfo_link_store').val(data.buildinfo_link_store);
                     $('#buildinfo_app_name_x').val(data.buildinfo_app_name_x);
-                    $('#buildinfo_store_name_x').val(data.buildinfo_store_name_x);
                     $('#buildinfo_vernum').val(data.buildinfo_vernum);
                     $('#buildinfo_verstr').val(data.buildinfo_verstr);
                     $('#buildinfo_keystore').val(data.buildinfo_keystore);
@@ -226,13 +250,18 @@
                     $('#buildinfo_time').val(data.buildinfo_time);
                     $('#buildinfo_mess').val(data.buildinfo_mess);
                     $('#time_mess').val(data.time_mess);
+                    $('#buildinfo_email_dev_x').val(data.buildinfo_email_dev_x);
+                    $('#buildinfo_link_youtube_x').val(data.buildinfo_link_youtube_x);
+                    $('#buildinfo_api_key_x').val(data.buildinfo_api_key_x);
+                    $('#status').val(data.status);
+
                 }
             });
 
         });
         $(document).on('click','.quickEditProject', function (data){
             var project_id = $(this).data('id');
-            $('#modelHeading').html("Quick Edit Project");
+            $('#modelQuickHeading').html("Quick Edit Project");
             $('#saveQBtn').val("quick-edit-project");
             $('#ajaxQuickModel').modal('show');
 
@@ -268,6 +297,10 @@
                     $('#quick_buildinfo_time').val(data.buildinfo_time);
                     $('#quick_buildinfo_mess').val(data.buildinfo_mess);
                     $('#quick_time_mess').val(data.time_mess);
+                    $('#quick_buildinfo_email_dev_x').val(data.buildinfo_email_dev_x);
+                    $('#quick_buildinfo_link_youtube_x').val(data.buildinfo_link_youtube_x);
+                    $('#quick_buildinfo_api_key_x').val(data.buildinfo_api_key_x);
+                    $('#quick_status').val(data.status);
                 }
             });
 
@@ -326,9 +359,159 @@
                     swal("Đã xóa!", "Your imaginary file has been deleted.", "success");
                 });
         });
+
+
+
+
     });
 </script>
 
+
+<script>
+    $("#AddDaForm").submit(function (e) {
+        e.preventDefault();
+        let data = new FormData(document.getElementById('AddDaForm'));
+        $.ajax({
+            url:"{{route('da.create')}}",
+            type: "post",
+            data:data,
+            processData: false,
+            contentType: false,
+            dataType: 'json',
+            beForeSend : () => {
+
+            },
+            success:function (data) {
+                if(data.errors){
+                    for( var count=0 ; count <data.errors.length; count++){
+                        $("#AddDaForm").notify(
+                            data.errors[count],"error",
+                            { position:"right" }
+                        );
+                    }
+                }
+                $.notify(data.success, "success");
+                $('#AddDaForm').trigger("reset");
+                $('#addMaDa').modal('hide');
+
+                if(typeof data.du_an == 'undefined'){
+                    data.du_an = {};
+                }
+                if(typeof rebuildMadaOption == 'function'){
+                    rebuildMadaOption(data.du_an)
+                }
+            }
+        });
+
+    });
+    $("#AddTempForm").submit(function (e) {
+        e.preventDefault();
+        let data = new FormData(document.getElementById('AddTempForm'));
+        $.ajax({
+            url:"{{route('template.create')}}",
+            type: "post",
+            data:data,
+            processData: false,
+            contentType: false,
+            dataType: 'json',
+            beForeSend : () => {
+
+            },
+            success:function (data) {
+                if(data.errors){
+                    for( var count=0 ; count <data.errors.length; count++){
+                        $("#AddTempForm").notify(
+                            data.errors[count],"error",
+                            { position:"right" }
+                        );
+                    }
+                }
+                $.notify(data.success, "success");
+                $('#AddTempForm').trigger("reset");
+                $('#addTemplate').modal('hide');
+
+
+                if(typeof data.temp == 'undefined'){
+                    data.temp = {};
+                }
+                if(typeof rebuildTemplateOption == 'function'){
+                    rebuildTemplateOption(data.temp)
+                }
+            }
+        });
+
+    });
+    $("#addStore").submit(function (e) {
+        alert(1);
+        e.preventDefault();
+        let data = new FormData(document.getElementById('AddDaForm'));
+        $.ajax({
+            url:"{{route('da.create')}}",
+            type: "post",
+            data:data,
+            processData: false,
+            contentType: false,
+            dataType: 'json',
+            beForeSend : () => {
+
+            },
+            success:function (data) {
+                if(data.errors){
+                    for( var count=0 ; count <data.errors.length; count++){
+                        $("#AddDaForm").notify(
+                            data.errors[count],"error",
+                            { position:"right" }
+                        );
+                    }
+                }
+                $.notify(data.success, "success");
+                $('#AddDaForm').trigger("reset");
+                $('#addMaDa').modal('hide');
+
+                if(typeof data.du_an == 'undefined'){
+                    data.du_an = {};
+                }
+                if(typeof rebuildMadaOption == 'function'){
+                    rebuildMadaOption(data.du_an)
+                }
+            }
+        });
+
+    });
+</script>
+<script>
+    function rebuildMadaOption(du_an){
+        var elementSelect = $("#ma_da");
+
+        if(elementSelect.length <= 0){
+            return false;
+        }
+        elementSelect.empty();
+
+        for(var da of du_an){
+            elementSelect.append(
+                $("<option></option>", {
+                    value : da.id
+                }).text(da.ma_da)
+            );
+        }
+    }
+    function rebuildTemplateOption(template){
+        var elementSelect = $("#template");
+        if(elementSelect.length <= 0){
+            return false;
+        }
+        elementSelect.empty();
+
+        for(var temp of template){
+            elementSelect.append(
+                $("<option></option>", {
+                    value : temp.template
+                }).text(temp.template)
+            );
+        }
+    }
+</script>
 
 
 @endsection

@@ -11,7 +11,6 @@ class ProjectModel extends Model
     protected $table = 'ngocphandang_project';
     protected $primaryKey = 'projectid';
     protected $fillable = [
-
         'projectname',
         'template',
         'ma_da',

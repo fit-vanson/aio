@@ -4,6 +4,7 @@
         <div class="modal-content">
             <div class="modal-header">
                 <h4 class="modal-title" id="modelHeading"></h4>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
             </div>
             <div class="modal-body">
 
@@ -28,94 +29,6 @@
                             <input type="text" id="vpn_iplogin" class="form-control" name="vpn_iplogin">
                         </div>
                     </div>
-
-                    <div data-repeater-list="group-a" class="input_bk">
-                        <div data-repeater-item="" class="row">
-                            <div class="form-group col-lg-6">
-                                <label class="col-sm-5 control-label">BK1</label>
-                                <div class="col-sm-12">
-                                    <input type="text" class="form-control" id="bk_1" name="bk_1">
-                                </div>
-                            </div>
-
-                            <div class="form-group col-lg-6">
-                                <label class="col-sm-5 control-label">BK2</label>
-                                <div class="col-sm-12">
-                                    <input type="text" class="form-control" id="bk_2" name="bk_2">
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div data-repeater-list="group-a" class="input_bk">
-                        <div data-repeater-item="" class="row">
-                            <div class="form-group col-lg-6">
-                                <label class="col-sm-5 control-label">BK3</label>
-                                <div class="col-sm-12">
-                                    <input type="text" class="form-control" id="bk_3" name="bk_3">
-                                </div>
-                            </div>
-
-                            <div class="form-group col-lg-6">
-                                <label class="col-sm-5 control-label">BK4</label>
-                                <div class="col-sm-12">
-                                    <input type="text" class="form-control" id="bk_4" name="bk_4">
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div data-repeater-list="group-a" class="input_bk">
-                        <div data-repeater-item="" class="row">
-                            <div class="form-group col-lg-6">
-                                <label class="col-sm-5 control-label">BK5</label>
-                                <div class="col-sm-12">
-                                    <input type="text" class="form-control" id="bk_5" name="bk_5">
-                                </div>
-                            </div>
-
-                            <div class="form-group col-lg-6">
-                                <label class="col-sm-5 control-label">BK6</label>
-                                <div class="col-sm-12">
-                                    <input type="text" class="form-control" id="bk_6" name="bk_6">
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div data-repeater-list="group-a" class="input_bk">
-                        <div data-repeater-item="" class="row">
-                            <div class="form-group col-lg-6">
-                                <label class="col-sm-5 control-label">BK7</label>
-                                <div class="col-sm-12">
-                                    <input type="text" class="form-control" id="bk_7" name="bk_7">
-                                </div>
-                            </div>
-
-                            <div class="form-group col-lg-6">
-                                <label class="col-sm-5 control-label">BK8</label>
-                                <div class="col-sm-12">
-                                    <input type="text" class="form-control" id="bk_8" name="bk_8">
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div data-repeater-list="group-a" class="input_bk">
-                        <div data-repeater-item="" class="row">
-                            <div class="form-group col-lg-6">
-                                <label class="col-sm-5 control-label">BK9</label>
-                                <div class="col-sm-12">
-                                    <input type="text" class="form-control" id="bk_9" name="bk_9">
-                                </div>
-                            </div>
-
-                            <div class="form-group col-lg-6">
-                                <label class="col-sm-5 control-label">BK10</label>
-                                <div class="col-sm-12">
-                                    <input type="text" class="form-control" id="bk_10" name="bk_10">
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-
                     <div class="form-group input_note">
                         <label class="col-sm-5 control-label">Ghi chú</label>
                         <div class="col-sm-12">
@@ -125,6 +38,7 @@
                     <div class="col-sm-offset-2 col-sm-10">
                         <button type="submit" class="btn btn-primary" id="saveBtn" value="create">Save changes
                         </button>
+                        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
                     </div>
                 </form>
             </div>
