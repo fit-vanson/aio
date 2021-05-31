@@ -180,20 +180,6 @@
                                 <input type="text" id="ads_open" name="ads_open" class="form-control" >
                             </div>
                         </div>
-                        <div data-repeater-item="" class="row input_api" >
-                            <div class="form-group col-lg-4">
-                                <label for="name">buildinfo_time</label>
-                                <input disabled type="number" id="buildinfo_time" name="buildinfo_time" class="form-control" >
-                            </div>
-                            <div class="form-group col-lg-4">
-                                <label for="name">buildinfo_mess</label>
-                                <input disabled type="number" id="buildinfo_mess" name="buildinfo_mess" class="form-control" >
-                            </div>
-                            <div class="form-group col-lg-4">
-                                <label for="name">time_mess</label>
-                                <input disabled type="text" id="time_mess" name="time_mess" class="form-control" >
-                            </div>
-                        </div>
                     </div>
                     <div class="col-sm-offset-2 col-sm-10">
                         <button type="submit" class="btn btn-primary" id="saveBtn" value="create">Save changes</button>

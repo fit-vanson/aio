@@ -147,8 +147,6 @@
             $('#projectForm').trigger("reset");
             $('#modelHeading').html("Thêm mới Project");
             $('#ajaxModel').modal('show');
-            $('.input_status').hide();
-            $('.input_api').hide();
             $('.modal').on('hidden.bs.modal', function (e) {
                 $('body').addClass('modal-open');
             });
