@@ -24,15 +24,21 @@ class TemplateController extends Controller
                     return $btn;
                 })
                 ->editColumn('time_create', function($data) {
-                    if($data->time_create = 0 ){
+                    if($data->time_create == 0 ){
                         return  null;
                     }
                     return date( 'd/m/Y',$data->time_create);
                 })
                 ->editColumn('time_update', function($data) {
-                    return date( 'd/m/Y - H:i:s ',$data->time_update);
+                    if($data->time_update == 0 ){
+                        return  null;
+                    }
+                    return date( 'd/m/Y',$data->time_update);
                 })
                 ->editColumn('time_get', function($data) {
+                    if($data->time_get == 0 ){
+                        return  null;
+                    }
                     return date( 'd/m/Y - H:i:s ',$data->time_get);
                 })
                 ->editColumn('template', function($data){
@@ -41,10 +47,9 @@ class TemplateController extends Controller
                                     <p class="text-muted m-b-30 ">'.$data->ver_build.'</p>
                                 ';
                 })
-
                 ->editColumn('link_chplay', function($data){
                     if ($data->link_chplay !== null){
-                        return "<a href='$data->link_chplay'>Link</a>";
+                        return "<a  target= _blankhref='$data->link_chplay'>Link</a>";
                     }
                     return null;
                 })
