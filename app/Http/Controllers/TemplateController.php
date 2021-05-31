@@ -162,7 +162,7 @@ class TemplateController extends Controller
     {
         $id = $request->template_id;
         $rules = [
-            'template' =>'unique:ngocphandang_template,template,'.$id.',template',
+            'template' =>'unique:ngocphandang_template,template,'.$id.',id',
         ];
         $message = [
             'template.unique'=>'Tên template đã tồn tại',

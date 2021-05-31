@@ -17,7 +17,7 @@
                                 <label for="name">Mã dự án <span style="color: red">*</span></label>
                                 <div class="inner row">
                                     <div class="col-md-10 col-10">
-                                        <select class="form-control ma_da" id="ma_da" name="ma_da">
+                                        <select class="form-control" id="ma_da" name="ma_da">
                                             <option>---Vui lòng chọn---</option>
                                                 @foreach($da as $item)
                                                     <option value="{{$item->id}}">{{$item->ma_da}}</option>
@@ -43,7 +43,7 @@
                                 <label for="name">Mã template <span style="color: red">*</span></label>
                                 <div class="inner row">
                                     <div class="col-md-10 col-10">
-                                        <select class="form-control select2" id="template" name="template">
+                                        <select class="form-control" id="template" name="template">
                                             <option>---Vui lòng chọn---</option>
                                                 @foreach($template as $item)
                                                     <option value="{{$item->id}}">{{$item->template}}</option>

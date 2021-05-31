@@ -87,13 +87,11 @@
 
 <script src="plugins/select2/js/select2.min.js"></script>
 
-
 <script>
     $("#template").select2({});
     $("#ma_da").select2({});
-
+    $("#buildinfo_store_name_x").select2({});
 </script>
-
 
 <script type="text/javascript">
     $(function () {
@@ -157,7 +155,6 @@
             $("#template").select2({});
             $("#ma_da").select2({});
             $("#buildinfo_store_name_x").select2({});
-
         });
 
         $('#projectForm').on('submit',function (event){
@@ -210,100 +207,6 @@
                     },
                 });
             }
-        });
-        $(document).on('click','.editProject', function (data){
-            var project_id = $(this).data('id');
-            $('#modelHeading').html("Edit Project");
-            $('#saveBtn').val("edit-project");
-            $('#ajaxModel').modal('show');
-            $('.input_status').show();
-            $('.input_api').show();
-
-            $.ajax({
-                data: $('#projectForm').serialize(),
-                url: "{{ asset("project/edit") }}/" + project_id,
-                type: "get",
-                dataType: 'json',
-                success: function (data) {
-                    $('#project_id').val(data.projectid);
-                    $('#projectname').val(data.projectname);
-                    $("#template").select2().select2("val", data.template);
-                    $("#ma_da").select2().select2("val", data.ma_da);
-                    $("#buildinfo_store_name_x").select2().select2("val", data.buildinfo_store_name_x);
-                    $('#package').val(data.package);
-                    $('#title_app').val(data.title_app);
-                    $('#buildinfo_link_policy_x').val(data.buildinfo_link_policy_x);
-                    $('#buildinfo_link_fanpage').val(data.buildinfo_link_fanpage);
-                    $('#buildinfo_link_website').val(data.buildinfo_link_website);
-                    $('#buildinfo_link_store').val(data.buildinfo_link_store);
-                    $('#buildinfo_app_name_x').val(data.buildinfo_app_name_x);
-                    $('#buildinfo_vernum').val(data.buildinfo_vernum);
-                    $('#buildinfo_verstr').val(data.buildinfo_verstr);
-                    $('#buildinfo_keystore').val(data.buildinfo_keystore);
-                    $('#buildinfo_console').val(data.buildinfo_console);
-                    $('#ads_id').val(data.ads_id);
-                    $('#banner').val(data.ads_banner);
-                    $('#ads_inter').val(data.ads_inter);
-                    $('#ads_reward').val(data.ads_reward);
-                    $('#ads_native').val(data.ads_native);
-                    $('#ads_open').val(data.ads_open);
-                    $('#buildinfo_time').val(data.buildinfo_time);
-                    $('#buildinfo_mess').val(data.buildinfo_mess);
-                    $('#time_mess').val(data.time_mess);
-                    $('#buildinfo_email_dev_x').val(data.buildinfo_email_dev_x);
-                    $('#buildinfo_link_youtube_x').val(data.buildinfo_link_youtube_x);
-                    $('#buildinfo_api_key_x').val(data.buildinfo_api_key_x);
-                    $('#status').val(data.status);
-
-                }
-            });
-
-        });
-        $(document).on('click','.quickEditProject', function (data){
-            var project_id = $(this).data('id');
-            $('#modelQuickHeading').html("Quick Edit Project");
-            $('#saveQBtn').val("quick-edit-project");
-            $('#ajaxQuickModel').modal('show');
-
-
-            $.ajax({
-                data: $('#projectQuickForm').serialize(),
-                url: "{{ asset("project/edit") }}/" + project_id,
-                type: "get",
-                dataType: 'json',
-                success: function (data) {
-                    $('#quick_project_id').val(data.projectid);
-                    $('#quick_projectname').val(data.projectname);
-                    $('#quick_template').val(data.template);
-                    $('#quick_ma_da').val(data.ma_da);
-                    $('#quick_package').val(data.package);
-                    $('#quick_title_app').val(data.title_app);
-                    $('#quick_buildinfo_link_policy_x').val(data.buildinfo_link_policy_x);
-                    $('#quick_buildinfo_link_fanpage').val(data.buildinfo_link_fanpage);
-                    $('#quick_buildinfo_link_website').val(data.buildinfo_link_website);
-                    $('#quick_buildinfo_link_store').val(data.buildinfo_link_store);
-                    $('#quick_buildinfo_app_name_x').val(data.buildinfo_app_name_x);
-                    $('#quick_buildinfo_store_name_x').val(data.buildinfo_store_name_x);
-                    $('#quick_buildinfo_vernum').val(data.buildinfo_vernum);
-                    $('#quick_buildinfo_verstr').val(data.buildinfo_verstr);
-                    $('#quick_buildinfo_keystore').val(data.buildinfo_keystore);
-                    $('#quick_buildinfo_console').val(data.buildinfo_console);
-                    $('#quick_ads_id').val(data.ads_id);
-                    $('#quick_banner').val(data.ads_banner);
-                    $('#quick_ads_inter').val(data.ads_inter);
-                    $('#quick_ads_reward').val(data.ads_reward);
-                    $('#quick_ads_native').val(data.ads_native);
-                    $('#quick_ads_open').val(data.ads_open);
-                    $('#quick_buildinfo_time').val(data.buildinfo_time);
-                    $('#quick_buildinfo_mess').val(data.buildinfo_mess);
-                    $('#quick_time_mess').val(data.time_mess);
-                    $('#quick_buildinfo_email_dev_x').val(data.buildinfo_email_dev_x);
-                    $('#quick_buildinfo_link_youtube_x').val(data.buildinfo_link_youtube_x);
-                    $('#quick_buildinfo_api_key_x').val(data.buildinfo_api_key_x);
-                    $('#quick_status').val(data.status);
-                }
-            });
-
         });
         $('#projectQuickForm').on('submit',function (event){
             event.preventDefault();
@@ -364,6 +267,86 @@
 
 
     });
+</script>
+<script>
+    function editProject(id) {
+        $.get('{{asset('project/edit')}}/'+id,function (data) {
+            $('#project_id').val(data.projectid);
+            $('#projectname').val(data.projectname);
+            $("#template").select2().select2("val", data.template);
+            $("#ma_da").select2().select2("val", data.ma_da);
+            $("#buildinfo_store_name_x").select2().select2("val", data.buildinfo_store_name_x);
+            $('#package').val(data.package);
+            $('#title_app').val(data.title_app);
+            $('#buildinfo_link_policy_x').val(data.buildinfo_link_policy_x);
+            $('#buildinfo_link_fanpage').val(data.buildinfo_link_fanpage);
+            $('#buildinfo_link_website').val(data.buildinfo_link_website);
+            $('#buildinfo_link_store').val(data.buildinfo_link_store);
+            $('#buildinfo_app_name_x').val(data.buildinfo_app_name_x);
+            $('#buildinfo_vernum').val(data.buildinfo_vernum);
+            $('#buildinfo_verstr').val(data.buildinfo_verstr);
+            $('#buildinfo_keystore').val(data.buildinfo_keystore);
+            $('#buildinfo_console').val(data.buildinfo_console);
+            $('#ads_id').val(data.ads_id);
+            $('#banner').val(data.ads_banner);
+            $('#ads_inter').val(data.ads_inter);
+            $('#ads_reward').val(data.ads_reward);
+            $('#ads_native').val(data.ads_native);
+            $('#ads_open').val(data.ads_open);
+            $('#buildinfo_time').val(data.buildinfo_time);
+            $('#buildinfo_mess').val(data.buildinfo_mess);
+            $('#time_mess').val(data.time_mess);
+            $('#buildinfo_email_dev_x').val(data.buildinfo_email_dev_x);
+            $('#buildinfo_link_youtube_x').val(data.buildinfo_link_youtube_x);
+            $('#buildinfo_api_key_x').val(data.buildinfo_api_key_x);
+            $('#status').val(data.status);
+            $('#modelHeading').html("Edit Project");
+            $('#saveBtn').val("edit-project");
+            $('#ajaxModel').modal('show');
+            $('.modal').on('hidden.bs.modal', function (e) {
+                $('body').addClass('modal-open');
+            });
+        })
+    }
+
+    function quickEditProject(id) {
+        $.get('{{asset('project/edit')}}/'+id,function (data) {
+            $('#quick_project_id').val(data.projectid);
+            $('#quick_projectname').val(data.projectname);
+            $('#quick_template').val(data.template);
+            $('#quick_ma_da').val(data.ma_da);
+            $('#quick_package').val(data.package);
+            $('#quick_title_app').val(data.title_app);
+            $('#quick_buildinfo_link_policy_x').val(data.buildinfo_link_policy_x);
+            $('#quick_buildinfo_link_fanpage').val(data.buildinfo_link_fanpage);
+            $('#quick_buildinfo_link_website').val(data.buildinfo_link_website);
+            $('#quick_buildinfo_link_store').val(data.buildinfo_link_store);
+            $('#quick_buildinfo_app_name_x').val(data.buildinfo_app_name_x);
+            $('#quick_buildinfo_store_name_x').val(data.buildinfo_store_name_x);
+            $('#quick_buildinfo_vernum').val(data.buildinfo_vernum);
+            $('#quick_buildinfo_verstr').val(data.buildinfo_verstr);
+            $('#quick_buildinfo_keystore').val(data.buildinfo_keystore);
+            $('#quick_buildinfo_console').val(data.buildinfo_console);
+            $('#quick_ads_id').val(data.ads_id);
+            $('#quick_banner').val(data.ads_banner);
+            $('#quick_ads_inter').val(data.ads_inter);
+            $('#quick_ads_reward').val(data.ads_reward);
+            $('#quick_ads_native').val(data.ads_native);
+            $('#quick_ads_open').val(data.ads_open);
+            $('#quick_buildinfo_time').val(data.buildinfo_time);
+            $('#quick_buildinfo_mess').val(data.buildinfo_mess);
+            $('#quick_time_mess').val(data.time_mess);
+            $('#quick_buildinfo_email_dev_x').val(data.buildinfo_email_dev_x);
+            $('#quick_buildinfo_link_youtube_x').val(data.buildinfo_link_youtube_x);
+            $('#quick_buildinfo_api_key_x').val(data.buildinfo_api_key_x);
+            $('#quick_status').val(data.status);
+
+
+            $('#modelQuickHeading').html("Quick Edit Project");
+            $('#saveQBtn').val("quick-edit-project");
+            $('#ajaxQuickModel').modal('show');
+        })
+    }
 </script>
 
 
