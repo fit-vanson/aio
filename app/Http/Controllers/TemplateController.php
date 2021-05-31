@@ -49,7 +49,7 @@ class TemplateController extends Controller
                 })
                 ->editColumn('link_chplay', function($data){
                     if ($data->link_chplay !== null){
-                        return "<a  target= _blankhref='$data->link_chplay'>Link</a>";
+                        return "<a  target= _blank href='$data->link_chplay'>Link</a>";
                     }
                     return null;
                 })
