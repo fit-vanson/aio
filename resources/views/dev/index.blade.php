@@ -148,7 +148,7 @@
                             if(data.success){
                                 $.notify(data.success, "success");
                                 $('#devForm').trigger("reset");
-                                $('#ajaxModel').modal('hide');
+                                $('#ajaxModelDev').modal('hide');
                                 table.draw();
                             }
                         },
@@ -172,7 +172,7 @@
                             if(data.success){
                                 $.notify(data.success, "success");
                                 $('#devForm').trigger("reset");
-                                $('#ajaxModel').modal('hide');
+                                $('#ajaxModelDev').modal('hide');
                                 table.draw();
                             }
                         },
