@@ -181,35 +181,6 @@
                 }
 
             });
-            $(document).on('click','.editDev', function (data){
-                var dev_id = $(this).data('id');
-                $('#modelHeading').html("Edit");
-                $('#saveBtn').val("edit-dev");
-                $('#ajaxModelDev').modal('show');
-                $.ajax({
-                    data: $('#devForm').serialize(),
-                    url: "{{ asset("dev/edit") }}/" + dev_id,
-                    type: "get",
-                    dataType: 'json',
-                    success: function (data) {
-                        $('#dev_id').val(data.id);
-                        $('#store_name').val(data.store_name);
-                        $("#gmail_gadev_chinh").select2().select2("val", data.gmail_gadev_chinh);
-                        $("#gmail_gadev_phu_1").select2().select2("val", data.gmail_gadev_phu_1);
-                        $("#gmail_gadev_phu_2").select2().select2("val", data.gmail_gadev_phu_2);
-                        $('#info_phone').val(data.info_phone);
-                        $('#info_andress').val(data.info_andress);
-                        $('#info_url').val(data.info_url);
-                        $('#info_logo').val(data.info_logo);
-                        $('#info_banner').val(data.info_banner);
-                        $('#info_policydev').val(data.info_policydev);
-                        $('#info_fanpage').val(data.info_fanpage);
-                        $('#info_web').val(data.info_web);
-                        $('#startus').val(data.status);
-                    }
-                });
-
-            });
 
             $(document).on('click','.deleteDev', function (data){
                 var dev_id = $(this).data("id");
@@ -239,6 +210,35 @@
             });
 
         });
+    </script>
+
+
+    <script>
+        function editDev(id) {
+            $.get('{{asset('dev/edit')}}/'+id,function (data) {
+                $('#store_name').val(data.store_name);
+                $("#gmail_gadev_chinh").select2().select2("val", data.gmail_gadev_chinh);
+                $("#gmail_gadev_phu_1").select2().select2("val", data.gmail_gadev_phu_1);
+                $("#gmail_gadev_phu_2").select2().select2("val", data.gmail_gadev_phu_2);
+                $('#info_phone').val(data.info_phone);
+                $('#info_andress').val(data.info_andress);
+                $('#info_url').val(data.info_url);
+                $('#info_logo').val(data.info_logo);
+                $('#info_banner').val(data.info_banner);
+                $('#info_policydev').val(data.info_policydev);
+                $('#info_fanpage').val(data.info_fanpage);
+                $('#info_web').val(data.info_web);
+                $('#startus').val(data.status);
+
+                $('#modelHeading').html("Edit Dev");
+                $('#saveBtn').val("edit-dev");
+                $('#ajaxModelDev').modal('show');
+                $('.modal').on('hidden.bs.modal', function (e) {
+                    $('body').addClass('modal-open');
+                });
+            })
+        }
+
     </script>
 
     <script>

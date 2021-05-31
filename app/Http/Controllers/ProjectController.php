@@ -32,11 +32,9 @@ class ProjectController extends Controller
             return Datatables::of($data)
                 ->addIndexColumn()
                 ->addColumn('action', function($row){
-//                    $btn = ' <a href="javascript:void(0)" data-toggle="tooltip"  data-id="'.$row->projectid.'" data-original-title="Edit" class="btn btn-warning btn-sm editProject"><i class="ti-pencil-alt"></i></a>';
-                    $btn = '<a href="javascript:void(0)" onclick="editProject('.$row->projectid.')" class="btn btn-info">Edit</a>';
-                    $btn = $btn.'<a href="javascript:void(0)" onclick="quickEditProject('.$row->projectid.')" class="btn btn-info">Quick Edit</a>';
-//                    $btn = $btn.' <a href="javascript:void(0)" data-toggle="tooltip"  data-id="'.$row->projectid.'" data-original-title="Quick Edit" class="btn btn-success btn-sm quickEditProject"><i class="mdi mdi-playlist-edit"></i></a>';
-                    $btn = $btn.' <a href="javascript:void(0)" data-toggle="tooltip"  data-id="'.$row->projectid.'" data-original-title="Delete" class="btn btn-danger btn-sm deleteProject"><i class="ti-trash"></i></a>';
+                    $btn = ' <a href="javascript:void(0)" onclick="editProject('.$row->projectid.')" class="btn btn-warning"><i class="ti-pencil-alt"></i></a>';
+                    $btn = $btn. ' <a href="javascript:void(0)" onclick="quickEditProject('.$row->projectid.')" class="btn btn-success"><i class="mdi mdi-playlist-edit"></i></a>';
+                    $btn = $btn.' <a href="javascript:void(0)" data-toggle="tooltip"  data-id="'.$row->projectid.'" data-original-title="Delete" class="btn btn-danger deleteProject"><i class="ti-trash"></i></a>';
                     return $btn;
                 })
                 ->editColumn('title_app', function($data){

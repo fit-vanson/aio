@@ -180,32 +180,6 @@
                 }
 
             });
-            $(document).on('click','.editGa', function (data){
-                var ga_id = $(this).data('id');
-                $('#modelHeading').html("Edit");
-                $('#saveBtn').val("edit-ga");
-                $('#ajaxModel').modal('show');
-                $.ajax({
-                    data: $('#gaForm').serialize(),
-                    url: "{{ asset("ga/edit") }}/" + ga_id,
-                    type: "get",
-                    dataType: 'json',
-                    success: function (data) {
-                        $('#ga_id').val(data.id);
-                        $('#ga_name').val(data.ga_name);
-                        $("#gmail_gadev_chinh").select2().select2("val", data.gmail_gadev_chinh);
-                        $("#gmail_gadev_phu_1").select2().select2("val", data.gmail_gadev_phu_1);
-                        $("#gmail_gadev_phu_2").select2().select2("val", data.gmail_gadev_phu_2);
-                        $('#info_phone').val(data.info_phone);
-                        $('#info_andress').val(data.info_andress);
-                        $('#payment').val(data.payment);
-                        $('#app_ads').val(data.app_ads);
-                        $('#note').val(data.note);
-                        $('#startus').val(data.status);
-                    }
-                });
-
-            });
 
             $(document).on('click','.deleteGa', function (data){
                 var ga_id = $(this).data("id");
@@ -235,6 +209,33 @@
             });
 
         });
+    </script>
+
+
+    <script>
+        function editGa(id) {
+            $.get('{{asset('ga/edit')}}/'+id,function (data) {
+                $('#ga_id').val(data.id);
+                $('#ga_name').val(data.ga_name);
+                $("#gmail_gadev_chinh").select2().select2("val", data.gmail_gadev_chinh);
+                $("#gmail_gadev_phu_1").select2().select2("val", data.gmail_gadev_phu_1);
+                $("#gmail_gadev_phu_2").select2().select2("val", data.gmail_gadev_phu_2);
+                $('#info_phone').val(data.info_phone);
+                $('#info_andress').val(data.info_andress);
+                $('#payment').val(data.payment);
+                $('#app_ads').val(data.app_ads);
+                $('#note').val(data.note);
+                $('#startus').val(data.status);
+
+                $('#modelHeading').html("Edit");
+                $('#saveBtn').val("edit-ga");
+                $('#ajaxModel').modal('show');
+                $('.modal').on('hidden.bs.modal', function (e) {
+                    $('body').addClass('modal-open');
+                });
+            })
+        }
+
     </script>
 
     <script>

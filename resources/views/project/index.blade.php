@@ -273,8 +273,8 @@
         $.get('{{asset('project/edit')}}/'+id,function (data) {
             $('#project_id').val(data.projectid);
             $('#projectname').val(data.projectname);
-            $("#template").select2().select2("val", data.template);
-            $("#ma_da").select2().select2("val", data.ma_da);
+            $('#template').val(data.template);
+            $('#ma_da').val(data.ma_da);
             $("#buildinfo_store_name_x").select2().select2("val", data.buildinfo_store_name_x);
             $('#package').val(data.package);
             $('#title_app').val(data.title_app);
@@ -489,7 +489,7 @@
         for(var temp of template){
             elementSelect.append(
                 $("<option></option>", {
-                    value : temp.template
+                    value : temp.id
                 }).text(temp.template)
             );
         }

@@ -21,8 +21,8 @@ class GaController extends Controller
             return Datatables::of($data)
                 ->addIndexColumn()
                 ->addColumn('action', function($row){
-                    $btn = ' <a href="javascript:void(0)" data-toggle="tooltip"  data-id="'.$row->id.'" data-original-title="Edit" class="btn btn-warning btn-sm editGa"><i class="ti-pencil-alt"></i></a>';
-                    $btn = $btn.' <a href="javascript:void(0)" data-toggle="tooltip"  data-id="'.$row->id.'" data-original-title="Delete" class="btn btn-danger btn-sm deleteGa"><i class="ti-trash"></i></a>';
+                    $btn = ' <a href="javascript:void(0)" onclick="editGa('.$row->id.')" class="btn btn-warning"><i class="ti-pencil-alt"></i></a>';
+                    $btn = $btn.' <a href="javascript:void(0)" data-toggle="tooltip"  data-id="'.$row->id.'" data-original-title="Delete" class="btn btn-danger deleteProject"><i class="ti-trash"></i></a>';
                     return $btn;
                 })
                 ->editColumn('gmail_gadev_chinh', function($data){
@@ -135,6 +135,7 @@ class GaController extends Controller
      */
     public function update(Request $request)
     {
+
         $id = $request->ga_id;
         $rules = [
             'ga_name' =>'unique:ngocphandang_ga,ga_name,'.$id.',id',
