@@ -46,7 +46,6 @@
                         <thead>
                         <tr>
                             <th>Tên Template</th>
-                            <th>Version</th>
                             <th>Phân loại</th>
                             <th>Link CHPlay</th>
                             <th>script_copy | IMG | svg2xml</th>
@@ -103,7 +102,6 @@
             ajax: "{{ route('template.index') }}",
             columns: [
                 {data: 'template'},
-                {data: 'ver_build'},
                 {data: 'category'},
                 {data: 'link_chplay'},
                 {data: 'script'},
