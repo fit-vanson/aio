@@ -43,7 +43,7 @@
                                     <div class="col-md-12 col-12">
                                         <select class="form-control select2js" id="gmail_gadev_phu_1" name="gmail_gadev_phu_1">
                                             <option>---Vui lòng chọn---</option>
-                                            @foreach($dev as $item)
+                                            @foreach($ga_dev as $item)
                                                 <option value="{{$item->id}}">{{$item->gmail}}</option>
                                             @endforeach
                                         </select>
@@ -57,7 +57,7 @@
                                     <div class="col-md-12 col-12">
                                         <select class="form-control select2js" id="gmail_gadev_phu_2" name="gmail_gadev_phu_2">
                                             <option>---Vui lòng chọn---</option>
-                                            @foreach($dev as $item)
+                                            @foreach($ga_dev as $item)
                                                 <option value="{{$item->id}}">{{$item->gmail}}</option>
                                             @endforeach
                                         </select>

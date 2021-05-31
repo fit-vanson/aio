@@ -95,7 +95,6 @@ class DevController extends Controller
         $data['info_fanpage'] = $request->info_fanpage;
         $data['info_web'] = $request->info_web;
         $data['status'] = 0;
-        $allDev = Dev::latest('id')->get();
         $data->save();
         return response()->json([
             'success'=>'Thêm mới thành công',

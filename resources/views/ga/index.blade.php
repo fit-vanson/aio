@@ -217,9 +217,12 @@
             $.get('{{asset('ga/edit')}}/'+id,function (data) {
                 $('#ga_id').val(data.id);
                 $('#ga_name').val(data.ga_name);
-                $("#gmail_gadev_chinh").select2().select2("val", data.gmail_gadev_chinh);
-                $("#gmail_gadev_phu_1").select2().select2("val", data.gmail_gadev_phu_1);
-                $("#gmail_gadev_phu_2").select2().select2("val", data.gmail_gadev_phu_2);
+                $('#gmail_gadev_chinh').val(data.gmail_gadev_chinh);
+                $('#gmail_gadev_chinh').select2();
+                $('#gmail_gadev_phu_1').val(data.gmail_gadev_phu_1);
+                $('#gmail_gadev_phu_1').select2();
+                $('#gmail_gadev_phu_2').val(data.gmail_gadev_phu_2);
+                $('#gmail_gadev_phu_2').select2();
                 $('#info_phone').val(data.info_phone);
                 $('#info_andress').val(data.info_andress);
                 $('#payment').val(data.payment);

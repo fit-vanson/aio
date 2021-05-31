@@ -78,10 +78,6 @@
     <script type="text/javascript" charset="utf8" src="https://cdn.datatables.net/plug-ins/1.10.20/sorting/datetime-moment.js"></script>
 
     <script src="plugins/select2/js/select2.min.js"></script>
-
-    <script>
-        $(".select2js").select2({});
-    </script>
     <script type="text/javascript">
         $(function () {
             $.ajaxSetup({
@@ -128,6 +124,9 @@
                 $('#devForm').trigger("reset");
                 $('#modelHeading').html("Thêm mới");
                 $('#ajaxModelDev').modal('show');
+                $("#gmail_gadev_chinh").select2({});
+                $("#gmail_gadev_phu_1").select2({});
+                $("#gmail_gadev_phu_2").select2({});
             });
             $('#devForm').on('submit',function (event){
                 event.preventDefault();
@@ -140,7 +139,7 @@
                         success: function (data) {
                             if(data.errors){
                                 for( var count=0 ; count <data.errors.length; count++){
-                                    $("#devForm").notify(
+                                    $("#gaForm").notify(
                                         data.errors[count],"error",
                                         { position:"right" }
                                     );
@@ -149,7 +148,7 @@
                             if(data.success){
                                 $.notify(data.success, "success");
                                 $('#devForm').trigger("reset");
-                                $('#ajaxModelDev').modal('hide');
+                                $('#ajaxModel').modal('hide');
                                 table.draw();
                             }
                         },
@@ -173,7 +172,7 @@
                             if(data.success){
                                 $.notify(data.success, "success");
                                 $('#devForm').trigger("reset");
-                                $('#ajaxModelDev').modal('hide');
+                                $('#ajaxModel').modal('hide');
                                 table.draw();
                             }
                         },
@@ -216,10 +215,14 @@
     <script>
         function editDev(id) {
             $.get('{{asset('dev/edit')}}/'+id,function (data) {
+                $('#dev_id').val(data.id);
                 $('#store_name').val(data.store_name);
-                $("#gmail_gadev_chinh").select2().select2("val", data.gmail_gadev_chinh);
-                $("#gmail_gadev_phu_1").select2().select2("val", data.gmail_gadev_phu_1);
-                $("#gmail_gadev_phu_2").select2().select2("val", data.gmail_gadev_phu_2);
+                $('#gmail_gadev_chinh').val(data.gmail_gadev_chinh);
+                $('#gmail_gadev_chinh').select2();
+                $('#gmail_gadev_phu_1').val(data.gmail_gadev_phu_1);
+                $('#gmail_gadev_phu_1').select2();
+                $('#gmail_gadev_phu_2').val(data.gmail_gadev_phu_2);
+                $('#gmail_gadev_phu_2').select2();
                 $('#info_phone').val(data.info_phone);
                 $('#info_andress').val(data.info_andress);
                 $('#info_url').val(data.info_url);
@@ -230,7 +233,7 @@
                 $('#info_web').val(data.info_web);
                 $('#startus').val(data.status);
 
-                $('#modelHeading').html("Edit Dev");
+                $('#modelHeading').html("Edit");
                 $('#saveBtn').val("edit-dev");
                 $('#ajaxModelDev').modal('show');
                 $('.modal').on('hidden.bs.modal', function (e) {

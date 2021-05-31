@@ -152,9 +152,6 @@
             $('.modal').on('hidden.bs.modal', function (e) {
                 $('body').addClass('modal-open');
             });
-            $("#template").select2({});
-            $("#ma_da").select2({});
-            $("#buildinfo_store_name_x").select2({});
         });
 
         $('#projectForm').on('submit',function (event){
@@ -274,8 +271,11 @@
             $('#project_id').val(data.projectid);
             $('#projectname').val(data.projectname);
             $('#template').val(data.template);
+            $('#template').select2();
             $('#ma_da').val(data.ma_da);
-            $("#buildinfo_store_name_x").select2().select2("val", data.buildinfo_store_name_x);
+            $('#ma_da').select2();
+            $('#buildinfo_store_name_x').val(data.buildinfo_store_name_x);
+            $('#buildinfo_store_name_x').select2();
             $('#package').val(data.package);
             $('#title_app').val(data.title_app);
             $('#buildinfo_link_policy_x').val(data.buildinfo_link_policy_x);
