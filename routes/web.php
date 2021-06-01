@@ -6,6 +6,7 @@ use App\Http\Controllers\Ga_devController;
 use App\Http\Controllers\GaController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\ProjectController;
+use App\Http\Controllers\RoleController;
 use App\Http\Controllers\TemplateController;
 use App\Http\Controllers\UserController;
 use App\Http\Middleware\CheckLogout;
@@ -45,6 +46,14 @@ Route::group(['prefix'=>'user'], function (){
     Route::post('/update',[UserController::class,'update'])->name('user.update');
     Route::get('/delete/{id}',[UserController::class,'delete'])->name('user.delete');
 });
+Route::group(['prefix'=>'role'], function (){
+    Route::get('/',[RoleController::class,'index'])->name('role.index');
+    Route::post('/create',[RoleController::class,'create'])->name('role.create');
+    Route::get('/edit/{id}',[RoleController::class,'edit'])->name('role.edit');
+    Route::post('/update',[RoleController::class,'update'])->name('role.update');
+    Route::get('/delete/{id}',[RoleController::class,'delete'])->name('role.delete');
+});
+
 
 Route::group(['prefix'=>'project','middleware'=>'CheckLogout'], function (){
     Route::get('/',[ProjectController::class,'index'])->name('project.index');
