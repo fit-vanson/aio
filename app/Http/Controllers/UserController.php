@@ -20,7 +20,7 @@ class UserController extends Controller
 {
 
     private $user;
-    private $role;
+    public $role;
     public function __construct(User $user, Role $role)
     {
         $this->user = $user;
@@ -34,29 +34,23 @@ class UserController extends Controller
      */
     public function index(Request $request)
     {
-
-        $roles = Role::all();
-        $users = User::latest()->get();
-//        $users = User::with('roles')->get();
-//        $users = User::with('roles');
+        $roles = $this->role->all();
+//        $users = User::latest()->get();
+        $users = User::with('roles')->latest();
 
 
         if ($request->ajax()) {
             $data = User::latest()->get();
 //            $data = User::with('roles')->latest();
+
             return Datatables::of($data)
                 ->addIndexColumn()
-                ->addColumn('roles', function( User $user){
-//                    return $user->roles->display_name;
-                    foreach ($user->roles as $a){
-                        return $a->display_name;
-                    }
-                })
+
                 ->addColumn('action', function($row){
 
-                    $btn = '<a href="javascript:void(0)" data-toggle="tooltip"  data-id="'.$row->id.'" data-original-title="Edit" class="edit btn btn-primary btn-sm editUser">Edit</a>';
 
-                    $btn = $btn.' <a href="javascript:void(0)" data-toggle="tooltip"  data-id="'.$row->id.'" data-original-title="Delete" class="btn btn-danger btn-sm deleteUser">Delete</a>';
+                    $btn = ' <a href="javascript:void(0)" onclick="editUser('.$row->id.')" class="btn btn-warning"><i class="ti-pencil-alt"></i></a>';
+                    $btn = $btn.' <a href="javascript:void(0)" data-toggle="tooltip"  data-id="'.$row->id.'" data-original-title="Delete" class="btn btn-danger deleteUser"><i class="ti-trash"></i></a>';
 
                     return $btn;
                 })
@@ -170,8 +164,6 @@ class UserController extends Controller
         if($error->fails()){
             return response()->json(['errors'=> $error->errors()->all()]);
         }
-
-
         try {
             DB::beginTransaction();
             if($request->password){
@@ -212,6 +204,5 @@ class UserController extends Controller
     {
         return parent::callAction($method, array_values($parameters));
     }
-
 
 }

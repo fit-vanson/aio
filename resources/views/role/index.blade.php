@@ -18,14 +18,14 @@
 
 @section('breadcrumb')
 <div class="col-sm-6">
-    <h4 class="page-title">Quản lý tài khoản</h4>
+    <h4 class="page-title">Quản lý Vai trò</h4>
 </div>
 <div class="col-sm-6">
     <div class="float-right">
-        <a class="btn btn-success" href="javascript:void(0)" id="createNewUser"> Create New User</a>
+        <a class="btn btn-success" href="javascript:void(0)" id="createNewRole">Thêm mới</a>
     </div>
 </div>
-@include('modals.user')
+@include('modals.role')
 @endsection
 @section('content')
 
@@ -39,8 +39,8 @@
                         <thead>
                         <tr>
                             <th>STT</th>
-                            <th>Tên tài khoản</th>
-                            <th>Email</th>
+                            <th>Tên Vai trò</th>
+                            <th>Mô tả vai trò</th>
                             <th width="20%px">Action</th>
                         </tr>
                         </thead>
@@ -91,34 +91,33 @@
 
             processing: true,
             serverSide: true,
-            ajax: "{{ route('user.index') }}",
+            ajax: "{{ route('role.index') }}",
             columns: [
                 {data: 'id', name: 'id'},
                 {data: 'name', name: 'name'},
-                {data: 'email', name: 'email'},
-
+                {data: 'display_name', name: 'display_name'},
                 {data: 'action', name: 'action', orderable: false, searchable: false},
             ]
         });
-        $('#createNewUser').click(function () {
-            $('#saveBtn').val("create-user");
-            $('#user_id').val('');
-            $('#userForm').trigger("reset");
-            $('#modelHeading').html("Thêm mới tài khoản");
+        $('#createNewRole').click(function () {
+            $('#saveBtn').val("create-role");
+            $('#role_id').val('');
+            $('#roleForm').trigger("reset");
+            $('#modelHeading').html("Thêm mới Vai trò");
             $('#ajaxModel').modal('show');
         });
-        $('#userForm').on('submit',function (event){
+        $('#roleForm').on('submit',function (event){
             event.preventDefault();
-            if($('#saveBtn').val() == 'create-user'){
+            if($('#saveBtn').val() == 'create-role'){
                 $.ajax({
-                    data: $('#userForm').serialize(),
-                    url: "{{ route('user.create') }}",
+                    data: $('#roleForm').serialize(),
+                    url: "{{ route('role.create') }}",
                     type: "POST",
                     dataType: 'json',
                     success: function (data) {
                         if(data.errors){
                             for( var count=0 ; count <data.errors.length; count++){
-                                $("#userForm").notify(
+                                $("#roleForm").notify(
                                     data.errors[count],"error",
                                     { position:"right" }
                                 );
@@ -126,23 +125,23 @@
                         }
                         if(data.success){
                             $.notify(data.success, "success");
-                            $('#userForm').trigger("reset");
+                            $('#roleForm').trigger("reset");
                             $('#ajaxModel').modal('hide');
                             table.draw();
                         }
                     },
                 });
             }
-            if($('#saveBtn').val() == 'edit-user'){
+            if($('#saveBtn').val() == 'edit-role'){
                 $.ajax({
-                    data: $('#userForm').serialize(),
-                    url: "{{ route('user.update') }}",
+                    data: $('#roleForm').serialize(),
+                    url: "{{ route('role.update') }}",
                     type: "post",
                     dataType: 'json',
                     success: function (data) {
                         if(data.errors){
                             for( var count=0 ; count <data.errors.length; count++){
-                                $("#userForm").notify(
+                                $("#roleForm").notify(
                                     data.errors[count],"error",
                                     { position:"right" }
                                 );
@@ -150,7 +149,7 @@
                         }
                         if(data.success){
                             $.notify(data.success, "success");
-                            $('#userForm').trigger("reset");
+                            $('#roleForm').trigger("reset");
                             $('#ajaxModel').modal('hide');
                             table.draw();
                         }
@@ -160,8 +159,8 @@
             }
 
         });
-        $(document).on('click','.deleteUser', function (data){
-            var user_id = $(this).data("id");
+        $(document).on('click','.deleteRole', function (data){
+            var role_id = $(this).data("id");
             swal({
                     title: "Bạn có chắc muốn xóa?",
                     text: "Your will not be able to recover this imaginary file!",
@@ -174,7 +173,7 @@
                 function(){
                     $.ajax({
                         type: "get",
-                        url: "{{ asset("user/delete") }}/" + user_id,
+                        url: "{{ asset("role/delete") }}/" + role_id,
                         success: function (data) {
                             table.draw();
                         },
@@ -190,31 +189,51 @@
 </script>
 
 <script>
-        function editUser(id) {
-            $.get('{{asset('user/edit')}}/'+id,function (data) {
-                $('#modelHeading').html("Edit User");
-                $('#saveBtn').val("edit-user");
+        function editRole(id) {
+            $.get('{{asset('role/edit')}}/'+id,function (data) {
+                $('#modelHeading').html("Chỉnh sửa vai trò");
+                $('#saveBtn').val("edit-role");
                 $('#ajaxModel').modal('show');
                 $('.modal').on('hidden.bs.modal', function (e) {
                     $('body').addClass('modal-open');
                 });
 
-                $('#user_id').val(data[0].id);
+                $('#role_id').val(data[0].id);
                 $('#name').val(data[0].name);
-                $('#email').val(data[0].email)
-                var roles = data[1];
-                var role = [];
-                $.each(roles, function(idx2,val2) {
+                $('#display_name').val(data[0].display_name)
+                console.log(data[1])
+
+                var permissions = data[1];
+                var permission = [];
+                $.each(permissions, function(idx2,val2) {
                     var str =  val2.id;
-                    role.push(str);
+                    permission.push(str);
                 });
-                $('#role_id').select2().val(role).trigger('change')
+                console.log(permission)
+                $('#permission_id_').val(permission).trigger('change')
+
+
+                $('.checkbox input:checked[name="c_n[]"]')
+                    .map(function () { return $(this).val(); }).get()
+
+
+
+
+
+
+
+
 
 
 
 
             })
         }
+    </script>
+    <script>
+        $('.checkbox_All').on('click',function (){
+           $(this).parents('.card').find('.checkbox_Child').prop('checked',$(this).prop('checked'));
+        });
     </script>
 @endsection
 
