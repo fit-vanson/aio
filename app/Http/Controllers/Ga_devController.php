@@ -110,8 +110,8 @@ class Ga_devController extends Controller
             return response()->json(['errors'=> $error->errors()->all()]);
         }
         $data = new Ga_dev();
-        $data['gmail'] = $request->gmail;
-        $data['mailrecovery'] = $request->mailrecovery;
+        $data['gmail'] = strtolower($request->gmail);
+        $data['mailrecovery'] = strtolower($request->mailrecovery);
         $data['vpn_iplogin'] = $request->vpn_iplogin;
         $data['note'] = $request->note;
         $allGadev = Ga_dev::latest('id')->get();
@@ -179,8 +179,8 @@ class Ga_devController extends Controller
             return response()->json(['errors'=> $error->errors()->all()]);
         }
         $data = Ga_dev::find($id);
-        $data->gmail = $request->gmail;
-        $data->mailrecovery = $request->mailrecovery;
+        $data->gmail = strtolower($request->gmail);
+        $data->mailrecovery = strtolower($request->mailrecovery);
         $data->vpn_iplogin= $request->vpn_iplogin;
         $data->note= $request->note;
         $data->save();
