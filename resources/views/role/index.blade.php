@@ -41,7 +41,7 @@
                             <th>STT</th>
                             <th>Tên Vai trò</th>
                             <th>Mô tả vai trò</th>
-                            <th width="20%px">Action</th>
+                            <th width="10px">Action</th>
                         </tr>
                         </thead>
                         <tbody>
@@ -77,6 +77,7 @@
 <script>
     $(".select2").select2({
         placeholder: "Vui lòng chọn",
+        tags:"true"
     });
 </script>
 
@@ -105,6 +106,7 @@
             $('#roleForm').trigger("reset");
             $('#modelHeading').html("Thêm mới Vai trò");
             $('#ajaxModel').modal('show');
+            $(".select2").select2({});
         });
         $('#roleForm').on('submit',function (event){
             event.preventDefault();
@@ -155,9 +157,7 @@
                         }
                     },
                 });
-
             }
-
         });
         $(document).on('click','.deleteRole', function (data){
             var role_id = $(this).data("id");
@@ -197,11 +197,9 @@
                 $('.modal').on('hidden.bs.modal', function (e) {
                     $('body').addClass('modal-open');
                 });
-
                 $('#role_id').val(data[0].id);
                 $('#name').val(data[0].name);
                 $('#display_name').val(data[0].display_name)
-                console.log(data[1])
 
                 var permissions = data[1];
                 var permission = [];
@@ -209,13 +207,7 @@
                     var str =  val2.id;
                     permission.push(str);
                 });
-                console.log(permission)
-                $('#permission_id_').val(permission).trigger('change')
-
-
-                $('.checkbox input:checked[name="c_n[]"]')
-                    .map(function () { return $(this).val(); }).get()
-
+                $('#permission_id').select2().val(permission).trigger('change')
 
 
 
@@ -229,11 +221,6 @@
 
             })
         }
-    </script>
-    <script>
-        $('.checkbox_All').on('click',function (){
-           $(this).parents('.card').find('.checkbox_Child').prop('checked',$(this).prop('checked'));
-        });
     </script>
 @endsection
 

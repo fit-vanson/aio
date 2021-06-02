@@ -2,17 +2,12 @@
 
 namespace App\Http\Controllers;
 
-use App\Http\Requests\AddUserRequest;
+
 use App\Models\Role;
 use App\Models\User;
-use App\Models\UserModel;
-use Illuminate\Database\Eloquent\Model;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Log;
-use Illuminate\Support\Facades\Redirect;
-use Illuminate\Support\Facades\Session;
 use Illuminate\Support\Facades\Validator;
 use Yajra\DataTables\Facades\DataTables;
 
@@ -35,10 +30,8 @@ class UserController extends Controller
     public function index(Request $request)
     {
         $roles = $this->role->all();
-//        $users = User::latest()->get();
+
         $users = User::with('roles')->latest();
-
-
         if ($request->ajax()) {
             $data = User::latest()->get();
 //            $data = User::with('roles')->latest();
@@ -48,8 +41,7 @@ class UserController extends Controller
 
                 ->addColumn('action', function($row){
 
-
-                    $btn = ' <a href="javascript:void(0)" onclick="editUser('.$row->id.')" class="btn btn-warning"><i class="ti-pencil-alt"></i></a>';
+                    $btn = '<a href="javascript:void(0)" onclick="editUser('.$row->id.')" class="btn btn-warning"><i class="ti-pencil-alt"></i></a>';
                     $btn = $btn.' <a href="javascript:void(0)" data-toggle="tooltip"  data-id="'.$row->id.'" data-original-title="Delete" class="btn btn-danger deleteUser"><i class="ti-trash"></i></a>';
 
                     return $btn;
@@ -76,7 +68,7 @@ class UserController extends Controller
             'password'=>'required'
         ];
         $message = [
-            'name.unique'=>'Tên người dùng đã tồn tại',
+            'namea.unique'=>'Tên người dùng đã tồn tại',
             'email.unique'=>'Email đã tồn tại',
             'password.required' => 'Mật khẩu không để trống.'
         ];
@@ -181,7 +173,7 @@ class UserController extends Controller
             $user = $this->user->find($id);
             $user->roles()->sync($roleIds);
             DB::commit();
-            return response()->json(['success'=>'Thêm mới thành công']);
+            return response()->json(['success'=>'Cập nhật thành công']);
         } catch (\Exception $exception) {
             DB::rollBack();
             Log::error('Message :' . $exception->getMessage() . '--- Line: ' . $exception->getLine());

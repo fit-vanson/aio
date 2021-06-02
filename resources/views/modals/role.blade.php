@@ -1,6 +1,6 @@
 
 <div class="modal fade" id="ajaxModel" aria-hidden="true">
-    <div class="modal-dialog modal-xl">
+    <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header">
                 <h4 class="modal-title" id="modelHeading"></h4>
@@ -24,35 +24,16 @@
                     </div>
 
 
-                    @foreach($permissionParent as $per)
-
-                    <div class="form-group card border-primary mb3 col-md-12 checkbox">
-                        <div class="card-header">
-                            <laber>
-                                <input class="checkbox_All" type="checkbox" value="{{$per->id}}">
-                            </laber> {{$per->display_name}}
-                        </div>
-                        <div class="row">
-                            @foreach($per->permissionChild as $item)
-                            <div class="card-body text-primary col-md-3">
-                                <h6 class="card-title">
-                                    <laber>
-                                        <input class="checkbox_Child" id="permission_id_{{$item->id}}"
-                                               {{$permissionOfRole->contains('id',$item->id) ?  'checked' : ''}}
-                                               name="permission_id[]" type="checkbox" value="{{$item->id}}">
-                                    </laber> {{$item->display_name}}
-                                </h6>
-                            </div>
-                            @endforeach
+                    <div class="form-group">
+                        <label class="col-sm-5 control-label">Vai trò</label>
+                        <div class="col-sm-12">
+                            <select class="select2 col-sm-12" name="permission_id[]" id="permission_id" multiple>
+                                @foreach($permissions as $permission)
+                                    <option value="{{$permission->id}}">{{$permission->name}}</option>
+                                @endforeach
+                            </select>
                         </div>
                     </div>
-                    @endforeach
-
-
-
-
-
-
                     <div class="col-sm-offset-2 col-sm-10">
                         <button type="submit" class="btn btn-primary" id="saveBtn" value="create">Save changes
                         </button>

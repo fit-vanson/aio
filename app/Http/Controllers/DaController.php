@@ -101,7 +101,7 @@ class DaController extends Controller
     {
         $id = $request->da_id;
         $rules = [
-            'ma_da' =>'unique:ngocphandang_da,ma_da,'.$id.',ma_da',
+            'ma_da' =>'unique:ngocphandang_da,ma_da,'.$id.',id',
         ];
         $message = [
             'ma_da.unique'=>'Tên Dự án đã tồn tại',

@@ -4,23 +4,22 @@ namespace App\Http\Controllers;
 
 use App\Models\Permission;
 use App\Models\Role;
-use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Validator;
+use Illuminate\Support\Str;
 use Yajra\DataTables\Facades\DataTables;
 
-class RoleController extends Controller
+class PermissionController extends Controller
 {
 
-    private $permision;
-    public $role;
 
-
-    public function __construct(Permission $permision, Role $role)
+//    private $role;
+    private $permission;
+    public function __construct(Permission $permission, Role $role)
     {
-        $this->permision = $permision;
+        $this->permission = $permission;
         $this->role = $role;
     }
 
@@ -32,16 +31,14 @@ class RoleController extends Controller
     public function index(Request $request)
     {
 
-//        $permisssions = Permission::all();
-        $permissions = $this->permision->all();
-        $role = Role::latest('id')->get();
+        $permisions = Permission::latest()->get();
         if ($request->ajax()) {
-            $data = Role::latest()->get();
+            $data = Permission::latest()->get();
             return Datatables::of($data)
                 ->addIndexColumn()
                 ->addColumn('action', function($row){
-                    $btn = ' <a href="javascript:void(0)" onclick="editRole('.$row->id.')" class="btn btn-warning"><i class="ti-pencil-alt"></i></a>';
-                    $btn = $btn.' <a href="javascript:void(0)" data-toggle="tooltip"  data-id="'.$row->id.'" data-original-title="Delete" class="btn btn-danger deleteRole"><i class="ti-trash"></i></a>';
+                    $btn = ' <a href="javascript:void(0)" onclick="editPer('.$row->id.')" class="btn btn-warning"><i class="ti-pencil-alt"></i></a>';
+                    $btn = $btn.' <a href="javascript:void(0)" data-toggle="tooltip"  data-id="'.$row->id.'" data-original-title="Delete" class="btn btn-danger deletePer"><i class="ti-trash"></i></a>';
 
                     return $btn;
                 })
@@ -50,7 +47,7 @@ class RoleController extends Controller
                 ->make(true);
         }
 
-        return view('role.index',compact(['role','permissions']));
+        return view('permission.index',compact(['permisions']));
     }
 
     /**
@@ -60,34 +57,14 @@ class RoleController extends Controller
      */
     public function create(Request  $request)
     {
-
-
-
-        $rules = [
-            'name' =>'required|unique:roles,name,',
-        ];
-        $message = [
-            'name.unique'=>'Tên vai trò đã tồn tại',
-            'name.required'=>'Tên vai trò không để trống',
-        ];
-
-        $error = Validator::make($request->all(),$rules, $message );
-
-        if($error->fails()){
-            return response()->json(['errors'=> $error->errors()->all()]);
-        }
-
-            $role = $this->role->create([
-                'name' => $request->name,
-                'display_name'=> $request->display_name,
+        foreach ($request->module_child as $item){
+            $permission = Permission::create([
+                'name'=> $item.' '.$request->module_parent,
+                'display_name'=>$item.' '.$request->module_parent,
+                'key_code' => str_replace('-','_',Str::slug($item.'_'.$request->module_parent)),
             ]);
-            $permissionIds = $request->permission_id;
-
-            $role->permissions()->attach($permissionIds);
-
-            return response()->json(['success'=>'Thêm mới thành công']);
-
-
+        }
+        return response()->json(['success'=>'Thêm mới thành công']);
     }
 
     /**
@@ -120,10 +97,9 @@ class RoleController extends Controller
      */
     public function edit($id)
     {
-        $role = Role::find($id);
-        $permissionOfRole = $role->permissions;
+        $role = Permission::find($id);
 
-        return response()->json([$role,$permissionOfRole]);
+        return response()->json([$role]);
     }
 
     /**
@@ -135,10 +111,9 @@ class RoleController extends Controller
      */
     public function update(Request $request)
     {
-
-        $id = $request->role_id;
+        $id = $request->permission_id;
         $rules = [
-            'name' =>'required|unique:roles,name,'.$id.',id',
+            'name' =>'required|unique:permissions,name,'.$id.',id',
             'display_name' =>'required',
 
         ];
@@ -152,15 +127,12 @@ class RoleController extends Controller
         if($error->fails()){
             return response()->json(['errors'=> $error->errors()->all()]);
         }
-
-        $this->role->find($id)->update([
-            'name' => $request->name,
-            'display_name'=> $request->display_name,
-        ]);
-        $permissionIds = $request->permission_id;
-        $role = $this->role->find($id);
-        $role->permissions()->sync($permissionIds);
-        return response()->json(['success'=>'Update thành công']);
+            $this->permission->find($id)->update([
+                'name' => $request->name,
+                'display_name'=> $request->name,
+                'key_code' =>str_replace('-','_',Str::slug($request->name))
+            ]);
+            return response()->json(['success'=>'Cập nhật thành công']);
 
     }
 
@@ -172,8 +144,8 @@ class RoleController extends Controller
      */
     public function delete($id)
     {
-        Role::find($id)->delete();
-        return response()->json(['success'=>'Xóa người dùng.']);
+        Permission::find($id)->delete();
+        return response()->json(['success'=>'Xóa thành công.']);
     }
 
     public function callAction($method, $parameters)

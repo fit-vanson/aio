@@ -33,10 +33,10 @@
                         <label class="col-sm-5 control-label">Vai trò</label>
                         <div class="col-sm-12">
                         <select class="select2 col-sm-12" name="role_id[]" id="role_id" multiple>
-                            @foreach($roles as $ro)
-                                <option
-                                    value="{{$ro->id}}">{{$ro->name}}</option>
-                            @endforeach
+                                @foreach($roles as $ro)
+                                    <option
+                                        value="{{$ro->id}}">{{$ro->name}}</option>
+                                @endforeach
                         </select>
                         </div>
 
