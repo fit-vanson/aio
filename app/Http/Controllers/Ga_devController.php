@@ -164,6 +164,7 @@ class Ga_devController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function update(Request $request)
+
     {
         $id = $request->gadev_id;
         $rules = [
