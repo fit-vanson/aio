@@ -34,6 +34,14 @@ class DevController extends Controller
 
                     return '<img width="60px" height="60px" src='.$data->info_logo.'>';
                 })
+
+                ->editColumn('info_phone', function($data){
+                    if($data->info_andress == null ){
+                        return $data->info_phone;
+                    }
+                    return '<i style="color:green;" class="ti-check-box h5"></i>'. $data->info_phone;
+                })
+
                 ->editColumn('gmail_gadev_chinh', function($data){
                     $gmail = DB::table('ngocphandang_dev')
                         ->join('ngocphandang_gadev','ngocphandang_gadev.id','=','ngocphandang_dev.gmail_gadev_chinh')
@@ -79,10 +87,9 @@ class DevController extends Controller
                     } else {
                         $info_policydev = "<i style='color:red;' class='ti-close h5'></i>";
                     }
-
                     return $info_url .' '. $info_web.' '. $info_fanpage.' '. $info_policydev;
                 })
-                ->rawColumns(['action','gmail_gadev_chinh','info_logo','status','link'])
+                ->rawColumns(['action','gmail_gadev_chinh','info_logo','status','link','info_phone'])
                 ->make(true);
         }
         return view('dev.index',compact(['dev','ga_dev']));
@@ -112,6 +119,7 @@ class DevController extends Controller
         $data['gmail_gadev_phu_2'] = $request->gmail_gadev_phu_2;
         $data['info_phone'] = $request->info_phone;
         $data['info_andress'] = $request->info_andress;
+        $data['note'] = $request->note;
         $data['info_url'] = $request->info_url;
         $data['info_logo'] = $request->info_logo;
         $data['info_banner'] = $request->info_banner;
@@ -186,6 +194,7 @@ class DevController extends Controller
         $data->gmail_gadev_phu_2 = $request->gmail_gadev_phu_2;
         $data->info_phone = $request->info_phone;
         $data->info_andress= $request->info_andress;
+        $data->note= $request->note;
         $data->info_url = $request->info_url;
         $data->info_logo = $request->info_logo;
         $data->info_banner = $request->info_banner;

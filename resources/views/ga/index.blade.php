@@ -40,7 +40,6 @@
                             <th>Ga name</th>
                             <th>Gmail </th>
                             <th>Điện thoại</th>
-                            <th>Địa chỉ</th>
                             <th>Phương thức thanh tóan</th>
                             <th>Trạng thái</th>
                             <th width="5%">Action</th>
@@ -93,7 +92,6 @@
                     {data: 'ga_name'},
                     {data: 'gmail_gadev_chinh'},
                     {data: 'info_phone'},
-                    {data: 'info_andress'},
                     {data: 'payment'},
                     {
                         "data": "status",

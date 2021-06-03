@@ -232,6 +232,7 @@
                 $('#info_fanpage').val(data.info_fanpage);
                 $('#info_web').val(data.info_web);
                 $('#startus').val(data.status);
+                $('#note').val(data.note);
 
                 $('#modelHeading').html("Edit");
                 $('#saveBtn').val("edit-dev");

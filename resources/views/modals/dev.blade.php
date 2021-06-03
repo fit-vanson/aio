@@ -65,17 +65,7 @@
                                 </div>
                             </div>
                         </div>
-                        <div data-repeater-item="" class="row">
-                            <div class="form-group col-lg-6 ">
-                                <label for="name">Số điện thoại</label>
-                                <input type="text" id="info_phone" name="info_phone" class="form-control">
-                            </div>
 
-                            <div class="form-group col-lg-6 ">
-                                <label for="name">Địa chỉ</label>
-                                <input type="text" id="info_andress" name="info_andress" class="form-control">
-                            </div>
-                        </div>
                         <div data-repeater-item="" class="row">
                             <div class="form-group col-lg-6">
                                 <label for="name">Đường dẫn</label>
@@ -106,11 +96,16 @@
                             </div>
 
                             <div class="form-group col-lg-6 ">
-                                <label for="name">Policy</label>
+                                <label for="name">Link</label>
                                 <input type="url" id="info_web" name="info_web" class="form-control">
                             </div>
                         </div>
                         <div data-repeater-item="" class="row">
+                            <div class="form-group col-lg-6 ">
+                                <label for="name">Số điện thoại</label>
+                                <input type="text" id="info_phone" name="info_phone" class="form-control">
+                            </div>
+
                             <div class="form-group col-lg-6">
                                 <label for="name">Trạng thái </label>
                                 <div class="inner row">
@@ -123,6 +118,17 @@
                                         </select>
                                     </div>
                                 </div>
+                            </div>
+                        </div>
+
+                        <div data-repeater-item="" class="row">
+                            <div class="form-group col-lg-6 ">
+                                <label for="name">Địa chỉ</label>
+                                <textarea id="info_andress" name="info_andress" class="form-control" rows="4" ></textarea>
+                            </div>
+                            <div class="form-group col-lg-6 ">
+                                <label for="name">Ghi chú</label>
+                                <textarea id="note" name="note" class="form-control" rows="4" ></textarea>
                             </div>
                         </div>
 

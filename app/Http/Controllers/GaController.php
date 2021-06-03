@@ -49,7 +49,14 @@ class GaController extends Controller
                     }
                     return $gmail.$gmail1.$gmail2;
                 })
-                ->rawColumns(['action','gmail_gadev_chinh'])
+                ->editColumn('info_phone', function($data){
+                    if($data->info_andress == null ){
+                        return $data->info_phone;
+                    }
+                    return '<i style="color:green;" class="ti-check-box h5"></i>'. $data->info_phone;
+                })
+
+                ->rawColumns(['action','gmail_gadev_chinh','info_phone'])
                 ->make(true);
         }
         return view('ga.index',compact(['ga']));
