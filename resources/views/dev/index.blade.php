@@ -41,7 +41,7 @@
                             <th>Store name</th>
                             <th>Gmail </th>
                             <th>Điện thoại</th>
-                            <th>Địa chỉ</th>
+                            <th>Link | Web | Fanpage |Policy</th>
                             <th>Trạng thái</th>
                             <th width="5%">Action</th>
                         </tr>
@@ -94,7 +94,7 @@
                     {data: 'store_name'},
                     {data: 'gmail_gadev_chinh'},
                     {data: 'info_phone'},
-                    {data: 'info_andress'},
+                    {data: 'link'},
                     {
                         "data": "status",
                         "render" : function(data)

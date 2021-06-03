@@ -58,7 +58,31 @@ class DevController extends Controller
                     }
                     return $gmail.$gmail1.$gmail2;
                 })
-                ->rawColumns(['action','gmail_gadev_chinh','info_logo','status'])
+                ->addColumn('link', function($row){
+                    if($row['info_url'] !== Null){
+                        $info_url = '<a  target= _blank href="'.$row["info_url"].'" <i style="color:green;" class="ti-check-box h5"></i></a>';
+                    } else {
+                        $info_url = "<i style='color:red;' class='ti-close h5'></i>";
+                    }
+                    if($row['info_web'] !== Null){
+                        $info_web = '<a  target= _blank href="'.$row["info_web"].'" <i style="color:green;" class="ti-check-box h5"></i></a>';
+                    } else {
+                        $info_web = "<i style='color:red;' class='ti-close h5'></i>";
+                    }
+                    if($row['info_fanpage'] !== Null){
+                        $info_fanpage = '<a  target= _blank href="'.$row["info_fanpage"].'" <i style="color:green;" class="ti-check-box h5"></i></a>';
+                    } else {
+                        $info_fanpage= "<i style='color:red;' class='ti-close h5'></i>";
+                    }
+                    if($row['info_policydev'] !== Null){
+                        $info_policydev = '<a  target= _blank href="'.$row["info_policydev"].'" <i style="color:green;" class="ti-check-box h5"></i></a>';
+                    } else {
+                        $info_policydev = "<i style='color:red;' class='ti-close h5'></i>";
+                    }
+
+                    return $info_url .' '. $info_web.' '. $info_fanpage.' '. $info_policydev;
+                })
+                ->rawColumns(['action','gmail_gadev_chinh','info_logo','status','link'])
                 ->make(true);
         }
         return view('dev.index',compact(['dev','ga_dev']));
