@@ -64,12 +64,33 @@ return [
         'phan_quyen-update'  =>'edit_phan_quyen',
         'phan_quyen-delete'  =>'delete_phan_quyen',
 
+        'khosim-index'  =>'index_khosim',
+        'khosim-show'  =>'show_khosim',
+        'khosim-add'  =>'add_khosim',
+        'khosim-edit'  =>'edit_khosim',
+        'khosim-update'  =>'edit_khosim',
+        'khosim-delete'  =>'delete_khosim',
+
+        'cocsim-index'  =>'index_cocsim',
+        'cocsim-show'  =>'show_cocsim',
+        'cocsim-add'  =>'add_cocsim',
+        'cocsim-edit'  =>'edit_cocsim',
+        'cocsim-update'  =>'edit_cocsim',
+        'cocsim-delete'  =>'delete_cocsim',
+
+        'sms-index'  =>'index_sms',
+        'sms-show'  =>'show_sms',
+        'sms-add'  =>'add_sms',
+        'sms-edit'  =>'edit_sms',
+        'sms-update'  =>'edit_sms',
+        'sms-delete'  =>'delete_sms',
+
     ],
 
 
 
     'table-module' => [
-        'Dự án','Template','Project','Gadev','Dev','Ga','User','Vai trò', 'Phân quyền'
+        'Dự án','Template','Project','Gadev','Dev','Ga','User','Vai trò', 'Phân quyền','khosim','cocsim','sms'
     ],
     'module-child' =>[
         'Index','Show','Add','Edit','Delete'

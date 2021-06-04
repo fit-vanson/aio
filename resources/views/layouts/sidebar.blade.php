@@ -38,16 +38,30 @@
                                 </ul>
                             </li>
                             <li>
-                                <a href="javascript:void(0);" class="waves-effect"><i class="ti-package"></i> <span> Quản trị phân quyền <span class="float-right menu-arrow"><i class="mdi mdi-chevron-right"></i></span> </span> </a>
+                                <a href="javascript:void(0);" class="waves-effect"><i class="ti-archive"></i> <span> Quản lý Sim <span class="float-right menu-arrow"><i class="mdi mdi-chevron-right"></i></span> </span> </a>
+                                <ul class="submenu">
+{{--                                    @can('user-index')--}}
+                                        <li><a href="{{route('khosim.index')}}">Quản lý Kho sim</a></li>
+{{--                                    @endcan--}}
+{{--                                    @can('vai_tro-index')--}}
+                                        <li><a href="{{route('cocsim.index')}}">Quản lý Cọc Sim</a></li>
+{{--                                    @endcan--}}
+{{--                                    @can('phan_quyen-index')--}}
+                                        <li><a href="{{route('sms.index')}}">Quản lý SMS</a></li>
+{{--                                    @endcan--}}
+                                </ul>
+                            </li>
+                            <li>
+                                <a href="javascript:void(0);" class="waves-effect"><i class="ti-archive"></i> <span> Quản trị phân quyền <span class="float-right menu-arrow"><i class="mdi mdi-chevron-right"></i></span> </span> </a>
                                 <ul class="submenu">
                                     @can('user-index')
-                                    <li><a href="{{route('user.index')}}">Quản lý User</a></li>
+                                    <li><a href="{{route('user.index')}}">User</a></li>
                                     @endcan
                                     @can('vai_tro-index')
-                                    <li><a href="{{route('role.index')}}">Quản lý Vai trò</a></li>
+                                    <li><a href="{{route('role.index')}}">Vai trò</a></li>
                                     @endcan
                                     @can('phan_quyen-index')
-                                    <li><a href="{{route('permission.index')}}">Quản lý Phân quyền</a></li>
+                                    <li><a href="{{route('permission.index')}}">Phân quyền</a></li>
                                     @endcan
                                 </ul>
                             </li>

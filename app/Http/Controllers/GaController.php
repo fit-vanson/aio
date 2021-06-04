@@ -39,21 +39,21 @@ class GaController extends Controller
                         ->where('ngocphandang_gadev.id',$data->gmail_gadev_phu_2)
                         ->first();
                     if($gmail != null){
-                        $gmail = '<span>'.$gmail->gmail.'</span>';
+                        $gmail = '<span>'.$gmail->gmail.' - <span style="font-style: italic"> '.$gmail->vpn_iplogin.'</span></span>';
                     }
                     if($gmail1 != null){
-                        $gmail1 = '<p style="margin: auto" class="text-muted ">'.$gmail1->gmail.'</p>';
+                        $gmail1 = '<p style="margin: auto" class="text-muted ">'.$gmail1->gmail.' - <span style="font-style: italic"> '.$gmail1->vpn_iplogin.'</span></p>';
                     }
                     if($gmail2 != null){
-                        $gmail2 = '<p style="margin: auto"class="text-muted ">'.$gmail2->gmail.'</p>';
+                        $gmail2 = '<p style="margin: auto"class="text-muted ">'.$gmail2->gmail.' - <span style="font-style: italic"> '.$gmail2->vpn_iplogin.'</span></p>';
                     }
                     return $gmail.$gmail1.$gmail2;
                 })
                 ->editColumn('info_phone', function($data){
                     if($data->info_andress == null ){
-                        return $data->info_phone;
+                        return '<span style="color: red;font-size: medium">'.$data->info_phone.'</span>';
                     }
-                    return '<i style="color:green;" class="ti-check-box h5"></i>'. $data->info_phone;
+                    return '<span style="color: green">'.$data->info_phone.'</span>';
                 })
 
                 ->rawColumns(['action','gmail_gadev_chinh','info_phone'])

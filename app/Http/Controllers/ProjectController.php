@@ -4,15 +4,20 @@ namespace App\Http\Controllers;
 
 use App\Models\Da;
 use App\Models\Dev;
-use App\Models\Ga_dev;
+
 use App\Models\ProjectModel;
 use App\Models\Template;
-use App\Models\UserModel;
-use Illuminate\Database\Eloquent\Model;
+
+use DOMDocument;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Validator;
+
+use voku\helper\HtmlDomParser;
+use voku\helper\SimpleHtmlDomNode;
 use Yajra\DataTables\Facades\DataTables;
+use function simplehtmldom_1_5\file_get_html;
+
 
 class ProjectController extends Controller
 {
@@ -165,8 +170,6 @@ class ProjectController extends Controller
      */
     public function edit($id)
     {
-
-//        $project = ProjectModel::find($id);
         $project = ProjectModel::where('projectid',$id)->first();
         return response()->json($project);
     }
@@ -180,8 +183,6 @@ class ProjectController extends Controller
      */
     public function update(Request $request)
     {
-
-
         $id = $request->project_id;
         $rules = [
             'projectname' =>'unique:ngocphandang_project,projectname,'.$id.',projectid',
@@ -232,6 +233,45 @@ class ProjectController extends Controller
         $data->buildinfo_link_youtube_x = $request->buildinfo_link_youtube_x;
         $data->buildinfo_api_key_x = $request->buildinfo_api_key_x;
         $data->status = $request->status;
+
+
+        if(isset($data->package)){
+            $url = 'https://play.google.com/store/apps/details?id='.$data->package.'&hl=en';
+            $curl = curl_init($url);
+            curl_setopt($curl, CURLOPT_NOBODY, true);
+            $result = curl_exec($curl);
+            if ($result !== false)
+            {
+                $statusCode = curl_getinfo($curl, CURLINFO_HTTP_CODE);
+                if ($statusCode == 404)
+                {
+                    return response()->json(['success'=>'Cập nhật thành công']);
+                }
+                else
+                {
+                    $html  = HtmlDomParser::file_get_html($url)->outerHtml();
+                    $document = new \voku\helper\HtmlDomParser($html);
+                    $dom = [];
+                    foreach ($this->find_contains($document, 'div .IQ1z0d span .htlgb') as $child_dom) {
+                        $dom[] = $child_dom->text();
+                    }
+                    $data->bot_verstr = $dom[3];
+                    $data->bot_update = $dom[0];
+                    $data->bot_install = $dom[2];
+                    $data->bot_storename = $dom[8];
+                }
+            }
+            else
+            {
+                return response()->json(['success'=>'Cập nhật thành công']);
+            }
+
+
+        }
+
+
+
+
         $data->save();
         return response()->json(['success'=>'Cập nhật thành công']);
     }
@@ -253,4 +293,52 @@ class ProjectController extends Controller
 //        $this->AuthLogin();
         return parent::callAction($method, array_values($parameters));
     }
+
+
+    function find_contains(
+        \voku\helper\HtmlDomParser $dom,
+        string $selector,
+        string $keyword = null
+    ) {
+        // init
+        $elements = new SimpleHtmlDomNode();
+
+        foreach ($dom->find($selector) as $e) {
+            if (strpos($e->innerText(), $keyword) !== false) {
+                $elements[] = $e;
+            }
+        }
+
+        return $elements;
+    }
+
+// -----------------------------------------------------------------------------
+
+
+
+
+    public function getList(){
+        $url = 'https://play.google.com/store/apps/details?id=com.netringtones.astrohitspopular';
+        $html  = HtmlDomParser::file_get_html($url)->text();
+        $document = new \voku\helper\HtmlDomParser($html);
+        dd($document);
+        $dom = [];
+        foreach ($this->find_contains($document, '.KZnDLd .r2Osbf ') as $child_dom) {
+               $dom[] =  $child_dom->html() . "\n";
+        }
+        dd ($dom);
+    }
+
+
+
+
+
+
+
+
+
+
+
+
+
 }

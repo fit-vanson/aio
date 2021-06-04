@@ -3,47 +3,47 @@
 namespace App\Policies;
 
 use App\Models\User;
+use App\Models\cocsim;
 use Illuminate\Auth\Access\HandlesAuthorization;
 use Illuminate\Auth\Access\Response;
-use Illuminate\Support\Facades\Gate;
 
-class UserPolicy
+class CocsimPolicy
 {
     use HandlesAuthorization;
 
     public function index(User $user)
     {
-        return $user->checkPermissionAccess(config('permissions.access.user-index'));
+        return $user->checkPermissionAccess(config('permissions.access.cocsim-index'));
     }
 
 
     public function show(User $user)
     {
-        return $user->checkPermissionAccess(config('permissions.access.user-show'));
+        return $user->checkPermissionAccess(config('permissions.access.cocsim-show'));
     }
 
 
     public function add(User $user)
     {
-        return $user->checkPermissionAccess(config('permissions.access.user-add'));
+        return $user->checkPermissionAccess(config('permissions.access.cocsim-add'));
     }
 
 
     public function edit(User $user)
     {
-        return $user->checkPermissionAccess(config('permissions.access.user-edit'))
+        return $user->checkPermissionAccess(config('permissions.access.cocsim-edit'))
             ? Response::allow()
             : Response::deny('Tài khoản không có quyền chỉnh sửa.');
     }
 
     public function update(User $user)
     {
-        return $user->checkPermissionAccess(config('permissions.access.user-update'));
+        return $user->checkPermissionAccess(config('permissions.access.cocsim-update'));
     }
 
     public function delete(User $user)
     {
-        return $user->checkPermissionAccess(config('permissions.access.user-delete'));
+        return $user->checkPermissionAccess(config('permissions.access.cocsim-delete'));
     }
 
 

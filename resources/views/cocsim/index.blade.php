@@ -22,12 +22,12 @@
 </div>
 <div class="col-sm-6">
     <div class="float-right">
-        @can('user-add')
-        <a class="btn btn-success" href="javascript:void(0)" id="createNewUser"> Create New User</a>
+        @can('cocsim-add')
+        <a class="btn btn-success" href="javascript:void(0)" id="createNewCocsim"> Thêm mới</a>
         @endcan
     </div>
 </div>
-@include('modals.user')
+@include('modals.cocsim')
 @endsection
 @section('content')
 
@@ -41,9 +41,10 @@
                         <thead>
                         <tr>
                             <th>STT</th>
-                            <th>Tên tài khoản</th>
-                            <th>Email</th>
-                            <th width="20%px">Action</th>
+                            <th>Tên cọc sim</th>
+                            <th>Time</th>
+                            <th>Ghi chú</th>
+                            <th width="20px">Action</th>
                         </tr>
                         </thead>
                         <tbody>
@@ -55,6 +56,18 @@
     </div> <!-- end row -->
 @endsection
 @section('script')
+    <script src="plugins/bootstrap-colorpicker/js/bootstrap-colorpicker.min.js"></script>
+    <script src="plugins/bootstrap-datepicker/js/bootstrap-datepicker.js"></script>
+    <script src="plugins/select2/js/select2.min.js"></script>
+    <script src="plugins/bootstrap-maxlength/bootstrap-maxlength.min.js"></script>
+    <script src="plugins/bootstrap-filestyle/js/bootstrap-filestyle.min.js"></script>
+    <script src="plugins/bootstrap-touchspin/js/jquery.bootstrap-touchspin.min.js"></script>
+    <!-- Plugins Init js -->
+    <script src="assets/pages/form-advanced.js"></script>
+
+
+
+
 
 <!-- Required datatable js -->
 <script src="plugins/datatables/jquery.dataTables.min.js"></script>
@@ -90,37 +103,44 @@
             }
         });
         var table = $('.data-table').DataTable({
+            lengthMenu: [[10, 25, 50, -1], [10, 25, 50, "All"]],
 
             processing: true,
             serverSide: true,
-            ajax: "{{ route('user.index') }}",
+            ajax: "{{ route('cocsim.index') }}",
             columns: [
-                {data: 'id', name: 'id'},
-                {data: 'name', name: 'name'},
-                {data: 'email', name: 'email'},
+                { "data": null,"sortable": true,
+                    render: function (data, type, row, meta) {
+                        return meta.row + meta.settings._iDisplayStart + 1;
+                    }
+                },
+
+                {data: 'cocsim', name: 'cocsim'},
+                {data: 'time', name: 'time'},
+                {data: 'note', name: 'note'},
 
                 {data: 'action', name: 'action', orderable: false, searchable: false},
             ]
         });
-        $('#createNewUser').click(function () {
-            $('#saveBtn').val("create-user");
-            $('#user_id').val('');
-            $('#userForm').trigger("reset");
-            $('#modelHeading').html("Thêm mới tài khoản");
+        $('#createNewCocsim').click(function () {
+            $('#saveBtn').val("create-cocsim");
+            $('#id').val('');
+            $('#cocsimForm').trigger("reset");
+            $('#modelHeading').html("Thêm mới");
             $('#ajaxModel').modal('show');
         });
-        $('#userForm').on('submit',function (event){
+        $('#cocsimForm').on('submit',function (event){
             event.preventDefault();
-            if($('#saveBtn').val() == 'create-user'){
+            if($('#saveBtn').val() == 'create-cocsim'){
                 $.ajax({
-                    data: $('#userForm').serialize(),
-                    url: "{{ route('user.create') }}",
+                    data: $('#cocsimForm').serialize(),
+                    url: "{{ route('cocsim.create') }}",
                     type: "POST",
                     dataType: 'json',
                     success: function (data) {
                         if(data.errors){
                             for( var count=0 ; count <data.errors.length; count++){
-                                $("#userForm").notify(
+                                $("#cocsimForm").notify(
                                     data.errors[count],"error",
                                     { position:"right" }
                                 );
@@ -128,23 +148,23 @@
                         }
                         if(data.success){
                             $.notify(data.success, "success");
-                            $('#userForm').trigger("reset");
+                            $('#cocsimForm').trigger("reset");
                             $('#ajaxModel').modal('hide');
                             table.draw();
                         }
                     },
                 });
             }
-            if($('#saveBtn').val() == 'edit-user'){
+            if($('#saveBtn').val() == 'edit-cocsim'){
                 $.ajax({
-                    data: $('#userForm').serialize(),
-                    url: "{{ route('user.update') }}",
+                    data: $('#cocsimForm').serialize(),
+                    url: "{{ route('cocsim.update') }}",
                     type: "post",
                     dataType: 'json',
                     success: function (data) {
                         if(data.errors){
                             for( var count=0 ; count <data.errors.length; count++){
-                                $("#userForm").notify(
+                                $("#cocsimForm").notify(
                                     data.errors[count],"error",
                                     { position:"right" }
                                 );
@@ -152,7 +172,7 @@
                         }
                         if(data.success){
                             $.notify(data.success, "success");
-                            $('#userForm').trigger("reset");
+                            $('#cocsimForm').trigger("reset");
                             $('#ajaxModel').modal('hide');
                             table.draw();
                         }
@@ -162,8 +182,8 @@
             }
 
         });
-        $(document).on('click','.deleteUser', function (data){
-            var user_id = $(this).data("id");
+        $(document).on('click','.deleteCocsim', function (data){
+            var id = $(this).data("id");
             swal({
                     title: "Bạn có chắc muốn xóa?",
                     text: "Your will not be able to recover this imaginary file!",
@@ -176,7 +196,7 @@
                 function(){
                     $.ajax({
                         type: "get",
-                        url: "{{ asset("user/delete") }}/" + user_id,
+                        url: "{{ asset("cocsim/delete") }}/" + id,
                         success: function (data) {
                             table.draw();
                         },
@@ -192,26 +212,19 @@
 </script>
 
 <script>
-        function editUser(id) {
+        function editCocsim(id) {
 
-            $.get('{{asset('user/edit')}}/'+id,function (data) {
-                $('#modelHeading').html("Edit User");
-                $('#saveBtn').val("edit-user");
+            $.get('{{asset('cocsim/edit')}}/'+id,function (data) {
+                $('#modelHeading').html("Edit");
+                $('#saveBtn').val("edit-cocsim");
                 $('#ajaxModel').modal('show');
                 $('.modal').on('hidden.bs.modal', function (e) {
                     $('body').addClass('modal-open');
                 });
 
-                $('#user_id').val(data[0].id);
-                $('#name').val(data[0].name);
-                $('#email').val(data[0].email)
-                var roles = data[1];
-                var role = [];
-                $.each(roles, function(idx2,val2) {
-                    var str =  val2.id;
-                    role.push(str);
-                });
-                $('#role_id').select2().val(role).trigger('change')
+                $('#id').val(data.id);
+                $('#cocsim').val(data.cocsim);
+                $('#note').val(data.note)
             })
         }
     </script>

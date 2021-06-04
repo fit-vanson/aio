@@ -1,13 +1,16 @@
 <?php
 
+use App\Http\Controllers\CocsimController;
 use App\Http\Controllers\DaController;
 use App\Http\Controllers\DevController;
 use App\Http\Controllers\Ga_devController;
 use App\Http\Controllers\GaController;
 use App\Http\Controllers\HomeController;
+use App\Http\Controllers\KhosimController;
 use App\Http\Controllers\PermissionController;
 use App\Http\Controllers\ProjectController;
 use App\Http\Controllers\RoleController;
+use App\Http\Controllers\SmsController;
 use App\Http\Controllers\TemplateController;
 use App\Http\Controllers\UserController;
 use App\Http\Middleware\CheckLogout;
@@ -72,6 +75,7 @@ Route::group(['prefix'=>'project','middleware'=>'CheckLogout'], function (){
     Route::get('/show/{id}',[ProjectController::class,'show'])->name('project.show')->middleware('can:project-show');
     Route::post('/update',[ProjectController::class,'update'])->name('project.update')->middleware('can:project-update');
     Route::get('/delete/{id}',[ProjectController::class,'delete'])->name('project.delete')->middleware('can:project-delete');
+    Route::get('/getlist',[ProjectController::class,'getList'])->name('project.get_content');
 });
 Route::group(['prefix'=>'template','middleware'=>'CheckLogout'], function (){
     Route::get('/',[TemplateController::class,'index'])->name('template.index')->middleware('can:template-index');
@@ -116,6 +120,33 @@ Route::group(['prefix'=>'da','middleware'=>'CheckLogout'], function (){
     Route::get('/show/{id}',[DaController::class,'show'])->name('da.show')->middleware('can:du_an-show');
     Route::post('/update',[DaController::class,'update'])->name('da.update')->middleware('can:du_an-update');
     Route::get('/delete/{id}',[DaController::class,'delete'])->name('da.delete')->middleware('can:du_an-delete');
+});
+
+Route::group(['prefix'=>'khosim','middleware'=>'CheckLogout'], function (){
+    Route::get('/',[KhosimController::class,'index'])->name('khosim.index')->middleware('can:khosim-index');
+    Route::post('/create',[KhosimController::class,'create'])->name('khosim.create')->middleware('can:khosim-add');
+    Route::get('/edit/{id}',[KhosimController::class,'edit'])->name('khosim.edit')->middleware('can:khosim-edit');
+    Route::get('/show/{id}',[KhosimController::class,'show'])->name('khosim.show')->middleware('can:khosim-show');
+    Route::post('/update',[KhosimController::class,'update'])->name('khosim.update')->middleware('can:khosim-update');
+    Route::get('/delete/{id}',[KhosimController::class,'delete'])->name('khosim.delete')->middleware('can:khosim-delete');
+});
+
+Route::group(['prefix'=>'cocsim','middleware'=>'CheckLogout'], function (){
+    Route::get('/',[CocsimController::class,'index'])->name('cocsim.index')->middleware('can:cocsim-index');
+    Route::post('/create',[CocsimController::class,'create'])->name('cocsim.create')->middleware('can:cocsim-add');
+    Route::get('/edit/{id}',[CocsimController::class,'edit'])->name('cocsim.edit')->middleware('can:cocsim-edit');
+    Route::get('/show/{id}',[CocsimController::class,'show'])->name('cocsim.show')->middleware('can:cocsim-show');
+    Route::post('/update',[CocsimController::class,'update'])->name('cocsim.update')->middleware('can:cocsim-update');
+    Route::get('/delete/{id}',[CocsimController::class,'delete'])->name('cocsim.delete')->middleware('can:cocsim-delete');
+});
+
+Route::group(['prefix'=>'sms','middleware'=>'CheckLogout'], function (){
+    Route::get('/',[SmsController::class,'index'])->name('sms.index')->middleware('can:sms-index');
+    Route::post('/create',[SmsController::class,'create'])->name('sms.create')->middleware('can:sms-add');
+    Route::get('/edit/{id}',[SmsController::class,'edit'])->name('sms.edit')->middleware('can:sms-edit');
+    Route::get('/show/{id}',[SmsController::class,'show'])->name('sms.show')->middleware('can:sms-show');
+    Route::post('/update',[SmsController::class,'update'])->name('sms.update')->middleware('can:sms-update');
+    Route::get('/delete/{id}',[SmsController::class,'delete'])->name('sms.delete')->middleware('can:sms-delete');
 });
 
 

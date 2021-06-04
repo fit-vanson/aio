@@ -2,6 +2,8 @@
 
 namespace App\Providers;
 
+use App\Http\Controllers\KhosimController;
+use App\Policies\CocsimPolicy;
 use App\Policies\DaPolicy;
 use App\Policies\DevPolicy;
 use App\Policies\Ga_devPolicy;
@@ -9,8 +11,10 @@ use App\Policies\GaPolicy;
 use App\Policies\PermissionPolicy;
 use App\Policies\ProjectPolicy;
 use App\Policies\RolePolicy;
+use App\Policies\SmsPolicy;
 use App\Policies\TemplatePolicy;
 use App\Policies\UserPolicy;
+use App\Policies\KhosimPolicy;
 use Illuminate\Foundation\Support\Providers\AuthServiceProvider as ServiceProvider;
 use Illuminate\Support\Facades\Gate;
 use function PHPUnit\Framework\callback;
@@ -44,6 +48,9 @@ class AuthServiceProvider extends ServiceProvider
        $this->defineUser();
        $this->defineVaitro();
        $this->definePhan_quyen();
+       $this->defineKhosim();
+       $this->defineCocsim();
+       $this->defineSms();
     }
 
     public function defineProject(){
@@ -124,6 +131,36 @@ class AuthServiceProvider extends ServiceProvider
         Gate::define('phan_quyen-edit', [PermissionPolicy::class, 'edit']);
         Gate::define('phan_quyen-update', [PermissionPolicy::class, 'update']);
         Gate::define('phan_quyen-delete', [PermissionPolicy::class, 'delete']);
+
+    }
+
+    public function defineKhosim(){
+        Gate::define('khosim-index', [KhosimPolicy::class, 'index']);
+        Gate::define('khosim-show', [KhosimPolicy::class, 'show']);
+        Gate::define('khosim-add', [KhosimPolicy::class, 'add']);
+        Gate::define('khosim-edit', [KhosimPolicy::class, 'edit']);
+        Gate::define('khosim-update', [KhosimPolicy::class, 'update']);
+        Gate::define('khosim-delete', [KhosimPolicy::class, 'delete']);
+
+    }
+
+    public function defineCocsim(){
+        Gate::define('cocsim-index', [CocsimPolicy::class, 'index']);
+        Gate::define('cocsim-show', [CocsimPolicy::class, 'show']);
+        Gate::define('cocsim-add', [CocsimPolicy::class, 'add']);
+        Gate::define('cocsim-edit', [CocsimPolicy::class, 'edit']);
+        Gate::define('cocsim-update', [CocsimPolicy::class, 'update']);
+        Gate::define('cocsim-delete', [CocsimPolicy::class, 'delete']);
+
+    }
+
+    public function defineSms(){
+        Gate::define('sms-index', [SmsPolicy::class, 'index']);
+        Gate::define('sms-show', [SmsPolicy::class, 'show']);
+        Gate::define('sms-add', [SmsPolicy::class, 'add']);
+        Gate::define('sms-edit', [SmsPolicy::class, 'edit']);
+        Gate::define('sms-update', [SmsPolicy::class, 'update']);
+        Gate::define('sms-delete', [SmsPolicy::class, 'delete']);
 
     }
 

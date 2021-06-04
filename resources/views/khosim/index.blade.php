@@ -18,16 +18,16 @@
 
 @section('breadcrumb')
 <div class="col-sm-6">
-    <h4 class="page-title">Quản lý tài khoản</h4>
+    <h4 class="page-title">Quản lý Kho sim</h4>
 </div>
 <div class="col-sm-6">
     <div class="float-right">
-        @can('user-add')
-        <a class="btn btn-success" href="javascript:void(0)" id="createNewUser"> Create New User</a>
+        @can('khosim-add')
+        <a class="btn btn-success" href="javascript:void(0)" id="createNewKhosim">Thêm mới</a>
         @endcan
     </div>
 </div>
-@include('modals.user')
+@include('modals.khosim')
 @endsection
 @section('content')
 
@@ -41,9 +41,11 @@
                         <thead>
                         <tr>
                             <th>STT</th>
-                            <th>Tên tài khoản</th>
-                            <th>Email</th>
-                            <th width="20%px">Action</th>
+                            <th>Phone</th>
+                            <th>Cọc Sim</th>
+                            <th>STT trong cọc sim</th>
+                            <th>Time</th>
+                            <th width="20px">Action</th>
                         </tr>
                         </thead>
                         <tbody>
@@ -90,37 +92,44 @@
             }
         });
         var table = $('.data-table').DataTable({
+            lengthMenu: [[15, 30, 45, -1], [15, 30, 45, "All"]],
 
             processing: true,
             serverSide: true,
-            ajax: "{{ route('user.index') }}",
+            ajax: "{{ route('khosim.index') }}",
             columns: [
-                {data: 'id', name: 'id'},
-                {data: 'name', name: 'name'},
-                {data: 'email', name: 'email'},
-
+                { "data": null,"sortable": true,
+                    render: function (data, type, row, meta) {
+                        return meta.row + meta.settings._iDisplayStart + 1;
+                    }
+                },
+                {data: 'phone', name: 'phone'},
+                {data: 'cocsim', name: 'cocsim'},
+                {data: 'stt', name: 'stt'},
+                {data: 'time', name: 'time'},
                 {data: 'action', name: 'action', orderable: false, searchable: false},
             ]
         });
-        $('#createNewUser').click(function () {
-            $('#saveBtn').val("create-user");
-            $('#user_id').val('');
-            $('#userForm').trigger("reset");
-            $('#modelHeading').html("Thêm mới tài khoản");
+        $('#createNewKhosim').click(function () {
+            $('#saveBtn').val("create-khosim");
+            $('#id').val('');
+            $('#khosimForm').trigger("reset");
+            $('#modelHeading').html("Thêm mới");
             $('#ajaxModel').modal('show');
+            $("#cocsim").select2({});
         });
-        $('#userForm').on('submit',function (event){
+        $('#khosimForm').on('submit',function (event){
             event.preventDefault();
-            if($('#saveBtn').val() == 'create-user'){
+            if($('#saveBtn').val() == 'create-khosim'){
                 $.ajax({
-                    data: $('#userForm').serialize(),
-                    url: "{{ route('user.create') }}",
+                    data: $('#khosimForm').serialize(),
+                    url: "{{ route('khosim.create') }}",
                     type: "POST",
                     dataType: 'json',
                     success: function (data) {
                         if(data.errors){
                             for( var count=0 ; count <data.errors.length; count++){
-                                $("#userForm").notify(
+                                $("#khosimForm").notify(
                                     data.errors[count],"error",
                                     { position:"right" }
                                 );
@@ -128,23 +137,23 @@
                         }
                         if(data.success){
                             $.notify(data.success, "success");
-                            $('#userForm').trigger("reset");
+                            $('#khosimForm').trigger("reset");
                             $('#ajaxModel').modal('hide');
                             table.draw();
                         }
                     },
                 });
             }
-            if($('#saveBtn').val() == 'edit-user'){
+            if($('#saveBtn').val() == 'edit-khosim'){
                 $.ajax({
-                    data: $('#userForm').serialize(),
-                    url: "{{ route('user.update') }}",
+                    data: $('#khosimForm').serialize(),
+                    url: "{{ route('khosim.update') }}",
                     type: "post",
                     dataType: 'json',
                     success: function (data) {
                         if(data.errors){
                             for( var count=0 ; count <data.errors.length; count++){
-                                $("#userForm").notify(
+                                $("#khosimForm").notify(
                                     data.errors[count],"error",
                                     { position:"right" }
                                 );
@@ -152,7 +161,7 @@
                         }
                         if(data.success){
                             $.notify(data.success, "success");
-                            $('#userForm').trigger("reset");
+                            $('#khosimForm').trigger("reset");
                             $('#ajaxModel').modal('hide');
                             table.draw();
                         }
@@ -162,8 +171,8 @@
             }
 
         });
-        $(document).on('click','.deleteUser', function (data){
-            var user_id = $(this).data("id");
+        $(document).on('click','.deleteKhosim', function (data){
+            var id = $(this).data("id");
             swal({
                     title: "Bạn có chắc muốn xóa?",
                     text: "Your will not be able to recover this imaginary file!",
@@ -176,8 +185,9 @@
                 function(){
                     $.ajax({
                         type: "get",
-                        url: "{{ asset("user/delete") }}/" + user_id,
+                        url: "{{ asset("khosim/delete") }}/" + id,
                         success: function (data) {
+                            console.log(data)
                             table.draw();
                         },
                         error: function (data) {
@@ -192,26 +202,19 @@
 </script>
 
 <script>
-        function editUser(id) {
-
-            $.get('{{asset('user/edit')}}/'+id,function (data) {
-                $('#modelHeading').html("Edit User");
-                $('#saveBtn').val("edit-user");
+        function editKhosim(id) {
+            $.get('{{asset('khosim/edit')}}/'+id,function (data) {
+                $('#modelHeading').html("Edit");
+                $('#saveBtn').val("edit-khosim");
                 $('#ajaxModel').modal('show');
                 $('.modal').on('hidden.bs.modal', function (e) {
                     $('body').addClass('modal-open');
                 });
-
-                $('#user_id').val(data[0].id);
-                $('#name').val(data[0].name);
-                $('#email').val(data[0].email)
-                var roles = data[1];
-                var role = [];
-                $.each(roles, function(idx2,val2) {
-                    var str =  val2.id;
-                    role.push(str);
-                });
-                $('#role_id').select2().val(role).trigger('change')
+                $('#id').val(data.id);
+                $('#phone').val(data.phone);
+                $('#cocsim').val(data.cocsim)
+                $('#cocsim').select2();
+                $('#stt').val(data.stt)
             })
         }
     </script>

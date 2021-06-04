@@ -7,6 +7,7 @@ use App\Models\Role;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Gate;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Validator;
 use Yajra\DataTables\Facades\DataTables;
@@ -30,7 +31,6 @@ class UserController extends Controller
     public function index(Request $request)
     {
         $roles = $this->role->all();
-
         $users = User::with('roles')->latest();
         if ($request->ajax()) {
             $data = User::latest()->get();
@@ -61,6 +61,10 @@ class UserController extends Controller
      */
     public function create(Request  $request)
     {
+
+        if (! Gate::allows('user-add')) {
+            abort(403);
+        }
 
         $rules = [
             'name' =>'unique:users,name,',
@@ -188,6 +192,7 @@ class UserController extends Controller
      */
     public function delete($id)
     {
+
         User::find($id)->delete();
         return response()->json(['success'=>'Xóa người dùng.']);
     }

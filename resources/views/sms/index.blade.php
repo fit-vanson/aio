@@ -18,16 +18,16 @@
 
 @section('breadcrumb')
 <div class="col-sm-6">
-    <h4 class="page-title">Quản lý tài khoản</h4>
+    <h4 class="page-title">Quản lý SMS</h4>
 </div>
 <div class="col-sm-6">
     <div class="float-right">
         @can('user-add')
-        <a class="btn btn-success" href="javascript:void(0)" id="createNewUser"> Create New User</a>
+        <a class="btn btn-success" href="javascript:void(0)" id="createNewSms"> Thêm mới</a>
         @endcan
     </div>
 </div>
-@include('modals.user')
+@include('modals.sms')
 @endsection
 @section('content')
 
@@ -40,9 +40,12 @@
                     <table class="table table-bordered dt-responsive nowrap data-table" style="border-collapse: collapse; border-spacing: 0; width: 100%;">
                         <thead>
                         <tr>
-                            <th>STT</th>
-                            <th>Tên tài khoản</th>
-                            <th>Email</th>
+                            <th>Hub ID</th>
+                            <th>Cọc sim</th>
+                            <th>Phone</th>
+                            <th>Code</th>
+                            <th>SMS</th>
+                            <th>Thời gian nhận code</th>
                             <th width="20%px">Action</th>
                         </tr>
                         </thead>
@@ -90,37 +93,42 @@
             }
         });
         var table = $('.data-table').DataTable({
+            lengthMenu: [[15, 30, 45, -1], [15, 30, 45, "All"]],
 
             processing: true,
             serverSide: true,
-            ajax: "{{ route('user.index') }}",
+            ajax: "{{ route('sms.index') }}",
             columns: [
-                {data: 'id', name: 'id'},
-                {data: 'name', name: 'name'},
-                {data: 'email', name: 'email'},
-
+                {data: 'hubid', name: 'hubid'},
+                {data: 'cocsim', name: 'cocsim'},
+                {data: 'phone', name: 'phone'},
+                {data: 'code', name: 'code'},
+                {data: 'sms', name: 'sms'},
+                {data: 'timecode', name: 'timecode'},
                 {data: 'action', name: 'action', orderable: false, searchable: false},
             ]
         });
-        $('#createNewUser').click(function () {
-            $('#saveBtn').val("create-user");
-            $('#user_id').val('');
-            $('#userForm').trigger("reset");
-            $('#modelHeading').html("Thêm mới tài khoản");
+        $('#createNewSms').click(function () {
+            $('#saveBtn').val("create-sms");
+            $('#id').val('');
+            $('#smsForm').trigger("reset");
+            $('#modelHeading').html("Thêm mới");
             $('#ajaxModel').modal('show');
+            $('#cocsim').select2();
+            $('#phone').select2();
         });
-        $('#userForm').on('submit',function (event){
+        $('#smsForm').on('submit',function (event){
             event.preventDefault();
-            if($('#saveBtn').val() == 'create-user'){
+            if($('#saveBtn').val() == 'create-sms'){
                 $.ajax({
-                    data: $('#userForm').serialize(),
-                    url: "{{ route('user.create') }}",
+                    data: $('#smsForm').serialize(),
+                    url: "{{ route('sms.create') }}",
                     type: "POST",
                     dataType: 'json',
                     success: function (data) {
                         if(data.errors){
                             for( var count=0 ; count <data.errors.length; count++){
-                                $("#userForm").notify(
+                                $("#smsForm").notify(
                                     data.errors[count],"error",
                                     { position:"right" }
                                 );
@@ -128,23 +136,23 @@
                         }
                         if(data.success){
                             $.notify(data.success, "success");
-                            $('#userForm').trigger("reset");
+                            $('#smsForm').trigger("reset");
                             $('#ajaxModel').modal('hide');
                             table.draw();
                         }
                     },
                 });
             }
-            if($('#saveBtn').val() == 'edit-user'){
+            if($('#saveBtn').val() == 'edit-sms'){
                 $.ajax({
-                    data: $('#userForm').serialize(),
-                    url: "{{ route('user.update') }}",
+                    data: $('#smsForm').serialize(),
+                    url: "{{ route('sms.update') }}",
                     type: "post",
                     dataType: 'json',
                     success: function (data) {
                         if(data.errors){
                             for( var count=0 ; count <data.errors.length; count++){
-                                $("#userForm").notify(
+                                $("#smsForm").notify(
                                     data.errors[count],"error",
                                     { position:"right" }
                                 );
@@ -152,7 +160,7 @@
                         }
                         if(data.success){
                             $.notify(data.success, "success");
-                            $('#userForm').trigger("reset");
+                            $('#smsForm').trigger("reset");
                             $('#ajaxModel').modal('hide');
                             table.draw();
                         }
@@ -162,8 +170,8 @@
             }
 
         });
-        $(document).on('click','.deleteUser', function (data){
-            var user_id = $(this).data("id");
+        $(document).on('click','.deleteSms', function (data){
+            var id = $(this).data("id");
             swal({
                     title: "Bạn có chắc muốn xóa?",
                     text: "Your will not be able to recover this imaginary file!",
@@ -176,7 +184,7 @@
                 function(){
                     $.ajax({
                         type: "get",
-                        url: "{{ asset("user/delete") }}/" + user_id,
+                        url: "{{ asset("sms/delete") }}/" + id,
                         success: function (data) {
                             table.draw();
                         },
@@ -192,26 +200,23 @@
 </script>
 
 <script>
-        function editUser(id) {
-
-            $.get('{{asset('user/edit')}}/'+id,function (data) {
-                $('#modelHeading').html("Edit User");
-                $('#saveBtn').val("edit-user");
+        function editSms(id) {
+            $.get('{{asset('sms/edit')}}/'+id,function (data) {
+                $('#modelHeading').html("Edit");
+                $('#saveBtn').val("edit-sms");
                 $('#ajaxModel').modal('show');
                 $('.modal').on('hidden.bs.modal', function (e) {
                     $('body').addClass('modal-open');
                 });
+                $('#id').val(data.id);
+                $('#hubid').val(data.hubid);
+                $('#hubname').val(data.hubname);
+                $('#cocsim').val(data.cocsim)
+                $('#cocsim').select2();
+                $('#phone').val(data.phone)
+                $('#phone').select2();
+                $('#code').val(data.code)
 
-                $('#user_id').val(data[0].id);
-                $('#name').val(data[0].name);
-                $('#email').val(data[0].email)
-                var roles = data[1];
-                var role = [];
-                $.each(roles, function(idx2,val2) {
-                    var str =  val2.id;
-                    role.push(str);
-                });
-                $('#role_id').select2().val(role).trigger('change')
             })
         }
     </script>
