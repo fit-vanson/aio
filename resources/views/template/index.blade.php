@@ -220,7 +220,7 @@
             $('#category').val(data.category);
 
             $('#modelHeading').html("Edit");
-            $('#saveBtn').val("edit-ga");
+            $('#saveBtn').val("edit-template");
             $('#ajaxModel').modal('show');
             $('.modal').on('hidden.bs.modal', function (e) {
                 $('body').addClass('modal-open');

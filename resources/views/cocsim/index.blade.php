@@ -222,9 +222,17 @@
                     $('body').addClass('modal-open');
                 });
 
-                $('#id').val(data.id);
-                $('#cocsim').val(data.cocsim);
-                $('#note').val(data.note)
+                $('#id').val(data[0].id);
+                $('#cocsim').val(data[0].cocsim);
+                $('#note').val(data[0].note)
+                var phones = data[1];
+                var phone = [];
+                $.each(phones, function(idx2,val2) {
+                    var str =  val2.phone;
+                    phone.push(str);
+                });
+                $('#phone').val(phone)
+
             })
         }
     </script>

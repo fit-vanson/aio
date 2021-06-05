@@ -9,10 +9,10 @@
             <div class="modal-body">
                 <form id="hubForm" name="hubForm" class="form-horizontal">
                     <input type="hidden" name="id" id="id">
-                    <div class="form-group">
+                    <div class="form-group" hidden>
                         <label for="name" class="col-sm-5 control-label">Hub Name</label>
                         <div class="col-sm-12">
-                            <input type="text" class="form-control" id="hubname" name="hubname" required>
+                            <input type="text" class="form-control"  id="hubname" name="hubname" required>
                         </div>
                     </div>
                     <div class="form-group">

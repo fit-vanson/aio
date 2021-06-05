@@ -133,36 +133,47 @@ class HubController extends Controller
         if($error->fails()){
             return response()->json(['errors'=> $error->errors()->all()]);
         }
-        $data = Hub::find($id);
-        $data->cocsim = $request->cocsim;
-        $data->save();
-        $sms = DB::table('ngocphandang_sms')
-            ->Join('ngocphandang_hubinfo','ngocphandang_hubinfo.hubname','=','ngocphandang_sms.hubname')
-            ->where('ngocphandang_hubinfo.hubname',$data->hubname)
-            ->get();
         $phoneOfcocsim =  DB::table('ngocphandang_khosim')
-        ->Join('ngocphandang_cocsim','ngocphandang_cocsim.id','=','ngocphandang_khosim.cocsim')
-        ->where('ngocphandang_khosim.cocsim',$data->cocsim)
-        ->get();
-        $cocsim  = DB::table('ngocphandang_cocsim')->where('cocsim',$data->cocsim);
-        dd($cocsim);
-        foreach ($sms  as $s){
-            dd($s);
-            foreach ($phoneOfcocsim as $phone){
-                $s->cocsim = $request->cocsim;
-                $s->phone = $phone->phone;
-                $s->hubid = $s->hubname.'_Slot'.$phone->stt;
-                $s = sms::find($s->hubid);
-                $s->save();
+            ->Join('ngocphandang_cocsim','ngocphandang_cocsim.id','=','ngocphandang_khosim.cocsim')
+            ->where('ngocphandang_khosim.cocsim',$request->cocsim)
+            ->get();
+        $count = count($phoneOfcocsim);
+        if($count==15){
+            $sms = DB::table('ngocphandang_sms')
+                ->Join('ngocphandang_hubinfo','ngocphandang_hubinfo.hubname','=','ngocphandang_sms.hubname')
+                ->where('ngocphandang_hubinfo.hubname',$request->hubname)
+                ->get();
+            $cocsim  = cocsim::where('id',$request->cocsim)->first();
+            $cocsim = $cocsim->cocsim;
+            foreach ($sms  as $s){
+                foreach ($phoneOfcocsim as $phone){
+                    if($phone->stt < 10){
+                        $s->hubid = $s->hubname.'_Slot0'.$phone->stt;
+                    }else{
+                        $s->hubid = $s->hubname.'_Slot'.$phone->stt;
+                    }
+                    $s = sms::where('hubid',$s->hubid)->first();
+                    $s->cocsim = $cocsim;
+                    $s->phone = $phone->phone;
+                    $s->code ='';
+                    $s->sms = '';
+                    $s->busyjob = '';
+                    $s->timebusyjob = 0;
+                    $s->timecode = 0;
+                    $s->strvalid = 0;
+                    $s->save();
+                }
             }
+            $data = Hub::find($id);
+            $data->cocsim = $request->cocsim;
+            $data->lockauto = 0;
+            $data->timeupdate = time();
+            $data->save();
+            return response()->json(['success'=>'Cập nhật thành công']);
+        }else{
+            return response()->json(['errors'=> ['Cọc sim không đủ 15 số']]);
         }
-
-
-
-
-        return response()->json(['success'=>'Cập nhật thành công']);
     }
-
     /**
      * Remove the specified resource from storage.
      *

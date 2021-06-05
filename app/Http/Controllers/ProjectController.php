@@ -183,6 +183,7 @@ class ProjectController extends Controller
      */
     public function update(Request $request)
     {
+//        dd($request->all());
         $id = $request->project_id;
         $rules = [
             'projectname' =>'unique:ngocphandang_project,projectname,'.$id.',projectid',
@@ -234,40 +235,39 @@ class ProjectController extends Controller
         $data->buildinfo_api_key_x = $request->buildinfo_api_key_x;
         $data->status = $request->status;
 
-
-        if(isset($data->package)){
-            $url = 'https://play.google.com/store/apps/details?id='.$data->package.'&hl=en';
-            $curl = curl_init($url);
-            curl_setopt($curl, CURLOPT_NOBODY, true);
-            $result = curl_exec($curl);
-            if ($result !== false)
-            {
-                $statusCode = curl_getinfo($curl, CURLINFO_HTTP_CODE);
-                if ($statusCode == 404)
-                {
-                    return response()->json(['success'=>'Cập nhật thành công']);
-                }
-                else
-                {
-                    $html  = HtmlDomParser::file_get_html($url)->outerHtml();
-                    $document = new \voku\helper\HtmlDomParser($html);
-                    $dom = [];
-                    foreach ($this->find_contains($document, 'div .IQ1z0d span .htlgb') as $child_dom) {
-                        $dom[] = $child_dom->text();
-                    }
-                    $data->bot_verstr = $dom[3];
-                    $data->bot_update = $dom[0];
-                    $data->bot_install = $dom[2];
-                    $data->bot_storename = $dom[8];
-                }
-            }
-            else
-            {
-                return response()->json(['success'=>'Cập nhật thành công']);
-            }
-
-
-        }
+//        if(isset($data->package)){
+//            $url = 'https://play.google.com/store/apps/details?id='.$data->package.'&hl=en';
+//            $curl = curl_init($url);
+//            curl_setopt($curl, CURLOPT_NOBODY, true);
+//            $result = curl_exec($curl);
+//            if ($result !== false)
+//            {
+//                $statusCode = curl_getinfo($curl, CURLINFO_HTTP_CODE);
+//                if ($statusCode == 404)
+//                {
+//                    return response()->json(['success'=>'Cập nhật thành công']);
+//                }
+//                else
+//                {
+//                    $html  = HtmlDomParser::file_get_html($url)->outerHtml();
+//                    $document = new \voku\helper\HtmlDomParser($html);
+//                    $dom = [];
+//                    foreach ($this->find_contains($document, 'div .IQ1z0d span .htlgb') as $child_dom) {
+//                        $dom[] = $child_dom->text();
+//                    }
+//                    $data->bot_verstr = $dom[3];
+//                    $data->bot_update = $dom[0];
+//                    $data->bot_install = $dom[2];
+//                    $data->bot_storename = $dom[8];
+//                }
+//            }
+//            else
+//            {
+//                return response()->json(['success'=>'Cập nhật thành công']);
+//            }
+//
+//
+//        }
 
 
 

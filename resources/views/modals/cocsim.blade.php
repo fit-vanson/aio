@@ -15,6 +15,14 @@
                             <input type="text" class="form-control" id="cocsim" name="cocsim" >
                         </div>
                     </div>
+
+                    <div class="form-group">
+                        <label for="name" class="col-sm-5 control-label">Phone</label>
+                        <div class="col-sm-12">
+                            <textarea id="phone" name="phone" class="form-control" rows="6" ></textarea>
+                        </div>
+                    </div>
+
                     <div class="form-group">
                         <label for="name" class="col-sm-5 control-label">Ghi chú</label>
                         <div class="col-sm-12">

@@ -207,7 +207,7 @@
 <script>
         function editHub(id) {
             $.get('{{asset('hub/edit')}}/'+id,function (data) {
-                $('#modelHeading').html("Edit");
+                $('#modelHeading').html("Edit - "+ (data.hubname));
                 $('#saveBtn').val("edit-hub");
                 $('#ajaxModel').modal('show');
                 $('.modal').on('hidden.bs.modal', function (e) {
@@ -216,7 +216,6 @@
 
                 $('#id').val(data.id);
                 $('#hubname').val(data.hubname);
-                $("#hubname").prop('disabled', true);
                 $('#cocsim').val(data.cocsim)
                 $('#cocsim').select2();
             })

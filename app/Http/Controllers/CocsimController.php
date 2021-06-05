@@ -3,7 +3,10 @@
 namespace App\Http\Controllers;
 
 use App\Models\cocsim;
+use App\Models\khosim;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\App;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Validator;
 use Yajra\DataTables\Facades\DataTables;
 
@@ -93,7 +96,11 @@ class CocsimController extends Controller
     public function edit($id)
     {
         $dev = cocsim::find($id);
-        return response()->json($dev);
+        $phoneOfcocsim =  DB::table('ngocphandang_khosim')
+            ->Join('ngocphandang_cocsim','ngocphandang_cocsim.id','=','ngocphandang_khosim.cocsim')
+            ->where('ngocphandang_khosim.cocsim',$id)
+            ->get();
+        return response()->json([$dev,$phoneOfcocsim]);
     }
 
     /**
@@ -117,11 +124,15 @@ class CocsimController extends Controller
         if($error->fails()){
             return response()->json(['errors'=> $error->errors()->all()]);
         }
+        $phone = new KhosimController();
+        $phone->create($request->phone);
+
         $data = cocsim::find($id);
         $data->cocsim = $request->cocsim;
         $data->note = $request->note;
         $data->time = time();
         $data->save();
+
         return response()->json(['success'=>'Cập nhật thành công']);
     }
 

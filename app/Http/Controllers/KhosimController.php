@@ -52,8 +52,9 @@ class KhosimController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function create(Request  $request)
+    public function create(Request $request)
     {
+        dd($phone);
         $rules = [
             'phone' =>'numeric|unique:ngocphandang_khosim,phone',
             'stt' =>'numeric|min:1|max:15'
@@ -124,6 +125,7 @@ class KhosimController extends Controller
      */
     public function update(Request $request)
     {
+        dd($request->all());
         $id = $request->id;
         $rules = [
             'phone' =>'numeric|unique:ngocphandang_khosim,phone,'.$id.',id',
