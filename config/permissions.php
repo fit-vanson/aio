@@ -78,6 +78,13 @@ return [
         'cocsim-update'  =>'edit_cocsim',
         'cocsim-delete'  =>'delete_cocsim',
 
+        'hub-index'  =>'index_hub',
+        'hub-show'  =>'show_hub',
+        'hub-add'  =>'add_hub',
+        'hub-edit'  =>'edit_hub',
+        'hub-update'  =>'edit_hub',
+        'hub-delete'  =>'delete_hub',
+
         'sms-index'  =>'index_sms',
         'sms-show'  =>'show_sms',
         'sms-add'  =>'add_sms',
@@ -88,9 +95,10 @@ return [
     ],
 
 
-
     'table-module' => [
-        'Dự án','Template','Project','Gadev','Dev','Ga','User','Vai trò', 'Phân quyền','khosim','cocsim','sms'
+        'Dự án','Template','Project','Gadev','Dev','Ga',
+        'User','Vai trò', 'Phân quyền',
+        'khosim','cocsim','sms','hub'
     ],
     'module-child' =>[
         'Index','Show','Add','Edit','Delete'

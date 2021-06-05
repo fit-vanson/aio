@@ -40,15 +40,18 @@
                             <li>
                                 <a href="javascript:void(0);" class="waves-effect"><i class="ti-archive"></i> <span> Quản lý Sim <span class="float-right menu-arrow"><i class="mdi mdi-chevron-right"></i></span> </span> </a>
                                 <ul class="submenu">
-{{--                                    @can('user-index')--}}
+                                    @can('khosim-index')
                                         <li><a href="{{route('khosim.index')}}">Quản lý Kho sim</a></li>
-{{--                                    @endcan--}}
-{{--                                    @can('vai_tro-index')--}}
+                                    @endcan
+                                    @can('cocsim-index')
                                         <li><a href="{{route('cocsim.index')}}">Quản lý Cọc Sim</a></li>
-{{--                                    @endcan--}}
-{{--                                    @can('phan_quyen-index')--}}
+                                    @endcan
+                                    @can('hub-index')
+                                        <li><a href="{{route('hub.index')}}">Quản lý Hub</a></li>
+                                    @endcan
+                                    @can('sms-index')
                                         <li><a href="{{route('sms.index')}}">Quản lý SMS</a></li>
-{{--                                    @endcan--}}
+                                    @endcan
                                 </ul>
                             </li>
                             <li>

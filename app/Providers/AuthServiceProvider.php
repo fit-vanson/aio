@@ -8,6 +8,7 @@ use App\Policies\DaPolicy;
 use App\Policies\DevPolicy;
 use App\Policies\Ga_devPolicy;
 use App\Policies\GaPolicy;
+use App\Policies\HubPolicy;
 use App\Policies\PermissionPolicy;
 use App\Policies\ProjectPolicy;
 use App\Policies\RolePolicy;
@@ -50,6 +51,7 @@ class AuthServiceProvider extends ServiceProvider
        $this->definePhan_quyen();
        $this->defineKhosim();
        $this->defineCocsim();
+       $this->defineHub();
        $this->defineSms();
     }
 
@@ -63,7 +65,6 @@ class AuthServiceProvider extends ServiceProvider
         Gate::define('project-delete', [ProjectPolicy::class, 'delete']);
 
     }
-
     public function defineDu_an(){
         Gate::define('du_an-index', [DaPolicy::class, 'index']);
         Gate::define('du_an-show', [DaPolicy::class, 'show']);
@@ -72,7 +73,6 @@ class AuthServiceProvider extends ServiceProvider
         Gate::define('du_an-update', [DaPolicy::class, 'update']);
         Gate::define('du_an-delete', [DaPolicy::class, 'delete']);
     }
-
     public function defineTemplate(){
         Gate::define('template-index', [TemplatePolicy::class, 'index']);
         Gate::define('template-show', [TemplatePolicy::class, 'show']);
@@ -81,7 +81,6 @@ class AuthServiceProvider extends ServiceProvider
         Gate::define('template-update', [TemplatePolicy::class, 'update']);
         Gate::define('template-delete', [TemplatePolicy::class, 'delete']);
     }
-
     public function defineGadev(){
         Gate::define('gadev-index', [Ga_devPolicy::class, 'index']);
         Gate::define('gadev-show', [Ga_devPolicy::class, 'show']);
@@ -143,7 +142,6 @@ class AuthServiceProvider extends ServiceProvider
         Gate::define('khosim-delete', [KhosimPolicy::class, 'delete']);
 
     }
-
     public function defineCocsim(){
         Gate::define('cocsim-index', [CocsimPolicy::class, 'index']);
         Gate::define('cocsim-show', [CocsimPolicy::class, 'show']);
@@ -153,7 +151,14 @@ class AuthServiceProvider extends ServiceProvider
         Gate::define('cocsim-delete', [CocsimPolicy::class, 'delete']);
 
     }
-
+    public function defineHub(){
+        Gate::define('hub-index', [HubPolicy::class, 'index']);
+        Gate::define('hub-show', [HubPolicy::class, 'show']);
+        Gate::define('hub-add', [HubPolicy::class, 'add']);
+        Gate::define('hub-edit', [HubPolicy::class, 'edit']);
+        Gate::define('hub-update', [HubPolicy::class, 'update']);
+        Gate::define('hub-delete', [HubPolicy::class, 'delete']);
+    }
     public function defineSms(){
         Gate::define('sms-index', [SmsPolicy::class, 'index']);
         Gate::define('sms-show', [SmsPolicy::class, 'show']);
@@ -161,7 +166,6 @@ class AuthServiceProvider extends ServiceProvider
         Gate::define('sms-edit', [SmsPolicy::class, 'edit']);
         Gate::define('sms-update', [SmsPolicy::class, 'update']);
         Gate::define('sms-delete', [SmsPolicy::class, 'delete']);
-
     }
 
 

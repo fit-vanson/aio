@@ -6,6 +6,7 @@ use App\Http\Controllers\DevController;
 use App\Http\Controllers\Ga_devController;
 use App\Http\Controllers\GaController;
 use App\Http\Controllers\HomeController;
+use App\Http\Controllers\HubController;
 use App\Http\Controllers\KhosimController;
 use App\Http\Controllers\PermissionController;
 use App\Http\Controllers\ProjectController;
@@ -139,6 +140,16 @@ Route::group(['prefix'=>'cocsim','middleware'=>'CheckLogout'], function (){
     Route::post('/update',[CocsimController::class,'update'])->name('cocsim.update')->middleware('can:cocsim-update');
     Route::get('/delete/{id}',[CocsimController::class,'delete'])->name('cocsim.delete')->middleware('can:cocsim-delete');
 });
+
+Route::group(['prefix'=>'hub','middleware'=>'CheckLogout'], function (){
+    Route::get('/',[HubController::class,'index'])->name('hub.index')->middleware('can:hub-index');
+    Route::post('/create',[HubController::class,'create'])->name('hub.create')->middleware('can:hub-add');
+    Route::get('/edit/{id}',[HubController::class,'edit'])->name('hub.edit')->middleware('can:hub-edit');
+    Route::get('/show/{id}',[HubController::class,'show'])->name('hub.show')->middleware('can:hub-show');
+    Route::post('/update',[HubController::class,'update'])->name('hub.update')->middleware('can:hub-update');
+    Route::get('/delete/{id}',[HubController::class,'delete'])->name('hub.delete')->middleware('can:hub-delete');
+});
+
 
 Route::group(['prefix'=>'sms','middleware'=>'CheckLogout'], function (){
     Route::get('/',[SmsController::class,'index'])->name('sms.index')->middleware('can:sms-index');
