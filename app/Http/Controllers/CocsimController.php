@@ -9,6 +9,7 @@ use Illuminate\Support\Facades\App;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Validator;
 use Yajra\DataTables\Facades\DataTables;
+use function PHPUnit\Framework\isNull;
 
 class CocsimController extends Controller
 {
@@ -43,6 +44,7 @@ class CocsimController extends Controller
      */
     public function create(Request  $request)
     {
+
         $rules = [
             'cocsim' =>'unique:ngocphandang_cocsim,cocsim',
 
@@ -112,27 +114,36 @@ class CocsimController extends Controller
      */
     public function update(Request $request)
     {
-        $id = $request->id;
-        $rules = [
-            'cocsim' =>'unique:ngocphandang_cocsim,cocsim,'.$id.',id'
 
+
+        $id = $request->id;
+
+        $rules1 = [
+            'cocsim' =>'unique:ngocphandang_cocsim,cocsim,'.$id.',id',
+            'phone.*' =>'numeric',
         ];
         $message = [
             'cocsim.unique'=>'Tên cọc sim đã tồn tại',
+            'phone.*.numeric' => ' :input không phải là số'
         ];
-        $error = Validator::make($request->all(),$rules, $message );
+        $error = Validator::make($request->all(),$rules1, $message );
         if($error->fails()){
             return response()->json(['errors'=> $error->errors()->all()]);
         }
-        $phone = new KhosimController();
-        $phone->create($request->phone);
 
         $data = cocsim::find($id);
         $data->cocsim = $request->cocsim;
         $data->note = $request->note;
-        $data->time = time();
+        $phoneOfCocsim = khosim::where('cocsim', $id)->get()->toArray();
+        for($i =0; $i < 15; $i++)
+        {
+            $idP = $phoneOfCocsim[$i];
+            $phone = khosim::where('id',$idP)->first();
+            $phone->phone = $request->phone[$i];
+            $phone->stt = $i+1;
+            $phone->save();
+        }
         $data->save();
-
         return response()->json(['success'=>'Cập nhật thành công']);
     }
 

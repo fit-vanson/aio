@@ -36,15 +36,24 @@ class HubController extends Controller
                         return $cocsim->cocsim;
                     }
                 })
+                ->editColumn('lockauto', function($data){
+                    if($data->lockauto == 0 ){
+                        return '<input type="checkbox" value="0" name="lockauto[]"  checked onclick="checkbox('.$data->id.')">';
+                    }return '<input type="checkbox" value="1" name="lockauto[]" onclick="checkbox('.$data->id.')">';
+
+                })
+
                 ->editColumn('timeupdate', function($data) {
                     if($data->timeupdate == 0 ){
                         return  null;
                     }
                     return date( 'd/m/Y - H:i:s ',$data->timeupdate);
                 })
-                ->rawColumns(['action'])
+                ->rawColumns(['action','lockauto'])
                 ->make(true);
         }
+
+
         return view('hub.index',compact(['hub','cocsim']));
     }
 
@@ -155,7 +164,7 @@ class HubController extends Controller
                     $s = sms::where('hubid',$s->hubid)->first();
                     $s->cocsim = $cocsim;
                     $s->phone = $phone->phone;
-                    $s->code ='';
+                    $s->code =$phone->stt;
                     $s->sms = '';
                     $s->busyjob = '';
                     $s->timebusyjob = 0;
@@ -189,5 +198,42 @@ class HubController extends Controller
     public function callAction($method, $parameters)
     {
         return parent::callAction($method, array_values($parameters));
+    }
+
+    public function checkbox($id){
+
+
+        $data = Hub::find($id);
+        if($data->lockauto == 1){
+            $data->lockauto = 0;
+            $data->save();
+            return response()->json(['success'=>$data->hubname.' đã mở']);
+        }else{
+            $data->lockauto = 1;
+            $data->save();
+            return response()->json(['errors'=> $data->hubname.' đã khóa']);
+        }
+
+    }
+
+    public function checkboxAll($check){
+        $data = Hub::all();
+        for($i =0; $i < 12; $i++)
+        {
+            $id = $data[$i];
+            $item = Hub::where('id',$id['id'])->first();
+            if($check == 'on'){
+                $item['lockauto'] = 0;
+                $item->save();
+                return response()->json(['success'=>'Tất cả hub đã mở']);
+            }else{
+                $item['lockauto'] = 1;
+                $item->save();
+                return response()->json(['errors'=> 'Tất cả hub đã khóa']);
+            }
+        }
+
+
+
     }
 }

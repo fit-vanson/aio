@@ -54,7 +54,6 @@ class KhosimController extends Controller
      */
     public function create(Request $request)
     {
-        dd($phone);
         $rules = [
             'phone' =>'numeric|unique:ngocphandang_khosim,phone',
             'stt' =>'numeric|min:1|max:15'
@@ -68,11 +67,13 @@ class KhosimController extends Controller
 
         ];
 
+
         $error = Validator::make($request->all(),$rules, $message );
 
         if($error->fails()){
             return response()->json(['errors'=> $error->errors()->all()]);
         }
+
         $data = new khosim();
         $data['phone'] = $request->phone;
         $data['cocsim'] = $request->cocsim;

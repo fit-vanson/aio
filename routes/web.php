@@ -145,6 +145,8 @@ Route::group(['prefix'=>'hub','middleware'=>'CheckLogout'], function (){
     Route::get('/',[HubController::class,'index'])->name('hub.index')->middleware('can:hub-index');
     Route::post('/create',[HubController::class,'create'])->name('hub.create')->middleware('can:hub-add');
     Route::get('/edit/{id}',[HubController::class,'edit'])->name('hub.edit')->middleware('can:hub-edit');
+    Route::get('/checkbox/{id}',[HubController::class,'checkbox'])->name('hub.checkbox')->middleware('can:hub-edit');
+    Route::get('/checkboxAll/{id}',[HubController::class,'checkboxAll'])->name('hub.checkboxAll')->middleware('can:hub-edit');
     Route::get('/show/{id}',[HubController::class,'show'])->name('hub.show')->middleware('can:hub-show');
     Route::post('/update',[HubController::class,'update'])->name('hub.update')->middleware('can:hub-update');
     Route::get('/delete/{id}',[HubController::class,'delete'])->name('hub.delete')->middleware('can:hub-delete');

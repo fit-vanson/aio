@@ -44,8 +44,9 @@
                             <th>Hub Name</th>
                             <th>Cọc Sim</th>
                             <th>Numerady</th>
-                            <th>Lock Auto</th>
+
                             <th>Update</th>
+                            <th>Lock Auto <input id="checkAll" type="checkbox"></th>
                             <th width="20px">Action</th>
                         </tr>
                         </thead>
@@ -94,6 +95,10 @@
         });
         var table = $('.data-table').DataTable({
             lengthMenu: [[15, 30, 45, -1], [15, 30, 45, "All"]],
+            columnDefs: [ {
+                'targets': [5], /* column index */
+                'orderable': false, /* true or false */
+            }],
 
             processing: true,
             serverSide: true,
@@ -107,8 +112,9 @@
                 {data: 'hubname', name: 'hubname'},
                 {data: 'cocsim', name: 'cocsim'},
                 {data: 'numready', name: 'numready'},
-                {data: 'lockauto', name: 'lockauto'},
+
                 {data: 'timeupdate', name: 'timeupdate'},
+                {data: 'lockauto', name: 'lockauto'},
                 {data: 'action', name: 'action', orderable: false, searchable: false},
             ]
         });
@@ -220,6 +226,22 @@
                 $('#cocsim').select2();
             })
         }
+
+        function checkbox(id) {
+            $.get('{{asset('hub/checkbox')}}/'+id,function (data) {
+                console.log(data)
+                if(data.success){
+                    $.notify(data.success, "success");
+                }
+                if(data.errors){
+                    $.notify(data.errors,"error");
+                }
+            })
+        }
+        $("#checkAll").click(function () {
+            $('input:checkbox').not(this).prop('checked', this.checked);
+        });
+
     </script>
 @endsection
 

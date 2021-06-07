@@ -221,7 +221,6 @@
                 $('.modal').on('hidden.bs.modal', function (e) {
                     $('body').addClass('modal-open');
                 });
-
                 $('#id').val(data[0].id);
                 $('#cocsim').val(data[0].cocsim);
                 $('#note').val(data[0].note)
@@ -230,9 +229,11 @@
                 $.each(phones, function(idx2,val2) {
                     var str =  val2.phone;
                     phone.push(str);
+                    <?php
+                    for($i=1; $i<=15;$i++) { ?>
+                    $('#phone_<?php echo $i;?>').val(phone[<?php echo $i-1;?>])
+                    <?php }?>
                 });
-                $('#phone').val(phone)
-
             })
         }
     </script>
