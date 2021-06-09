@@ -24,6 +24,7 @@ class TwoFaceAuthsController extends Controller
         $qrCodeUrl = $googleAuthenticator->getQRCodeGoogleUrl(
             auth()->user()->email, $secretCode, config("app.name")
         );
+        dd(config("app.name"));
         // Lưu secret code vào session để phục vụ cho việc kiểm tra bên dưới
         // và update vào database trong trường hợp người dùng nhập đúng mã được sinh ra bởi
         // ứng dụng Google Authenticator
