@@ -14,13 +14,6 @@ use Yajra\DataTables\Facades\DataTables;
 
 class UserController extends Controller
 {
-
-//$secretCode = auth()->user()->secret_code;
-//
-//$oneCode = $googleAuthenticator->getCode($secretCode);
-//echo "Checking Code '$oneCode' and Secret '.$secretCode ':\n";
-//dd();
-
     private $user;
     public $role;
     public function __construct(User $user, Role $role)
