@@ -3,6 +3,7 @@
 use App\Http\Controllers\CocsimController;
 use App\Http\Controllers\DaController;
 use App\Http\Controllers\DevController;
+
 use App\Http\Controllers\Ga_devController;
 use App\Http\Controllers\GaController;
 use App\Http\Controllers\HomeController;
@@ -13,8 +14,10 @@ use App\Http\Controllers\ProjectController;
 use App\Http\Controllers\RoleController;
 use App\Http\Controllers\SmsController;
 use App\Http\Controllers\TemplateController;
+use App\Http\Controllers\TwoFaceAuthsController;
 use App\Http\Controllers\UserController;
-use App\Http\Middleware\CheckLogout;
+use App\Http\Controllers\VerifyTwoFaceController;
+
 use Illuminate\Support\Facades\Artisan;
 use Illuminate\Support\Facades\Route;
 
@@ -37,13 +40,13 @@ Route::group(['prefix'=>'login','middleware'=>'CheckUser'], function (){
     Route::post('/',[HomeController::class,'postLogin'])->name('login');
 });
 Route::get('logout',[HomeController::class,'logout'])->name('logout');
-Route::group(['prefix'=>'admin','middleware'=>'CheckLogout'], function (){
+Route::group(['prefix'=>'admin','middleware'=>['CheckLogout','2fa']], function (){
     Route::get('/',[HomeController::class,'getHome'])->name('index');
 });
 
-Route::get('/',[HomeController::class,'getHome'])->middleware('CheckLogout')->name('index');
+Route::get('/',[HomeController::class,'getHome'])->middleware(['CheckLogout','2fa'])->name('index');
 
-Route::group(['prefix'=>'user','middleware'=>'CheckLogout'], function (){
+Route::group(['prefix'=>'user','middleware'=>['CheckLogout','2fa']], function (){
     Route::get('/',[UserController::class,'index'])->name('user.index')->middleware('can:user-index');
     Route::post('/create',[UserController::class,'create'])->name('user.create')->middleware('can:user-add');
     Route::get('/edit/{id}',[UserController::class,'edit'])->name('user.edit')->middleware('can:user-edit');
@@ -51,7 +54,7 @@ Route::group(['prefix'=>'user','middleware'=>'CheckLogout'], function (){
     Route::post('/update',[UserController::class,'update'])->name('user.update')->middleware('can:user-update');
     Route::get('/delete/{id}',[UserController::class,'delete'])->name('user.delete')->middleware('can:user-delete');
 });
-Route::group(['prefix'=>'role','middleware'=>'CheckLogout'], function (){
+Route::group(['prefix'=>'role','middleware'=>['CheckLogout','2fa']], function (){
     Route::get('/',[RoleController::class,'index'])->name('role.index')->middleware('can:vai_tro-index');
     Route::post('/create',[RoleController::class,'create'])->name('role.create')->middleware('can:vai_tro-add');
     Route::get('/edit/{id}',[RoleController::class,'edit'])->name('role.edit')->middleware('can:vai_tro-edit');
@@ -59,7 +62,7 @@ Route::group(['prefix'=>'role','middleware'=>'CheckLogout'], function (){
     Route::post('/update',[RoleController::class,'update'])->name('role.update')->middleware('can:vai_tro-update');
     Route::get('/delete/{id}',[RoleController::class,'delete'])->name('role.delete')->middleware('can:vai_tro-delete');
 });
-Route::group(['prefix'=>'permission','middleware'=>'CheckLogout'], function (){
+Route::group(['prefix'=>'permission','middleware'=>['CheckLogout','2fa']], function (){
     Route::get('/',[PermissionController::class,'index'])->name('permission.index')->middleware('can:phan_quyen-index');
     Route::post('/create',[PermissionController::class,'create'])->name('permission.create')->middleware('can:phan_quyen-add');
     Route::get('/edit/{id}',[PermissionController::class,'edit'])->name('permission.edit')->middleware('can:phan_quyen-edit');
@@ -69,7 +72,7 @@ Route::group(['prefix'=>'permission','middleware'=>'CheckLogout'], function (){
 });
 
 
-Route::group(['prefix'=>'project','middleware'=>'CheckLogout'], function (){
+Route::group(['prefix'=>'project','middleware'=>['CheckLogout','2fa']], function (){
     Route::get('/',[ProjectController::class,'index'])->name('project.index')->middleware('can:project-index');
     Route::post('/create',[ProjectController::class,'create'])->name('project.create')->middleware('can:project-add');
     Route::get('/edit/{id}',[ProjectController::class,'edit'])->name('project.edit')->middleware('can:project-edit');
@@ -78,7 +81,7 @@ Route::group(['prefix'=>'project','middleware'=>'CheckLogout'], function (){
     Route::get('/delete/{id}',[ProjectController::class,'delete'])->name('project.delete')->middleware('can:project-delete');
     Route::get('/getlist',[ProjectController::class,'getList'])->name('project.get_content');
 });
-Route::group(['prefix'=>'template','middleware'=>'CheckLogout'], function (){
+Route::group(['prefix'=>'template','middleware'=>['CheckLogout','2fa']], function (){
     Route::get('/',[TemplateController::class,'index'])->name('template.index')->middleware('can:template-index');
     Route::post('/create',[TemplateController::class,'create'])->name('template.create')->middleware('can:template-add');
     Route::get('/edit/{id}',[TemplateController::class,'edit'])->name('template.edit')->middleware('can:template-edit');
@@ -86,7 +89,7 @@ Route::group(['prefix'=>'template','middleware'=>'CheckLogout'], function (){
     Route::post('/update',[TemplateController::class,'update'])->name('template.update')->middleware('can:template-update');
     Route::get('/delete/{id}',[TemplateController::class,'delete'])->name('template.delete')->middleware('can:template-delete');
 });
-Route::group(['prefix'=>'ga_dev','middleware'=>'CheckLogout'], function (){
+Route::group(['prefix'=>'ga_dev','middleware'=>['CheckLogout','2fa']], function (){
     Route::get('/',[Ga_devController::class,'index'])->name('gadev.index')->middleware('can:gadev-index');
     Route::post('/create',[Ga_devController::class,'create'])->name('gadev.create')->middleware('can:gadev-add');
     Route::get('/edit/{id}',[Ga_devController::class,'edit'])->name('gadev.edit')->middleware('can:gadev-edit');
@@ -95,7 +98,7 @@ Route::group(['prefix'=>'ga_dev','middleware'=>'CheckLogout'], function (){
     Route::get('/delete/{id}',[Ga_devController::class,'delete'])->name('gadev.delete')->middleware('can:gadev-delete');
 });
 
-Route::group(['prefix'=>'dev','middleware'=>'CheckLogout'], function (){
+Route::group(['prefix'=>'dev','middleware'=>['CheckLogout','2fa']], function (){
     Route::get('/',[DevController::class,'index'])->name('dev.index')->middleware('can:dev-index');
     Route::post('/create',[DevController::class,'create'])->name('dev.create')->middleware('can:dev-add');
     Route::get('/edit/{id}',[DevController::class,'edit'])->name('dev.edit')->middleware('can:dev-edit');
@@ -104,7 +107,7 @@ Route::group(['prefix'=>'dev','middleware'=>'CheckLogout'], function (){
     Route::get('/delete/{id}',[DevController::class,'delete'])->name('dev.delete')->middleware('can:dev-delete');
 });
 
-Route::group(['prefix'=>'ga','middleware'=>'CheckLogout'], function (){
+Route::group(['prefix'=>'ga','middleware'=>['CheckLogout','2fa']], function (){
     Route::get('/',[GaController::class,'index'])->name('ga.index')->middleware('can:ga-index');
     Route::post('/create',[GaController::class,'create'])->name('ga.create')->middleware('can:ga-add');
     Route::get('/edit/{id}',[GaController::class,'edit'])->name('ga.edit')->middleware('can:ga-edit');
@@ -114,7 +117,7 @@ Route::group(['prefix'=>'ga','middleware'=>'CheckLogout'], function (){
 });
 
 
-Route::group(['prefix'=>'da','middleware'=>'CheckLogout'], function (){
+Route::group(['prefix'=>'da','middleware'=>['CheckLogout','2fa']], function (){
     Route::get('/',[DaController::class,'index'])->name('da.index')->middleware('can:du_an-index');
     Route::post('/create',[DaController::class,'create'])->name('da.create')->middleware('can:du_an-add');
     Route::get('/edit/{id}',[DaController::class,'edit'])->name('da.edit')->middleware('can:du_an-edit');
@@ -123,7 +126,7 @@ Route::group(['prefix'=>'da','middleware'=>'CheckLogout'], function (){
     Route::get('/delete/{id}',[DaController::class,'delete'])->name('da.delete')->middleware('can:du_an-delete');
 });
 
-Route::group(['prefix'=>'khosim','middleware'=>'CheckLogout'], function (){
+Route::group(['prefix'=>'khosim','middleware'=>['CheckLogout','2fa']], function (){
     Route::get('/',[KhosimController::class,'index'])->name('khosim.index')->middleware('can:khosim-index');
     Route::post('/create',[KhosimController::class,'create'])->name('khosim.create')->middleware('can:khosim-add');
     Route::get('/edit/{id}',[KhosimController::class,'edit'])->name('khosim.edit')->middleware('can:khosim-edit');
@@ -132,7 +135,7 @@ Route::group(['prefix'=>'khosim','middleware'=>'CheckLogout'], function (){
     Route::get('/delete/{id}',[KhosimController::class,'delete'])->name('khosim.delete')->middleware('can:khosim-delete');
 });
 
-Route::group(['prefix'=>'cocsim','middleware'=>'CheckLogout'], function (){
+Route::group(['prefix'=>'cocsim','middleware'=>['CheckLogout','2fa']], function (){
     Route::get('/',[CocsimController::class,'index'])->name('cocsim.index')->middleware('can:cocsim-index');
     Route::post('/create',[CocsimController::class,'create'])->name('cocsim.create')->middleware('can:cocsim-add');
     Route::get('/edit/{id}',[CocsimController::class,'edit'])->name('cocsim.edit')->middleware('can:cocsim-edit');
@@ -141,7 +144,7 @@ Route::group(['prefix'=>'cocsim','middleware'=>'CheckLogout'], function (){
     Route::get('/delete/{id}',[CocsimController::class,'delete'])->name('cocsim.delete')->middleware('can:cocsim-delete');
 });
 
-Route::group(['prefix'=>'hub','middleware'=>'CheckLogout'], function (){
+Route::group(['prefix'=>'hub','middleware'=>['CheckLogout','2fa']], function (){
     Route::get('/',[HubController::class,'index'])->name('hub.index')->middleware('can:hub-index');
     Route::post('/create',[HubController::class,'create'])->name('hub.create')->middleware('can:hub-add');
     Route::get('/edit/{id}',[HubController::class,'edit'])->name('hub.edit')->middleware('can:hub-edit');
@@ -153,13 +156,30 @@ Route::group(['prefix'=>'hub','middleware'=>'CheckLogout'], function (){
 });
 
 
-Route::group(['prefix'=>'sms','middleware'=>'CheckLogout'], function (){
+Route::group(['prefix'=>'sms','middleware'=>['CheckLogout','2fa']], function (){
     Route::get('/',[SmsController::class,'index'])->name('sms.index')->middleware('can:sms-index');
     Route::post('/create',[SmsController::class,'create'])->name('sms.create')->middleware('can:sms-add');
     Route::get('/edit/{id}',[SmsController::class,'edit'])->name('sms.edit')->middleware('can:sms-edit');
     Route::get('/show/{id}',[SmsController::class,'show'])->name('sms.show')->middleware('can:sms-show');
     Route::post('/update',[SmsController::class,'update'])->name('sms.update')->middleware('can:sms-update');
     Route::get('/delete/{id}',[SmsController::class,'delete'])->name('sms.delete')->middleware('can:sms-delete');
+});
+
+
+
+Route::group(["middleware" => ["auth", "2fa"]], function() {
+    Route::get('/home',[HomeController::class,'index']);
+    Route::group(["prefix" => "two_face_auths"], function() {
+        Route::get('/',[TwoFaceAuthsController::class,'index'])->name('2fa_setting');
+        Route::post('/enable',[TwoFaceAuthsController::class,'enable'])->name('enable_2fa_setting');
+
+
+    });
+});
+
+Route::group(["middleware" => ["auth"], "prefix" => "two_face"], function() {
+    Route::get('/',[VerifyTwoFaceController::class,'index'])->name('two_face.index');
+    Route::post('/verify',[VerifyTwoFaceController::class,'verify'])->name('two_face.verify');
 });
 
 

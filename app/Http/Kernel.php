@@ -4,6 +4,7 @@ namespace App\Http;
 
 use App\Http\Middleware\CheckLogout;
 use App\Http\Middleware\CheckUser;
+use App\Http\Middleware\TwoFaceVerify;
 use Illuminate\Foundation\Http\Kernel as HttpKernel;
 
 class Kernel extends HttpKernel
@@ -66,5 +67,6 @@ class Kernel extends HttpKernel
         'verified' => \Illuminate\Auth\Middleware\EnsureEmailIsVerified::class,
         'CheckUser' => CheckUser::class,
         'CheckLogout' => CheckLogout::class,
+        '2fa' => TwoFaceVerify::class,
     ];
 }

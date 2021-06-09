@@ -46,11 +46,12 @@ class CocsimController extends Controller
     {
 
         $rules = [
-            'cocsim' =>'unique:ngocphandang_cocsim,cocsim',
+            'cocsim' =>'required|unique:ngocphandang_cocsim,cocsim',
 
         ];
         $message = [
             'cocsim.unique'=>'Tên cọc sim đã tồn tại',
+            'cocsim.required'=>'Tên cọc không để trống',
 
         ];
 
@@ -119,11 +120,12 @@ class CocsimController extends Controller
         $id = $request->id;
 
         $rules1 = [
-            'cocsim' =>'unique:ngocphandang_cocsim,cocsim,'.$id.',id',
+            'cocsim' =>'required|unique:ngocphandang_cocsim,cocsim,'.$id.',id',
             'phone.*' =>'numeric',
         ];
         $message = [
             'cocsim.unique'=>'Tên cọc sim đã tồn tại',
+            'cocsim.required'=>'Tên cọc sim không để trống',
             'phone.*.numeric' => ' :input không phải là số'
         ];
         $error = Validator::make($request->all(),$rules1, $message );

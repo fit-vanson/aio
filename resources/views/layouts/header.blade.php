@@ -1,8 +1,11 @@
    <!-- Top Bar Start -->
    <div class="topbar">
 
+
 <!-- LOGO -->
 <div class="topbar-left">
+
+
     <a href="{{route('index')}}" class="logo">
         <span>
                 <img src="assets/images/logo-light.png" alt="" height="18">
@@ -44,6 +47,9 @@
                 <div class="dropdown-menu dropdown-menu-right profile-dropdown ">
                     <!-- item-->
                     <div class="dropdown-divider"></div>
+                    <a class="dropdown-item" href="{{ route('2fa_setting') }}">
+                        Cập nhật 2FA
+                    </a>
                     <a class="dropdown-item text-danger" href="{{route('logout')}}"><i class="mdi mdi-power text-danger"></i> Logout</a>
                 </div>
             </div>

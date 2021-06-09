@@ -1,34 +1,6 @@
+
 @extends('layouts.master')
-
-@section('css')
-/*<!--Chartist Chart CSS -->*/
-<link rel="stylesheet" href="plugins/chartist/css/chartist.min.css">
-@endsection
-
-@section('breadcrumb')
-<div class="col-sm-6">
-     <h4 class="page-title">Trang chủ</h4>
-     <ol class="breadcrumb">
-         <li class="breadcrumb-item active">Chào mừng đến với trang quản trị</li>
-     </ol>
-</div>
-@endsection
-
-@section('content')
-    @if (session('status'))
-        <div class="alert alert-success" role="alert">
-            {{ session('status') }}
-        </div>
-    @endif
-    @if (session("error"))
-        <div class="alert alert-danger">
-            {{ session("error") }}
-        </div>
-    @endif
-    <?php
-    $secretCode = auth()->user()->secret_code;
-    if(!$secretCode){
-    ?>
+@section("content")
     <div class="container">
         <div class="row justify-content-center">
             <div class="col-md-8">
@@ -41,7 +13,6 @@
                                 @endforeach
                             </div>
                         @endif
-
                         <form role="form" method="post" action="{{ route('enable_2fa_setting') }}">
                             {{ csrf_field() }}
                             <h2>Scan barcode</h2>
@@ -59,8 +30,7 @@
                                 <input type="text" name="code" class="form-control" placeholder="123456" autocomplete="off" maxlength="6">
                             </div>
                             <div class="form-group">
-                                <button class="btn btn-success">Enable</button>
-                                <a href="" class="btn btn-secondary float-right">Cancel</a>
+                                <button class="btn btn-success">Cập nhật</button>
                             </div>
                         </form>
                     </div>
@@ -68,14 +38,4 @@
             </div>
         </div>
     </div>
-    <?php } ?>
-@endsection
-
-@section('script')
-<!--Chartist Chart-->
-<script src="plugins/chartist/js/chartist.min.js"></script>
-<script src="plugins/chartist/js/chartist-plugin-tooltip.min.js"></script>
-<!-- peity JS -->
-<script src="plugins/peity-chart/jquery.peity.min.js"></script>
-<script src="assets/pages/dashboard.js"></script>
 @endsection

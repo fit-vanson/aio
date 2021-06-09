@@ -13,8 +13,27 @@ use App\Http\Requests\LoginRequest;
 
 class HomeController extends Controller
 {
+    public function index()
+    {
+        return view('home');
+    }
     public function getHome(){
-        return view('index');
+        $googleAuthenticator = new \PHPGangsta_GoogleAuthenticator();
+        // Tạo secret code
+        $secretCode = $googleAuthenticator->createSecret();
+        // Tạo QR code từ secret code. Tham số đầu tiên là tên. Chúng ta sẽ hiển thị
+        // email hiện tại của người dùng. Tham số tiếp theo là secret code và tham số cuối cùng
+        // là tiêu đề của ứng dụng. Sử dụng để người dùng biết code này đang sử dụng cho dịch vụ nào
+        // Bạn có thể tùy ý sử dụng tham số 1 và 3.
+        $qrCodeUrl = $googleAuthenticator->getQRCodeGoogleUrl(
+            auth()->user()->email, $secretCode, config("app.name")
+        );
+        // Lưu secret code vào session để phục vụ cho việc kiểm tra bên dưới
+        // và update vào database trong trường hợp người dùng nhập đúng mã được sinh ra bởi
+        // ứng dụng Google Authenticator
+        session(["secret_code" => $secretCode]);
+        return view("index", compact("qrCodeUrl"));
+
     }
     public function getLogin(){
         return view('login');
@@ -42,6 +61,7 @@ class HomeController extends Controller
 
     }
     public function logout(){
+        session()->flush();
         Auth::logout();
         return \redirect()->intended('login');
     }
