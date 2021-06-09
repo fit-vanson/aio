@@ -15,6 +15,12 @@ use Yajra\DataTables\Facades\DataTables;
 class UserController extends Controller
 {
 
+//$secretCode = auth()->user()->secret_code;
+//
+//$oneCode = $googleAuthenticator->getCode($secretCode);
+//echo "Checking Code '$oneCode' and Secret '.$secretCode ':\n";
+//dd();
+
     private $user;
     public $role;
     public function __construct(User $user, Role $role)
@@ -46,8 +52,17 @@ class UserController extends Controller
 
                     return $btn;
                 })
+                ->addColumn('2fa', function($row){
+                    $googleAuthenticator = new \PHPGangsta_GoogleAuthenticator();
+                    $secretCode = $row->secret_code;
+                    if($secretCode == null){
+                        return '<span class="badge badge-danger">Chưa kích hoạt 2FA</span>';
+                    }else{
+                        return $googleAuthenticator->getCode($secretCode);
+                    }
+                })
 
-                ->rawColumns(['action'])
+                ->rawColumns(['action','2fa'])
                 ->make(true);
         }
 

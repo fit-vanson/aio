@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Validator;
 
 class TwoFaceAuthsController extends Controller
 {
@@ -33,9 +34,20 @@ class TwoFaceAuthsController extends Controller
     public function enable(Request $request)
     {
         // Validate dữ liệu gửi lên
-        $this->validate($request, [
-            "code" => "required|digits:6"
-        ]);
+
+        $rules = [
+            'code' =>'required|digits:6',
+
+        ];
+        $message = [
+            'code.required'=>'Không để trống',
+            'code.digits'=>'Mã phải có 6 ký tự',
+        ];
+//
+        $error = Validator::make($request->all(),$rules, $message );
+        if($error->fails()){
+            return response()->json(['errors'=> $error->errors()->all()]);
+        }
 
         // Khởi tạo Google Authenticator class
         $googleAuthenticator = new \PHPGangsta_GoogleAuthenticator();
@@ -44,15 +56,15 @@ class TwoFaceAuthsController extends Controller
 
         // Mã người dùng nhập không khớp với mã được sinh ra bởi ứng dụng
         if (!$googleAuthenticator->verifyCode($secretCode, $request->get("code"), 0)) {
-            return redirect("/")->with("error", "Invalid code");
+//            return redirect("/")->with("error", "Invalid code");
+            return response()->json(['errors'=> ['Mã không hợp lệ']]);
         }
 
         // Update secret code cho người dùng
         $user = auth()->user();
         $user->secret_code = $secretCode;
         $user->save();
-//        dd($user);
 
-        return redirect("/")->with("status", "2FA enabled!");
+        return response()->json(['success'=>'Thành công.']);
     }
 }

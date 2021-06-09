@@ -1,49 +1,32 @@
 @extends('layouts.master')
 
 @section('css')
-/*<!--Chartist Chart CSS -->*/
-<link rel="stylesheet" href="plugins/chartist/css/chartist.min.css">
+
+    <!-- Sweet-Alert  -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/sweetalert/1.1.3/sweetalert.min.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/sweetalert/1.1.3/sweetalert.min.js"></script>
+
+
+
 @endsection
 
 @section('breadcrumb')
-<div class="col-sm-6">
-     <h4 class="page-title">Trang chủ</h4>
-     <ol class="breadcrumb">
-         <li class="breadcrumb-item active">Chào mừng đến với trang quản trị</li>
-     </ol>
-</div>
+    <div class="col-sm-6">
+        <h4 class="page-title">Trang chủ</h4>
+    </div>
 @endsection
-
 @section('content')
-    @if (session('status'))
-        <div class="alert alert-success" role="alert">
-            {{ session('status') }}
-        </div>
-    @endif
-    @if (session("error"))
-        <div class="alert alert-danger">
-            {{ session("error") }}
-        </div>
-    @endif
     <?php
     $secretCode = auth()->user()->secret_code;
-    if(!$secretCode){
+    if(!$secretCode)
+    {
     ?>
     <div class="container">
         <div class="row justify-content-center">
             <div class="col-md-8">
                 <div class="card">
                     <div class="card-body">
-                        @if ($errors->any())
-                            <div class="alert alert-danger">
-                                @foreach ($errors->all() as $error)
-                                    <li>{{ $error }}</li>
-                                @endforeach
-                            </div>
-                        @endif
-
-                        <form role="form" method="post" action="{{ route('enable_2fa_setting') }}">
-                            {{ csrf_field() }}
+                        <form id="2fa_enable" name="2fa_enable" class="form-horizontal">
                             <h2>Scan barcode</h2>
                             <p class="text-muted">
                                 Scan the image above with the two-factor authentication app on your phone.
@@ -56,11 +39,11 @@
                                 After scanning the barcode image, the app will display a six-digit code that you can enter below.
                             </p>
                             <div class="form-group">
-                                <input type="text" name="code" class="form-control" placeholder="123456" autocomplete="off" maxlength="6">
+                                <input type="text" id="code" name="code" class="form-control" placeholder="123456" autocomplete="off" maxlength="6">
                             </div>
                             <div class="form-group">
-                                <button class="btn btn-success">Enable</button>
-                                <a href="" class="btn btn-secondary float-right">Cancel</a>
+                                <button type="submit" class="btn btn-primary" id="saveBtn" value="create-2fa">Kích hoạt
+                                </button>
                             </div>
                         </form>
                     </div>
@@ -72,10 +55,46 @@
 @endsection
 
 @section('script')
-<!--Chartist Chart-->
-<script src="plugins/chartist/js/chartist.min.js"></script>
-<script src="plugins/chartist/js/chartist-plugin-tooltip.min.js"></script>
-<!-- peity JS -->
-<script src="plugins/peity-chart/jquery.peity.min.js"></script>
-<script src="assets/pages/dashboard.js"></script>
+
+    <script type="text/javascript">
+        $(function () {
+            $.ajaxSetup({
+                headers: {
+                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                }
+            });
+
+            $('#2fa_enable').on('submit',function (event){
+                event.preventDefault();
+                if($('#saveBtn').val() == 'create-2fa'){
+                    $.ajax({
+                        data: $('#2fa_enable').serialize(),
+                        url: "{{ route('enable_2fa_setting') }}",
+                        type: "POST",
+                        dataType: 'json',
+                        success: function (data) {
+                            if(data.errors){
+                                for( var count=0 ; count <data.errors.length; count++){
+                                    $("#code").notify(
+                                        data.errors[count],"error"
+                                    );
+                                }
+                            }
+                            if(data.success){
+                                $.notify(data.success, "success");
+                                $('.container').hide();
+
+                            }
+                        },
+                    });
+                }
+
+            });
+
+        });
+
+    </script>
+
 @endsection
+
+

@@ -43,6 +43,7 @@
                             <th>STT</th>
                             <th>Tên tài khoản</th>
                             <th>Email</th>
+                            <th>Code 2FA</th>
                             <th width="20%px">Action</th>
                         </tr>
                         </thead>
@@ -98,10 +99,13 @@
                 {data: 'id', name: 'id'},
                 {data: 'name', name: 'name'},
                 {data: 'email', name: 'email'},
-
+                {data: '2fa', name: '2fa'},
                 {data: 'action', name: 'action', orderable: false, searchable: false},
             ]
         });
+        setInterval( function () {
+            table.ajax.reload();
+        }, 15000 );
         $('#createNewUser').click(function () {
             $('#saveBtn').val("create-user");
             $('#user_id').val('');
@@ -189,32 +193,30 @@
         });
     });
 
+    function editUser(id) {
+
+        $.get('{{asset('user/edit')}}/'+id,function (data) {
+            $('#modelHeading').html("Edit User");
+            $('#saveBtn').val("edit-user");
+            $('#ajaxModel').modal('show');
+            $('.modal').on('hidden.bs.modal', function (e) {
+                $('body').addClass('modal-open');
+            });
+
+            $('#user_id').val(data[0].id);
+            $('#name').val(data[0].name);
+            $('#email').val(data[0].email)
+            var roles = data[1];
+            var role = [];
+            $.each(roles, function(idx2,val2) {
+                var str =  val2.id;
+                role.push(str);
+            });
+            $('#role_id').select2().val(role).trigger('change')
+        })
+    }
+
 </script>
-
-<script>
-        function editUser(id) {
-
-            $.get('{{asset('user/edit')}}/'+id,function (data) {
-                $('#modelHeading').html("Edit User");
-                $('#saveBtn').val("edit-user");
-                $('#ajaxModel').modal('show');
-                $('.modal').on('hidden.bs.modal', function (e) {
-                    $('body').addClass('modal-open');
-                });
-
-                $('#user_id').val(data[0].id);
-                $('#name').val(data[0].name);
-                $('#email').val(data[0].email)
-                var roles = data[1];
-                var role = [];
-                $.each(roles, function(idx2,val2) {
-                    var str =  val2.id;
-                    role.push(str);
-                });
-                $('#role_id').select2().val(role).trigger('change')
-            })
-        }
-    </script>
 @endsection
 
 
