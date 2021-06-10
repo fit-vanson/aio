@@ -7,7 +7,6 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/sweetalert/1.1.3/sweetalert.min.js"></script>
 
 
-
 @endsection
 
 @section('breadcrumb')
@@ -77,6 +76,7 @@
                             }
                             if(data.success){
                                 $.notify(data.success, "success");
+                                window.location.href  = "{{ route('index') }}";
                             }
                         },
                     });

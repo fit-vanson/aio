@@ -1,6 +1,12 @@
 
 
 @extends('layouts.master-blank')
+@section('css')
+
+    <!-- Sweet-Alert  -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/sweetalert/1.1.3/sweetalert.min.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/sweetalert/1.1.3/sweetalert.min.js"></script>
+@endsection
 
 @section('content')
     <div class="home-btn d-none d-sm-block">
@@ -18,21 +24,12 @@
             </div>
 
             <div class="account-card-content">
-
-                <form role="form" method="post" action="{{ route('two_face.verify') }}">
-                    {{ csrf_field() }}
-                    @if ($errors->any())
-                        <div class="alert alert-danger">
-                            @foreach ($errors->all() as $error)
-                                <li>{{ $error }}</li>
-                            @endforeach
-                        </div>
-                    @endif
+                <form id="2fa_verify" name="2fa_verify" class="form-horizontal">
                     <div class="form-group">
                         <label class="control-label" for="otp">
                             <b>Authentication code</b>
                         </label>
-                        <input type="text" name="code" class="form-control" placeholder="123456" autocomplete="off" maxlength="6" id="otp">
+                        <input type="text" id='code' name="code" class="form-control" placeholder="123456" autocomplete="off" maxlength="6" id="otp">
                     </div>
                     <div class="form-group">
                         <button class="btn btn-primary w-md waves-effect waves-light">Verify</button>
@@ -45,10 +42,47 @@
             </div>
         </div>
     </div>
-    <!-- end wrapper-page -->
+
 @endsection
 
 @section('script')
-@endsection
 
+    <script type="text/javascript">
+        $(function () {
+            $.ajaxSetup({
+                headers: {
+                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                }
+            });
+
+            $('#2fa_verify').on('submit',function (event){
+                event.preventDefault();
+
+                $.ajax({
+                    data: $('#2fa_verify').serialize(),
+                    url: "{{ route('two_face.verify') }}",
+                    type: "POST",
+                    dataType: 'json',
+                    success: function (data) {
+                        console.log(data)
+                        if(data.errors){
+                            for( var count=0 ; count <data.errors.length; count++){
+                                $("#code").notify(
+                                    data.errors[count],"error"
+                                );
+                            }
+                        }
+                        if(data.success){
+                            $.notify(data.success, "success");
+                            window.location.href  = "{{ route('index') }}";
+                        }
+                    },
+                });
+            });
+
+        });
+
+    </script>
+
+@endsection
 

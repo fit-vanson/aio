@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
+use PragmaRX\Google2FA\Google2FA;
 
 class TwoFaceAuthsController extends Controller
 {
@@ -24,12 +25,17 @@ class TwoFaceAuthsController extends Controller
         $qrCodeUrl = $googleAuthenticator->getQRCodeGoogleUrl(
             auth()->user()->email, $secretCode, config("app.name")
         );
-        dd(config("app.name"));
+
+
         // Lưu secret code vào session để phục vụ cho việc kiểm tra bên dưới
         // và update vào database trong trường hợp người dùng nhập đúng mã được sinh ra bởi
         // ứng dụng Google Authenticator
         session(["secret_code" => $secretCode]);
         return view("two_face_auths.index", compact("qrCodeUrl"));
+
+
+
+
     }
 
     public function enable(Request $request)
@@ -38,7 +44,6 @@ class TwoFaceAuthsController extends Controller
 
         $rules = [
             'code' =>'required|digits:6',
-
         ];
         $message = [
             'code.required'=>'Không để trống',
@@ -65,7 +70,6 @@ class TwoFaceAuthsController extends Controller
         $user = auth()->user();
         $user->secret_code = $secretCode;
         $user->save();
-
         return response()->json(['success'=>'Thành công.']);
     }
 }

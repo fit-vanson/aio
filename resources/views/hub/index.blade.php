@@ -219,7 +219,6 @@
                 $('.modal').on('hidden.bs.modal', function (e) {
                     $('body').addClass('modal-open');
                 });
-
                 $('#id').val(data.id);
                 $('#hubname').val(data.hubname);
                 $('#cocsim').val(data.cocsim)
@@ -238,8 +237,9 @@
                 }
             })
         }
-        $("#checkAll").click(function () {
-            $('input:checkbox').not(this).prop('checked', this.checked);
+        $("#checkAll").click(function(){
+            $("input[type=checkbox]").prop('checked', $(this).prop('checked'));
+
         });
 
     </script>

@@ -15,6 +15,7 @@
         "laravel/framework": "^8.6.0",
         "laravel/tinker": "^2.0",
         "phpgangsta/googleauthenticator": "dev-master",
+        "pragmarx/google2fa": "^8.0",
         "sunra/php-simple-html-dom-parser": "^1.5",
         "voku/portable-utf8": "^5.4",
         "voku/simple_html_dom": "^4.7",

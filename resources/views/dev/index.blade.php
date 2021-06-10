@@ -231,7 +231,7 @@
                 $('#info_policydev').val(data.info_policydev);
                 $('#info_fanpage').val(data.info_fanpage);
                 $('#info_web').val(data.info_web);
-                $('#startus').val(data.status);
+                $('#status').val(data.status);
                 $('#note').val(data.note);
 
                 $('#modelHeading').html("Edit");

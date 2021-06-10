@@ -38,7 +38,7 @@
                                 </ul>
                             </li>
                             <li>
-                                <a href="javascript:void(0);" class="waves-effect"><i class="ti-archive"></i> <span> Quản lý Sim <span class="float-right menu-arrow"><i class="mdi mdi-chevron-right"></i></span> </span> </a>
+                                <a href="javascript:void(0);" class="waves-effect"><i class="mdi mdi-sim"></i> <span> Quản lý Sim <span class="float-right menu-arrow"><i class="mdi mdi-chevron-right"></i></span> </span> </a>
                                 <ul class="submenu">
                                     @can('khosim-index')
                                         <li><a href="{{route('khosim.index')}}">Quản lý Kho sim</a></li>
@@ -51,6 +51,14 @@
                                     @endcan
                                     @can('sms-index')
                                         <li><a href="{{route('sms.index')}}">Quản lý SMS</a></li>
+                                    @endcan
+                                </ul>
+                            </li>
+                            <li>
+                                <a href="javascript:void(0);" class="waves-effect"><i class="ti-email"></i> <span> Quản lý Gmail<span class="float-right menu-arrow"><i class="mdi mdi-chevron-right"></i></span> </span> </a>
+                                <ul class="submenu">
+                                    @can('mail_manage-index')
+                                        <li><a href="{{route('mail_manage.index')}}">Quản lý Mail</a></li>
                                     @endcan
                                 </ul>
                             </li>

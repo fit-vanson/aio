@@ -9,6 +9,7 @@ use App\Policies\DevPolicy;
 use App\Policies\Ga_devPolicy;
 use App\Policies\GaPolicy;
 use App\Policies\HubPolicy;
+use App\Policies\MaiManagePolicy;
 use App\Policies\PermissionPolicy;
 use App\Policies\ProjectPolicy;
 use App\Policies\RolePolicy;
@@ -53,6 +54,7 @@ class AuthServiceProvider extends ServiceProvider
        $this->defineCocsim();
        $this->defineHub();
        $this->defineSms();
+       $this->defineMailManage();
     }
 
     public function defineProject(){
@@ -166,6 +168,15 @@ class AuthServiceProvider extends ServiceProvider
         Gate::define('sms-edit', [SmsPolicy::class, 'edit']);
         Gate::define('sms-update', [SmsPolicy::class, 'update']);
         Gate::define('sms-delete', [SmsPolicy::class, 'delete']);
+    }
+
+    public function defineMailManage(){
+        Gate::define('mail_manage-index', [MaiManagePolicy::class, 'index']);
+        Gate::define('mail_manage-show', [MaiManagePolicy::class, 'show']);
+        Gate::define('mail_manage-add', [MaiManagePolicy::class, 'add']);
+        Gate::define('mail_manage-edit', [MaiManagePolicy::class, 'edit']);
+        Gate::define('mail_manage-update', [MaiManagePolicy::class, 'update']);
+        Gate::define('mail_manage-delete', [MaiManagePolicy::class, 'delete']);
     }
 
 

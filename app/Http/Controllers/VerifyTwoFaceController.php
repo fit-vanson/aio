@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Validator;
 
 class VerifyTwoFaceController extends Controller
 {
@@ -13,20 +14,26 @@ class VerifyTwoFaceController extends Controller
 
     public function verify(Request $request)
     {
-        $this->validate($request, [
-            "code" => "required|digits:6",
-        ]);
 
+        $rules = [
+            'code' =>'required|digits:6',
 
+        ];
+        $message = [
+            'code.required'=>'Không để trống',
+            'code.digits'=>'Mã phải có 6 chữ số',
+        ];
+//
+        $error = Validator::make($request->all(),$rules, $message );
+        if($error->fails()){
+            return response()->json(['errors'=> $error->errors()->all()]);
+        }
         $googleAuthenticator = new \PHPGangsta_GoogleAuthenticator();
         $secretCode = auth()->user()->secret_code;
         if (!$googleAuthenticator->verifyCode($secretCode, $request->get("code"), 0)) {
-            $errors = new \Illuminate\Support\MessageBag();
-            $errors->add("code", "Invalid authentication code");
-            return redirect()->back()->withErrors($errors);
+            return response()->json(['errors'=> ['Mã không hợp lệ']]);
         }
-
         session(["2fa_verified" => true]);
-        return \redirect()->intended('admin/');
+        return response()->json(['success'=>'Đăng nhập thành công.']);
     }
 }

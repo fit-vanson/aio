@@ -119,7 +119,7 @@
                         if (data==0) {
                             return 'Mặc định'
                         }if (data==1){
-                            return '<span class="badge badge-dark">Build App</span>'
+                            return '<span class="badge badge-dark">Publish</span>'
                         }if (data==2){
                             return '<span class="badge badge-warning">Suppend</span>'
                         }if (data==3){

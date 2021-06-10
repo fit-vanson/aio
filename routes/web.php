@@ -9,6 +9,7 @@ use App\Http\Controllers\GaController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\HubController;
 use App\Http\Controllers\KhosimController;
+use App\Http\Controllers\MailManageController;
 use App\Http\Controllers\PermissionController;
 use App\Http\Controllers\ProjectController;
 use App\Http\Controllers\RoleController;
@@ -163,6 +164,16 @@ Route::group(['prefix'=>'sms','middleware'=>['CheckLogout','2fa']], function (){
     Route::get('/show/{id}',[SmsController::class,'show'])->name('sms.show')->middleware('can:sms-show');
     Route::post('/update',[SmsController::class,'update'])->name('sms.update')->middleware('can:sms-update');
     Route::get('/delete/{id}',[SmsController::class,'delete'])->name('sms.delete')->middleware('can:sms-delete');
+});
+
+
+Route::group(['prefix'=>'mail_manage','middleware'=>['CheckLogout','2fa']], function (){
+    Route::get('/',[MailManageController::class,'index'])->name('mail_manage.index')->middleware('can:mail_manage-index');
+    Route::post('/create',[MailManageController::class,'create'])->name('mail_manage.create')->middleware('can:mail_manage-add');
+    Route::get('/edit/{id}',[MailManageController::class,'edit'])->name('mail_manage.edit')->middleware('can:mail_manage-edit');
+    Route::get('/show/{id}',[MailManageController::class,'show'])->name('mail_manage.show')->middleware('can:mail_manage-show');
+    Route::post('/update',[MailManageController::class,'update'])->name('mail_manage.update')->middleware('can:mail_manage-update');
+    Route::get('/delete/{id}',[MailManageController::class,'delete'])->name('mail_manage.delete')->middleware('can:mail_manage-delete');
 });
 
 

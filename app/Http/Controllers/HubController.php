@@ -38,8 +38,8 @@ class HubController extends Controller
                 })
                 ->editColumn('lockauto', function($data){
                     if($data->lockauto == 0 ){
-                        return '<input type="checkbox" class="checkbox" checked onclick="checkbox('.$data->id.')">';
-                    }return '<input type="checkbox" class="checkbox"   onclick="checkbox('.$data->id.')">';
+                        return '<input type="checkbox" class="checkbox" checked onchange="checkbox('.$data->id.')">';
+                    }return '<input type="checkbox" class="checkbox"   onchange="checkbox('.$data->id.')">';
 
                 })
 
