@@ -101,13 +101,13 @@
                                 return '<span class="badge badge-dark">Chưa xử dụng</span>';
                             }
                             if(data == 1){
-                                return '<span class="badge badge-primary">Đang phát triển</span>';
+                                return '<span class="badge badge-primary">Đang sử dụng</span>';
                             }
                             if(data == 2){
-                                return '<span class="badge badge-warning">Đóng</span>';
+                                return '<span class="badge badge-warning">Tụt Match Rate</span>';
                             }
                             if(data == 3){
-                                return '<span class="badge badge-danger">Suspend</span>';
+                                return '<span class="badge badge-danger">Disable</span>';
                             }
                         },
 
@@ -226,7 +226,7 @@
                 $('#payment').val(data.payment);
                 $('#app_ads').val(data.app_ads);
                 $('#note').val(data.note);
-                $('#startus').val(data.status);
+                $('#status').val(data.status);
 
                 $('#modelHeading').html("Edit");
                 $('#saveBtn').val("edit-ga");
