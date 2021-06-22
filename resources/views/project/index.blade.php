@@ -239,38 +239,38 @@
 <script>
     function editProject(id) {
         $.get('{{asset('project/edit')}}/'+id,function (data) {
-            $('#project_id').val(data.projectid);
-            $('#projectname').val(data.projectname);
-            $('#template').val(data.template);
+            $('#project_id').val(data[0].projectid);
+            $('#projectname').val(data[0].projectname);
+            $('#template').val(data[0].template);
             $('#template').select2();
-            $('#ma_da').val(data.ma_da);
+            $('#ma_da').val(data[0].ma_da);
             $('#ma_da').select2();
-            $('#buildinfo_store_name_x').val(data.buildinfo_store_name_x);
+            $('#buildinfo_store_name_x').val(data[0].buildinfo_store_name_x);
             $('#buildinfo_store_name_x').select2();
-            $('#package').val(data.package);
-            $('#title_app').val(data.title_app);
-            $('#buildinfo_link_policy_x').val(data.buildinfo_link_policy_x);
-            $('#buildinfo_link_fanpage').val(data.buildinfo_link_fanpage);
-            $('#buildinfo_link_website').val(data.buildinfo_link_website);
-            $('#buildinfo_link_store').val(data.buildinfo_link_store);
-            $('#buildinfo_app_name_x').val(data.buildinfo_app_name_x);
-            $('#buildinfo_vernum').val(data.buildinfo_vernum);
-            $('#buildinfo_verstr').val(data.buildinfo_verstr);
-            $('#buildinfo_keystore').val(data.buildinfo_keystore);
-            $('#buildinfo_console').val(data.buildinfo_console);
-            $('#ads_id').val(data.ads_id);
-            $('#banner').val(data.ads_banner);
-            $('#ads_inter').val(data.ads_inter);
-            $('#ads_reward').val(data.ads_reward);
-            $('#ads_native').val(data.ads_native);
-            $('#ads_open').val(data.ads_open);
-            $('#buildinfo_time').val(data.buildinfo_time);
-            $('#buildinfo_mess').val(data.buildinfo_mess);
-            $('#time_mess').val(data.time_mess);
-            $('#buildinfo_email_dev_x').val(data.buildinfo_email_dev_x);
-            $('#buildinfo_link_youtube_x').val(data.buildinfo_link_youtube_x);
-            $('#buildinfo_api_key_x').val(data.buildinfo_api_key_x);
-            $('#status').val(data.status);
+            $('#package').val(data[0].package);
+            $('#title_app').val(data[0].title_app);
+            $('#buildinfo_link_policy_x').val(data[0].buildinfo_link_policy_x);
+            $('#buildinfo_link_fanpage').val(data[0].buildinfo_link_fanpage);
+            $('#buildinfo_link_website').val(data[0].buildinfo_link_website);
+            $('#buildinfo_link_store').val(data[0].buildinfo_link_store);
+            $('#buildinfo_app_name_x').val(data[0].buildinfo_app_name_x);
+            $('#buildinfo_vernum').val(data[0].buildinfo_vernum);
+            $('#buildinfo_verstr').val(data[0].buildinfo_verstr);
+            $('#buildinfo_keystore').val(data[0].buildinfo_keystore);
+            $('#buildinfo_console').val(data[0].buildinfo_console);
+            $('#ads_id').val(data[0].ads_id);
+            $('#banner').val(data[0].ads_banner);
+            $('#ads_inter').val(data[0].ads_inter);
+            $('#ads_reward').val(data[0].ads_reward);
+            $('#ads_native').val(data[0].ads_native);
+            $('#ads_open').val(data[0].ads_open);
+            $('#buildinfo_time').val(data[0].buildinfo_time);
+            $('#buildinfo_mess').val(data[0].buildinfo_mess);
+            $('#time_mess').val(data[0].time_mess);
+            $('#buildinfo_email_dev_x').val(data[0].buildinfo_email_dev_x);
+            $('#buildinfo_link_youtube_x').val(data[0].buildinfo_link_youtube_x);
+            $('#buildinfo_api_key_x').val(data[0].buildinfo_api_key_x);
+            $('#status').val(data[0].status);
             $('#modelHeading').html("Edit Project");
             $('#saveBtn').val("edit-project");
             $('#ajaxModel').modal('show');
@@ -282,35 +282,35 @@
 
     function quickEditProject(id) {
         $.get('{{asset('project/edit')}}/'+id,function (data) {
-            $('#quick_project_id').val(data.projectid);
-            $('#quick_projectname').val(data.projectname);
-            $('#quick_template').val(data.template);
-            $('#quick_ma_da').val(data.ma_da);
-            $('#quick_package').val(data.package);
-            $('#quick_title_app').val(data.title_app);
-            $('#quick_buildinfo_link_policy_x').val(data.buildinfo_link_policy_x);
-            $('#quick_buildinfo_link_fanpage').val(data.buildinfo_link_fanpage);
-            $('#quick_buildinfo_link_website').val(data.buildinfo_link_website);
-            $('#quick_buildinfo_link_store').val(data.buildinfo_link_store);
-            $('#quick_buildinfo_app_name_x').val(data.buildinfo_app_name_x);
-            $('#quick_buildinfo_store_name_x').val(data.buildinfo_store_name_x);
-            $('#quick_buildinfo_vernum').val(data.buildinfo_vernum);
-            $('#quick_buildinfo_verstr').val(data.buildinfo_verstr);
-            $('#quick_buildinfo_keystore').val(data.buildinfo_keystore);
-            $('#quick_buildinfo_console').val(data.buildinfo_console);
-            $('#quick_ads_id').val(data.ads_id);
-            $('#quick_banner').val(data.ads_banner);
-            $('#quick_ads_inter').val(data.ads_inter);
-            $('#quick_ads_reward').val(data.ads_reward);
-            $('#quick_ads_native').val(data.ads_native);
-            $('#quick_ads_open').val(data.ads_open);
-            $('#quick_buildinfo_time').val(data.buildinfo_time);
-            $('#quick_buildinfo_mess').val(data.buildinfo_mess);
-            $('#quick_time_mess').val(data.time_mess);
-            $('#quick_buildinfo_email_dev_x').val(data.buildinfo_email_dev_x);
-            $('#quick_buildinfo_link_youtube_x').val(data.buildinfo_link_youtube_x);
-            $('#quick_buildinfo_api_key_x').val(data.buildinfo_api_key_x);
-            $('#quick_status').val(data.status);
+            $('#quick_project_id').val(data[0].projectid);
+            $('#quick_projectname').val(data[0].projectname);
+            $('#quick_template').val(data[0].template);
+            $('#quick_ma_da').val(data[0].ma_da);
+            $('#quick_package').val(data[0].package);
+            $('#quick_title_app').val(data[0].title_app);
+            $('#quick_buildinfo_link_policy_x').val(data[0].buildinfo_link_policy_x);
+            $('#quick_buildinfo_link_fanpage').val(data[0].buildinfo_link_fanpage);
+            $('#quick_buildinfo_link_website').val(data[0].buildinfo_link_website);
+            $('#quick_buildinfo_link_store').val(data[0].buildinfo_link_store);
+            $('#quick_buildinfo_app_name_x').val(data[0].buildinfo_app_name_x);
+            $('#quick_buildinfo_store_name_x').val(data[0].buildinfo_store_name_x);
+            $('#quick_buildinfo_vernum').val(data[0].buildinfo_vernum);
+            $('#quick_buildinfo_verstr').val(data[0].buildinfo_verstr);
+            $('#quick_buildinfo_keystore').val(data[0].buildinfo_keystore);
+            $('#quick_buildinfo_console').val(data[0].buildinfo_console);
+            $('#quick_ads_id').val(data[0].ads_id);
+            $('#quick_banner').val(data[0].ads_banner);
+            $('#quick_ads_inter').val(data[0].ads_inter);
+            $('#quick_ads_reward').val(data[0].ads_reward);
+            $('#quick_ads_native').val(data[0].ads_native);
+            $('#quick_ads_open').val(data[0].ads_open);
+            $('#quick_buildinfo_time').val(data[0].buildinfo_time);
+            $('#quick_buildinfo_mess').val(data[0].buildinfo_mess);
+            $('#quick_time_mess').val(data[0].time_mess);
+            $('#quick_buildinfo_email_dev_x').val(data[0].buildinfo_email_dev_x);
+            $('#quick_buildinfo_link_youtube_x').val(data[0].buildinfo_link_youtube_x);
+            $('#quick_buildinfo_api_key_x').val(data[0].buildinfo_api_key_x);
+            $('#quick_status').val(data[0].status);
 
 
             $('#modelQuickHeading').html("Quick Edit Project");
@@ -321,9 +321,11 @@
 
 
     function showPolicy(id) {
-        $.get('{{asset('template/edit')}}/'+id,function (data) {
-            let policy1 = data[0].policy1.replaceAll("{APP_NAME_X}", data[1].buildinfo_app_name_x).replaceAll("{STORE_NAME_X}", data[2].store_name);
-            let policy2 = data[0].policy2.replaceAll("{APP_NAME_X}", data[1].buildinfo_app_name_x).replaceAll("{STORE_NAME_X}", data[2].store_name);
+        $.get('{{asset('project/edit')}}/'+id,function (data) {
+            if(data[2] == null) { data[2] = '222'}
+            if(data[1] == null) { data[1] = ''}
+            let policy1 = data[1].policy1.replaceAll("{APP_NAME_X}", data[0].buildinfo_app_name_x).replaceAll("{STORE_NAME_X}", data[2].store_name);
+            let policy2 = data[1].policy2.replaceAll("{APP_NAME_X}", data[0].buildinfo_app_name_x).replaceAll("{STORE_NAME_X}", data[2].store_name);
             $('#policy1').val(policy1);
             $('#policy2').val(policy2);
             $('#modelHeadingPolicy').html("Show Policy");

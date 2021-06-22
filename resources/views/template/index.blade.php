@@ -209,19 +209,19 @@
 <script>
     function editTemplate(id) {
         $.get('{{asset('template/edit')}}/'+id,function (data) {
-            $('#template_id').val(data[0].id);
-            $('#template').val(data[0].template);
-            $('#ver_build').val(data[0].ver_build);
-            $('#script_copy').val(data[0].script_copy);
-            $('#script_img').val(data[0].script_img);
-            $('#script_svg2xml').val(data[0].script_svg2xml);
-            $('#script_file').val(data[0].script_file);
-            $('#permissions').val(data[0].permissions);
-            $('#policy1').val(data[0].policy1);
-            $('#policy2').val(data[0].policy2);
-            $('#note').val(data[0].note);
-            $('#link_chplay').val(data[0].link_chplay);
-            $('#category').val(data[0].category);
+            $('#template_id').val(data.id);
+            $('#template').val(data.template);
+            $('#ver_build').val(data.ver_build);
+            $('#script_copy').val(data.script_copy);
+            $('#script_img').val(data.script_img);
+            $('#script_svg2xml').val(data.script_svg2xml);
+            $('#script_file').val(data.script_file);
+            $('#permissions').val(data.permissions);
+            $('#policy1').val(data.policy1);
+            $('#policy2').val(data.policy2);
+            $('#note').val(data.note);
+            $('#link_chplay').val(data.link_chplay);
+            $('#category').val(data.category);
 
             $('#modelHeading').html("Edit");
             $('#saveBtn').val("edit-template");

@@ -101,7 +101,7 @@ class ProjectController extends Controller
                         ->first();
 //                    dd($policy);
                     if($policy->policy1 != '' || $policy->policy2 != ''){
-                        $policy = ' <a href="javascript:void(0)" onclick="showPolicy('.$policy->id.')"><span class="badge badge-primary">Policy</span></a>';
+                        $policy = ' <a href="javascript:void(0)" onclick="showPolicy('.$data->projectid.')"><span class="badge badge-primary">Policy</span></a>';
                     }else{
                         $policy = '';
                     }
@@ -204,8 +204,14 @@ class ProjectController extends Controller
      */
     public function edit($id)
     {
+        $policy = '';
+        $policy = '';
+
         $project = ProjectModel::where('projectid',$id)->first();
-        return response()->json($project);
+        $policy = Template::select('policy1','policy2')->where('id',$project->template)->first();
+        $store_name= Dev::select('store_name')->where('id',$project->buildinfo_store_name_x)->first();
+
+        return response()->json([$project,$policy,$store_name]);
     }
 
     /**

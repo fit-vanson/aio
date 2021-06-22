@@ -7,7 +7,7 @@
         <meta name="csrf-token" content="{{ csrf_token() }}">
         <meta content="Admin Dashboard" name="description" />
         <meta content="Themesbrand" name="author" />
-        <link rel="shortcut icon" href="assets/images/favicon.ico">
+        <link rel="shortcut icon" style="width: 100px; height: 100px" href="assets/images/favicon.ico">
         @include('layouts.head')
   </head>
     <body class="pb-0">
