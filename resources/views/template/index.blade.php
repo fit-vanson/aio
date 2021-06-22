@@ -215,6 +215,10 @@
             $('#script_copy').val(data.script_copy);
             $('#script_img').val(data.script_img);
             $('#script_svg2xml').val(data.script_svg2xml);
+            $('#script_file').val(data.script_file);
+            $('#permissions').val(data.permissions);
+            $('#policy1').val(data.policy1);
+            $('#policy2').val(data.policy2);
             $('#note').val(data.note);
             $('#link_chplay').val(data.link_chplay);
             $('#category').val(data.category);

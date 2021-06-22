@@ -50,7 +50,7 @@
                             <th>Tên Project</th>
                             <th>Tên Template</th>
                             <th>Tiêu đề</th>
-                            <th>Trạng thái Ứng dụng</th>
+                            <th>Trạng thái Ứng dụng | Policy</th>
                             <th width="10%">Action</th>
                         </tr>
                         </thead>
@@ -83,8 +83,6 @@
 
 <!-- Datatable init js -->
 <script src="assets/pages/datatables.init.js"></script>
-
-
 <script src="plugins/select2/js/select2.min.js"></script>
 
 <script>
@@ -110,33 +108,8 @@
                 {data: 'ma_da', name: 'ma_da'},
                 {data: 'projectname', name: 'projectname'},
                 {data: 'template', name: 'template'},
-                // {data: 'package', name: 'package'},
                 {data: 'title_app', name: 'title_app'},
-                {
-                    "data": "status",
-                    "render" : function(data)
-                    {
-                        if (data==0) {
-                            return 'Mặc định'
-                        }if (data==1){
-                            return '<span class="badge badge-dark">Publish</span>'
-                        }if (data==2){
-                            return '<span class="badge badge-warning">Suppend</span>'
-                        }if (data==3){
-                            return '<span class="badge badge-info">UnPublish</span>'
-                        }if (data==4){
-                            return '<span class="badge badge-primary">Remove</span>'
-                        }if (data==5){
-                            return '<span class="badge badge-success">Reject</span>'
-                        }else {
-                            return '<span class="badge badge-danger">Check</span>'
-                        }
-                    },
-
-                    "name": "status", "autoWidth": true
-                },
-
-
+                {data: 'status', name: 'status'},
                 {data: 'action', name: 'action', orderable: false, searchable: false},
             ]
         });
@@ -345,6 +318,22 @@
             $('#ajaxQuickModel').modal('show');
         })
     }
+
+
+    function showPolicy(id) {
+        $.get('{{asset('template/edit')}}/'+id,function (data) {
+            $('#policy1').val(data.policy1);
+            $('#policy2').val(data.policy2);
+            $('#modelHeadingPolicy').html("Show Policy");
+            $('#showPolicy').modal('show');
+            $('.modal').on('hidden.bs.modal', function (e) {
+                $('body').addClass('modal-open');
+            });
+        })
+    }
+
+
+
 </script>
 
 

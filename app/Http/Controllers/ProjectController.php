@@ -73,8 +73,42 @@ class ProjectController extends Controller
                         return $template->template;
                     }
                 })
+                ->editColumn('status', function($data){
+                    if ($data['status']==0) {
+                        $status = 'Mặc định';
+                    }
+                    elseif($data['status']==1){
+                        $status = '<span class="badge badge-dark">Publish</span>';
+                    }
+                    elseif($data['status']==2){
+                        $status =  '<span class="badge badge-warning">Suppend</span>';
+                    }
+                    elseif($data['status']==3){
+                        $status =  '<span class="badge badge-info">UnPublish</span>';
+                    }
+                    elseif($data['status']==4){
+                        $status =  '<span class="badge badge-primary">Remove</span>';
+                    }
+                    elseif($data['status']==5){
+                        $status =  '<span class="badge badge-success">Reject</span>';
+                    }
+                    elseif($data['status']==6){
+                        $status =  '<span class="badge badge-danger">Check</span>';
+                    }
+                    $policy = DB::table('ngocphandang_project')
+                        ->join('ngocphandang_template','ngocphandang_template.id','=','ngocphandang_project.template')
+                        ->where('ngocphandang_template.id',$data->template)
+                        ->first();
+//                    dd($policy);
+                    if($policy->policy1 != '' || $policy->policy2 != ''){
+                        $policy = ' <a href="javascript:void(0)" onclick="showPolicy('.$policy->id.')"><span class="badge badge-primary">Policy</span></a>';
+                    }else{
+                        $policy = '';
+                    }
 
-                ->rawColumns(['action','title_app','bot_imglogo'])
+                    return $status.' '. $policy;
+                })
+                ->rawColumns(['action','title_app','bot_imglogo','status'])
                 ->make(true);
         }
         return view('project.index',compact(['project','template','da','store_name']));

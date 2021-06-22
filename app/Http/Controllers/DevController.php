@@ -31,7 +31,6 @@ class DevController extends Controller
                     if($data->info_logo == null ){
                         return '<img width="60px" height="60px" src="assets\images\logo-member.jpg">';
                     }
-
                     return '<img width="60px" height="60px" src='.$data->info_logo.'>';
                 })
 
