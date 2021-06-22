@@ -48,7 +48,7 @@
                             <th>Tên Template</th>
                             <th>Phân loại</th>
                             <th>Link CHPlay</th>
-                            <th>script_copy | IMG | svg2xml</th>
+                            <th>script_copy | IMG | svg2xml | file</th>
                             <th>Thời gian tạo</th>
                             <th>Update</th>
                             <th>Time Get</th>

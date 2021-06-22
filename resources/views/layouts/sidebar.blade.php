@@ -60,6 +60,9 @@
                                     @can('mail_manage-index')
                                         <li><a href="{{route('mail_manage.index')}}">Quản lý Mail</a></li>
                                     @endcan
+                                    @can('mail_manage-index')
+                                        <li><a href="{{route('mail_parent.index')}}">Quản lý Mail Parent</a></li>
+                                    @endcan
                                 </ul>
                             </li>
                             <li>

@@ -70,7 +70,12 @@ class TemplateController extends Controller
                     } else {
                         $script_svg2xml = "<i style='color:red;' class='ti-close h5'></i>";
                     }
-                    return $script_copy .' '. $script_img.' '. $script_svg2xml ;
+                    if($row['script_file'] !== Null){
+                        $script_file = "<i style='color:green;' class='ti-check-box h5'></i>";
+                    } else {
+                        $script_file = "<i style='color:red;' class='ti-close h5'></i>";
+                    }
+                    return $script_copy .' '. $script_img.' '. $script_svg2xml .' '.$script_file;
                 })
 
                 ->rawColumns(['action','link_chplay','script','template'])
@@ -104,6 +109,10 @@ class TemplateController extends Controller
         $data['script_copy'] = $request->script_copy;
         $data['script_img'] = $request->script_img;
         $data['script_svg2xml'] = $request->script_svg2xml;
+        $data['script_file'] = $request->script_file;
+        $data['permissions'] = $request->permissions;
+        $data['policy1'] = $request->policy1;
+        $data['policy2'] = $request->policy2;
         $data['time_create'] =  time();
         $data['time_update'] = time();
         $data['time_get'] = time();
@@ -178,6 +187,10 @@ class TemplateController extends Controller
         $data->script_copy = $request->script_copy;
         $data->script_img= $request->script_img;
         $data->script_svg2xml = $request->script_svg2xml;
+        $data->script_file = $request->script_file;
+        $data->permissions = $request->permissions;
+        $data->policy1 = $request->policy1;
+        $data->policy2 = $request->policy2;
         $data->time_update = time();
         $data->note = $request->note;
         $data->link_chplay = $request->link_chplay;

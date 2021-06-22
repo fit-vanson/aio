@@ -11,28 +11,23 @@
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/sweetalert/1.1.3/sweetalert.min.css">
 <script src="https://cdnjs.cloudflare.com/ajax/libs/sweetalert/1.1.3/sweetalert.min.js"></script>
 
-<!-- Select2 Js  -->
-<link href="plugins/select2/css/select2.min.css" rel="stylesheet" type="text/css" />
 
 @endsection
 
 @section('breadcrumb')
 <div class="col-sm-6">
-    <h4 class="page-title">Quản lý Hub</h4>
+    <h4 class="page-title">Quản lý Mail</h4>
 </div>
 <div class="col-sm-6">
     <div class="float-right">
-        @can('hub-add')
-        <a class="btn btn-success" href="javascript:void(0)" id="createNewHub">Thêm mới</a>
+        @can('mail_parent-add')
+        <a class="btn btn-success" href="javascript:void(0)" id="createNewMail">Thêm mới</a>
         @endcan
     </div>
 </div>
-@include('modals.hub')
+{{--@include('modals.mailmanage')--}}
 @endsection
 @section('content')
-
-
-
 
     <div class="row">
         <div class="col-12">
@@ -41,14 +36,10 @@
                     <table class="table table-bordered dt-responsive nowrap data-table" style="border-collapse: collapse; border-spacing: 0; width: 100%;">
                         <thead>
                         <tr>
-                            <th>STT</th>
-                            <th>Hub Name</th>
-                            <th>Cọc Sim</th>
-                            <th>Numerady</th>
+                            <th>User</th>
+                            <th>Phone</th>
+                            <th>Time Add</th>
 
-                            <th>Update</th>
-                            <th>Lock Auto <input id="checkAll" type="checkbox"></th>
-                            <th width="20px">Action</th>
                         </tr>
                         </thead>
                         <tbody>
@@ -81,11 +72,7 @@
 <script src="assets/pages/datatables.init.js"></script>
 
 <script src="plugins/select2/js/select2.min.js"></script>
-<script>
-    $(".select2").select2({
-        placeholder: "Vui lòng chọn",
-    });
-</script>
+
 
 <script type="text/javascript">
     $(function () {
@@ -95,55 +82,36 @@
             }
         });
         var table = $('.data-table').DataTable({
-            lengthMenu: [[15, 30, 45, -1], [15, 30, 45, "All"]],
-            columnDefs: [ {
-                'targets': [5], /* column index */
-                'orderable': false, /* true or false */
-            }],
-
-            processing: true,
+            searching: true,
             serverSide: true,
-            ajax: "{{ route('hub.index') }}",
+            processing: true,
+            ajax: '{{ route('mail_parent.index') }}',
             columns: [
-                { "data": null,"sortable": true,
-                    render: function (data, type, row, meta) {
-                        return meta.row + meta.settings._iDisplayStart + 1;
-                    }
-                },
-                {data: 'hubname', name: 'hubname'},
-                {data: 'cocsim', name: 'cocsim'},
-                {data: 'numready', name: 'numready'},
+                {data: 'user', name: 'user'},
+                {data: 'phone', name: 'phone'},
+                {data: 'timeadd', name: 'timeadd'},
 
-                {data: 'timeupdate', name: 'timeupdate'},
-                {data: 'lockauto', name: 'lockauto'},
-                {data: 'action', name: 'action', orderable: false, searchable: false},
             ]
         });
-
-
-
-
-        $('#createNewHub').click(function () {
-            $('#saveBtn').val("create-hub");
+        $('#createNewMail').click(function () {
+            $('#saveBtn').val("create-mail");
             $('#id').val('');
-            $('#hubForm').trigger("reset");
-            $('#modelHeading').html("Thêm mới");
+            $('#mailForm').trigger("reset");
+            $('#modelHeading').html("Thêm mới email");
             $('#ajaxModel').modal('show');
-            $("#cocsim").select2({});
-            $("#hubname").prop('disabled', false);
         });
-        $('#hubForm').on('submit',function (event){
+        $('#mailForm').on('submit',function (event){
             event.preventDefault();
-            if($('#saveBtn').val() == 'create-hub'){
+            if($('#saveBtn').val() == 'create-mail'){
                 $.ajax({
-                    data: $('#hubForm').serialize(),
-                    url: "{{ route('hub.create') }}",
+                    data: $('#mailForm').serialize(),
+                    url: "{{ route('mail_manage.create') }}",
                     type: "POST",
                     dataType: 'json',
                     success: function (data) {
                         if(data.errors){
                             for( var count=0 ; count <data.errors.length; count++){
-                                $("#hubForm").notify(
+                                $("#mailForm").notify(
                                     data.errors[count],"error",
                                     { position:"right" }
                                 );
@@ -151,23 +119,23 @@
                         }
                         if(data.success){
                             $.notify(data.success, "success");
-                            $('#hubForm').trigger("reset");
+                            $('#mailForm').trigger("reset");
                             $('#ajaxModel').modal('hide');
                             table.draw();
                         }
                     },
                 });
             }
-            if($('#saveBtn').val() == 'edit-hub'){
+            if($('#saveBtn').val() == 'edit-mail'){
                 $.ajax({
-                    data: $('#hubForm').serialize(),
-                    url: "{{ route('hub.update') }}",
+                    data: $('#mailForm').serialize(),
+                    url: "{{ route('mail_manage.update') }}",
                     type: "post",
                     dataType: 'json',
                     success: function (data) {
                         if(data.errors){
                             for( var count=0 ; count <data.errors.length; count++){
-                                $("#hubForm").notify(
+                                $("#mailForm").notify(
                                     data.errors[count],"error",
                                     { position:"right" }
                                 );
@@ -175,7 +143,7 @@
                         }
                         if(data.success){
                             $.notify(data.success, "success");
-                            $('#hubForm').trigger("reset");
+                            $('#mailForm').trigger("reset");
                             $('#ajaxModel').modal('hide');
                             table.draw();
                         }
@@ -185,7 +153,7 @@
             }
 
         });
-        $(document).on('click','.deleteHub', function (data){
+        $(document).on('click','.deleteMail', function (data){
             var id = $(this).data("id");
             swal({
                     title: "Bạn có chắc muốn xóa?",
@@ -199,9 +167,8 @@
                 function(){
                     $.ajax({
                         type: "get",
-                        url: "{{ asset("hub/delete") }}/" + id,
+                        url: "{{ asset("mail_manage/delete") }}/" + id,
                         success: function (data) {
-                            console.log(data)
                             table.draw();
                         },
                         error: function (data) {
@@ -213,53 +180,23 @@
         });
     });
 
+    function editMail(id) {
+
+        $.get('{{asset('mail_manage/edit')}}/'+id,function (data) {
+            $('#modelHeading').html("Edit Mail");
+            $('#saveBtn').val("edit-mail");
+            $('#ajaxModel').modal('show');
+            $('.modal').on('hidden.bs.modal', function (e) {
+                $('body').addClass('modal-open');
+            });
+
+            $('#id').val(data.id);
+            $('#email').val(data.email);
+            $('#secret_code').val(data.secret_code)
+        })
+    }
+
 </script>
-
-<script>
-        function editHub(id) {
-            $.get('{{asset('hub/edit')}}/'+id,function (data) {
-                $('#modelHeading').html("Edit - "+ (data.hubname));
-                $('#saveBtn').val("edit-hub");
-                $('#ajaxModel').modal('show');
-                $('.modal').on('hidden.bs.modal', function (e) {
-                    $('body').addClass('modal-open');
-                });
-                $('#id').val(data.id);
-                $('#hubname').val(data.hubname);
-                $('#cocsim').val(data.cocsim)
-                $('#cocsim').select2();
-            })
-        }
-
-        function checkbox(id) {
-            $.get('{{asset('hub/checkbox')}}/'+id,function (data) {
-                console.log(data)
-                if(data.success){
-                    $.notify(data.success, "success");
-                }
-                if(data.errors){
-                    $.notify(data.errors,"error");
-                }
-            })
-        }
-
-
-        $("#checkAll").click(function(){
-            var isCheckAll = $('#checkAll').is(":checked");
-            console.log(isCheckAll)
-            $("input[type=checkbox]").prop('checked', $(this).prop('checked'));
-            $.get('{{asset('hub/checkboxAll')}}/'+isCheckAll,function (data) {
-                if(data.success){
-                    $.notify(data.success, "success");
-                }
-                if(data.errors){
-                    $.notify(data.errors,"error");
-                }
-            })
-
-        });
-
-    </script>
 @endsection
 
 

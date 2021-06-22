@@ -3,11 +3,12 @@
 namespace App\Http\Controllers;
 
 use App\Models\cocsim;
+use App\Models\Hub;
 use App\Models\khosim;
 use App\Models\sms;
-use Illuminate\Database\Eloquent\Model;
+
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\DB;
+
 use Illuminate\Support\Facades\Validator;
 use Yajra\DataTables\Facades\DataTables;
 
@@ -15,9 +16,11 @@ class SmsController extends Controller
 {
     public function index(Request $request)
     {
+
         $cocsim = cocsim::latest('id')->get();
         $khosim= khosim::latest('id')->get();
         $sms = sms::latest('hubid')->get();
+        $hubs = Hub::all();
         if ($request->ajax()) {
             $data = sms::latest('hubid')->get();
             return Datatables::of($data)
@@ -37,7 +40,7 @@ class SmsController extends Controller
                 ->rawColumns(['action'])
                 ->make(true);
         }
-        return view('sms.index',compact(['sms','khosim','cocsim']));
+        return view('sms.index',compact(['sms','khosim','cocsim','hubs']));
     }
 
     /**
@@ -47,7 +50,7 @@ class SmsController extends Controller
      */
     public function create(Request  $request)
     {
-        dd($request->all());
+
         $rules = [
             'hubid' =>'unique:ngocphandang_sms,hubid',
         ];
@@ -86,9 +89,15 @@ class SmsController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show($id)
+    public function show()
     {
-        //
+
+    }
+    public function showHub( Request $request)
+    {
+        $hubs= Hub::where('id',$request->id)->first();
+        $items = sms::where('hubname', $hubs->hubname)->get();
+        return view('sms.showHub',compact(['hubs','items']));
     }
 
     /**

@@ -39,8 +39,29 @@
                                 <textarea id="script_svg2xml" name="script_svg2xml" class="form-control" rows="4" ></textarea>
                             </div>
                             <div class="form-group col-lg-6 input_title_app">
+                                <label for="name">script_file</label>
+                                <textarea id="script_file" name="script_file" class="form-control" rows="4" ></textarea>
+                            </div>
+                        </div>
+                        <div data-repeater-item="" class="row">
+                            <div class="form-group col-lg-6 input_package">
+                                <label for="name">Permissions</label>
+                                <textarea id="permissions" name="permissions" class="form-control" rows="4" ></textarea>
+                            </div>
+
+                            <div class="form-group col-lg-6 input_title_app">
                                 <label for="name">Ghi chú</label>
                                 <textarea id="note" name="note" class="form-control" rows="4" ></textarea>
+                            </div>
+                        </div>
+                        <div data-repeater-item="" class="row">
+                            <div class="form-group col-lg-6 input_package">
+                                <label for="name">Policy 1 </label>
+                                <textarea id="policy1" name="policy1" class="form-control" rows="4" ></textarea>
+                            </div>
+                            <div class="form-group col-lg-6 input_title_app">
+                                <label for="name">Policy 2</label>
+                                <textarea id="policy2" name="policy2" class="form-control" rows="4" ></textarea>
                             </div>
                         </div>
                         <div data-repeater-item="" class="row">

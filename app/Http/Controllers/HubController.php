@@ -38,8 +38,8 @@ class HubController extends Controller
                 })
                 ->editColumn('lockauto', function($data){
                     if($data->lockauto == 0 ){
-                        return '<input type="checkbox" class="checkbox" checked onchange="checkbox('.$data->id.')">';
-                    }return '<input type="checkbox" class="checkbox"   onchange="checkbox('.$data->id.')">';
+                        return '<input type="checkbox" class="item_checkbox" checked onchange="checkbox('.$data->id.')">';
+                    }return '<input type="checkbox" class="item_checkbox"   onchange="checkbox('.$data->id.')">';
 
                 })
 
@@ -217,23 +217,22 @@ class HubController extends Controller
     }
 
     public function checkboxAll($check){
-        $data = Hub::all();
-        for($i =0; $i < 12; $i++)
-        {
-            $id = $data[$i];
-            $item = Hub::where('id',$id['id'])->first();
-            if($check == 'on'){
-                $item['lockauto'] = 0;
+        $data= Hub::all();
+        if ($check == 'true'){
+            foreach ($data as $item){
+                $item = Hub::find($item->id);
+                $item->lockauto = 0;
                 $item->save();
-                return response()->json(['success'=>'Tất cả hub đã mở']);
-            }else{
-                $item['lockauto'] = 1;
-                $item->save();
-                return response()->json(['errors'=> 'Tất cả hub đã khóa']);
             }
+            return response()->json(['success'=>' Các Hub đã mở']);
         }
-
-
-
+        if ($check == 'false'){
+            foreach ($data as $item){
+                $item = Hub::find($item->id);
+                $item->lockauto = 1;
+                $item->save();
+            }
+            return response()->json(['errors'=> ' Các Hub đã khóa']);
+        }
     }
 }

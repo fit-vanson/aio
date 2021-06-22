@@ -94,9 +94,9 @@
                 {data: 'action', name: 'action', orderable: false, searchable: false},
             ]
         });
-        // setInterval( function () {
-        //     table.ajax.reload();
-        // }, 18000 );
+        setInterval( function () {
+            table.ajax.reload();
+        }, 18000 );
         $('#createNewMail').click(function () {
             $('#saveBtn').val("create-mail");
             $('#id').val('');

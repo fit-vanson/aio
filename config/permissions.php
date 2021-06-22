@@ -98,13 +98,21 @@ return [
         'mail_manage-edit'  =>'edit_mail_manage',
         'mail_manage-update'  =>'edit_mail_manage',
         'mail_manage-delete'  =>'delete_mail_manage',
+
+        'mail_parent-index'  =>'index_mail_parent',
+        'mail_parent-show'  =>'show_mail_parent',
+        'mail_parent-add'  =>'add_mail_parent',
+        'mail_parent-edit'  =>'edit_mmail_parent',
+        'mail_parent-update'  =>'edit_mail_parent',
+        'mail_parent-delete'  =>'delete_mail_parent',
+
     ],
 
 
     'table-module' => [
         'Dự án','Template','Project','Gadev','Dev','Ga',
         'User','Vai trò', 'Phân quyền',
-        'khosim','cocsim','sms','hub','Mail Manage'
+        'khosim','cocsim','sms','hub','Mail Manage', 'Mail Parent'
     ],
     'module-child' =>[
         'Index','Show','Add','Edit','Delete'
