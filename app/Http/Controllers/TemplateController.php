@@ -158,6 +158,7 @@ class TemplateController extends Controller
     public function edit($id)
     {
         $temp = Template::find($id);
+
         return response()->json($temp);
     }
 

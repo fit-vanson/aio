@@ -322,8 +322,10 @@
 
     function showPolicy(id) {
         $.get('{{asset('template/edit')}}/'+id,function (data) {
-            $('#policy1').val(data.policy1);
-            $('#policy2').val(data.policy2);
+            let policy1 = data.policy1.replaceAll("{APP_NAME_X}", "3333333333").replaceAll("{STORE_NAME_X}", "2312");
+            let policy2 = data.policy1.replaceAll("{APP_NAME_X}", "3333333333").replaceAll("{STORE_NAME_X}", "2312");
+            $('#policy1').val(policy1);
+            $('#policy2').val(policy2);
             $('#modelHeadingPolicy').html("Show Policy");
             $('#showPolicy').modal('show');
             $('.modal').on('hidden.bs.modal', function (e) {

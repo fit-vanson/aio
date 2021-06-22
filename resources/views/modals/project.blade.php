@@ -372,10 +372,10 @@
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
             </div>
             <div class="modal-body">
-                <label for="name">Policy 1</label>
-                <textarea disabled type="text" id="policy1" name="policy1" rows="5" class="form-control" > </textarea>
-                <label for="name">Policy 2</label>
-                <textarea disabled type="text" id="policy2" name="policy2" rows="5" class="form-control" > </textarea>
+                <label for="name">Policy 1 <button type="button" onclick="copy1()" class="btn btn-link waves-effect copyboard"><i class="mdi mdi-content-copy"></i></button> </label>
+                <textarea  type="text" id="policy1" name="policy1" rows="5" class="form-control" > </textarea>
+                <label for="name">Policy 2 <button type="button" onclick="copy2()" class="btn btn-link waves-effect copyboard"><i class="mdi mdi-content-copy"></i></button></label>
+                <textarea  type="text" id="policy2" name="policy2" rows="5" class="form-control" > </textarea>
 
             </div>
             <div class="modal-footer">
@@ -384,6 +384,8 @@
         </div>
     </div>
 </div>
+
+
 
 
 
