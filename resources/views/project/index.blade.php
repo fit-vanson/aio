@@ -322,8 +322,8 @@
 
     function showPolicy(id) {
         $.get('{{asset('template/edit')}}/'+id,function (data) {
-            let policy1 = data[0].policy1.replaceAll("{APP_NAME_X}", data[1].buildinfo_app_name_x).replaceAll("{STORE_NAME_X}", data[1].buildinfo_store_name_x);
-            let policy2 = data[0].policy2.replaceAll("{APP_NAME_X}", data[1].buildinfo_app_name_x).replaceAll("{STORE_NAME_X}", data[1].buildinfo_store_name_x);
+            let policy1 = data[0].policy1.replaceAll("{APP_NAME_X}", data[1].buildinfo_app_name_x).replaceAll("{STORE_NAME_X}", data[2].store_name);
+            let policy2 = data[0].policy2.replaceAll("{APP_NAME_X}", data[1].buildinfo_app_name_x).replaceAll("{STORE_NAME_X}", data[2].store_name);
             $('#policy1').val(policy1);
             $('#policy2').val(policy2);
             $('#modelHeadingPolicy').html("Show Policy");

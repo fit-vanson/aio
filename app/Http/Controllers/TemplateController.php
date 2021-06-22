@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Dev;
 use App\Models\ProjectModel;
 use App\Models\Template;
 use Illuminate\Database\Eloquent\Model;
@@ -159,9 +160,8 @@ class TemplateController extends Controller
     {
         $temp = Template::find($id);
         $project = ProjectModel::where('template',$id)->first();
-
-
-        return response()->json([$temp,$project]);
+        $store_name= Dev::where('id',$project->buildinfo_store_name_x)->first();
+        return response()->json([$temp,$project,$store_name]);
     }
 
     /**
