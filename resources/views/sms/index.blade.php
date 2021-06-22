@@ -22,21 +22,31 @@
 </div>
 <div class="col-sm-6">
     <div class="float-right">
-        @can('user-add')
-        <a class="btn btn-success" href="javascript:void(0)" id="createNewSms"> Thêm mới</a>
-        @endcan
+{{--        @can('user-add')--}}
+{{--        <a class="btn btn-success" href="javascript:void(0)" id="createNewSms"> Thêm mới</a>--}}
+{{--        @endcan--}}
     </div>
 </div>
-@include('modals.sms')
+{{--@include('modals.sms')--}}
 @endsection
 @section('content')
 
+    <ul class="nav nav-pills nav-justified" role="tablist">
+        @foreach($hubs as $hub)
+            <li class="nav-item waves-effect waves-light">
+               <button class="btn btn-success waves-effect waves-light" onclick="showHub({{$hub->id}})">{{$hub->hubname}}</button>
 
-
+            </li>
+        @endforeach
+    </ul>
     <div class="row">
         <div class="col-12">
             <div class="card">
-                <div class="card-body">
+                <div>
+                    <div class="tab-content showHub ">
+                    </div>
+                </div>
+                <div class="card-body showAll">
                     <table class="table table-bordered dt-responsive nowrap data-table" style="border-collapse: collapse; border-spacing: 0; width: 100%;">
                         <thead>
                         <tr>
@@ -108,6 +118,7 @@
                 {data: 'action', name: 'action', orderable: false, searchable: false},
             ]
         });
+
         $('#createNewSms').click(function () {
             $('#saveBtn').val("create-sms");
             $('#id').val('');
@@ -216,10 +227,33 @@
                 $('#phone').val(data.phone)
                 $('#phone').select2();
                 $('#code').val(data.code)
-
             })
         }
-    </script>
+
+        function showHub(id){
+            $.ajaxSetup({
+                headers: {
+                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                }
+            });
+            var id = id;
+            $.ajax({
+                data: {id:id},
+                url: "{{ route('sms.showHub') }}",
+                type: "post",
+                dataType: 'html',
+                success: function (data) {
+                    $('.showAll').hide();
+                    $('.showHub').html(data)
+                },
+            });
+        }
+
+
+
+
+
+</script>
 @endsection
 
 
