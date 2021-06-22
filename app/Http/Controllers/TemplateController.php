@@ -158,8 +158,10 @@ class TemplateController extends Controller
     public function edit($id)
     {
         $temp = Template::find($id);
+        $project = ProjectModel::where('template',$id)->first();
 
-        return response()->json($temp);
+
+        return response()->json([$temp,$project]);
     }
 
     /**
