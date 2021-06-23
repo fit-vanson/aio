@@ -92,10 +92,11 @@
                 {data: 'hovaten', name: 'hovaten'},
                 {data: 'birth', name: 'birth'},
                 {data: 'timereg', name: 'timereg'},
-
             ]
         });
+    });
 
+</script>
 @endsection
 
 
