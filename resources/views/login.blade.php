@@ -48,8 +48,8 @@
             </div>
 
             <div class="m-t-40 text-center">
-                <p>Don't have an account ? <a href="pages-register" class="font-500 text-primary"> Signup now </a> </p>
-                <p>© {{date('Y')}} Veltrix. Crafted with <i class="mdi mdi-heart text-danger"></i> by Themesbrand</p>
+
+                <p>© {{date('Y')}} VietMMO <i class="mdi mdi-heart text-danger"></i> </p>
             </div>
 
         </div>
