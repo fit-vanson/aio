@@ -16,11 +16,11 @@
 
 @section('breadcrumb')
 <div class="col-sm-6">
-    <h4 class="page-title">Quản lý Mail Parent</h4>
+    <h4 class="page-title">Quản lý Mail Reg</h4>
 </div>
 <div class="col-sm-6">
     <div class="float-right">
-        @can('mail_parent-add')
+        @can('mail_reg-add')
         <a class="btn btn-success" href="javascript:void(0)" id="createNewMail">Thêm mới</a>
         @endcan
     </div>
@@ -36,9 +36,10 @@
                     <table class="table table-bordered dt-responsive nowrap data-table" style="border-collapse: collapse; border-spacing: 0; width: 100%;">
                         <thead>
                         <tr>
-                            <th>User</th>
-                            <th>Phone</th>
-                            <th>Time Add</th>
+                            <th>Gmail</th>
+                            <th>Họ và tên</th>
+                            <th>Sinh nhật</th>
+                            <th>Ngày đăng ký</th>
 
                         </tr>
                         </thead>
@@ -85,18 +86,16 @@
             searching: true,
             serverSide: true,
             processing: true,
-            ajax: '{{ route('mail_parent.getMailParents') }}',
+            ajax: '{{ route('mail_reg.getMailRegs') }}',
             columns: [
-                {data: 'user', name: 'user'},
-                {data: 'phone', name: 'phone'},
-                {data: 'timeadd', name: 'timeadd'},
+                {data: 'gmail', name: 'gmail'},
+                {data: 'hovaten', name: 'hovaten'},
+                {data: 'birth', name: 'birth'},
+                {data: 'timereg', name: 'timereg'},
 
             ]
         });
 
-    });
-
-</script>
 @endsection
 
 

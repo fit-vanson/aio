@@ -96,7 +96,7 @@
 
             processing: true,
             serverSide: true,
-            ajax: "{{ route('khosim.index') }}",
+            ajax: "{{ route('khosim.getKhosim') }}",
             columns: [
                 { "data": null,"sortable": true,
                     render: function (data, type, row, meta) {

@@ -10,6 +10,7 @@ use App\Policies\Ga_devPolicy;
 use App\Policies\GaPolicy;
 use App\Policies\HubPolicy;
 use App\Policies\MailParentPolicy;
+use App\Policies\MailRegPolicy;
 use App\Policies\MaiManagePolicy;
 use App\Policies\PermissionPolicy;
 use App\Policies\ProjectPolicy;
@@ -57,6 +58,7 @@ class AuthServiceProvider extends ServiceProvider
        $this->defineSms();
        $this->defineMailManage();
        $this->defineMailParent();
+       $this->defineMailReg();
     }
 
     public function defineProject(){
@@ -188,6 +190,15 @@ class AuthServiceProvider extends ServiceProvider
         Gate::define('mail_parent-edit', [MailParentPolicy::class, 'edit']);
         Gate::define('mail_parent-update', [MailParentPolicy::class, 'update']);
         Gate::define('mail_parent-delete', [MailParentPolicy::class, 'delete']);
+    }
+
+    public function defineMailReg(){
+        Gate::define('mail_reg-index', [MailRegPolicy::class, 'index']);
+        Gate::define('mail_reg-show', [MailRegPolicy::class, 'show']);
+        Gate::define('mail_reg-add', [MailRegPolicy::class, 'add']);
+        Gate::define('mail_reg-edit', [MailRegPolicy::class, 'edit']);
+        Gate::define('mail_reg-update', [MailRegPolicy::class, 'update']);
+        Gate::define('mail_reg-delete', [MailRegPolicy::class, 'delete']);
     }
 
 

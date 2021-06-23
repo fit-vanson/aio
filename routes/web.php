@@ -131,6 +131,7 @@ Route::group(['prefix'=>'da','middleware'=>['CheckLogout','2fa']], function (){
 
 Route::group(['prefix'=>'khosim','middleware'=>['CheckLogout','2fa']], function (){
     Route::get('/',[KhosimController::class,'index'])->name('khosim.index')->middleware('can:khosim-index');
+    Route::get('/getKhosim/', [KhosimController::class, "getKhosim"])->name('khosim.getKhosim');
     Route::post('/create',[KhosimController::class,'create'])->name('khosim.create')->middleware('can:khosim-add');
     Route::get('/edit/{id}',[KhosimController::class,'edit'])->name('khosim.edit')->middleware('can:khosim-edit');
     Route::get('/show/{id}',[KhosimController::class,'show'])->name('khosim.show')->middleware('can:khosim-show');
@@ -182,6 +183,7 @@ Route::group(['prefix'=>'mail_manage','middleware'=>['CheckLogout','2fa']], func
 
 Route::group(['prefix'=>'mail_parent','middleware'=>['CheckLogout','2fa']], function (){
     Route::get('/',[MailParentController::class,'index'])->name('mail_parent.index')->middleware('can:mail_parent-index');
+    Route::get('/getMailParents/', [MailParentController::class, "getMailParents"])->name('mail_parent.getMailParents');
 //    Route::post('/create',[MailManageController::class,'create'])->name('mail_manage.create')->middleware('can:mail_manage-add');
 //    Route::get('/edit/{id}',[MailManageController::class,'edit'])->name('mail_manage.edit')->middleware('can:mail_manage-edit');
 //    Route::get('/show/{id}',[MailManageController::class,'show'])->name('mail_manage.show')->middleware('can:mail_manage-show');
@@ -192,11 +194,8 @@ Route::group(['prefix'=>'mail_parent','middleware'=>['CheckLogout','2fa']], func
 
 Route::group(['prefix'=>'mail_reg','middleware'=>['CheckLogout','2fa']], function (){
     Route::get('/',[MailRegController::class,'index'])->name('mail_reg.index')->middleware('can:mail_reg-index');
-//    Route::post('/create',[MailManageController::class,'create'])->name('mail_manage.create')->middleware('can:mail_manage-add');
-//    Route::get('/edit/{id}',[MailManageController::class,'edit'])->name('mail_manage.edit')->middleware('can:mail_manage-edit');
-//    Route::get('/show/{id}',[MailManageController::class,'show'])->name('mail_manage.show')->middleware('can:mail_manage-show');
-//    Route::post('/update',[MailManageController::class,'update'])->name('mail_manage.update')->middleware('can:mail_manage-update');
-//    Route::get('/delete/{id}',[MailManageController::class,'delete'])->name('mail_manage.delete')->middleware('can:mail_manage-delete');
+    Route::get('/getMailRegs/', [MailRegController::class, "getMailRegs"])->name('mail_reg.getMailRegs');
+
 });
 
 

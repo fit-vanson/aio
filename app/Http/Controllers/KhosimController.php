@@ -13,38 +13,64 @@ use Yajra\DataTables\Facades\DataTables;
 class KhosimController extends Controller
 {
 
-    public function index(Request $request)
+    public function index()
     {
         $cocsim = cocsim::all();
-        $khosim= khosim::latest('id')->get();
-        if ($request->ajax()) {
-            $data = khosim::latest('id')->get();
-            return Datatables::of($data)
-                ->addIndexColumn()
-                ->addColumn('action', function($row){
-                    $btn = ' <a href="javascript:void(0)" onclick="editKhosim('.$row->id.')" class="btn btn-warning"><i class="ti-pencil-alt"></i></a>';
-                    $btn = $btn.' <a href="javascript:void(0)" data-toggle="tooltip"  data-id="'.$row->id.'" data-original-title="Delete" class="btn btn-danger deleteKhosim"><i class="ti-trash"></i></a>';
-                    return $btn;
-                })
-                ->editColumn('cocsim', function($data){
-                    $cocsim = DB::table('ngocphandang_khosim')
-                        ->join('ngocphandang_cocsim','ngocphandang_cocsim.id','=','ngocphandang_khosim.cocsim')
-                        ->where('ngocphandang_cocsim.id',$data->cocsim)
-                        ->first();
-                    if($cocsim != null){
-                        return $cocsim->cocsim;
-                    }
-                })
-                ->editColumn('time', function($data) {
-                    if($data->time == 0 ){
-                        return  null;
-                    }
-                    return date( 'd/m/Y - H:i:s ',$data->time);
-                })
-                ->rawColumns(['action'])
-                ->make(true);
+        return view('khosim.index',compact(['cocsim']));
+    }
+
+    /* Process ajax request */
+    public function getKhosim(Request $request)
+    {
+        $draw = $request->get('draw');
+        $start = $request->get("start");
+        $rowperpage = $request->get("length"); // total number of rows per page
+
+        $columnIndex_arr = $request->get('order');
+        $columnName_arr = $request->get('columns');
+        $order_arr = $request->get('order');
+        $search_arr = $request->get('search');
+
+        $columnIndex = $columnIndex_arr[0]['column']; // Column index
+        $columnName = $columnName_arr[$columnIndex]['data']; // Column name
+        $columnSortOrder = $order_arr[0]['dir']; // asc or desc
+        $searchValue = $search_arr['value']; // Search value
+
+        // Total records
+        $totalRecords = khosim::select('count(*) as allcount')->count();
+        $totalRecordswithFilter = khosim::select('count(*) as allcount')->where('phone', 'like', '%' . $searchValue . '%')->count();
+
+        // Get records, also we have included search filter as well
+        $records = khosim::where('ngocphandang_khosim.phone', 'like', '%' . $searchValue . '%')
+            ->orWhere('ngocphandang_khosim.cocsim', 'like', '%' . $searchValue . '%')
+            ->orWhere('ngocphandang_khosim.time', 'like', '%' . $searchValue . '%')
+//            ->select('ngocphandang_khosim.*')
+            ->skip($start)
+            ->take($rowperpage)
+            ->get();
+
+        $data_arr = array();
+
+        foreach ($records as $record) {
+
+            $data_arr[] = array(
+                "phone" => $record->phone,
+                "cocsim" => $record->cocsim,
+                "stt" => $record->stt,
+                "action" => '<a href="javascript:void(0)" onclick="editKhosim('.$record->id.')" class="btn btn-warning"><i class="ti-pencil-alt"></i></a>' . ' <a href="javascript:void(0)" data-toggle="tooltip"  data-id="'.$record->id.'" data-original-title="Delete" class="btn btn-danger deleteKhosim"><i class="ti-trash"></i></a>' ,
+
+                "time" => date('d-m-Y',$record->time),
+            );
         }
-        return view('khosim.index',compact(['khosim','cocsim']));
+
+        $response = array(
+            "draw" => intval($draw),
+            "iTotalRecords" => $totalRecords,
+            "iTotalDisplayRecords" => $totalRecordswithFilter,
+            "aaData" => $data_arr,
+        );
+
+        echo json_encode($response);
     }
 
     /**
@@ -126,7 +152,6 @@ class KhosimController extends Controller
      */
     public function update(Request $request)
     {
-        dd($request->all());
         $id = $request->id;
         $rules = [
             'phone' =>'numeric|unique:ngocphandang_khosim,phone,'.$id.',id',
