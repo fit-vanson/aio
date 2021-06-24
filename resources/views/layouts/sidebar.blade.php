@@ -13,9 +13,9 @@
                                 </a>
                             </li>
 
-                            <li class="menu-title">Quản trị</li>
+                            <li class="menu-title">VietMMO</li>
                             <li>
-                                <a href="javascript:void(0);" class="waves-effect"><i class="ti-package"></i> <span> Quản trị backend <span class="float-right menu-arrow"><i class="mdi mdi-chevron-right"></i></span> </span> </a>
+                                <a href="javascript:void(0);" class="waves-effect"><i class="ti-package"></i> <span> App And Project <span class="float-right menu-arrow"><i class="mdi mdi-chevron-right"></i></span> </span> </a>
                                 <ul class="submenu">
                                     @can('du_an-index')
                                     <li><a href="{{route('da.index')}}">Quản lý Dự án</a></li>
@@ -26,17 +26,23 @@
                                     @can('template-index')
                                     <li><a href="{{route('template.index')}}">Quản lý Template</a></li>
                                     @endcan
+                                </ul>
+                            </li>
+                            <li>
+                                <a href="javascript:void(0);" class="waves-effect"><i class="ti-receipt"></i> <span> Ga & Dev & Ads <span class="float-right menu-arrow"><i class="mdi mdi-chevron-right"></i></span> </span> </a>
+                                <ul class="submenu">
                                     @can('gadev-index')
-                                    <li><a href="{{route('gadev.index')}}">Quản lý Tài khoản</a></li>
+                                        <li><a href="{{route('gadev.index')}}">Gmail Quản lý</a></li>
                                     @endcan
                                     @can('dev-index')
-                                    <li><a href="{{route('dev.index')}}">Quản lý DEV</a></li>
+                                        <li><a href="{{route('dev.index')}}">Quản lý DEV</a></li>
                                     @endcan
                                     @can('ga-index')
-                                    <li><a href="{{route('ga.index')}}">Quản lý Ga</a></li>
+                                        <li><a href="{{route('ga.index')}}">Quản lý GA</a></li>
                                     @endcan
                                 </ul>
                             </li>
+
                             <li>
                                 <a href="javascript:void(0);" class="waves-effect"><i class="mdi mdi-sim"></i> <span> Quản lý Sim <span class="float-right menu-arrow"><i class="mdi mdi-chevron-right"></i></span> </span> </a>
                                 <ul class="submenu">
@@ -55,11 +61,16 @@
                                 </ul>
                             </li>
                             <li>
-                                <a href="javascript:void(0);" class="waves-effect"><i class="ti-email"></i> <span> Quản lý Gmail<span class="float-right menu-arrow"><i class="mdi mdi-chevron-right"></i></span> </span> </a>
+                                <a href="javascript:void(0);" class="waves-effect"><i class="ti-email"></i> <span>Job Auto CHplay<span class="float-right menu-arrow"><i class="mdi mdi-chevron-right"></i></span> </span> </a>
                                 <ul class="submenu">
                                     @can('mail_manage-index')
-                                        <li><a href="{{route('mail_manage.index')}}">Quản lý Mail</a></li>
+                                        <li><a href="{{route('mail_manage.index')}}">Tài nguyên Gmail</a></li>
                                     @endcan
+                                </ul>
+                            </li>
+                            <li>
+                                <a href="javascript:void(0);" class="waves-effect"><i class="ti-bookmark-alt"></i> <span> Gmail Reg Auto<span class="float-right menu-arrow"><i class="mdi mdi-chevron-right"></i></span> </span> </a>
+                                <ul class="submenu">
                                     @can('mail_manage-index')
                                         <li><a href="{{route('mail_parent.index')}}">Quản lý Mail Parent</a></li>
                                     @endcan
