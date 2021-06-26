@@ -11,12 +11,26 @@
                 <form id="devForm" name="devForm" class="form-horizontal">
                     <input type="hidden" name="dev_id" id="dev_id">
 
+
                     <div data-repeater-list="group-a">
                         <div data-repeater-item="" class="row">
+
                             <div class="form-group col-lg-6">
-                                <label for="name">Tên  <span style="color: red">*</span></label>
+                                <label for="name">Dev Name  <span style="color: red">*</span></label>
+                                <input type="text" id="dev_name" name="dev_name" class="form-control" required>
+                            </div>
+                            <div class="form-group col-lg-6">
+                                <label for="name">Store Name  <span style="color: red">*</span></label>
                                 <input type="text" id="store_name" name="store_name" class="form-control" required>
                             </div>
+                        </div>
+
+                        <div data-repeater-item="" class="row">
+                            <div class="form-group col-lg-6">
+                                <label for="name">Mã hóa đơn </label>
+                                <input type="text" id="ma_hoa_don" name="ma_hoa_don" class="form-control">
+                            </div>
+
 
                             <div class="form-group col-lg-6">
                                 <label for="name">Email <span style="color: red">*</span></label>

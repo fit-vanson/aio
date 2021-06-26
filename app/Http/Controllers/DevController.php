@@ -113,7 +113,9 @@ class DevController extends Controller
             return response()->json(['errors'=> $error->errors()->all()]);
         }
         $data = new Dev();
+        $data['dev_name'] = $request->dev_name;
         $data['store_name'] = $request->store_name;
+        $data['ma_hoa_don'] = $request->ma_hoa_don;
         $data['gmail_gadev_chinh'] = $request->gmail_gadev_chinh;
         $data['gmail_gadev_phu_1'] = $request->gmail_gadev_phu_1;
         $data['gmail_gadev_phu_2'] = $request->gmail_gadev_phu_2;
@@ -188,7 +190,9 @@ class DevController extends Controller
             return response()->json(['errors'=> $error->errors()->all()]);
         }
         $data = Dev::find($id);
+        $data->dev_name = $request->dev_name;
         $data->store_name = $request->store_name;
+        $data->ma_hoa_don = $request->ma_hoa_don;
         $data->gmail_gadev_chinh = $request->gmail_gadev_chinh;
         $data->gmail_gadev_phu_1 = $request->gmail_gadev_phu_1;
         $data->gmail_gadev_phu_2 = $request->gmail_gadev_phu_2;
@@ -202,6 +206,7 @@ class DevController extends Controller
         $data->info_fanpage = $request->info_fanpage;
         $data->info_web = $request->info_web;
         $data->status = $request->status;
+
         $data->save();
         return response()->json(['success'=>'Cập nhật thành công']);
     }

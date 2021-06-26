@@ -38,6 +38,7 @@
                         <thead>
                         <tr>
                             <th width="60px">IMG</th>
+                            <th>Dev name</th>
                             <th>Store name</th>
                             <th>Gmail </th>
                             <th>Điện thoại</th>
@@ -91,6 +92,7 @@
                 ajax: "{{ route('dev.index') }}",
                 columns: [
                     {data: 'info_logo'},
+                    {data: 'dev_name'},
                     {data: 'store_name'},
                     {data: 'gmail_gadev_chinh'},
                     {data: 'info_phone'},
@@ -217,6 +219,8 @@
             $.get('{{asset('dev/edit')}}/'+id,function (data) {
                 $('#dev_id').val(data.id);
                 $('#store_name').val(data.store_name);
+                $('#dev_name').val(data.dev_name);
+                $('#ma_hoa_don').val(data.ma_hoa_don);
                 $('#gmail_gadev_chinh').val(data.gmail_gadev_chinh);
                 $('#gmail_gadev_chinh').select2();
                 $('#gmail_gadev_phu_1').val(data.gmail_gadev_phu_1);
