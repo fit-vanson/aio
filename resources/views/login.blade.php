@@ -10,7 +10,7 @@
                 <div class="bg-primary p-4 text-white text-center position-relative">
                     <h4 class="font-20 m-b-5">Welcome Back !</h4>
                     <p class="text-white-50 mb-4">Sign in to continue.</p>
-                    <a href="index" class="logo logo-admin"><img src="{{asset('public/backend/assets/images/logo-sm.png')}}" height="24" alt="logo"></a>
+                    <a href="index" class="logo logo-admin"><img src="{{asset('public/backend/assets/images/logo-sm.png')}}" height="60" alt="logo"></a>
                 </div>
 
                 <div class="account-card-content">

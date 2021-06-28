@@ -8,10 +8,10 @@
 
     <a href="{{route('index')}}" class="logo">
         <span>
-                <img src="assets/images/logo-light.png" alt="" height="18">
+                <img src="assets/images/logo-light.png" alt="" height="30">
             </span>
         <i>
-                <img src="assets/images/logo-sm.png" alt="" height="22">
+                <img src="assets/images/logo-sm.png" alt="" height="60">
             </i>
     </a>
 </div>
