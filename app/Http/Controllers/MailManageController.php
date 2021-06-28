@@ -96,7 +96,15 @@ class MailManageController extends Controller
      */
     public function show($id)
     {
-        //
+        $gadev = MailManage::find($id);
+        $googleAuthenticator =  new Google2FA();
+        $secretCode = $gadev->secret_code;
+        if($secretCode == null){
+            return '<span class="badge badge-danger">Chưa kích hoạt 2FA</span>';
+        }else{
+            return $googleAuthenticator->getCurrentOtp($secretCode);
+        }
+        return response()->json($gadev);
     }
 
     /**

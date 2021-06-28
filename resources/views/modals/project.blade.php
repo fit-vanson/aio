@@ -90,7 +90,7 @@
                                     <select class="form-control select2" id="buildinfo_store_name_x" name="buildinfo_store_name_x">
                                         <option >---Vui lòng chọn---</option>
                                         @foreach($store_name as $item)
-                                            <option value="{{$item->id}}">{{$item->store_name}}</option>
+                                            <option value="{{$item->id}}">{{$item->dev_name}} : {{$item->store_name}}</option>
                                         @endforeach
                                     </select>
                             </div>
