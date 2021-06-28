@@ -39,7 +39,6 @@
                         <tr>
                             <th width="60px">IMG</th>
                             <th>Dev name</th>
-                            <th>Ga name</th>
                             <th>Store name</th>
                             <th>Gmail </th>
                             <th>Điện thoại</th>
@@ -94,7 +93,6 @@
                 columns: [
                     {data: 'info_logo'},
                     {data: 'dev_name'},
-                    {data: 'id_ga'},
                     {data: 'store_name'},
                     {data: 'gmail_gadev_chinh'},
                     {data: 'info_phone'},
