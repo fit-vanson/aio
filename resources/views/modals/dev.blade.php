@@ -14,7 +14,23 @@
 
                     <div data-repeater-list="group-a">
                         <div data-repeater-item="" class="row">
+                            <div class="form-group col-lg-6">
+                                <label for="name">Ga Name</label>
+                                <div class="inner row">
+                                    <div class="col-md-12 col-12">
+                                        <select class="form-control select2js" id="id_ga" name="id_ga">
+                                            <option>---Vui lòng chọn---</option>
+                                            @foreach($ga as $item)
+                                                <option value="{{$item->id}}">{{$item->ga_name}}</option>
+                                            @endforeach
+                                        </select>
+                                    </div>
+                                </div>
+                            </div>
 
+                        </div>
+
+                        <div data-repeater-item="" class="row">
                             <div class="form-group col-lg-6">
                                 <label for="name">Dev Name  <span style="color: red">*</span></label>
                                 <input type="text" id="dev_name" name="dev_name" class="form-control" required>

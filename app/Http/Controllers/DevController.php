@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Dev;
 
+use App\Models\Ga;
 use App\Models\Ga_dev;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Http\Request;
@@ -18,6 +19,7 @@ class DevController extends Controller
     {
         $dev=  Dev::latest('id')->get();
         $ga_dev = Ga_dev::latest('id')->get();
+        $ga= Ga::latest('id')->get();
         if ($request->ajax()) {
             $data = Dev::latest('id')->get();
             return Datatables::of($data)
@@ -39,6 +41,16 @@ class DevController extends Controller
                         return '<span style="color: red;font-size: medium">'.$data->info_phone.'</span>';
                     }
                     return '<span style="color: green">'.$data->info_phone.'</span>';
+                })
+                ->editColumn('id_ga', function($data){
+                    if($data->id_ga == null ){
+                        return '<span class="badge badge-dark">Chưa có</span>';
+                    }
+                    $ga_name = DB::table('ngocphandang_dev')
+                        ->join('ngocphandang_ga','ngocphandang_ga.id','=','ngocphandang_dev.id_ga')
+                        ->where('ngocphandang_dev.id_ga',$data->id_ga)
+                        ->first();
+                    return $ga_name->ga_name;
                 })
 
                 ->editColumn('gmail_gadev_chinh', function($data){
@@ -89,10 +101,10 @@ class DevController extends Controller
                     }
                     return $info_url .' '. $info_web.' '. $info_fanpage.' '. $info_policydev;
                 })
-                ->rawColumns(['action','gmail_gadev_chinh','info_logo','status','link','info_phone'])
+                ->rawColumns(['action','gmail_gadev_chinh','info_logo','status','link','info_phone','id_ga'])
                 ->make(true);
         }
-        return view('dev.index',compact(['dev','ga_dev']));
+        return view('dev.index',compact(['dev','ga_dev','ga']));
     }
 
     /**
@@ -114,6 +126,7 @@ class DevController extends Controller
         }
         $data = new Dev();
         $data['dev_name'] = $request->dev_name;
+        $data['id_ga'] = $request->id_ga;
         $data['store_name'] = $request->store_name;
         $data['ma_hoa_don'] = $request->ma_hoa_don;
         $data['gmail_gadev_chinh'] = $request->gmail_gadev_chinh;
@@ -191,6 +204,7 @@ class DevController extends Controller
         }
         $data = Dev::find($id);
         $data->dev_name = $request->dev_name;
+        $data->id_ga = $request->id_ga;
         $data->store_name = $request->store_name;
         $data->ma_hoa_don = $request->ma_hoa_don;
         $data->gmail_gadev_chinh = $request->gmail_gadev_chinh;
