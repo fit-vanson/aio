@@ -237,9 +237,25 @@
             })
         }
 
-    </script>
 
-    <script>
+        function showGa(id) {
+            $.get('{{asset('ga/showDev')}}/'+id,function (data) {
+
+                var html_row ='<ol>';
+                $.each(data, function(key, val){
+                    html_row += '<li>'+ val.dev_name +'</li>';
+                });
+                html_row += '</ol>';
+                var html_content = '<p>'+ html_row +'</p>';
+                $('#showDev_detail').html(html_content);
+                $('#showDev').modal('show');
+                $('.modal').on('hidden.bs.modal', function (e) {
+                    $('body').addClass('modal-open');
+                });
+            })
+        }
+
+
         $("#addGaDevForm").submit(function (e) {
             e.preventDefault();
             let data = new FormData(document.getElementById('addGaDevForm'));
