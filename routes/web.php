@@ -184,6 +184,8 @@ Route::group(['prefix'=>'mail_manage','middleware'=>['CheckLogout','2fa']], func
 Route::group(['prefix'=>'mail_parent','middleware'=>['CheckLogout','2fa']], function (){
     Route::get('/',[MailParentController::class,'index'])->name('mail_parent.index')->middleware('can:mail_parent-index');
     Route::get('/getMailParents/', [MailParentController::class, "getMailParents"])->name('mail_parent.getMailParents');
+    Route::get('/noPhone',[MailParentController::class,'indexNo'])->name('mail_parent.indexNo')->middleware('can:mail_parent-index');
+    Route::get('/getMailParentsNo/', [MailParentController::class, "getMailParentsNo"])->name('mail_parent.getMailParentsNo');
 //    Route::post('/create',[MailManageController::class,'create'])->name('mail_manage.create')->middleware('can:mail_manage-add');
 //    Route::get('/edit/{id}',[MailManageController::class,'edit'])->name('mail_manage.edit')->middleware('can:mail_manage-edit');
 //    Route::get('/show/{id}',[MailManageController::class,'show'])->name('mail_manage.show')->middleware('can:mail_manage-show');

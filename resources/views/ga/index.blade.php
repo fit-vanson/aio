@@ -240,19 +240,29 @@
 
         function showGa(id) {
             $.get('{{asset('ga/showDev')}}/'+id,function (data) {
+                console.log(data.length)
+                if(data.length == 0){
+                    swal({
+                        title: "Thông báo!",
+                        text: "Ga chưa được sử dụng!",
+                        timer: 1500,
+                        type: 'warning',
+                        showConfirmButton: false
 
-                var html_row ='<ol>';
-                $.each(data, function(key, val){
-                    html_row += '<li>'+ val.dev_name +'</li>';
-                });
-                html_row += '</ol>';
-                var html_content = '<p>'+ html_row +'</p>';
-                $('#showDev_detail').html(html_content);
-                $('#showDev').modal('show');
-                $('.modal').on('hidden.bs.modal', function (e) {
-                    $('body').addClass('modal-open');
-                });
-
+                    });
+                }else {
+                    var html_row ='<ol>';
+                    $.each(data, function(key, val){
+                        html_row += '<li>'+ val.dev_name +'</li>';
+                    });
+                    html_row += '</ol>';
+                    var html_content = '<p>'+ html_row +'</p>';
+                    $('#showDev_detail').html(html_content);
+                    $('#showDev').modal('show');
+                    $('.modal').on('hidden.bs.modal', function (e) {
+                        $('body').addClass('modal-open');
+                    });
+                }
             })
         }
 
