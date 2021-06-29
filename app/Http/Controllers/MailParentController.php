@@ -38,7 +38,10 @@ class MailParentController extends Controller
 
         // Total records
         $totalRecords = MailParent::select('count(*) as allcount')->count();
-        $totalRecordswithFilter = MailParent::select('count(*) as allcount')->where('user', 'like', '%' . $searchValue . '%')->count();
+        $totalRecordswithFilter = MailParent::select('count(*) as allcount')
+            ->where('ngocphandang_parent.user', 'like', '%' . $searchValue . '%')
+            ->orWhere('ngocphandang_parent.phone', 'like', '%' . $searchValue . '%')
+            ->count();
 
         // Get records, also we have included search filter as well
         $records = MailParent::orderBy($columnName, $columnSortOrder)
@@ -73,6 +76,7 @@ class MailParentController extends Controller
 
     public function getMailParentsNo(Request $request)
     {
+
 
         $draw = $request->get('draw');
         $start = $request->get("start");
@@ -112,7 +116,8 @@ class MailParentController extends Controller
             })
             ->count();
         $totalRecordswithFilter = MailParent::select('count(*) as allcount')
-            ->where('user', 'like', '%' . $searchValue . '%')
+            ->where('ngocphandang_parent.user', 'like', '%' . $searchValue . '%')
+            ->orWhere('ngocphandang_parent.phone', 'like', '%' . $searchValue . '%')
             ->whereNotExists(function($query)
             {
                 $query->select(DB::raw('phone'))
