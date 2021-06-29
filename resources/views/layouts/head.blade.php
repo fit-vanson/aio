@@ -1,5 +1,5 @@
 <!-- App favicon -->
-<link rel="shortcut icon" href="assets/images/favicon.ico">
+<link rel="shortcut icon" href="assets/images/favicon.png">
 
 @yield('css')
 
