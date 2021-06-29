@@ -89,51 +89,38 @@ class MailParentController extends Controller
         $searchValue = $search_arr['value']; // Search value
 
         // Get records, also we have included search filter as well
-        $records = DB::table('ngocphandang_parent')
-            ->leftJoin('ngocphandang_khosim','ngocphandang_khosim.phone','=','ngocphandang_parent.phone')
-
+        $records = MailParent::select('ngocphandang_parent.*')
             ->where('ngocphandang_parent.user', 'like', '%' . $searchValue . '%')
             ->orWhere('ngocphandang_parent.phone', 'like', '%' . $searchValue . '%')
             ->orWhere('ngocphandang_parent.timeadd', 'like', '%' . $searchValue . '%')
-            ->whereNull('ngocphandang_khosim.phone')
-            ->select('ngocphandang_parent.*')
-
-
+            ->whereNotExists(function($query)
+            {
+                $query->select(DB::raw('phone'))
+                    ->from('ngocphandang_khosim')
+                    ->whereRaw('ngocphandang_khosim.phone = ngocphandang_parent.phone');
+            })
             ->skip($start)
             ->take($rowperpage)
             ->get();
 
-
-
-        // Total records
-        $totalRecords = count($records);
-//        $totalRecords = DB::table('ngocphandang_parent')
-//            ->leftJoin('ngocphandang_khosim','ngocphandang_khosim.phone','=','ngocphandang_parent.phone')
-//            ->whereNull('ngocphandang_khosim.phone')
-//            ->select('count(*) as allcount')
-//            ->count();
-//
-//
-        $totalRecordswithFilter = DB::table('ngocphandang_parent')
-            ->leftJoin('ngocphandang_khosim','ngocphandang_khosim.phone','=','ngocphandang_parent.phone')
-            ->whereNull('ngocphandang_khosim.phone')
-            ->where('user', 'like', '%' . $searchValue . '%')
-            ->select('count(*) as allcount')
+        $totalRecords = MailParent::select('count(*) as allcount')
+            ->whereNotExists(function($query)
+            {
+                $query->select(DB::raw('phone'))
+                    ->from('ngocphandang_khosim')
+                    ->whereRaw('ngocphandang_khosim.phone = ngocphandang_parent.phone');
+            })
             ->count();
-
-
-
-
-
-
-
-
-
-
-
+        $totalRecordswithFilter = MailParent::select('count(*) as allcount')
+            ->where('user', 'like', '%' . $searchValue . '%')
+            ->whereNotExists(function($query)
+            {
+                $query->select(DB::raw('phone'))
+                    ->from('ngocphandang_khosim')
+                    ->whereRaw('ngocphandang_khosim.phone = ngocphandang_parent.phone');
+            })
+            ->count();
         $data_arr = array();
-
-
         foreach ($records as $record) {
 
             $data_arr[] = array(
