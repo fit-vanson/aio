@@ -8,6 +8,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
 use PHPGangsta_GoogleAuthenticator;
 use PragmaRX\Google2FA\Google2FA;
+use PragmaRX\Google2FA\Support\Base32;
 use Yajra\DataTables\Facades\DataTables;
 
 class MailManageController extends Controller
@@ -54,7 +55,7 @@ class MailManageController extends Controller
     public function create(Request  $request)
     {
         $rules = [
-            'email' =>'unique:ngocphandang_mailmanage,email'
+            'email' =>'unique:ngocphandang_mailmanage,email',
         ];
         $message = [
             'email.unique'=>'Email đã tồn tại',
@@ -65,9 +66,15 @@ class MailManageController extends Controller
         if($error->fails()){
             return response()->json(['errors'=> $error->errors()->all()]);
         }
+        $secret_code = strtoupper(str_replace(' ','',$request->secret_code));
+
+        $isMatch = preg_match('#^([A-Z2-7=]{8})+$#', $secret_code);
+        if($isMatch == 0) {
+            return response()->json(['errors'=> ['Mã không hợp lệ']]);
+        }
         $data = new MailManage();
         $data['email'] = strtolower($request->email);
-        $data['secret_code'] = $request->secret_code;
+        $data['secret_code'] = $secret_code;
         $data['created_at'] = time();
         $data['updated_at'] = time();
         $data->save();
@@ -142,10 +149,16 @@ class MailManageController extends Controller
         if($error->fails()){
             return response()->json(['errors'=> $error->errors()->all()]);
         }
+        $secret_code = strtoupper(str_replace(' ','',$request->secret_code));
+
+        $isMatch = preg_match('#^([A-Z2-7=]{8})+$#', $secret_code);
+        if($isMatch == 0) {
+            return response()->json(['errors'=> ['Mã không hợp lệ']]);
+        }
         $data = MailManage::find($id);
         $data->email = strtolower($request->email);
 
-        $data->secret_code= $request->secret_code;
+        $data->secret_code= $secret_code;
         $data->updated_at= time();
         $data->save();
         return response()->json(['success'=>'Cập nhật thành công']);
