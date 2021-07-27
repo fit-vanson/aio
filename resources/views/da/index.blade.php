@@ -91,6 +91,7 @@
                 processing: true,
                 serverSide: true,
                 ajax: "{{ route('da.index') }}",
+
                 columns: [
                     { "data": null,"sortable": true,
                         render: function (data, type, row, meta) {

@@ -22,6 +22,7 @@ class MailParentController extends Controller
     /* Process ajax request */
     public function getMailParents(Request $request)
     {
+        dd($request);
         $draw = $request->get('draw');
         $start = $request->get("start");
         $rowperpage = $request->get("length"); // total number of rows per page
@@ -78,6 +79,7 @@ class MailParentController extends Controller
     {
 
 
+
         $draw = $request->get('draw');
         $start = $request->get("start");
         $rowperpage = $request->get("length"); // total number of rows per page
@@ -93,16 +95,12 @@ class MailParentController extends Controller
         $searchValue = $search_arr['value']; // Search value
 
         // Get records, also we have included search filter as well
-        $records = MailParent::select('ngocphandang_parent.*')
+        $records = DB::table('ngocphandang_parent')
+            ->leftJoin('ngocphandang_khosim','ngocphandang_khosim.phone','=','ngocphandang_parent.phone')
             ->where('ngocphandang_parent.user', 'like', '%' . $searchValue . '%')
             ->orWhere('ngocphandang_parent.phone', 'like', '%' . $searchValue . '%')
             ->orWhere('ngocphandang_parent.timeadd', 'like', '%' . $searchValue . '%')
-            ->whereNotExists(function($query)
-            {
-                $query->select(DB::raw('phone'))
-                    ->from('ngocphandang_khosim')
-                    ->whereRaw('ngocphandang_khosim.phone = ngocphandang_parent.phone');
-            })
+            ->whereNull('ngocphandang_khosim.phone')
             ->skip($start)
             ->take($rowperpage)
             ->get();
@@ -110,7 +108,7 @@ class MailParentController extends Controller
         $totalRecords = MailParent::select('count(*) as allcount')
             ->whereNotExists(function($query)
             {
-                $query->select(DB::raw('phone'))
+                $query->select(DB::raw('ngocphandang_khosim.phone'))
                     ->from('ngocphandang_khosim')
                     ->whereRaw('ngocphandang_khosim.phone = ngocphandang_parent.phone');
             })
@@ -120,11 +118,11 @@ class MailParentController extends Controller
             ->orWhere('ngocphandang_parent.phone', 'like', '%' . $searchValue . '%')
             ->whereNotExists(function($query)
             {
-                $query->select(DB::raw('phone'))
+                $query->select(DB::raw('ngocphandang_khosim.phone'))
                     ->from('ngocphandang_khosim')
                     ->whereRaw('ngocphandang_khosim.phone = ngocphandang_parent.phone');
             })
-            ->count();
+            ->dd();
         $data_arr = array();
         foreach ($records as $record) {
 

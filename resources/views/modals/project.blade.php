@@ -101,6 +101,7 @@
 
                         </div>
                         <div data-repeater-item="" class="row input_buildinfo">
+
                             <div class="form-group col-lg-6 ">
                                 <label for="name">Link Policy</label>
                                 <input type="text" id="buildinfo_link_policy_x" name="buildinfo_link_policy_x" class="form-control" >

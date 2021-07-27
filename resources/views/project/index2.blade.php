@@ -18,15 +18,15 @@
 
 @section('breadcrumb')
 <div class="col-sm-6">
-    <h4 class="page-title">Quản lý Project</h4>
+    <h4 class="page-title">Quản lý Project2</h4>
 </div>
 <div class="col-sm-6">
     <div class="float-right">
-        <a class="btn btn-success" href="javascript:void(0)" id="createNewProject"> Create New Project</a>
+        <a class="btn btn-success" href="javascript:void(0)" id="createNewProject"> Create New Project2</a>
     </div>
 </div>
-@include('modals.project')
 
+@include('modals.project2')
 
 @endsection
 @section('content')
@@ -47,10 +47,10 @@
                         <tr>
 
                             <th width="100px">Logo</th>
-                            <th>Mã dự án</th>
-                            <th>Tên Project</th>
-                            <th>Tên Template</th>
-                            <th>Tiêu đề</th>
+                            <th>Mã dự án2</th>
+{{--                            <th>Tên Project</th>--}}
+{{--                            <th>Tên Template</th>--}}
+                            <th>Package</th>
                             <th>Trạng thái Ứng dụng | Policy</th>
                             <th width="10%">Action</th>
                         </tr>
@@ -92,6 +92,7 @@
     $("#buildinfo_store_name_x").select2({});
 </script>
 
+
 <script type="text/javascript">
     $(function () {
         $.ajaxSetup({
@@ -102,14 +103,16 @@
         var table = $('.data-table').DataTable({
             processing: true,
             serverSide: true,
-            ajax: "{{ route('project.index') }}",
+            ajax: {
+                url: "{{ route('project2.getIndex') }}",
+                type: "post"
+            },
             columns: [
-
-                {data: 'bot_imglogo', name: 'bot_imglogo'},
+                {data: 'logo', name: 'logo'},
                 {data: 'ma_da', name: 'ma_da'},
-                {data: 'projectname', name: 'projectname'},
-                {data: 'template', name: 'template'},
-                {data: 'title_app', name: 'title_app'},
+                // {data: 'projectname', name: 'projectname'},
+                // {data: 'template', name: 'template'},
+                {data: 'package', name: 'package'},
                 {data: 'status', name: 'status'},
                 {data: 'action', name: 'action', orderable: false, searchable: false},
             ]
@@ -118,7 +121,7 @@
         $('#createNewProject').click(function () {
             $('#saveBtn').val("create-project");
             $('#project_id').val('');
-            $('#projectForm').trigger("reset");
+            $('#projectForm2').trigger("reset");
             $('#modelHeading').html("Thêm mới Project");
             $('#ajaxModel').modal('show');
             $('.modal').on('hidden.bs.modal', function (e) {
@@ -127,12 +130,12 @@
         });
 
 
-        $('#projectForm').on('submit',function (event){
+        $('#projectForm2').on('submit',function (event){
             event.preventDefault();
             if($('#saveBtn').val() == 'create-project'){
                 $.ajax({
-                    data: $('#projectForm').serialize(),
-                    url: "{{ route('project.create') }}",
+                    data: $('#projectForm2').serialize(),
+                    url: "{{ route('project2.create') }}",
                     type: "POST",
                     dataType: 'json',
                     success: function (data) {
@@ -146,7 +149,7 @@
                         }
                         if(data.success){
                             $.notify(data.success, "success");
-                            $('#projectForm').trigger("reset");
+                            $('#projectForm2').trigger("reset");
                             $('#ajaxModel').modal('hide');
                             table.draw();
                         }
@@ -155,8 +158,8 @@
             }
             if($('#saveBtn').val() == 'edit-project'){
                 $.ajax({
-                    data: $('#projectForm').serialize(),
-                    url: "{{ route('project.update') }}",
+                    data: $('#projectForm2').serialize(),
+                    url: "{{ route('project2.update') }}",
                     type: "post",
                     dataType: 'json',
                     success: function (data) {
@@ -170,7 +173,7 @@
                         }
                         if(data.success){
                             $.notify(data.success, "success");
-                            $('#projectForm').trigger("reset");
+                            $('#projectForm2').trigger("reset");
                             $('#ajaxModel').modal('hide');
                             table.draw();
                         }
@@ -183,13 +186,13 @@
             if($('#saveQBtn').val() == 'quick-edit-project'){
                 $.ajax({
                     data: $('#projectQuickForm').serialize(),
-                    url: "{{ route('project.update') }}",
+                    url: "{{ route('project2.updateQuick') }}",
                     type: "post",
                     dataType: 'json',
                     success: function (data) {
                         if(data.errors){
                             for( var count=0 ; count <data.errors.length; count++){
-                                $("#projectForm").notify(
+                                $("#projectQuickForm").notify(
                                     data.errors[count],"error",
                                     { position:"right" }
                                 );
@@ -240,39 +243,78 @@
 </script>
 <script>
     function editProject(id) {
-        $.get('{{asset('project/edit')}}/'+id,function (data) {
+        $.get('{{asset('project2/edit')}}/'+id,function (data) {
             $('#project_id').val(data[0].projectid);
             $('#projectname').val(data[0].projectname);
             $('#template').val(data[0].template);
             $('#template').select2();
             $('#ma_da').val(data[0].ma_da);
             $('#ma_da').select2();
-            $('#buildinfo_store_name_x').val(data[0].buildinfo_store_name_x);
-            $('#buildinfo_store_name_x').select2();
-            $('#package').val(data[0].package);
             $('#title_app').val(data[0].title_app);
-            $('#buildinfo_link_policy_x').val(data[0].buildinfo_link_policy_x);
-            $('#buildinfo_link_fanpage').val(data[0].buildinfo_link_fanpage);
-            $('#buildinfo_link_website').val(data[0].buildinfo_link_website);
-            $('#buildinfo_link_store').val(data[0].buildinfo_link_store);
-            $('#buildinfo_app_name_x').val(data[0].buildinfo_app_name_x);
             $('#buildinfo_vernum').val(data[0].buildinfo_vernum);
             $('#buildinfo_verstr').val(data[0].buildinfo_verstr);
+            $('#buildinfo_app_name_x').val(data[0].buildinfo_app_name_x);
             $('#buildinfo_keystore').val(data[0].buildinfo_keystore);
-            $('#buildinfo_console').val(data[0].buildinfo_console);
-            $('#ads_id').val(data[0].ads_id);
-            $('#banner').val(data[0].ads_banner);
-            $('#ads_inter').val(data[0].ads_inter);
-            $('#ads_reward').val(data[0].ads_reward);
-            $('#ads_native').val(data[0].ads_native);
-            $('#ads_open').val(data[0].ads_open);
-            $('#buildinfo_time').val(data[0].buildinfo_time);
-            $('#buildinfo_mess').val(data[0].buildinfo_mess);
-            $('#time_mess').val(data[0].time_mess);
-            $('#buildinfo_email_dev_x').val(data[0].buildinfo_email_dev_x);
+            $('#buildinfo_sdk').val(data[0].buildinfo_sdk);
+            $('#buildinfo_link_policy_x').val(data[0].buildinfo_link_policy_x);
             $('#buildinfo_link_youtube_x').val(data[0].buildinfo_link_youtube_x);
+            $('#buildinfo_link_fanpage').val(data[0].buildinfo_link_fanpage);
             $('#buildinfo_api_key_x').val(data[0].buildinfo_api_key_x);
-            $('#status').val(data[0].status);
+            $('#buildinfo_link_website').val(data[0].buildinfo_link_website);
+
+
+            $('#Chplay_package').val(data[0].Chplay_package);
+            $('#Chplay_ads').val(data[0].Chplay_ads);
+            $('#Chplay_buildinfo_store_name_x').val(data[0].Chplay_buildinfo_store_name_x);
+            $('#Chplay_buildinfo_link_store').val(data[0].Chplay_buildinfo_link_store);
+            $('#Chplay_buildinfo_link_app').val(data[0].Chplay_buildinfo_link_app);
+            $('#Chplay_buildinfo_email_dev_x').val(data[0].Chplay_buildinfo_email_dev_x);
+            $('#Chplay_status').val(data[0].Chplay_status);
+
+            $('#Amazon_package').val(data[0].Amazon_package);
+            $('#Amazon_ads').val(data[0].Amazon_ads);
+            $('#Amazon_buildinfo_store_name_x').val(data[0].Amazon_buildinfo_store_name_x);
+            $('#Amazon_buildinfo_link_store').val(data[0].Amazon_buildinfo_link_store);
+            $('#Amazon_buildinfo_link_app').val(data[0].Amazon_buildinfo_link_app);
+            $('#Amazon_buildinfo_email_dev_x').val(data[0].Amazon_buildinfo_email_dev_x);
+            $('#Amazon_status').val(data[0].Amazon_status);
+
+            $('#Samsung_package').val(data[0].Samsung_package);
+            $('#Samsung_ads').val(data[0].Samsung_ads);
+            $('#Samsung_buildinfo_store_name_x').val(data[0].Samsung_buildinfo_store_name_x);
+            $('#Samsung_buildinfo_link_store').val(data[0].Samsung_buildinfo_link_store);
+            $('#Samsung_buildinfo_link_app').val(data[0].Samsung_buildinfo_link_app);
+            $('#Samsung_buildinfo_email_dev_x').val(data[0].Samsung_buildinfo_email_dev_x);
+            $('#Samsung_status').val(data[0].Samsung_status);
+
+            $('#Xiaomi_package').val(data[0].Xiaomi_package);
+            $('#Xiaomi_ads').val(data[0].Xiaomi_ads);
+            $('#Xiaomi_buildinfo_store_name_x').val(data[0].Xiaomi_buildinfo_store_name_x);
+            $('#Xiaomi_buildinfo_link_store').val(data[0].Xiaomi_buildinfo_link_store);
+            $('#Xiaomi_buildinfo_link_app').val(data[0].Xiaomi_buildinfo_link_app);
+            $('#Xiaomi_buildinfo_email_dev_x').val(data[0].Xiaomi_buildinfo_email_dev_x);
+            $('#Xiaomi_status').val(data[0].Xiaomi_status);
+
+            $('#Oppo_package').val(data[0].Oppo_package);
+            $('#Oppo_ads').val(data[0].Oppo_ads);
+            $('#Oppo_buildinfo_store_name_x').val(data[0].Oppo_buildinfo_store_name_x);
+            $('#Oppo_buildinfo_link_store').val(data[0].Oppo_buildinfo_link_store);
+            $('#Oppo_buildinfo_link_app').val(data[0].Oppo_buildinfo_link_app);
+            $('#Oppo_buildinfo_email_dev_x').val(data[0].Oppo_buildinfo_email_dev_x);
+            $('#Oppo_status').val(data[0].Oppo_status);
+
+            $('#Vivo_package').val(data[0].Vivo_package);
+            $('#Vivo_ads').val(data[0].Vivo_ads);
+            $('#Vivo_buildinfo_store_name_x').val(data[0].Vivo_buildinfo_store_name_x);
+            $('#Vivo_buildinfo_link_store').val(data[0].Vivo_buildinfo_link_store);
+            $('#Vivo_buildinfo_link_app').val(data[0].Vivo_buildinfo_link_app);
+            $('#Vivo_buildinfo_email_dev_x').val(data[0].Vivo_buildinfo_email_dev_x);
+            $('#Vivo_status').val(data[0].Vivo_status);
+
+
+
+
+
             $('#modelHeading').html("Edit Project");
             $('#saveBtn').val("edit-project");
             $('#ajaxModel').modal('show');
@@ -283,36 +325,38 @@
     }
 
     function quickEditProject(id) {
-        $.get('{{asset('project/edit')}}/'+id,function (data) {
+        $.get('{{asset('project2/edit')}}/'+id,function (data) {
             $('#quick_project_id').val(data[0].projectid);
-            $('#quick_projectname').val(data[0].projectname);
-            $('#quick_template').val(data[0].template);
-            $('#quick_ma_da').val(data[0].ma_da);
-            $('#quick_package').val(data[0].package);
-            $('#quick_title_app').val(data[0].title_app);
-            $('#quick_buildinfo_link_policy_x').val(data[0].buildinfo_link_policy_x);
-            $('#quick_buildinfo_link_fanpage').val(data[0].buildinfo_link_fanpage);
-            $('#quick_buildinfo_link_website').val(data[0].buildinfo_link_website);
-            $('#quick_buildinfo_link_store').val(data[0].buildinfo_link_store);
-            $('#quick_buildinfo_app_name_x').val(data[0].buildinfo_app_name_x);
-            $('#quick_buildinfo_store_name_x').val(data[0].buildinfo_store_name_x);
+            // $('#quick_projectname').val(data[0].projectname);
+            // $('#quick_template').val(data[0].template);
+            // $('#quick_ma_da').val(data[0].ma_da);
+            // $('#quick_package').val(data[0].package);
+            // $('#quick_title_app').val(data[0].title_app);
+            // $('#quick_buildinfo_link_policy_x').val(data[0].buildinfo_link_policy_x);
+            // $('#quick_buildinfo_link_fanpage').val(data[0].buildinfo_link_fanpage);
+            // $('#quick_buildinfo_link_website').val(data[0].buildinfo_link_website);
+            // $('#quick_buildinfo_link_store').val(data[0].buildinfo_link_store);
+            // $('#quick_buildinfo_app_name_x').val(data[0].buildinfo_app_name_x);
+            // $('#quick_buildinfo_store_name_x').val(data[0].buildinfo_store_name_x);
+
             $('#quick_buildinfo_vernum').val(data[0].buildinfo_vernum);
             $('#quick_buildinfo_verstr').val(data[0].buildinfo_verstr);
-            $('#quick_buildinfo_keystore').val(data[0].buildinfo_keystore);
             $('#quick_buildinfo_console').val(data[0].buildinfo_console);
-            $('#quick_ads_id').val(data[0].ads_id);
-            $('#quick_banner').val(data[0].ads_banner);
-            $('#quick_ads_inter').val(data[0].ads_inter);
-            $('#quick_ads_reward').val(data[0].ads_reward);
-            $('#quick_ads_native').val(data[0].ads_native);
-            $('#quick_ads_open').val(data[0].ads_open);
-            $('#quick_buildinfo_time').val(data[0].buildinfo_time);
-            $('#quick_buildinfo_mess').val(data[0].buildinfo_mess);
-            $('#quick_time_mess').val(data[0].time_mess);
-            $('#quick_buildinfo_email_dev_x').val(data[0].buildinfo_email_dev_x);
-            $('#quick_buildinfo_link_youtube_x').val(data[0].buildinfo_link_youtube_x);
-            $('#quick_buildinfo_api_key_x').val(data[0].buildinfo_api_key_x);
-            $('#quick_status').val(data[0].status);
+
+            // $('#quick_buildinfo_keystore').val(data[0].buildinfo_keystore);
+            // $('#quick_ads_id').val(data[0].ads_id);
+            // $('#quick_banner').val(data[0].ads_banner);
+            // $('#quick_ads_inter').val(data[0].ads_inter);
+            // $('#quick_ads_reward').val(data[0].ads_reward);
+            // $('#quick_ads_native').val(data[0].ads_native);
+            // $('#quick_ads_open').val(data[0].ads_open);
+            // $('#quick_buildinfo_time').val(data[0].buildinfo_time);
+            // $('#quick_buildinfo_mess').val(data[0].buildinfo_mess);
+            // $('#quick_time_mess').val(data[0].time_mess);
+            // $('#quick_buildinfo_email_dev_x').val(data[0].buildinfo_email_dev_x);
+            // $('#quick_buildinfo_link_youtube_x').val(data[0].buildinfo_link_youtube_x);
+            // $('#quick_buildinfo_api_key_x').val(data[0].buildinfo_api_key_x);
+            // $('#quick_status').val(data[0].status);
 
 
             $('#modelQuickHeading').html("Quick Edit Project");
@@ -323,7 +367,7 @@
 
 
     function showPolicy(id) {
-        $.get('{{asset('project/edit')}}/'+id,function (data) {
+        $.get('{{asset('project2/edit')}}/'+id,function (data) {
             if(data[2] == null) { data[2] = '222'}
             if(data[1] == null) { data[1] = ''}
             let policy1 = data[1].policy1.replaceAll("{APP_NAME_X}", data[0].buildinfo_app_name_x).replaceAll("{STORE_NAME_X}", data[2].store_name);

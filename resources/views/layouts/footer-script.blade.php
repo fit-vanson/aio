@@ -31,7 +31,7 @@
     }
     $(document).ready(function() {
         $('#avatar').click(function(){
-            $('#image_name').click();
+            $('#logo').click();
         });
     });
 </script>
