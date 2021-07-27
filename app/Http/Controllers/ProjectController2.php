@@ -349,7 +349,7 @@ class ProjectController2 extends Controller
             $status =  $policy.'<br> CH Play: '.$Chplay_status.'<br> Amazon: '.$Amazon_status.'<br> SamSung: '.$Samsung_status.'<br> Xiaomi: '.$Xiaomi_status.'<br> Oppo: '.$Oppo_status.'<br> Vivo: '.$Vivo_status;
 
             if(isset($record->logo)){
-                $logo = ' ádj';
+                $logo = "<img width='60px' height='60px' src='../uploads/project/$record->logo'>";
             }else{
                 $logo = '<img width="60px" height="60px" src="assets\images\logo-sm.png">';
             }
