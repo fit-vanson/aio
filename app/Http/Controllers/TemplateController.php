@@ -12,78 +12,169 @@ use Yajra\DataTables\Facades\DataTables;
 
 class TemplateController extends Controller
 {
-    public function index(Request $request)
-    {
-        $template = Template::latest('id')->get();
-        if ($request->ajax()) {
-            $data = Template::latest('id')->get();
-            return Datatables::of($data)
-                ->addIndexColumn()
-                ->addColumn('action', function($row){
-                    $btn = ' <a href="javascript:void(0)" onclick="editTemplate('.$row->id.')" class="btn btn-warning"><i class="ti-pencil-alt"></i></a>';
-
-                    $btn = $btn.' <a href="javascript:void(0)" data-toggle="tooltip"  data-id="'.$row->id.'" data-original-title="Delete" class="btn btn-danger deleteTemplate"><i class="ti-trash"></i></a>';
-                    return $btn;
-                })
-                ->editColumn('time_create', function($data) {
-                    if($data->time_create == 0 ){
-                        return  null;
-                    }
-                    return date( 'd/m/Y',$data->time_create);
-                })
-                ->editColumn('time_update', function($data) {
-                    if($data->time_update == 0 ){
-                        return  null;
-                    }
-                    return date( 'd/m/Y',$data->time_update);
-                })
-                ->editColumn('time_get', function($data) {
-                    if($data->time_get == 0 ){
-                        return  null;
-                    }
-                    return date( 'd/m/Y - H:i:s ',$data->time_get);
-                })
-                ->editColumn('template', function($data){
-                    return '
-                                    <span>'.$data->template.'</span>
-                                    <p class="text-muted m-b-30 ">'.$data->ver_build.'</p>
-                                ';
-                })
-                ->editColumn('link_chplay', function($data){
-                    if ($data->link_chplay !== null){
-                        return "<a  target= _blank href='$data->link_chplay'>Link</a>";
-                    }
-                    return null;
-                })
-                ->addColumn('script', function($row){
-                    if($row['script_copy'] !== Null){
-                        $script_copy = "<i style='color:green;' class='ti-check-box h5'></i>";
-                    } else {
-                        $script_copy = "<i style='color:red;' class='ti-close h5'></i>";
-                    }
-                    if($row['script_img'] !== Null){
-                        $script_img = "<i style='color:green;' class='ti-check-box h5'></i>";
-                    } else {
-                        $script_img = "<i style='color:red;' class='ti-close h5'></i>";
-                    }
-                    if($row['script_svg2xml'] !== Null){
-                        $script_svg2xml = "<i style='color:green;' class='ti-check-box h5'></i>";
-                    } else {
-                        $script_svg2xml = "<i style='color:red;' class='ti-close h5'></i>";
-                    }
-                    if($row['script_file'] !== Null){
-                        $script_file = "<i style='color:green;' class='ti-check-box h5'></i>";
-                    } else {
-                        $script_file = "<i style='color:red;' class='ti-close h5'></i>";
-                    }
-                    return $script_copy .' '. $script_img.' '. $script_svg2xml .' '.$script_file;
-                })
-
-                ->rawColumns(['action','link_chplay','script','template'])
-                ->make(true);
-        }
-        return view('template.index',compact('template'));
+    public function index(){
+        return view('template.index');
     }
+
+    public function getIndex(Request $request)
+    {
+        $draw = $request->get('draw');
+        $start = $request->get("start");
+        $rowperpage = $request->get("length"); // total number of rows per page
+
+        $columnIndex_arr = $request->get('order');
+        $columnName_arr = $request->get('columns');
+        $order_arr = $request->get('order');
+        $search_arr = $request->get('search');
+
+        $columnIndex = $columnIndex_arr[0]['column']; // Column index
+        $columnName = $columnName_arr[$columnIndex]['data']; // Column name
+        $columnSortOrder = $order_arr[0]['dir']; // asc or desc
+        $searchValue = $search_arr['value']; // Search value
+
+
+        // Total records
+        $totalRecords = Template::select('count(*) as allcount')->count();
+        $totalRecordswithFilter = Template::select('count(*) as allcount')
+            ->where('template', 'like', '%' . $searchValue . '%')
+            ->orWhere('ver_build', 'like', '%' . $searchValue . '%')
+            ->orWhere('Chplay_category', 'like', '%' . $searchValue . '%')
+            ->orWhere('Amazon_category', 'like', '%' . $searchValue . '%')
+            ->orWhere('Samsung_category', 'like', '%' . $searchValue . '%')
+            ->orWhere('Xiaomi_category', 'like', '%' . $searchValue . '%')
+            ->orWhere('Oppo_category', 'like', '%' . $searchValue . '%')
+            ->orWhere('Vivo_category', 'like', '%' . $searchValue . '%')
+            ->count();
+
+
+        // Get records, also we have included search filter as well
+        $records = Template::orderBy($columnName, $columnSortOrder)
+            ->where('template', 'like', '%' . $searchValue . '%')
+            ->orWhere('ver_build', 'like', '%' . $searchValue . '%')
+            ->orWhere('Chplay_category', 'like', '%' . $searchValue . '%')
+            ->orWhere('Amazon_category', 'like', '%' . $searchValue . '%')
+            ->orWhere('Samsung_category', 'like', '%' . $searchValue . '%')
+            ->orWhere('Xiaomi_category', 'like', '%' . $searchValue . '%')
+            ->orWhere('Oppo_category', 'like', '%' . $searchValue . '%')
+            ->orWhere('Vivo_category', 'like', '%' . $searchValue . '%')
+            ->select('*')
+            ->skip($start)
+            ->take($rowperpage)
+            ->get();
+
+        $data_arr = array();
+        foreach ($records as $record) {
+            $btn = ' <a href="javascript:void(0)" onclick="editTemplate('.$record->id.')" class="btn btn-warning"><i class="ti-pencil-alt"></i></a>';
+            $btn = $btn.' <a href="javascript:void(0)" data-toggle="tooltip"  data-id="'.$record->id.'" data-original-title="Delete" class="btn btn-danger deleteTemplate"><i class="ti-trash"></i></a>';
+
+            $template = ' <span>'.$record->template.'</span>
+                                    <p class="text-muted m-b-30 ">'.$record->ver_build.'</p>';
+
+            if($record['script_copy'] !== Null){
+                $script_copy = "<i style='color:green;' class='ti-check-box h5'></i>";
+            } else {
+                $script_copy = "<i style='color:red;' class='ti-close h5'></i>";
+            }
+            if($record['script_img'] !== Null){
+                $script_img = "<i style='color:green;' class='ti-check-box h5'></i>";
+            } else {
+                $script_img = "<i style='color:red;' class='ti-close h5'></i>";
+            }
+            if($record['script_svg2xml'] !== Null){
+                $script_svg2xml = "<i style='color:green;' class='ti-check-box h5'></i>";
+            } else {
+                $script_svg2xml = "<i style='color:red;' class='ti-close h5'></i>";
+            }
+            if($record['script_file'] !== Null){
+                $script_file = "<i style='color:green;' class='ti-check-box h5'></i>";
+            } else {
+                $script_file = "<i style='color:red;' class='ti-close h5'></i>";
+            }
+            $script = $script_copy .' '. $script_img.' '. $script_svg2xml .' '.$script_file;
+
+            if($record->time_create == 0 ){
+                $time_create =   null;
+            }else{
+                $time_create =  date( 'd/m/Y',$record->time_create);
+            }
+
+            if($record->time_update == 0 ){
+                $time_update =   null;
+            }else{
+                $time_update =  date( 'd/m/Y',$record->time_update);
+            }
+
+            if($record->time_get == 0 ){
+                $time_get =   null;
+            }else{
+                $time_get =  date( 'd/m/Y',$record->time_get);
+            }
+            if(isset($record->Chplay_category)){
+                $Chplay_category = 'CH Play: '.$record->Chplay_category;
+            }else{
+                $Chplay_category ='';
+            }
+
+            if(isset($record->Amazon_category)){
+                $Amazon_category = 'Amazon: '.$record->Amazon_category;
+            }else{
+                $Amazon_category ='';
+            }
+
+            if(isset($record->Samsung_category)){
+                $Samsung_category = 'Samsung: '.$record->Samsung_category;
+            }else{
+                $Samsung_category ='';
+            }
+
+            if(isset($record->Xiaomi_category)){
+                $Xiaomi_category = 'Xiaomi: '.$record->Xiaomi_category;
+            }else{
+                $Xiaomi_category ='';
+            }
+
+            if(isset($record->Oppo_category)){
+                $Oppo_category = 'Oppo: '.$record->Oppo_category;
+            }else{
+                $Oppo_category ='';
+            }
+
+            if(isset($record->Vivo_category)){
+                $Vivo_category = 'CH Play: '.$record->Vivo_category;
+            }else{
+                $Vivo_category ='';
+            }
+
+
+            if ($record->link_chplay !== null){
+                $link= "<a  target= _blank href='$record->link_chplay'>Link</a>";
+            }
+            else{
+                $link = null;
+            }
+            $data_arr[] = array(
+                "template" => $template,
+                "category"=>$Chplay_category.'<br>'.$Amazon_category.'<br>'.$Samsung_category.'<br>'.$Xiaomi_category.'<br>'.$Oppo_category.'<br>'.$Vivo_category,
+                "link" => $link,
+                "script" => $script,
+                "time_create"=> $time_create,
+                "time_update"=> $time_update,
+                "time_get"=> $time_get,
+                "action"=> $btn,
+            );
+        }
+
+
+        $response = array(
+            "draw" => intval($draw),
+            "iTotalRecords" => $totalRecords,
+            "iTotalDisplayRecords" => $totalRecordswithFilter,
+            "aaData" => $data_arr,
+        );
+
+        echo json_encode($response);
+    }
+
 
     /**
      * Show the form for creating a new resource.
@@ -92,6 +183,7 @@ class TemplateController extends Controller
      */
     public function create(Request  $request)
     {
+
         $rules = [
             'template' =>'unique:ngocphandang_template,template'
         ];
@@ -118,13 +210,20 @@ class TemplateController extends Controller
         $data['time_update'] = time();
         $data['time_get'] = time();
         $data['note'] = $request->note;
-        $data['link_chplay'] = $request->link_chplay;
-        $data['category'] =  $request->category;
+
+        $data['link'] = $request->link;
+        $data['Chplay_category'] =  $request->Chplay_category;
+        $data['Amazon_category'] =  $request->Amazon_category;
+        $data['Samsung_category'] =  $request->Samsung_category;
+        $data['Xiaomi_category'] =  $request->Xiaomi_category;
+        $data['Oppo_category'] =  $request->Oppo_category;
+        $data['Vivo_category'] =  $request->Vivo_category;
+
         $data->save();
-        $allTemp  = Template::latest('time_create')->get();
+
         return response()->json([
             'success'=>'Thêm mới thành công',
-            'temp'=>$allTemp
+
         ]);
     }
 
@@ -194,8 +293,13 @@ class TemplateController extends Controller
         $data->policy2 = $request->policy2;
         $data->time_update = time();
         $data->note = $request->note;
-        $data->link_chplay = $request->link_chplay;
-        $data->category =  $request->category;
+        $data->link = $request->link;
+        $data->Chplay_category =  $request->Chplay_category;
+        $data->Amazon_category =  $request->Amazon_category;
+        $data->Samsung_category =  $request->Samsung_category;
+        $data->Xiaomi_category =  $request->Xiaomi_category;
+        $data->Oppo_category =  $request->Oppo_category;
+        $data->Vivo_category =  $request->Vivo_category;
         $data->save();
         return response()->json(['success'=>'Cập nhật thành công']);
     }

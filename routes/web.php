@@ -14,6 +14,7 @@ use App\Http\Controllers\MailParentController;
 use App\Http\Controllers\MailRegController;
 use App\Http\Controllers\PermissionController;
 use App\Http\Controllers\ProjectController;
+use App\Http\Controllers\ProjectController2;
 use App\Http\Controllers\RoleController;
 use App\Http\Controllers\SmsController;
 use App\Http\Controllers\TemplateController;
@@ -84,8 +85,23 @@ Route::group(['prefix'=>'project','middleware'=>['CheckLogout','2fa']], function
     Route::get('/delete/{id}',[ProjectController::class,'delete'])->name('project.delete')->middleware('can:project-delete');
     Route::get('/getlist',[ProjectController::class,'getList'])->name('project.get_content');
 });
+
+Route::group(['prefix'=>'project2','middleware'=>['CheckLogout','2fa']], function (){
+    Route::get('/',[ProjectController2::class,'index'])->name('project2.index')->middleware('can:project-index');
+    Route::post('/getIndex',[ProjectController2::class,'getIndex'])->name('project2.getIndex')->middleware('can:project-index');
+    Route::post('/create',[ProjectController2::class,'create'])->name('project2.create')->middleware('can:project-add');
+    Route::get('/edit/{id}',[ProjectController2::class,'edit'])->name('project2.edit')->middleware('can:project-edit');
+    Route::get('/show/{id}',[ProjectController2::class,'show'])->name('project2.show')->middleware('can:project-show');
+    Route::post('/update',[ProjectController2::class,'update'])->name('project2.update')->middleware('can:project-update');
+    Route::post('/updateQuick',[ProjectController2::class,'updateQuick'])->name('project2.updateQuick')->middleware('can:project-update');
+    Route::get('/delete/{id}',[ProjectController2::class,'delete'])->name('project2.delete')->middleware('can:project-delete');
+    Route::get('/getlist',[ProjectController2::class,'getList'])->name('project2.get_content');
+});
+
+
 Route::group(['prefix'=>'template','middleware'=>['CheckLogout','2fa']], function (){
     Route::get('/',[TemplateController::class,'index'])->name('template.index')->middleware('can:template-index');
+    Route::post('/getIndex',[TemplateController::class,'getIndex'])->name('template.getIndex')->middleware('can:project-index');
     Route::post('/create',[TemplateController::class,'create'])->name('template.create')->middleware('can:template-add');
     Route::get('/edit/{id}',[TemplateController::class,'edit'])->name('template.edit')->middleware('can:template-edit');
     Route::get('/show/{id}',[TemplateController::class,'edit'])->name('template.show')->middleware('can:template-show');
@@ -94,6 +110,7 @@ Route::group(['prefix'=>'template','middleware'=>['CheckLogout','2fa']], functio
 });
 Route::group(['prefix'=>'ga_dev','middleware'=>['CheckLogout','2fa']], function (){
     Route::get('/',[Ga_devController::class,'index'])->name('gadev.index')->middleware('can:gadev-index');
+
     Route::post('/create',[Ga_devController::class,'create'])->name('gadev.create')->middleware('can:gadev-add');
     Route::get('/edit/{id}',[Ga_devController::class,'edit'])->name('gadev.edit')->middleware('can:gadev-edit');
     Route::get('/show/{id}',[Ga_devController::class,'show'])->name('gadev.show')->middleware('can:gadev-show');

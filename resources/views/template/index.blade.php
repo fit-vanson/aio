@@ -99,17 +99,23 @@
         var table = $('.data-table').DataTable({
             processing: true,
             serverSide: true,
-            ajax: "{{ route('template.index') }}",
+            ajax: {
+                url: "{{ route('template.getIndex') }}",
+                type: "post"
+            },
             columns: [
                 {data: 'template'},
                 {data: 'category'},
-                {data: 'link_chplay'},
+                {data: 'link'},
                 {data: 'script'},
                 {data: 'time_create'},
                 {data: 'time_update'},
                 {data: 'time_get'},
                 {data: 'action', name: 'action', orderable: false, searchable: false},
             ],
+            "columnDefs": [
+                { "orderable": false, "targets": [1,2,3] }
+            ]
 
         });
 
@@ -220,8 +226,13 @@
             $('#policy1').val(data.policy1);
             $('#policy2').val(data.policy2);
             $('#note').val(data.note);
-            $('#link_chplay').val(data.link_chplay);
-            $('#category').val(data.category);
+            $('#link').val(data.link);
+            $('#Chplay_category').val(data.Chplay_category);
+            $('#Amazon_category').val(data.Amazon_category);
+            $('#Samsung_category').val(data.Samsung_category);
+            $('#Xiaomi_category').val(data.Xiaomi_category);
+            $('#Oppo_category').val(data.Oppo_category);
+            $('#Vivo_category').val(data.Vivo_category);
 
             $('#modelHeading').html("Edit");
             $('#saveBtn').val("edit-template");

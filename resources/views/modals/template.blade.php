@@ -66,14 +66,45 @@
                         </div>
                         <div data-repeater-item="" class="row">
                             <div class="form-group col-lg-6 input_ma_da">
-                                <label for="name">Link của ứng dụng trên CHPlay</label>
-                                <input type="text" id="link_chplay" name="link_chplay" class="form-control" >
+                                <label for="name">Category CH Play</label>
+                                <input type="text" id="Chplay_category" name="Chplay_category" class="form-control" >
                             </div>
                             <div class="form-group col-lg-6 input_projectname">
-                                <label for="name">category</label>
-                                <input type="text" id="category" name="category" class="form-control">
+                                <label for="name">Category Amazon</label>
+                                <input type="text" id="Amazon_category" name="Amazon_category" class="form-control">
                             </div>
                         </div>
+
+                        <div data-repeater-item="" class="row">
+                            <div class="form-group col-lg-6 input_ma_da">
+                                <label for="name">Category Samsung</label>
+                                <input type="text" id="Samsung_category" name="Samsung_category" class="form-control" >
+                            </div>
+                            <div class="form-group col-lg-6 input_projectname">
+                                <label for="name">Category Xiaomi</label>
+                                <input type="text" id="Xiaomi_category" name="Xiaomi_category" class="form-control">
+                            </div>
+                        </div>
+
+                        <div data-repeater-item="" class="row">
+                            <div class="form-group col-lg-6 input_ma_da">
+                                <label for="name">Category Oppo</label>
+                                <input type="text" id="Oppo_category" name="Oppo_category" class="form-control" >
+                            </div>
+                            <div class="form-group col-lg-6 input_projectname">
+                                <label for="name">Category Vivo</label>
+                                <input type="text" id="Vivo_category" name="Vivo_category" class="form-control">
+                            </div>
+                        </div>
+
+                        <div data-repeater-item="" class="row">
+                            <div class="form-group col-lg-6 input_ma_da">
+                                <label for="name">Link của ứng dụng</label>
+                                <input type="text" id="link" name="link" class="form-control" >
+                            </div>
+
+                        </div>
+
 
                     </div>
                     <div class="col-sm-offset-2 col-sm-10">
