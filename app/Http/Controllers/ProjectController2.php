@@ -747,8 +747,10 @@ class ProjectController2 extends Controller
         $data->Vivo_ads = $Vivo_ads;
         $data->Vivo_status = $request->Vivo_status;
 
-        $data->logo = time().'.'.$request->logo->extension();
-        $request->logo->move(public_path('uploads/project'), $data->logo);
+        if($request->logo){
+            $data->logo = time().'.'.$request->logo->extension();
+            $request->logo->move(public_path('uploads/project'), $data->logo);
+        }
         $data->save();
         return response()->json(['success'=>'Cập nhật thành công']);
     }
