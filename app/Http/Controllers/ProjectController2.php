@@ -388,6 +388,7 @@ class ProjectController2 extends Controller
             'title_app' =>'required',
             'buildinfo_vernum' =>'required',
             'buildinfo_verstr' =>'required',
+            'logo' => 'mimes:jpeg,png,jpg,gif,svg|max:2048',
         ];
         $message = [
             'projectname.unique'=>'Tên Project đã tồn tại',
@@ -397,6 +398,8 @@ class ProjectController2 extends Controller
             'title_app.required'=>'Tiêu đề ứng không để trống',
             'buildinfo_vernum.required'=>'Version Number không để trống',
             'buildinfo_verstr.required'=>'Version String không để trống',
+            'logo.mimes'=>'Logo không đúng định dạng: jpeg, png, jpg, gif, svg.',
+            'logo.max'=>'Logo max: 2M.',
         ];
 
         $error = Validator::make($request->all(),$rules, $message );
@@ -531,14 +534,8 @@ class ProjectController2 extends Controller
         $data['Vivo_ads'] = $Vivo_ads;
         $data['Vivo_status'] = $request->Vivo_status;
 
-
-//        $image = $request->('logo');
-
-
-
-
-
-
+        $data['logo'] = time().'.'.$request->logo->extension();
+        $request->logo->move(public_path('uploads/project'), $data['logo']);
         $data->save();
         return response()->json(['success'=>'Thêm mới thành công']);
     }
@@ -603,6 +600,7 @@ class ProjectController2 extends Controller
             'title_app' =>'required',
             'buildinfo_vernum' =>'required',
             'buildinfo_verstr' =>'required',
+            'logo' => 'mimes:jpeg,png,jpg,gif,svg|max:2048',
         ];
         $message = [
             'projectname.unique'=>'Tên Project đã tồn tại',
@@ -612,6 +610,8 @@ class ProjectController2 extends Controller
             'title_app.required'=>'Tiêu đề ứng không để trống',
             'buildinfo_vernum.required'=>'Version Number không để trống',
             'buildinfo_verstr.required'=>'Version String không để trống',
+            'logo.mimes'=>'Logo không đúng định dạng: jpeg, png, jpg, gif, svg.',
+            'logo.max'=>'Logo max: 2M.',
         ];
 
         $error = Validator::make($request->all(),$rules, $message );
@@ -746,6 +746,9 @@ class ProjectController2 extends Controller
         $data->Vivo_buildinfo_email_dev_x = $request->Vivo_buildinfo_email_dev_x;
         $data->Vivo_ads = $Vivo_ads;
         $data->Vivo_status = $request->Vivo_status;
+
+        $data->logo = time().'.'.$request->logo->extension();
+        $request->logo->move(public_path('uploads/project'), $data->logo);
         $data->save();
         return response()->json(['success'=>'Cập nhật thành công']);
     }
@@ -826,7 +829,7 @@ class ProjectController2 extends Controller
                 'ads_native' =>$project->ads_native,
                 'ads_open' =>$project->ads_open
             ];
-//            $Chplay_ads = json_encode($Chplay_ads);
+            $Chplay_ads = json_encode($Chplay_ads);
 
 
             ProjectModel2::updateOrCreate(

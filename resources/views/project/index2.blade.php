@@ -123,6 +123,7 @@
         $('#createNewProject').click(function () {
             $('#saveBtn').val("create-project");
             $('#project_id').val('');
+            $("#avatar").attr("src","img/logo.png");
             $('#projectForm2').trigger("reset");
             $('#modelHeading').html("Thêm mới Project");
             $('#ajaxModel').modal('show');
@@ -134,12 +135,17 @@
 
         $('#projectForm2').on('submit',function (event){
             event.preventDefault();
+            var formData = new FormData($("#projectForm2")[0]);
+            console.log(formData)
             if($('#saveBtn').val() == 'create-project'){
                 $.ajax({
-                    data: $('#projectForm2').serialize(),
+                    // data: $('#projectForm2').serialize(),
+                    data: formData,
                     url: "{{ route('project2.create') }}",
                     type: "POST",
                     dataType: 'json',
+                    processData: false,
+                    contentType: false,
                     success: function (data) {
                         if(data.errors){
                             for( var count=0 ; count <data.errors.length; count++){
@@ -160,10 +166,13 @@
             }
             if($('#saveBtn').val() == 'edit-project'){
                 $.ajax({
-                    data: $('#projectForm2').serialize(),
+                    // data: $('#projectForm2').serialize(),
+                    data: formData,
                     url: "{{ route('project2.update') }}",
                     type: "post",
                     dataType: 'json',
+                    processData: false,
+                    contentType: false,
                     success: function (data) {
                         if(data.errors){
                             for( var count=0 ; count <data.errors.length; count++){
@@ -246,6 +255,7 @@
 <script>
     function editProject(id) {
         $.get('{{asset('project2/edit')}}/'+id,function (data) {
+            console.log(data)
 
             var Chplay_ads = '';
             var Amazon_ads = '';
@@ -254,11 +264,12 @@
             var Oppo_ads = '';
             var Vivo_ads = '';
 
-            if(data[0].Amazon_ads) {
+            if(data[0].Chplay_ads) {
                 Chplay_ads = data[0].Chplay_ads;
                 Chplay_ads = JSON.parse(Chplay_ads);
             }
-            console.log(Chplay_ads)
+
+
             if(data[0].Amazon_ads){
                 Amazon_ads = data[0].Amazon_ads;
                 Amazon_ads = JSON.parse(Amazon_ads);
@@ -279,6 +290,14 @@
                 Vivo_ads = data[0].Vivo_ads;
                 Vivo_ads = JSON.parse(Vivo_ads);
             }
+            if(data[0].logo) {
+                $("#avatar").attr("src","../uploads/project/"+data[0].logo);
+            }else {
+                $("#avatar").attr("src","img/logo.png");
+            }
+
+
+
             $('#project_id').val(data[0].projectid);
             $('#projectname').val(data[0].projectname);
             $('#template').val(data[0].template);
