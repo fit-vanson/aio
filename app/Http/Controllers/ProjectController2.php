@@ -125,25 +125,49 @@ class ProjectController2 extends Controller
                 $data_title_app='';
             }
 
-            if(isset($record->Chplay_ads)){
+            if(isset(json_decode($record->Chplay_ads,true)['ads_id'])
+                || isset(json_decode($record->Chplay_ads,true)['ads_banner'])
+                || isset(json_decode($record->Chplay_ads,true)['ads_inter'])
+                || isset(json_decode($record->Chplay_ads,true)['ads_native'])
+                || isset(json_decode($record->Chplay_ads,true)['ads_open'])
+                || isset(json_decode($record->Chplay_ads,true)['ads_reward'])
+            ){
                 $package_chplay = '<p style="color:green;line-height:0.5">CH Play: '.$record->Chplay_package.'</p>';
             }else{
                 $package_chplay = '<p style="color:red;line-height:0.5">CH Play: '.$record->Chplay_package.'</p>';
             }
 
-            if(isset($record->Amazon_ads)){
+            if(isset(json_decode($record->Amazon_ads,true)['ads_id'])
+                || isset(json_decode($record->Amazon_ads,true)['ads_banner'])
+                || isset(json_decode($record->Amazon_ads,true)['ads_inter'])
+                || isset(json_decode($record->Amazon_ads,true)['ads_native'])
+                || isset(json_decode($record->Amazon_ads,true)['ads_open'])
+                || isset(json_decode($record->Amazon_ads,true)['ads_reward'])
+            ){
                 $package_amazon = '<p  style="color:green;line-height:0.5">Amazon: '.$record->Amazon_package.'</p>';
             }else{
                 $package_amazon = '<p style="color:red;line-height:0.5">Amazon: '.$record->Amazon_package.'</p>';
             }
 
-            if(isset($record->Samsung_ads)){
+            if(isset(json_decode($record->Samsung_ads,true)['ads_id'])
+                || isset(json_decode($record->Samsung_ads,true)['ads_banner'])
+                || isset(json_decode($record->Samsung_ads,true)['ads_inter'])
+                || isset(json_decode($record->Samsung_ads,true)['ads_native'])
+                || isset(json_decode($record->Samsung_ads,true)['ads_open'])
+                || isset(json_decode($record->Samsung_ads,true)['ads_reward'])
+            ){
                 $package_samsung = '<p style="color:green;line-height:0.5">SamSung: '.$record->Samsung_package.'</p>';
             }else{
                 $package_samsung = '<p style="color:red;line-height:0.5">SamSung: '.$record->Samsung_package.'</p>';
             }
 
-            if(isset($record->Xiaomi_ads)){
+            if(isset(json_decode($record->Xiaomi_ads,true)['ads_id'])
+                || isset(json_decode($record->Xiaomi_ads,true)['ads_banner'])
+                || isset(json_decode($record->Xiaomi_ads,true)['ads_inter'])
+                || isset(json_decode($record->Xiaomi_ads,true)['ads_native'])
+                || isset(json_decode($record->Xiaomi_ads,true)['ads_open'])
+                || isset(json_decode($record->Xiaomi_ads,true)['ads_reward'])
+            ){
                 $package_xiaomi = '<p style="color:green;line-height:0.5">Xiaomi: '.$record->Xiaomi_package.'</p>';
             }else{
                 $package_xiaomi = '<p style="color:red;line-height:0.5">Xiaomi: '.$record->Xiaomi_package.'</p>';
@@ -151,18 +175,29 @@ class ProjectController2 extends Controller
 
 
 
-            if(isset($record->Oppo_ads)){
+            if(isset(json_decode($record->Oppo_ads,true)['ads_id'])
+                || isset(json_decode($record->Oppo_ads,true)['ads_banner'])
+                || isset(json_decode($record->Oppo_ads,true)['ads_inter'])
+                || isset(json_decode($record->Oppo_ads,true)['ads_native'])
+                || isset(json_decode($record->Oppo_ads,true)['ads_open'])
+                || isset(json_decode($record->Oppo_ads,true)['ads_reward'])
+            ){
                 $package_oppo = '<p style="color:green;line-height:0.5">Oppo: '.$record->Oppo_package.'</p>';
             }else{
                 $package_oppo = '<p style="color:red;line-height:0.5">Oppo: '.$record->Oppo_package.'</p>';
             }
 
-            if(isset($record->Vivo_ads)){
+            if(isset(json_decode($record->Vivo_ads,true)['ads_id'])
+                || isset(json_decode($record->Vivo_ads,true)['ads_banner'])
+                || isset(json_decode($record->Vivo_ads,true)['ads_inter'])
+                || isset(json_decode($record->Vivo_ads,true)['ads_native'])
+                || isset(json_decode($record->Vivo_ads,true)['ads_open'])
+                || isset(json_decode($record->Vivo_ads,true)['ads_reward'])
+            ){
                 $package_vivo = '<p style="color:green;line-height:0.5">Vivo: '.$record->Vivo_package.'</p>';
             }else{
                 $package_vivo = '<p style="color:red;line-height:0.5">Vivo: '.$record->Vivo_package.'</p>';
             }
-
 
             if ($record['Chplay_status']==0  ) {
                 $Chplay_status = 'Mặc định';
@@ -345,8 +380,9 @@ class ProjectController2 extends Controller
      */
     public function create(Request  $request)
     {
+
         $rules = [
-            'projectname' =>'required|unique:ngocphandang_project,projectname',
+            'projectname' =>'required|unique:ngocphandang_project2,projectname',
             'ma_da' => 'required',
             'template' => 'required',
             'title_app' =>'required',
@@ -368,6 +404,68 @@ class ProjectController2 extends Controller
         if($error->fails()){
             return response()->json(['errors'=> $error->errors()->all()]);
         }
+
+        $Chplay_ads = [
+            'ads_id' => $request->Chplay_ads_id,
+            'ads_banner' => $request->Chplay_ads_banner,
+            'ads_inter' => $request->Chplay_ads_inter,
+            'ads_reward' => $request->Chplay_ads_reward,
+            'ads_native' => $request->Chplay_ads_native,
+            'ads_open' => $request->Chplay_ads_open
+        ];
+        $Chplay_ads =  json_encode($Chplay_ads);
+
+        $Amazon_ads = [
+            'ads_id' => $request->Amazon_ads_id,
+            'ads_banner' => $request->Amazon_ads_banner,
+            'ads_inter' => $request->Amazon_ads_inter,
+            'ads_reward' => $request->Amazon_ads_reward,
+            'ads_native' => $request->Amazon_ads_native,
+            'ads_open' => $request->Amazon_ads_open
+        ];
+        $Amazon_ads =  json_encode($Amazon_ads);
+
+        $Samsung_ads = [
+            'ads_id' => $request->Samsung_ads_id,
+            'ads_banner' => $request->Samsung_ads_banner,
+            'ads_inter' => $request->Samsung_ads_inter,
+            'ads_reward' => $request->Samsung_ads_reward,
+            'ads_native' => $request->Samsung_ads_native,
+            'ads_open' => $request->Samsung_ads_open
+        ];
+        $Samsung_ads =  json_encode($Samsung_ads);
+
+        $Xiaomi_ads = [
+            'ads_id' => $request->Xiaomi_ads_id,
+            'ads_banner' => $request->Xiaomi_ads_banner,
+            'ads_inter' => $request->Xiaomi_ads_inter,
+            'ads_reward' => $request->Xiaomi_ads_reward,
+            'ads_native' => $request->Xiaomi_ads_native,
+            'ads_open' => $request->Xiaomi_ads_open
+        ];
+        $Xiaomi_ads =  json_encode($Xiaomi_ads);
+
+        $Oppo_ads = [
+            'ads_id' => $request->Oppo_ads_id,
+            'ads_banner' => $request->Oppo_ads_banner,
+            'ads_inter' => $request->Oppo_ads_inter,
+            'ads_reward' => $request->Oppo_ads_reward,
+            'ads_native' => $request->Oppo_ads_native,
+            'ads_open' => $request->Oppo_ads_open
+        ];
+        $Oppo_ads =  json_encode($Oppo_ads);
+
+        $Vivo_ads = [
+            'ads_id' => $request->Vivo_ads_id,
+            'ads_banner' => $request->Vivo_ads_banner,
+            'ads_inter' => $request->Vivo_ads_inter,
+            'ads_reward' => $request->Vivo_ads_reward,
+            'ads_native' => $request->Vivo_ads_native,
+            'ads_open' => $request->Vivo_ads_open
+        ];
+        $Vivo_ads =  json_encode($Vivo_ads);
+
+
         $data = new ProjectModel2();
         $data['projectname'] = $request->projectname;
         $data['template'] = $request->template;
@@ -390,7 +488,7 @@ class ProjectController2 extends Controller
         $data['Chplay_buildinfo_link_store'] = $request->Chplay_buildinfo_link_store;
         $data['Chplay_buildinfo_email_dev_x'] = $request->Chplay_buildinfo_email_dev_x;
         $data['Chplay_buildinfo_link_app'] = $request->Chplay_buildinfo_link_app;
-        $data['Chplay_ads'] = $request->Chplay_ads;
+        $data['Chplay_ads'] = $Chplay_ads;
         $data['Chplay_status'] = $request->Chplay_status;
 
         $data['Amazon_package'] = $request->Amazon_package;
@@ -398,7 +496,7 @@ class ProjectController2 extends Controller
         $data['Amazon_buildinfo_link_store'] = $request->Amazon_buildinfo_link_store;
         $data['Amazon_buildinfo_email_dev_x'] = $request->Amazon_buildinfo_email_dev_x;
         $data['Amazon_buildinfo_link_app'] = $request->Amazon_buildinfo_link_app;
-        $data['Amazon_ads'] = $request->Amazon_ads;
+        $data['Amazon_ads'] = $Amazon_ads;
         $data['Amazon_status'] = $request->Amazon_status;
 
         $data['Samsung_package'] = $request->Samsung_package;
@@ -406,7 +504,7 @@ class ProjectController2 extends Controller
         $data['Samsung_buildinfo_link_store'] = $request->Samsung_buildinfo_link_store;
         $data['Samsung_buildinfo_email_dev_x'] = $request->Samsung_buildinfo_email_dev_x;
         $data['Samsung_buildinfo_link_app'] = $request->Samsung_buildinfo_link_app;
-        $data['Samsung_ads'] = $request->Samsung_ads;
+        $data['Samsung_ads'] = $Samsung_ads;
         $data['Samsung_status'] = $request->Samsung_status;
 
         $data['Xiaomi_package'] = $request->Xiaomi_package;
@@ -414,7 +512,7 @@ class ProjectController2 extends Controller
         $data['Xiaomi_buildinfo_link_store'] = $request->Xiaomi_buildinfo_link_store;
         $data['Xiaomi_buildinfo_email_dev_x'] = $request->Xiaomi_buildinfo_email_dev_x;
         $data['Xiaomi_buildinfo_link_app'] = $request->Xiaomi_buildinfo_link_app;
-        $data['Xiaomi_ads'] = $request->Xiaomi_ads;
+        $data['Xiaomi_ads'] = $Xiaomi_ads;
         $data['Xiaomi_status'] = $request->Xiaomi_status;
 
         $data['Oppo_package'] = $request->Oppo_package;
@@ -422,7 +520,7 @@ class ProjectController2 extends Controller
         $data['Oppo_buildinfo_link_store'] = $request->Oppo_buildinfo_link_store;
         $data['Oppo_buildinfo_email_dev_x'] = $request->Oppo_buildinfo_email_dev_x;
         $data['Oppo_buildinfo_link_app'] = $request->Oppo_buildinfo_link_app;
-        $data['Oppo_ads'] = $request->Oppo_ads;
+        $data['Oppo_ads'] = $Oppo_ads;
         $data['Oppo_status'] = $request->Oppo_status;
 
         $data['Vivo_package'] = $request->Vivo_package;
@@ -430,7 +528,7 @@ class ProjectController2 extends Controller
         $data['Vivo_buildinfo_link_store'] = $request->Vivo_buildinfo_link_store;
         $data['Vivo_buildinfo_email_dev_x'] = $request->Vivo_buildinfo_email_dev_x;
         $data['Vivo_buildinfo_link_app'] = $request->Vivo_buildinfo_link_app;
-        $data['Vivo_ads'] = $request->Vivo_ads;
+        $data['Vivo_ads'] = $Vivo_ads;
         $data['Vivo_status'] = $request->Vivo_status;
 
 
@@ -497,8 +595,9 @@ class ProjectController2 extends Controller
     {
 
         $id = $request->project_id;
+
         $rules = [
-            'projectname' =>'unique:ngocphandang_project,projectname,'.$id.',projectid',
+            'projectname' =>'unique:ngocphandang_project2,projectname,'.$id.',projectid',
             'ma_da' => 'required',
             'template' => 'required',
             'title_app' =>'required',
@@ -521,7 +620,66 @@ class ProjectController2 extends Controller
             return response()->json(['errors'=> $error->errors()->all()]);
         }
 
-//        dd($request->projectname);
+
+        $Chplay_ads = [
+            'ads_id' => $request->Chplay_ads_id,
+            'ads_banner' => $request->Chplay_ads_banner,
+            'ads_inter' => $request->Chplay_ads_inter,
+            'ads_reward' => $request->Chplay_ads_reward,
+            'ads_native' => $request->Chplay_ads_native,
+            'ads_open' => $request->Chplay_ads_open
+        ];
+        $Chplay_ads =  json_encode($Chplay_ads);
+
+        $Amazon_ads = [
+            'ads_id' => $request->Amazon_ads_id,
+            'ads_banner' => $request->Amazon_ads_banner,
+            'ads_inter' => $request->Amazon_ads_inter,
+            'ads_reward' => $request->Amazon_ads_reward,
+            'ads_native' => $request->Amazon_ads_native,
+            'ads_open' => $request->Amazon_ads_open
+        ];
+        $Amazon_ads =  json_encode($Amazon_ads);
+
+        $Samsung_ads = [
+            'ads_id' => $request->Samsung_ads_id,
+            'ads_banner' => $request->Samsung_ads_banner,
+            'ads_inter' => $request->Samsung_ads_inter,
+            'ads_reward' => $request->Samsung_ads_reward,
+            'ads_native' => $request->Samsung_ads_native,
+            'ads_open' => $request->Samsung_ads_open
+        ];
+        $Samsung_ads =  json_encode($Samsung_ads);
+
+        $Xiaomi_ads = [
+            'ads_id' => $request->Xiaomi_ads_id,
+            'ads_banner' => $request->Xiaomi_ads_banner,
+            'ads_inter' => $request->Xiaomi_ads_inter,
+            'ads_reward' => $request->Xiaomi_ads_reward,
+            'ads_native' => $request->Xiaomi_ads_native,
+            'ads_open' => $request->Xiaomi_ads_open
+        ];
+        $Xiaomi_ads =  json_encode($Xiaomi_ads);
+
+        $Oppo_ads = [
+            'ads_id' => $request->Oppo_ads_id,
+            'ads_banner' => $request->Oppo_ads_banner,
+            'ads_inter' => $request->Oppo_ads_inter,
+            'ads_reward' => $request->Oppo_ads_reward,
+            'ads_native' => $request->Oppo_ads_native,
+            'ads_open' => $request->Oppo_ads_open
+        ];
+        $Oppo_ads =  json_encode($Oppo_ads);
+
+        $Vivo_ads = [
+            'ads_id' => $request->Vivo_ads_id,
+            'ads_banner' => $request->Vivo_ads_banner,
+            'ads_inter' => $request->Vivo_ads_inter,
+            'ads_reward' => $request->Vivo_ads_reward,
+            'ads_native' => $request->Vivo_ads_native,
+            'ads_open' => $request->Vivo_ads_open
+        ];
+        $Vivo_ads =  json_encode($Vivo_ads);
         $data = ProjectModel2::find($id);
 
         $data->projectname = $request->projectname;
@@ -546,7 +704,7 @@ class ProjectController2 extends Controller
         $data->Chplay_buildinfo_link_store = $request->Chplay_buildinfo_link_store;
         $data->Chplay_buildinfo_link_app = $request->Chplay_buildinfo_link_app;
         $data->Chplay_buildinfo_email_dev_x = $request->Chplay_buildinfo_email_dev_x;
-        $data->Chplay_ads = $request->Chplay_ads;
+        $data->Chplay_ads = $Chplay_ads;
         $data->Chplay_status = $request->Chplay_status;
 
         $data->Amazon_package = $request->Amazon_package;
@@ -554,7 +712,7 @@ class ProjectController2 extends Controller
         $data->Amazon_buildinfo_link_store = $request->Amazon_buildinfo_link_store;
         $data->Amazon_buildinfo_link_app = $request->Amazon_buildinfo_link_app;
         $data->Amazon_buildinfo_email_dev_x = $request->Amazon_buildinfo_email_dev_x;
-        $data->Amazon_ads = $request->Amazon_ads;
+        $data->Amazon_ads = $Amazon_ads;
         $data->Amazon_status = $request->Amazon_status;
 
         $data->Samsung_package = $request->Samsung_package;
@@ -562,7 +720,7 @@ class ProjectController2 extends Controller
         $data->Samsung_buildinfo_link_store = $request->Samsung_buildinfo_link_store;
         $data->Samsung_buildinfo_link_app = $request->Samsung_buildinfo_link_app;
         $data->Samsung_buildinfo_email_dev_x = $request->Samsung_buildinfo_email_dev_x;
-        $data->Samsung_ads = $request->Samsung_ads;
+        $data->Samsung_ads = $Samsung_ads;
         $data->Samsung_status = $request->Samsung_status;
 
         $data->Xiaomi_package = $request->Xiaomi_package;
@@ -570,7 +728,7 @@ class ProjectController2 extends Controller
         $data->Xiaomi_buildinfo_link_store = $request->Xiaomi_buildinfo_link_store;
         $data->Xiaomi_buildinfo_link_app = $request->Xiaomi_buildinfo_link_app;
         $data->Xiaomi_buildinfo_email_dev_x = $request->Xiaomi_buildinfo_email_dev_x;
-        $data->Xiaomi_ads = $request->Xiaomi_ads;
+        $data->Xiaomi_ads = $Xiaomi_ads;
         $data->Xiaomi_status = $request->Xiaomi_status;
 
         $data->Oppo_package = $request->Oppo_package;
@@ -578,7 +736,7 @@ class ProjectController2 extends Controller
         $data->Oppo_buildinfo_link_store = $request->Oppo_buildinfo_link_store;
         $data->Oppo_buildinfo_link_app = $request->Oppo_buildinfo_link_app;
         $data->Oppo_buildinfo_email_dev_x = $request->Oppo_buildinfo_email_dev_x;
-        $data->Oppo_ads = $request->Oppo_ads;
+        $data->Oppo_ads = $Oppo_ads;
         $data->Oppo_status = $request->Oppo_status;
 
         $data->Vivo_package = $request->Vivo_package;
@@ -586,7 +744,7 @@ class ProjectController2 extends Controller
         $data->Vivo_buildinfo_link_store = $request->Vivo_buildinfo_link_store;
         $data->Vivo_buildinfo_link_app = $request->Vivo_buildinfo_link_app;
         $data->Vivo_buildinfo_email_dev_x = $request->Vivo_buildinfo_email_dev_x;
-        $data->Vivo_ads = $request->Vivo_ads;
+        $data->Vivo_ads = $Vivo_ads;
         $data->Vivo_status = $request->Vivo_status;
         $data->save();
         return response()->json(['success'=>'Cập nhật thành công']);
@@ -629,39 +787,85 @@ class ProjectController2 extends Controller
     }
 
 
-    function find_contains(
-        \voku\helper\HtmlDomParser $dom,
-        string $selector,
-        string $keyword = null
-    ) {
-        // init
-        $elements = new SimpleHtmlDomNode();
+    function getProject(){
+        $projectAll = ProjectModel::all();
+        foreach ($projectAll as $project){
+            $Chplay_ads = [];
+            $projectid = $project->project;
+            $projectname = $project->projectname;
+            $template = $project->template;
+            $ma_da = $project->ma_da;
+            $title_app = $project->title_app;
+            $buildinfo_app_name_x = $project->buildinfo_app_name_x;
+            $buildinfo_link_policy_x = $project->buildinfo_link_policy_x;
+            $buildinfo_link_fanpage = $project->buildinfo_link_fanpage;
+            $buildinfo_link_website = $project->buildinfo_link_website;
+            $buildinfo_link_youtube_x = $project->buildinfo_link_youtube_x;
+            $buildinfo_api_key_x = $project->buildinfo_api_key_x;
+            $buildinfo_console = $project->buildinfo_console;
+            $buildinfo_vernum = $project->buildinfo_vernum;
+            $buildinfo_verstr = $project->buildinfo_verstr;
+            $buildinfo_keystore = $project->buildinfo_keystore;
+            $buildinfo_sdk = $project->buildinfo_sdk;
+            $buildinfo_time = $project->buildinfo_time;
+            $buildinfo_mess = $project->buildinfo_mess;
+            $bot_timecheck = $project->bot_timecheck;
+            $time_mess = $project->time_mess;
 
-        foreach ($dom->find($selector) as $e) {
-            if (strpos($e->innerText(), $keyword) !== false) {
-                $elements[] = $e;
-            }
+            $Chplay_package = $project->package;
+            $Chplay_buildinfo_store_name_x = $project->buildinfo_store_name_x;
+            $Chplay_buildinfo_link_store = $project->buildinfo_link_store;
+            $Chplay_buildinfo_email_dev_x = $project->buildinfo_email_dev_x;
+            $Chplay_buildinfo_link_app = $project->buildinfo_link_app;
+            $Chplay_status = $project->status;
+            $Chplay_ads = [
+                'ads_id' =>$project->ads_id,
+                'ads_banner' =>$project->ads_banner,
+                'ads_inter' =>$project->ads_inter,
+                'ads_reward' =>$project->ads_reward,
+                'ads_native' =>$project->ads_native,
+                'ads_open' =>$project->ads_open
+            ];
+//            $Chplay_ads = json_encode($Chplay_ads);
+
+
+            ProjectModel2::updateOrCreate(
+                [
+                    "projectid" => $projectid,
+
+                ],
+                [
+                    "projectname" => $projectname,
+                    'template' => $template,
+                    'ma_da' => $ma_da,
+                    'title_app' => $title_app,
+                    'buildinfo_app_name_x' => $buildinfo_app_name_x,
+                    'buildinfo_link_policy_x' =>  $buildinfo_link_policy_x,
+                    'buildinfo_link_fanpage' =>  $buildinfo_link_fanpage,
+                    'buildinfo_link_website' =>  $buildinfo_link_website,
+                    'buildinfo_link_youtube_x' =>  $buildinfo_link_youtube_x,
+                    'buildinfo_api_key_x' =>  $buildinfo_api_key_x,
+                    'buildinfo_console' =>  $buildinfo_console,
+                    'buildinfo_vernum' =>  $buildinfo_vernum,
+                    "buildinfo_verstr" => $buildinfo_verstr,
+                    "buildinfo_keystore" =>  $buildinfo_keystore,
+                    "buildinfo_sdk" =>  $buildinfo_sdk,
+                    "buildinfo_time" =>  $buildinfo_time,
+                    "buildinfo_mess" =>  $buildinfo_mess,
+                    "bot_timecheck" =>  $bot_timecheck,
+                    "time_mess" =>  $time_mess,
+
+                    "Chplay_package" =>  $Chplay_package,
+                    "Chplay_buildinfo_store_name_x" =>  $Chplay_buildinfo_store_name_x,
+                    "Chplay_buildinfo_link_store" =>  $Chplay_buildinfo_link_store,
+                    "Chplay_buildinfo_email_dev_x" =>  $Chplay_buildinfo_email_dev_x,
+                    "Chplay_buildinfo_link_app" =>  $Chplay_buildinfo_link_app,
+                    "Chplay_ads" =>  $Chplay_ads,
+                    "Chplay_status" =>  $Chplay_status,
+                ]);
         }
-
-        return $elements;
     }
 
-// -----------------------------------------------------------------------------
-
-
-
-
-//    public function getList(){
-//        $url = 'https://play.google.com/store/apps/details?id=com.netringtones.astrohitspopular';
-//        $html  = HtmlDomParser::file_get_html($url)->text();
-//        $document = new \voku\helper\HtmlDomParser($html);
-//        dd($document);
-//        $dom = [];
-//        foreach ($this->find_contains($document, '.KZnDLd .r2Osbf ') as $child_dom) {
-//               $dom[] =  $child_dom->html() . "\n";
-//        }
-//        dd ($dom);
-//    }
 
 
 

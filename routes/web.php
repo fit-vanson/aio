@@ -87,6 +87,8 @@ Route::group(['prefix'=>'project','middleware'=>['CheckLogout','2fa']], function
 });
 
 Route::group(['prefix'=>'project2','middleware'=>['CheckLogout','2fa']], function (){
+
+    Route::get('/get',[ProjectController2::class,'getProject']);
     Route::get('/',[ProjectController2::class,'index'])->name('project2.index')->middleware('can:project-index');
     Route::post('/getIndex',[ProjectController2::class,'getIndex'])->name('project2.getIndex')->middleware('can:project-index');
     Route::post('/create',[ProjectController2::class,'create'])->name('project2.create')->middleware('can:project-add');

@@ -169,81 +169,225 @@
                                             </div>
 
                                             <div class="progress m-b-10" style="height: 3px;">
-                                                <div class="progress-bar"  role="progressbar" style="background-color: #0b0b0b;width: 100%;"></div>
+                                                <div class="progress-bar"  role="progressbar" style="background-color: #0b0b0b;width: 100%;S"></div>
                                             </div>
                                             <div data-repeater-item="" class="row">
-                                                <div class="form-group col-lg-6 input_package">
+                                                <div class="form-group col-lg-3 input_package">
                                                     <label for="name">Tên Package CH-Play </label>
                                                     <input type="text" id="Chplay_package" name="Chplay_package" class="form-control">
                                                 </div>
-                                                <div class="form-group col-lg-6">
+                                                <div class="form-group col-lg-9">
                                                     <label for="name">Ads CHPlay</label>
-                                                    <input type="text" id="Chplay_ads" name="Chplay_ads" class="form-control" >
+                                                    <div class="row" >
+                                                        <div class="col-lg-2">
+                                                            <input type="text" id="Chplay_ads_id" name="Chplay_ads_id" placeholder="ads_id" class="form-control" >
+                                                        </div>
+
+                                                        <div class="col-lg-2">
+                                                            <input type="text" id="Chplay_ads_banner" name="Chplay_ads_banner" placeholder="ads_banner"  class="form-control" >
+                                                        </div>
+
+                                                        <div class="col-lg-2">
+                                                            <input type="text" id="Chplay_ads_inter" name="Chplay_ads_inter" placeholder="ads_inter"  class="form-control" >
+                                                        </div>
+
+                                                        <div class="col-lg-2">
+                                                            <input type="text" id="Chplay_ads_reward" name="Chplay_ads_reward" placeholder="ads_reward"  class="form-control" >
+                                                        </div>
+
+                                                        <div class="col-lg-2">
+                                                            <input type="text" id="Chplay_ads_native" name="Chplay_ads_native" placeholder="ads_native"  class="form-control" >
+                                                        </div>
+
+                                                        <div class="col-lg-2">
+                                                            <input type="text" id="Chplay_ads_open" name="Chplay_ads_open" placeholder="ads_open"  class="form-control" >
+                                                        </div>
+                                                    </div>
                                                 </div>
 
                                             </div>
 
                                             <div data-repeater-item="" class="row">
-                                                <div class="form-group col-lg-6 input_package">
+                                                <div class="form-group col-lg-3 input_package">
                                                     <label for="name">Tên Package Amazon</label>
                                                     <input type="text" id="Amazon_package" name="Amazon_package" class="form-control">
                                                 </div>
 
-                                                <div class="form-group col-lg-6">
+                                                <div class="form-group col-lg-9">
                                                     <label for="name">Ads Amazon</label>
-                                                    <input type="text" id="Amazon_ads" name="Amazon_ads" class="form-control" >
+                                                    <div class="row" >
+                                                        <div class="col-lg-2">
+                                                            <input type="text" id="Amazon_ads_id" name="Amazon_ads_id" placeholder="ads_id" class="form-control" >
+                                                        </div>
+
+                                                        <div class="col-lg-2">
+                                                            <input type="text" id="Amazon_ads_banner" name="Amazon_ads_banner" placeholder="ads_banner"  class="form-control" >
+                                                        </div>
+
+                                                        <div class="col-lg-2">
+                                                            <input type="text" id="Amazon_ads_inter" name="Amazon_ads_inter" placeholder="ads_inter"  class="form-control" >
+                                                        </div>
+
+                                                        <div class="col-lg-2">
+                                                            <input type="text" id="Amazon_ads_reward" name="Amazon_ads_reward" placeholder="ads_reward"  class="form-control" >
+                                                        </div>
+
+                                                        <div class="col-lg-2">
+                                                            <input type="text" id="Amazon_ads_native" name="Amazon_ads_native" placeholder="ads_native"  class="form-control" >
+                                                        </div>
+
+                                                        <div class="col-lg-2">
+                                                            <input type="text" id="Amazon_ads_open" name="Amazon_ads_open" placeholder="ads_open"  class="form-control" >
+                                                        </div>
+                                                    </div>
                                                 </div>
 
                                             </div>
 
                                             <div data-repeater-item="" class="row">
-                                                <div class="form-group col-lg-6 input_package">
+                                                <div class="form-group col-lg-3 input_package">
                                                     <label for="name">Tên Package SamSung </label>
                                                     <input type="text" id="Samsung_package" name="Samsung_package" class="form-control">
                                                 </div>
 
-                                                <div class="form-group col-lg-6">
+                                                <div class="form-group col-lg-9">
                                                     <label for="name">Ads Sam Sung</label>
-                                                    <input type="text" id="Samsung_ads" name="Samsung_ads" class="form-control" >
+                                                    <div class="row" >
+                                                        <div class="col-lg-2">
+                                                            <input type="text" id="Samsung_ads_id" name="Samsung_ads_id" placeholder="ads_id" class="form-control" >
+                                                        </div>
+
+                                                        <div class="col-lg-2">
+                                                            <input type="text" id="Samsung_ads_banner" name="Samsung_ads_banner" placeholder="ads_banner"  class="form-control" >
+                                                        </div>
+
+                                                        <div class="col-lg-2">
+                                                            <input type="text" id="Samsung_ads_inter" name="Samsung_ads_inter" placeholder="ads_inter"  class="form-control" >
+                                                        </div>
+
+                                                        <div class="col-lg-2">
+                                                            <input type="text" id="Samsung_ads_reward" name="Samsung_ads_reward" placeholder="ads_reward"  class="form-control" >
+                                                        </div>
+
+                                                        <div class="col-lg-2">
+                                                            <input type="text" id="Samsung_ads_native" name="Samsung_ads_native" placeholder="ads_native"  class="form-control" >
+                                                        </div>
+
+                                                        <div class="col-lg-2">
+                                                            <input type="text" id="Samsung_ads_open" name="Samsung_ads_open" placeholder="ads_open"  class="form-control" >
+                                                        </div>
+                                                    </div>
                                                 </div>
 
                                             </div>
 
                                             <div data-repeater-item="" class="row">
-                                                <div class="form-group col-lg-6 input_package">
+                                                <div class="form-group col-lg-3 input_package">
                                                     <label for="name">Tên Package Xiaomi </label>
                                                     <input type="text" id="Xiaomi_package" name="Xiaomi_package" class="form-control">
                                                 </div>
 
-                                                <div class="form-group col-lg-6">
+                                                <div class="form-group col-lg-9">
                                                     <label for="name">Ads Xiaomi</label>
-                                                    <input type="text" id="Xiaomi_ads" name="Xiaomi_ads" class="form-control" >
+                                                    <div class="row" >
+                                                        <div class="col-lg-2">
+                                                            <input type="text" id="Xiaomi_ads_id" name="Xiaomi_ads_id" placeholder="ads_id" class="form-control" >
+                                                        </div>
+
+                                                        <div class="col-lg-2">
+                                                            <input type="text" id="Xiaomi_ads_banner" name="Xiaomi_ads_banner" placeholder="ads_banner"  class="form-control" >
+                                                        </div>
+
+                                                        <div class="col-lg-2">
+                                                            <input type="text" id="Xiaomi_ads_inter" name="Xiaomi_ads_inter" placeholder="ads_inter"  class="form-control" >
+                                                        </div>
+
+                                                        <div class="col-lg-2">
+                                                            <input type="text" id="Xiaomi_ads_reward" name="Xiaomi_ads_reward" placeholder="ads_reward"  class="form-control" >
+                                                        </div>
+
+                                                        <div class="col-lg-2">
+                                                            <input type="text" id="Xiaomi_ads_native" name="Xiaomi_ads_native" placeholder="ads_native"  class="form-control" >
+                                                        </div>
+
+                                                        <div class="col-lg-2">
+                                                            <input type="text" id="Xiaomi_ads_open" name="Xiaomi_ads_open" placeholder="ads_open"  class="form-control" >
+                                                        </div>
+                                                    </div>
                                                 </div>
 
                                             </div>
 
                                             <div data-repeater-item="" class="row">
-                                                <div class="form-group col-lg-6 input_package">
+                                                <div class="form-group col-lg-3 input_package">
                                                     <label for="name">Tên Package Oppo </label>
                                                     <input type="text" id="Oppo_package" name="Oppo_package" class="form-control">
                                                 </div>
 
-                                                <div class="form-group col-lg-6">
+                                                <div class="form-group col-lg-9">
                                                     <label for="name">Ads Oppo</label>
-                                                    <input type="text" id="Oppo_ads" name="Oppo_ads" class="form-control" >
+                                                    <div class="row" >
+                                                        <div class="col-lg-2">
+                                                            <input type="text" id="Oppo_ads_id" name="Oppo_ads_id" placeholder="ads_id" class="form-control" >
+                                                        </div>
+
+                                                        <div class="col-lg-2">
+                                                            <input type="text" id="Oppo_ads_banner" name="Oppo_ads_banner" placeholder="ads_banner"  class="form-control" >
+                                                        </div>
+
+                                                        <div class="col-lg-2">
+                                                            <input type="text" id="Oppo_ads_inter" name="Oppo_ads_inter" placeholder="ads_inter"  class="form-control" >
+                                                        </div>
+
+                                                        <div class="col-lg-2">
+                                                            <input type="text" id="Oppo_ads_reward" name="Oppo_ads_reward" placeholder="ads_reward"  class="form-control" >
+                                                        </div>
+
+                                                        <div class="col-lg-2">
+                                                            <input type="text" id="Oppo_ads_native" name="Oppo_ads_native" placeholder="ads_native"  class="form-control" >
+                                                        </div>
+
+                                                        <div class="col-lg-2">
+                                                            <input type="text" id="Oppo_ads_open" name="Oppo_ads_open" placeholder="ads_open"  class="form-control" >
+                                                        </div>
+                                                    </div>
                                                 </div>
 
                                             </div>
 
                                             <div data-repeater-item="" class="row">
-                                                <div class="form-group col-lg-6 input_package">
+                                                <div class="form-group col-lg-3 input_package">
                                                     <label for="name">Tên Package Vivo </label>
                                                     <input type="text" id="Vivo_package" name="Vivo_package" class="form-control">
                                                 </div>
 
-                                                <div class="form-group col-lg-6">
+                                                <div class="form-group col-lg-9">
                                                     <label for="name">Ads Vivo</label>
-                                                    <input type="text" id="Vivo_ads" name="Vivo_ads" class="form-control" >
+                                                    <div class="row" >
+                                                        <div class="col-lg-2">
+                                                            <input type="text" id="Vivo_ads_id" name="Vivo_ads_id" placeholder="ads_id" class="form-control" >
+                                                        </div>
+
+                                                        <div class="col-lg-2">
+                                                            <input type="text" id="Vivo_ads_banner" name="Vivo_ads_banner" placeholder="ads_banner"  class="form-control" >
+                                                        </div>
+
+                                                        <div class="col-lg-2">
+                                                            <input type="text" id="Vivo_ads_inter" name="Vivo_ads_inter" placeholder="ads_inter"  class="form-control" >
+                                                        </div>
+
+                                                        <div class="col-lg-2">
+                                                            <input type="text" id="Vivo_ads_reward" name="Vivo_ads_reward" placeholder="ads_reward"  class="form-control" >
+                                                        </div>
+
+                                                        <div class="col-lg-2">
+                                                            <input type="text" id="Vivo_ads_native" name="Vivo_ads_native" placeholder="ads_native"  class="form-control" >
+                                                        </div>
+
+                                                        <div class="col-lg-2">
+                                                            <input type="text" id="Vivo_ads_open" name="Vivo_ads_open" placeholder="ads_open"  class="form-control" >
+                                                        </div>
+                                                    </div>
                                                 </div>
 
                                             </div>
