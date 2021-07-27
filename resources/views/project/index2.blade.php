@@ -110,12 +110,12 @@
                 type: "post"
             },
             columns: [
-                {data: 'logo', name: 'logo'},
+                {data: 'logo', name: 'logo',orderable: false},
                 {data: 'ma_da', name: 'ma_da'},
                 // {data: 'projectname', name: 'projectname'},
                 // {data: 'template', name: 'template'},
-                {data: 'package', name: 'package'},
-                {data: 'status', name: 'status'},
+                {data: 'package', name: 'package',orderable: false},
+                {data: 'status', name: 'status',orderable: false},
                 {data: 'action', name: 'action', orderable: false, searchable: false},
             ]
         });
