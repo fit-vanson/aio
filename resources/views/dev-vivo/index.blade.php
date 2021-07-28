@@ -19,7 +19,7 @@
 @endsection
 @section('breadcrumb')
     <div class="col-sm-6">
-        <h4 class="page-title">Quản lý Dev vivo</h4>
+        <h4 class="page-title">Quản lý Dev Vivo</h4>
     </div>
     <div class="col-sm-6">
         <div class="float-right">
@@ -40,7 +40,7 @@
                             <th>Ga name</th>
                             <th>Dev name</th>
                             <th>Store name</th>
-                            <th>Gmail </th>
+                            <th>Tên công ty </th>
                             <th>Trạng thái</th>
                             <th>Ghi chú</th>
                             <th width="5%">Action</th>
@@ -205,6 +205,7 @@
                 $('#vivo_ga_name').val(data.vivo_ga_name);
                 $('#vivo_ga_name').select2();
                 $('#vivo_note').val(data.vivo_note);
+                $('#vivo_company').val(data.vivo_company);
                 $('#vivo_pass').val(data.vivo_pass);
                 $('#vivo_status').val(data.vivo_status);
                 $('#vivo_store_name').val(data.vivo_store_name);

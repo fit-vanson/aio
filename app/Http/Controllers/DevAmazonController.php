@@ -166,7 +166,7 @@ class DevAmazonController extends Controller
             'amazon_dev_name.unique'=>'Dev name đã tồn tại',
             'amazon_store_name.unique'=>'Store name tồn tại',
             'amazon_ga_name.not_in'=>'Vui lòng chọn Ga Name',
-            'amazon_email.not_in'=>'Vui lòng chọn Email',s
+            'amazon_email.not_in'=>'Vui lòng chọn Email',
         ];
         $error = Validator::make($request->all(),$rules, $message );
         if($error->fails()){

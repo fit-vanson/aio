@@ -45,6 +45,7 @@ class DevVivoController extends Controller
             ->orWhere('vivo_dev_name', 'like', '%' . $searchValue . '%')
             ->orWhere('vivo_store_name', 'like', '%' . $searchValue . '%')
             ->orWhere('vivo_email', 'like', '%' . $searchValue . '%')
+            ->orWhere('vivo_company', 'like', '%' . $searchValue . '%')
             ->orWhere('vivo_status', 'like', '%' . $searchValue . '%')
             ->orWhere('vivo_note', 'like', '%' . $searchValue . '%')
             ->count();
@@ -55,6 +56,7 @@ class DevVivoController extends Controller
             ->orWhere('vivo_dev_name', 'like', '%' . $searchValue . '%')
             ->orWhere('vivo_store_name', 'like', '%' . $searchValue . '%')
             ->orWhere('vivo_email', 'like', '%' . $searchValue . '%')
+            ->orWhere('vivo_company', 'like', '%' . $searchValue . '%')
             ->orWhere('vivo_status', 'like', '%' . $searchValue . '%')
             ->orWhere('vivo_note', 'like', '%' . $searchValue . '%')
             ->select('*')
@@ -91,14 +93,11 @@ class DevVivoController extends Controller
             if($record->vivo_status == 3){
                 $status = '<span class="badge badge-danger">Suspend</span>';
             }
-
-
-
             $data_arr[] = array(
                 "vivo_ga_name" => $ga_name->ga_name,
                 "vivo_dev_name" => $record->vivo_dev_name,
                 "vivo_store_name" => $record->vivo_store_name,
-                "vivo_email"=>$email->gmail,
+                "vivo_email"=>$record->vivo_company.'<p class="text-muted">'.$email->gmail.'</p>',
                 "vivo_status"=>$status,
                 "vivo_note"=>$record->vivo_note,
                 "action"=> $btn,
@@ -141,6 +140,7 @@ class DevVivoController extends Controller
         $data['vivo_email'] = $request->vivo_email;
         $data['vivo_dev_name'] = $request->vivo_dev_name;
         $data['vivo_store_name'] = $request->vivo_store_name;
+        $data['vivo_company'] = $request->vivo_company;
         $data['vivo_pass'] = $request->vivo_pass;
         $data['vivo_status'] = $request->vivo_status;
         $data['vivo_note'] = $request->vivo_note;
@@ -179,6 +179,7 @@ class DevVivoController extends Controller
         $data->vivo_email = $request->vivo_email;
         $data->vivo_dev_name = $request->vivo_dev_name;
         $data->vivo_store_name = $request->vivo_store_name;
+        $data->vivo_company = $request->vivo_company;
         $data->vivo_pass = $request->vivo_pass;
         $data->vivo_status = $request->vivo_status;
         $data->vivo_note = $request->vivo_note;
