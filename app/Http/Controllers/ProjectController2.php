@@ -5,6 +5,11 @@ namespace App\Http\Controllers;
 use App\Models\Da;
 use App\Models\Dev;
 
+use App\Models\Dev_Amazon;
+use App\Models\Dev_Oppo;
+use App\Models\Dev_Samsung;
+use App\Models\Dev_Vivo;
+use App\Models\Dev_Xiaomi;
 use App\Models\ProjectModel;
 use App\Models\ProjectModel2;
 use App\Models\Template;
@@ -32,10 +37,17 @@ class ProjectController2 extends Controller
     {
         $da =  Da::latest('id')->get();
         $template =  Template::latest('id')->get();
-        $store_name=  Dev::latest('id')->get();
-//        return view('mailparent.index');
-//        return view('project.index2');
-        return view('project.index2',compact(['template','da','store_name']));
+        $store_name =  Dev::latest('id')->get();
+        $store_name_amazon  =  Dev_Amazon::latest('id')->get();
+        $store_name_samsung =  Dev_Samsung::latest('id')->get();
+        $store_name_xiaomi  =  Dev_Xiaomi::latest('id')->get();
+        $store_name_oppo    =  Dev_Oppo::latest('id')->get();
+        $store_name_vivo    =  Dev_Vivo::latest('id')->get();
+        return view('project.index2',compact([
+            'template','da','store_name',
+            'store_name_amazon','store_name_samsung',
+            'store_name_xiaomi','store_name_oppo','store_name_vivo'
+        ]));
     }
 
     public function getIndex(Request $request)

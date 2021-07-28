@@ -54,19 +54,9 @@
                             </div>
                         </div>
                         <div data-repeater-item="" class="row">
-                            <div class="form-group col-lg-6">
-                                <label for="name">Công ty đăng ký </label>
-                                <input type="text" id="vivo_company" name="vivo_company" class="form-control" required>
-                            </div>
                             <div class="form-group col-lg-6 ">
                                 <label for="name">Mật khẩu</label>
                                 <input type="text" id="vivo_pass" name="vivo_pass" class="form-control">
-                            </div>
-                        </div>
-                        <div data-repeater-item="" class="row">
-                            <div class="form-group col-lg-6 ">
-                                <label for="name">Ghi chú</label>
-                                <textarea id="vivo_note" name="vivo_note" class="form-control" rows="4" ></textarea>
                             </div>
                             <div class="form-group col-lg-6">
                                 <label for="name">Trạng thái </label>
@@ -82,7 +72,16 @@
                                 </div>
                             </div>
                         </div>
-
+                        <div data-repeater-item="" class="row">
+                            <div class="form-group col-lg-6">
+                                <label for="name">Công ty đăng ký </label>
+                                <textarea id="vivo_company" name="vivo_company" class="form-control" rows="4" ></textarea>
+                            </div>
+                            <div class="form-group col-lg-6 ">
+                                <label for="name">Ghi chú</label>
+                                <textarea id="vivo_note" name="vivo_note" class="form-control" rows="4" ></textarea>
+                            </div>
+                        </div>
                     </div>
                     <div class="col-sm-offset-2 col-sm-10">
                         <button type="submit" class="btn btn-primary" id="saveBtn" value="create">Save changes</button>

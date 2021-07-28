@@ -5,6 +5,11 @@ namespace App\Http\Controllers;
 use App\Models\Da;
 use App\Models\Dev;
 
+use App\Models\Dev_Amazon;
+use App\Models\Dev_Oppo;
+use App\Models\Dev_Samsung;
+use App\Models\Dev_Vivo;
+use App\Models\Dev_Xiaomi;
 use App\Models\ProjectModel;
 use App\Models\Template;
 
@@ -30,7 +35,14 @@ class ProjectController extends Controller
     {
         $da =  Da::latest('id')->get();
         $template =  Template::latest('id')->get();
-        $store_name=  Dev::latest('id')->get();
+
+        $store_name         =  Dev::latest('id')->get();
+        $store_name_amazon  =  Dev_Amazon::latest('id')->get();
+        $store_name_samsung =  Dev_Samsung::latest('id')->get();
+        $store_name_xiaomi  =  Dev_Xiaomi::latest('id')->get();
+        $store_name_oppo    =  Dev_Oppo::latest('id')->get();
+        $store_name_vivo    =  Dev_Vivo::latest('id')->get();
+
         $project = ProjectModel::latest()->get();
         if ($request->ajax()) {
             $data = ProjectModel::latest()->get();
@@ -111,7 +123,10 @@ class ProjectController extends Controller
                 ->rawColumns(['action','title_app','bot_imglogo','status'])
                 ->make(true);
         }
-        return view('project.index',compact(['project','template','da','store_name']));
+        return view('project.index',compact(['project',
+            'template','da','store_name','store_name_amazon','store_name_samsung',
+            'store_name_xiaomi','store_name_oppo','store_name_vivo'
+            ]));
     }
 
     /**

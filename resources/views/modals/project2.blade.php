@@ -445,8 +445,8 @@
                                                     <label for="name">Store Name (Amazon) </label>
                                                     <select class="form-control select2" id="Amazon_buildinfo_store_name_x" name="Amazon_buildinfo_store_name_x">
                                                         <option >---Vui lòng chọn---</option>
-                                                        @foreach($store_name as $item)
-                                                            <option value="{{$item->id}}">{{$item->dev_name}} : {{$item->store_name}}</option>
+                                                        @foreach($store_name_amazon as $item)
+                                                            <option value="{{$item->id}}">{{$item->amazon_dev_name}} : {{$item->amazon_store_name}}</option>
                                                         @endforeach
                                                     </select>
                                                 </div>
@@ -488,8 +488,8 @@
                                                     <label for="name">Store Name (Samsung) </label>
                                                     <select class="form-control select2" id="Samsung_buildinfo_store_name_x" name="Samsung_buildinfo_store_name_x">
                                                         <option >---Vui lòng chọn---</option>
-                                                        @foreach($store_name as $item)
-                                                            <option value="{{$item->id}}">{{$item->dev_name}} : {{$item->store_name}}</option>
+                                                        @foreach($store_name_samsung as $item)
+                                                            <option value="{{$item->id}}">{{$item->samsung_dev_name}} : {{$item->samsung_store_name}}</option>
                                                         @endforeach
                                                     </select>
                                                 </div>
@@ -531,8 +531,8 @@
                                                     <label for="name">Store Name (Xiaomi) </label>
                                                     <select class="form-control select2" id="Xiaomi_buildinfo_store_name_x" name="Xiaomi_buildinfo_store_name_x">
                                                         <option >---Vui lòng chọn---</option>
-                                                        @foreach($store_name as $item)
-                                                            <option value="{{$item->id}}">{{$item->dev_name}} : {{$item->store_name}}</option>
+                                                        @foreach($store_name_xiaomi as $item)
+                                                            <option value="{{$item->id}}">{{$item->xiaomi_dev_name}} : {{$item->xiaomi_store_name}}</option>
                                                         @endforeach
                                                     </select>
                                                 </div>
@@ -574,8 +574,8 @@
                                                     <label for="name">Store Name (OPPO) </label>
                                                     <select class="form-control select2" id="Oppo_buildinfo_store_name_x" name="Oppo_buildinfo_store_name_x">
                                                         <option >---Vui lòng chọn---</option>
-                                                        @foreach($store_name as $item)
-                                                            <option value="{{$item->id}}">{{$item->dev_name}} : {{$item->store_name}}</option>
+                                                        @foreach($store_name_oppo as $item)
+                                                            <option value="{{$item->id}}">{{$item->oppo_dev_name}} : {{$item->oppo_store_name}}</option>
                                                         @endforeach
                                                     </select>
                                                 </div>
@@ -617,8 +617,8 @@
                                                     <label for="name">Store Name (Vivo) </label>
                                                     <select class="form-control select2" id="Vivo_buildinfo_store_name_x" name="Vivo_buildinfo_store_name_x">
                                                         <option >---Vui lòng chọn---</option>
-                                                        @foreach($store_name as $item)
-                                                            <option value="{{$item->id}}">{{$item->dev_name}} : {{$item->store_name}}</option>
+                                                        @foreach($store_name_vivo as $item)
+                                                            <option value="{{$item->id}}">{{$item->vivo_dev_name}} : {{$item->vivo_store_name}}</option>
                                                         @endforeach
                                                     </select>
                                                 </div>
