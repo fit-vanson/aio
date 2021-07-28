@@ -19,14 +19,14 @@
 @endsection
 @section('breadcrumb')
     <div class="col-sm-6">
-        <h4 class="page-title">Quản lý Dev</h4>
+        <h4 class="page-title">Quản lý Dev Amazon</h4>
     </div>
     <div class="col-sm-6">
         <div class="float-right">
             <a class="btn btn-success" href="javascript:void(0)" id="createNewDev"> Create New</a>
         </div>
     </div>
-    @include('modals.dev')
+    @include('modals.dev-amazon')
 @endsection
 @section('content')
     <div class="row">
@@ -37,13 +37,12 @@
                     <table class="table table-bordered dt-responsive nowrap data-table" style="border-collapse: collapse; border-spacing: 0; width: 100%;">
                         <thead>
                         <tr>
-                            <th width="60px">IMG</th>
+                            <th>Ga name</th>
                             <th>Dev name</th>
                             <th>Store name</th>
                             <th>Gmail </th>
-                            <th>Điện thoại</th>
-                            <th>Link | Web | Fanpage |Policy</th>
                             <th>Trạng thái</th>
+                            <th>Ghi chú</th>
                             <th width="5%">Action</th>
                         </tr>
                         </thead>
@@ -89,60 +88,41 @@
             var table = $('.data-table').DataTable({
                 processing: true,
                 serverSide: true,
-                ajax: "{{ route('dev.index') }}",
+                ajax: {
+                    url: "{{ route('dev_amazon.getIndex') }}",
+                    type: "post"
+                },
                 columns: [
-                    {data: 'info_logo'},
-                    {data: 'dev_name'},
-                    {data: 'store_name'},
-                    {data: 'gmail_gadev_chinh'},
-                    {data: 'info_phone'},
-                    {data: 'link'},
-                    {
-                        "data": "status",
-                        "render" : function(data)
-                        {
-                            if(data == 0){
-                                return '<span class="badge badge-dark">Chưa sử dụng</span>';
-                            }
-                            if(data == 1){
-                                return '<span class="badge badge-primary">Đang phát triển</span>';
-                            }
-                            if(data == 2){
-                                return '<span class="badge badge-warning">Đóng</span>';
-                            }
-                            if(data == 3){
-                                return '<span class="badge badge-danger">Suspend</span>';
-                            }
-                        },
-
-                        "name": "status", "autoWidth": true
-                    },
+                    {data: 'amazon_ga_name'},
+                    {data: 'amazon_dev_name'},
+                    {data: 'amazon_store_name'},
+                    {data: 'amazon_email'},
+                    {data: 'amazon_status'},
+                    {data: 'amazon_note'},
                     {data: 'action', name: 'action', orderable: false, searchable: false},
                 ],
             });
             $('#createNewDev').click(function () {
-                $('#saveBtn').val("create-dev");
-                $('#dev_id').val('');
-                $('#devForm').trigger("reset");
+                $('#saveBtn').val("create");
+                $('#id').val('');
+                $('#devAmazonForm').trigger("reset");
                 $('#modelHeading').html("Thêm mới");
                 $('#ajaxModelDev').modal('show');
-                $("#id_ga").select2({});
-                $("#gmail_gadev_chinh").select2({});
-                $("#gmail_gadev_phu_1").select2({});
-                $("#gmail_gadev_phu_2").select2({});
+                $("#amazon_ga_name").select2({});
+                $("#amazon_email").select2({});
             });
-            $('#devForm').on('submit',function (event){
+            $('#devAmazonForm').on('submit',function (event){
                 event.preventDefault();
-                if($('#saveBtn').val() == 'create-dev'){
+                if($('#saveBtn').val() == 'create'){
                     $.ajax({
-                        data: $('#devForm').serialize(),
-                        url: "{{ route('dev.create') }}",
+                        data: $('#devAmazonForm').serialize(),
+                        url: "{{ route('dev_amazon.create') }}",
                         type: "POST",
                         dataType: 'json',
                         success: function (data) {
                             if(data.errors){
                                 for( var count=0 ; count <data.errors.length; count++){
-                                    $("#gaForm").notify(
+                                    $("#devAmazonForm").notify(
                                         data.errors[count],"error",
                                         { position:"right" }
                                     );
@@ -150,23 +130,23 @@
                             }
                             if(data.success){
                                 $.notify(data.success, "success");
-                                $('#devForm').trigger("reset");
+                                $('#devAmazonForm').trigger("reset");
                                 $('#ajaxModelDev').modal('hide');
                                 table.draw();
                             }
                         },
                     });
                 }
-                if($('#saveBtn').val() == 'edit-dev'){
+                if($('#saveBtn').val() == 'edit'){
                     $.ajax({
-                        data: $('#devForm').serialize(),
-                        url: "{{ route('dev.update') }}",
+                        data: $('#devAmazonForm').serialize(),
+                        url: "{{ route('dev_amazon.update') }}",
                         type: "post",
                         dataType: 'json',
                         success: function (data) {
                             if(data.errors){
                                 for( var count=0 ; count <data.errors.length; count++){
-                                    $("#devForm").notify(
+                                    $("#devAmazonForm").notify(
                                         data.errors[count],"error",
                                         { position:"right" }
                                     );
@@ -174,7 +154,7 @@
                             }
                             if(data.success){
                                 $.notify(data.success, "success");
-                                $('#devForm').trigger("reset");
+                                $('#devAmazonForm').trigger("reset");
                                 $('#ajaxModelDev').modal('hide');
                                 table.draw();
                             }
@@ -184,8 +164,8 @@
 
             });
 
-            $(document).on('click','.deleteDev', function (data){
-                var dev_id = $(this).data("id");
+            $(document).on('click','.deleteDevAmazon', function (data){
+                var id = $(this).data("id");
 
                 swal({
                         title: "Bạn có chắc muốn xóa?",
@@ -199,7 +179,7 @@
                     function(){
                         $.ajax({
                             type: "get",
-                            url: "{{ asset("dev/delete") }}/" + dev_id,
+                            url: "{{ asset("dev-amazon/delete") }}/" + id,
                             success: function (data) {
                                 table.draw();
                             },
@@ -216,33 +196,21 @@
 
 
     <script>
-        function editDev(id) {
-            $.get('{{asset('dev/edit')}}/'+id,function (data) {
-                $('#dev_id').val(data.id);
-                $('#store_name').val(data.store_name);
-                $('#dev_name').val(data.dev_name);
-                $('#ma_hoa_don').val(data.ma_hoa_don);
-                $('#id_ga').val(data.id_ga);
-                $('#id_ga').select2();
-                $('#gmail_gadev_chinh').val(data.gmail_gadev_chinh);
-                $('#gmail_gadev_chinh').select2();
-                $('#gmail_gadev_phu_1').val(data.gmail_gadev_phu_1);
-                $('#gmail_gadev_phu_1').select2();
-                $('#gmail_gadev_phu_2').val(data.gmail_gadev_phu_2);
-                $('#gmail_gadev_phu_2').select2();
-                $('#info_phone').val(data.info_phone);
-                $('#info_andress').val(data.info_andress);
-                $('#info_url').val(data.info_url);
-                $('#info_logo').val(data.info_logo);
-                $('#info_banner').val(data.info_banner);
-                $('#info_policydev').val(data.info_policydev);
-                $('#info_fanpage').val(data.info_fanpage);
-                $('#info_web').val(data.info_web);
-                $('#status').val(data.status);
-                $('#note').val(data.note);
-
+        function editDevAmazon(id) {
+            $.get('{{asset('dev-amazon/edit')}}/'+id,function (data) {
+                console.log(data)
+                $('#id').val(data.id);
+                $('#amazon_email').val(data.amazon_email);
+                $('#amazon_email').select2();
+                $('#amazon_ga_name').val(data.amazon_ga_name);
+                $('#amazon_ga_name').select2();
+                $('#amazon_note').val(data.amazon_note);
+                $('#amazon_pass').val(data.amazon_pass);
+                $('#amazon_status').val(data.amazon_status);
+                $('#amazon_store_name').val(data.amazon_store_name);
+                $('#amazon_dev_name').val(data.amazon_dev_name);
                 $('#modelHeading').html("Edit");
-                $('#saveBtn').val("edit-dev");
+                $('#saveBtn').val("edit");
                 $('#ajaxModelDev').modal('show');
                 $('.modal').on('hidden.bs.modal', function (e) {
                     $('body').addClass('modal-open');
@@ -278,44 +246,27 @@
                     $.notify(data.success, "success");
                     $('#addGaDevForm').trigger("reset");
                     $('#addGaDev').modal('hide');
-                    console.log(data)
-
                     if(typeof data.allGa_dev == 'undefined'){
-                        data.allGa_dev = {};
-                    }
+                        data.allGa_dev = {};                    }
                     if(typeof rebuildMailOption == 'function'){
                         rebuildMailOption(data.allGa_dev)
                     }
                 }
             });
-
         });
 
     </script>
     <script>
         function rebuildMailOption(mails){
-            var elementSelect = $("#gmail_gadev_chinh");
-            var elementSelect1 = $("#gmail_gadev_phu_1");
-            var elementSelect2 = $("#gmail_gadev_phu_2");
+            var elementSelect = $("#amazon_email");
 
-            if(elementSelect.length <= 0 || elementSelect1.length <= 0  || elementSelect2.length <= 0){
+
+            if(elementSelect.length <= 0){
                 return false;
             }
             elementSelect.empty();
-            elementSelect1.empty();
-            elementSelect2.empty();
             for(var m of mails){
                 elementSelect.append(
-                    $("<option></option>", {
-                        value : m.id
-                    }).text(m.gmail)
-                );
-                elementSelect1.append(
-                    $("<option></option>", {
-                        value : m.id
-                    }).text(m.gmail)
-                );
-                elementSelect2.append(
                     $("<option></option>", {
                         value : m.id
                     }).text(m.gmail)

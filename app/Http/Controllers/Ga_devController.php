@@ -114,8 +114,8 @@ class Ga_devController extends Controller
         $data['mailrecovery'] = strtolower($request->mailrecovery);
         $data['vpn_iplogin'] = $request->vpn_iplogin;
         $data['note'] = $request->note;
-        $allGadev = Ga_dev::latest('id')->get();
         $data->save();
+        $allGadev = Ga_dev::latest('id')->get();
         return response()->json([
             'success'=>'Thêm mới thành công',
             'allGa_dev' => $allGadev

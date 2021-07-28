@@ -220,9 +220,10 @@ class TemplateController extends Controller
         $data['Vivo_category'] =  $request->Vivo_category;
 
         $data->save();
-
+        $allTemp  = Template::latest('id')->get();
         return response()->json([
             'success'=>'Thêm mới thành công',
+            'temp' => $allTemp
 
         ]);
     }

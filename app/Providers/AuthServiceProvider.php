@@ -5,7 +5,12 @@ namespace App\Providers;
 use App\Http\Controllers\KhosimController;
 use App\Policies\CocsimPolicy;
 use App\Policies\DaPolicy;
+use App\Policies\DevAmazonPolicy;
+use App\Policies\DevOppoPolicy;
 use App\Policies\DevPolicy;
+use App\Policies\DevSamsungPolicy;
+use App\Policies\DevVivoPolicy;
+use App\Policies\DevXiaomiPolicy;
 use App\Policies\Ga_devPolicy;
 use App\Policies\GaPolicy;
 use App\Policies\HubPolicy;
@@ -49,6 +54,11 @@ class AuthServiceProvider extends ServiceProvider
        $this->defineGadev();
        $this->defineGa();
        $this->defineDev();
+       $this->defineDevAmazon();
+       $this->defineDevSamsung();
+       $this->defineDevXiaomi();
+       $this->defineDevOppo();
+       $this->defineDevVivo();
        $this->defineUser();
        $this->defineVaitro();
        $this->definePhan_quyen();
@@ -103,6 +113,7 @@ class AuthServiceProvider extends ServiceProvider
         Gate::define('ga-update', [GaPolicy::class, 'update']);
         Gate::define('ga-delete', [GaPolicy::class, 'delete']);
     }
+
     public function defineDev(){
 
         Gate::define('dev-index', [DevPolicy::class, 'index']);
@@ -112,6 +123,61 @@ class AuthServiceProvider extends ServiceProvider
         Gate::define('dev-update', [DevPolicy::class, 'update']);
         Gate::define('dev-delete', [DevPolicy::class, 'delete']);
     }
+
+    public function defineDevAmazon(){
+
+        Gate::define('dev_amazon-index', [DevAmazonPolicy::class, 'index']);
+        Gate::define('dev_amazon-show', [DevAmazonPolicy::class, 'show']);
+        Gate::define('dev_amazon-add', [DevAmazonPolicy::class, 'add']);
+        Gate::define('dev_amazon-edit', [DevAmazonPolicy::class, 'edit']);
+        Gate::define('dev_amazon-update', [DevAmazonPolicy::class, 'update']);
+        Gate::define('dev_amazon-delete', [DevAmazonPolicy::class, 'delete']);
+    }
+
+
+    public function defineDevSamsung(){
+
+        Gate::define('dev_samsung-index', [DevSamsungPolicy::class, 'index']);
+        Gate::define('dev_samsung-show', [DevSamsungPolicy::class, 'show']);
+        Gate::define('dev_samsung-add', [DevSamsungPolicy::class, 'add']);
+        Gate::define('dev_samsung-edit', [DevSamsungPolicy::class, 'edit']);
+        Gate::define('dev_samsung-update', [DevSamsungPolicy::class, 'update']);
+        Gate::define('dev_samsung-delete', [DevSamsungPolicy::class, 'delete']);
+    }
+
+
+    public function defineDevXiaomi(){
+
+        Gate::define('dev_xiaomi-index', [DevXiaomiPolicy::class, 'index']);
+        Gate::define('dev_xiaomi-show', [DevXiaomiPolicy::class, 'show']);
+        Gate::define('dev_xiaomi-add', [DevXiaomiPolicy::class, 'add']);
+        Gate::define('dev_xiaomi-edit', [DevXiaomiPolicy::class, 'edit']);
+        Gate::define('dev_xiaomi-update', [DevXiaomiPolicy::class, 'update']);
+        Gate::define('dev_xiaomi-delete', [DevXiaomiPolicy::class, 'delete']);
+    }
+
+
+    public function defineDevOppo(){
+
+        Gate::define('dev_oppo-index', [DevOppoPolicy::class, 'index']);
+        Gate::define('dev_oppo-show', [DevOppoPolicy::class, 'show']);
+        Gate::define('dev_oppo-add', [DevOppoPolicy::class, 'add']);
+        Gate::define('dev_oppo-edit', [DevOppoPolicy::class, 'edit']);
+        Gate::define('dev_oppo-update', [DevOppoPolicy::class, 'update']);
+        Gate::define('dev_oppo-delete', [DevOppoPolicy::class, 'delete']);
+    }
+
+
+    public function defineDevVivo(){
+
+        Gate::define('dev_vivo-index', [DevVivoPolicy::class, 'index']);
+        Gate::define('dev_vivo-show', [DevVivoPolicy::class, 'show']);
+        Gate::define('dev_vivo-add', [DevVivoPolicy::class, 'add']);
+        Gate::define('dev_vivo-edit', [DevVivoPolicy::class, 'edit']);
+        Gate::define('dev_vivo-update', [DevVivoPolicy::class, 'update']);
+        Gate::define('dev_vivo-delete', [DevVivoPolicy::class, 'delete']);
+    }
+
 
     public function defineVaitro(){
         Gate::define('vai_tro-index', [RolePolicy::class, 'index']);

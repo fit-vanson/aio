@@ -14,15 +14,17 @@
 <link href="plugins/select2/css/select2.min.css" rel="stylesheet" type="text/css" />
 
 
+
+
 @endsection
 
 @section('breadcrumb')
 <div class="col-sm-6">
-    <h4 class="page-title">Quản lý Project2</h4>
+    <h4 class="page-title">Quản lý Project</h4>
 </div>
 <div class="col-sm-6">
     <div class="float-right">
-        <a class="btn btn-success" href="javascript:void(0)" id="createNewProject"> Create New Project2</a>
+        <a class="btn btn-success" href="javascript:void(0)" id="createNewProject"> Create New Project</a>
     </div>
 </div>
 
@@ -46,12 +48,12 @@
                         <thead>
                         <tr>
 
-                            <th width="100px">Logo</th>
-                            <th>Mã dự án2</th>
+                            <th width="10%">Logo</th>
+                            <th width="20%">Mã dự án2</th>
 {{--                            <th>Tên Project</th>--}}
 {{--                            <th>Tên Template</th>--}}
-                            <th>Package</th>
-                            <th>Trạng thái Ứng dụng | Policy</th>
+                            <th width="30%">Package</th>
+                            <th width="30%">Trạng thái Ứng dụng | Policy</th>
                             <th width="10%">Action</th>
                         </tr>
                         </thead>
@@ -523,6 +525,7 @@
 
             },
             success:function (data) {
+
                 if(data.errors){
                     for( var count=0 ; count <data.errors.length; count++){
                         $("#AddTempForm").notify(
@@ -547,7 +550,7 @@
 
     });
     $("#addStore").submit(function (e) {
-        alert(1);
+
         e.preventDefault();
         let data = new FormData(document.getElementById('AddDaForm'));
         $.ajax({
@@ -602,6 +605,7 @@
         }
     }
     function rebuildTemplateOption(template){
+        console.log(template)
         var elementSelect = $("#template");
         if(elementSelect.length <= 0){
             return false;

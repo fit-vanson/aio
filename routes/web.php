@@ -2,8 +2,13 @@
 
 use App\Http\Controllers\CocsimController;
 use App\Http\Controllers\DaController;
+use App\Http\Controllers\DevAmazonController;
 use App\Http\Controllers\DevController;
 
+use App\Http\Controllers\DevOppoController;
+use App\Http\Controllers\DevSamsungController;
+use App\Http\Controllers\DevVivoController;
+use App\Http\Controllers\DevXiaomiController;
 use App\Http\Controllers\Ga_devController;
 use App\Http\Controllers\GaController;
 use App\Http\Controllers\HomeController;
@@ -127,6 +132,60 @@ Route::group(['prefix'=>'dev','middleware'=>['CheckLogout','2fa']], function (){
     Route::get('/show/{id}',[DevController::class,'show'])->name('dev.show')->middleware('can:dev-show');
     Route::post('/update',[DevController::class,'update'])->name('dev.update')->middleware('can:dev-update');
     Route::get('/delete/{id}',[DevController::class,'delete'])->name('dev.delete')->middleware('can:dev-delete');
+});
+
+Route::group(['prefix'=>'dev-amazon','middleware'=>['CheckLogout','2fa']], function (){
+    Route::get('/',[DevAmazonController::class,'index'])->name('dev_amazon.index')->middleware('can:dev_amazon-index');
+    Route::post('/getIndex',[DevAmazonController::class,'getIndex'])->name('dev_amazon.getIndex')->middleware('can:dev_amazon-index');
+    Route::post('/create',[DevAmazonController::class,'create'])->name('dev_amazon.create')->middleware('can:dev_amazon-add');
+    Route::get('/edit/{id}',[DevAmazonController::class,'edit'])->name('dev_amazon.edit')->middleware('can:dev_amazon-edit');
+    Route::get('/show/{id}',[DevAmazonController::class,'show'])->name('dev_amazon.show')->middleware('can:dev_amazon-show');
+    Route::post('/update',[DevAmazonController::class,'update'])->name('dev_amazon.update')->middleware('can:dev_amazon-update');
+    Route::get('/delete/{id}',[DevAmazonController::class,'delete'])->name('dev_amazon.delete')->middleware('can:dev_amazon-delete');
+});
+
+Route::group(['prefix'=>'dev-samsung','middleware'=>['CheckLogout','2fa']], function (){
+    Route::get('/',[DevSamsungController::class,'index'])->name('dev_samsung.index')->middleware('can:dev_samsung-index');
+    Route::post('/getIndex',[DevSamsungController::class,'getIndex'])->name('dev_samsung.getIndex')->middleware('can:dev_samsung-index');
+
+    Route::post('/create',[DevSamsungController::class,'create'])->name('dev_samsung.create')->middleware('can:dev_samsung-add');
+    Route::get('/edit/{id}',[DevSamsungController::class,'edit'])->name('dev_samsung.edit')->middleware('can:dev_samsung-edit');
+    Route::get('/show/{id}',[DevSamsungController::class,'show'])->name('dev_samsung.show')->middleware('can:dev_samsung-show');
+    Route::post('/update',[DevSamsungController::class,'update'])->name('dev_samsung.update')->middleware('can:dev_samsung-update');
+    Route::get('/delete/{id}',[DevSamsungController::class,'delete'])->name('dev_samsung.delete')->middleware('can:dev_samsung-delete');
+});
+
+Route::group(['prefix'=>'dev-xiaomi','middleware'=>['CheckLogout','2fa']], function (){
+    Route::get('/',[DevXiaomiController::class,'index'])->name('dev_xiaomi.index')->middleware('can:dev_xiaomi-index');
+    Route::post('/getIndex',[DevXiaomiController::class,'getIndex'])->name('dev_xiaomi.getIndex')->middleware('can:dev_xiaomi-index');
+
+    Route::post('/create',[DevXiaomiController::class,'create'])->name('dev_xiaomi.create')->middleware('can:dev_xiaomi-add');
+    Route::get('/edit/{id}',[DevXiaomiController::class,'edit'])->name('dev_xiaomi.edit')->middleware('can:dev_xiaomi-edit');
+    Route::get('/show/{id}',[DevXiaomiController::class,'show'])->name('dev_xiaomi.show')->middleware('can:dev_xiaomi-show');
+    Route::post('/update',[DevXiaomiController::class,'update'])->name('dev_xiaomi.update')->middleware('can:dev_xiaomi-update');
+    Route::get('/delete/{id}',[DevXiaomiController::class,'delete'])->name('dev_xiaomi.delete')->middleware('can:dev_xiaomi-delete');
+});
+
+Route::group(['prefix'=>'dev-oppo','middleware'=>['CheckLogout','2fa']], function (){
+    Route::get('/',[DevOppoController::class,'index'])->name('dev_oppo.index')->middleware('can:dev_oppo-index');
+    Route::post('/getIndex',[DevOppoController::class,'getIndex'])->name('dev_oppo.getIndex')->middleware('can:dev_oppo-index');
+
+    Route::post('/create',[DevOppoController::class,'create'])->name('dev_oppo.create')->middleware('can:dev_oppo-add');
+    Route::get('/edit/{id}',[DevOppoController::class,'edit'])->name('dev_oppo.edit')->middleware('can:dev_oppo-edit');
+    Route::get('/show/{id}',[DevOppoController::class,'show'])->name('dev_oppo.show')->middleware('can:dev_oppo-show');
+    Route::post('/update',[DevOppoController::class,'update'])->name('dev_oppo.update')->middleware('can:dev_oppo-update');
+    Route::get('/delete/{id}',[DevOppoController::class,'delete'])->name('dev_oppo.delete')->middleware('can:dev_oppo-delete');
+});
+
+Route::group(['prefix'=>'dev-vivo','middleware'=>['CheckLogout','2fa']], function (){
+    Route::get('/',[DevVivoController::class,'index'])->name('dev_vivo.index')->middleware('can:dev_vivo-index');
+    Route::post('/getIndex',[DevVivoController::class,'getIndex'])->name('dev_vivo.getIndex')->middleware('can:dev_vivo-index');
+
+    Route::post('/create',[DevVivoController::class,'create'])->name('dev_vivo.create')->middleware('can:dev_vivo-add');
+    Route::get('/edit/{id}',[DevVivoController::class,'edit'])->name('dev_vivo.edit')->middleware('can:dev_vivo-edit');
+    Route::get('/show/{id}',[DevVivoController::class,'show'])->name('dev_vivo.show')->middleware('can:dev_vivo-show');
+    Route::post('/update',[DevVivoController::class,'update'])->name('dev_vivo.update')->middleware('can:dev_vivo-update');
+    Route::get('/delete/{id}',[DevVivoController::class,'delete'])->name('dev_vivo.delete')->middleware('can:dev_vivo-delete');
 });
 
 Route::group(['prefix'=>'ga','middleware'=>['CheckLogout','2fa']], function (){

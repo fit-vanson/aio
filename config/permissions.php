@@ -43,6 +43,41 @@ return [
         'dev-update'  =>'edit_dev',
         'dev-delete'  =>'delete_dev',
 
+        'dev_amazon-index'  =>'index_dev_amazon',
+        'dev_amazon-show'  =>'show_dev_amazon',
+        'dev_amazon-add'  =>'add_dev_amazon',
+        'dev_amazon-edit'  =>'edit_dev_amazon',
+        'dev_amazon-update'  =>'edit_dev_amazon',
+        'dev_amazon-delete'  =>'delete_dev_amazon',
+
+        'dev_samsung-index'  =>'index_dev_samsung',
+        'dev_samsung-show'  =>'show_dev_samsung',
+        'dev_samsung-add'  =>'add_dev_samsung',
+        'dev_samsung-edit'  =>'edit_dev_samsung',
+        'dev_samsung-update'  =>'edit_dev_samsung',
+        'dev_samsung-delete'  =>'delete_dev_samsung',
+
+        'dev_xiaomi-index'  =>'index_dev_xiaomi',
+        'dev_xiaomi-show'  =>'show_dev_xiaomi',
+        'dev_xiaomi-add'  =>'add_dev_xiaomi',
+        'dev_xiaomi-edit'  =>'edit_dev_xiaomi',
+        'dev_xiaomi-update'  =>'edit_dev_xiaomi',
+        'dev_xiaomi-delete'  =>'delete_dev_xiaomi',
+
+        'dev_oppo-index'  =>'index_dev_oppo',
+        'dev_oppo-show'  =>'show_dev_oppo',
+        'dev_oppo-add'  =>'add_dev_oppo',
+        'dev_oppo-edit'  =>'edit_dev_oppo',
+        'dev_oppo-update'  =>'edit_dev_oppo',
+        'dev_oppo-delete'  =>'delete_dev_oppo',
+
+        'dev_vivo-index'  =>'index_dev_vivo',
+        'dev_vivo-show'  =>'show_dev_vivo',
+        'dev_vivo-add'  =>'add_dev_vivo',
+        'dev_vivo-edit'  =>'edit_dev_vivo',
+        'dev_vivo-update'  =>'edit_dev_vivo',
+        'dev_vivo-delete'  =>'delete_dev_vivo',
+
         'user-index'  =>'index_user',
         'user-show'  =>'show_user',
         'user-add'  =>'add_user',
@@ -117,7 +152,7 @@ return [
 
 
     'table-module' => [
-        'Dự án','Template','Project','Gadev','Dev','Ga',
+        'Dự án','Template','Project','Gadev','Dev','Dev Amazon','Dev SamSung','Dev Xiaomi','Dev Oppo','Dev Vivo','Ga',
         'User','Vai trò', 'Phân quyền',
         'khosim','cocsim','sms','hub','Mail Manage', 'Mail Parent','Mail Reg'
     ],
