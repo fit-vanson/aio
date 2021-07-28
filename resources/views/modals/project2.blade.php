@@ -818,17 +818,22 @@
 </div>
 
 <div class="modal fade bd-example-modal-xl" id="showPolicy" aria-hidden="true">
-    <div class="modal-dialog">
+    <div class="modal-dialog modal-lg">
         <div class="modal-content">
             <div class="modal-header">
                 <h4 class="modal-title" id="modelHeadingPolicy"></h4>
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
             </div>
             <div class="modal-body">
-                <label for="name">Policy 1 <button type="button" onclick="copy1()" class="btn btn-link waves-effect copyboard"><i class="mdi mdi-content-copy"></i></button> </label>
-                <textarea  type="text" id="policy1" name="policy1" rows="5" class="form-control" > </textarea>
-                <label for="name">Policy 2 <button type="button" onclick="copy2()" class="btn btn-link waves-effect copyboard"><i class="mdi mdi-content-copy"></i></button></label>
-                <textarea  type="text" id="policy2" name="policy2" rows="5" class="form-control" > </textarea>
+                <div class="policy-1">
+                    <label for="name">Policy 1 <button type="button" onclick="copy1()" class="btn btn-link waves-effect copyboard"><i class="mdi mdi-content-copy"></i></button> </label>
+                    <textarea  type="text" id="policy1"  name="policy1" rows="8" class="form-control" > </textarea>
+                </div>
+                <div class="policy-2">
+                    <label  for="name">Policy 2 <button type="button" onclick="copy2()" class="btn btn-link waves-effect copyboard"><i class="mdi mdi-content-copy"></i></button></label>
+                    <textarea  type="text" id="policy2"  name="policy2" rows="8" class="form-control" > </textarea>
+
+                </div>
 
             </div>
             <div class="modal-footer">

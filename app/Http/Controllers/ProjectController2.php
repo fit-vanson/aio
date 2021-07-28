@@ -588,7 +588,7 @@ class ProjectController2 extends Controller
 
         $project = ProjectModel2::where('projectid',$id)->first();
         $policy = Template::select('policy1','policy2')->where('id',$project->template)->first();
-        $store_name= Dev::select('store_name')->where('id',$project->buildinfo_store_name_x)->first();
+        $store_name= Dev::select('store_name')->where('id',$project->Chplay_buildinfo_store_name_x)->first();
 
         return response()->json([$project,$policy,$store_name]);
     }
