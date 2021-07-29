@@ -797,7 +797,7 @@ class ProjectController2 extends Controller
      */
     public function delete($id)
     {
-        ProjectModel::find($id)->delete();
+        ProjectModel2::find($id)->delete();
         return response()->json(['success'=>'Xóa thành công.']);
     }
 
