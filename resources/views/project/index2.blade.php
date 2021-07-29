@@ -237,7 +237,7 @@
                 function(){
                     $.ajax({
                         type: "get",
-                        url: "{{ asset("project/delete") }}/" + project_id,
+                        url: "{{ asset("project2/delete") }}/" + project_id,
                         success: function (data) {
                             table.draw();
                         },
