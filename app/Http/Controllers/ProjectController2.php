@@ -368,6 +368,7 @@ class ProjectController2 extends Controller
             }
 
             $data_arr[] = array(
+                "updated_at" => $record->updated_at,
                 "logo" => $logo,
                 "ma_da"=>$data_ma_da.$data_template.$data_projectname.$data_title_app,
                 "package" => $package_chplay.$package_amazon.$package_samsung.$package_xiaomi.$package_oppo.$package_vivo,
@@ -375,8 +376,6 @@ class ProjectController2 extends Controller
                 "action"=> $btn,
             );
         }
-
-
         $response = array(
             "draw" => intval($draw),
             "iTotalRecords" => $totalRecords,

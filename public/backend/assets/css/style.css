@@ -3862,4 +3862,12 @@ Invoice
     overflow: inherit !important;
   }
 }
+#addTemplate {
+    background: rgba(0, 0, 0, 0.7);
+}
+#addMaDa {
+    background: rgba(0, 0, 0, 0.7);
+}
+
+
 /*# sourceMappingURL=style.css.map */
