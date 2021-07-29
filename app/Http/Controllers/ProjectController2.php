@@ -105,7 +105,7 @@ class ProjectController2 extends Controller
             $btn = $btn. ' <a href="javascript:void(0)" onclick="quickEditProject('.$record->projectid.')" class="btn btn-success"><i class="mdi mdi-android-head"></i></a>';
             $btn = $btn.' <a href="javascript:void(0)" data-toggle="tooltip"  data-id="'.$record->projectid.'" data-original-title="Delete" class="btn btn-danger deleteProject"><i class="ti-trash"></i></a>';
 
-            $ma_da = DB::table('2')
+            $ma_da = DB::table('ngocphandang_project2')
                 ->join('ngocphandang_da','ngocphandang_da.id','=','ngocphandang_project2.ma_da')
                 ->where('ngocphandang_da.id',$record->ma_da)
                 ->first();
@@ -113,7 +113,7 @@ class ProjectController2 extends Controller
                 ->join('ngocphandang_template','ngocphandang_template.id','=','ngocphandang_project2.template')
                 ->where('ngocphandang_template.id',$record->template)
                 ->first();
-            dd($ma_da);
+
             if(isset($ma_da)) {
                 $data_ma_da =
                     '<span style="line-height:3">' . $ma_da->ma_da . '</span>';
