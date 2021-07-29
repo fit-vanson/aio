@@ -68,7 +68,7 @@
                                                     <div class="inner row">
                                                         <div class="col-md-10 col-10">
                                                             <select class="form-control" id="ma_da" name="ma_da">
-                                                                <option>---Vui lòng chọn---</option>
+                                                                <option value="0">---Vui lòng chọn---</option>
                                                                 @foreach($da as $item)
                                                                     <option value="{{$item->id}}">{{$item->ma_da}}</option>
                                                                 @endforeach
@@ -85,7 +85,7 @@
                                                     <div class="inner row">
                                                         <div class="col-md-10 col-10">
                                                             <select class="form-control" id="template" name="template">
-                                                                <option>---Vui lòng chọn---</option>
+                                                                <option value="0">---Vui lòng chọn---</option>
                                                                 @foreach($template as $item)
                                                                     <option value="{{$item->id}}">{{$item->template}}</option>
                                                                 @endforeach

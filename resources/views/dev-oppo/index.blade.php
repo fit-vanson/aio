@@ -208,6 +208,9 @@
                 $('#oppo_pass').val(data.oppo_pass);
                 $('#oppo_status').val(data.oppo_status);
                 $('#oppo_store_name').val(data.oppo_store_name);
+                $('#oppo_phone').val(data.oppo_phone);
+                $('#oppo_profile_info').val(data.oppo_profile_info);
+                $('#oppo_company').val(data.oppo_company);
                 $('#oppo_dev_name').val(data.oppo_dev_name);
                 $('#modelHeading').html("Edit");
                 $('#saveBtn').val("edit");

@@ -140,6 +140,8 @@ class DevSamsungController extends Controller
         $data['samsung_email'] = $request->samsung_email;
         $data['samsung_dev_name'] = $request->samsung_dev_name;
         $data['samsung_store_name'] = $request->samsung_store_name;
+        $data['samsung_phone'] = $request->samsung_phone;
+        $data['samsung_profile_info'] = $request->samsung_profile_info;
         $data['samsung_pass'] = $request->samsung_pass;
         $data['samsung_status'] = $request->samsung_status;
         $data['samsung_note'] = $request->samsung_note;
@@ -180,6 +182,8 @@ class DevSamsungController extends Controller
         $data->samsung_email = $request->samsung_email;
         $data->samsung_dev_name = $request->samsung_dev_name;
         $data->samsung_store_name = $request->samsung_store_name;
+        $data->samsung_phone = $request->samsung_phone;
+        $data->samsung_profile_info = $request->samsung_profile_info;
         $data->samsung_pass = $request->samsung_pass;
         $data->samsung_status = $request->samsung_status;
         $data->samsung_note = $request->samsung_note;

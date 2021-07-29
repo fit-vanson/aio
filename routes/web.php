@@ -56,20 +56,20 @@ Route::group(['prefix'=>'admin','middleware'=>['CheckLogout','2fa']], function (
 Route::get('/',[HomeController::class,'getHome'])->middleware(['CheckLogout','2fa'])->name('index');
 
 Route::group(['prefix'=>'user','middleware'=>['CheckLogout','2fa']], function (){
-    Route::get('/',[UserController::class,'index'])->name('user.index')->middleware('can:user-index');
-    Route::post('/create',[UserController::class,'create'])->name('user.create')->middleware('can:user-add');
-    Route::get('/edit/{id}',[UserController::class,'edit'])->name('user.edit')->middleware('can:user-edit');
-    Route::get('/show/{id}',[UserController::class,'show'])->name('user.show')->middleware('can:user-show');
-    Route::post('/update',[UserController::class,'update'])->name('user.update')->middleware('can:user-update');
-    Route::get('/delete/{id}',[UserController::class,'delete'])->name('user.delete')->middleware('can:user-delete');
+    Route::get('/',[UserController::class,'index'])->name('user.index');
+    Route::post('/create',[UserController::class,'create'])->name('user.create');
+    Route::get('/edit/{id}',[UserController::class,'edit'])->name('user.edit');
+    Route::get('/show/{id}',[UserController::class,'show'])->name('user.show');
+    Route::post('/update',[UserController::class,'update'])->name('user.update');
+    Route::get('/delete/{id}',[UserController::class,'delete'])->name('user.delete');
 });
 Route::group(['prefix'=>'role','middleware'=>['CheckLogout','2fa']], function (){
-    Route::get('/',[RoleController::class,'index'])->name('role.index')->middleware('can:vai_tro-index');
-    Route::post('/create',[RoleController::class,'create'])->name('role.create')->middleware('can:vai_tro-add');
-    Route::get('/edit/{id}',[RoleController::class,'edit'])->name('role.edit')->middleware('can:vai_tro-edit');
-    Route::get('/show/{id}',[RoleController::class,'show'])->name('role.show')->middleware('can:vai_tro-show');
-    Route::post('/update',[RoleController::class,'update'])->name('role.update')->middleware('can:vai_tro-update');
-    Route::get('/delete/{id}',[RoleController::class,'delete'])->name('role.delete')->middleware('can:vai_tro-delete');
+    Route::get('/',[RoleController::class,'index'])->name('role.index');
+    Route::post('/create',[RoleController::class,'create'])->name('role.create');
+    Route::get('/edit/{id}',[RoleController::class,'edit'])->name('role.edit');
+    Route::get('/show/{id}',[RoleController::class,'show'])->name('role.show');
+    Route::post('/update',[RoleController::class,'update'])->name('role.update');
+    Route::get('/delete/{id}',[RoleController::class,'delete'])->name('role.delete');
 });
 Route::group(['prefix'=>'permission','middleware'=>['CheckLogout','2fa']], function (){
     Route::get('/',[PermissionController::class,'index'])->name('permission.index')->middleware('can:phan_quyen-index');
@@ -127,6 +127,7 @@ Route::group(['prefix'=>'ga_dev','middleware'=>['CheckLogout','2fa']], function 
 
 Route::group(['prefix'=>'dev','middleware'=>['CheckLogout','2fa']], function (){
     Route::get('/',[DevController::class,'index'])->name('dev.index')->middleware('can:dev-index');
+    Route::post('/getIndex',[DevController::class,'getIndex'])->name('dev.getIndex')->middleware('can:dev-index');
     Route::post('/create',[DevController::class,'create'])->name('dev.create')->middleware('can:dev-add');
     Route::get('/edit/{id}',[DevController::class,'edit'])->name('dev.edit')->middleware('can:dev-edit');
     Route::get('/show/{id}',[DevController::class,'show'])->name('dev.show')->middleware('can:dev-show');

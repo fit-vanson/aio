@@ -7,11 +7,8 @@
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
             </div>
             <div class="modal-body">
-
                 <form id="devForm" name="devForm" class="form-horizontal">
                     <input type="hidden" name="dev_id" id="dev_id">
-
-
                     <div data-repeater-list="group-a">
                         <div data-repeater-item="" class="row">
                             <div class="form-group col-lg-6">
@@ -19,8 +16,8 @@
                                 <div class="inner row">
                                     <div class="col-md-12 col-12">
                                         <select class="form-control select2js" id="id_ga" name="id_ga">
-                                            <option>---Vui lòng chọn---</option>
-                                            @foreach($ga as $item)
+                                            <option value="0">---Vui lòng chọn---</option>
+                                            @foreach($ga_name as $item)
                                                 <option value="{{$item->id}}">{{$item->ga_name}}</option>
                                             @endforeach
                                         </select>
@@ -28,32 +25,31 @@
                                 </div>
                             </div>
 
-                        </div>
-
-                        <div data-repeater-item="" class="row">
                             <div class="form-group col-lg-6">
                                 <label for="name">Dev Name  <span style="color: red">*</span></label>
                                 <input type="text" id="dev_name" name="dev_name" class="form-control" required>
                             </div>
-                            <div class="form-group col-lg-6">
-                                <label for="name">Store Name  <span style="color: red">*</span></label>
-                                <input type="text" id="store_name" name="store_name" class="form-control" required>
-                            </div>
+
                         </div>
 
                         <div data-repeater-item="" class="row">
                             <div class="form-group col-lg-6">
+                                <label for="name">Store Name  <span style="color: red">*</span></label>
+                                <input type="text" id="store_name" name="store_name" class="form-control" required>
+                            </div>
+                            <div class="form-group col-lg-6">
                                 <label for="name">Mã hóa đơn </label>
                                 <input type="text" id="ma_hoa_don" name="ma_hoa_don" class="form-control">
                             </div>
+                        </div>
 
-
-                            <div class="form-group col-lg-6">
+                        <div data-repeater-item="" class="row">
+                            <div class="form-group col-lg-4">
                                 <label for="name">Email <span style="color: red">*</span></label>
                                 <div class="inner row">
                                     <div class="col-md-10 col-10">
                                         <select class="form-control select2js" id="gmail_gadev_chinh" name="gmail_gadev_chinh">
-                                            <option>---Vui lòng chọn---</option>
+                                            <option value="0">---Vui lòng chọn---</option>
                                             @foreach($ga_dev as $item)
                                                 <option value="{{$item->id}}">{{$item->gmail}}</option>
                                             @endforeach
@@ -65,9 +61,7 @@
                                     </div>
                                 </div>
                             </div>
-                        </div>
-                        <div data-repeater-item="" class="row">
-                            <div class="form-group col-lg-6">
+                            <div class="form-group col-lg-4">
                                 <label for="name">Email 1</label>
                                 <div class="inner row">
                                     <div class="col-md-12 col-12">
@@ -80,8 +74,7 @@
                                     </div>
                                 </div>
                             </div>
-
-                            <div class="form-group col-lg-6">
+                            <div class="form-group col-lg-4">
                                 <label for="name">Email 2</label>
                                 <div class="inner row">
                                     <div class="col-md-12 col-12">
@@ -95,48 +88,44 @@
                                 </div>
                             </div>
                         </div>
-
                         <div data-repeater-item="" class="row">
-                            <div class="form-group col-lg-6">
+                            <div class="form-group col-lg-4">
                                 <label for="name">Đường dẫn</label>
                                 <input type="url" id="info_url" name="info_url" class="form-control">
                             </div>
-
-                            <div class="form-group col-lg-6">
+                            <div class="form-group col-lg-4">
                                 <label for="name">Logo</label>
                                 <input type="url" id="info_logo" name="info_logo" class="form-control">
                             </div>
-                        </div>
-
-                        <div data-repeater-item="" class="row">
-                            <div class="form-group col-lg-6 ">
+                            <div class="form-group col-lg-4 ">
                                 <label for="name">Banner</label>
                                 <input type="url" id="info_banner" name="info_banner" class="form-control">
                             </div>
-
-                            <div class="form-group col-lg-6 ">
+                        </div>
+                        <div data-repeater-item="" class="row">
+                            <div class="form-group col-lg-4 ">
                                 <label for="name">Policy</label>
                                 <input type="url" id="info_policydev" name="info_policydev" class="form-control">
                             </div>
-                        </div>
-                        <div data-repeater-item="" class="row">
-                            <div class="form-group col-lg-6 ">
+                            <div class="form-group col-lg-4 ">
                                 <label for="name">Fanpage</label>
                                 <input type="url" id="info_fanpage" name="info_fanpage" class="form-control">
                             </div>
-
-                            <div class="form-group col-lg-6 ">
+                            <div class="form-group col-lg-4 ">
                                 <label for="name">Link</label>
                                 <input type="url" id="info_web" name="info_web" class="form-control">
                             </div>
                         </div>
                         <div data-repeater-item="" class="row">
-                            <div class="form-group col-lg-6 ">
+                            <div class="form-group col-lg-4 ">
                                 <label for="name">Số điện thoại</label>
-                                <input type="text" id="info_phone" name="info_phone" class="form-control">
+                                <input type="number" id="info_phone" name="info_phone" class="form-control">
                             </div>
-
-                            <div class="form-group col-lg-6">
+                            <div class="form-group col-lg-4 ">
+                                <label for="name">Profile Info</label>
+                                <input type="text" id="profile_info" name="profile_info" class="form-control">
+                            </div>
+                            <div class="form-group col-lg-4">
                                 <label for="name">Trạng thái </label>
                                 <div class="inner row">
                                     <div class="col-md-12 col-12">
@@ -150,6 +139,7 @@
                                 </div>
                             </div>
                         </div>
+
 
                         <div data-repeater-item="" class="row">
                             <div class="form-group col-lg-6 ">
@@ -168,7 +158,6 @@
                         <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
                     </div>
                 </form>
-
             </div>
         </div>
     </div>

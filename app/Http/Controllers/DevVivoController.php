@@ -141,6 +141,8 @@ class DevVivoController extends Controller
         $data['vivo_dev_name'] = $request->vivo_dev_name;
         $data['vivo_store_name'] = $request->vivo_store_name;
         $data['vivo_company'] = $request->vivo_company;
+        $data['vivo_profile_info'] = $request->vivo_profile_info;
+        $data['vivo_phone'] = $request->vivo_phone;
         $data['vivo_pass'] = $request->vivo_pass;
         $data['vivo_status'] = $request->vivo_status;
         $data['vivo_note'] = $request->vivo_note;
@@ -179,6 +181,8 @@ class DevVivoController extends Controller
         $data->vivo_email = $request->vivo_email;
         $data->vivo_dev_name = $request->vivo_dev_name;
         $data->vivo_store_name = $request->vivo_store_name;
+        $data->vivo_phone = $request->vivo_phone;
+        $data->vivo_profile_info = $request->vivo_profile_info;
         $data->vivo_company = $request->vivo_company;
         $data->vivo_pass = $request->vivo_pass;
         $data->vivo_status = $request->vivo_status;

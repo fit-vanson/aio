@@ -208,6 +208,8 @@
                 $('#amazon_pass').val(data.amazon_pass);
                 $('#amazon_status').val(data.amazon_status);
                 $('#amazon_store_name').val(data.amazon_store_name);
+                $('#amazon_profile_info').val(data.amazon_profile_info);
+                $('#amazon_phone').val(data.amazon_phone);
                 $('#amazon_dev_name').val(data.amazon_dev_name);
                 $('#modelHeading').html("Edit");
                 $('#saveBtn').val("edit");

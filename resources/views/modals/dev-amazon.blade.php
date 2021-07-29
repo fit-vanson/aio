@@ -56,7 +56,16 @@
                             </div>
                         </div>
 
-
+                        <div data-repeater-item="" class="row">
+                            <div class="form-group col-lg-6">
+                                <label for="name">Số điện thoại </label>
+                                <input type="number" id="amazon_phone" name="amazon_phone" class="form-control" required>
+                            </div>
+                            <div class="form-group col-lg-6">
+                                <label for="name">Profile Info </label>
+                                <input type="text" id="amazon_profile_info" name="amazon_profile_info" class="form-control" required>
+                            </div>
+                        </div>
 
                         <div data-repeater-item="" class="row">
                             <div class="form-group col-lg-6 ">

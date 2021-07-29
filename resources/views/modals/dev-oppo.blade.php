@@ -56,8 +56,16 @@
                             </div>
                         </div>
 
-
-
+                        <div data-repeater-item="" class="row">
+                            <div class="form-group col-lg-6">
+                                <label for="name">Số điện thoại </label>
+                                <input type="number" id="oppo_phone" name="oppo_phone" class="form-control" required>
+                            </div>
+                            <div class="form-group col-lg-6">
+                                <label for="name">Profile Info </label>
+                                <input type="text" id="oppo_profile_info" name="oppo_profile_info" class="form-control" required>
+                            </div>
+                        </div>
                         <div data-repeater-item="" class="row">
                             <div class="form-group col-lg-6 ">
                                 <label for="name">Mật khẩu</label>
@@ -80,6 +88,10 @@
                         </div>
 
                         <div data-repeater-item="" class="row">
+                            <div class="form-group col-lg-6">
+                                <label for="name">Công ty đăng ký </label>
+                                <textarea id="oppo_company" name="oppo_company" class="form-control" rows="4" ></textarea>
+                            </div>
                             <div class="form-group col-lg-6 ">
                                 <label for="name">Ghi chú</label>
                                 <textarea id="oppo_note" name="oppo_note" class="form-control" rows="4" ></textarea>

@@ -208,6 +208,9 @@
                 $('#xiaomi_pass').val(data.xiaomi_pass);
                 $('#xiaomi_status').val(data.xiaomi_status);
                 $('#xiaomi_store_name').val(data.xiaomi_store_name);
+                $('#xiaomi_phone').val(data.xiaomi_phone);
+                $('#xiaomi_profile_info').val(data.xiaomi_profile_info);
+                $('#xiaomi_company').val(data.xiaomi_company);
                 $('#xiaomi_dev_name').val(data.xiaomi_dev_name);
                 $('#modelHeading').html("Edit");
                 $('#saveBtn').val("edit");

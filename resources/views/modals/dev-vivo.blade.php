@@ -54,6 +54,16 @@
                             </div>
                         </div>
                         <div data-repeater-item="" class="row">
+                            <div class="form-group col-lg-6">
+                                <label for="name">Số điện thoại </label>
+                                <input type="number" id="vivo_phone" name="vivo_phone" class="form-control" required>
+                            </div>
+                            <div class="form-group col-lg-6">
+                                <label for="name">Profile Info </label>
+                                <input type="text" id="vivo_profile_info" name="vivo_profile_info" class="form-control" required>
+                            </div>
+                        </div>
+                        <div data-repeater-item="" class="row">
                             <div class="form-group col-lg-6 ">
                                 <label for="name">Mật khẩu</label>
                                 <input type="text" id="vivo_pass" name="vivo_pass" class="form-control">

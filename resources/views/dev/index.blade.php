@@ -38,8 +38,8 @@
                         <thead>
                         <tr>
                             <th width="60px">IMG</th>
+                            <th>Ga name</th>
                             <th>Dev name</th>
-                            <th>Store name</th>
                             <th>Gmail </th>
                             <th>Điện thoại</th>
                             <th>Link | Web | Fanpage |Policy</th>
@@ -89,51 +89,33 @@
             var table = $('.data-table').DataTable({
                 processing: true,
                 serverSide: true,
-                ajax: "{{ route('dev.index') }}",
+                ajax: {
+                    url: "{{ route('dev.getIndex') }}",
+                    type: "post"
+                },
                 columns: [
                     {data: 'info_logo'},
+                    {data: 'ga_name'},
                     {data: 'dev_name'},
-                    {data: 'store_name'},
                     {data: 'gmail_gadev_chinh'},
                     {data: 'info_phone'},
-                    {data: 'link'},
-                    {
-                        "data": "status",
-                        "render" : function(data)
-                        {
-                            if(data == 0){
-                                return '<span class="badge badge-dark">Chưa sử dụng</span>';
-                            }
-                            if(data == 1){
-                                return '<span class="badge badge-primary">Đang phát triển</span>';
-                            }
-                            if(data == 2){
-                                return '<span class="badge badge-warning">Đóng</span>';
-                            }
-                            if(data == 3){
-                                return '<span class="badge badge-danger">Suspend</span>';
-                            }
-                        },
-
-                        "name": "status", "autoWidth": true
-                    },
+                    {data: 'info_url'},
+                    {data: 'status'},
                     {data: 'action', name: 'action', orderable: false, searchable: false},
                 ],
             });
             $('#createNewDev').click(function () {
-                $('#saveBtn').val("create-dev");
-                $('#dev_id').val('');
-                $('#devForm').trigger("reset");
+                $('#saveBtn').val("create");
+                $('#id').val('');
+                $('#devAmazonForm').trigger("reset");
                 $('#modelHeading').html("Thêm mới");
                 $('#ajaxModelDev').modal('show');
-                $("#id_ga").select2({});
-                $("#gmail_gadev_chinh").select2({});
-                $("#gmail_gadev_phu_1").select2({});
-                $("#gmail_gadev_phu_2").select2({});
+                $("#amazon_ga_name").select2({});
+                $("#amazon_email").select2({});
             });
             $('#devForm').on('submit',function (event){
                 event.preventDefault();
-                if($('#saveBtn').val() == 'create-dev'){
+                if($('#saveBtn').val() == 'create'){
                     $.ajax({
                         data: $('#devForm').serialize(),
                         url: "{{ route('dev.create') }}",
@@ -142,7 +124,7 @@
                         success: function (data) {
                             if(data.errors){
                                 for( var count=0 ; count <data.errors.length; count++){
-                                    $("#gaForm").notify(
+                                    $("#devForm").notify(
                                         data.errors[count],"error",
                                         { position:"right" }
                                     );
@@ -185,7 +167,7 @@
             });
 
             $(document).on('click','.deleteDev', function (data){
-                var dev_id = $(this).data("id");
+                var id = $(this).data("id");
 
                 swal({
                         title: "Bạn có chắc muốn xóa?",
@@ -199,7 +181,7 @@
                     function(){
                         $.ajax({
                             type: "get",
-                            url: "{{ asset("dev/delete") }}/" + dev_id,
+                            url: "{{ asset("dev/delete") }}/" + id,
                             success: function (data) {
                                 table.draw();
                             },
@@ -218,6 +200,7 @@
     <script>
         function editDev(id) {
             $.get('{{asset('dev/edit')}}/'+id,function (data) {
+                console.log(data)
                 $('#dev_id').val(data.id);
                 $('#store_name').val(data.store_name);
                 $('#dev_name').val(data.dev_name);
@@ -232,6 +215,7 @@
                 $('#gmail_gadev_phu_2').select2();
                 $('#info_phone').val(data.info_phone);
                 $('#info_andress').val(data.info_andress);
+                $('#profile_info').val(data.profile_info);
                 $('#info_url').val(data.info_url);
                 $('#info_logo').val(data.info_logo);
                 $('#info_banner').val(data.info_banner);
@@ -278,44 +262,27 @@
                     $.notify(data.success, "success");
                     $('#addGaDevForm').trigger("reset");
                     $('#addGaDev').modal('hide');
-                    console.log(data)
-
                     if(typeof data.allGa_dev == 'undefined'){
-                        data.allGa_dev = {};
-                    }
+                        data.allGa_dev = {};                    }
                     if(typeof rebuildMailOption == 'function'){
                         rebuildMailOption(data.allGa_dev)
                     }
                 }
             });
-
         });
 
     </script>
     <script>
         function rebuildMailOption(mails){
-            var elementSelect = $("#gmail_gadev_chinh");
-            var elementSelect1 = $("#gmail_gadev_phu_1");
-            var elementSelect2 = $("#gmail_gadev_phu_2");
+            var elementSelect = $("#amazon_email");
 
-            if(elementSelect.length <= 0 || elementSelect1.length <= 0  || elementSelect2.length <= 0){
+
+            if(elementSelect.length <= 0){
                 return false;
             }
             elementSelect.empty();
-            elementSelect1.empty();
-            elementSelect2.empty();
             for(var m of mails){
                 elementSelect.append(
-                    $("<option></option>", {
-                        value : m.id
-                    }).text(m.gmail)
-                );
-                elementSelect1.append(
-                    $("<option></option>", {
-                        value : m.id
-                    }).text(m.gmail)
-                );
-                elementSelect2.append(
                     $("<option></option>", {
                         value : m.id
                     }).text(m.gmail)

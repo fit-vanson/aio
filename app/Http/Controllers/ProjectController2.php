@@ -395,8 +395,8 @@ class ProjectController2 extends Controller
 
         $rules = [
             'projectname' =>'required|unique:ngocphandang_project2,projectname',
-            'ma_da' => 'required',
-            'template' => 'required',
+            'ma_da' => 'required|not_in:0',
+            'template' => 'required|not_in:0',
             'title_app' =>'required',
             'buildinfo_vernum' =>'required',
             'buildinfo_verstr' =>'required',
@@ -407,6 +407,8 @@ class ProjectController2 extends Controller
             'projectname.required'=>'Tên Project không để trống',
             'ma_da.required'=>'Mã dự án không để trống',
             'template.required'=>'Mã template không để trống',
+            'ma_da.not_in'=>'Mã dự án không để trống',
+            'template.not_in'=>'Mã template không để trống',
             'title_app.required'=>'Tiêu đề ứng không để trống',
             'buildinfo_vernum.required'=>'Version Number không để trống',
             'buildinfo_verstr.required'=>'Version String không để trống',
@@ -546,8 +548,10 @@ class ProjectController2 extends Controller
         $data['Vivo_ads'] = $Vivo_ads;
         $data['Vivo_status'] = $request->Vivo_status;
 
-        $data['logo'] = time().'.'.$request->logo->extension();
-        $request->logo->move(public_path('uploads/project'), $data['logo']);
+        if(isset($request->logo)){
+            $data['logo'] = time().'.'.$request->logo->extension();
+            $request->logo->move(public_path('uploads/project'), $data['logo']);
+        }
         $data->save();
         return response()->json(['success'=>'Thêm mới thành công']);
     }

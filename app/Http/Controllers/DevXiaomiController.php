@@ -139,6 +139,9 @@ class DevXiaomiController extends Controller
         $data['xiaomi_email'] = $request->xiaomi_email;
         $data['xiaomi_dev_name'] = $request->xiaomi_dev_name;
         $data['xiaomi_store_name'] = $request->xiaomi_store_name;
+        $data['xiaomi_phone'] = $request->xiaomi_phone;
+        $data['xiaomi_profile_info'] = $request->xiaomi_profile_info;
+        $data['xiaomi_company'] = $request->xiaomi_company;
         $data['xiaomi_pass'] = $request->xiaomi_pass;
         $data['xiaomi_status'] = $request->xiaomi_status;
         $data['xiaomi_note'] = $request->xiaomi_note;
@@ -178,6 +181,9 @@ class DevXiaomiController extends Controller
         $data->xiaomi_email = $request->xiaomi_email;
         $data->xiaomi_dev_name = $request->xiaomi_dev_name;
         $data->xiaomi_store_name = $request->xiaomi_store_name;
+        $data->xiaomi_profile_info = $request->xiaomi_profile_info;
+        $data->xiaomi_phone = $request->xiaomi_phone;
+        $data->xiaomi_company = $request->xiaomi_company;
         $data->xiaomi_pass = $request->xiaomi_pass;
         $data->xiaomi_status = $request->xiaomi_status;
         $data->xiaomi_note = $request->xiaomi_note;

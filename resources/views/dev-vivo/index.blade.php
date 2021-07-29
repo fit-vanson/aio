@@ -209,6 +209,8 @@
                 $('#vivo_pass').val(data.vivo_pass);
                 $('#vivo_status').val(data.vivo_status);
                 $('#vivo_store_name').val(data.vivo_store_name);
+                $('#vivo_phone').val(data.vivo_phone);
+                $('#vivo_profile_info').val(data.vivo_profile_info);
                 $('#vivo_dev_name').val(data.vivo_dev_name);
                 $('#modelHeading').html("Edit");
                 $('#saveBtn').val("edit");
