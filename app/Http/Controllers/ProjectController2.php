@@ -113,7 +113,7 @@ class ProjectController2 extends Controller
                 ->join('ngocphandang_template','ngocphandang_template.id','=','ngocphandang_project.template')
                 ->where('ngocphandang_template.id',$record->template)
                 ->first();
-            if($ma_da != null) {
+            if(isset($ma_da)) {
                 $data_ma_da =
                     '<span style="line-height:3">' . $ma_da->ma_da . '</span>';
             }else{
@@ -125,13 +125,13 @@ class ProjectController2 extends Controller
                 $data_template='';
             }
 
-            if($record->projectname != null) {
+            if(isset($record->projectname)) {
                 $data_projectname =  '<p class="text-muted" style="line-height:0.5">'.$record->projectname.'</p>';
             }else{
                 $data_projectname='';
             }
 
-            if($record->title_app != null) {
+            if(isset($record->title_app)) {
                 $data_title_app=  '<p class="text-muted" style="line-height:0.5">'.$record->title_app.'</p>';
             }else{
                 $data_title_app='';
