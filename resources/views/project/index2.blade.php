@@ -258,8 +258,6 @@
 <script>
     function editProject(id) {
         $.get('{{asset('project2/edit')}}/'+id,function (data) {
-            console.log(data)
-
             var Chplay_ads = '';
             var Amazon_ads = '';
             var Samsung_ads = '';
