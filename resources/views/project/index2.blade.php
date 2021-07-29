@@ -127,6 +127,8 @@
             $('#project_id').val('');
             $("#avatar").attr("src","img/logo.png");
             $('#projectForm2').trigger("reset");
+            $('#template').select2();
+            $('#ma_da').select2();
             $('#modelHeading').html("Thêm mới Project");
             $('#ajaxModel').modal('show');
             $('.modal').on('hidden.bs.modal', function (e) {
@@ -138,7 +140,6 @@
         $('#projectForm2').on('submit',function (event){
             event.preventDefault();
             var formData = new FormData($("#projectForm2")[0]);
-            console.log(formData)
             if($('#saveBtn').val() == 'create-project'){
                 $.ajax({
                     // data: $('#projectForm2').serialize(),
@@ -297,8 +298,6 @@
             }else {
                 $("#avatar").attr("src","img/logo.png");
             }
-
-
 
             $('#project_id').val(data[0].projectid);
             $('#projectname').val(data[0].projectname);
