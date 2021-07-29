@@ -19,6 +19,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Validator;
 
+use Intervention\Image\Facades\Image;
 use voku\helper\HtmlDomParser;
 use voku\helper\SimpleHtmlDomNode;
 use Yajra\DataTables\Facades\DataTables;
@@ -362,11 +363,10 @@ class ProjectController2 extends Controller
             $status =  $policy.'<br> CH Play: '.$Chplay_status.'<br> Amazon: '.$Amazon_status.'<br> SamSung: '.$Samsung_status.'<br> Xiaomi: '.$Xiaomi_status.'<br> Oppo: '.$Oppo_status.'<br> Vivo: '.$Vivo_status;
 
             if(isset($record->logo)){
-                $logo = "<img class='rounded mx-auto d-block'  width='100px'  height='100px'  src='../uploads/project/$record->logo'>";
+                $logo = "<img class='rounded mx-auto d-block'  width='100px'  height='100px'  src='../uploads/project/$record->projectname/thumbnail/$record->logo'>";
             }else{
                 $logo = '<img class="rounded mx-auto d-block" width="100px" height="100px" src="assets\images\logo-sm.png">';
             }
-
             $data_arr[] = array(
                 "updated_at" => $record->updated_at,
                 "logo" => $logo,
@@ -392,7 +392,6 @@ class ProjectController2 extends Controller
      */
     public function create(Request  $request)
     {
-
         $rules = [
             'projectname' =>'required|unique:ngocphandang_project2,projectname',
             'ma_da' => 'required|not_in:0',
@@ -482,7 +481,6 @@ class ProjectController2 extends Controller
         ];
         $Vivo_ads =  json_encode($Vivo_ads);
 
-
         $data = new ProjectModel2();
         $data['projectname'] = $request->projectname;
         $data['template'] = $request->template;
@@ -549,8 +547,18 @@ class ProjectController2 extends Controller
         $data['Vivo_status'] = $request->Vivo_status;
 
         if(isset($request->logo)){
-            $data['logo'] = time().'.'.$request->logo->extension();
-            $request->logo->move(public_path('uploads/project'), $data['logo']);
+            $image = $request->file('logo');
+            $data['logo'] = 'logo_'.time().'.'.$image->extension();
+            $destinationPath = public_path('uploads/project/'.$request->projectname.'/thumbnail/');
+            $img = Image::make($image->path());
+            if (!file_exists($destinationPath)) {
+                mkdir($destinationPath, 777, true);
+            }
+            $img->resize(100, 100, function ($constraint) {
+                $constraint->aspectRatio();
+            })->save($destinationPath.$data['logo']);
+            $destinationPath = public_path('uploads/project/'.$request->projectname);
+            $image->move($destinationPath, $data['logo']);
         }
         $data->save();
         return response()->json(['success'=>'Thêm mới thành công']);
@@ -606,9 +614,7 @@ class ProjectController2 extends Controller
      */
     public function update(Request $request)
     {
-
         $id = $request->project_id;
-
         $rules = [
             'projectname' =>'unique:ngocphandang_project2,projectname,'.$id.',projectid',
             'ma_da' => 'required',
@@ -764,8 +770,18 @@ class ProjectController2 extends Controller
         $data->Vivo_status = $request->Vivo_status;
 
         if($request->logo){
-            $data->logo = time().'.'.$request->logo->extension();
-            $request->logo->move(public_path('uploads/project'), $data->logo);
+            $image = $request->file('logo');
+            $data['logo'] = 'logo_'.time().'.'.$image->extension();
+            $destinationPath = public_path('uploads/project/'.$request->projectname.'/thumbnail/');
+            $img = Image::make($image->path());
+            if (!file_exists($destinationPath)) {
+                mkdir($destinationPath, 777, true);
+            }
+            $img->resize(100, 100, function ($constraint) {
+                $constraint->aspectRatio();
+            })->save($destinationPath.$data['logo']);
+            $destinationPath = public_path('uploads/project/'.$request->projectname);
+            $image->move($destinationPath, $data['logo']);
         }
         $data->save();
         return response()->json(['success'=>'Cập nhật thành công']);

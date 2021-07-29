@@ -13,9 +13,6 @@
 <!-- Select2 Js  -->
 <link href="plugins/select2/css/select2.min.css" rel="stylesheet" type="text/css" />
 
-
-
-
 @endsection
 
 @section('breadcrumb')
@@ -32,13 +29,6 @@
 
 @endsection
 @section('content')
-    <?php
-    $message =Session::get('message');
-    if($message){
-        echo  '<span class="splash-message" style="color:#2a75f3">'.$message.'</span>';
-        Session::put('message',null);
-    }
-    ?>
 
     <div class="row">
         <div class="col-12">
@@ -47,11 +37,9 @@
                     <table class="table table-bordered dt-responsive nowrap data-table" style="border-collapse: collapse; border-spacing: 0; width: 100%;">
                         <thead>
                         <tr>
-
+                            <th >ID</th>
                             <th width="10%">Logo</th>
-                            <th width="20%">Mã dự án2</th>
-{{--                            <th>Tên Project</th>--}}
-{{--                            <th>Tên Template</th>--}}
+                            <th width="20%">Mã dự án</th>
                             <th width="30%">Package</th>
                             <th width="30%">Trạng thái Ứng dụng | Policy</th>
                             <th width="10%">Action</th>
@@ -112,14 +100,21 @@
                 type: "post"
             },
             columns: [
+                {data: 'updated_at', name: 'updated_at',},
                 {data: 'logo', name: 'logo',orderable: false},
                 {data: 'ma_da', name: 'ma_da'},
-                // {data: 'projectname', name: 'projectname'},
-                // {data: 'template', name: 'template'},
                 {data: 'package', name: 'package',orderable: false},
                 {data: 'status', name: 'status',orderable: false},
                 {data: 'action', name: 'action', orderable: false, searchable: false},
-            ]
+            ],
+            columnDefs: [
+                {
+                    "targets": [ 0 ],
+                    "visible": false,
+                    "searchable": false
+                }
+            ],
+            order: [[ 0, 'desc' ]]
         });
 
         $('#createNewProject').click(function () {
@@ -249,28 +244,22 @@
                     swal("Đã xóa!", "Your imaginary file has been deleted.", "success");
                 });
         });
-
-
-
-
     });
 </script>
 <script>
     function editProject(id) {
         $.get('{{asset('project2/edit')}}/'+id,function (data) {
+            console.log(data)
             var Chplay_ads = '';
             var Amazon_ads = '';
             var Samsung_ads = '';
             var Xiaomi_ads = '';
             var Oppo_ads = '';
             var Vivo_ads = '';
-
             if(data[0].Chplay_ads) {
                 Chplay_ads = data[0].Chplay_ads;
                 Chplay_ads = JSON.parse(Chplay_ads);
             }
-
-
             if(data[0].Amazon_ads){
                 Amazon_ads = data[0].Amazon_ads;
                 Amazon_ads = JSON.parse(Amazon_ads);
@@ -292,11 +281,10 @@
                 Vivo_ads = JSON.parse(Vivo_ads);
             }
             if(data[0].logo) {
-                $("#avatar").attr("src","../uploads/project/"+data[0].logo);
+                $("#avatar").attr("src","../uploads/project/"+data[0].projectname+"/thumbnail/"+data[0].logo);
             }else {
                 $("#avatar").attr("src","img/logo.png");
             }
-
             $('#project_id').val(data[0].projectid);
             $('#projectname').val(data[0].projectname);
             $('#template').val(data[0].template);
@@ -394,10 +382,6 @@
             $('#Vivo_buildinfo_email_dev_x').val(data[0].Vivo_buildinfo_email_dev_x);
             $('#Vivo_status').val(data[0].Vivo_status);
 
-
-
-
-
             $('#modelHeading').html("Edit Project");
             $('#saveBtn').val("edit-project");
             $('#ajaxModel').modal('show');
@@ -406,7 +390,6 @@
             });
         })
     }
-
     function quickEditProject(id) {
         $.get('{{asset('project2/edit')}}/'+id,function (data) {
             $('#quick_project_id').val(data[0].projectid);
@@ -418,8 +401,6 @@
             $('#ajaxQuickModel').modal('show');
         })
     }
-
-
     function showPolicy(id) {
         $.get('{{asset('project2/edit')}}/'+id,function (data) {
             if(data[2] == null) { data[2] = {store_name: "(NO STORE NAME)"}}
@@ -462,15 +443,9 @@
             });
         })
     }
-
-
-
 </script>
-
-
 <script>
     $("#AddDaForm").submit(function (e) {
-        console.log(e)
         e.preventDefault();
         let data = new FormData(document.getElementById('AddDaForm'));
         $.ajax({
@@ -516,7 +491,6 @@
             contentType: false,
             dataType: 'json',
             beForeSend : () => {
-
             },
             success:function (data) {
 
@@ -531,50 +505,11 @@
                 $.notify(data.success, "success");
                 $('#AddTempForm').trigger("reset");
                 $('#addTemplate').modal('hide');
-
-
                 if(typeof data.temp == 'undefined'){
                     data.temp = {};
                 }
                 if(typeof rebuildTemplateOption == 'function'){
                     rebuildTemplateOption(data.temp)
-                }
-            }
-        });
-
-    });
-    $("#addStore").submit(function (e) {
-
-        e.preventDefault();
-        let data = new FormData(document.getElementById('AddDaForm'));
-        $.ajax({
-            url:"{{route('da.create')}}",
-            type: "post",
-            data:data,
-            processData: false,
-            contentType: false,
-            dataType: 'json',
-            beForeSend : () => {
-
-            },
-            success:function (data) {
-                if(data.errors){
-                    for( var count=0 ; count <data.errors.length; count++){
-                        $("#AddDaForm").notify(
-                            data.errors[count],"error",
-                            { position:"right" }
-                        );
-                    }
-                }
-                $.notify(data.success, "success");
-                $('#AddDaForm').trigger("reset");
-                $('#addMaDa').modal('hide');
-
-                if(typeof data.du_an == 'undefined'){
-                    data.du_an = {};
-                }
-                if(typeof rebuildMadaOption == 'function'){
-                    rebuildMadaOption(data.du_an)
                 }
             }
         });
