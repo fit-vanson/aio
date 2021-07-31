@@ -10,30 +10,23 @@ use App\Models\Dev_Oppo;
 use App\Models\Dev_Samsung;
 use App\Models\Dev_Vivo;
 use App\Models\Dev_Xiaomi;
+use App\Models\log;
 use App\Models\ProjectModel;
 use App\Models\ProjectModel2;
 use App\Models\Template;
 
-use DOMDocument;
+
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Validator;
 
 use Intervention\Image\Facades\Image;
-use voku\helper\HtmlDomParser;
-use voku\helper\SimpleHtmlDomNode;
-use Yajra\DataTables\Facades\DataTables;
-use function simplehtmldom_1_5\file_get_html;
+
 
 
 class ProjectController2 extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-
     public function index()
     {
         $da =  Da::latest('id')->get();
@@ -49,6 +42,19 @@ class ProjectController2 extends Controller
             'store_name_amazon','store_name_samsung',
             'store_name_xiaomi','store_name_oppo','store_name_vivo'
         ]));
+    }
+
+    public function indexBuild()
+    {
+//        $da =  Da::latest('id')->get();
+//        $template =  Template::latest('id')->get();
+//        $store_name =  Dev::latest('id')->get();
+//        $store_name_amazon  =  Dev_Amazon::latest('id')->get();
+//        $store_name_samsung =  Dev_Samsung::latest('id')->get();
+//        $store_name_xiaomi  =  Dev_Xiaomi::latest('id')->get();
+//        $store_name_oppo    =  Dev_Oppo::latest('id')->get();
+//        $store_name_vivo    =  Dev_Vivo::latest('id')->get();
+        return view('project.indexBuild');
     }
 
     public function getIndex(Request $request)
@@ -385,11 +391,216 @@ class ProjectController2 extends Controller
 
         echo json_encode($response);
     }
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
+
+    public function getIndexBuild(Request $request)
+    {
+
+        $draw = $request->get('draw');
+        $start = $request->get("start");
+        $rowperpage = $request->get("length"); // total number of rows per page
+
+        $columnIndex_arr = $request->get('order');
+        $columnName_arr = $request->get('columns');
+        $order_arr = $request->get('order');
+        $search_arr = $request->get('search');
+
+        $columnIndex = $columnIndex_arr[0]['column']; // Column index
+        $columnName = $columnName_arr[$columnIndex]['data']; // Column name
+        $columnSortOrder = $order_arr[0]['dir']; // asc or desc
+        $searchValue = $search_arr['value']; // Search value
+
+        // Total records
+        $totalRecords = ProjectModel2::select('count(*) as allcount')->count();
+        $totalRecordswithFilter = ProjectModel2::select('count(*) as allcount')
+            ->where('projectname', 'like', '%' . $searchValue . '%')
+            ->where(function ($q){
+                $q->where('buildinfo_console',1)
+                    ->orWhere('buildinfo_console',4);
+            })
+            ->count();
+
+        // Get records, also we have included search filter as well
+        $records = ProjectModel2::orderBy($columnName, $columnSortOrder)
+            ->where('projectname', 'like', '%' . $searchValue . '%')
+            ->where(function ($q){
+                $q->where('buildinfo_console',1)
+                    ->orWhere('buildinfo_console',4);
+            })
+            ->select('*')
+            ->skip($start)
+            ->take($rowperpage)
+            ->get();
+
+
+        $data_arr = array();
+        foreach ($records as $record) {
+            $btn = ' <a href="javascript:void(0)" data-toggle="tooltip"  data-id="'.$record->projectid.'" data-original-title="Delete" class="btn btn-danger removeProject"><i class="ti-trash"></i></a>';
+
+            $ma_da = DB::table('ngocphandang_project2')
+                ->join('ngocphandang_da','ngocphandang_da.id','=','ngocphandang_project2.ma_da')
+                ->where('ngocphandang_da.id',$record->ma_da)
+                ->first();
+            $template = DB::table('ngocphandang_project2')
+                ->join('ngocphandang_template','ngocphandang_template.id','=','ngocphandang_project2.template')
+                ->where('ngocphandang_template.id',$record->template)
+                ->first();
+
+            if(isset($ma_da)) {
+                $data_ma_da =
+                    '<span style="line-height:3">' . $ma_da->ma_da . '</span>';
+            }else{
+                $data_ma_da = '';
+            }
+            if(isset($template)) {
+                $data_template =  '<p class="text-muted" style="line-height:0.5">'.$template->template.'</p>';
+            }else{
+                $data_template='';
+            }
+
+            if(isset($record->projectname)) {
+                $data_projectname =  '<p class="text-muted" style="line-height:0.5">'.$record->projectname.'</p>';
+            }else{
+                $data_projectname='';
+            }
+
+            if(isset($record->title_app)) {
+                $data_title_app=  '<p class="text-muted" style="line-height:0.5">'.$record->title_app.'</p>';
+            }else{
+                $data_title_app='';
+            }
+
+            if(isset(json_decode($record->Chplay_ads,true)['ads_id'])
+                || isset(json_decode($record->Chplay_ads,true)['ads_banner'])
+                || isset(json_decode($record->Chplay_ads,true)['ads_inter'])
+                || isset(json_decode($record->Chplay_ads,true)['ads_native'])
+                || isset(json_decode($record->Chplay_ads,true)['ads_open'])
+                || isset(json_decode($record->Chplay_ads,true)['ads_reward'])
+            ){
+                $package_chplay = '<p style="color:green;line-height:0.5">CH Play: '.$record->Chplay_package.'</p>';
+            }else{
+                $package_chplay = '<p style="color:red;line-height:0.5">CH Play: '.$record->Chplay_package.'</p>';
+            }
+
+            if(isset(json_decode($record->Amazon_ads,true)['ads_id'])
+                || isset(json_decode($record->Amazon_ads,true)['ads_banner'])
+                || isset(json_decode($record->Amazon_ads,true)['ads_inter'])
+                || isset(json_decode($record->Amazon_ads,true)['ads_native'])
+                || isset(json_decode($record->Amazon_ads,true)['ads_open'])
+                || isset(json_decode($record->Amazon_ads,true)['ads_reward'])
+            ){
+                $package_amazon = '<p  style="color:green;line-height:0.5">Amazon: '.$record->Amazon_package.'</p>';
+            }else{
+                $package_amazon = '<p style="color:red;line-height:0.5">Amazon: '.$record->Amazon_package.'</p>';
+            }
+
+            if(isset(json_decode($record->Samsung_ads,true)['ads_id'])
+                || isset(json_decode($record->Samsung_ads,true)['ads_banner'])
+                || isset(json_decode($record->Samsung_ads,true)['ads_inter'])
+                || isset(json_decode($record->Samsung_ads,true)['ads_native'])
+                || isset(json_decode($record->Samsung_ads,true)['ads_open'])
+                || isset(json_decode($record->Samsung_ads,true)['ads_reward'])
+            ){
+                $package_samsung = '<p style="color:green;line-height:0.5">SamSung: '.$record->Samsung_package.'</p>';
+            }else{
+                $package_samsung = '<p style="color:red;line-height:0.5">SamSung: '.$record->Samsung_package.'</p>';
+            }
+
+            if(isset(json_decode($record->Xiaomi_ads,true)['ads_id'])
+                || isset(json_decode($record->Xiaomi_ads,true)['ads_banner'])
+                || isset(json_decode($record->Xiaomi_ads,true)['ads_inter'])
+                || isset(json_decode($record->Xiaomi_ads,true)['ads_native'])
+                || isset(json_decode($record->Xiaomi_ads,true)['ads_open'])
+                || isset(json_decode($record->Xiaomi_ads,true)['ads_reward'])
+            ){
+                $package_xiaomi = '<p style="color:green;line-height:0.5">Xiaomi: '.$record->Xiaomi_package.'</p>';
+            }else{
+                $package_xiaomi = '<p style="color:red;line-height:0.5">Xiaomi: '.$record->Xiaomi_package.'</p>';
+            }
+
+
+
+            if(isset(json_decode($record->Oppo_ads,true)['ads_id'])
+                || isset(json_decode($record->Oppo_ads,true)['ads_banner'])
+                || isset(json_decode($record->Oppo_ads,true)['ads_inter'])
+                || isset(json_decode($record->Oppo_ads,true)['ads_native'])
+                || isset(json_decode($record->Oppo_ads,true)['ads_open'])
+                || isset(json_decode($record->Oppo_ads,true)['ads_reward'])
+            ){
+                $package_oppo = '<p style="color:green;line-height:0.5">Oppo: '.$record->Oppo_package.'</p>';
+            }else{
+                $package_oppo = '<p style="color:red;line-height:0.5">Oppo: '.$record->Oppo_package.'</p>';
+            }
+
+            if(isset(json_decode($record->Vivo_ads,true)['ads_id'])
+                || isset(json_decode($record->Vivo_ads,true)['ads_banner'])
+                || isset(json_decode($record->Vivo_ads,true)['ads_inter'])
+                || isset(json_decode($record->Vivo_ads,true)['ads_native'])
+                || isset(json_decode($record->Vivo_ads,true)['ads_open'])
+                || isset(json_decode($record->Vivo_ads,true)['ads_reward'])
+            ){
+                $package_vivo = '<p style="color:green;line-height:0.5">Vivo: '.$record->Vivo_package.'</p>';
+            }else{
+                $package_vivo = '<p style="color:red;line-height:0.5">Vivo: '.$record->Vivo_package.'</p>';
+            }
+
+            if ($record['buildinfo_console']==0  ) {
+                $buildinfo_console = 'Trạng thái tĩnh';
+            }
+            elseif($record['buildinfo_console']== 1){
+                $buildinfo_console = '<span class="badge badge-dark">Build App</span>';
+
+            }
+            elseif($record['buildinfo_console']==2){
+                $buildinfo_console =  '<span class="badge badge-warning">Đang xử lý Build App</span>';
+            }
+            elseif($record['buildinfo_console']==3){
+                $buildinfo_console =  '<span class="badge badge-info">Kết thúc Build App</span>';
+            }
+            elseif($record['buildinfo_console']==4){
+                $buildinfo_console =  '<span class="badge badge-primary">Check Data Project</span>';
+            }
+            elseif($record['buildinfo_console']==5){
+                $buildinfo_console =  '<span class="badge badge-success">Đang xử lý check dữ liệu của Project</span>';
+            }
+            elseif($record['buildinfo_console']==6){
+                $buildinfo_console =  '<span class="badge badge-danger">Kết thúc Check</span>';
+            }
+//
+            if(isset($record->logo)){
+                $logo = "<img class='rounded mx-auto d-block'  width='100px'  height='100px'  src='../uploads/project/$record->projectname/thumbnail/$record->logo'>";
+            }else{
+                $logo = '<img class="rounded mx-auto d-block" width="100px" height="100px" src="assets\images\logo-sm.png">';
+            }
+            if ($record->buildinfo_mess){
+                $mess_info = [];
+                $buildinfo_mess = $record->buildinfo_mess;
+                $buildinfo_mess =  (explode('|',$buildinfo_mess));
+                $buildinfo_mess = array_reverse($buildinfo_mess);
+                for($i = 0 ; $i<6 ; $i++){
+                    $mess_info[] .=  $buildinfo_mess[$i];
+                }
+                $mess_info =  implode('<br>',$mess_info);
+            }
+            $data_arr[] = array(
+                "updated_at" => $record->updated_at,
+                "logo" => $logo,
+                "ma_da"=>$data_ma_da.$data_template.$data_projectname.$data_title_app,
+                "package" => $package_chplay.$package_amazon.$package_samsung.$package_xiaomi.$package_oppo.$package_vivo,
+                "buildinfo_mess" => $mess_info,
+                "buildinfo_console" =>$buildinfo_console,
+                "action"=> $btn,
+            );
+        }
+        $response = array(
+            "draw" => intval($draw),
+            "iTotalRecords" => $totalRecords,
+            "iTotalDisplayRecords" => $totalRecordswithFilter,
+            "aaData" => $data_arr,
+        );
+
+        echo json_encode($response);
+    }
+
     public function create(Request  $request)
     {
         $rules = [
@@ -564,34 +775,18 @@ class ProjectController2 extends Controller
         return response()->json(['success'=>'Thêm mới thành công']);
     }
 
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
+
     public function store(Request $request)
     {
 
     }
 
-    /**
-     * Display the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
     public function show($id)
     {
         //
     }
 
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
+
     public function edit($id)
     {
 
@@ -605,13 +800,6 @@ class ProjectController2 extends Controller
         return response()->json([$project,$policy,$store_name]);
     }
 
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
     public function update(Request $request)
     {
         $id = $request->project_id;
@@ -798,19 +986,18 @@ class ProjectController2 extends Controller
             [
                 "buildinfo_vernum" => $request->buildinfo_vernum,
                 'buildinfo_verstr' => $request->buildinfo_verstr,
-                'buildinfo_console' => $request->buildinfo_console
+                'buildinfo_console' => $request->buildinfo_console,
+                'buildinfo_mess' => 'Chờ xử lý',
+                'time_mess' =>Carbon::now('Asia/Ho_Chi_Minh'),
+                'buildinfo_time' =>Carbon::now('Asia/Ho_Chi_Minh'),
+
             ]);
         return response()->json(['success'=>'Cập nhật thành công']);
 
 
     }
 
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
+
     public function delete($id)
     {
         ProjectModel2::find($id)->delete();
@@ -821,6 +1008,32 @@ class ProjectController2 extends Controller
     {
 //        $this->AuthLogin();
         return parent::callAction($method, array_values($parameters));
+    }
+
+    public function removeProject($id){
+
+        $project = ProjectModel2::where('projectid',$id)->first();
+
+        ProjectModel2::updateOrCreate(
+            [
+                "projectid" => $id,
+            ],
+            [
+                'buildinfo_console' => 0,
+                'buildinfo_mess' => '',
+                'time_mess' =>Carbon::now('Asia/Ho_Chi_Minh'),
+                'buildinfo_time' =>Carbon::now('Asia/Ho_Chi_Minh'),
+
+            ]);
+        log::updateOrCreate(
+            [
+                "projectid" => $id,
+            ],
+            [
+                'buildinfo_mess' => $project->time_mess.' - ' .$project->buildinfo_mess.'---'
+            ]
+        );
+        return response()->json(['success'=>'Cập nhật thành công']);
     }
 
 

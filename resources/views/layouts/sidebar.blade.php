@@ -26,6 +26,10 @@
                                     @can('template-index')
                                     <li><a href="{{route('template.index')}}">Quản lý Template</a></li>
                                     @endcan
+
+                                    @can('project-index')
+                                        <li><a href="{{route('project2.indexBuild')}}">Tiến trình xử lý</a></li>
+                                    @endcan
                                 </ul>
                             </li>
                             <li>
