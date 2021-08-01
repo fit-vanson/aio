@@ -572,14 +572,20 @@ class ProjectController2 extends Controller
                 $logo = '<img class="rounded mx-auto d-block" width="100px" height="100px" src="assets\images\logo-sm.png">';
             }
             if ($record->buildinfo_mess){
-                $mess_info = [];
+                $mess_info = '';
                 $buildinfo_mess = $record->buildinfo_mess;
                 $buildinfo_mess =  (explode('|',$buildinfo_mess));
                 $buildinfo_mess = array_reverse($buildinfo_mess);
-                for($i = 0 ; $i<6 ; $i++){
-                    $mess_info[] .=  $buildinfo_mess[$i];
+
+                if(count($buildinfo_mess)<6){
+                    foreach ($buildinfo_mess as $mess ){
+                        $mess_info .= $mess . '<br>';
+                    }
+                }else{
+                    for($i = 0 ; $i < 6 ; $i++){
+                        $mess_info .=  $buildinfo_mess[$i].'<br>';
+                    }
                 }
-                $mess_info =  implode('<br>',$mess_info);
             }
             $data_arr[] = array(
                 "updated_at" => $record->updated_at,
@@ -988,8 +994,8 @@ class ProjectController2 extends Controller
                 'buildinfo_verstr' => $request->buildinfo_verstr,
                 'buildinfo_console' => $request->buildinfo_console,
                 'buildinfo_mess' => 'Chờ xử lý',
-                'time_mess' =>Carbon::now('Asia/Ho_Chi_Minh'),
-                'buildinfo_time' =>Carbon::now('Asia/Ho_Chi_Minh'),
+                'time_mess' => time(),
+                'buildinfo_time' =>time(),
 
             ]);
         return response()->json(['success'=>'Cập nhật thành công']);
@@ -1021,8 +1027,8 @@ class ProjectController2 extends Controller
             [
                 'buildinfo_console' => 0,
                 'buildinfo_mess' => '',
-                'time_mess' =>Carbon::now('Asia/Ho_Chi_Minh'),
-                'buildinfo_time' =>Carbon::now('Asia/Ho_Chi_Minh'),
+                'time_mess' =>time(),
+                'buildinfo_time' => time(),
 
             ]);
         log::updateOrCreate(
@@ -1030,7 +1036,7 @@ class ProjectController2 extends Controller
                 "projectid" => $id,
             ],
             [
-                'buildinfo_mess' => $project->time_mess.' - ' .$project->buildinfo_mess.'---'
+                'buildinfo_mess' => $project->buildinfo_mess
             ]
         );
         return response()->json(['success'=>'Cập nhật thành công']);

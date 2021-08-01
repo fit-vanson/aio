@@ -119,8 +119,8 @@
         $(document).on('click','.removeProject', function (data){
             var project_id = $(this).data("id");
             swal({
-                    title: "Bạn có chắc muốn di chuyển?",
-                    text: "Your will not be able to recover this imaginary file!",
+                    title: "Bạn có chắc muốn kết thúc?",
+                    text: "",
                     type: "warning",
                     showCancelButton: true,
                     confirmButtonClass: "btn-danger",
@@ -138,7 +138,7 @@
                             console.log('Error:', data);
                         }
                     });
-                    swal("Đã di chuyển!", "Your imaginary file has been deleted.", "success");
+                    swal("Đã di chuyển!",'', "success");
                 });
         });
     });
