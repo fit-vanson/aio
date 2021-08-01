@@ -1037,12 +1037,18 @@ class ProjectController2 extends Controller
                 'buildinfo_time' => time(),
 
             ]);
+        $log_mess = log::where('projectname',$project->projectname)->first();
+        if($log_mess){
+            $mess = $log_mess->buildinfo_mess .'|'.$project->buildinfo_mess;
+        }else{
+            $mess = $project->buildinfo_mess;
+        }
         log::updateOrCreate(
             [
-                "projectid" => $id,
+                "projectname" => $project->projectname,
             ],
             [
-                'buildinfo_mess' => $project->buildinfo_mess
+                'buildinfo_mess' => $mess
             ]
         );
         return response()->json(['success'=>'Cập nhật thành công']);
