@@ -434,7 +434,7 @@ class ProjectController2 extends Controller
 
         $data_arr = array();
         foreach ($records as $record) {
-            $btn = ' <a href="javascript:void(0)" data-toggle="tooltip"  data-id="'.$record->projectid.'" data-original-title="Delete" class="btn btn-danger removeProject"><i class="ti-trash"></i></a>';
+            $btn = ' <a href="javascript:void(0)" data-toggle="tooltip"  data-id="'.$record->projectid.'" data-original-title="Delete" class="btn btn-warning removeProject"><i class="mdi mdi-file-move"></i></a>';
 
             $ma_da = DB::table('ngocphandang_project2')
                 ->join('ngocphandang_da','ngocphandang_da.id','=','ngocphandang_project2.ma_da')
@@ -896,10 +896,16 @@ class ProjectController2 extends Controller
             'ads_open' => $request->Vivo_ads_open
         ];
         $Vivo_ads =  json_encode($Vivo_ads);
+
         $data = ProjectModel2::find($id);
-
+        if($data->projectname <> $request->projectname){
+            $dir = (public_path('uploads/project/'));
+            if (!file_exists($dir.$data->projectname)) {
+                mkdir($dir.$data->projectname, 777, true);
+            }
+            rename($dir.$data->projectname, $dir.$request->projectname);
+        }
         $data->projectname = $request->projectname;
-
         $data->template = $request->template;
         $data->ma_da = $request->ma_da;
         $data->title_app = $request->title_app;
