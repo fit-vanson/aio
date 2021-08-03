@@ -410,9 +410,24 @@ class ProjectController2 extends Controller
         $searchValue = $search_arr['value']; // Search value
 
         // Total records
-        $totalRecords = ProjectModel2::select('count(*) as allcount')->count();
+        $totalRecords = ProjectModel2::select('count(*) as allcount')
+            ->where(function ($q){
+                $q->where('buildinfo_console',1)
+                    ->orWhere('buildinfo_console',4);
+            })
+            ->count();
         $totalRecordswithFilter = ProjectModel2::select('count(*) as allcount')
-            ->where('projectname', 'like', '%' . $searchValue . '%')
+//            ->where('projectname', 'like', '%' . $searchValue . '%')
+            ->where(function ($a) use ($searchValue) {
+                $a->where('projectname', 'like', '%' .$searchValue. '%')
+                    ->orWhere('title_app', 'like', '%' . $searchValue . '%')
+                    ->orWhere('Chplay_package', 'like', '%' . $searchValue . '%')
+                    ->orWhere('Amazon_package', 'like', '%' . $searchValue . '%')
+                    ->orWhere('Samsung_package', 'like', '%' . $searchValue . '%')
+                    ->orWhere('Xiaomi_package', 'like', '%' . $searchValue . '%')
+                    ->orWhere('Oppo_package', 'like', '%' . $searchValue . '%')
+                    ->orWhere('Vivo_package', 'like', '%' . $searchValue . '%');
+            })
             ->where(function ($q){
                 $q->where('buildinfo_console',1)
                     ->orWhere('buildinfo_console',4);
@@ -421,7 +436,16 @@ class ProjectController2 extends Controller
 
         // Get records, also we have included search filter as well
         $records = ProjectModel2::orderBy($columnName, $columnSortOrder)
-            ->where('projectname', 'like', '%' . $searchValue . '%')
+            ->where(function ($a) use ($searchValue) {
+                $a->where('projectname', 'like', '%' .$searchValue. '%')
+                    ->orWhere('title_app', 'like', '%' . $searchValue . '%')
+                    ->orWhere('Chplay_package', 'like', '%' . $searchValue . '%')
+                    ->orWhere('Amazon_package', 'like', '%' . $searchValue . '%')
+                    ->orWhere('Samsung_package', 'like', '%' . $searchValue . '%')
+                    ->orWhere('Xiaomi_package', 'like', '%' . $searchValue . '%')
+                    ->orWhere('Oppo_package', 'like', '%' . $searchValue . '%')
+                    ->orWhere('Vivo_package', 'like', '%' . $searchValue . '%');
+            })
             ->where(function ($q){
                 $q->where('buildinfo_console',1)
                     ->orWhere('buildinfo_console',4);
@@ -576,16 +600,12 @@ class ProjectController2 extends Controller
                 $buildinfo_mess = $record->buildinfo_mess;
                 $buildinfo_mess =  (explode('|',$buildinfo_mess));
                 $buildinfo_mess = array_reverse($buildinfo_mess);
-
-                if(count($buildinfo_mess)<6){
-                    foreach ($buildinfo_mess as $mess ){
-                        $mess_info .= $mess . '<br>';
-                    }
-                }else{
-                    for($i = 0 ; $i < 6 ; $i++){
+                for($i = 0 ; $i < 6 ; $i++){
+                    if(isset($buildinfo_mess[$i])){
                         $mess_info .=  $buildinfo_mess[$i].'<br>';
                     }
                 }
+
             }
             $data_arr[] = array(
                 "updated_at" => $record->updated_at,
@@ -631,7 +651,6 @@ class ProjectController2 extends Controller
             'logo.mimes'=>'Logo không đúng định dạng: jpeg, png, jpg, gif, svg.',
             'logo.max'=>'Logo max: 2M.',
         ];
-
         $error = Validator::make($request->all(),$rules, $message );
 
         if($error->fails()){
@@ -780,19 +799,6 @@ class ProjectController2 extends Controller
         $data->save();
         return response()->json(['success'=>'Thêm mới thành công']);
     }
-
-
-    public function store(Request $request)
-    {
-
-    }
-
-    public function show($id)
-    {
-        //
-    }
-
-
     public function edit($id)
     {
 
@@ -898,14 +904,8 @@ class ProjectController2 extends Controller
         $Vivo_ads =  json_encode($Vivo_ads);
 
         $data = ProjectModel2::find($id);
-        if($data->projectname <> $request->projectname){
-            $dir = (public_path('uploads/project/'));
-            if (!file_exists($dir.$data->projectname)) {
-                mkdir($dir.$data->projectname, 777, true);
-            }
-            rename($dir.$data->projectname, $dir.$request->projectname);
-        }
-        $data->projectname = $request->projectname;
+
+
         $data->template = $request->template;
         $data->ma_da = $request->ma_da;
         $data->title_app = $request->title_app;
@@ -915,7 +915,6 @@ class ProjectController2 extends Controller
         $data->buildinfo_link_website =  $request->buildinfo_link_website;
         $data->buildinfo_link_youtube_x = $request->buildinfo_link_youtube_x;
         $data->buildinfo_api_key_x = $request->buildinfo_api_key_x;
-        $data->buildinfo_console = 0;
         $data->buildinfo_vernum= $request->buildinfo_vernum;
         $data->buildinfo_verstr = $request->buildinfo_verstr;
         $data->buildinfo_keystore = $request->buildinfo_keystore;
@@ -968,7 +967,12 @@ class ProjectController2 extends Controller
         $data->Vivo_buildinfo_email_dev_x = $request->Vivo_buildinfo_email_dev_x;
         $data->Vivo_ads = $Vivo_ads;
         $data->Vivo_status = $request->Vivo_status;
-
+        if($data->logo){
+            if($data->projectname <> $request->projectname){
+                $dir = (public_path('uploads/project/'));
+                rename($dir.$data->projectname, $dir.$request->projectname);
+            }
+        }
         if($request->logo){
             $image = $request->file('logo');
             $data['logo'] = 'logo_'.time().'.'.$image->extension();
@@ -983,6 +987,7 @@ class ProjectController2 extends Controller
             $destinationPath = public_path('uploads/project/'.$request->projectname);
             $image->move($destinationPath, $data['logo']);
         }
+        $data->projectname = $request->projectname;
         $data->save();
         return response()->json(['success'=>'Cập nhật thành công']);
     }

@@ -115,6 +115,10 @@
             order: [[ 0, 'desc' ]]
         });
 
+        setInterval( function () {
+            table.ajax.reload();
+        }, 5000 );
+
 
         $(document).on('click','.removeProject', function (data){
             var project_id = $(this).data("id");
