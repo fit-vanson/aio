@@ -41,26 +41,32 @@ class DevOppoController extends Controller
         // Total records
         $totalRecords = Dev_Oppo::select('count(*) as allcount')->count();
         $totalRecordswithFilter = Dev_Oppo::select('count(*) as allcount')
-            ->where('oppo_ga_name', 'like', '%' . $searchValue . '%')
-            ->orWhere('oppo_dev_name', 'like', '%' . $searchValue . '%')
-            ->orWhere('oppo_store_name', 'like', '%' . $searchValue . '%')
-            ->orWhere('oppo_email', 'like', '%' . $searchValue . '%')
-            ->orWhere('oppo_status', 'like', '%' . $searchValue . '%')
-            ->orWhere('oppo_note', 'like', '%' . $searchValue . '%')
+            ->join('ngocphandang_ga','ngocphandang_ga.id','=','ngocphandang_dev_oppo.oppo_ga_name')
+            ->join('ngocphandang_gadev','ngocphandang_gadev.id','=','ngocphandang_dev_oppo.oppo_email')
+            ->orwhere('ngocphandang_ga.ga_name', 'like', '%' . $searchValue . '%')
+            ->orWhere('ngocphandang_dev_oppo.oppo_store_name', 'like', '%' . $searchValue . '%')
+            ->orWhere('ngocphandang_dev_oppo.oppo_dev_name', 'like', '%' . $searchValue . '%')
+            ->orWhere('ngocphandang_gadev.gmail', 'like', '%' . $searchValue . '%')
+            ->orWhere('ngocphandang_dev_oppo.oppo_phone', 'like', '%' . $searchValue . '%')
+            ->orWhere('ngocphandang_dev_oppo.oppo_note', 'like', '%' . $searchValue . '%')
             ->count();
 
         // Get records, also we have included search filter as well
         $records = Dev_Oppo::orderBy($columnName, $columnSortOrder)
-            ->where('oppo_ga_name', 'like', '%' . $searchValue . '%')
-            ->orWhere('oppo_dev_name', 'like', '%' . $searchValue . '%')
-            ->orWhere('oppo_store_name', 'like', '%' . $searchValue . '%')
-            ->orWhere('oppo_email', 'like', '%' . $searchValue . '%')
-            ->orWhere('oppo_status', 'like', '%' . $searchValue . '%')
-            ->orWhere('oppo_note', 'like', '%' . $searchValue . '%')
-            ->select('*')
+            ->join('ngocphandang_ga','ngocphandang_ga.id','=','ngocphandang_dev_oppo.oppo_ga_name')
+            ->join('ngocphandang_gadev','ngocphandang_gadev.id','=','ngocphandang_dev_oppo.oppo_email')
+            ->orwhere('ngocphandang_ga.ga_name', 'like', '%' . $searchValue . '%')
+            ->orWhere('ngocphandang_dev_oppo.oppo_store_name', 'like', '%' . $searchValue . '%')
+            ->orWhere('ngocphandang_dev_oppo.oppo_dev_name', 'like', '%' . $searchValue . '%')
+            ->orWhere('ngocphandang_gadev.gmail', 'like', '%' . $searchValue . '%')
+            ->orWhere('ngocphandang_dev_oppo.oppo_phone', 'like', '%' . $searchValue . '%')
+            ->orWhere('ngocphandang_dev_oppo.oppo_note', 'like', '%' . $searchValue . '%')
+            ->select('ngocphandang_dev_oppo.*')
             ->skip($start)
             ->take($rowperpage)
             ->get();
+
+
 
 
 

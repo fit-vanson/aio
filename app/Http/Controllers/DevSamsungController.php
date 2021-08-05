@@ -41,26 +41,31 @@ class DevSamsungController extends Controller
         // Total records
         $totalRecords = Dev_Samsung::select('count(*) as allcount')->count();
         $totalRecordswithFilter = Dev_Samsung::select('count(*) as allcount')
-            ->where('samsung_ga_name', 'like', '%' . $searchValue . '%')
-            ->orWhere('samsung_dev_name', 'like', '%' . $searchValue . '%')
-            ->orWhere('samsung_store_name', 'like', '%' . $searchValue . '%')
-            ->orWhere('samsung_email', 'like', '%' . $searchValue . '%')
-            ->orWhere('samsung_status', 'like', '%' . $searchValue . '%')
-            ->orWhere('samsung_note', 'like', '%' . $searchValue . '%')
+            ->join('ngocphandang_ga','ngocphandang_ga.id','=','ngocphandang_dev_samsung.samsung_ga_name')
+            ->join('ngocphandang_gadev','ngocphandang_gadev.id','=','ngocphandang_dev_samsung.samsung_email')
+            ->orwhere('ngocphandang_ga.ga_name', 'like', '%' . $searchValue . '%')
+            ->orWhere('ngocphandang_dev_samsung.samsung_store_name', 'like', '%' . $searchValue . '%')
+            ->orWhere('ngocphandang_dev_samsung.samsung_dev_name', 'like', '%' . $searchValue . '%')
+            ->orWhere('ngocphandang_gadev.gmail', 'like', '%' . $searchValue . '%')
+            ->orWhere('ngocphandang_dev_samsung.samsung_phone', 'like', '%' . $searchValue . '%')
+            ->orWhere('ngocphandang_dev_samsung.samsung_note', 'like', '%' . $searchValue . '%')
             ->count();
 
         // Get records, also we have included search filter as well
         $records = Dev_Samsung::orderBy($columnName, $columnSortOrder)
-            ->where('samsung_ga_name', 'like', '%' . $searchValue . '%')
-            ->orWhere('samsung_dev_name', 'like', '%' . $searchValue . '%')
-            ->orWhere('samsung_store_name', 'like', '%' . $searchValue . '%')
-            ->orWhere('samsung_email', 'like', '%' . $searchValue . '%')
-            ->orWhere('samsung_status', 'like', '%' . $searchValue . '%')
-            ->orWhere('samsung_note', 'like', '%' . $searchValue . '%')
-            ->select('*')
+            ->join('ngocphandang_ga','ngocphandang_ga.id','=','ngocphandang_dev_samsung.samsung_ga_name')
+            ->join('ngocphandang_gadev','ngocphandang_gadev.id','=','ngocphandang_dev_samsung.samsung_email')
+            ->orwhere('ngocphandang_ga.ga_name', 'like', '%' . $searchValue . '%')
+            ->orWhere('ngocphandang_dev_samsung.samsung_store_name', 'like', '%' . $searchValue . '%')
+            ->orWhere('ngocphandang_dev_samsung.samsung_dev_name', 'like', '%' . $searchValue . '%')
+            ->orWhere('ngocphandang_gadev.gmail', 'like', '%' . $searchValue . '%')
+            ->orWhere('ngocphandang_dev_samsung.samsung_phone', 'like', '%' . $searchValue . '%')
+            ->orWhere('ngocphandang_dev_samsung.samsung_note', 'like', '%' . $searchValue . '%')
+            ->select('ngocphandang_dev_samsung.*')
             ->skip($start)
             ->take($rowperpage)
             ->get();
+
 
 
 

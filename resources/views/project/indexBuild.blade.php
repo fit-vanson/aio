@@ -90,10 +90,10 @@
             },
             displayLength: 5,
             lengthMenu: [5, 10, 25, 50, 75, 100],
-            processing: true,
+            // processing: true,
             serverSide: true,
             ajax: {
-                url: "{{ route('project2.getIndexBuild') }}",
+                url: "{{ route('project.getIndexBuild') }}",
                 type: "post"
             },
             columns: [
@@ -134,7 +134,7 @@
                 function(){
                     $.ajax({
                         type: "get",
-                        url: "{{ asset("project2/removeProject") }}/" + project_id,
+                        url: "{{ asset("project/removeProject") }}/" + project_id,
                         success: function (data) {
                             table.draw();
                         },

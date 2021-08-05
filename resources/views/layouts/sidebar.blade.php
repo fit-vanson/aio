@@ -21,14 +21,14 @@
                                     <li><a href="{{route('da.index')}}">Quản lý Dự án</a></li>
                                     @endcan
                                     @can('project-index')
-                                    <li><a href="{{route('project2.index')}}">Quản lý Project</a></li>
+                                    <li><a href="{{route('project.index')}}">Quản lý Project</a></li>
                                     @endcan
                                     @can('template-index')
                                     <li><a href="{{route('template.index')}}">Quản lý Template</a></li>
                                     @endcan
 
                                     @can('project-index')
-                                        <li><a href="{{route('project2.indexBuild')}}">Tiến trình xử lý</a></li>
+                                        <li><a href="{{route('project.indexBuild')}}">Tiến trình xử lý</a></li>
                                     @endcan
                                 </ul>
                             </li>

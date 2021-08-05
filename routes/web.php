@@ -19,7 +19,6 @@ use App\Http\Controllers\MailParentController;
 use App\Http\Controllers\MailRegController;
 use App\Http\Controllers\PermissionController;
 use App\Http\Controllers\ProjectController;
-use App\Http\Controllers\ProjectController2;
 use App\Http\Controllers\RoleController;
 use App\Http\Controllers\SmsController;
 use App\Http\Controllers\TemplateController;
@@ -81,31 +80,22 @@ Route::group(['prefix'=>'permission','middleware'=>['CheckLogout','2fa']], funct
 });
 
 
+
 Route::group(['prefix'=>'project','middleware'=>['CheckLogout','2fa']], function (){
+
+//    Route::get('/get',[ProjectController2::class,'getProject']);
     Route::get('/',[ProjectController::class,'index'])->name('project.index')->middleware('can:project-index');
+    Route::get('/indexBuild',[ProjectController::class,'indexBuild'])->name('project.indexBuild')->middleware('can:project-index');
+    Route::post('/getIndex',[ProjectController::class,'getIndex'])->name('project.getIndex')->middleware('can:project-index');
+    Route::post('/getIndexBuild',[ProjectController::class,'getIndexBuild'])->name('project.getIndexBuild')->middleware('can:project-index');
     Route::post('/create',[ProjectController::class,'create'])->name('project.create')->middleware('can:project-add');
     Route::get('/edit/{id}',[ProjectController::class,'edit'])->name('project.edit')->middleware('can:project-edit');
     Route::get('/show/{id}',[ProjectController::class,'show'])->name('project.show')->middleware('can:project-show');
     Route::post('/update',[ProjectController::class,'update'])->name('project.update')->middleware('can:project-update');
+    Route::post('/updateQuick',[ProjectController::class,'updateQuick'])->name('project.updateQuick')->middleware('can:project-update');
     Route::get('/delete/{id}',[ProjectController::class,'delete'])->name('project.delete')->middleware('can:project-delete');
+    Route::get('/removeProject/{id}',[ProjectController::class,'removeProject'])->name('project.removeProject')->middleware('can:project-edit');
     Route::get('/getlist',[ProjectController::class,'getList'])->name('project.get_content');
-});
-
-Route::group(['prefix'=>'project2','middleware'=>['CheckLogout','2fa']], function (){
-
-//    Route::get('/get',[ProjectController2::class,'getProject']);
-    Route::get('/',[ProjectController2::class,'index'])->name('project2.index')->middleware('can:project-index');
-    Route::get('/indexBuild',[ProjectController2::class,'indexBuild'])->name('project2.indexBuild')->middleware('can:project-index');
-    Route::post('/getIndex',[ProjectController2::class,'getIndex'])->name('project2.getIndex')->middleware('can:project-index');
-    Route::post('/getIndexBuild',[ProjectController2::class,'getIndexBuild'])->name('project2.getIndexBuild')->middleware('can:project-index');
-    Route::post('/create',[ProjectController2::class,'create'])->name('project2.create')->middleware('can:project-add');
-    Route::get('/edit/{id}',[ProjectController2::class,'edit'])->name('project2.edit')->middleware('can:project-edit');
-    Route::get('/show/{id}',[ProjectController2::class,'show'])->name('project2.show')->middleware('can:project-show');
-    Route::post('/update',[ProjectController2::class,'update'])->name('project2.update')->middleware('can:project-update');
-    Route::post('/updateQuick',[ProjectController2::class,'updateQuick'])->name('project2.updateQuick')->middleware('can:project-update');
-    Route::get('/delete/{id}',[ProjectController2::class,'delete'])->name('project2.delete')->middleware('can:project-delete');
-    Route::get('/removeProject/{id}',[ProjectController2::class,'removeProject'])->name('project2.removeProject')->middleware('can:project-edit');
-    Route::get('/getlist',[ProjectController2::class,'getList'])->name('project2.get_content');
 });
 
 

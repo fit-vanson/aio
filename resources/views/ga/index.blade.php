@@ -208,8 +208,6 @@
 
         });
     </script>
-
-
     <script>
         function editGa(id) {
             $.get('{{asset('ga/edit')}}/'+id,function (data) {
@@ -236,8 +234,6 @@
                 });
             })
         }
-
-
         function showGa(id) {
             $.get('{{asset('ga/showDev')}}/'+id,function (data) {
                 console.log(data.length)

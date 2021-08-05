@@ -226,35 +226,34 @@ class DevController extends Controller
         // Total records
         $totalRecords = Dev::select('count(*) as allcount')->count();
         $totalRecordswithFilter = Dev::select('count(*) as allcount')
+            ->join('ngocphandang_ga','ngocphandang_ga.id','=','ngocphandang_dev.id_ga')
+            ->join('ngocphandang_gadev','ngocphandang_gadev.id','=','ngocphandang_dev.gmail_gadev_chinh')
             ->where('id_ga', 'like', '%' . $searchValue . '%')
+            ->orwhere('ga_name', 'like', '%' . $searchValue . '%')
             ->orWhere('store_name', 'like', '%' . $searchValue . '%')
             ->orWhere('dev_name', 'like', '%' . $searchValue . '%')
-            ->orWhere('gmail_gadev_chinh', 'like', '%' . $searchValue . '%')
-            ->orWhere('gmail_gadev_phu_1', 'like', '%' . $searchValue . '%')
-            ->orWhere('gmail_gadev_phu_2', 'like', '%' . $searchValue . '%')
-            ->orWhere('info_phone', 'like', '%' . $searchValue . '%')
-            ->orWhere('status', 'like', '%' . $searchValue . '%')
+            ->orWhere('ngocphandang_gadev.gmail', 'like', '%' . $searchValue . '%')
+            ->orWhere('ngocphandang_dev.info_phone', 'like', '%' . $searchValue . '%')
+            ->orWhere('ngocphandang_dev.status', 'like', '%' . $searchValue . '%')
             ->count();
 
         // Get records, also we have included search filter as well
         $records = Dev::orderBy($columnName, $columnSortOrder)
-            ->where('id_ga', 'like', '%' . $searchValue . '%')
-            ->orWhere('store_name', 'like', '%' . $searchValue . '%')
-            ->orWhere('dev_name', 'like', '%' . $searchValue . '%')
-            ->orWhere('gmail_gadev_chinh', 'like', '%' . $searchValue . '%')
-            ->orWhere('gmail_gadev_phu_1', 'like', '%' . $searchValue . '%')
-            ->orWhere('gmail_gadev_phu_2', 'like', '%' . $searchValue . '%')
-            ->orWhere('info_phone', 'like', '%' . $searchValue . '%')
-            ->orWhere('status', 'like', '%' . $searchValue . '%')
-            ->select('*')
+            ->join('ngocphandang_ga','ngocphandang_ga.id','=','ngocphandang_dev.id_ga')
+            ->join('ngocphandang_gadev','ngocphandang_gadev.id','=','ngocphandang_dev.gmail_gadev_chinh')
+            ->orwhere('ga_name', 'like', '%' . $searchValue . '%')
+            ->orWhere('ngocphandang_dev.store_name', 'like', '%' . $searchValue . '%')
+            ->orWhere('ngocphandang_dev.dev_name', 'like', '%' . $searchValue . '%')
+            ->orWhere('ngocphandang_gadev.gmail', 'like', '%' . $searchValue . '%')
+            ->orWhere('ngocphandang_dev.info_phone', 'like', '%' . $searchValue . '%')
+            ->orWhere('ngocphandang_dev.status', 'like', '%' . $searchValue . '%')
+            ->select('ngocphandang_dev.*')
             ->skip($start)
             ->take($rowperpage)
             ->get();
-
-
-
         $data_arr = array();
         foreach ($records as $record) {
+
             $btn = ' <a href="javascript:void(0)" onclick="editDev('.$record->id.')" class="btn btn-warning"><i class="ti-pencil-alt"></i></a>';
             $btn = $btn.' <a href="javascript:void(0)" data-toggle="tooltip"  data-id="'.$record->id.'" data-original-title="Delete" class="btn btn-danger deleteDev"><i class="ti-trash"></i></a>';
 
