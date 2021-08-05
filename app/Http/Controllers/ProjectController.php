@@ -117,18 +117,18 @@ class ProjectController extends Controller
 
             if(isset($ma_da)) {
                 $data_ma_da =
-                    '<span style="line-height:3">' . $ma_da->ma_da . '</span>';
+                    '<span style="line-height:3">Mã Dự án: ' . $ma_da->ma_da . '</span>';
             }else{
                 $data_ma_da = '';
             }
             if(isset($template)) {
-                $data_template =  '<p class="text-muted" style="line-height:0.5">'.$template->template.'</p>';
+                $data_template =  '<p class="text-muted" style="line-height:0.5">Template: '.$template->template.'</p>';
             }else{
                 $data_template='';
             }
 
             if(isset($record->projectname)) {
-                $data_projectname =  '<p class="text-muted" style="line-height:0.5">'.$record->projectname.'</p>';
+                $data_projectname =  '<p class="text-muted" style="line-height:0.5">Project: '.$record->projectname.'</p>';
             }else{
                 $data_projectname='';
             }
@@ -411,16 +411,19 @@ class ProjectController extends Controller
             })
             ->count();
         $totalRecordswithFilter = ProjectModel::select('count(*) as allcount')
-//            ->where('projectname', 'like', '%' . $searchValue . '%')
+            ->join('ngocphandang_da','ngocphandang_da.id','=','ngocphandang_project.ma_da')
+            ->join('ngocphandang_template','ngocphandang_template.id','=','ngocphandang_project.template')
             ->where(function ($a) use ($searchValue) {
-                $a->where('projectname', 'like', '%' .$searchValue. '%')
-                    ->orWhere('title_app', 'like', '%' . $searchValue . '%')
-                    ->orWhere('Chplay_package', 'like', '%' . $searchValue . '%')
-                    ->orWhere('Amazon_package', 'like', '%' . $searchValue . '%')
-                    ->orWhere('Samsung_package', 'like', '%' . $searchValue . '%')
-                    ->orWhere('Xiaomi_package', 'like', '%' . $searchValue . '%')
-                    ->orWhere('Oppo_package', 'like', '%' . $searchValue . '%')
-                    ->orWhere('Vivo_package', 'like', '%' . $searchValue . '%');
+                $a->where('ngocphandang_da.ma_da', 'like', '%' . $searchValue . '%')
+                    ->orWhere('ngocphandang_project.projectname', 'like', '%' . $searchValue . '%')
+                    ->orWhere('ngocphandang_project.title_app', 'like', '%' . $searchValue . '%')
+                    ->orWhere('ngocphandang_template.template', 'like', '%' . $searchValue . '%')
+                    ->orWhere('ngocphandang_project.Chplay_package', 'like', '%' . $searchValue . '%')
+                    ->orWhere('ngocphandang_project.Amazon_package', 'like', '%' . $searchValue . '%')
+                    ->orWhere('ngocphandang_project.Samsung_package', 'like', '%' . $searchValue . '%')
+                    ->orWhere('ngocphandang_project.Xiaomi_package', 'like', '%' . $searchValue . '%')
+                    ->orWhere('ngocphandang_project.Oppo_package', 'like', '%' . $searchValue . '%')
+                    ->orWhere('ngocphandang_project.Vivo_package', 'like', '%' . $searchValue . '%');
             })
             ->where(function ($q){
                 $q->where('buildinfo_console',1)
@@ -430,25 +433,30 @@ class ProjectController extends Controller
 
         // Get records, also we have included search filter as well
         $records = ProjectModel::orderBy($columnName, $columnSortOrder)
+            ->join('ngocphandang_da','ngocphandang_da.id','=','ngocphandang_project.ma_da')
+            ->join('ngocphandang_template','ngocphandang_template.id','=','ngocphandang_project.template')
+
             ->where(function ($a) use ($searchValue) {
-                $a->where('projectname', 'like', '%' .$searchValue. '%')
-                    ->orWhere('title_app', 'like', '%' . $searchValue . '%')
-                    ->orWhere('Chplay_package', 'like', '%' . $searchValue . '%')
-                    ->orWhere('Amazon_package', 'like', '%' . $searchValue . '%')
-                    ->orWhere('Samsung_package', 'like', '%' . $searchValue . '%')
-                    ->orWhere('Xiaomi_package', 'like', '%' . $searchValue . '%')
-                    ->orWhere('Oppo_package', 'like', '%' . $searchValue . '%')
-                    ->orWhere('Vivo_package', 'like', '%' . $searchValue . '%');
+                $a->where('ngocphandang_da.ma_da', 'like', '%' . $searchValue . '%')
+                    ->orWhere('ngocphandang_project.projectname', 'like', '%' . $searchValue . '%')
+                    ->orWhere('ngocphandang_project.title_app', 'like', '%' . $searchValue . '%')
+                    ->orWhere('ngocphandang_template.template', 'like', '%' . $searchValue . '%')
+                    ->orWhere('ngocphandang_project.Chplay_package', 'like', '%' . $searchValue . '%')
+                    ->orWhere('ngocphandang_project.Amazon_package', 'like', '%' . $searchValue . '%')
+                    ->orWhere('ngocphandang_project.Samsung_package', 'like', '%' . $searchValue . '%')
+                    ->orWhere('ngocphandang_project.Xiaomi_package', 'like', '%' . $searchValue . '%')
+                    ->orWhere('ngocphandang_project.Oppo_package', 'like', '%' . $searchValue . '%')
+                    ->orWhere('ngocphandang_project.Vivo_package', 'like', '%' . $searchValue . '%');
+
             })
             ->where(function ($q){
                 $q->where('buildinfo_console',1)
                     ->orWhere('buildinfo_console',4);
             })
-            ->select('*')
+            ->select('ngocphandang_project.*')
             ->skip($start)
             ->take($rowperpage)
             ->get();
-
 
         $data_arr = array();
         foreach ($records as $record) {
@@ -465,18 +473,18 @@ class ProjectController extends Controller
 
             if(isset($ma_da)) {
                 $data_ma_da =
-                    '<span style="line-height:3">' . $ma_da->ma_da . '</span>';
+                    '<span style="line-height:3"> Mã Dự án: ' . $ma_da->ma_da . '</span>';
             }else{
                 $data_ma_da = '';
             }
             if(isset($template)) {
-                $data_template =  '<p class="text-muted" style="line-height:0.5">'.$template->template.'</p>';
+                $data_template =  '<p class="text-muted" style="line-height:0.5">Template: '.$template->template.'</p>';
             }else{
                 $data_template='';
             }
 
             if(isset($record->projectname)) {
-                $data_projectname =  '<p class="text-muted" style="line-height:0.5">'.$record->projectname.'</p>';
+                $data_projectname =  '<p class="text-muted" style="line-height:0.5">Project: '.$record->projectname.'</p>';
             }else{
                 $data_projectname='';
             }
@@ -1052,98 +1060,4 @@ class ProjectController extends Controller
         );
         return response()->json(['success'=>'Cập nhật thành công']);
     }
-
-
-    function getProject(){
-        $projectAll = ProjectModel::all();
-        foreach ($projectAll as $project){
-            $Chplay_ads = [];
-            $projectid = $project->project;
-            $projectname = $project->projectname;
-            $template = $project->template;
-            $ma_da = $project->ma_da;
-            $title_app = $project->title_app;
-            $buildinfo_app_name_x = $project->buildinfo_app_name_x;
-            $buildinfo_link_policy_x = $project->buildinfo_link_policy_x;
-            $buildinfo_link_fanpage = $project->buildinfo_link_fanpage;
-            $buildinfo_link_website = $project->buildinfo_link_website;
-            $buildinfo_link_youtube_x = $project->buildinfo_link_youtube_x;
-            $buildinfo_api_key_x = $project->buildinfo_api_key_x;
-            $buildinfo_console = $project->buildinfo_console;
-            $buildinfo_vernum = $project->buildinfo_vernum;
-            $buildinfo_verstr = $project->buildinfo_verstr;
-            $buildinfo_keystore = $project->buildinfo_keystore;
-            $buildinfo_sdk = $project->buildinfo_sdk;
-            $buildinfo_time = $project->buildinfo_time;
-            $buildinfo_mess = $project->buildinfo_mess;
-            $bot_timecheck = $project->bot_timecheck;
-            $time_mess = $project->time_mess;
-
-            $Chplay_package = $project->package;
-            $Chplay_buildinfo_store_name_x = $project->buildinfo_store_name_x;
-            $Chplay_buildinfo_link_store = $project->buildinfo_link_store;
-            $Chplay_buildinfo_email_dev_x = $project->buildinfo_email_dev_x;
-            $Chplay_buildinfo_link_app = $project->buildinfo_link_app;
-            $Chplay_status = $project->status;
-            $Chplay_ads = [
-                'ads_id' =>$project->ads_id,
-                'ads_banner' =>$project->ads_banner,
-                'ads_inter' =>$project->ads_inter,
-                'ads_reward' =>$project->ads_reward,
-                'ads_native' =>$project->ads_native,
-                'ads_open' =>$project->ads_open
-            ];
-            $Chplay_ads = json_encode($Chplay_ads);
-
-
-            ProjectModel::updateOrCreate(
-                [
-                    "projectid" => $projectid,
-
-                ],
-                [
-                    "projectname" => $projectname,
-                    'template' => $template,
-                    'ma_da' => $ma_da,
-                    'title_app' => $title_app,
-                    'buildinfo_app_name_x' => $buildinfo_app_name_x,
-                    'buildinfo_link_policy_x' =>  $buildinfo_link_policy_x,
-                    'buildinfo_link_fanpage' =>  $buildinfo_link_fanpage,
-                    'buildinfo_link_website' =>  $buildinfo_link_website,
-                    'buildinfo_link_youtube_x' =>  $buildinfo_link_youtube_x,
-                    'buildinfo_api_key_x' =>  $buildinfo_api_key_x,
-                    'buildinfo_console' =>  $buildinfo_console,
-                    'buildinfo_vernum' =>  $buildinfo_vernum,
-                    "buildinfo_verstr" => $buildinfo_verstr,
-                    "buildinfo_keystore" =>  $buildinfo_keystore,
-                    "buildinfo_sdk" =>  $buildinfo_sdk,
-                    "buildinfo_time" =>  $buildinfo_time,
-                    "buildinfo_mess" =>  $buildinfo_mess,
-                    "bot_timecheck" =>  $bot_timecheck,
-                    "time_mess" =>  $time_mess,
-
-                    "Chplay_package" =>  $Chplay_package,
-                    "Chplay_buildinfo_store_name_x" =>  $Chplay_buildinfo_store_name_x,
-                    "Chplay_buildinfo_link_store" =>  $Chplay_buildinfo_link_store,
-                    "Chplay_buildinfo_email_dev_x" =>  $Chplay_buildinfo_email_dev_x,
-                    "Chplay_buildinfo_link_app" =>  $Chplay_buildinfo_link_app,
-                    "Chplay_ads" =>  $Chplay_ads,
-                    "Chplay_status" =>  $Chplay_status,
-                ]);
-        }
-    }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 }
