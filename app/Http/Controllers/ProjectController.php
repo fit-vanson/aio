@@ -677,10 +677,7 @@ class ProjectController extends Controller
 
         // Total records
         $totalRecords = ProjectModel::select('count(*) as allcount')
-            ->where(function ($q){
-                $q->where('buildinfo_console',1)
-                    ->orWhere('buildinfo_console',4);
-            })
+            ->where('ngocphandang_project.Chplay_package','<>','null')
             ->count();
         $totalRecordswithFilter = ProjectModel::select('count(*) as allcount')
             ->leftjoin('ngocphandang_da','ngocphandang_da.id','=','ngocphandang_project.ma_da')
@@ -850,10 +847,7 @@ class ProjectController extends Controller
 
         // Total records
         $totalRecords = ProjectModel::select('count(*) as allcount')
-            ->where(function ($q){
-                $q->where('buildinfo_console',1)
-                    ->orWhere('buildinfo_console',4);
-            })
+            ->where('ngocphandang_project.Amazon_package','<>','null')
             ->count();
         $totalRecordswithFilter = ProjectModel::select('count(*) as allcount')
             ->leftjoin('ngocphandang_da','ngocphandang_da.id','=','ngocphandang_project.ma_da')
@@ -1015,10 +1009,7 @@ class ProjectController extends Controller
 
         // Total records
         $totalRecords = ProjectModel::select('count(*) as allcount')
-            ->where(function ($q){
-                $q->where('buildinfo_console',1)
-                    ->orWhere('buildinfo_console',4);
-            })
+            ->where('ngocphandang_project.Samsung_package','<>','null')
             ->count();
         $totalRecordswithFilter = ProjectModel::select('count(*) as allcount')
             ->leftjoin('ngocphandang_da','ngocphandang_da.id','=','ngocphandang_project.ma_da')
@@ -1177,10 +1168,7 @@ class ProjectController extends Controller
 
         // Total records
         $totalRecords = ProjectModel::select('count(*) as allcount')
-            ->where(function ($q){
-                $q->where('buildinfo_console',1)
-                    ->orWhere('buildinfo_console',4);
-            })
+            ->where('ngocphandang_project.Xiaomi_package','<>','null')
             ->count();
         $totalRecordswithFilter = ProjectModel::select('count(*) as allcount')
             ->leftjoin('ngocphandang_da','ngocphandang_da.id','=','ngocphandang_project.ma_da')
@@ -1340,10 +1328,7 @@ class ProjectController extends Controller
 
         // Total records
         $totalRecords = ProjectModel::select('count(*) as allcount')
-            ->where(function ($q){
-                $q->where('buildinfo_console',1)
-                    ->orWhere('buildinfo_console',4);
-            })
+            ->where('ngocphandang_project.Oppo_package','<>','null')
             ->count();
         $totalRecordswithFilter = ProjectModel::select('count(*) as allcount')
             ->leftjoin('ngocphandang_da','ngocphandang_da.id','=','ngocphandang_project.ma_da')
@@ -1503,10 +1488,7 @@ class ProjectController extends Controller
 
         // Total records
         $totalRecords = ProjectModel::select('count(*) as allcount')
-            ->where(function ($q){
-                $q->where('buildinfo_console',1)
-                    ->orWhere('buildinfo_console',4);
-            })
+            ->where('ngocphandang_project.Vivo_package','<>','null')
             ->count();
         $totalRecordswithFilter = ProjectModel::select('count(*) as allcount')
             ->leftjoin('ngocphandang_da','ngocphandang_da.id','=','ngocphandang_project.ma_da')
