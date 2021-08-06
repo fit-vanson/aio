@@ -95,7 +95,28 @@ Route::group(['prefix'=>'project','middleware'=>['CheckLogout','2fa']], function
     Route::post('/updateQuick',[ProjectController::class,'updateQuick'])->name('project.updateQuick')->middleware('can:project-update');
     Route::get('/delete/{id}',[ProjectController::class,'delete'])->name('project.delete')->middleware('can:project-delete');
     Route::get('/removeProject/{id}',[ProjectController::class,'removeProject'])->name('project.removeProject')->middleware('can:project-edit');
-    Route::get('/getlist',[ProjectController::class,'getList'])->name('project.get_content');
+
+    Route::get('/appChplay',[ProjectController::class,'appChplay'])->name('project.appChplay')->middleware('can:project-index');
+    Route::post('/getChplay',[ProjectController::class,'getChplay'])->name('project.getChplay')->middleware('can:project-index');
+
+    Route::get('/appAmazon',[ProjectController::class,'appAmazon'])->name('project.appAmazon')->middleware('can:project-index');
+    Route::post('/getAmazon',[ProjectController::class,'getAmazon'])->name('project.getAmazon')->middleware('can:project-index');
+
+    Route::get('/appSamsung',[ProjectController::class,'appSamsung'])->name('project.appSamsung')->middleware('can:project-index');
+    Route::post('/getSamsung',[ProjectController::class,'getSamsung'])->name('project.getSamsung')->middleware('can:project-index');
+
+    Route::get('/appXiaomi',[ProjectController::class,'appXiaomi'])->name('project.appXiaomi')->middleware('can:project-index');
+    Route::post('/getXiaomi',[ProjectController::class,'getXiaomi'])->name('project.getXiaomi')->middleware('can:project-index');
+
+    Route::get('/appOppo',[ProjectController::class,'appOppo'])->name('project.appOppo')->middleware('can:project-index');
+    Route::post('/getOppo',[ProjectController::class,'getOppo'])->name('project.getOppo')->middleware('can:project-index');
+
+    Route::get('/appVivo',[ProjectController::class,'appVivo'])->name('project.appVivo')->middleware('can:project-index');
+    Route::post('/getVivo',[ProjectController::class,'getVivo'])->name('project.getVivo')->middleware('can:project-index');
+
+
+
+
 });
 
 

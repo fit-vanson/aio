@@ -48,6 +48,36 @@ class ProjectController extends Controller
         return view('project.indexBuild');
     }
 
+    public function appAmazon()
+    {
+        return view('project.appAmazon');
+    }
+
+    public function appSamsung()
+    {
+        return view('project.appSamsung');
+    }
+
+    public function appXiaomi()
+    {
+        return view('project.appXiaomi');
+    }
+
+    public function appOppo()
+    {
+        return view('project.appOppo');
+    }
+
+    public function appVivo()
+    {
+        return view('project.appVivo');
+    }
+
+    public function appChplay()
+    {
+        return view('project.appChplay');
+    }
+
     public function getIndex(Request $request)
     {
         $draw = $request->get('draw');
@@ -66,9 +96,10 @@ class ProjectController extends Controller
 
         // Total records
         $totalRecords = ProjectModel::select('count(*) as allcount')->count();
+
         $totalRecordswithFilter = ProjectModel::select('count(*) as allcount')
-            ->join('ngocphandang_da','ngocphandang_da.id','=','ngocphandang_project.ma_da')
-            ->join('ngocphandang_template','ngocphandang_template.id','=','ngocphandang_project.template')
+            ->leftjoin('ngocphandang_da','ngocphandang_da.id','=','ngocphandang_project.ma_da')
+            ->leftjoin('ngocphandang_template','ngocphandang_template.id','=','ngocphandang_project.template')
             ->where('ngocphandang_da.ma_da', 'like', '%' . $searchValue . '%')
             ->orWhere('ngocphandang_project.projectname', 'like', '%' . $searchValue . '%')
             ->orWhere('ngocphandang_project.title_app', 'like', '%' . $searchValue . '%')
@@ -80,12 +111,10 @@ class ProjectController extends Controller
             ->orWhere('ngocphandang_project.Oppo_package', 'like', '%' . $searchValue . '%')
             ->orWhere('ngocphandang_project.Vivo_package', 'like', '%' . $searchValue . '%')
             ->count();
-
         // Get records, also we have included search filter as well
         $records = ProjectModel::orderBy($columnName, $columnSortOrder)
-            ->join('ngocphandang_da','ngocphandang_da.id','=','ngocphandang_project.ma_da')
-            ->join('ngocphandang_template','ngocphandang_template.id','=','ngocphandang_project.template')
-            ->where('ngocphandang_da.ma_da', 'like', '%' . $searchValue . '%')
+            ->leftjoin('ngocphandang_da','ngocphandang_da.id','=','ngocphandang_project.ma_da')
+            ->leftjoin('ngocphandang_template','ngocphandang_template.id','=','ngocphandang_project.template') ->where('ngocphandang_da.ma_da', 'like', '%' . $searchValue . '%')
             ->orWhere('ngocphandang_project.projectname', 'like', '%' . $searchValue . '%')
             ->orWhere('ngocphandang_project.title_app', 'like', '%' . $searchValue . '%')
             ->orWhere('ngocphandang_template.template', 'like', '%' . $searchValue . '%')
@@ -629,6 +658,995 @@ class ProjectController extends Controller
         echo json_encode($response);
     }
 
+    public function getChplay(Request $request)
+    {
+
+        $draw = $request->get('draw');
+        $start = $request->get("start");
+        $rowperpage = $request->get("length"); // total number of rows per page
+
+        $columnIndex_arr = $request->get('order');
+        $columnName_arr = $request->get('columns');
+        $order_arr = $request->get('order');
+        $search_arr = $request->get('search');
+
+        $columnIndex = $columnIndex_arr[0]['column']; // Column index
+        $columnName = $columnName_arr[$columnIndex]['data']; // Column name
+        $columnSortOrder = $order_arr[0]['dir']; // asc or desc
+        $searchValue = $search_arr['value']; // Search value
+
+        // Total records
+        $totalRecords = ProjectModel::select('count(*) as allcount')
+            ->where(function ($q){
+                $q->where('buildinfo_console',1)
+                    ->orWhere('buildinfo_console',4);
+            })
+            ->count();
+        $totalRecordswithFilter = ProjectModel::select('count(*) as allcount')
+            ->leftjoin('ngocphandang_da','ngocphandang_da.id','=','ngocphandang_project.ma_da')
+            ->leftjoin('ngocphandang_template','ngocphandang_template.id','=','ngocphandang_project.template')
+            ->where(function ($a) use ($searchValue) {
+                $a->where('ngocphandang_da.ma_da', 'like', '%' . $searchValue . '%')
+                    ->orWhere('ngocphandang_project.projectname', 'like', '%' . $searchValue . '%')
+                    ->orWhere('ngocphandang_project.title_app', 'like', '%' . $searchValue . '%')
+                    ->orWhere('ngocphandang_template.template', 'like', '%' . $searchValue . '%')
+                    ->orWhere('ngocphandang_project.Chplay_package', 'like', '%' . $searchValue . '%')
+                    ->orWhere('ngocphandang_project.Amazon_package', 'like', '%' . $searchValue . '%')
+                    ->orWhere('ngocphandang_project.Samsung_package', 'like', '%' . $searchValue . '%')
+                    ->orWhere('ngocphandang_project.Xiaomi_package', 'like', '%' . $searchValue . '%')
+                    ->orWhere('ngocphandang_project.Oppo_package', 'like', '%' . $searchValue . '%')
+                    ->orWhere('ngocphandang_project.Vivo_package', 'like', '%' . $searchValue . '%');
+            })
+            ->where('ngocphandang_project.Chplay_package','<>','null')
+            ->count();
+
+
+        // Get records, also we have included search filter as well
+        $records = ProjectModel::orderBy($columnName, $columnSortOrder)
+            ->leftjoin('ngocphandang_da','ngocphandang_da.id','=','ngocphandang_project.ma_da')
+            ->leftjoin('ngocphandang_template','ngocphandang_template.id','=','ngocphandang_project.template')
+
+            ->where(function ($a) use ($searchValue) {
+                $a->where('ngocphandang_da.ma_da', 'like', '%' . $searchValue . '%')
+                    ->orWhere('ngocphandang_project.projectname', 'like', '%' . $searchValue . '%')
+                    ->orWhere('ngocphandang_project.title_app', 'like', '%' . $searchValue . '%')
+                    ->orWhere('ngocphandang_template.template', 'like', '%' . $searchValue . '%')
+                    ->orWhere('ngocphandang_project.Chplay_package', 'like', '%' . $searchValue . '%')
+                    ->orWhere('ngocphandang_project.Amazon_package', 'like', '%' . $searchValue . '%')
+                    ->orWhere('ngocphandang_project.Samsung_package', 'like', '%' . $searchValue . '%')
+                    ->orWhere('ngocphandang_project.Xiaomi_package', 'like', '%' . $searchValue . '%')
+                    ->orWhere('ngocphandang_project.Oppo_package', 'like', '%' . $searchValue . '%')
+                    ->orWhere('ngocphandang_project.Vivo_package', 'like', '%' . $searchValue . '%');
+
+            })
+            ->where('ngocphandang_project.Chplay_package','<>',null)
+            ->select('ngocphandang_project.*')
+            ->skip($start)
+            ->take($rowperpage)
+            ->get();
+
+
+        $data_arr = array();
+        foreach ($records as $record) {
+            $btn = ' <a href="javascript:void(0)" onclick="detailChplay('.$record->projectid.')" class="btn btn-outline-warning"><i class="mdi mdi-clipboard-text"></i></a>';
+            $ma_da = DB::table('ngocphandang_project')
+                ->join('ngocphandang_da','ngocphandang_da.id','=','ngocphandang_project.ma_da')
+                ->where('ngocphandang_da.id',$record->ma_da)
+                ->first();
+            $template = DB::table('ngocphandang_project')
+                ->join('ngocphandang_template','ngocphandang_template.id','=','ngocphandang_project.template')
+                ->where('ngocphandang_template.id',$record->template)
+                ->first();
+
+            if(isset($ma_da)) {
+                $data_ma_da =
+                    '<span style="line-height:3"> Mã Dự án: ' . $ma_da->ma_da . '</span>';
+            }else{
+                $data_ma_da = '';
+            }
+            if(isset($template)) {
+                $data_template =  '<p class="text-muted" style="line-height:0.5">Template: '.$template->template.'</p>';
+            }else{
+                $data_template='';
+            }
+
+            if(isset($record->projectname)) {
+                $data_projectname =  '<p class="text-muted" style="line-height:0.5">Project: '.$record->projectname.'</p>';
+            }else{
+                $data_projectname='';
+            }
+
+            if(isset($record->title_app)) {
+                $data_title_app=  '<p class="text-muted" style="line-height:0.5">'.$record->title_app.'</p>';
+            }else{
+                $data_title_app='';
+            }
+            $ads = json_decode($record->Chplay_ads,true);
+            $package_chplay = '<p style="line-height:0.5">'.$record->Chplay_package.'</p>';
+            $ads_banner = '<p class="text-muted" style="line-height:0.5">ads_banner: '.$ads['ads_banner'].'</p>';
+            $ads_inter = '<p class="text-muted" style="line-height:0.5">ads_inter: '.$ads['ads_inter'].'</p>';
+            $ads_native = '<p class="text-muted" style="line-height:0.5">ads_native: '.$ads['ads_native'].'</p>';
+            $ads_open = '<p class="text-muted" style="line-height:0.5">ads_open: '.$ads['ads_open'].'</p>';
+            $ads_reward = '<p class="text-muted" style="line-height:0.5">ads_reward: '.$ads['ads_reward'].'</p>';
+//
+
+
+            if ($record['buildinfo_console']==0  ) {
+                $buildinfo_console = 'Trạng thái tĩnh';
+            }
+            elseif($record['buildinfo_console']== 1){
+                $buildinfo_console = '<span class="badge badge-dark">Build App</span>';
+
+            }
+            elseif($record['buildinfo_console']==2){
+                $buildinfo_console =  '<span class="badge badge-warning">Đang xử lý Build App</span>';
+            }
+            elseif($record['buildinfo_console']==3){
+                $buildinfo_console =  '<span class="badge badge-info">Kết thúc Build App</span>';
+            }
+            elseif($record['buildinfo_console']==4){
+                $buildinfo_console =  '<span class="badge badge-primary">Check Data Project</span>';
+            }
+            elseif($record['buildinfo_console']==5){
+                $buildinfo_console =  '<span class="badge badge-success">Đang xử lý check dữ liệu của Project</span>';
+            }
+            elseif($record['buildinfo_console']==6){
+                $buildinfo_console =  '<span class="badge badge-danger">Kết thúc Check</span>';
+            }
+//
+            if(isset($record->logo)){
+                $logo = "<img class='rounded mx-auto d-block'  width='100px'  height='100px'  src='../uploads/project/$record->projectname/thumbnail/$record->logo'>";
+            }else{
+                $logo = '<img class="rounded mx-auto d-block" width="100px" height="100px" src="assets\images\logo-sm.png">';
+            }
+            if ($record->buildinfo_mess){
+                $mess_info = '';
+                $buildinfo_mess = $record->buildinfo_mess;
+                $buildinfo_mess =  (explode('|',$buildinfo_mess));
+                $buildinfo_mess = array_reverse($buildinfo_mess);
+                for($i = 0 ; $i < 6 ; $i++){
+                    if(isset($buildinfo_mess[$i])){
+                        $mess_info .=  $buildinfo_mess[$i].'<br>';
+                    }
+                }
+
+            }
+            $data_arr[] = array(
+                "updated_at" => $record->updated_at,
+                "logo" => $logo,
+                "ma_da"=>$data_ma_da.$data_template.$data_projectname.$data_title_app,
+                "package" => $package_chplay.$ads_banner.$ads_inter.$ads_native.$ads_open.$ads_reward,
+//                "buildinfo_mess" => $mess_info,
+                "buildinfo_console" =>$buildinfo_console,
+                "action"=> $btn,
+            );
+        }
+        $response = array(
+            "draw" => intval($draw),
+            "iTotalRecords" => $totalRecords,
+            "iTotalDisplayRecords" => $totalRecordswithFilter,
+            "aaData" => $data_arr,
+        );
+
+        echo json_encode($response);
+    }
+
+    public function getAmazon(Request $request)
+    {
+
+        $draw = $request->get('draw');
+        $start = $request->get("start");
+        $rowperpage = $request->get("length"); // total number of rows per page
+
+        $columnIndex_arr = $request->get('order');
+        $columnName_arr = $request->get('columns');
+        $order_arr = $request->get('order');
+        $search_arr = $request->get('search');
+
+        $columnIndex = $columnIndex_arr[0]['column']; // Column index
+        $columnName = $columnName_arr[$columnIndex]['data']; // Column name
+        $columnSortOrder = $order_arr[0]['dir']; // asc or desc
+        $searchValue = $search_arr['value']; // Search value
+
+        // Total records
+        $totalRecords = ProjectModel::select('count(*) as allcount')
+            ->where(function ($q){
+                $q->where('buildinfo_console',1)
+                    ->orWhere('buildinfo_console',4);
+            })
+            ->count();
+        $totalRecordswithFilter = ProjectModel::select('count(*) as allcount')
+            ->leftjoin('ngocphandang_da','ngocphandang_da.id','=','ngocphandang_project.ma_da')
+            ->leftjoin('ngocphandang_template','ngocphandang_template.id','=','ngocphandang_project.template')
+            ->where(function ($a) use ($searchValue) {
+                $a->where('ngocphandang_da.ma_da', 'like', '%' . $searchValue . '%')
+                    ->orWhere('ngocphandang_project.projectname', 'like', '%' . $searchValue . '%')
+                    ->orWhere('ngocphandang_project.title_app', 'like', '%' . $searchValue . '%')
+                    ->orWhere('ngocphandang_template.template', 'like', '%' . $searchValue . '%')
+                    ->orWhere('ngocphandang_project.Amazon_package', 'like', '%' . $searchValue . '%');
+
+            })
+            ->where('ngocphandang_project.Amazon_package','<>','null')
+            ->count();
+
+
+        // Get records, also we have included search filter as well
+        $records = ProjectModel::orderBy($columnName, $columnSortOrder)
+            ->leftjoin('ngocphandang_da','ngocphandang_da.id','=','ngocphandang_project.ma_da')
+            ->leftjoin('ngocphandang_template','ngocphandang_template.id','=','ngocphandang_project.template')
+
+            ->where(function ($a) use ($searchValue) {
+                $a->where('ngocphandang_da.ma_da', 'like', '%' . $searchValue . '%')
+                    ->orWhere('ngocphandang_project.projectname', 'like', '%' . $searchValue . '%')
+                    ->orWhere('ngocphandang_project.title_app', 'like', '%' . $searchValue . '%')
+                    ->orWhere('ngocphandang_template.template', 'like', '%' . $searchValue . '%')
+                    ->orWhere('ngocphandang_project.Amazon_package', 'like', '%' . $searchValue . '%');
+
+
+            })
+            ->where('ngocphandang_project.Amazon_package','<>',null)
+            ->select('ngocphandang_project.*')
+            ->skip($start)
+            ->take($rowperpage)
+            ->get();
+
+
+        $data_arr = array();
+        foreach ($records as $record) {
+            $btn = ' <a href="javascript:void(0)" onclick="detailAmazon('.$record->projectid.')" class="btn btn-outline-warning"><i class="mdi mdi-clipboard-text"></i></a>';
+            $ma_da = DB::table('ngocphandang_project')
+                ->join('ngocphandang_da','ngocphandang_da.id','=','ngocphandang_project.ma_da')
+                ->where('ngocphandang_da.id',$record->ma_da)
+                ->first();
+            $template = DB::table('ngocphandang_project')
+                ->join('ngocphandang_template','ngocphandang_template.id','=','ngocphandang_project.template')
+                ->where('ngocphandang_template.id',$record->template)
+                ->first();
+
+            if(isset($ma_da)) {
+                $data_ma_da =
+                    '<span style="line-height:3"> Mã Dự án: ' . $ma_da->ma_da . '</span>';
+            }else{
+                $data_ma_da = '';
+            }
+            if(isset($template)) {
+                $data_template =  '<p class="text-muted" style="line-height:0.5">Template: '.$template->template.'</p>';
+            }else{
+                $data_template='';
+            }
+
+            if(isset($record->projectname)) {
+                $data_projectname =  '<p class="text-muted" style="line-height:0.5">Project: '.$record->projectname.'</p>';
+            }else{
+                $data_projectname='';
+            }
+
+            if(isset($record->title_app)) {
+                $data_title_app=  '<p class="text-muted" style="line-height:0.5">'.$record->title_app.'</p>';
+            }else{
+                $data_title_app='';
+            }
+            $ads = json_decode($record->Amazon_ads,true);
+            $package_Amazon = '<p style="line-height:0.5">'.$record->Amazon_package.'</p>';
+            $ads_banner = '<p class="text-muted" style="line-height:0.5">ads_banner: '.$ads['ads_banner'].'</p>';
+            $ads_inter = '<p class="text-muted" style="line-height:0.5">ads_inter: '.$ads['ads_inter'].'</p>';
+            $ads_native = '<p class="text-muted" style="line-height:0.5">ads_native: '.$ads['ads_native'].'</p>';
+            $ads_open = '<p class="text-muted" style="line-height:0.5">ads_open: '.$ads['ads_open'].'</p>';
+            $ads_reward = '<p class="text-muted" style="line-height:0.5">ads_reward: '.$ads['ads_reward'].'</p>';
+//
+
+
+            if ($record['buildinfo_console']==0  ) {
+                $buildinfo_console = 'Trạng thái tĩnh';
+            }
+            elseif($record['buildinfo_console']== 1){
+                $buildinfo_console = '<span class="badge badge-dark">Build App</span>';
+
+            }
+            elseif($record['buildinfo_console']==2){
+                $buildinfo_console =  '<span class="badge badge-warning">Đang xử lý Build App</span>';
+            }
+            elseif($record['buildinfo_console']==3){
+                $buildinfo_console =  '<span class="badge badge-info">Kết thúc Build App</span>';
+            }
+            elseif($record['buildinfo_console']==4){
+                $buildinfo_console =  '<span class="badge badge-primary">Check Data Project</span>';
+            }
+            elseif($record['buildinfo_console']==5){
+                $buildinfo_console =  '<span class="badge badge-success">Đang xử lý check dữ liệu của Project</span>';
+            }
+            elseif($record['buildinfo_console']==6){
+                $buildinfo_console =  '<span class="badge badge-danger">Kết thúc Check</span>';
+            }
+//
+            if(isset($record->logo)){
+                $logo = "<img class='rounded mx-auto d-block'  width='100px'  height='100px'  src='../uploads/project/$record->projectname/thumbnail/$record->logo'>";
+            }else{
+                $logo = '<img class="rounded mx-auto d-block" width="100px" height="100px" src="assets\images\logo-sm.png">';
+            }
+            if ($record->buildinfo_mess){
+                $mess_info = '';
+                $buildinfo_mess = $record->buildinfo_mess;
+                $buildinfo_mess =  (explode('|',$buildinfo_mess));
+                $buildinfo_mess = array_reverse($buildinfo_mess);
+                for($i = 0 ; $i < 6 ; $i++){
+                    if(isset($buildinfo_mess[$i])){
+                        $mess_info .=  $buildinfo_mess[$i].'<br>';
+                    }
+                }
+
+            }
+            $data_arr[] = array(
+                "updated_at" => $record->updated_at,
+                "logo" => $logo,
+                "ma_da"=>$data_ma_da.$data_template.$data_projectname.$data_title_app,
+                "package" => $package_Amazon.$ads_banner.$ads_inter.$ads_native.$ads_open.$ads_reward,
+//                "buildinfo_mess" => $mess_info,
+                "buildinfo_console" =>$buildinfo_console,
+                "action"=> $btn,
+            );
+        }
+        $response = array(
+            "draw" => intval($draw),
+            "iTotalRecords" => $totalRecords,
+            "iTotalDisplayRecords" => $totalRecordswithFilter,
+            "aaData" => $data_arr,
+        );
+
+        echo json_encode($response);
+    }
+
+    public function getSamsung(Request $request)
+    {
+
+        $draw = $request->get('draw');
+        $start = $request->get("start");
+        $rowperpage = $request->get("length"); // total number of rows per page
+
+        $columnIndex_arr = $request->get('order');
+        $columnName_arr = $request->get('columns');
+        $order_arr = $request->get('order');
+        $search_arr = $request->get('search');
+
+        $columnIndex = $columnIndex_arr[0]['column']; // Column index
+        $columnName = $columnName_arr[$columnIndex]['data']; // Column name
+        $columnSortOrder = $order_arr[0]['dir']; // asc or desc
+        $searchValue = $search_arr['value']; // Search value
+
+        // Total records
+        $totalRecords = ProjectModel::select('count(*) as allcount')
+            ->where(function ($q){
+                $q->where('buildinfo_console',1)
+                    ->orWhere('buildinfo_console',4);
+            })
+            ->count();
+        $totalRecordswithFilter = ProjectModel::select('count(*) as allcount')
+            ->leftjoin('ngocphandang_da','ngocphandang_da.id','=','ngocphandang_project.ma_da')
+            ->leftjoin('ngocphandang_template','ngocphandang_template.id','=','ngocphandang_project.template')
+            ->where(function ($a) use ($searchValue) {
+                $a->where('ngocphandang_da.ma_da', 'like', '%' . $searchValue . '%')
+                    ->orWhere('ngocphandang_project.projectname', 'like', '%' . $searchValue . '%')
+                    ->orWhere('ngocphandang_project.title_app', 'like', '%' . $searchValue . '%')
+                    ->orWhere('ngocphandang_template.template', 'like', '%' . $searchValue . '%')
+                    ->orWhere('ngocphandang_project.Samsung_package', 'like', '%' . $searchValue . '%');
+            })
+            ->where('ngocphandang_project.Samsung_package','<>','null')
+            ->count();
+
+
+        // Get records, also we have included search filter as well
+        $records = ProjectModel::orderBy($columnName, $columnSortOrder)
+            ->leftjoin('ngocphandang_da','ngocphandang_da.id','=','ngocphandang_project.ma_da')
+            ->leftjoin('ngocphandang_template','ngocphandang_template.id','=','ngocphandang_project.template')
+
+            ->where(function ($a) use ($searchValue) {
+                $a->where('ngocphandang_da.ma_da', 'like', '%' . $searchValue . '%')
+                    ->orWhere('ngocphandang_project.projectname', 'like', '%' . $searchValue . '%')
+                    ->orWhere('ngocphandang_project.title_app', 'like', '%' . $searchValue . '%')
+                    ->orWhere('ngocphandang_template.template', 'like', '%' . $searchValue . '%')
+                    ->orWhere('ngocphandang_project.Samsung_package', 'like', '%' . $searchValue . '%');
+            })
+            ->where('ngocphandang_project.Samsung_package','<>',null)
+            ->select('ngocphandang_project.*')
+            ->skip($start)
+            ->take($rowperpage)
+            ->get();
+
+
+        $data_arr = array();
+        foreach ($records as $record) {
+            $btn = ' <a href="javascript:void(0)" onclick="detailSamsung('.$record->projectid.')" class="btn btn-outline-warning"><i class="mdi mdi-clipboard-text"></i></a>';
+            $ma_da = DB::table('ngocphandang_project')
+                ->join('ngocphandang_da','ngocphandang_da.id','=','ngocphandang_project.ma_da')
+                ->where('ngocphandang_da.id',$record->ma_da)
+                ->first();
+            $template = DB::table('ngocphandang_project')
+                ->join('ngocphandang_template','ngocphandang_template.id','=','ngocphandang_project.template')
+                ->where('ngocphandang_template.id',$record->template)
+                ->first();
+
+            if(isset($ma_da)) {
+                $data_ma_da =
+                    '<span style="line-height:3"> Mã Dự án: ' . $ma_da->ma_da . '</span>';
+            }else{
+                $data_ma_da = '';
+            }
+            if(isset($template)) {
+                $data_template =  '<p class="text-muted" style="line-height:0.5">Template: '.$template->template.'</p>';
+            }else{
+                $data_template='';
+            }
+
+            if(isset($record->projectname)) {
+                $data_projectname =  '<p class="text-muted" style="line-height:0.5">Project: '.$record->projectname.'</p>';
+            }else{
+                $data_projectname='';
+            }
+
+            if(isset($record->title_app)) {
+                $data_title_app=  '<p class="text-muted" style="line-height:0.5">'.$record->title_app.'</p>';
+            }else{
+                $data_title_app='';
+            }
+            $ads = json_decode($record->Samsung_ads,true);
+            $package_Samsung = '<p style="line-height:0.5">'.$record->Samsung_package.'</p>';
+            $ads_banner = '<p class="text-muted" style="line-height:0.5">ads_banner: '.$ads['ads_banner'].'</p>';
+            $ads_inter = '<p class="text-muted" style="line-height:0.5">ads_inter: '.$ads['ads_inter'].'</p>';
+            $ads_native = '<p class="text-muted" style="line-height:0.5">ads_native: '.$ads['ads_native'].'</p>';
+            $ads_open = '<p class="text-muted" style="line-height:0.5">ads_open: '.$ads['ads_open'].'</p>';
+            $ads_reward = '<p class="text-muted" style="line-height:0.5">ads_reward: '.$ads['ads_reward'].'</p>';
+//
+
+
+            if ($record['buildinfo_console']==0  ) {
+                $buildinfo_console = 'Trạng thái tĩnh';
+            }
+            elseif($record['buildinfo_console']== 1){
+                $buildinfo_console = '<span class="badge badge-dark">Build App</span>';
+
+            }
+            elseif($record['buildinfo_console']==2){
+                $buildinfo_console =  '<span class="badge badge-warning">Đang xử lý Build App</span>';
+            }
+            elseif($record['buildinfo_console']==3){
+                $buildinfo_console =  '<span class="badge badge-info">Kết thúc Build App</span>';
+            }
+            elseif($record['buildinfo_console']==4){
+                $buildinfo_console =  '<span class="badge badge-primary">Check Data Project</span>';
+            }
+            elseif($record['buildinfo_console']==5){
+                $buildinfo_console =  '<span class="badge badge-success">Đang xử lý check dữ liệu của Project</span>';
+            }
+            elseif($record['buildinfo_console']==6){
+                $buildinfo_console =  '<span class="badge badge-danger">Kết thúc Check</span>';
+            }
+//
+            if(isset($record->logo)){
+                $logo = "<img class='rounded mx-auto d-block'  width='100px'  height='100px'  src='../uploads/project/$record->projectname/thumbnail/$record->logo'>";
+            }else{
+                $logo = '<img class="rounded mx-auto d-block" width="100px" height="100px" src="assets\images\logo-sm.png">';
+            }
+            if ($record->buildinfo_mess){
+                $mess_info = '';
+                $buildinfo_mess = $record->buildinfo_mess;
+                $buildinfo_mess =  (explode('|',$buildinfo_mess));
+                $buildinfo_mess = array_reverse($buildinfo_mess);
+                for($i = 0 ; $i < 6 ; $i++){
+                    if(isset($buildinfo_mess[$i])){
+                        $mess_info .=  $buildinfo_mess[$i].'<br>';
+                    }
+                }
+
+            }
+            $data_arr[] = array(
+                "updated_at" => $record->updated_at,
+                "logo" => $logo,
+                "ma_da"=>$data_ma_da.$data_template.$data_projectname.$data_title_app,
+                "package" => $package_Samsung.$ads_banner.$ads_inter.$ads_native.$ads_open.$ads_reward,
+//                "buildinfo_mess" => $mess_info,
+                "buildinfo_console" =>$buildinfo_console,
+                "action"=> $btn,
+            );
+        }
+        $response = array(
+            "draw" => intval($draw),
+            "iTotalRecords" => $totalRecords,
+            "iTotalDisplayRecords" => $totalRecordswithFilter,
+            "aaData" => $data_arr,
+        );
+
+        echo json_encode($response);
+    }
+
+    public function getXiaomi(Request $request)
+    {
+
+        $draw = $request->get('draw');
+        $start = $request->get("start");
+        $rowperpage = $request->get("length"); // total number of rows per page
+
+        $columnIndex_arr = $request->get('order');
+        $columnName_arr = $request->get('columns');
+        $order_arr = $request->get('order');
+        $search_arr = $request->get('search');
+
+        $columnIndex = $columnIndex_arr[0]['column']; // Column index
+        $columnName = $columnName_arr[$columnIndex]['data']; // Column name
+        $columnSortOrder = $order_arr[0]['dir']; // asc or desc
+        $searchValue = $search_arr['value']; // Search value
+
+        // Total records
+        $totalRecords = ProjectModel::select('count(*) as allcount')
+            ->where(function ($q){
+                $q->where('buildinfo_console',1)
+                    ->orWhere('buildinfo_console',4);
+            })
+            ->count();
+        $totalRecordswithFilter = ProjectModel::select('count(*) as allcount')
+            ->leftjoin('ngocphandang_da','ngocphandang_da.id','=','ngocphandang_project.ma_da')
+            ->leftjoin('ngocphandang_template','ngocphandang_template.id','=','ngocphandang_project.template')
+            ->where(function ($a) use ($searchValue) {
+                $a->where('ngocphandang_da.ma_da', 'like', '%' . $searchValue . '%')
+                    ->orWhere('ngocphandang_project.projectname', 'like', '%' . $searchValue . '%')
+                    ->orWhere('ngocphandang_project.title_app', 'like', '%' . $searchValue . '%')
+                    ->orWhere('ngocphandang_template.template', 'like', '%' . $searchValue . '%')
+                    ->orWhere('ngocphandang_project.Xiaomi_package', 'like', '%' . $searchValue . '%');
+            })
+            ->where('ngocphandang_project.Xiaomi_package','<>','null')
+            ->count();
+
+
+        // Get records, also we have included search filter as well
+        $records = ProjectModel::orderBy($columnName, $columnSortOrder)
+            ->leftjoin('ngocphandang_da','ngocphandang_da.id','=','ngocphandang_project.ma_da')
+            ->leftjoin('ngocphandang_template','ngocphandang_template.id','=','ngocphandang_project.template')
+
+            ->where(function ($a) use ($searchValue) {
+                $a->where('ngocphandang_da.ma_da', 'like', '%' . $searchValue . '%')
+                    ->orWhere('ngocphandang_project.projectname', 'like', '%' . $searchValue . '%')
+                    ->orWhere('ngocphandang_project.title_app', 'like', '%' . $searchValue . '%')
+                    ->orWhere('ngocphandang_template.template', 'like', '%' . $searchValue . '%')
+                    ->orWhere('ngocphandang_project.Xiaomi_package', 'like', '%' . $searchValue . '%');
+
+            })
+            ->where('ngocphandang_project.Xiaomi_package','<>',null)
+            ->select('ngocphandang_project.*')
+            ->skip($start)
+            ->take($rowperpage)
+            ->get();
+
+
+        $data_arr = array();
+        foreach ($records as $record) {
+            $btn = ' <a href="javascript:void(0)" onclick="detailXiaomi('.$record->projectid.')" class="btn btn-outline-warning"><i class="mdi mdi-clipboard-text"></i></a>';
+            $ma_da = DB::table('ngocphandang_project')
+                ->join('ngocphandang_da','ngocphandang_da.id','=','ngocphandang_project.ma_da')
+                ->where('ngocphandang_da.id',$record->ma_da)
+                ->first();
+            $template = DB::table('ngocphandang_project')
+                ->join('ngocphandang_template','ngocphandang_template.id','=','ngocphandang_project.template')
+                ->where('ngocphandang_template.id',$record->template)
+                ->first();
+
+            if(isset($ma_da)) {
+                $data_ma_da =
+                    '<span style="line-height:3"> Mã Dự án: ' . $ma_da->ma_da . '</span>';
+            }else{
+                $data_ma_da = '';
+            }
+            if(isset($template)) {
+                $data_template =  '<p class="text-muted" style="line-height:0.5">Template: '.$template->template.'</p>';
+            }else{
+                $data_template='';
+            }
+
+            if(isset($record->projectname)) {
+                $data_projectname =  '<p class="text-muted" style="line-height:0.5">Project: '.$record->projectname.'</p>';
+            }else{
+                $data_projectname='';
+            }
+
+            if(isset($record->title_app)) {
+                $data_title_app=  '<p class="text-muted" style="line-height:0.5">'.$record->title_app.'</p>';
+            }else{
+                $data_title_app='';
+            }
+            $ads = json_decode($record->Xiaomi_ads,true);
+            $package_Xiaomi = '<p style="line-height:0.5">'.$record->Xiaomi_package.'</p>';
+            $ads_banner = '<p class="text-muted" style="line-height:0.5">ads_banner: '.$ads['ads_banner'].'</p>';
+            $ads_inter = '<p class="text-muted" style="line-height:0.5">ads_inter: '.$ads['ads_inter'].'</p>';
+            $ads_native = '<p class="text-muted" style="line-height:0.5">ads_native: '.$ads['ads_native'].'</p>';
+            $ads_open = '<p class="text-muted" style="line-height:0.5">ads_open: '.$ads['ads_open'].'</p>';
+            $ads_reward = '<p class="text-muted" style="line-height:0.5">ads_reward: '.$ads['ads_reward'].'</p>';
+//
+
+
+            if ($record['buildinfo_console']==0  ) {
+                $buildinfo_console = 'Trạng thái tĩnh';
+            }
+            elseif($record['buildinfo_console']== 1){
+                $buildinfo_console = '<span class="badge badge-dark">Build App</span>';
+
+            }
+            elseif($record['buildinfo_console']==2){
+                $buildinfo_console =  '<span class="badge badge-warning">Đang xử lý Build App</span>';
+            }
+            elseif($record['buildinfo_console']==3){
+                $buildinfo_console =  '<span class="badge badge-info">Kết thúc Build App</span>';
+            }
+            elseif($record['buildinfo_console']==4){
+                $buildinfo_console =  '<span class="badge badge-primary">Check Data Project</span>';
+            }
+            elseif($record['buildinfo_console']==5){
+                $buildinfo_console =  '<span class="badge badge-success">Đang xử lý check dữ liệu của Project</span>';
+            }
+            elseif($record['buildinfo_console']==6){
+                $buildinfo_console =  '<span class="badge badge-danger">Kết thúc Check</span>';
+            }
+//
+            if(isset($record->logo)){
+                $logo = "<img class='rounded mx-auto d-block'  width='100px'  height='100px'  src='../uploads/project/$record->projectname/thumbnail/$record->logo'>";
+            }else{
+                $logo = '<img class="rounded mx-auto d-block" width="100px" height="100px" src="assets\images\logo-sm.png">';
+            }
+            if ($record->buildinfo_mess){
+                $mess_info = '';
+                $buildinfo_mess = $record->buildinfo_mess;
+                $buildinfo_mess =  (explode('|',$buildinfo_mess));
+                $buildinfo_mess = array_reverse($buildinfo_mess);
+                for($i = 0 ; $i < 6 ; $i++){
+                    if(isset($buildinfo_mess[$i])){
+                        $mess_info .=  $buildinfo_mess[$i].'<br>';
+                    }
+                }
+
+            }
+            $data_arr[] = array(
+                "updated_at" => $record->updated_at,
+                "logo" => $logo,
+                "ma_da"=>$data_ma_da.$data_template.$data_projectname.$data_title_app,
+                "package" => $package_Xiaomi.$ads_banner.$ads_inter.$ads_native.$ads_open.$ads_reward,
+//                "buildinfo_mess" => $mess_info,
+                "buildinfo_console" =>$buildinfo_console,
+                "action"=> $btn,
+            );
+        }
+        $response = array(
+            "draw" => intval($draw),
+            "iTotalRecords" => $totalRecords,
+            "iTotalDisplayRecords" => $totalRecordswithFilter,
+            "aaData" => $data_arr,
+        );
+
+        echo json_encode($response);
+    }
+
+    public function getOppo(Request $request)
+    {
+
+        $draw = $request->get('draw');
+        $start = $request->get("start");
+        $rowperpage = $request->get("length"); // total number of rows per page
+
+        $columnIndex_arr = $request->get('order');
+        $columnName_arr = $request->get('columns');
+        $order_arr = $request->get('order');
+        $search_arr = $request->get('search');
+
+        $columnIndex = $columnIndex_arr[0]['column']; // Column index
+        $columnName = $columnName_arr[$columnIndex]['data']; // Column name
+        $columnSortOrder = $order_arr[0]['dir']; // asc or desc
+        $searchValue = $search_arr['value']; // Search value
+
+        // Total records
+        $totalRecords = ProjectModel::select('count(*) as allcount')
+            ->where(function ($q){
+                $q->where('buildinfo_console',1)
+                    ->orWhere('buildinfo_console',4);
+            })
+            ->count();
+        $totalRecordswithFilter = ProjectModel::select('count(*) as allcount')
+            ->leftjoin('ngocphandang_da','ngocphandang_da.id','=','ngocphandang_project.ma_da')
+            ->leftjoin('ngocphandang_template','ngocphandang_template.id','=','ngocphandang_project.template')
+            ->where(function ($a) use ($searchValue) {
+                $a->where('ngocphandang_da.ma_da', 'like', '%' . $searchValue . '%')
+                    ->orWhere('ngocphandang_project.projectname', 'like', '%' . $searchValue . '%')
+                    ->orWhere('ngocphandang_project.title_app', 'like', '%' . $searchValue . '%')
+                    ->orWhere('ngocphandang_template.template', 'like', '%' . $searchValue . '%')
+                    ->orWhere('ngocphandang_project.Oppo_package', 'like', '%' . $searchValue . '%');
+            })
+            ->where('ngocphandang_project.Oppo_package','<>','null')
+            ->count();
+
+
+        // Get records, also we have included search filter as well
+        $records = ProjectModel::orderBy($columnName, $columnSortOrder)
+            ->leftjoin('ngocphandang_da','ngocphandang_da.id','=','ngocphandang_project.ma_da')
+            ->leftjoin('ngocphandang_template','ngocphandang_template.id','=','ngocphandang_project.template')
+
+            ->where(function ($a) use ($searchValue) {
+                $a->where('ngocphandang_da.ma_da', 'like', '%' . $searchValue . '%')
+                    ->orWhere('ngocphandang_project.projectname', 'like', '%' . $searchValue . '%')
+                    ->orWhere('ngocphandang_project.title_app', 'like', '%' . $searchValue . '%')
+                    ->orWhere('ngocphandang_template.template', 'like', '%' . $searchValue . '%')
+                    ->orWhere('ngocphandang_project.Oppo_package', 'like', '%' . $searchValue . '%');
+
+            })
+            ->where('ngocphandang_project.Oppo_package','<>',null)
+            ->select('ngocphandang_project.*')
+            ->skip($start)
+            ->take($rowperpage)
+            ->get();
+
+
+        $data_arr = array();
+        foreach ($records as $record) {
+            $btn = ' <a href="javascript:void(0)" onclick="detailOppo('.$record->projectid.')" class="btn btn-outline-warning"><i class="mdi mdi-clipboard-text"></i></a>';
+            $ma_da = DB::table('ngocphandang_project')
+                ->join('ngocphandang_da','ngocphandang_da.id','=','ngocphandang_project.ma_da')
+                ->where('ngocphandang_da.id',$record->ma_da)
+                ->first();
+            $template = DB::table('ngocphandang_project')
+                ->join('ngocphandang_template','ngocphandang_template.id','=','ngocphandang_project.template')
+                ->where('ngocphandang_template.id',$record->template)
+                ->first();
+
+            if(isset($ma_da)) {
+                $data_ma_da =
+                    '<span style="line-height:3"> Mã Dự án: ' . $ma_da->ma_da . '</span>';
+            }else{
+                $data_ma_da = '';
+            }
+            if(isset($template)) {
+                $data_template =  '<p class="text-muted" style="line-height:0.5">Template: '.$template->template.'</p>';
+            }else{
+                $data_template='';
+            }
+
+            if(isset($record->projectname)) {
+                $data_projectname =  '<p class="text-muted" style="line-height:0.5">Project: '.$record->projectname.'</p>';
+            }else{
+                $data_projectname='';
+            }
+
+            if(isset($record->title_app)) {
+                $data_title_app=  '<p class="text-muted" style="line-height:0.5">'.$record->title_app.'</p>';
+            }else{
+                $data_title_app='';
+            }
+            $ads = json_decode($record->Oppo_ads,true);
+            $package_Oppo = '<p style="line-height:0.5">'.$record->Oppo_package.'</p>';
+            $ads_banner = '<p class="text-muted" style="line-height:0.5">ads_banner: '.$ads['ads_banner'].'</p>';
+            $ads_inter = '<p class="text-muted" style="line-height:0.5">ads_inter: '.$ads['ads_inter'].'</p>';
+            $ads_native = '<p class="text-muted" style="line-height:0.5">ads_native: '.$ads['ads_native'].'</p>';
+            $ads_open = '<p class="text-muted" style="line-height:0.5">ads_open: '.$ads['ads_open'].'</p>';
+            $ads_reward = '<p class="text-muted" style="line-height:0.5">ads_reward: '.$ads['ads_reward'].'</p>';
+//
+
+
+            if ($record['buildinfo_console']==0  ) {
+                $buildinfo_console = 'Trạng thái tĩnh';
+            }
+            elseif($record['buildinfo_console']== 1){
+                $buildinfo_console = '<span class="badge badge-dark">Build App</span>';
+
+            }
+            elseif($record['buildinfo_console']==2){
+                $buildinfo_console =  '<span class="badge badge-warning">Đang xử lý Build App</span>';
+            }
+            elseif($record['buildinfo_console']==3){
+                $buildinfo_console =  '<span class="badge badge-info">Kết thúc Build App</span>';
+            }
+            elseif($record['buildinfo_console']==4){
+                $buildinfo_console =  '<span class="badge badge-primary">Check Data Project</span>';
+            }
+            elseif($record['buildinfo_console']==5){
+                $buildinfo_console =  '<span class="badge badge-success">Đang xử lý check dữ liệu của Project</span>';
+            }
+            elseif($record['buildinfo_console']==6){
+                $buildinfo_console =  '<span class="badge badge-danger">Kết thúc Check</span>';
+            }
+//
+            if(isset($record->logo)){
+                $logo = "<img class='rounded mx-auto d-block'  width='100px'  height='100px'  src='../uploads/project/$record->projectname/thumbnail/$record->logo'>";
+            }else{
+                $logo = '<img class="rounded mx-auto d-block" width="100px" height="100px" src="assets\images\logo-sm.png">';
+            }
+            if ($record->buildinfo_mess){
+                $mess_info = '';
+                $buildinfo_mess = $record->buildinfo_mess;
+                $buildinfo_mess =  (explode('|',$buildinfo_mess));
+                $buildinfo_mess = array_reverse($buildinfo_mess);
+                for($i = 0 ; $i < 6 ; $i++){
+                    if(isset($buildinfo_mess[$i])){
+                        $mess_info .=  $buildinfo_mess[$i].'<br>';
+                    }
+                }
+
+            }
+            $data_arr[] = array(
+                "updated_at" => $record->updated_at,
+                "logo" => $logo,
+                "ma_da"=>$data_ma_da.$data_template.$data_projectname.$data_title_app,
+                "package" => $package_Oppo.$ads_banner.$ads_inter.$ads_native.$ads_open.$ads_reward,
+//                "buildinfo_mess" => $mess_info,
+                "buildinfo_console" =>$buildinfo_console,
+                "action"=> $btn,
+            );
+        }
+        $response = array(
+            "draw" => intval($draw),
+            "iTotalRecords" => $totalRecords,
+            "iTotalDisplayRecords" => $totalRecordswithFilter,
+            "aaData" => $data_arr,
+        );
+
+        echo json_encode($response);
+    }
+
+    public function getVivo(Request $request)
+    {
+
+        $draw = $request->get('draw');
+        $start = $request->get("start");
+        $rowperpage = $request->get("length"); // total number of rows per page
+
+        $columnIndex_arr = $request->get('order');
+        $columnName_arr = $request->get('columns');
+        $order_arr = $request->get('order');
+        $search_arr = $request->get('search');
+
+        $columnIndex = $columnIndex_arr[0]['column']; // Column index
+        $columnName = $columnName_arr[$columnIndex]['data']; // Column name
+        $columnSortOrder = $order_arr[0]['dir']; // asc or desc
+        $searchValue = $search_arr['value']; // Search value
+
+        // Total records
+        $totalRecords = ProjectModel::select('count(*) as allcount')
+            ->where(function ($q){
+                $q->where('buildinfo_console',1)
+                    ->orWhere('buildinfo_console',4);
+            })
+            ->count();
+        $totalRecordswithFilter = ProjectModel::select('count(*) as allcount')
+            ->leftjoin('ngocphandang_da','ngocphandang_da.id','=','ngocphandang_project.ma_da')
+            ->leftjoin('ngocphandang_template','ngocphandang_template.id','=','ngocphandang_project.template')
+            ->where(function ($a) use ($searchValue) {
+                $a->where('ngocphandang_da.ma_da', 'like', '%' . $searchValue . '%')
+                    ->orWhere('ngocphandang_project.projectname', 'like', '%' . $searchValue . '%')
+                    ->orWhere('ngocphandang_project.title_app', 'like', '%' . $searchValue . '%')
+                    ->orWhere('ngocphandang_template.template', 'like', '%' . $searchValue . '%')
+                    ->orWhere('ngocphandang_project.Vivo_package', 'like', '%' . $searchValue . '%');
+            })
+            ->where('ngocphandang_project.Vivo_package','<>','null')
+            ->count();
+
+
+        // Get records, also we have included search filter as well
+        $records = ProjectModel::orderBy($columnName, $columnSortOrder)
+            ->leftjoin('ngocphandang_da','ngocphandang_da.id','=','ngocphandang_project.ma_da')
+            ->leftjoin('ngocphandang_template','ngocphandang_template.id','=','ngocphandang_project.template')
+
+            ->where(function ($a) use ($searchValue) {
+                $a->where('ngocphandang_da.ma_da', 'like', '%' . $searchValue . '%')
+                    ->orWhere('ngocphandang_project.projectname', 'like', '%' . $searchValue . '%')
+                    ->orWhere('ngocphandang_project.title_app', 'like', '%' . $searchValue . '%')
+                    ->orWhere('ngocphandang_template.template', 'like', '%' . $searchValue . '%')
+                    ->orWhere('ngocphandang_project.Vivo_package', 'like', '%' . $searchValue . '%');
+
+            })
+            ->where('ngocphandang_project.Vivo_package','<>',null)
+            ->select('ngocphandang_project.*')
+            ->skip($start)
+            ->take($rowperpage)
+            ->get();
+
+
+        $data_arr = array();
+        foreach ($records as $record) {
+            $btn = ' <a href="javascript:void(0)" onclick="detailVivo('.$record->projectid.')" class="btn btn-outline-warning"><i class="mdi mdi-clipboard-text"></i></a>';
+            $ma_da = DB::table('ngocphandang_project')
+                ->join('ngocphandang_da','ngocphandang_da.id','=','ngocphandang_project.ma_da')
+                ->where('ngocphandang_da.id',$record->ma_da)
+                ->first();
+            $template = DB::table('ngocphandang_project')
+                ->join('ngocphandang_template','ngocphandang_template.id','=','ngocphandang_project.template')
+                ->where('ngocphandang_template.id',$record->template)
+                ->first();
+
+            if(isset($ma_da)) {
+                $data_ma_da =
+                    '<span style="line-height:3"> Mã Dự án: ' . $ma_da->ma_da . '</span>';
+            }else{
+                $data_ma_da = '';
+            }
+            if(isset($template)) {
+                $data_template =  '<p class="text-muted" style="line-height:0.5">Template: '.$template->template.'</p>';
+            }else{
+                $data_template='';
+            }
+
+            if(isset($record->projectname)) {
+                $data_projectname =  '<p class="text-muted" style="line-height:0.5">Project: '.$record->projectname.'</p>';
+            }else{
+                $data_projectname='';
+            }
+
+            if(isset($record->title_app)) {
+                $data_title_app=  '<p class="text-muted" style="line-height:0.5">'.$record->title_app.'</p>';
+            }else{
+                $data_title_app='';
+            }
+            $ads = json_decode($record->Vivo_ads,true);
+            $package_Vivo = '<p style="line-height:0.5">'.$record->Vivo_package.'</p>';
+            $ads_banner = '<p class="text-muted" style="line-height:0.5">ads_banner: '.$ads['ads_banner'].'</p>';
+            $ads_inter = '<p class="text-muted" style="line-height:0.5">ads_inter: '.$ads['ads_inter'].'</p>';
+            $ads_native = '<p class="text-muted" style="line-height:0.5">ads_native: '.$ads['ads_native'].'</p>';
+            $ads_open = '<p class="text-muted" style="line-height:0.5">ads_open: '.$ads['ads_open'].'</p>';
+            $ads_reward = '<p class="text-muted" style="line-height:0.5">ads_reward: '.$ads['ads_reward'].'</p>';
+//
+
+
+            if ($record['buildinfo_console']==0  ) {
+                $buildinfo_console = 'Trạng thái tĩnh';
+            }
+            elseif($record['buildinfo_console']== 1){
+                $buildinfo_console = '<span class="badge badge-dark">Build App</span>';
+
+            }
+            elseif($record['buildinfo_console']==2){
+                $buildinfo_console =  '<span class="badge badge-warning">Đang xử lý Build App</span>';
+            }
+            elseif($record['buildinfo_console']==3){
+                $buildinfo_console =  '<span class="badge badge-info">Kết thúc Build App</span>';
+            }
+            elseif($record['buildinfo_console']==4){
+                $buildinfo_console =  '<span class="badge badge-primary">Check Data Project</span>';
+            }
+            elseif($record['buildinfo_console']==5){
+                $buildinfo_console =  '<span class="badge badge-success">Đang xử lý check dữ liệu của Project</span>';
+            }
+            elseif($record['buildinfo_console']==6){
+                $buildinfo_console =  '<span class="badge badge-danger">Kết thúc Check</span>';
+            }
+//
+            if(isset($record->logo)){
+                $logo = "<img class='rounded mx-auto d-block'  width='100px'  height='100px'  src='../uploads/project/$record->projectname/thumbnail/$record->logo'>";
+            }else{
+                $logo = '<img class="rounded mx-auto d-block" width="100px" height="100px" src="assets\images\logo-sm.png">';
+            }
+            if ($record->buildinfo_mess){
+                $mess_info = '';
+                $buildinfo_mess = $record->buildinfo_mess;
+                $buildinfo_mess =  (explode('|',$buildinfo_mess));
+                $buildinfo_mess = array_reverse($buildinfo_mess);
+                for($i = 0 ; $i < 6 ; $i++){
+                    if(isset($buildinfo_mess[$i])){
+                        $mess_info .=  $buildinfo_mess[$i].'<br>';
+                    }
+                }
+
+            }
+            $data_arr[] = array(
+                "updated_at" => $record->updated_at,
+                "logo" => $logo,
+                "ma_da"=>$data_ma_da.$data_template.$data_projectname.$data_title_app,
+                "package" => $package_Vivo.$ads_banner.$ads_inter.$ads_native.$ads_open.$ads_reward,
+//                "buildinfo_mess" => $mess_info,
+                "buildinfo_console" =>$buildinfo_console,
+                "action"=> $btn,
+            );
+        }
+        $response = array(
+            "draw" => intval($draw),
+            "iTotalRecords" => $totalRecords,
+            "iTotalDisplayRecords" => $totalRecordswithFilter,
+            "aaData" => $data_arr,
+        );
+
+        echo json_encode($response);
+    }
+
     public function create(Request  $request)
     {
         $rules = [
@@ -810,8 +1828,10 @@ class ProjectController extends Controller
         $project = ProjectModel::where('projectid',$id)->first();
         $policy = Template::select('policy1','policy2')->where('id',$project->template)->first();
         $store_name= Dev::select('store_name')->where('id',$project->Chplay_buildinfo_store_name_x)->first();
+        $da= Da::select('ma_da')->where('id',$project->ma_da)->first();
+        $template= Template::select('template')->where('id',$project->template)->first();
 
-        return response()->json([$project,$policy,$store_name]);
+        return response()->json([$project,$policy,$store_name,$da,$template]);
     }
 
     public function update(Request $request)

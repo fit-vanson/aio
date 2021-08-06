@@ -17,9 +17,11 @@
 
 @section('breadcrumb')
 <div class="col-sm-6">
-    <h4 class="page-title">Tiến trình xử lý Project</h4>
+    <h4 class="page-title">Market Amazon</h4>
 </div>
+@include('modals.detailApps')
 @endsection
+
 @section('content')
 
     <div class="row">
@@ -33,7 +35,6 @@
                             <th width="10%">Logo</th>
                             <th width="20%">Mã dự án</th>
                             <th width="30%">Package</th>
-                            <th width="30%">Message</th>
                             <th width="30%">Trạng thái Console</th>
                             <th width="10%">Action</th>
                         </tr>
@@ -69,11 +70,11 @@
 <script src="assets/pages/datatables.init.js"></script>
 <script src="plugins/select2/js/select2.min.js"></script>
 
-<script>
-    $("#template").select2({});
-    $("#ma_da").select2({});
-    $("#buildinfo_store_name_x").select2({});
-</script>
+{{--<script>--}}
+{{--    $("#template").select2({});--}}
+{{--    $("#ma_da").select2({});--}}
+{{--    $("#buildinfo_store_name_x").select2({});--}}
+{{--</script>--}}
 
 
 <script type="text/javascript">
@@ -89,7 +90,7 @@
             // processing: true,
             serverSide: true,
             ajax: {
-                url: "{{ route('project.getIndexBuild') }}",
+                url: "{{ route('project.getAmazon') }}",
                 type: "post"
             },
             columns: [
@@ -97,7 +98,7 @@
                 {data: 'logo', name: 'logo',orderable: false},
                 {data: 'ma_da', name: 'ma_da'},
                 {data: 'package', name: 'package',orderable: false},
-                {data: 'buildinfo_mess', name: 'buildinfo_mess',orderable: false},
+                // {data: 'buildinfo_mess', name: 'buildinfo_mess',orderable: false},
                 {data: 'buildinfo_console', name: 'buildinfo_console',orderable: false},
                 {data: 'action', name: 'action', orderable: false, searchable: false},
             ],
@@ -110,38 +111,60 @@
             ],
             order: [[ 0, 'desc' ]]
         });
-
-        setInterval( function () {
-            table.ajax.reload();
-        }, 5000 );
-
-
-        $(document).on('click','.removeProject', function (data){
-            var project_id = $(this).data("id");
-            swal({
-                    title: "Bạn có chắc muốn kết thúc?",
-                    text: "",
-                    type: "warning",
-                    showCancelButton: true,
-                    confirmButtonClass: "btn-danger",
-                    confirmButtonText: "Xác nhận!",
-                    closeOnConfirm: false
-                },
-                function(){
-                    $.ajax({
-                        type: "get",
-                        url: "{{ asset("project/removeProject") }}/" + project_id,
-                        success: function (data) {
-                            table.draw();
-                        },
-                        error: function (data) {
-                            console.log('Error:', data);
-                        }
-                    });
-                    swal("Đã di chuyển!",'', "success");
-                });
-        });
     });
+    function detailAmazon(id) {
+        $.get('{{asset('project/edit')}}/'+id,function (data) {
+            $("#projectForm input").prop("disabled", true);
+            if(data[4] == null) { data[4] = {template: "Chưa có template"}}
+            if(data[3] == null) { data[3] = {ma_da: "Chưa có mã dự án"}}
+            if(data[2] == null) { data[2] = {store_name: "Chưa có Store Name"}}
+            var Amazon_ads = '';
+            if(data[0].Amazon_ads) {
+                Amazon_ads = data[0].Amazon_ads;
+                Amazon_ads = JSON.parse(Amazon_ads);
+            }
+            if(data[0].logo) {
+                $("#avatar").attr("src","../uploads/project/"+data[0].projectname+"/thumbnail/"+data[0].logo);
+            }else {
+                $("#avatar").attr("src","img/logo.png");
+            }
+            $('#project_id').val(data[0].projectid);
+            $('#projectname').val(data[0].projectname);
+            $('#template').val(data[4].template);
+            $('#ma_da').val(data[3].ma_da);
+            $('#title_app').val(data[0].title_app);
+            $('#buildinfo_vernum').val(data[0].buildinfo_vernum);
+            $('#buildinfo_verstr').val(data[0].buildinfo_verstr);
+            $('#buildinfo_app_name_x').val(data[0].buildinfo_app_name_x);
+            $('#buildinfo_keystore').val(data[0].buildinfo_keystore);
+            $('#buildinfo_sdk').val(data[0].buildinfo_sdk);
+            $('#buildinfo_link_policy_x').val(data[0].buildinfo_link_policy_x);
+            $('#buildinfo_link_youtube_x').val(data[0].buildinfo_link_youtube_x);
+            $('#buildinfo_link_fanpage').val(data[0].buildinfo_link_fanpage);
+            $('#buildinfo_api_key_x').val(data[0].buildinfo_api_key_x);
+            $('#buildinfo_link_website').val(data[0].buildinfo_link_website);
+
+
+            $('#package').val(data[0].Amazon_package);
+            $('#buildinfo_store_name_x').val(data[2].store_name);
+            $('#ads_id').val(Amazon_ads.ads_id);
+            $('#banner').val(Amazon_ads.ads_banner);
+            $('#ads_inter').val(Amazon_ads.ads_inter);
+            $('#ads_reward').val(Amazon_ads.ads_reward);
+            $('#ads_native').val(Amazon_ads.ads_native);
+            $('#ads_open').val(Amazon_ads.ads_open);
+
+            $('#Amazon_buildinfo_link_store').val(data[0].Amazon_buildinfo_link_store);
+            $('#Amazon_buildinfo_link_app').val(data[0].Amazon_buildinfo_link_app);
+            $('#Amazon_buildinfo_email_dev_x').val(data[0].Amazon_buildinfo_email_dev_x);
+            $('#Amazon_status').val(data[0].Amazon_status);
+            $('#modelHeading').html("Chi tiết");
+            $('#ajaxModel').modal('show');
+            $('.modal').on('hidden.bs.modal', function (e) {
+                $('body').addClass('modal-open');
+            });
+        })
+    }
 </script>
 
 

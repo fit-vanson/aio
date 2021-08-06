@@ -26,9 +26,14 @@
                                     @can('template-index')
                                     <li><a href="{{route('template.index')}}">Quản lý Template</a></li>
                                     @endcan
-
                                     @can('project-index')
                                         <li><a href="{{route('project.indexBuild')}}">Tiến trình xử lý</a></li>
+                                        <li><a href="{{route('project.appChplay')}}">Quản lý APP (CHPlay)</a></li>
+                                        <li><a href="{{route('project.appAmazon')}}">Quản lý APP (Amazon)</a></li>
+                                        <li><a href="{{route('project.appSamsung')}}">Quản lý APP (Samsung)</a></li>
+                                        <li><a href="{{route('project.appXiaomi')}}">Quản lý APP (Xiaomi)</a></li>
+                                        <li><a href="{{route('project.appOppo')}}">Quản lý APP (Oppo)</a></li>
+                                        <li><a href="{{route('project.appVivo')}}">Quản lý APP (Vivo)</a></li>
                                     @endcan
                                 </ul>
                             </li>
