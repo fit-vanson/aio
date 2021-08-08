@@ -33,10 +33,14 @@
                         <tr>
                             <th >ID</th>
                             <th width="10%">Logo</th>
-                            <th width="20%">Mã dự án</th>
-                            <th width="30%">Package</th>
-                            <th width="30%">Trạng thái Console</th>
-                            <th width="10%">Action</th>
+                            <th width="15%">Mã dự án</th>
+                            <th width="5%">Install</th>
+                            <th width="5%">Voters</th>
+                            <th width="5%">Review</th>
+                            <th width="5%">Score</th>
+                            <th width="20%">Message</th>
+                            <th width="15%">Trạng thái</th>
+                            <th width="5%">Action</th>
                         </tr>
                         </thead>
                         <tbody>
@@ -84,34 +88,59 @@
                 'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
             }
         });
+        var currData = [];
         var table = $('.data-table').DataTable({
-            displayLength: 5,
+            displayLength: 50,
             lengthMenu: [5, 10, 25, 50, 75, 100],
-            // processing: true,
             serverSide: true,
             ajax: {
                 url: "{{ route('project.getChplay') }}",
-                type: "post"
+                type: "post",
             },
             columns: [
                 {data: 'updated_at', name: 'updated_at',},
                 {data: 'logo', name: 'logo',orderable: false},
                 {data: 'ma_da', name: 'ma_da'},
-                {data: 'package', name: 'package',orderable: false},
-                // {data: 'buildinfo_mess', name: 'buildinfo_mess',orderable: false},
-                {data: 'buildinfo_console', name: 'buildinfo_console',orderable: false},
+                {data: 'install', name: 'install',"orderable": true},
+                {data: 'numberVoters', name: 'numberVoters'},
+                {data: 'numberReviews', name: 'numberReviews'},
+                {data: 'score', name: 'score'},
+                {data: 'buildinfo_mess', name: 'buildinfo_mess',orderable: false},
+                {data: 'status', name: 'status',orderable: false},
                 {data: 'action', name: 'action', orderable: false, searchable: false},
             ],
             columnDefs: [
                 {
-                    "targets": [ 0 ],
+                    "targets": [ 0],
                     "visible": false,
                     "searchable": false
                 }
             ],
-            order: [[ 0, 'desc' ]]
+            order: [[ 0, 'desc' ]],
+            fnRowCallback: function (nRow, aData, iDisplayIndex, iDisplayIndexFull) {
+                console.log(aData.status)
+
+                if (aData.status.includes('Check')) {
+                    $('td', nRow).css('background-color', 'rgb(255 0 0 / 29%)').css('color', 'white');
+                }
+                if (aData.status.includes('Public')) {
+                    $('td', nRow).css('background-color', 'rgb(144 144 144)').css('color', '#ffffff' );
+                }
+                if (aData.status.includes('Reject')) {
+                    $('td', nRow).css('background-color', 'rgb(2 164 153)').css('color', 'white');
+                }
+                if (aData.status.includes('UnPublish')) {
+                    $('td', nRow).css('background-color', 'rgb(146 232 255)').css('color', 'white');
+                }
+                if (aData.status.includes('Remove')) {
+                    $('td', nRow).css('background-color', 'rgb(98 110 212)').css('color', 'white');
+                }
+
+            },
         });
     });
+
+
     function detailChplay(id) {
         $.get('{{asset('project/edit')}}/'+id,function (data) {
             $("#projectForm input").prop("disabled", true);

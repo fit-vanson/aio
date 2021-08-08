@@ -687,42 +687,30 @@ class ProjectController extends Controller
                     ->orWhere('ngocphandang_project.projectname', 'like', '%' . $searchValue . '%')
                     ->orWhere('ngocphandang_project.title_app', 'like', '%' . $searchValue . '%')
                     ->orWhere('ngocphandang_template.template', 'like', '%' . $searchValue . '%')
-                    ->orWhere('ngocphandang_project.Chplay_package', 'like', '%' . $searchValue . '%')
-                    ->orWhere('ngocphandang_project.Amazon_package', 'like', '%' . $searchValue . '%')
-                    ->orWhere('ngocphandang_project.Samsung_package', 'like', '%' . $searchValue . '%')
-                    ->orWhere('ngocphandang_project.Xiaomi_package', 'like', '%' . $searchValue . '%')
-                    ->orWhere('ngocphandang_project.Oppo_package', 'like', '%' . $searchValue . '%')
-                    ->orWhere('ngocphandang_project.Vivo_package', 'like', '%' . $searchValue . '%');
+                    ->orWhere('ngocphandang_project.Chplay_package', 'like', '%' . $searchValue . '%');
             })
             ->where('ngocphandang_project.Chplay_package','<>','null')
             ->count();
 
 
         // Get records, also we have included search filter as well
-        $records = ProjectModel::orderBy($columnName, $columnSortOrder)
-            ->leftjoin('ngocphandang_da','ngocphandang_da.id','=','ngocphandang_project.ma_da')
+        $records = ProjectModel::
+//        orderBy($columnName, $columnSortOrder)
+//            ->
+            leftjoin('ngocphandang_da','ngocphandang_da.id','=','ngocphandang_project.ma_da')
             ->leftjoin('ngocphandang_template','ngocphandang_template.id','=','ngocphandang_project.template')
-
             ->where(function ($a) use ($searchValue) {
                 $a->where('ngocphandang_da.ma_da', 'like', '%' . $searchValue . '%')
                     ->orWhere('ngocphandang_project.projectname', 'like', '%' . $searchValue . '%')
                     ->orWhere('ngocphandang_project.title_app', 'like', '%' . $searchValue . '%')
                     ->orWhere('ngocphandang_template.template', 'like', '%' . $searchValue . '%')
-                    ->orWhere('ngocphandang_project.Chplay_package', 'like', '%' . $searchValue . '%')
-                    ->orWhere('ngocphandang_project.Amazon_package', 'like', '%' . $searchValue . '%')
-                    ->orWhere('ngocphandang_project.Samsung_package', 'like', '%' . $searchValue . '%')
-                    ->orWhere('ngocphandang_project.Xiaomi_package', 'like', '%' . $searchValue . '%')
-                    ->orWhere('ngocphandang_project.Oppo_package', 'like', '%' . $searchValue . '%')
-                    ->orWhere('ngocphandang_project.Vivo_package', 'like', '%' . $searchValue . '%');
-
+                    ->orWhere('ngocphandang_project.Chplay_package', 'like', '%' . $searchValue . '%');
             })
             ->where('ngocphandang_project.Chplay_package','<>',null)
             ->select('ngocphandang_project.*')
             ->skip($start)
             ->take($rowperpage)
             ->get();
-
-
         $data_arr = array();
         foreach ($records as $record) {
             $btn = ' <a href="javascript:void(0)" onclick="detailChplay('.$record->projectid.')" class="btn btn-outline-warning"><i class="mdi mdi-clipboard-text"></i></a>';
@@ -748,7 +736,7 @@ class ProjectController extends Controller
             }
 
             if(isset($record->projectname)) {
-                $data_projectname =  '<p class="text-muted" style="line-height:0.5">Project: '.$record->projectname.'</p>';
+                $data_projectname =  '<p style="line-height:0.5">Project: '.$record->projectname.'</p>';
             }else{
                 $data_projectname='';
             }
@@ -758,22 +746,13 @@ class ProjectController extends Controller
             }else{
                 $data_title_app='';
             }
-            $ads = json_decode($record->Chplay_ads,true);
+
             $package_chplay = '<p style="line-height:0.5">'.$record->Chplay_package.'</p>';
-            $ads_banner = '<p class="text-muted" style="line-height:0.5">ads_banner: '.$ads['ads_banner'].'</p>';
-            $ads_inter = '<p class="text-muted" style="line-height:0.5">ads_inter: '.$ads['ads_inter'].'</p>';
-            $ads_native = '<p class="text-muted" style="line-height:0.5">ads_native: '.$ads['ads_native'].'</p>';
-            $ads_open = '<p class="text-muted" style="line-height:0.5">ads_open: '.$ads['ads_open'].'</p>';
-            $ads_reward = '<p class="text-muted" style="line-height:0.5">ads_reward: '.$ads['ads_reward'].'</p>';
-//
-
-
             if ($record['buildinfo_console']==0  ) {
                 $buildinfo_console = 'Trạng thái tĩnh';
             }
             elseif($record['buildinfo_console']== 1){
                 $buildinfo_console = '<span class="badge badge-dark">Build App</span>';
-
             }
             elseif($record['buildinfo_console']==2){
                 $buildinfo_console =  '<span class="badge badge-warning">Đang xử lý Build App</span>';
@@ -790,14 +769,31 @@ class ProjectController extends Controller
             elseif($record['buildinfo_console']==6){
                 $buildinfo_console =  '<span class="badge badge-danger">Kết thúc Check</span>';
             }
-//
-            if(isset($record->logo)){
-                $logo = "<img class='rounded mx-auto d-block'  width='100px'  height='100px'  src='../uploads/project/$record->projectname/thumbnail/$record->logo'>";
-            }else{
-                $logo = '<img class="rounded mx-auto d-block" width="100px" height="100px" src="assets\images\logo-sm.png">';
+
+            if ($record['Chplay_status']==0  ) {
+                $Chplay_status = 'Chưa Publish';
             }
+            elseif($record['Chplay_status']== 1){
+                $Chplay_status = '<span class="badge badge-dark">Public</span>';
+            }
+            elseif($record['Chplay_status']==2){
+                $Chplay_status =  '<span class="badge badge-warning">Suppend</span>';
+            }
+            elseif($record['Chplay_status']==3){
+                $Chplay_status =  '<span class="badge badge-info">UnPublish</span>';
+            }
+            elseif($record['Chplay_status']==4){
+                $Chplay_status =  '<span class="badge badge-primary">Remove</span>';
+            }
+            elseif($record['Chplay_status']==5){
+                $Chplay_status =  '<span class="badge badge-success">Reject</span>';
+            }
+            elseif($record['Chplay_status']==6){
+                $Chplay_status =  '<span class="badge badge-danger">Check</span>';
+            }
+
+            $mess_info = '';
             if ($record->buildinfo_mess){
-                $mess_info = '';
                 $buildinfo_mess = $record->buildinfo_mess;
                 $buildinfo_mess =  (explode('|',$buildinfo_mess));
                 $buildinfo_mess = array_reverse($buildinfo_mess);
@@ -806,17 +802,34 @@ class ProjectController extends Controller
                         $mess_info .=  $buildinfo_mess[$i].'<br>';
                     }
                 }
-
             }
+
+            if(isset($record->Chplay_bot)){
+                $bot = json_decode($record->Chplay_bot,true);
+                if($bot['logo'] != 0){
+                    $logo = $bot['logo'];
+                    $logo = "<img class='rounded mx-auto d-block'  width='100px'  height='100px'  src='$logo'>";
+                }else{
+                    $logo = '<img class="rounded mx-auto d-block" width="100px" height="100px" src="../uploads/project/'.$record->projectname.'/thumbnail/'.$record->logo.'">';
+                }
+            }else{
+                $logo = '<img class="rounded mx-auto d-block" width="100px" height="100px" src="assets\images\logo-sm.png">';
+            }
+
             $data_arr[] = array(
-                "updated_at" => $record->updated_at,
+                "updated_at" => strtotime($record->updated_at),
                 "logo" => $logo,
-                "ma_da"=>$data_ma_da.$data_template.$data_projectname.$data_title_app,
-                "package" => $package_chplay.$ads_banner.$ads_inter.$ads_native.$ads_open.$ads_reward,
-//                "buildinfo_mess" => $mess_info,
-                "buildinfo_console" =>$buildinfo_console,
+                "ma_da"=>$data_projectname.$package_chplay,
+                "install" => $bot['installs'],
+                "numberVoters" => $bot['numberVoters'],
+                "numberReviews" => $bot['numberReviews'],
+                "score" => $bot['score'],
+                "buildinfo_mess" => $mess_info,
+                "status" =>'Console: '.$buildinfo_console.'<br> Ứng dụng: '.$Chplay_status,
                 "action"=> $btn,
             );
+
+
         }
         $response = array(
             "draw" => intval($draw),
@@ -827,6 +840,7 @@ class ProjectController extends Controller
 
         echo json_encode($response);
     }
+
 
     public function getAmazon(Request $request)
     {
@@ -1742,7 +1756,7 @@ class ProjectController extends Controller
         $data['Chplay_buildinfo_email_dev_x'] = $request->Chplay_buildinfo_email_dev_x;
         $data['Chplay_buildinfo_link_app'] = $request->Chplay_buildinfo_link_app;
         $data['Chplay_ads'] = $Chplay_ads;
-        $data['Chplay_status'] = $request->Chplay_status;
+        $data['Chplay_status'] = 0;
 
         $data['Amazon_package'] = $request->Amazon_package;
         $data['Amazon_buildinfo_store_name_x'] = $request->Amazon_buildinfo_store_name_x;
@@ -1750,7 +1764,7 @@ class ProjectController extends Controller
         $data['Amazon_buildinfo_email_dev_x'] = $request->Amazon_buildinfo_email_dev_x;
         $data['Amazon_buildinfo_link_app'] = $request->Amazon_buildinfo_link_app;
         $data['Amazon_ads'] = $Amazon_ads;
-        $data['Amazon_status'] = $request->Amazon_status;
+        $data['Amazon_status'] = 0;
 
         $data['Samsung_package'] = $request->Samsung_package;
         $data['Samsung_buildinfo_store_name_x'] = $request->Samsung_buildinfo_store_name_x;
@@ -1758,7 +1772,7 @@ class ProjectController extends Controller
         $data['Samsung_buildinfo_email_dev_x'] = $request->Samsung_buildinfo_email_dev_x;
         $data['Samsung_buildinfo_link_app'] = $request->Samsung_buildinfo_link_app;
         $data['Samsung_ads'] = $Samsung_ads;
-        $data['Samsung_status'] = $request->Samsung_status;
+        $data['Samsung_status'] = 0;
 
         $data['Xiaomi_package'] = $request->Xiaomi_package;
         $data['Xiaomi_buildinfo_store_name_x'] = $request->Xiaomi_buildinfo_store_name_x;
@@ -1766,7 +1780,7 @@ class ProjectController extends Controller
         $data['Xiaomi_buildinfo_email_dev_x'] = $request->Xiaomi_buildinfo_email_dev_x;
         $data['Xiaomi_buildinfo_link_app'] = $request->Xiaomi_buildinfo_link_app;
         $data['Xiaomi_ads'] = $Xiaomi_ads;
-        $data['Xiaomi_status'] = $request->Xiaomi_status;
+        $data['Xiaomi_status'] = 0;
 
         $data['Oppo_package'] = $request->Oppo_package;
         $data['Oppo_buildinfo_store_name_x'] = $request->Oppo_buildinfo_store_name_x;
@@ -1774,7 +1788,7 @@ class ProjectController extends Controller
         $data['Oppo_buildinfo_email_dev_x'] = $request->Oppo_buildinfo_email_dev_x;
         $data['Oppo_buildinfo_link_app'] = $request->Oppo_buildinfo_link_app;
         $data['Oppo_ads'] = $Oppo_ads;
-        $data['Oppo_status'] = $request->Oppo_status;
+        $data['Oppo_status'] = 0;
 
         $data['Vivo_package'] = $request->Vivo_package;
         $data['Vivo_buildinfo_store_name_x'] = $request->Vivo_buildinfo_store_name_x;
@@ -1782,7 +1796,7 @@ class ProjectController extends Controller
         $data['Vivo_buildinfo_email_dev_x'] = $request->Vivo_buildinfo_email_dev_x;
         $data['Vivo_buildinfo_link_app'] = $request->Vivo_buildinfo_link_app;
         $data['Vivo_ads'] = $Vivo_ads;
-        $data['Vivo_status'] = $request->Vivo_status;
+        $data['Vivo_status'] = 0;
 
         if(isset($request->logo)){
             $image = $request->file('logo');

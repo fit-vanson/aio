@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\CocsimController;
+use App\Http\Controllers\CronProjectController;
 use App\Http\Controllers\DaController;
 use App\Http\Controllers\DevAmazonController;
 use App\Http\Controllers\DevController;
@@ -119,6 +120,11 @@ Route::group(['prefix'=>'project','middleware'=>['CheckLogout','2fa']], function
 
 });
 
+
+Route::group(['prefix'=>'cronProject'], function (){
+    Route::get('/',[CronProjectController::class,'index'])->name('cronProject.index');
+    Route::get('/ch-play',[CronProjectController::class,'Chplay'])->name('cronProject.Chplay');
+});
 
 Route::group(['prefix'=>'template','middleware'=>['CheckLogout','2fa']], function (){
     Route::get('/',[TemplateController::class,'index'])->name('template.index')->middleware('can:template-index');

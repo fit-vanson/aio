@@ -140,7 +140,7 @@ class TemplateController extends Controller
             }
 
             if(isset($record->Vivo_category)){
-                $Vivo_category = 'CH Play: '.$record->Vivo_category;
+                $Vivo_category = 'Vivo: '.$record->Vivo_category;
             }else{
                 $Vivo_category ='';
             }
