@@ -99,6 +99,7 @@ Route::group(['prefix'=>'project','middleware'=>['CheckLogout','2fa']], function
 
     Route::get('/appChplay',[ProjectController::class,'appChplay'])->name('project.appChplay')->middleware('can:project-index');
     Route::post('/getChplay',[ProjectController::class,'getChplay'])->name('project.getChplay')->middleware('can:project-index');
+    Route::get('/checkbox/{id}',[ProjectController::class,'checkbox'])->name('project.checkbox')->middleware('can:project-edit');
 
     Route::get('/appAmazon',[ProjectController::class,'appAmazon'])->name('project.appAmazon')->middleware('can:project-index');
     Route::post('/getAmazon',[ProjectController::class,'getAmazon'])->name('project.getAmazon')->middleware('can:project-index');

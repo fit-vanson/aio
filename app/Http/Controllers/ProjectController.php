@@ -247,7 +247,6 @@ class ProjectController extends Controller
             }
             elseif($record['Chplay_status']== 1){
                 $Chplay_status = '<span class="badge badge-dark">Publish</span>';
-
             }
             elseif($record['Chplay_status']==2){
                 $Chplay_status =  '<span class="badge badge-warning">Suppend</span>';
@@ -263,6 +262,9 @@ class ProjectController extends Controller
             }
             elseif($record['Chplay_status']==6){
                 $Chplay_status =  '<span class="badge badge-danger">Check</span>';
+            }
+            elseif($record['Chplay_status']==7){
+                $Chplay_status =  '<span class="badge badge-warning">Pending</span>';
             }
             if ($record['Amazon_status']==0  ) {
                 $Amazon_status = 'Mặc định';
@@ -689,7 +691,7 @@ class ProjectController extends Controller
                     ->orWhere('ngocphandang_template.template', 'like', '%' . $searchValue . '%')
                     ->orWhere('ngocphandang_project.Chplay_package', 'like', '%' . $searchValue . '%');
             })
-            ->where('ngocphandang_project.Chplay_package','<>','null')
+            ->where('ngocphandang_project.Chplay_package','<>',null)
             ->count();
 
 
@@ -712,8 +714,17 @@ class ProjectController extends Controller
             ->take($rowperpage)
             ->get();
         $data_arr = array();
+
         foreach ($records as $record) {
-            $btn = ' <a href="javascript:void(0)" onclick="detailChplay('.$record->projectid.')" class="btn btn-outline-warning"><i class="mdi mdi-clipboard-text"></i></a>';
+
+            $btn = ' <a href="javascript:void(0)" onclick="detailChplay('.$record->projectid.')" class="btn btn-warning"><i class="mdi mdi-clipboard-text"></i></a>';
+
+
+            if($record->Chplay_status == 0 || $record->Chplay_status == 3 ){
+                $check = '<input type="checkbox" class="item_checkbox"   onchange="checkbox('.$record->projectid.')">';
+            }else{
+                $check = '';
+            }
             $ma_da = DB::table('ngocphandang_project')
                 ->join('ngocphandang_da','ngocphandang_da.id','=','ngocphandang_project.ma_da')
                 ->where('ngocphandang_da.id',$record->ma_da)
@@ -770,7 +781,7 @@ class ProjectController extends Controller
                 $buildinfo_console =  '<span class="badge badge-danger">Kết thúc Check</span>';
             }
 
-            if ($record['Chplay_status']==0  ) {
+            if ($record['Chplay_status'] ==0  ) {
                 $Chplay_status = 'Chưa Publish';
             }
             elseif($record['Chplay_status']== 1){
@@ -790,6 +801,9 @@ class ProjectController extends Controller
             }
             elseif($record['Chplay_status']==6){
                 $Chplay_status =  '<span class="badge badge-danger">Check</span>';
+            }
+            elseif($record['Chplay_status']==7){
+                $Chplay_status =  '<span class="badge badge-warning">Pending</span>';
             }
 
             $mess_info = '';
@@ -818,7 +832,7 @@ class ProjectController extends Controller
 
             $data_arr[] = array(
                 "updated_at" => strtotime($record->updated_at),
-                "logo" => $logo,
+                "logo" => $check . '  '.$logo,
                 "ma_da"=>$data_projectname.$package_chplay,
                 "install" => $bot['installs'],
                 "numberVoters" => $bot['numberVoters'],
@@ -2075,5 +2089,20 @@ class ProjectController extends Controller
             ]
         );
         return response()->json(['success'=>'Cập nhật thành công']);
+    }
+
+    public function checkbox($id){
+        $data = ProjectModel::find($id);
+        ProjectModel::updateOrCreate(
+            [
+                "projectid" => $data->projectid,
+            ],
+            [
+                'Chplay_status' => 7
+            ]
+        );
+        return response()->json(['success'=> $data->projectname.' đang chờ duyệt']);
+
+
     }
 }

@@ -82,7 +82,7 @@
 
 
 <script type="text/javascript">
-    $(function () {
+
         $.ajaxSetup({
             headers: {
                 'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
@@ -118,8 +118,7 @@
             ],
             order: [[ 0, 'desc' ]],
             fnRowCallback: function (nRow, aData, iDisplayIndex, iDisplayIndexFull) {
-                console.log(aData.status)
-
+                console.log(aData)
                 if (aData.status.includes('Check')) {
                     $('td', nRow).css('background-color', 'rgb(255 0 0 / 29%)').css('color', 'white');
                 }
@@ -135,10 +134,26 @@
                 if (aData.status.includes('Remove')) {
                     $('td', nRow).css('background-color', 'rgb(98 110 212)').css('color', 'white');
                 }
-
+                if (aData.status.includes('Pending')) {
+                    $('td', nRow).css('background-color', 'rgb(253 222 114)').css('color', 'white');
+                }
             },
         });
-    });
+
+
+
+    function checkbox(id) {
+        $.get('{{asset('project/checkbox')}}/'+id,function (data) {
+            if(data.success){
+                $.notify(data.success, "success");
+                table.draw();
+            }
+            if(data.errors){
+                $.notify(data.errors,"error");
+            }
+        })
+    }
+
 
 
     function detailChplay(id) {
@@ -194,6 +209,8 @@
             });
         })
     }
+
+
 </script>
 
 
