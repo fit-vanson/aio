@@ -123,7 +123,7 @@
                     $('td', nRow).css('background-color', 'rgb(255 0 0 / 29%)').css('color', 'white');
                 }
                 if (aData.status.includes('Public')) {
-                    $('td', nRow).css('background-color', 'rgb(144 144 144)').css('color', '#ffffff' );
+                    $('td', nRow).css('background-color', 'rgb(59 212 57 / 72%)').css('color', '#ffffff' );
                 }
                 if (aData.status.includes('Reject')) {
                     $('td', nRow).css('background-color', 'rgb(2 164 153)').css('color', 'white');
