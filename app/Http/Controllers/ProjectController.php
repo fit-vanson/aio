@@ -817,9 +817,7 @@ class ProjectController extends Controller
             if(isset($record->Chplay_bot)){
                 $bot = json_decode($record->Chplay_bot,true);
                 $logo = $bot['logo'];
-
                 $logo = '<img class="rounded mx-auto d-block" width="100px" height="100px" src="'.$logo.'">';
-
                 $data_arr[] = array(
                     "updated_at" => strtotime($record->updated_at),
                     "logo" => $check . '  '.$logo,
