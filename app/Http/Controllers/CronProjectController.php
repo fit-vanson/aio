@@ -52,7 +52,7 @@ class CronProjectController extends Controller
                        'released' => 0,
                        'updated' => 0,
                        'bot_name_dev' => 0,
-                       'logo' => 0,
+                       'logo' => '../uploads/project/'.$appChplay->projectname.'/thumbnail/'.$appChplay->logo,
                        'log_status'=>$log_status. '|'.$appChplay->Chplay_status,
                    ];
                }

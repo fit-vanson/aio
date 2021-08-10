@@ -99,6 +99,7 @@ class DevAmazonController extends Controller
                 "amazon_dev_name" => $record->amazon_dev_name,
                 "amazon_store_name" => $record->amazon_store_name,
                 "amazon_email"=>$email->gmail,
+                "amazon_pass"=>$record->amazon_pass,
                 "amazon_status"=>$status,
                 "amazon_note"=>$record->amazon_note,
                 "action"=> $btn,

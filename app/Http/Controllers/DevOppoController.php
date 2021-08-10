@@ -105,6 +105,7 @@ class DevOppoController extends Controller
                 "oppo_dev_name" => $record->oppo_dev_name,
                 "oppo_store_name" => $record->oppo_store_name,
                 "oppo_email"=>$email->gmail,
+                "oppo_pass"=>$record->oppo_pass,
                 "oppo_status"=>$status,
                 "oppo_note"=>$record->oppo_note,
                 "action"=> $btn,

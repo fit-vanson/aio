@@ -104,6 +104,7 @@ class DevSamsungController extends Controller
                 "samsung_dev_name" => $record->samsung_dev_name,
                 "samsung_store_name" => $record->samsung_store_name,
                 "samsung_email"=>$email->gmail,
+                "samsung_pass"=>$record->samsung_pass,
                 "samsung_status"=>$status,
                 "samsung_note"=>$record->samsung_note,
                 "action"=> $btn,

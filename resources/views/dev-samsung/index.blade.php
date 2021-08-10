@@ -41,6 +41,7 @@
                             <th>Dev name</th>
                             <th>Store name</th>
                             <th>Gmail </th>
+                            <th>Pass </th>
                             <th>Trạng thái</th>
                             <th>Ghi chú</th>
                             <th width="5%">Action</th>
@@ -97,6 +98,7 @@
                     {data: 'samsung_dev_name'},
                     {data: 'samsung_store_name'},
                     {data: 'samsung_email'},
+                    {data: 'samsung_pass'},
                     {data: 'samsung_status'},
                     {data: 'samsung_note'},
                     {data: 'action', name: 'action', orderable: false, searchable: false},

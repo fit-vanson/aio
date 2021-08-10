@@ -663,6 +663,7 @@ class ProjectController extends Controller
     public function getChplay(Request $request)
     {
 
+
         $draw = $request->get('draw');
         $start = $request->get("start");
         $rowperpage = $request->get("length"); // total number of rows per page
@@ -673,39 +674,63 @@ class ProjectController extends Controller
         $search_arr = $request->get('search');
 
         $columnIndex = $columnIndex_arr[0]['column']; // Column index
+
+
         $columnName = $columnName_arr[$columnIndex]['data']; // Column name
+
         $columnSortOrder = $order_arr[0]['dir']; // asc or desc
+
         $searchValue = $search_arr['value']; // Search value
 
+        if (isset($request->status_app)){
+            // Total records
+            $totalRecords = ProjectModel::select('count(*) as allcount')
+                ->where('ngocphandang_project.Chplay_package','<>','null')
+                ->where('ngocphandang_project.Chplay_status','=',$request->status_app)
+                ->count();
+            $totalRecordswithFilter = ProjectModel::select('count(*) as allcount')
+                ->leftjoin('ngocphandang_da','ngocphandang_da.id','=','ngocphandang_project.ma_da')
+                ->leftjoin('ngocphandang_template','ngocphandang_template.id','=','ngocphandang_project.template')
+                ->where(function ($a) use ($searchValue) {
+                    $a->Where('ngocphandang_project.projectname', 'like', '%' . $searchValue . '%')
+                        ->orWhere('ngocphandang_project.Chplay_package', 'like', '%' . $searchValue . '%');
+                })
+                ->where('ngocphandang_project.Chplay_package','<>',null)
+                ->where('ngocphandang_project.Chplay_status','=',$request->status_app)
+                ->count();
+            // Get records, also we have included search filter as well
+            $records = ProjectModel::
+        orderBy($columnName, $columnSortOrder)
+                ->where(function ($a) use ($searchValue) {
+                    $a->Where('ngocphandang_project.projectname', 'like', '%' . $searchValue . '%')
+                        ->orWhere('ngocphandang_project.Chplay_package', 'like', '%' . $searchValue . '%');
+                })
+                ->where('ngocphandang_project.Chplay_package','<>',null)
+                ->where('ngocphandang_project.Chplay_status','=',$request->status_app)
+                ->select('ngocphandang_project.*')
+                ->skip($start)
+                ->take($rowperpage)
+                ->get();
+        }    else {
         // Total records
         $totalRecords = ProjectModel::select('count(*) as allcount')
             ->where('ngocphandang_project.Chplay_package','<>','null')
             ->count();
         $totalRecordswithFilter = ProjectModel::select('count(*) as allcount')
-            ->leftjoin('ngocphandang_da','ngocphandang_da.id','=','ngocphandang_project.ma_da')
-            ->leftjoin('ngocphandang_template','ngocphandang_template.id','=','ngocphandang_project.template')
             ->where(function ($a) use ($searchValue) {
-                $a->where('ngocphandang_da.ma_da', 'like', '%' . $searchValue . '%')
-                    ->orWhere('ngocphandang_project.projectname', 'like', '%' . $searchValue . '%')
-                    ->orWhere('ngocphandang_project.title_app', 'like', '%' . $searchValue . '%')
-                    ->orWhere('ngocphandang_template.template', 'like', '%' . $searchValue . '%')
+                $a
+                    ->Where('ngocphandang_project.projectname', 'like', '%' . $searchValue . '%')
                     ->orWhere('ngocphandang_project.Chplay_package', 'like', '%' . $searchValue . '%');
             })
             ->where('ngocphandang_project.Chplay_package','<>',null)
             ->count();
-
-
+//        dd($columnName);
         // Get records, also we have included search filter as well
         $records = ProjectModel::
-//        orderBy($columnName, $columnSortOrder)
-//            ->
-            leftjoin('ngocphandang_da','ngocphandang_da.id','=','ngocphandang_project.ma_da')
-            ->leftjoin('ngocphandang_template','ngocphandang_template.id','=','ngocphandang_project.template')
+        orderBy($columnName, $columnSortOrder)
             ->where(function ($a) use ($searchValue) {
-                $a->where('ngocphandang_da.ma_da', 'like', '%' . $searchValue . '%')
-                    ->orWhere('ngocphandang_project.projectname', 'like', '%' . $searchValue . '%')
-                    ->orWhere('ngocphandang_project.title_app', 'like', '%' . $searchValue . '%')
-                    ->orWhere('ngocphandang_template.template', 'like', '%' . $searchValue . '%')
+                $a->
+                    Where('ngocphandang_project.projectname', 'like', '%' . $searchValue . '%')
                     ->orWhere('ngocphandang_project.Chplay_package', 'like', '%' . $searchValue . '%');
             })
             ->where('ngocphandang_project.Chplay_package','<>',null)
@@ -713,51 +738,21 @@ class ProjectController extends Controller
             ->skip($start)
             ->take($rowperpage)
             ->get();
+    }
         $data_arr = array();
 
         foreach ($records as $record) {
-
             $btn = ' <a href="javascript:void(0)" onclick="detailChplay('.$record->projectid.')" class="btn btn-warning"><i class="mdi mdi-clipboard-text"></i></a>';
-
-
             if($record->Chplay_status == 0 || $record->Chplay_status == 3 ){
                 $check = '<input type="checkbox" class="item_checkbox"   onchange="checkbox('.$record->projectid.')">';
             }else{
                 $check = '';
             }
-            $ma_da = DB::table('ngocphandang_project')
-                ->join('ngocphandang_da','ngocphandang_da.id','=','ngocphandang_project.ma_da')
-                ->where('ngocphandang_da.id',$record->ma_da)
-                ->first();
-            $template = DB::table('ngocphandang_project')
-                ->join('ngocphandang_template','ngocphandang_template.id','=','ngocphandang_project.template')
-                ->where('ngocphandang_template.id',$record->template)
-                ->first();
-
-            if(isset($ma_da)) {
-                $data_ma_da =
-                    '<span style="line-height:3"> Mã Dự án: ' . $ma_da->ma_da . '</span>';
-            }else{
-                $data_ma_da = '';
-            }
-            if(isset($template)) {
-                $data_template =  '<p class="text-muted" style="line-height:0.5">Template: '.$template->template.'</p>';
-            }else{
-                $data_template='';
-            }
-
             if(isset($record->projectname)) {
                 $data_projectname =  '<p style="line-height:0.5">Project: '.$record->projectname.'</p>';
             }else{
                 $data_projectname='';
             }
-
-            if(isset($record->title_app)) {
-                $data_title_app=  '<p class="text-muted" style="line-height:0.5">'.$record->title_app.'</p>';
-            }else{
-                $data_title_app='';
-            }
-
             $package_chplay = '<p style="line-height:0.5">'.$record->Chplay_package.'</p>';
             if ($record['buildinfo_console']==0  ) {
                 $buildinfo_console = 'Trạng thái tĩnh';
@@ -818,32 +813,41 @@ class ProjectController extends Controller
                 }
             }
 
+
             if(isset($record->Chplay_bot)){
                 $bot = json_decode($record->Chplay_bot,true);
-                if($bot['logo'] != 0){
-                    $logo = $bot['logo'];
-                    $logo = "<img class='rounded mx-auto d-block'  width='100px'  height='100px'  src='$logo'>";
-                }else{
-                    $logo = '<img class="rounded mx-auto d-block" width="100px" height="100px" src="../uploads/project/'.$record->projectname.'/thumbnail/'.$record->logo.'">';
-                }
+                $logo = $bot['logo'];
+
+                $logo = '<img class="rounded mx-auto d-block" width="100px" height="100px" src="'.$logo.'">';
+
+                $data_arr[] = array(
+                    "updated_at" => strtotime($record->updated_at),
+                    "logo" => $check . '  '.$logo,
+                    "ma_da"=>$data_projectname.$package_chplay,
+                    "Chplay_bot->installs" => $bot['installs'],
+                    "Chplay_bot->numberVoters" => $bot['numberVoters'],
+                    "Chplay_bot->numberReviews" => $bot['numberReviews'],
+                    "Chplay_bot->score" => $bot['score'],
+                    "buildinfo_mess" => $mess_info,
+                    "status" =>'Console: '.$buildinfo_console.'<br> Ứng dụng: '.$Chplay_status,
+                    "action"=> $btn,
+                );
+
             }else{
                 $logo = '<img class="rounded mx-auto d-block" width="100px" height="100px" src="assets\images\logo-sm.png">';
+                $data_arr[] = array(
+                    "updated_at" => strtotime($record->updated_at),
+                    "logo" => $check . '  '.$logo,
+                    "ma_da"=>$data_projectname.$package_chplay,
+                    "Chplay_bot->installs" => $bot['installs'],
+                    "Chplay_bot->numberVoters" => $bot['numberVoters'],
+                    "Chplay_bot->numberReviews" => $bot['numberReviews'],
+                    "Chplay_bot->score" => $bot['score'],
+                    "buildinfo_mess" => $mess_info,
+                    "status" =>'Console: '.$buildinfo_console.'<br> Ứng dụng: '.$Chplay_status,
+                    "action"=> $btn,
+                );
             }
-
-            $data_arr[] = array(
-                "updated_at" => strtotime($record->updated_at),
-                "logo" => $check . '  '.$logo,
-                "ma_da"=>$data_projectname.$package_chplay,
-                "install" => $bot['installs'],
-                "numberVoters" => $bot['numberVoters'],
-                "numberReviews" => $bot['numberReviews'],
-                "score" => $bot['score'],
-                "buildinfo_mess" => $mess_info,
-                "status" =>'Console: '.$buildinfo_console.'<br> Ứng dụng: '.$Chplay_status,
-                "action"=> $btn,
-            );
-
-
         }
         $response = array(
             "draw" => intval($draw),
@@ -851,6 +855,7 @@ class ProjectController extends Controller
             "iTotalDisplayRecords" => $totalRecordswithFilter,
             "aaData" => $data_arr,
         );
+
 
         echo json_encode($response);
     }

@@ -41,6 +41,7 @@
                             <th>Dev name</th>
                             <th>Store name</th>
                             <th>Tên công ty </th>
+                            <th>Pass </th>
                             <th>Trạng thái</th>
                             <th>Ghi chú</th>
                             <th width="5%">Action</th>
@@ -97,6 +98,7 @@
                     {data: 'vivo_dev_name'},
                     {data: 'vivo_store_name'},
                     {data: 'vivo_email'},
+                    {data: 'vivo_pass'},
                     {data: 'vivo_status'},
                     {data: 'vivo_note'},
                     {data: 'action', name: 'action', orderable: false, searchable: false},

@@ -41,9 +41,11 @@
                             <th>Ga name</th>
                             <th>Dev name</th>
                             <th>Gmail </th>
+                            <th>Mật khẩu</th>
                             <th>Điện thoại</th>
                             <th>Link | Web | Fanpage |Policy</th>
                             <th>Trạng thái</th>
+
                             <th width="5%">Action</th>
                         </tr>
                         </thead>
@@ -98,6 +100,7 @@
                     {data: 'ga_name'},
                     {data: 'dev_name'},
                     {data: 'gmail_gadev_chinh'},
+                    {data: 'pass'},
                     {data: 'info_phone'},
                     {data: 'info_url'},
                     {data: 'status'},
@@ -214,6 +217,7 @@
                 $('#gmail_gadev_phu_2').val(data.gmail_gadev_phu_2);
                 $('#gmail_gadev_phu_2').select2();
                 $('#info_phone').val(data.info_phone);
+                $('#pass').val(data.pass);
                 $('#info_andress').val(data.info_andress);
                 $('#profile_info').val(data.profile_info);
                 $('#info_url').val(data.info_url);

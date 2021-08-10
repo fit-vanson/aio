@@ -103,6 +103,7 @@ class DevXiaomiController extends Controller
                 "xiaomi_dev_name" => $record->xiaomi_dev_name,
                 "xiaomi_store_name" => $record->xiaomi_store_name,
                 "xiaomi_email"=>$email->gmail,
+                "xiaomi_pass"=>$record->xiaomi_pass,
                 "xiaomi_status"=>$status,
                 "xiaomi_note"=>$record->xiaomi_note,
                 "action"=> $btn,

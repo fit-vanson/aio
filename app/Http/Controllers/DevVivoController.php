@@ -100,6 +100,7 @@ class DevVivoController extends Controller
                 "vivo_dev_name" => $record->vivo_dev_name,
                 "vivo_store_name" => $record->vivo_store_name,
                 "vivo_email"=>$record->vivo_company.'<p class="text-muted">'.$email->gmail.'</p>',
+                "vivo_pass"=>$record->vivo_pass,
                 "vivo_status"=>$status,
                 "vivo_note"=>$record->vivo_note,
                 "action"=> $btn,

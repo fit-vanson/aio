@@ -41,6 +41,7 @@
                             <th>Dev name</th>
                             <th>Store name</th>
                             <th>Gmail </th>
+                            <th>Mật khẩu </th>
                             <th>Trạng thái</th>
                             <th>Ghi chú</th>
                             <th width="5%">Action</th>
@@ -97,6 +98,7 @@
                     {data: 'amazon_dev_name'},
                     {data: 'amazon_store_name'},
                     {data: 'amazon_email'},
+                    {data: 'amazon_pass'},
                     {data: 'amazon_status'},
                     {data: 'amazon_note'},
                     {data: 'action', name: 'action', orderable: false, searchable: false},

@@ -41,6 +41,7 @@
                             <th>Dev name</th>
                             <th>Store name</th>
                             <th>Gmail </th>
+                            <th>Pass </th>
                             <th>Trạng thái</th>
                             <th>Ghi chú</th>
                             <th width="5%">Action</th>
@@ -97,6 +98,7 @@
                     {data: 'oppo_dev_name'},
                     {data: 'oppo_store_name'},
                     {data: 'oppo_email'},
+                    {data: 'oppo_pass'},
                     {data: 'oppo_status'},
                     {data: 'oppo_note'},
                     {data: 'action', name: 'action', orderable: false, searchable: false},

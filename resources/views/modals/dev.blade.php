@@ -33,13 +33,17 @@
                         </div>
 
                         <div data-repeater-item="" class="row">
-                            <div class="form-group col-lg-6">
+                            <div class="form-group col-lg-4">
                                 <label for="name">Store Name  <span style="color: red">*</span></label>
                                 <input type="text" id="store_name" name="store_name" class="form-control" required>
                             </div>
-                            <div class="form-group col-lg-6">
+                            <div class="form-group col-lg-4">
                                 <label for="name">Mã hóa đơn </label>
                                 <input type="text" id="ma_hoa_don" name="ma_hoa_don" class="form-control">
+                            </div>
+                            <div class="form-group col-lg-4">
+                                <label for="name">Mật khẩu </label>
+                                <input type="text" id="pass" name="pass" class="form-control">
                             </div>
                         </div>
 
@@ -119,7 +123,7 @@
                         <div data-repeater-item="" class="row">
                             <div class="form-group col-lg-4 ">
                                 <label for="name">Số điện thoại</label>
-                                <input type="number" id="info_phone" name="info_phone" class="form-control">
+                                <input type="text" id="info_phone" name="info_phone" class="form-control">
                             </div>
                             <div class="form-group col-lg-4 ">
                                 <label for="name">Profile Info</label>

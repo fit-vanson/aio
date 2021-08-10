@@ -59,11 +59,11 @@
                         <div data-repeater-item="" class="row">
                             <div class="form-group col-lg-6">
                                 <label for="name">Số điện thoại </label>
-                                <input type="number" id="xiaomi_phone" name="xiaomi_phone" class="form-control" required>
+                                <input type="text" id="xiaomi_phone" name="xiaomi_phone" class="form-control" >
                             </div>
                             <div class="form-group col-lg-6">
                                 <label for="name">Profile Info </label>
-                                <input type="text" id="xiaomi_profile_info" name="xiaomi_profile_info" class="form-control" required>
+                                <input type="text" id="xiaomi_profile_info" name="xiaomi_profile_info" class="form-control">
                             </div>
                         </div>
 

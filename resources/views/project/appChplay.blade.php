@@ -28,6 +28,18 @@
         <div class="col-12">
             <div class="card">
                 <div class="card-body">
+                    <div class="button-items">
+                        <button type="button" class="btn btn-primary waves-effect waves-light" onclick="All()">All</button>
+                        <button type="button" class="btn btn-success waves-effect" onclick="Public()" >Public</button>
+                        <button type="button" class="btn btn-warning waves-effect" onclick="Pending()">Pending</button>
+                        <button type="button" class="btn btn-danger waves-effect waves-light" onclick="Check()">Check</button>
+                        <button type="button" class="btn btn-info waves-effect waves-light" onclick="UbPublish()">UbPublish</button>
+                        <button type="button" class="btn btn-secondary waves-effect waves-light" onclick="Remove()">Remove</button>
+                        <button type="button" class="btn btn-dark waves-effect waves-light" onclick="Reject()">Reject</button>
+                        <button type="button" class="btn btn-link waves-effect waves-light" onclick="Suppend()">Suppend</button>
+                    </div>
+                </div>
+                <div class="card-body">
                     <table class="table table-bordered dt-responsive nowrap data-table" style="border-collapse: collapse; border-spacing: 0; width: 100%;">
                         <thead>
                         <tr>
@@ -83,13 +95,12 @@
 
 <script type="text/javascript">
 
-        $.ajaxSetup({
+    $.ajaxSetup({
             headers: {
                 'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
             }
         });
-        var currData = [];
-        var table = $('.data-table').DataTable({
+    var table = $('.data-table').DataTable({
             displayLength: 50,
             lengthMenu: [5, 10, 25, 50, 75, 100],
             serverSide: true,
@@ -101,24 +112,23 @@
                 {data: 'updated_at', name: 'updated_at',},
                 {data: 'logo', name: 'logo',orderable: false},
                 {data: 'ma_da', name: 'ma_da'},
-                {data: 'install', name: 'install',"orderable": true},
-                {data: 'numberVoters', name: 'numberVoters'},
-                {data: 'numberReviews', name: 'numberReviews'},
-                {data: 'score', name: 'score'},
+                {data: 'Chplay_bot->installs', name: 'install'},
+                {data: 'Chplay_bot->numberVoters', name: 'numberVoters'},
+                {data: 'Chplay_bot->numberReviews', name: 'numberReviews'},
+                {data: 'Chplay_bot->score', name: 'score'},
                 {data: 'buildinfo_mess', name: 'buildinfo_mess',orderable: false},
                 {data: 'status', name: 'status',orderable: false},
                 {data: 'action', name: 'action', orderable: false, searchable: false},
             ],
             columnDefs: [
-                {
-                    "targets": [ 0],
-                    "visible": false,
-                    "searchable": false
-                }
-            ],
-            order: [[ 0, 'desc' ]],
+                    {
+                        "targets": [ 0],
+                        "visible": false,
+                        "searchable": false
+                    },
+                ],
+            order: [[ 0, 'asc' ]],
             fnRowCallback: function (nRow, aData, iDisplayIndex, iDisplayIndexFull) {
-                console.log(aData)
                 if (aData.status.includes('Check')) {
                     $('td', nRow).css('background-color', 'rgb(255 0 0 / 29%)').css('color', 'white');
                 }
@@ -140,8 +150,6 @@
             },
         });
 
-
-
     function checkbox(id) {
         $.get('{{asset('project/checkbox')}}/'+id,function (data) {
             if(data.success){
@@ -153,9 +161,6 @@
             }
         })
     }
-
-
-
     function detailChplay(id) {
         $.get('{{asset('project/edit')}}/'+id,function (data) {
             $("#projectForm input").prop("disabled", true);
@@ -167,11 +172,9 @@
                 Chplay_ads = data[0].Chplay_ads;
                 Chplay_ads = JSON.parse(Chplay_ads);
             }
-            if(data[0].logo) {
-                $("#avatar").attr("src","../uploads/project/"+data[0].projectname+"/thumbnail/"+data[0].logo);
-            }else {
-                $("#avatar").attr("src","img/logo.png");
-            }
+            var logo = data[0].Chplay_bot;
+            logo = JSON.parse(logo).logo;
+            $("#avatar").attr("src",logo);
             $('#project_id').val(data[0].projectid);
             $('#projectname').val(data[0].projectname);
             $('#template').val(data[4].template);
@@ -208,6 +211,323 @@
                 $('body').addClass('modal-open');
             });
         })
+    }
+    function All(){
+        $.ajaxSetup({
+            headers: {
+                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+            }
+        });
+        var table = $('.data-table').DataTable({
+            destroy: true,
+            displayLength: 50,
+            lengthMenu: [5, 10, 25, 50, 75, 100],
+            serverSide: true,
+            ajax: {
+                url: "{{ route('project.getChplay') }}",
+                type: "post",
+            },
+            columns: [
+                {data: 'updated_at', name: 'updated_at',},
+                {data: 'logo', name: 'logo',orderable: false},
+                {data: 'ma_da', name: 'ma_da'},
+                {data: 'Chplay_bot->installs', name: 'install'},
+                {data: 'Chplay_bot->numberVoters', name: 'numberVoters'},
+                {data: 'Chplay_bot->numberReviews', name: 'numberReviews'},
+                {data: 'Chplay_bot->score', name: 'score'},
+                {data: 'buildinfo_mess', name: 'buildinfo_mess',orderable: false},
+                {data: 'status', name: 'status',orderable: false},
+                {data: 'action', name: 'action', orderable: false, searchable: false},
+            ],
+            columnDefs: [
+                {
+                    "targets": [ 0],
+                    "visible": false,
+                    "searchable": false
+                }
+            ],
+            order: [[ 0, 'desc' ]],
+            fnRowCallback: function (nRow, aData, iDisplayIndex, iDisplayIndexFull) {
+
+                if (aData.status.includes('Check')) {
+                    $('td', nRow).css('background-color', 'rgb(255 0 0 / 29%)').css('color', 'white');
+                }
+                if (aData.status.includes('Public')) {
+                    $('td', nRow).css('background-color', 'rgb(59 212 57 / 72%)').css('color', '#ffffff' );
+                }
+                if (aData.status.includes('Reject')) {
+                    $('td', nRow).css('background-color', 'rgb(2 164 153)').css('color', 'white');
+                }
+                if (aData.status.includes('UnPublish')) {
+                    $('td', nRow).css('background-color', 'rgb(146 232 255)').css('color', 'white');
+                }
+                if (aData.status.includes('Remove')) {
+                    $('td', nRow).css('background-color', 'rgb(98 110 212)').css('color', 'white');
+                }
+                if (aData.status.includes('Pending')) {
+                    $('td', nRow).css('background-color', 'rgb(253 222 114)').css('color', 'white');
+                }
+            },
+        });
+    }
+    function Public(){
+        $.ajaxSetup({
+            headers: {
+                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+            }
+        });
+        var table = $('.data-table').DataTable({
+            destroy: true,
+            displayLength: 50,
+            lengthMenu: [5, 10, 25, 50, 75, 100],
+            serverSide: true,
+            ajax: {
+                url: "{{ route('project.getChplay') }}?status_app=1",
+                type: "post",
+            },
+            columns: [
+                {data: 'updated_at', name: 'updated_at',},
+                {data: 'logo', name: 'logo',orderable: false},
+                {data: 'ma_da', name: 'ma_da'},
+                {data: 'Chplay_bot->installs', name: 'install'},
+                {data: 'Chplay_bot->numberVoters', name: 'numberVoters'},
+                {data: 'Chplay_bot->numberReviews', name: 'numberReviews'},
+                {data: 'Chplay_bot->score', name: 'score'},
+                {data: 'buildinfo_mess', name: 'buildinfo_mess',orderable: false},
+                {data: 'status', name: 'status',orderable: false},
+                {data: 'action', name: 'action', orderable: false, searchable: false},
+            ],
+            columnDefs: [
+                {
+                    "targets": [ 0],
+                    "visible": false,
+                    "searchable": false
+                }
+            ],
+            order: [[ 0, 'desc' ]],
+        });
+    }
+    function Pending(){
+        $.ajaxSetup({
+            headers: {
+                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+            }
+        });
+        var table = $('.data-table').DataTable({
+            destroy: true,
+            displayLength: 50,
+            lengthMenu: [5, 10, 25, 50, 75, 100],
+            serverSide: true,
+            ajax: {
+                url: "{{ route('project.getChplay') }}?status_app=7",
+                type: "post",
+            },
+            columns: [
+                {data: 'updated_at', name: 'updated_at',},
+                {data: 'logo', name: 'logo',orderable: false},
+                {data: 'ma_da', name: 'ma_da'},
+                {data: 'Chplay_bot->installs', name: 'install'},
+                {data: 'Chplay_bot->numberVoters', name: 'numberVoters'},
+                {data: 'Chplay_bot->numberReviews', name: 'numberReviews'},
+                {data: 'Chplay_bot->score', name: 'score'},
+                {data: 'buildinfo_mess', name: 'buildinfo_mess',orderable: false},
+                {data: 'status', name: 'status',orderable: false},
+                {data: 'action', name: 'action', orderable: false, searchable: false},
+            ],
+            columnDefs: [
+                {
+                    "targets": [ 0],
+                    "visible": false,
+                    "searchable": false
+                }
+            ],
+            order: [[ 0, 'desc' ]],
+        });
+    }
+    function Check(){
+        $.ajaxSetup({
+            headers: {
+                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+            }
+        });
+        var table = $('.data-table').DataTable({
+            destroy: true,
+            displayLength: 50,
+            lengthMenu: [5, 10, 25, 50, 75, 100],
+            serverSide: true,
+            ajax: {
+                url: "{{ route('project.getChplay') }}?status_app=6",
+                type: "post",
+            },
+            columns: [
+                {data: 'updated_at', name: 'updated_at',},
+                {data: 'logo', name: 'logo',orderable: false},
+                {data: 'ma_da', name: 'ma_da'},
+                {data: 'Chplay_bot->installs', name: 'install'},
+                {data: 'Chplay_bot->numberVoters', name: 'numberVoters'},
+                {data: 'Chplay_bot->numberReviews', name: 'numberReviews'},
+                {data: 'Chplay_bot->score', name: 'score'},
+                {data: 'buildinfo_mess', name: 'buildinfo_mess',orderable: false},
+                {data: 'status', name: 'status',orderable: false},
+                {data: 'action', name: 'action', orderable: false, searchable: false},
+            ],
+            columnDefs: [
+                {
+                    "targets": [ 0],
+                    "visible": false,
+                    "searchable": false
+                }
+            ],
+            order: [[ 0, 'desc' ]],
+        });
+    }
+    function UbPublish(){
+        $.ajaxSetup({
+            headers: {
+                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+            }
+        });
+        var table = $('.data-table').DataTable({
+            destroy: true,
+            displayLength: 50,
+            lengthMenu: [5, 10, 25, 50, 75, 100],
+            serverSide: true,
+            ajax: {
+                url: "{{ route('project.getChplay') }}?status_app=3",
+                type: "post",
+            },
+            columns: [
+                {data: 'updated_at', name: 'updated_at',},
+                {data: 'logo', name: 'logo',orderable: false},
+                {data: 'ma_da', name: 'ma_da'},
+                {data: 'Chplay_bot->installs', name: 'install'},
+                {data: 'Chplay_bot->numberVoters', name: 'numberVoters'},
+                {data: 'Chplay_bot->numberReviews', name: 'numberReviews'},
+                {data: 'Chplay_bot->score', name: 'score'},
+                {data: 'buildinfo_mess', name: 'buildinfo_mess',orderable: false},
+                {data: 'status', name: 'status',orderable: false},
+                {data: 'action', name: 'action', orderable: false, searchable: false},
+            ],
+            columnDefs: [
+                {
+                    "targets": [ 0],
+                    "visible": false,
+                    "searchable": false
+                }
+            ],
+            order: [[ 0, 'desc' ]],
+        });
+    }
+    function Remove(){
+        $.ajaxSetup({
+            headers: {
+                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+            }
+        });
+        var table = $('.data-table').DataTable({
+            destroy: true,
+            displayLength: 50,
+            lengthMenu: [5, 10, 25, 50, 75, 100],
+            serverSide: true,
+            ajax: {
+                url: "{{ route('project.getChplay') }}?status_app=4",
+                type: "post",
+            },
+            columns: [
+                {data: 'updated_at', name: 'updated_at',},
+                {data: 'logo', name: 'logo',orderable: false},
+                {data: 'ma_da', name: 'ma_da'},
+                {data: 'Chplay_bot->installs', name: 'install'},
+                {data: 'Chplay_bot->numberVoters', name: 'numberVoters'},
+                {data: 'Chplay_bot->numberReviews', name: 'numberReviews'},
+                {data: 'Chplay_bot->score', name: 'score'},
+                {data: 'buildinfo_mess', name: 'buildinfo_mess',orderable: false},
+                {data: 'status', name: 'status',orderable: false},
+                {data: 'action', name: 'action', orderable: false, searchable: false},
+            ],
+            columnDefs: [
+                {
+                    "targets": [ 0],
+                    "visible": false,
+                    "searchable": false
+                }
+            ],
+            order: [[ 0, 'desc' ]],
+        });
+    }
+    function Reject(){
+        $.ajaxSetup({
+            headers: {
+                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+            }
+        });
+        var table = $('.data-table').DataTable({
+            destroy: true,
+            displayLength: 50,
+            lengthMenu: [5, 10, 25, 50, 75, 100],
+            serverSide: true,
+            ajax: {
+                url: "{{ route('project.getChplay') }}?status_app=5",
+                type: "post",
+            },
+            columns: [
+                {data: 'updated_at', name: 'updated_at',},
+                {data: 'logo', name: 'logo',orderable: false},
+                {data: 'ma_da', name: 'ma_da'},
+                {data: 'Chplay_bot->installs', name: 'install'},
+                {data: 'Chplay_bot->numberVoters', name: 'numberVoters'},
+                {data: 'Chplay_bot->numberReviews', name: 'numberReviews'},
+                {data: 'Chplay_bot->score', name: 'score'},
+                {data: 'buildinfo_mess', name: 'buildinfo_mess',orderable: false},
+                {data: 'status', name: 'status',orderable: false},
+                {data: 'action', name: 'action', orderable: false, searchable: false},
+            ],
+            columnDefs: [
+                {
+                    "targets": [ 0],
+                    "visible": false,
+                    "searchable": false
+                }
+            ],
+            order: [[ 0, 'desc' ]],
+        });
+    }
+    function Suppend(){
+        $.ajaxSetup({
+            headers: {
+                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+            }
+        });
+        var table = $('.data-table').DataTable({
+            destroy: true,
+            displayLength: 50,
+            lengthMenu: [5, 10, 25, 50, 75, 100],
+            serverSide: true,
+            ajax: {
+                url: "{{ route('project.getChplay') }}?status_app=2",
+                type: "post",
+            },
+            columns: [
+                {data: 'updated_at', name: 'updated_at',},
+                {data: 'logo', name: 'logo',orderable: false},
+                {data: 'ma_da', name: 'ma_da'},
+                {data: 'Chplay_bot->installs', name: 'install'},
+                {data: 'Chplay_bot->numberVoters', name: 'numberVoters'},
+                {data: 'Chplay_bot->numberReviews', name: 'numberReviews'},
+                {data: 'Chplay_bot->score', name: 'score'},
+                {data: 'buildinfo_mess', name: 'buildinfo_mess',orderable: false},
+                {data: 'status', name: 'status',orderable: false},
+                {data: 'action', name: 'action', orderable: false, searchable: false},
+            ],
+            columnDefs: [
+                {
+                    "targets": [ 0],
+                    "visible": false,
+                    "searchable": false
+                }
+            ],
+            order: [[ 0, 'desc' ]],
+        });
     }
 
 

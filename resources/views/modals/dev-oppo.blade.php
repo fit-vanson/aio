@@ -59,11 +59,11 @@
                         <div data-repeater-item="" class="row">
                             <div class="form-group col-lg-6">
                                 <label for="name">Số điện thoại </label>
-                                <input type="number" id="oppo_phone" name="oppo_phone" class="form-control" required>
+                                <input type="text" id="oppo_phone" name="oppo_phone" class="form-control">
                             </div>
                             <div class="form-group col-lg-6">
                                 <label for="name">Profile Info </label>
-                                <input type="text" id="oppo_profile_info" name="oppo_profile_info" class="form-control" required>
+                                <input type="text" id="oppo_profile_info" name="oppo_profile_info" class="form-control">
                             </div>
                         </div>
                         <div data-repeater-item="" class="row">

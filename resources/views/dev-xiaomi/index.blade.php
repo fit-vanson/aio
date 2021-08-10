@@ -41,6 +41,7 @@
                             <th>Dev name</th>
                             <th>Store name</th>
                             <th>Gmail </th>
+                            <th>Pass </th>
                             <th>Trạng thái</th>
                             <th>Ghi chú</th>
                             <th width="5%">Action</th>
@@ -97,6 +98,7 @@
                     {data: 'xiaomi_dev_name'},
                     {data: 'xiaomi_store_name'},
                     {data: 'xiaomi_email'},
+                    {data: 'xiaomi_pass'},
                     {data: 'xiaomi_status'},
                     {data: 'xiaomi_note'},
                     {data: 'action', name: 'action', orderable: false, searchable: false},
