@@ -31,7 +31,7 @@ class CronProjectController extends Controller
                        'installs' => $appInfo->getInstalls(),
                        'numberVoters' => $appInfo->getNumberVoters(),
                        'numberReviews' => $appInfo->getNumberReviews(),
-                       'score' => $appInfo->getNumberReviews(),
+                       'score' => $appInfo->getScore(),
                        'appVersion' => $appInfo->getNumberReviews(),
                        'privacyPoliceUrl' => $appInfo->getNumberReviews(),
                        'released' => $appInfo->getNumberReviews(),
