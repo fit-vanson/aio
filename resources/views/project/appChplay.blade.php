@@ -19,6 +19,12 @@
 <div class="col-sm-6">
     <h4 class="page-title">Market CHPlay</h4>
 </div>
+<div class="col-sm-6 ">
+    <div class="float-right d-none d-md-block">
+        <a class="btn btn-outline btn-info" href="../../cronProject/ch-play" >Cập nhật</a>
+    </div>
+
+</div>
 @include('modals.detailApps')
 @endsection
 
@@ -168,12 +174,59 @@
             if(data[3] == null) { data[3] = {ma_da: "Chưa có mã dự án"}}
             if(data[2] == null) { data[2] = {store_name: "Chưa có Store Name"}}
             var Chplay_ads = '';
+            $('#log_status').html('');
             if(data[0].Chplay_ads) {
                 Chplay_ads = data[0].Chplay_ads;
                 Chplay_ads = JSON.parse(Chplay_ads);
             }
-            var logo = data[0].Chplay_bot;
-            logo = JSON.parse(logo).logo;
+            if(data[0].Chplay_bot){
+                var bot = data[0].Chplay_bot;
+                var log_status = JSON.parse(bot).log_status
+                console.log(log_status)
+                log_status = log_status.split('|')
+                log_status = log_status[log_status.length-1]
+                if(log_status == 0){
+                    $('#log_status').html('<div>Mặc định.</div>' );
+                }
+                if(log_status == 1){
+                    $('#log_status').html('<div class="alert alert-success" >Publish</div>' );
+                }
+                if(log_status == 2){
+                    $('#log_status').html('<div class="alert alert-danger" >Suppend</div>' );
+                }
+                if(log_status == 3){
+                    $('#log_status').html('<div class="alert alert-info" >UbPublish.</div>' );
+                }
+                if(log_status == 4){
+                    $('#log_status').html('<div class="alert alert-info" >Remove.</div>' );;
+                }
+                if(log_status == 5){
+                    $('#log_status').html('<div class="alert alert-info" >Reject.</div>' );
+                }
+                if(log_status == 6){
+                    $('#log_status').html('<div class="alert alert-danger" >Check.</div>' );
+                }
+                if(log_status == 7){
+                    $('#log_status').html('<div class="alert alert-warning" >Pending.</div>' );
+                }
+
+                console.log(log_status)
+                if(JSON.parse(bot).logo){
+                    logo = JSON.parse(bot).logo;
+                }  else {
+                    if(data[0].logo) {
+                        logo = "../uploads/project/"+data[0].projectname+"/thumbnail/"+data[0].logo;
+                    }else {
+                        logo ="img/logo.png";
+                    }
+                }
+            }else {
+                if(data[0].logo) {
+                    logo = "../uploads/project/"+data[0].projectname+"/thumbnail/"+data[0].logo;
+                }else {
+                    logo ="img/logo.png";
+                }
+            }
             $("#avatar").attr("src",logo);
             $('#project_id').val(data[0].projectid);
             $('#projectname').val(data[0].projectname);
@@ -213,11 +266,6 @@
         })
     }
     function All(){
-        $.ajaxSetup({
-            headers: {
-                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-            }
-        });
         var table = $('.data-table').DataTable({
             destroy: true,
             displayLength: 50,
@@ -248,7 +296,6 @@
             ],
             order: [[ 0, 'desc' ]],
             fnRowCallback: function (nRow, aData, iDisplayIndex, iDisplayIndexFull) {
-
                 if (aData.status.includes('Check')) {
                     $('td', nRow).css('background-color', 'rgb(255 0 0 / 29%)').css('color', 'white');
                 }
@@ -271,11 +318,6 @@
         });
     }
     function Public(){
-        $.ajaxSetup({
-            headers: {
-                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-            }
-        });
         var table = $('.data-table').DataTable({
             destroy: true,
             displayLength: 50,
@@ -305,14 +347,29 @@
                 }
             ],
             order: [[ 0, 'desc' ]],
+            fnRowCallback: function (nRow, aData, iDisplayIndex, iDisplayIndexFull) {
+                if (aData.status.includes('Check')) {
+                    $('td', nRow).css('background-color', 'rgb(255 0 0 / 29%)').css('color', 'white');
+                }
+                if (aData.status.includes('Public')) {
+                    $('td', nRow).css('background-color', 'rgb(59 212 57 / 72%)').css('color', '#ffffff' );
+                }
+                if (aData.status.includes('Reject')) {
+                    $('td', nRow).css('background-color', 'rgb(2 164 153)').css('color', 'white');
+                }
+                if (aData.status.includes('UnPublish')) {
+                    $('td', nRow).css('background-color', 'rgb(146 232 255)').css('color', 'white');
+                }
+                if (aData.status.includes('Remove')) {
+                    $('td', nRow).css('background-color', 'rgb(98 110 212)').css('color', 'white');
+                }
+                if (aData.status.includes('Pending')) {
+                    $('td', nRow).css('background-color', 'rgb(253 222 114)').css('color', 'white');
+                }
+            },
         });
     }
     function Pending(){
-        $.ajaxSetup({
-            headers: {
-                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-            }
-        });
         var table = $('.data-table').DataTable({
             destroy: true,
             displayLength: 50,
@@ -342,14 +399,29 @@
                 }
             ],
             order: [[ 0, 'desc' ]],
+            fnRowCallback: function (nRow, aData, iDisplayIndex, iDisplayIndexFull) {
+                if (aData.status.includes('Check')) {
+                    $('td', nRow).css('background-color', 'rgb(255 0 0 / 29%)').css('color', 'white');
+                }
+                if (aData.status.includes('Public')) {
+                    $('td', nRow).css('background-color', 'rgb(59 212 57 / 72%)').css('color', '#ffffff' );
+                }
+                if (aData.status.includes('Reject')) {
+                    $('td', nRow).css('background-color', 'rgb(2 164 153)').css('color', 'white');
+                }
+                if (aData.status.includes('UnPublish')) {
+                    $('td', nRow).css('background-color', 'rgb(146 232 255)').css('color', 'white');
+                }
+                if (aData.status.includes('Remove')) {
+                    $('td', nRow).css('background-color', 'rgb(98 110 212)').css('color', 'white');
+                }
+                if (aData.status.includes('Pending')) {
+                    $('td', nRow).css('background-color', 'rgb(253 222 114)').css('color', 'white');
+                }
+            },
         });
     }
     function Check(){
-        $.ajaxSetup({
-            headers: {
-                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-            }
-        });
         var table = $('.data-table').DataTable({
             destroy: true,
             displayLength: 50,
@@ -379,14 +451,29 @@
                 }
             ],
             order: [[ 0, 'desc' ]],
+            fnRowCallback: function (nRow, aData, iDisplayIndex, iDisplayIndexFull) {
+                if (aData.status.includes('Check')) {
+                    $('td', nRow).css('background-color', 'rgb(255 0 0 / 29%)').css('color', 'white');
+                }
+                if (aData.status.includes('Public')) {
+                    $('td', nRow).css('background-color', 'rgb(59 212 57 / 72%)').css('color', '#ffffff' );
+                }
+                if (aData.status.includes('Reject')) {
+                    $('td', nRow).css('background-color', 'rgb(2 164 153)').css('color', 'white');
+                }
+                if (aData.status.includes('UnPublish')) {
+                    $('td', nRow).css('background-color', 'rgb(146 232 255)').css('color', 'white');
+                }
+                if (aData.status.includes('Remove')) {
+                    $('td', nRow).css('background-color', 'rgb(98 110 212)').css('color', 'white');
+                }
+                if (aData.status.includes('Pending')) {
+                    $('td', nRow).css('background-color', 'rgb(253 222 114)').css('color', 'white');
+                }
+            },
         });
     }
     function UbPublish(){
-        $.ajaxSetup({
-            headers: {
-                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-            }
-        });
         var table = $('.data-table').DataTable({
             destroy: true,
             displayLength: 50,
@@ -416,14 +503,29 @@
                 }
             ],
             order: [[ 0, 'desc' ]],
+            fnRowCallback: function (nRow, aData, iDisplayIndex, iDisplayIndexFull) {
+                if (aData.status.includes('Check')) {
+                    $('td', nRow).css('background-color', 'rgb(255 0 0 / 29%)').css('color', 'white');
+                }
+                if (aData.status.includes('Public')) {
+                    $('td', nRow).css('background-color', 'rgb(59 212 57 / 72%)').css('color', '#ffffff' );
+                }
+                if (aData.status.includes('Reject')) {
+                    $('td', nRow).css('background-color', 'rgb(2 164 153)').css('color', 'white');
+                }
+                if (aData.status.includes('UnPublish')) {
+                    $('td', nRow).css('background-color', 'rgb(146 232 255)').css('color', 'white');
+                }
+                if (aData.status.includes('Remove')) {
+                    $('td', nRow).css('background-color', 'rgb(98 110 212)').css('color', 'white');
+                }
+                if (aData.status.includes('Pending')) {
+                    $('td', nRow).css('background-color', 'rgb(253 222 114)').css('color', 'white');
+                }
+            },
         });
     }
     function Remove(){
-        $.ajaxSetup({
-            headers: {
-                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-            }
-        });
         var table = $('.data-table').DataTable({
             destroy: true,
             displayLength: 50,
@@ -453,14 +555,29 @@
                 }
             ],
             order: [[ 0, 'desc' ]],
+            fnRowCallback: function (nRow, aData, iDisplayIndex, iDisplayIndexFull) {
+                if (aData.status.includes('Check')) {
+                    $('td', nRow).css('background-color', 'rgb(255 0 0 / 29%)').css('color', 'white');
+                }
+                if (aData.status.includes('Public')) {
+                    $('td', nRow).css('background-color', 'rgb(59 212 57 / 72%)').css('color', '#ffffff' );
+                }
+                if (aData.status.includes('Reject')) {
+                    $('td', nRow).css('background-color', 'rgb(2 164 153)').css('color', 'white');
+                }
+                if (aData.status.includes('UnPublish')) {
+                    $('td', nRow).css('background-color', 'rgb(146 232 255)').css('color', 'white');
+                }
+                if (aData.status.includes('Remove')) {
+                    $('td', nRow).css('background-color', 'rgb(98 110 212)').css('color', 'white');
+                }
+                if (aData.status.includes('Pending')) {
+                    $('td', nRow).css('background-color', 'rgb(253 222 114)').css('color', 'white');
+                }
+            },
         });
     }
     function Reject(){
-        $.ajaxSetup({
-            headers: {
-                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-            }
-        });
         var table = $('.data-table').DataTable({
             destroy: true,
             displayLength: 50,
@@ -490,14 +607,29 @@
                 }
             ],
             order: [[ 0, 'desc' ]],
+            fnRowCallback: function (nRow, aData, iDisplayIndex, iDisplayIndexFull) {
+                if (aData.status.includes('Check')) {
+                    $('td', nRow).css('background-color', 'rgb(255 0 0 / 29%)').css('color', 'white');
+                }
+                if (aData.status.includes('Public')) {
+                    $('td', nRow).css('background-color', 'rgb(59 212 57 / 72%)').css('color', '#ffffff' );
+                }
+                if (aData.status.includes('Reject')) {
+                    $('td', nRow).css('background-color', 'rgb(2 164 153)').css('color', 'white');
+                }
+                if (aData.status.includes('UnPublish')) {
+                    $('td', nRow).css('background-color', 'rgb(146 232 255)').css('color', 'white');
+                }
+                if (aData.status.includes('Remove')) {
+                    $('td', nRow).css('background-color', 'rgb(98 110 212)').css('color', 'white');
+                }
+                if (aData.status.includes('Pending')) {
+                    $('td', nRow).css('background-color', 'rgb(253 222 114)').css('color', 'white');
+                }
+            },
         });
     }
     function Suppend(){
-        $.ajaxSetup({
-            headers: {
-                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-            }
-        });
         var table = $('.data-table').DataTable({
             destroy: true,
             displayLength: 50,
@@ -527,6 +659,26 @@
                 }
             ],
             order: [[ 0, 'desc' ]],
+            fnRowCallback: function (nRow, aData, iDisplayIndex, iDisplayIndexFull) {
+                if (aData.status.includes('Check')) {
+                    $('td', nRow).css('background-color', 'rgb(255 0 0 / 29%)').css('color', 'white');
+                }
+                if (aData.status.includes('Public')) {
+                    $('td', nRow).css('background-color', 'rgb(59 212 57 / 72%)').css('color', '#ffffff' );
+                }
+                if (aData.status.includes('Reject')) {
+                    $('td', nRow).css('background-color', 'rgb(2 164 153)').css('color', 'white');
+                }
+                if (aData.status.includes('UnPublish')) {
+                    $('td', nRow).css('background-color', 'rgb(146 232 255)').css('color', 'white');
+                }
+                if (aData.status.includes('Remove')) {
+                    $('td', nRow).css('background-color', 'rgb(98 110 212)').css('color', 'white');
+                }
+                if (aData.status.includes('Pending')) {
+                    $('td', nRow).css('background-color', 'rgb(253 222 114)').css('color', 'white');
+                }
+            },
         });
     }
 

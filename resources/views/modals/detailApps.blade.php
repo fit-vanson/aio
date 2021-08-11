@@ -10,11 +10,7 @@
                 <form id="projectForm" name="projectForm" class="form-horizontal" enctype="multipart/form-data">
                     <input type="hidden" name="project_id" id="project_id">
                     <input type="hidden" name="buildinfo_console" id="buildinfo_console">
-                    <div class="form-group col-lg-4">
-                        <label>Logo</label>
-                        <input  id="logo" type="file" name="logo" class="form-control" disabled hidden>
-                        <img id="avatar" class="thumbnail" width="100px" src="img/logo.png">
-                    </div>
+
                     <div class="row">
                         <div class="col-lg-12">
                             <div class="card">
@@ -23,11 +19,24 @@
                                     <div class="tab-content" >
                                         <div data-repeater-item="" class="row">
                                             <div class="form-group col-lg-4">
+                                                <label>Logo</label>
+                                                <input  id="logo" type="file" name="logo" class="form-control" disabled hidden>
+                                                <img id="avatar" class="thumbnail" width="100px" src="img/logo.png">
+                                            </div>
+                                            <div class="col-lg-6">
+                                                <h4 class="mt-0 header-title text-right">Old Status: </h4>
+                                            </div>
+                                            <div class="col-lg-2" id="log_status">
+
+                                            </div>
+                                        </div>
+                                        <div data-repeater-item="" class="row">
+                                            <div class="form-group col-lg-4">
                                                 <label for="name">Mã dự án </label>
                                                 <input type="text" id="ma_da" name="ma_da" class="form-control">
                                             </div>
                                             <div class="form-group col-lg-4">
-                                                <label for="name">Mã template ></label>
+                                                <label for="name">Mã template</label>
                                                 <input type="text" id="template" name="template" class="form-control">
                                             </div>
                                             <div class="form-group col-lg-4">

@@ -18,9 +18,16 @@ class CronProjectController extends Controller
        foreach ($appsChplay as $appChplay){
            $package = $appChplay->Chplay_package;
            if(isset($package)){
-               $log_status ='0|7';
+               $log_status ='0|7'.$appChplay->Chplay_status;
                if($appChplay->Chplay_bot != ''){
                    $log_status = json_decode($appChplay->Chplay_bot,true)['log_status'];
+                   $status_old = explode('|',$log_status);
+                   $status_old =  $status_old[count($status_old)-1];
+                   if($status_old == $appChplay->Chplay_status){
+                       $log_status = $log_status;
+                   }else{
+                       $log_status =  $log_status. '|'.$appChplay->Chplay_status;
+                   }
                }
                $appInfo = new GPlayApps();
                $existApp =  $appInfo->existsApp($package);
@@ -38,7 +45,7 @@ class CronProjectController extends Controller
                        'updated' => $appInfo->getUpdated(),
                        'bot_name_dev' => $appInfo->getDeveloper(),
                        'logo' => $appInfo->getIcon()->getUrl(),
-                       'log_status'=>$log_status. '|'.$appChplay->Chplay_status,
+                       'log_status'=>$log_status,
                    ];
                }else{
                    $status = 6;
@@ -52,8 +59,7 @@ class CronProjectController extends Controller
                        'released' => 0,
                        'updated' => 0,
                        'bot_name_dev' => 0,
-                       'logo' => '../uploads/project/'.$appChplay->projectname.'/thumbnail/'.$appChplay->logo,
-                       'log_status'=>$log_status. '|'.$appChplay->Chplay_status,
+                       'log_status'=>$log_status,
                    ];
                }
                $data = json_encode($data);
@@ -67,7 +73,10 @@ class CronProjectController extends Controller
                        'bot_timecheck' => time(),
                    ]);
                echo '<br/>'.'Dang chay:  ' . $appChplay->Chplay_package .' - '. Carbon::now('Asia/Ho_Chi_Minh');
+
            }
        }
+        echo '<br>'.'Trở lại sau 3s';
+        echo '<META http-equiv="refresh" content="3;URL=' . url("/project/appChplay") . '">';
     }
 }

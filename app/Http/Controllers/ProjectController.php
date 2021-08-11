@@ -21,7 +21,7 @@ use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Validator;
 
 use Intervention\Image\Facades\Image;
-
+use function Psy\debug;
 
 
 class ProjectController extends Controller
@@ -718,20 +718,17 @@ class ProjectController extends Controller
             ->count();
         $totalRecordswithFilter = ProjectModel::select('count(*) as allcount')
             ->where(function ($a) use ($searchValue) {
-                $a
-                    ->Where('ngocphandang_project.projectname', 'like', '%' . $searchValue . '%')
+                $a->Where('ngocphandang_project.projectname', 'like', '%' . $searchValue . '%')
                     ->orWhere('ngocphandang_project.Chplay_package', 'like', '%' . $searchValue . '%');
             })
             ->where('ngocphandang_project.Chplay_package','<>',null)
             ->count();
-//        dd($columnName);
         // Get records, also we have included search filter as well
-        $records = ProjectModel::
-        orderBy($columnName, $columnSortOrder)
+        $records = ProjectModel::orderBy($columnName, $columnSortOrder)
             ->where(function ($a) use ($searchValue) {
-                $a->
-                    Where('ngocphandang_project.projectname', 'like', '%' . $searchValue . '%')
-                    ->orWhere('ngocphandang_project.Chplay_package', 'like', '%' . $searchValue . '%');
+                $a->Where('ngocphandang_project.projectname', 'like', '%' . $searchValue . '%')
+                    ->orwhereJsonContains('Chplay_bot->installs', $searchValue);
+//                    ->orWhere('ngocphandang_project.Chplay_package', 'like', '%' . $searchValue . '%');
             })
             ->where('ngocphandang_project.Chplay_package','<>',null)
             ->select('ngocphandang_project.*')
@@ -813,11 +810,17 @@ class ProjectController extends Controller
                 }
             }
 
-
+            if(isset($record->logo)){
+                $logo = "<img class='rounded mx-auto d-block'  width='100px'  height='100px'  src='../uploads/project/$record->projectname/thumbnail/$record->logo'>";
+            }else{
+                $logo = '<img class="rounded mx-auto d-block" width="100px" height="100px" src="assets\images\logo-sm.png">';
+            }
             if(isset($record->Chplay_bot)){
                 $bot = json_decode($record->Chplay_bot,true);
-                $logo = $bot['logo'];
-                $logo = '<img class="rounded mx-auto d-block" width="100px" height="100px" src="'.$logo.'">';
+                if(isset($bot['logo'])){
+                    $logo = $bot['logo'];
+                    $logo = '<img class="rounded mx-auto d-block" width="100px" height="100px" src="'.$logo.'">';
+                }
                 $data_arr[] = array(
                     "updated_at" => strtotime($record->updated_at),
                     "logo" => $check . '  '.$logo,
@@ -825,14 +828,13 @@ class ProjectController extends Controller
                     "Chplay_bot->installs" => $bot['installs'],
                     "Chplay_bot->numberVoters" => $bot['numberVoters'],
                     "Chplay_bot->numberReviews" => $bot['numberReviews'],
-                    "Chplay_bot->score" => $bot['score'],
+                    "Chplay_bot->score" => number_format($bot['score'],2),
                     "buildinfo_mess" => $mess_info,
                     "status" =>'Console: '.$buildinfo_console.'<br> Ứng dụng: '.$Chplay_status,
                     "action"=> $btn,
                 );
-
             }else{
-                $logo = '<img class="rounded mx-auto d-block" width="100px" height="100px" src="assets\images\logo-sm.png">';
+
                 $data_arr[] = array(
                     "updated_at" => strtotime($record->updated_at),
                     "logo" => $check . '  '.$logo,
@@ -2096,12 +2098,24 @@ class ProjectController extends Controller
 
     public function checkbox($id){
         $data = ProjectModel::find($id);
+
         ProjectModel::updateOrCreate(
             [
                 "projectid" => $data->projectid,
             ],
             [
-                'Chplay_status' => 7
+                'Chplay_status' => 7,
+                'Chplay_bot->log_status' => '-|0',
+                'Chplay_bot->installs' => 0,
+               'Chplay_bot->numberVoters' => 0,
+               'Chplay_bot->numberReviews' => 0,
+               'Chplay_bot->score' => 0,
+               'Chplay_bot->appVersion' => $data->buildinfo_verstr,
+               'Chplay_bot->privacyPoliceUrl' => 0,
+               'Chplay_bot->released' => time(),
+               'Chplay_bot->updated' => time(),
+               'Chplay_bot->logo' =>  '../uploads/project/'.$data->projectname.'/thumbnail/'.$data->logo,
+               'Chplay_bot->bot_name_dev' => 0,
             ]
         );
         return response()->json(['success'=> $data->projectname.' đang chờ duyệt']);
