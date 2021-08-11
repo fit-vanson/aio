@@ -183,8 +183,6 @@
                 var bot = data[0].Chplay_bot;
                 var log_status = JSON.parse(bot).log_status
                 console.log(log_status)
-                log_status = log_status.split('|')
-                log_status = log_status[log_status.length-1]
                 if(log_status == 0){
                     $('#log_status').html('<div>Mặc định.</div>' );
                 }

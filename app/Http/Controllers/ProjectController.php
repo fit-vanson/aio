@@ -1963,6 +1963,8 @@ class ProjectController extends Controller
         $data->Chplay_buildinfo_link_app = $request->Chplay_buildinfo_link_app;
         $data->Chplay_buildinfo_email_dev_x = $request->Chplay_buildinfo_email_dev_x;
         $data->Chplay_ads = $Chplay_ads;
+        $data->update(['Chplay_bot->log_status' => $data->Chplay_status]);
+//        $data->Chplay_bot->log_status = $data->Chplay_bot->log_status.'|'.$data->Chplay_status;
         $data->Chplay_status = $request->Chplay_status;
 
         $data->Amazon_package = $request->Amazon_package;
@@ -2105,7 +2107,7 @@ class ProjectController extends Controller
             ],
             [
                 'Chplay_status' => 7,
-                'Chplay_bot->log_status' => '-|0',
+                'Chplay_bot->log_status' => $data->Chplay_status,
                 'Chplay_bot->installs' => 0,
                'Chplay_bot->numberVoters' => 0,
                'Chplay_bot->numberReviews' => 0,

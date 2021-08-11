@@ -18,15 +18,13 @@ class CronProjectController extends Controller
        foreach ($appsChplay as $appChplay){
            $package = $appChplay->Chplay_package;
            if(isset($package)){
-               $log_status ='0|7'.$appChplay->Chplay_status;
+               $log_status =$appChplay->Chplay_status;
                if($appChplay->Chplay_bot != ''){
                    $log_status = json_decode($appChplay->Chplay_bot,true)['log_status'];
-                   $status_old = explode('|',$log_status);
-                   $status_old =  $status_old[count($status_old)-1];
-                   if($status_old == $appChplay->Chplay_status){
+                   if($log_status == $appChplay->Chplay_status){
                        $log_status = $log_status;
                    }else{
-                       $log_status =  $log_status. '|'.$appChplay->Chplay_status;
+                       $log_status =  $appChplay->Chplay_status;
                    }
                }
                $appInfo = new GPlayApps();
