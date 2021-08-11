@@ -133,7 +133,7 @@
                         "searchable": false
                     },
                 ],
-            order: [[ 0, 'asc' ]],
+            order: [[ 0, 'desc' ]],
             fnRowCallback: function (nRow, aData, iDisplayIndex, iDisplayIndexFull) {
                 if (aData.status.includes('Check')) {
                     $('td', nRow).css('background-color', 'rgb(255 0 0 / 29%)').css('color', 'white');
@@ -182,7 +182,6 @@
             if(data[0].Chplay_bot){
                 var bot = data[0].Chplay_bot;
                 var log_status = JSON.parse(bot).log_status
-                console.log(log_status)
                 if(log_status == 0){
                     $('#log_status').html('<div>Mặc định.</div>' );
                 }
@@ -207,8 +206,6 @@
                 if(log_status == 7){
                     $('#log_status').html('<div class="alert alert-warning" >Pending.</div>' );
                 }
-
-                console.log(log_status)
                 if(JSON.parse(bot).logo){
                     logo = JSON.parse(bot).logo;
                 }  else {
