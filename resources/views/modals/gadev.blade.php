@@ -24,6 +24,12 @@
                         </div>
                     </div>
                     <div class="form-group">
+                        <label for="name" class="col-sm-5 control-label">Password</label>
+                        <div class="col-sm-12">
+                            <input type="text" class="form-control" id="pass" name="pass">
+                        </div>
+                    </div>
+                    <div class="form-group">
                         <label class="col-sm-5 control-label">VPN</label>
                         <div class="col-sm-12">
                             <input type="text" id="vpn_iplogin" class="form-control" name="vpn_iplogin">

@@ -112,6 +112,7 @@ class Ga_devController extends Controller
         $data = new Ga_dev();
         $data['gmail'] = strtolower($request->gmail);
         $data['mailrecovery'] = strtolower($request->mailrecovery);
+        $data['pass'] = $request->pass;
         $data['vpn_iplogin'] = $request->vpn_iplogin;
         $data['note'] = $request->note;
         $data->save();
@@ -183,6 +184,7 @@ class Ga_devController extends Controller
         $data->gmail = strtolower($request->gmail);
         $data->mailrecovery = strtolower($request->mailrecovery);
         $data->vpn_iplogin= $request->vpn_iplogin;
+        $data->pass = $request->pass;
         $data->note= $request->note;
         $data->save();
         return response()->json(['success'=>'Cập nhật thành công']);

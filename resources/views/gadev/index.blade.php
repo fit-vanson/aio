@@ -48,6 +48,7 @@
                             <th>STT</th>
                             <th>Gmail</th>
                             <th>Gmail Recover</th>
+                            <th>Pass</th>
                             <th>VPN</th>
                             <th>Backup Code</th>
                             <th>Ghi chú</th>
@@ -107,6 +108,7 @@
                     },
                     {data: 'gmail'},
                     {data: 'mailrecovery'},
+                    {data: 'pass'},
                     {data: 'vpn_iplogin'},
                     {data: 'backup_code'},
                     {data: 'note'},
@@ -189,6 +191,7 @@
                         $('#gadev_id').val(data.id);
                         $('#gmail').val(data.gmail);
                         $('#mailrecovery').val(data.mailrecovery);
+                        $('#pass').val(data.pass);
                         $('#vpn_iplogin').val(data.vpn_iplogin);
                         $('#note').val(data.note);
                     }
