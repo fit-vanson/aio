@@ -135,23 +135,31 @@
                 ],
             order: [[ 0, 'desc' ]],
             fnRowCallback: function (nRow, aData, iDisplayIndex, iDisplayIndexFull) {
+                console.log(aData.status)
+                if (aData.status.includes('Chưa Publish')) {
+                    $('td', nRow).css('background-color', 'rgb(187 187 187 / 27%)');
+                }
+
                 if (aData.status.includes('Check')) {
-                    $('td', nRow).css('background-color', 'rgb(255 0 0 / 29%)').css('color', 'white');
+                    $('td', nRow).css('background-color', 'rgb(250 68 68 / 30%)');
                 }
                 if (aData.status.includes('Public')) {
-                    $('td', nRow).css('background-color', 'rgb(59 212 57 / 72%)').css('color', '#ffffff' );
+                    $('td', nRow).css('background-color', 'rgb(255 255 255)');
                 }
                 if (aData.status.includes('Reject')) {
-                    $('td', nRow).css('background-color', 'rgb(2 164 153)').css('color', 'white');
+                    $('td', nRow).css('background-color', 'rgb(255 0 0 / 45%)');
                 }
                 if (aData.status.includes('UnPublish')) {
-                    $('td', nRow).css('background-color', 'rgb(146 232 255)').css('color', 'white');
+                    $('td', nRow).css('background-color', 'rgb(56 164 248 / 69%)');
                 }
                 if (aData.status.includes('Remove')) {
-                    $('td', nRow).css('background-color', 'rgb(98 110 212)').css('color', 'white');
+                    $('td', nRow).css('background-color', 'rgb(255 0 0 / 45%)');
                 }
                 if (aData.status.includes('Pending')) {
-                    $('td', nRow).css('background-color', 'rgb(253 222 114)').css('color', 'white');
+                    $('td', nRow).css('background-color', 'rgb(253 222 114)');
+                }
+                if (aData.status.includes('Suppend')) {
+                    $('td', nRow).css('background-color', 'rgb(255 0 0 / 72%)');
                 }
             },
         });
@@ -169,7 +177,9 @@
     }
     function detailChplay(id) {
         $.get('{{asset('project/edit')}}/'+id,function (data) {
-            $("#projectForm input").prop("disabled", true);
+            $("#detailApp input").prop("disabled", true);
+            $("#project_id").prop("disabled", false);
+            project_id
             if(data[4] == null) { data[4] = {template: "Chưa có template"}}
             if(data[3] == null) { data[3] = {ma_da: "Chưa có mã dự án"}}
             if(data[2] == null) { data[2] = {store_name: "Chưa có Store Name"}}
@@ -291,23 +301,31 @@
             ],
             order: [[ 0, 'desc' ]],
             fnRowCallback: function (nRow, aData, iDisplayIndex, iDisplayIndexFull) {
+                console.log(aData.status)
+                if (aData.status.includes('Chưa Publish')) {
+                    $('td', nRow).css('background-color', 'rgb(187 187 187 / 27%)');
+                }
+
                 if (aData.status.includes('Check')) {
-                    $('td', nRow).css('background-color', 'rgb(255 0 0 / 29%)').css('color', 'white');
+                    $('td', nRow).css('background-color', 'rgb(250 68 68 / 30%)');
                 }
                 if (aData.status.includes('Public')) {
-                    $('td', nRow).css('background-color', 'rgb(59 212 57 / 72%)').css('color', '#ffffff' );
+                    $('td', nRow).css('background-color', 'rgb(255 255 255)');
                 }
                 if (aData.status.includes('Reject')) {
-                    $('td', nRow).css('background-color', 'rgb(2 164 153)').css('color', 'white');
+                    $('td', nRow).css('background-color', 'rgb(255 0 0 / 45%)');
                 }
                 if (aData.status.includes('UnPublish')) {
-                    $('td', nRow).css('background-color', 'rgb(146 232 255)').css('color', 'white');
+                    $('td', nRow).css('background-color', 'rgb(56 164 248 / 69%)');
                 }
                 if (aData.status.includes('Remove')) {
-                    $('td', nRow).css('background-color', 'rgb(98 110 212)').css('color', 'white');
+                    $('td', nRow).css('background-color', 'rgb(255 0 0 / 45%)');
                 }
                 if (aData.status.includes('Pending')) {
-                    $('td', nRow).css('background-color', 'rgb(253 222 114)').css('color', 'white');
+                    $('td', nRow).css('background-color', 'rgb(253 222 114)');
+                }
+                if (aData.status.includes('Suppend')) {
+                    $('td', nRow).css('background-color', 'rgb(255 0 0 / 72%)');
                 }
             },
         });
@@ -343,23 +361,31 @@
             ],
             order: [[ 0, 'desc' ]],
             fnRowCallback: function (nRow, aData, iDisplayIndex, iDisplayIndexFull) {
+                console.log(aData.status)
+                if (aData.status.includes('Chưa Publish')) {
+                    $('td', nRow).css('background-color', 'rgb(187 187 187 / 27%)');
+                }
+
                 if (aData.status.includes('Check')) {
-                    $('td', nRow).css('background-color', 'rgb(255 0 0 / 29%)').css('color', 'white');
+                    $('td', nRow).css('background-color', 'rgb(250 68 68 / 30%)');
                 }
                 if (aData.status.includes('Public')) {
-                    $('td', nRow).css('background-color', 'rgb(59 212 57 / 72%)').css('color', '#ffffff' );
+                    $('td', nRow).css('background-color', 'rgb(255 255 255)');
                 }
                 if (aData.status.includes('Reject')) {
-                    $('td', nRow).css('background-color', 'rgb(2 164 153)').css('color', 'white');
+                    $('td', nRow).css('background-color', 'rgb(255 0 0 / 45%)');
                 }
                 if (aData.status.includes('UnPublish')) {
-                    $('td', nRow).css('background-color', 'rgb(146 232 255)').css('color', 'white');
+                    $('td', nRow).css('background-color', 'rgb(56 164 248 / 69%)');
                 }
                 if (aData.status.includes('Remove')) {
-                    $('td', nRow).css('background-color', 'rgb(98 110 212)').css('color', 'white');
+                    $('td', nRow).css('background-color', 'rgb(255 0 0 / 45%)');
                 }
                 if (aData.status.includes('Pending')) {
-                    $('td', nRow).css('background-color', 'rgb(253 222 114)').css('color', 'white');
+                    $('td', nRow).css('background-color', 'rgb(253 222 114)');
+                }
+                if (aData.status.includes('Suppend')) {
+                    $('td', nRow).css('background-color', 'rgb(255 0 0 / 72%)');
                 }
             },
         });
@@ -395,23 +421,31 @@
             ],
             order: [[ 0, 'desc' ]],
             fnRowCallback: function (nRow, aData, iDisplayIndex, iDisplayIndexFull) {
+                console.log(aData.status)
+                if (aData.status.includes('Chưa Publish')) {
+                    $('td', nRow).css('background-color', 'rgb(187 187 187 / 27%)');
+                }
+
                 if (aData.status.includes('Check')) {
-                    $('td', nRow).css('background-color', 'rgb(255 0 0 / 29%)').css('color', 'white');
+                    $('td', nRow).css('background-color', 'rgb(250 68 68 / 30%)');
                 }
                 if (aData.status.includes('Public')) {
-                    $('td', nRow).css('background-color', 'rgb(59 212 57 / 72%)').css('color', '#ffffff' );
+                    $('td', nRow).css('background-color', 'rgb(255 255 255)');
                 }
                 if (aData.status.includes('Reject')) {
-                    $('td', nRow).css('background-color', 'rgb(2 164 153)').css('color', 'white');
+                    $('td', nRow).css('background-color', 'rgb(255 0 0 / 45%)');
                 }
                 if (aData.status.includes('UnPublish')) {
-                    $('td', nRow).css('background-color', 'rgb(146 232 255)').css('color', 'white');
+                    $('td', nRow).css('background-color', 'rgb(56 164 248 / 69%)');
                 }
                 if (aData.status.includes('Remove')) {
-                    $('td', nRow).css('background-color', 'rgb(98 110 212)').css('color', 'white');
+                    $('td', nRow).css('background-color', 'rgb(255 0 0 / 45%)');
                 }
                 if (aData.status.includes('Pending')) {
-                    $('td', nRow).css('background-color', 'rgb(253 222 114)').css('color', 'white');
+                    $('td', nRow).css('background-color', 'rgb(253 222 114)');
+                }
+                if (aData.status.includes('Suppend')) {
+                    $('td', nRow).css('background-color', 'rgb(255 0 0 / 72%)');
                 }
             },
         });
@@ -447,23 +481,31 @@
             ],
             order: [[ 0, 'desc' ]],
             fnRowCallback: function (nRow, aData, iDisplayIndex, iDisplayIndexFull) {
+                console.log(aData.status)
+                if (aData.status.includes('Chưa Publish')) {
+                    $('td', nRow).css('background-color', 'rgb(187 187 187 / 27%)');
+                }
+
                 if (aData.status.includes('Check')) {
-                    $('td', nRow).css('background-color', 'rgb(255 0 0 / 29%)').css('color', 'white');
+                    $('td', nRow).css('background-color', 'rgb(250 68 68 / 30%)');
                 }
                 if (aData.status.includes('Public')) {
-                    $('td', nRow).css('background-color', 'rgb(59 212 57 / 72%)').css('color', '#ffffff' );
+                    $('td', nRow).css('background-color', 'rgb(255 255 255)');
                 }
                 if (aData.status.includes('Reject')) {
-                    $('td', nRow).css('background-color', 'rgb(2 164 153)').css('color', 'white');
+                    $('td', nRow).css('background-color', 'rgb(255 0 0 / 45%)');
                 }
                 if (aData.status.includes('UnPublish')) {
-                    $('td', nRow).css('background-color', 'rgb(146 232 255)').css('color', 'white');
+                    $('td', nRow).css('background-color', 'rgb(56 164 248 / 69%)');
                 }
                 if (aData.status.includes('Remove')) {
-                    $('td', nRow).css('background-color', 'rgb(98 110 212)').css('color', 'white');
+                    $('td', nRow).css('background-color', 'rgb(255 0 0 / 45%)');
                 }
                 if (aData.status.includes('Pending')) {
-                    $('td', nRow).css('background-color', 'rgb(253 222 114)').css('color', 'white');
+                    $('td', nRow).css('background-color', 'rgb(253 222 114)');
+                }
+                if (aData.status.includes('Suppend')) {
+                    $('td', nRow).css('background-color', 'rgb(255 0 0 / 72%)');
                 }
             },
         });
@@ -499,23 +541,31 @@
             ],
             order: [[ 0, 'desc' ]],
             fnRowCallback: function (nRow, aData, iDisplayIndex, iDisplayIndexFull) {
+                console.log(aData.status)
+                if (aData.status.includes('Chưa Publish')) {
+                    $('td', nRow).css('background-color', 'rgb(187 187 187 / 27%)');
+                }
+
                 if (aData.status.includes('Check')) {
-                    $('td', nRow).css('background-color', 'rgb(255 0 0 / 29%)').css('color', 'white');
+                    $('td', nRow).css('background-color', 'rgb(250 68 68 / 30%)');
                 }
                 if (aData.status.includes('Public')) {
-                    $('td', nRow).css('background-color', 'rgb(59 212 57 / 72%)').css('color', '#ffffff' );
+                    $('td', nRow).css('background-color', 'rgb(255 255 255)');
                 }
                 if (aData.status.includes('Reject')) {
-                    $('td', nRow).css('background-color', 'rgb(2 164 153)').css('color', 'white');
+                    $('td', nRow).css('background-color', 'rgb(255 0 0 / 45%)');
                 }
                 if (aData.status.includes('UnPublish')) {
-                    $('td', nRow).css('background-color', 'rgb(146 232 255)').css('color', 'white');
+                    $('td', nRow).css('background-color', 'rgb(56 164 248 / 69%)');
                 }
                 if (aData.status.includes('Remove')) {
-                    $('td', nRow).css('background-color', 'rgb(98 110 212)').css('color', 'white');
+                    $('td', nRow).css('background-color', 'rgb(255 0 0 / 45%)');
                 }
                 if (aData.status.includes('Pending')) {
-                    $('td', nRow).css('background-color', 'rgb(253 222 114)').css('color', 'white');
+                    $('td', nRow).css('background-color', 'rgb(253 222 114)');
+                }
+                if (aData.status.includes('Suppend')) {
+                    $('td', nRow).css('background-color', 'rgb(255 0 0 / 72%)');
                 }
             },
         });
@@ -551,23 +601,31 @@
             ],
             order: [[ 0, 'desc' ]],
             fnRowCallback: function (nRow, aData, iDisplayIndex, iDisplayIndexFull) {
+                console.log(aData.status)
+                if (aData.status.includes('Chưa Publish')) {
+                    $('td', nRow).css('background-color', 'rgb(187 187 187 / 27%)');
+                }
+
                 if (aData.status.includes('Check')) {
-                    $('td', nRow).css('background-color', 'rgb(255 0 0 / 29%)').css('color', 'white');
+                    $('td', nRow).css('background-color', 'rgb(250 68 68 / 30%)');
                 }
                 if (aData.status.includes('Public')) {
-                    $('td', nRow).css('background-color', 'rgb(59 212 57 / 72%)').css('color', '#ffffff' );
+                    $('td', nRow).css('background-color', 'rgb(255 255 255)');
                 }
                 if (aData.status.includes('Reject')) {
-                    $('td', nRow).css('background-color', 'rgb(2 164 153)').css('color', 'white');
+                    $('td', nRow).css('background-color', 'rgb(255 0 0 / 45%)');
                 }
                 if (aData.status.includes('UnPublish')) {
-                    $('td', nRow).css('background-color', 'rgb(146 232 255)').css('color', 'white');
+                    $('td', nRow).css('background-color', 'rgb(56 164 248 / 69%)');
                 }
                 if (aData.status.includes('Remove')) {
-                    $('td', nRow).css('background-color', 'rgb(98 110 212)').css('color', 'white');
+                    $('td', nRow).css('background-color', 'rgb(255 0 0 / 45%)');
                 }
                 if (aData.status.includes('Pending')) {
-                    $('td', nRow).css('background-color', 'rgb(253 222 114)').css('color', 'white');
+                    $('td', nRow).css('background-color', 'rgb(253 222 114)');
+                }
+                if (aData.status.includes('Suppend')) {
+                    $('td', nRow).css('background-color', 'rgb(255 0 0 / 72%)');
                 }
             },
         });
@@ -603,23 +661,31 @@
             ],
             order: [[ 0, 'desc' ]],
             fnRowCallback: function (nRow, aData, iDisplayIndex, iDisplayIndexFull) {
+                console.log(aData.status)
+                if (aData.status.includes('Chưa Publish')) {
+                    $('td', nRow).css('background-color', 'rgb(187 187 187 / 27%)');
+                }
+
                 if (aData.status.includes('Check')) {
-                    $('td', nRow).css('background-color', 'rgb(255 0 0 / 29%)').css('color', 'white');
+                    $('td', nRow).css('background-color', 'rgb(250 68 68 / 30%)');
                 }
                 if (aData.status.includes('Public')) {
-                    $('td', nRow).css('background-color', 'rgb(59 212 57 / 72%)').css('color', '#ffffff' );
+                    $('td', nRow).css('background-color', 'rgb(255 255 255)');
                 }
                 if (aData.status.includes('Reject')) {
-                    $('td', nRow).css('background-color', 'rgb(2 164 153)').css('color', 'white');
+                    $('td', nRow).css('background-color', 'rgb(255 0 0 / 45%)');
                 }
                 if (aData.status.includes('UnPublish')) {
-                    $('td', nRow).css('background-color', 'rgb(146 232 255)').css('color', 'white');
+                    $('td', nRow).css('background-color', 'rgb(56 164 248 / 69%)');
                 }
                 if (aData.status.includes('Remove')) {
-                    $('td', nRow).css('background-color', 'rgb(98 110 212)').css('color', 'white');
+                    $('td', nRow).css('background-color', 'rgb(255 0 0 / 45%)');
                 }
                 if (aData.status.includes('Pending')) {
-                    $('td', nRow).css('background-color', 'rgb(253 222 114)').css('color', 'white');
+                    $('td', nRow).css('background-color', 'rgb(253 222 114)');
+                }
+                if (aData.status.includes('Suppend')) {
+                    $('td', nRow).css('background-color', 'rgb(255 0 0 / 72%)');
                 }
             },
         });
@@ -655,27 +721,67 @@
             ],
             order: [[ 0, 'desc' ]],
             fnRowCallback: function (nRow, aData, iDisplayIndex, iDisplayIndexFull) {
+                console.log(aData.status)
+                if (aData.status.includes('Chưa Publish')) {
+                    $('td', nRow).css('background-color', 'rgb(187 187 187 / 27%)');
+                }
+
                 if (aData.status.includes('Check')) {
-                    $('td', nRow).css('background-color', 'rgb(255 0 0 / 29%)').css('color', 'white');
+                    $('td', nRow).css('background-color', 'rgb(250 68 68 / 30%)');
                 }
                 if (aData.status.includes('Public')) {
-                    $('td', nRow).css('background-color', 'rgb(59 212 57 / 72%)').css('color', '#ffffff' );
+                    $('td', nRow).css('background-color', 'rgb(255 255 255)');
                 }
                 if (aData.status.includes('Reject')) {
-                    $('td', nRow).css('background-color', 'rgb(2 164 153)').css('color', 'white');
+                    $('td', nRow).css('background-color', 'rgb(255 0 0 / 45%)');
                 }
                 if (aData.status.includes('UnPublish')) {
-                    $('td', nRow).css('background-color', 'rgb(146 232 255)').css('color', 'white');
+                    $('td', nRow).css('background-color', 'rgb(56 164 248 / 69%)');
                 }
                 if (aData.status.includes('Remove')) {
-                    $('td', nRow).css('background-color', 'rgb(98 110 212)').css('color', 'white');
+                    $('td', nRow).css('background-color', 'rgb(255 0 0 / 45%)');
                 }
                 if (aData.status.includes('Pending')) {
-                    $('td', nRow).css('background-color', 'rgb(253 222 114)').css('color', 'white');
+                    $('td', nRow).css('background-color', 'rgb(253 222 114)');
+                }
+                if (aData.status.includes('Suppend')) {
+                    $('td', nRow).css('background-color', 'rgb(255 0 0 / 72%)');
                 }
             },
         });
     }
+    $('#detailApp').on('submit',function (event){
+        event.preventDefault();
+        var formData = new FormData($("#detailApp")[0]);
+        if($('#saveBtn').val() == 'update'){
+            $.ajax({
+                // data: $('#detailApp').serialize(),
+                data: formData,
+                url: "{{ route('project.updateStatus') }}",
+                type: "post",
+                dataType: 'json',
+                processData: false,
+                contentType: false,
+                success: function (data) {
+
+                    if(data.errors){
+                        for( var count=0 ; count <data.errors.length; count++){
+                            $("#detailApp").notify(
+                                data.errors[count],"error",
+                                { position:"right" }
+                            );
+                        }
+                    }
+                    if(data.success){
+                        $.notify(data.success, "success");
+                        $('#detailApp').trigger("reset");
+                        $('#ajaxModel').modal('hide');
+                        table.draw();
+                    }
+                },
+            });
+        }
+    });
 
 
 </script>

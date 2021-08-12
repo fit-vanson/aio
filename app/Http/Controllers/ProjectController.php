@@ -741,7 +741,7 @@ class ProjectController extends Controller
         foreach ($records as $record) {
             $btn = ' <a href="javascript:void(0)" onclick="detailChplay('.$record->projectid.')" class="btn btn-warning"><i class="mdi mdi-clipboard-text"></i></a>';
             if($record->Chplay_status == 0 || $record->Chplay_status == 3 ){
-                $check = '<input type="checkbox" class="item_checkbox"   onchange="checkbox('.$record->projectid.')">';
+                $check = ' <a href="javascript:void(0)" onclick="checkbox('.$record->projectid.')" class="btn btn-success"><i class="mdi mdi-check-box-outline"></i></a>';
             }else{
                 $check = '';
             }
@@ -823,7 +823,7 @@ class ProjectController extends Controller
                 }
                 $data_arr[] = array(
                     "updated_at" => strtotime($record->updated_at),
-                    "logo" => $check . '  '.$logo,
+                    "logo" => $logo,
                     "ma_da"=>$data_projectname.$package_chplay,
                     "Chplay_bot->installs" => $bot['installs'],
                     "Chplay_bot->numberVoters" => $bot['numberVoters'],
@@ -831,13 +831,13 @@ class ProjectController extends Controller
                     "Chplay_bot->score" => number_format($bot['score'],2),
                     "buildinfo_mess" => $mess_info,
                     "status" =>'Console: '.$buildinfo_console.'<br> Ứng dụng: '.$Chplay_status,
-                    "action"=> $btn,
+                    "action"=> $btn .'  '. $check,
                 );
             }else{
 
                 $data_arr[] = array(
                     "updated_at" => strtotime($record->updated_at),
-                    "logo" => $check . '  '.$logo,
+                    "logo" => $logo,
                     "ma_da"=>$data_projectname.$package_chplay,
                     "Chplay_bot->installs" => 0,
                     "Chplay_bot->numberVoters" => 0,
@@ -845,7 +845,7 @@ class ProjectController extends Controller
                     "Chplay_bot->score" => 0,
                     "buildinfo_mess" => $mess_info,
                     "status" =>'Console: '.$buildinfo_console.'<br> Ứng dụng: '.$Chplay_status,
-                    "action"=> $btn,
+                    "action"=> $btn .'  '. $check,
                 );
             }
         }
@@ -2052,6 +2052,21 @@ class ProjectController extends Controller
 
 
     }
+    public function updateStatus(Request $request){
+        $data = ProjectModel::where('projectid',$request->project_id)->first();
+        ProjectModel::updateOrCreate(
+            [
+                "projectid" => $request->project_id,
+
+            ],
+            [
+                "Chplay_status" => $request->Chplay_status,
+                'Chplay_bot->log_status' => $data->Chplay_status,
+            ]);
+        return response()->json(['success'=>'Cập nhật thành công']);
+
+
+    }
 
 
     public function delete($id)
@@ -2100,7 +2115,6 @@ class ProjectController extends Controller
 
     public function checkbox($id){
         $data = ProjectModel::find($id);
-
         ProjectModel::updateOrCreate(
             [
                 "projectid" => $data->projectid,

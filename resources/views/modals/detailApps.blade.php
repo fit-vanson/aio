@@ -7,10 +7,9 @@
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
             </div>
             <div class="modal-body">
-                <form id="projectForm" name="projectForm" class="form-horizontal" enctype="multipart/form-data">
-                    <input type="hidden" name="project_id" id="project_id">
+                <form id="detailApp" name="detailApp" class="form-horizontal" enctype="multipart/form-data">
+                    <input type="hidden" disabled="" name="project_id" id="project_id">
                     <input type="hidden" name="buildinfo_console" id="buildinfo_console">
-
                     <div class="row">
                         <div class="col-lg-12">
                             <div class="card">
@@ -27,7 +26,6 @@
                                                 <h4 class="mt-0 header-title text-right">Old Status: </h4>
                                             </div>
                                             <div class="col-lg-2" id="log_status">
-
                                             </div>
                                         </div>
                                         <div data-repeater-item="" class="row">
@@ -134,7 +132,7 @@
                                             <div class="form-group col-lg-6 input_status">
                                                 <label for="name">Trạng thái Ứng dụng</label>
                                                 <div>
-                                                    <select class="form-control" id="Chplay_status" disabled name="Chplay_status">
+                                                    <select class="form-control" id="Chplay_status" name="Chplay_status">
                                                         <option value="0">Mặc định</option>
                                                         <option value="1">Publish</option>
                                                         <option value="2">Suppend</option>
@@ -181,6 +179,8 @@
                             </div>
                         </div>
                         <div class="col-sm-offset-2 col-sm-10">
+                            <button type="submit" class="btn btn-primary" id="saveBtn" value="update">Save changes
+                            </button>
                             <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
                         </div>
                     </div>
