@@ -228,6 +228,7 @@
             $('#policy2').val(data.policy2);
             $('#note').val(data.note);
             $('#link').val(data.link);
+            $('#package').val(data.package);
             $('#convert_aab').val(data.convert_aab);
             $('#startus').val(data.startus);
             $('#link_store_vietmmo').val(data.link_store_vietmmo);

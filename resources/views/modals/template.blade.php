@@ -21,7 +21,40 @@
                                 <input type="text" id="ver_build" name="ver_build" class="form-control">
                             </div>
                         </div>
-
+                        <div data-repeater-item="" class="row">
+                            <div class="form-group col-lg-6 ">
+                                <label for="name">Convert Aab</label>
+                                <div>
+                                    <select class="form-control" id="convert_aab" name="convert_aab">
+                                        <option value="0">No</option>
+                                        <option value="1">Yes</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="form-group col-lg-6 input_status">
+                                <label for="name">Trạng thái</label>
+                                <div>
+                                    <select class="form-control" id="startus" name="startus">
+                                        <option value="0">Mở</option>
+                                        <option value="1">Tắt</option>
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+                        <div data-repeater-item="" class="row">
+                            <div class="form-group col-lg-4">
+                                <label for="name">Package</label>
+                                <input type="text" id="package" name="package" class="form-control" >
+                            </div>
+                            <div class="form-group col-lg-4">
+                                <label for="name">Link của ứng dụng</label>
+                                <input type="text" id="link" name="link" class="form-control" >
+                            </div>
+                            <div class="form-group col-lg-4 ">
+                                <label for="name">Link Store VietMMO</label>
+                                <input type="url" id="link_store_vietmmo" name="link_store_vietmmo" class="form-control" >
+                            </div>
+                        </div>
                         <div data-repeater-item="" class="row">
                             <div class="form-group col-lg-6 input_package">
                                 <label for="name">script_copy </label>
@@ -97,36 +130,7 @@
                             </div>
                         </div>
 
-                        <div data-repeater-item="" class="row">
-                            <div class="form-group col-lg-6">
-                                <label for="name">Link của ứng dụng</label>
-                                <input type="text" id="link" name="link" class="form-control" >
-                            </div>
-                            <div class="form-group col-lg-6 ">
-                                <label for="name">Link Store VietMMO</label>
-                                <input type="url" id="link_store_vietmmo" name="link_store_vietmmo" class="form-control" >
-                            </div>
-                        </div>
-                        <div data-repeater-item="" class="row">
-                            <div class="form-group col-lg-6 ">
-                                <label for="name">Convert Aab</label>
-                                <div>
-                                    <select class="form-control" id="convert_aab" name="convert_aab">
-                                        <option value="0">No</option>
-                                        <option value="1">Yes</option>
-                                    </select>
-                                </div>
-                            </div>
-                            <div class="form-group col-lg-6 input_status">
-                                <label for="name">Trạng thái</label>
-                                <div>
-                                    <select class="form-control" id="startus" name="startus">
-                                        <option value="0">Mở</option>
-                                        <option value="1">Tắt</option>
-                                    </select>
-                                </div>
-                            </div>
-                        </div>
+
 
 
                     </div>

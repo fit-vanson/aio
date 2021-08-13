@@ -207,6 +207,7 @@ class TemplateController extends Controller
         $data['time_get'] = time();
         $data['note'] = $request->note;
 
+        $data['package'] = $request->package;
         $data['link'] = $request->link;
         $data['convert_aab'] = $request->convert_aab;
         $data['startus'] = $request->startus;
@@ -293,6 +294,7 @@ class TemplateController extends Controller
         $data->policy2 = $request->policy2;
         $data->time_update = time();
         $data->note = $request->note;
+        $data->package = $request->package;
         $data->link = $request->link;
         $data->convert_aab = $request->convert_aab;
         $data->startus = $request->startus;
