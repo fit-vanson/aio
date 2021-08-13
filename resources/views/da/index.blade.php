@@ -47,6 +47,11 @@
                         <tr>
                             <th width="5%">STT</th>
                             <th>Mã dự án</th>
+                            <th>Chủ đề</th>
+                            <th>Key words</th>
+                            <th>Link store</th>
+                            <th>Ghi chú</th>
+
                             <th width="5%">Action</th>
                         </tr>
                         </thead>
@@ -99,6 +104,10 @@
                         }
                     },
                     {data: 'ma_da'},
+                    {data: 'chude'},
+                    {data: 'keywords'},
+                    {data: 'link_store_vietmmo'},
+                    {data: 'note'},
                     {data: 'action', name: 'action', orderable: false, searchable: false},
                 ],
             });
@@ -175,6 +184,10 @@
                     success: function (data) {
                         $('#da_id').val(data.id);
                         $('#ma_da').val(data.ma_da);
+                        $('#chude').val(data.chude);
+                        $('#keywords').val(data.keywords);
+                        $('#link_store_vietmmo').val(data.link_store_vietmmo);
+                        $('#note').val(data.note);
                     }
                 });
 

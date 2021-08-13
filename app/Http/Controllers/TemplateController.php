@@ -176,11 +176,7 @@ class TemplateController extends Controller
     }
 
 
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
+
     public function create(Request  $request)
     {
 
@@ -212,6 +208,9 @@ class TemplateController extends Controller
         $data['note'] = $request->note;
 
         $data['link'] = $request->link;
+        $data['convert_aab'] = $request->convert_aab;
+        $data['startus'] = $request->startus;
+        $data['link_store_vietmmo'] = $request->link_store_vietmmo;
         $data['Chplay_category'] =  $request->Chplay_category;
         $data['Amazon_category'] =  $request->Amazon_category;
         $data['Samsung_category'] =  $request->Samsung_category;
@@ -295,6 +294,9 @@ class TemplateController extends Controller
         $data->time_update = time();
         $data->note = $request->note;
         $data->link = $request->link;
+        $data->convert_aab = $request->convert_aab;
+        $data->startus = $request->startus;
+        $data->link_store_vietmmo = $request->link_store_vietmmo;
         $data->Chplay_category =  $request->Chplay_category;
         $data->Amazon_category =  $request->Amazon_category;
         $data->Samsung_category =  $request->Samsung_category;

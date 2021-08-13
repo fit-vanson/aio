@@ -115,7 +115,8 @@
             ],
             "columnDefs": [
                 { "orderable": false, "targets": [1,2,3] }
-            ]
+            ],
+            order:[6,'desc']
 
         });
 
@@ -227,6 +228,9 @@
             $('#policy2').val(data.policy2);
             $('#note').val(data.note);
             $('#link').val(data.link);
+            $('#convert_aab').val(data.convert_aab);
+            $('#startus').val(data.startus);
+            $('#link_store_vietmmo').val(data.link_store_vietmmo);
             $('#Chplay_category').val(data.Chplay_category);
             $('#Amazon_category').val(data.Amazon_category);
             $('#Samsung_category').val(data.Samsung_category);

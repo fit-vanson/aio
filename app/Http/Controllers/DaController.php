@@ -21,7 +21,12 @@ class DaController extends Controller
                     $btn = $btn.' <a href="javascript:void(0)" data-toggle="tooltip"  data-id="'.$row->id.'" data-original-title="Delete" class="btn btn-danger btn-sm deleteDa"><i class="ti-trash"></i></a>';
                     return $btn;
                 })
-                ->rawColumns(['action'])
+                ->editColumn('link_store_vietmmo',function ($row){
+                    if(isset($row->link_store_vietmmo)){
+                        return '<a href="'.$row->link_store_vietmmo.'" target="_blank">Link </a>';
+                    }
+                })
+                ->rawColumns(['action','link_store_vietmmo'])
                 ->make(true);
         }
         return view('da.index',compact('da'));
@@ -48,6 +53,10 @@ class DaController extends Controller
         }
         $data = new Da();
         $data['ma_da'] = $request->ma_da;
+        $data['chude'] = $request->chude;
+        $data['keywords'] = $request->keywords;
+        $data['link_store_vietmmo'] = $request->link_store_vietmmo;
+        $data['note'] = $request->note;
         $data->save();
         $allDa  = Da::latest()->get();
         return response()->json([
@@ -113,6 +122,10 @@ class DaController extends Controller
         }
         $data = Da::find($id);
         $data->ma_da =$request->ma_da;
+        $data->chude =$request->chude;
+        $data->keywords =$request->keywords;
+        $data->link_store_vietmmo =$request->link_store_vietmmo;
+        $data->note =$request->note;
         $data->save();
         return response()->json(['success'=>'Cập nhật thành công']);
     }
