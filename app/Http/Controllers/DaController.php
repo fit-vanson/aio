@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Da;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Validator;
 use Yajra\DataTables\Facades\DataTables;
 
@@ -26,7 +27,17 @@ class DaController extends Controller
                         return '<a href="'.$row->link_store_vietmmo.'" target="_blank">Link </a>';
                     }
                 })
-                ->rawColumns(['action','link_store_vietmmo'])
+                ->editColumn('ma_da',function ($row){
+                    $project = DB::table('ngocphandang_da')
+                        ->join('ngocphandang_project','ngocphandang_da.id','=','ngocphandang_project.ma_da')
+                        ->where('ngocphandang_project.ma_da',$row->id)
+                        ->count();
+//                    return '<a href="../../project/getIndex?ma_da='.$row->id.'" target="_blank">'.$row->ma_da.'  - ('.$project.')</a>';
+                    return '<a href="javascript:void(0)" onclick="showProject('.$row->id.')">'.$row->ma_da.'  - ('.$project.')</a>';
+                    return route('project.getIndex');
+                    return redirect()->route('project.getIndex', [$row->id]);
+                })
+                ->rawColumns(['action','link_store_vietmmo','ma_da'])
                 ->make(true);
         }
         return view('da.index',compact('da'));

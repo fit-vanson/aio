@@ -19,7 +19,7 @@
 
 @section('breadcrumb')
     <div class="col-sm-6">
-        <h4 class="page-title">Quản lý GaDev</h4>
+        <h4 class="page-title">Quản lý Dự án</h4>
     </div>
     <div class="col-sm-6">
         <div class="float-right">
@@ -41,7 +41,6 @@
         <div class="col-12">
             <div class="card">
                 <div class="card-body">
-
                     <table class="table table-bordered dt-responsive nowrap data-table" style="border-collapse: collapse; border-spacing: 0; width: 100%;">
                         <thead>
                         <tr>
@@ -51,7 +50,6 @@
                             <th>Key words</th>
                             <th>Link store</th>
                             <th>Ghi chú</th>
-
                             <th width="5%">Action</th>
                         </tr>
                         </thead>
@@ -95,6 +93,7 @@
             var table = $('.data-table').DataTable({
                 processing: true,
                 serverSide: true,
+                displayLength: 50,
                 ajax: "{{ route('da.index') }}",
 
                 columns: [
@@ -219,6 +218,53 @@
                 });
             });
         });
+        function showProject(id){
+            {{--var table = $('.data-table').DataTable({--}}
+            {{--    destroy: true,--}}
+            {{--    displayLength: 50,--}}
+            {{--    lengthMenu: [5, 10, 25, 50, 75, 100],--}}
+            {{--    serverSide: true,--}}
+            {{--    $.ajax( {--}}
+            {{--        url : "{{ route('project.getIndex') }}?ma_da="+id,--}}
+            {{--        type: "post",--}}
+            {{--        success: function (data){--}}
+            {{--            alert(data)--}}
+            {{--        },--}}
+            {{--    })--}}
+
+            {{--});--}}
+            var table = $('.data-table').DataTable({
+                destroy: true,
+                displayLength: 50,
+                searching:false,
+                lengthMenu: [5, 10, 25, 50, 75, 100],
+                serverSide: true,
+                ajax: {
+                    url : "{{ route('project.getIndex') }}?ma_da="+id,
+                    type: "post",
+
+                },
+                columns: [
+                    {data: 'updated_at', name: 'updated_at',},
+                    {title: 'logo',data: 'logo', name: 'logo',orderable: false},
+                    {title: 'Mã Dự án',data: 'ma_da', name: 'ma_da'},
+                    {title: 'Package',data: 'package', name: 'package',orderable: false},
+                    {title: 'Status',data: 'status', name: 'status',orderable: false},
+                    {title: 'Status',data: 'status', name: 'status',orderable: false},
+                    {title: 'Action',data: 'action', name: 'action', orderable: false, searchable: false},
+                ],
+                columnDefs: [
+                    {
+                        "targets": [ 0,4,6],
+                        "visible": false,
+                        "searchable": false
+                    }
+                ],
+                order: [[ 0, 'desc' ]],
+
+            });
+            {{--table.draw();--}}
+        }
     </script>
 @endsection
 

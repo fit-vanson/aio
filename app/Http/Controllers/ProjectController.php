@@ -26,7 +26,7 @@ use function Psy\debug;
 
 class ProjectController extends Controller
 {
-    public function index()
+    public function index(Request $request)
     {
         $da =  Da::latest('id')->get();
         $template =  Template::latest('id')->get();
@@ -80,6 +80,10 @@ class ProjectController extends Controller
 
     public function getIndex(Request $request)
     {
+//        dd($request->all());
+
+
+
         $draw = $request->get('draw');
         $start = $request->get("start");
         $rowperpage = $request->get("length"); // total number of rows per page
@@ -94,40 +98,61 @@ class ProjectController extends Controller
         $columnSortOrder = $order_arr[0]['dir']; // asc or desc
         $searchValue = $search_arr['value']; // Search value
 
-        // Total records
-        $totalRecords = ProjectModel::select('count(*) as allcount')->count();
+        if(isset($request->ma_da)){
+            $totalRecords = ProjectModel::select('count(*) as allcount')->where('ma_da',$request->ma_da)->count();
+            $totalRecordswithFilter = ProjectModel::select('count(*) as allcount')
+                ->leftjoin('ngocphandang_da','ngocphandang_da.id','=','ngocphandang_project.ma_da')
+                ->leftjoin('ngocphandang_template','ngocphandang_template.id','=','ngocphandang_project.template')
+                ->where('ngocphandang_project.ma_da',$request->ma_da)
+                ->count();
 
-        $totalRecordswithFilter = ProjectModel::select('count(*) as allcount')
-            ->leftjoin('ngocphandang_da','ngocphandang_da.id','=','ngocphandang_project.ma_da')
-            ->leftjoin('ngocphandang_template','ngocphandang_template.id','=','ngocphandang_project.template')
-            ->where('ngocphandang_da.ma_da', 'like', '%' . $searchValue . '%')
-            ->orWhere('ngocphandang_project.projectname', 'like', '%' . $searchValue . '%')
-            ->orWhere('ngocphandang_project.title_app', 'like', '%' . $searchValue . '%')
-            ->orWhere('ngocphandang_template.template', 'like', '%' . $searchValue . '%')
-            ->orWhere('ngocphandang_project.Chplay_package', 'like', '%' . $searchValue . '%')
-            ->orWhere('ngocphandang_project.Amazon_package', 'like', '%' . $searchValue . '%')
-            ->orWhere('ngocphandang_project.Samsung_package', 'like', '%' . $searchValue . '%')
-            ->orWhere('ngocphandang_project.Xiaomi_package', 'like', '%' . $searchValue . '%')
-            ->orWhere('ngocphandang_project.Oppo_package', 'like', '%' . $searchValue . '%')
-            ->orWhere('ngocphandang_project.Vivo_package', 'like', '%' . $searchValue . '%')
-            ->count();
-        // Get records, also we have included search filter as well
-        $records = ProjectModel::orderBy($columnName, $columnSortOrder)
-            ->leftjoin('ngocphandang_da','ngocphandang_da.id','=','ngocphandang_project.ma_da')
-            ->leftjoin('ngocphandang_template','ngocphandang_template.id','=','ngocphandang_project.template') ->where('ngocphandang_da.ma_da', 'like', '%' . $searchValue . '%')
-            ->orWhere('ngocphandang_project.projectname', 'like', '%' . $searchValue . '%')
-            ->orWhere('ngocphandang_project.title_app', 'like', '%' . $searchValue . '%')
-            ->orWhere('ngocphandang_template.template', 'like', '%' . $searchValue . '%')
-            ->orWhere('ngocphandang_project.Chplay_package', 'like', '%' . $searchValue . '%')
-            ->orWhere('ngocphandang_project.Amazon_package', 'like', '%' . $searchValue . '%')
-            ->orWhere('ngocphandang_project.Samsung_package', 'like', '%' . $searchValue . '%')
-            ->orWhere('ngocphandang_project.Xiaomi_package', 'like', '%' . $searchValue . '%')
-            ->orWhere('ngocphandang_project.Oppo_package', 'like', '%' . $searchValue . '%')
-            ->orWhere('ngocphandang_project.Vivo_package', 'like', '%' . $searchValue . '%')
-            ->select('ngocphandang_project.*')
-            ->skip($start)
-            ->take($rowperpage)
-            ->get();
+            // Get records, also we have included search filter as well
+            $records = ProjectModel::orderBy($columnName, $columnSortOrder)
+                ->leftjoin('ngocphandang_da','ngocphandang_da.id','=','ngocphandang_project.ma_da')
+                ->leftjoin('ngocphandang_template','ngocphandang_template.id','=','ngocphandang_project.template') ->where('ngocphandang_da.ma_da', 'like', '%' . $searchValue . '%')
+                ->where('ngocphandang_project.ma_da',$request->ma_da)
+                ->select('ngocphandang_project.*')
+                ->skip($start)
+                ->take($rowperpage)
+                ->get();
+
+        }else{
+            $totalRecords = ProjectModel::select('count(*) as allcount')->count();
+            $totalRecordswithFilter = ProjectModel::select('count(*) as allcount')
+                ->leftjoin('ngocphandang_da','ngocphandang_da.id','=','ngocphandang_project.ma_da')
+                ->leftjoin('ngocphandang_template','ngocphandang_template.id','=','ngocphandang_project.template')
+                ->where('ngocphandang_da.ma_da', 'like', '%' . $searchValue . '%')
+                ->orWhere('ngocphandang_project.projectname', 'like', '%' . $searchValue . '%')
+                ->orWhere('ngocphandang_project.title_app', 'like', '%' . $searchValue . '%')
+                ->orWhere('ngocphandang_template.template', 'like', '%' . $searchValue . '%')
+                ->orWhere('ngocphandang_project.Chplay_package', 'like', '%' . $searchValue . '%')
+                ->orWhere('ngocphandang_project.Amazon_package', 'like', '%' . $searchValue . '%')
+                ->orWhere('ngocphandang_project.Samsung_package', 'like', '%' . $searchValue . '%')
+                ->orWhere('ngocphandang_project.Xiaomi_package', 'like', '%' . $searchValue . '%')
+                ->orWhere('ngocphandang_project.Oppo_package', 'like', '%' . $searchValue . '%')
+                ->orWhere('ngocphandang_project.Vivo_package', 'like', '%' . $searchValue . '%')
+                ->count();
+            // Get records, also we have included search filter as well
+            $records = ProjectModel::orderBy($columnName, $columnSortOrder)
+                ->leftjoin('ngocphandang_da','ngocphandang_da.id','=','ngocphandang_project.ma_da')
+                ->leftjoin('ngocphandang_template','ngocphandang_template.id','=','ngocphandang_project.template') ->where('ngocphandang_da.ma_da', 'like', '%' . $searchValue . '%')
+                ->orWhere('ngocphandang_project.projectname', 'like', '%' . $searchValue . '%')
+                ->orWhere('ngocphandang_project.title_app', 'like', '%' . $searchValue . '%')
+                ->orWhere('ngocphandang_template.template', 'like', '%' . $searchValue . '%')
+                ->orWhere('ngocphandang_project.Chplay_package', 'like', '%' . $searchValue . '%')
+                ->orWhere('ngocphandang_project.Amazon_package', 'like', '%' . $searchValue . '%')
+                ->orWhere('ngocphandang_project.Samsung_package', 'like', '%' . $searchValue . '%')
+                ->orWhere('ngocphandang_project.Xiaomi_package', 'like', '%' . $searchValue . '%')
+                ->orWhere('ngocphandang_project.Oppo_package', 'like', '%' . $searchValue . '%')
+                ->orWhere('ngocphandang_project.Vivo_package', 'like', '%' . $searchValue . '%')
+                ->select('ngocphandang_project.*')
+                ->skip($start)
+                ->take($rowperpage)
+                ->get();
+        }
+
+        // Total records
+
 
         $data_arr = array();
         foreach ($records as $record) {
@@ -659,7 +684,6 @@ class ProjectController extends Controller
 
         echo json_encode($response);
     }
-
     public function getChplay(Request $request)
     {
 
@@ -699,8 +723,7 @@ class ProjectController extends Controller
                 ->where('ngocphandang_project.Chplay_status','=',$request->status_app)
                 ->count();
             // Get records, also we have included search filter as well
-            $records = ProjectModel::
-        orderBy($columnName, $columnSortOrder)
+            $records = ProjectModel::orderBy($columnName, $columnSortOrder)
                 ->where(function ($a) use ($searchValue) {
                     $a->Where('ngocphandang_project.projectname', 'like', '%' . $searchValue . '%')
                         ->orWhere('ngocphandang_project.Chplay_package', 'like', '%' . $searchValue . '%');
@@ -859,8 +882,6 @@ class ProjectController extends Controller
 
         echo json_encode($response);
     }
-
-
     public function getAmazon(Request $request)
     {
 
@@ -1022,7 +1043,6 @@ class ProjectController extends Controller
 
         echo json_encode($response);
     }
-
     public function getSamsung(Request $request)
     {
 
