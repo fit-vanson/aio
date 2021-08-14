@@ -63,7 +63,7 @@ class MailRegController extends Controller
                 "phone" => $record->phone,
                 "parent_mailrecovery" => $record->parent_mailrecovery,
                 "hovaten" => $record->ho. ' '. $record->ten,
-                "birth" => $record->birth .'| '.date('d-m-Y',$record->timereg),
+                "birth" => $record->birth .'  *|*  '.date('d-m-Y',$record->timereg),
             );
         }
         $response = array(
