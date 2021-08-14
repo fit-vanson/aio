@@ -37,9 +37,9 @@
                         <thead>
                         <tr>
                             <th>User</th>
+                            <th>Pass</th>
                             <th>Phone</th>
-                            <th>Time Add</th>
-
+                            <th>Mailrecovery</th>
                         </tr>
                         </thead>
                         <tbody>
@@ -90,8 +90,9 @@
             ajax: '{{ route('mail_parent.getMailParentsNo') }}',
             columns: [
                 {data: 'user', name: 'user'},
+                {data: 'pass', name: 'pass'},
                 {data: 'phone', name: 'phone'},
-                {data: 'timeadd', name: 'timeadd'},
+                {data: 'mailrecovery', name: 'mailrecovery'},
 
             ]
         });

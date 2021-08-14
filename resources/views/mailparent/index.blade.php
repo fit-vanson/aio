@@ -40,7 +40,6 @@
                             <th>Pass</th>
                             <th>Phone</th>
                             <th>Mailrecovery</th>
-
                         </tr>
                         </thead>
                         <tbody>
