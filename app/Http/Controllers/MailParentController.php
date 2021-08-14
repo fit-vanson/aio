@@ -94,22 +94,25 @@ class MailParentController extends Controller
         // Get records, also we have included search filter as well
         $records = DB::table('ngocphandang_parent')
             ->where('ngocphandang_parent.user', 'like', '%' . $searchValue . '%')
-            ->orWhere('ngocphandang_parent.phone', 'like', '%' . $searchValue . '%')
+//            ->orWhere('phone', 'like', '%' . $searchValue . '%')
             ->whereNotExists(function($query)
             {
-                $query->select(DB::raw('ngocphandang_khosim.phone'))
+                $query->select(DB::raw('phone'))
                     ->from('ngocphandang_khosim')
-                    ->whereRaw('ngocphandang_khosim.phone = ngocphandang_parent.phone');
+                    ->whereRaw('ngocphandang_parent.phone = ngocphandang_khosim.phone');
             })
             ->skip($start)
             ->take($rowperpage)
             ->get();
+
+
         $totalRecords = MailParent::select('count(*) as allcount')
+            ->where('ngocphandang_parent.user', 'like', '%' . $searchValue . '%')
             ->whereNotExists(function($query)
             {
-                $query->select(DB::raw('ngocphandang_khosim.phone'))
+                $query->select(DB::raw('phone'))
                     ->from('ngocphandang_khosim')
-                    ->whereRaw('ngocphandang_khosim.phone = ngocphandang_parent.phone');
+                    ->whereRaw('ngocphandang_parent.phone = ngocphandang_khosim.phone');
             })
             ->count();
 
