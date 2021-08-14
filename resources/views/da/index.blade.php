@@ -50,7 +50,7 @@
                             <th class="all" style="width:25%">Key words</th>
                             <th style="width:5%">Link store</th>
                             <th class="all" style="width:20%">Ghi chú</th>
-                            <th style="width:5%">Action</th>
+                            <th class="all" style="width:5%">Action</th>
                         </tr>
                         </thead>
                         <tbody>

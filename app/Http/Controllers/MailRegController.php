@@ -34,28 +34,39 @@ class MailRegController extends Controller
         $totalRecordswithFilter = MailReg::select('count(*) as allcount')->where('phone', 'like', '%' . $searchValue . '%')->count();
 
         // Get records, also we have included search filter as well
-        $records = MailReg::where('ngocphandang_gmailreg.gmail', 'like', '%' . $searchValue . '%')
+        $records = MailReg::orderBy($columnName, $columnSortOrder)
+            ->join('ngocphandang_parent','ngocphandang_parent.user','=','ngocphandang_gmailreg.mailrecovery')
+            ->where('ngocphandang_gmailreg.gmail', 'like', '%' . $searchValue . '%')
+            ->orWhere('ngocphandang_gmailreg.mailrecovery', 'like', '%' . $searchValue . '%')
             ->orWhere('ngocphandang_gmailreg.ho', 'like', '%' . $searchValue . '%')
             ->orWhere('ngocphandang_gmailreg.ten', 'like', '%' . $searchValue . '%')
             ->orWhere('ngocphandang_gmailreg.birth', 'like', '%' . $searchValue . '%')
             ->orWhere('ngocphandang_gmailreg.timereg', 'like', '%' . $searchValue . '%')
-            ->select('ngocphandang_gmailreg.*')
+            ->select('ngocphandang_gmailreg.*',
+                'ngocphandang_parent.user',
+                'ngocphandang_parent.pass as parent_pass',
+                'ngocphandang_parent.mailrecovery as parent_mailrecovery',
+                'ngocphandang_parent.phone'
+            )
             ->skip($start)
             ->take($rowperpage)
             ->get();
 
+
         $data_arr = array();
-
         foreach ($records as $record) {
-
             $data_arr[] = array(
                 "gmail" => $record->gmail,
+                "pass" => $record->pass,
+                "mailrecovery" => $record->mailrecovery,
+                "parent_pass" => $record->parent_pass,
+                "phone" => $record->phone,
+                "parent_mailrecovery" => $record->parent_mailrecovery,
                 "hovaten" => $record->ho. ' '. $record->ten,
                 "birth" => $record->birth,
                 "timereg" => date('d-m-Y',$record->timereg),
             );
         }
-
         $response = array(
             "draw" => intval($draw),
             "iTotalRecords" => $totalRecords,

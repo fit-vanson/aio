@@ -36,7 +36,12 @@
                     <table class="table table-bordered dt-responsive nowrap data-table" style="border-collapse: collapse; border-spacing: 0; width: 100%;">
                         <thead>
                         <tr>
-                            <th>Gmail</th>
+                            <th>Gmail Child</th>
+                            <th>Pass Child</th>
+                            <th>Gmail Parent</th>
+                            <th>Pass Parent</th>
+                            <th>Phone Parent</th>
+                            <th>Mailrecovery</th>
                             <th>Họ và tên</th>
                             <th>Sinh nhật</th>
                             <th>Ngày đăng ký</th>
@@ -89,10 +94,16 @@
             ajax: '{{ route('mail_reg.getMailRegs') }}',
             columns: [
                 {data: 'gmail', name: 'gmail'},
+                {data: 'pass', name: 'pass'},
+                {data: 'mailrecovery', name: 'mailrecovery'},
+                {data: 'parent_pass', name: 'parent_pass'},
+                {data: 'phone', name: 'phone'},
+                {data: 'parent_mailrecovery', name: 'parent_mailrecovery'},
                 {data: 'hovaten', name: 'hovaten'},
                 {data: 'birth', name: 'birth'},
                 {data: 'timereg', name: 'timereg'},
-            ]
+            ],
+            order:[2,'asc']
         });
     });
 
