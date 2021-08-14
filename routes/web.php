@@ -298,7 +298,7 @@ Route::group(['prefix'=>'mail_parent','middleware'=>['CheckLogout','2fa']], func
 
 Route::group(['prefix'=>'mail_reg','middleware'=>['CheckLogout','2fa']], function (){
     Route::get('/',[MailRegController::class,'index'])->name('mail_reg.index')->middleware('can:mail_reg-index');
-    Route::get('/getMailRegs/', [MailRegController::class, "getMailRegs"])->name('mail_reg.getMailRegs');
+    Route::post('/getMailRegs/', [MailRegController::class, "getMailRegs"])->name('mail_reg.getMailRegs');
 
 });
 

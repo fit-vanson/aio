@@ -31,7 +31,14 @@ class MailRegController extends Controller
 
         // Total records
         $totalRecords = MailReg::select('count(*) as allcount')->count();
-        $totalRecordswithFilter = MailReg::select('count(*) as allcount')->where('phone', 'like', '%' . $searchValue . '%')->count();
+        $totalRecordswithFilter = MailReg::select('count(*) as allcount')
+            ->where('ngocphandang_gmailreg.gmail', 'like', '%' . $searchValue . '%')
+            ->orWhere('ngocphandang_gmailreg.mailrecovery', 'like', '%' . $searchValue . '%')
+            ->orWhere('ngocphandang_gmailreg.ho', 'like', '%' . $searchValue . '%')
+            ->orWhere('ngocphandang_gmailreg.ten', 'like', '%' . $searchValue . '%')
+            ->orWhere('ngocphandang_gmailreg.birth', 'like', '%' . $searchValue . '%')
+            ->orWhere('ngocphandang_gmailreg.timereg', 'like', '%' . $searchValue . '%')
+            ->count();
 
         // Get records, also we have included search filter as well
         $records = MailReg::orderBy($columnName, $columnSortOrder)

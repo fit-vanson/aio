@@ -89,9 +89,14 @@
         });
         var table = $('.data-table').DataTable({
             searching: true,
+            displayLength: 5000,
+            lengthMenu: [500, 1000, 2000, 5000],
             serverSide: true,
             processing: true,
-            ajax: '{{ route('mail_reg.getMailRegs') }}',
+            ajax: {
+                url: '{{ route('mail_reg.getMailRegs') }}',
+                type: "post",
+            },
             columns: [
                 {data: 'gmail', name: 'gmail'},
                 {data: 'pass', name: 'pass'},
@@ -102,7 +107,12 @@
                 {data: 'hovaten', name: 'hovaten'},
                 {data: 'birth', name: 'birth'},
             ],
-            order:[2,'asc']
+            rowGroup: {
+                dataSrc:  'mailrecovery'
+            },
+
+            ordering: true,
+            order: [[ 2, "asc" ], [ 0, "asc" ]],
         });
     });
 
