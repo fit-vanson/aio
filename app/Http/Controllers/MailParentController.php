@@ -60,8 +60,9 @@ class MailParentController extends Controller
 
             $data_arr[] = array(
                 "user" => $record->user,
+                "pass" => $record->pass,
                 "phone" => $record->phone,
-                "timeadd" => date('d-m-Y',$record->timeadd),
+                "mailrecovery" => $record->mailrecovery,
             );
         }
 
