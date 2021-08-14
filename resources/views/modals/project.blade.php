@@ -180,27 +180,27 @@
                                                     <label for="name">Ads CHPlay</label>
                                                     <div class="row" >
                                                         <div class="col-lg-2">
-                                                            <input type="text" id="Chplay_ads_id" name="Chplay_ads_id" placeholder="ads_id" class="form-control" >
+                                                            <input type="text" id="Chplay_ads_id" name="Chplay_ads_id" placeholder="id" class="form-control" >
                                                         </div>
 
                                                         <div class="col-lg-2">
-                                                            <input type="text" id="Chplay_ads_banner" name="Chplay_ads_banner" placeholder="ads_banner"  class="form-control" >
+                                                            <input type="text" id="Chplay_ads_banner" name="Chplay_ads_banner" placeholder="banner"  class="form-control" >
                                                         </div>
 
                                                         <div class="col-lg-2">
-                                                            <input type="text" id="Chplay_ads_inter" name="Chplay_ads_inter" placeholder="ads_inter"  class="form-control" >
+                                                            <input type="text" id="Chplay_ads_inter" name="Chplay_ads_inter" placeholder="inter"  class="form-control" >
                                                         </div>
 
                                                         <div class="col-lg-2">
-                                                            <input type="text" id="Chplay_ads_reward" name="Chplay_ads_reward" placeholder="ads_reward"  class="form-control" >
+                                                            <input type="text" id="Chplay_ads_reward" name="Chplay_ads_reward" placeholder="reward"  class="form-control" >
                                                         </div>
 
                                                         <div class="col-lg-2">
-                                                            <input type="text" id="Chplay_ads_native" name="Chplay_ads_native" placeholder="ads_native"  class="form-control" >
+                                                            <input type="text" id="Chplay_ads_native" name="Chplay_ads_native" placeholder="native"  class="form-control" >
                                                         </div>
 
                                                         <div class="col-lg-2">
-                                                            <input type="text" id="Chplay_ads_open" name="Chplay_ads_open" placeholder="ads_open"  class="form-control" >
+                                                            <input type="text" id="Chplay_ads_open" name="Chplay_ads_open" placeholder="open"  class="form-control" >
                                                         </div>
                                                     </div>
                                                 </div>
@@ -217,27 +217,27 @@
                                                     <label for="name">Ads Amazon</label>
                                                     <div class="row" >
                                                         <div class="col-lg-2">
-                                                            <input type="text" id="Amazon_ads_id" name="Amazon_ads_id" placeholder="ads_id" class="form-control" >
+                                                            <input type="text" id="Amazon_ads_id" name="Amazon_ads_id" placeholder="id" class="form-control" >
                                                         </div>
 
                                                         <div class="col-lg-2">
-                                                            <input type="text" id="Amazon_ads_banner" name="Amazon_ads_banner" placeholder="ads_banner"  class="form-control" >
+                                                            <input type="text" id="Amazon_ads_banner" name="Amazon_ads_banner" placeholder="banner"  class="form-control" >
                                                         </div>
 
                                                         <div class="col-lg-2">
-                                                            <input type="text" id="Amazon_ads_inter" name="Amazon_ads_inter" placeholder="ads_inter"  class="form-control" >
+                                                            <input type="text" id="Amazon_ads_inter" name="Amazon_ads_inter" placeholder="inter"  class="form-control" >
                                                         </div>
 
                                                         <div class="col-lg-2">
-                                                            <input type="text" id="Amazon_ads_reward" name="Amazon_ads_reward" placeholder="ads_reward"  class="form-control" >
+                                                            <input type="text" id="Amazon_ads_reward" name="Amazon_ads_reward" placeholder="reward"  class="form-control" >
                                                         </div>
 
                                                         <div class="col-lg-2">
-                                                            <input type="text" id="Amazon_ads_native" name="Amazon_ads_native" placeholder="ads_native"  class="form-control" >
+                                                            <input type="text" id="Amazon_ads_native" name="Amazon_ads_native" placeholder="native"  class="form-control" >
                                                         </div>
 
                                                         <div class="col-lg-2">
-                                                            <input type="text" id="Amazon_ads_open" name="Amazon_ads_open" placeholder="ads_open"  class="form-control" >
+                                                            <input type="text" id="Amazon_ads_open" name="Amazon_ads_open" placeholder="open"  class="form-control" >
                                                         </div>
                                                     </div>
                                                 </div>
@@ -254,27 +254,27 @@
                                                     <label for="name">Ads Sam Sung</label>
                                                     <div class="row" >
                                                         <div class="col-lg-2">
-                                                            <input type="text" id="Samsung_ads_id" name="Samsung_ads_id" placeholder="ads_id" class="form-control" >
+                                                            <input type="text" id="Samsung_ads_id" name="Samsung_ads_id" placeholder="id" class="form-control" >
                                                         </div>
 
                                                         <div class="col-lg-2">
-                                                            <input type="text" id="Samsung_ads_banner" name="Samsung_ads_banner" placeholder="ads_banner"  class="form-control" >
+                                                            <input type="text" id="Samsung_ads_banner" name="Samsung_ads_banner" placeholder="banner"  class="form-control" >
                                                         </div>
 
                                                         <div class="col-lg-2">
-                                                            <input type="text" id="Samsung_ads_inter" name="Samsung_ads_inter" placeholder="ads_inter"  class="form-control" >
+                                                            <input type="text" id="Samsung_ads_inter" name="Samsung_ads_inter" placeholder="inter"  class="form-control" >
                                                         </div>
 
                                                         <div class="col-lg-2">
-                                                            <input type="text" id="Samsung_ads_reward" name="Samsung_ads_reward" placeholder="ads_reward"  class="form-control" >
+                                                            <input type="text" id="Samsung_ads_reward" name="Samsung_ads_reward" placeholder="reward"  class="form-control" >
                                                         </div>
 
                                                         <div class="col-lg-2">
-                                                            <input type="text" id="Samsung_ads_native" name="Samsung_ads_native" placeholder="ads_native"  class="form-control" >
+                                                            <input type="text" id="Samsung_ads_native" name="Samsung_ads_native" placeholder="native"  class="form-control" >
                                                         </div>
 
                                                         <div class="col-lg-2">
-                                                            <input type="text" id="Samsung_ads_open" name="Samsung_ads_open" placeholder="ads_open"  class="form-control" >
+                                                            <input type="text" id="Samsung_ads_open" name="Samsung_ads_open" placeholder="open"  class="form-control" >
                                                         </div>
                                                     </div>
                                                 </div>
@@ -291,27 +291,27 @@
                                                     <label for="name">Ads Xiaomi</label>
                                                     <div class="row" >
                                                         <div class="col-lg-2">
-                                                            <input type="text" id="Xiaomi_ads_id" name="Xiaomi_ads_id" placeholder="ads_id" class="form-control" >
+                                                            <input type="text" id="Xiaomi_ads_id" name="Xiaomi_ads_id" placeholder="id" class="form-control" >
                                                         </div>
 
                                                         <div class="col-lg-2">
-                                                            <input type="text" id="Xiaomi_ads_banner" name="Xiaomi_ads_banner" placeholder="ads_banner"  class="form-control" >
+                                                            <input type="text" id="Xiaomi_ads_banner" name="Xiaomi_ads_banner" placeholder="banner"  class="form-control" >
                                                         </div>
 
                                                         <div class="col-lg-2">
-                                                            <input type="text" id="Xiaomi_ads_inter" name="Xiaomi_ads_inter" placeholder="ads_inter"  class="form-control" >
+                                                            <input type="text" id="Xiaomi_ads_inter" name="Xiaomi_ads_inter" placeholder="inter"  class="form-control" >
                                                         </div>
 
                                                         <div class="col-lg-2">
-                                                            <input type="text" id="Xiaomi_ads_reward" name="Xiaomi_ads_reward" placeholder="ads_reward"  class="form-control" >
+                                                            <input type="text" id="Xiaomi_ads_reward" name="Xiaomi_ads_reward" placeholder="reward"  class="form-control" >
                                                         </div>
 
                                                         <div class="col-lg-2">
-                                                            <input type="text" id="Xiaomi_ads_native" name="Xiaomi_ads_native" placeholder="ads_native"  class="form-control" >
+                                                            <input type="text" id="Xiaomi_ads_native" name="Xiaomi_ads_native" placeholder="native"  class="form-control" >
                                                         </div>
 
                                                         <div class="col-lg-2">
-                                                            <input type="text" id="Xiaomi_ads_open" name="Xiaomi_ads_open" placeholder="ads_open"  class="form-control" >
+                                                            <input type="text" id="Xiaomi_ads_open" name="Xiaomi_ads_open" placeholder="open"  class="form-control" >
                                                         </div>
                                                     </div>
                                                 </div>
@@ -328,27 +328,27 @@
                                                     <label for="name">Ads Oppo</label>
                                                     <div class="row" >
                                                         <div class="col-lg-2">
-                                                            <input type="text" id="Oppo_ads_id" name="Oppo_ads_id" placeholder="ads_id" class="form-control" >
+                                                            <input type="text" id="Oppo_ads_id" name="Oppo_ads_id" placeholder="id" class="form-control" >
                                                         </div>
 
                                                         <div class="col-lg-2">
-                                                            <input type="text" id="Oppo_ads_banner" name="Oppo_ads_banner" placeholder="ads_banner"  class="form-control" >
+                                                            <input type="text" id="Oppo_ads_banner" name="Oppo_ads_banner" placeholder="banner"  class="form-control" >
                                                         </div>
 
                                                         <div class="col-lg-2">
-                                                            <input type="text" id="Oppo_ads_inter" name="Oppo_ads_inter" placeholder="ads_inter"  class="form-control" >
+                                                            <input type="text" id="Oppo_ads_inter" name="Oppo_ads_inter" placeholder="inter"  class="form-control" >
                                                         </div>
 
                                                         <div class="col-lg-2">
-                                                            <input type="text" id="Oppo_ads_reward" name="Oppo_ads_reward" placeholder="ads_reward"  class="form-control" >
+                                                            <input type="text" id="Oppo_ads_reward" name="Oppo_ads_reward" placeholder="reward"  class="form-control" >
                                                         </div>
 
                                                         <div class="col-lg-2">
-                                                            <input type="text" id="Oppo_ads_native" name="Oppo_ads_native" placeholder="ads_native"  class="form-control" >
+                                                            <input type="text" id="Oppo_ads_native" name="Oppo_ads_native" placeholder="native"  class="form-control" >
                                                         </div>
 
                                                         <div class="col-lg-2">
-                                                            <input type="text" id="Oppo_ads_open" name="Oppo_ads_open" placeholder="ads_open"  class="form-control" >
+                                                            <input type="text" id="Oppo_ads_open" name="Oppo_ads_open" placeholder="open"  class="form-control" >
                                                         </div>
                                                     </div>
                                                 </div>
@@ -365,27 +365,27 @@
                                                     <label for="name">Ads Vivo</label>
                                                     <div class="row" >
                                                         <div class="col-lg-2">
-                                                            <input type="text" id="Vivo_ads_id" name="Vivo_ads_id" placeholder="ads_id" class="form-control" >
+                                                            <input type="text" id="Vivo_ads_id" name="Vivo_ads_id" placeholder="id" class="form-control" >
                                                         </div>
 
                                                         <div class="col-lg-2">
-                                                            <input type="text" id="Vivo_ads_banner" name="Vivo_ads_banner" placeholder="ads_banner"  class="form-control" >
+                                                            <input type="text" id="Vivo_ads_banner" name="Vivo_ads_banner" placeholder="banner"  class="form-control" >
                                                         </div>
 
                                                         <div class="col-lg-2">
-                                                            <input type="text" id="Vivo_ads_inter" name="Vivo_ads_inter" placeholder="ads_inter"  class="form-control" >
+                                                            <input type="text" id="Vivo_ads_inter" name="Vivo_ads_inter" placeholder="inter"  class="form-control" >
                                                         </div>
 
                                                         <div class="col-lg-2">
-                                                            <input type="text" id="Vivo_ads_reward" name="Vivo_ads_reward" placeholder="ads_reward"  class="form-control" >
+                                                            <input type="text" id="Vivo_ads_reward" name="Vivo_ads_reward" placeholder="reward"  class="form-control" >
                                                         </div>
 
                                                         <div class="col-lg-2">
-                                                            <input type="text" id="Vivo_ads_native" name="Vivo_ads_native" placeholder="ads_native"  class="form-control" >
+                                                            <input type="text" id="Vivo_ads_native" name="Vivo_ads_native" placeholder="native"  class="form-control" >
                                                         </div>
 
                                                         <div class="col-lg-2">
-                                                            <input type="text" id="Vivo_ads_open" name="Vivo_ads_open" placeholder="ads_open"  class="form-control" >
+                                                            <input type="text" id="Vivo_ads_open" name="Vivo_ads_open" placeholder="open"  class="form-control" >
                                                         </div>
                                                     </div>
                                                 </div>

@@ -3869,5 +3869,19 @@ Invoice
     background: rgba(0, 0, 0, 0.7);
 }
 
+form .form-control::-webkit-input-placeholder {
+    color: #DEDDDDFF;
+}
+
+form .form-control::-moz-placeholder {
+    color: #DEDDDDFF;
+}
+form .form-control:-ms-input-placeholder {
+    color: #DEDDDDFF;
+}
+form .form-control:placeholder {
+    color: #DEDDDDFF;
+}
+
 
 /*# sourceMappingURL=style.css.map */

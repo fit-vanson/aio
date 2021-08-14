@@ -200,9 +200,9 @@ class ProjectController extends Controller
                 || isset(json_decode($record->Chplay_ads,true)['ads_open'])
                 || isset(json_decode($record->Chplay_ads,true)['ads_reward'])
             ){
-                $package_chplay = '<p style="color:green;line-height:0.5">CH Play: '.$record->Chplay_package.'</p>';
+                $package_chplay = '<a href="http://play.google.com/store/apps/details?id='.$record->Chplay_package.'" target="_blank" <p style="color:green;line-height:0.5">CH Play: '.$record->Chplay_package.'</p></a>';
             }else{
-                $package_chplay = '<p style="color:red;line-height:0.5">CH Play: '.$record->Chplay_package.'</p>';
+                $package_chplay = '<a href="http://play.google.com/store/apps/details?id='.$record->Chplay_package.'" target="_blank" <p style="color:red;line-height:0.5">CH Play: '.$record->Chplay_package.'</p></a>';
             }
 
             if(isset(json_decode($record->Amazon_ads,true)['ads_id'])
@@ -773,7 +773,7 @@ class ProjectController extends Controller
             }else{
                 $data_projectname='';
             }
-            $package_chplay = '<p style="line-height:0.5">'.$record->Chplay_package.'</p>';
+            $package_chplay = '<a href="http://play.google.com/store/apps/details?id='.$record->Chplay_package.'" target="_blank"<p style="line-height:0.5">'.$record->Chplay_package.'</p></a>';
             if ($record['buildinfo_console']==0  ) {
                 $buildinfo_console = 'Trạng thái tĩnh';
             }

@@ -15,6 +15,7 @@
 
 
 
+
 @endsection
 
 @section('breadcrumb')
@@ -99,6 +100,7 @@
         var table = $('.data-table').DataTable({
             processing: true,
             serverSide: true,
+            displayLength: 50,
             ajax: {
                 url: "{{ route('template.getIndex') }}",
                 type: "post"
@@ -116,7 +118,7 @@
             "columnDefs": [
                 { "orderable": false, "targets": [1,2,3] }
             ],
-            order:[6,'desc']
+            order:[0,'asc']
 
         });
 

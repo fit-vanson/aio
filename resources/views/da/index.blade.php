@@ -44,13 +44,13 @@
                     <table class="table table-bordered dt-responsive nowrap data-table" style="border-collapse: collapse; border-spacing: 0; width: 100%;">
                         <thead>
                         <tr>
-                            <th width="5%">STT</th>
-                            <th>Mã dự án</th>
-                            <th>Chủ đề</th>
-                            <th>Key words</th>
-                            <th>Link store</th>
-                            <th>Ghi chú</th>
-                            <th width="5%">Action</th>
+                            <th style="width:5%">STT</th>
+                            <th class="all" style="width:15%">Mã dự án</th>
+                            <th class="all" style="width:25%">Chủ đề</th>
+                            <th class="all" style="width:25%">Key words</th>
+                            <th style="width:5%">Link store</th>
+                            <th class="all" style="width:20%">Ghi chú</th>
+                            <th style="width:5%">Action</th>
                         </tr>
                         </thead>
                         <tbody>
@@ -94,6 +94,7 @@
                 processing: true,
                 serverSide: true,
                 displayLength: 50,
+                responsive: true,
                 ajax: "{{ route('da.index') }}",
 
                 columns: [
@@ -109,7 +110,20 @@
                     {data: 'note'},
                     {data: 'action', name: 'action', orderable: false, searchable: false},
                 ],
+                columnDefs: [
+                    {
+                        render: function (data, type, full, meta) {
+                            if(data != null){
+                                return "<div class='text-wrap width-200'>" + data + "</div>";
+                            }else {
+                                return '';
+                            }
+                        },
+                        targets: [3,5]
+                    }
+                ]
             });
+            $('.data-table td').css('white-space','initial');
             $('#createNewDa').click(function () {
                 $('#saveBtn').val("create-da");
                 $('#da_id').val('');
@@ -219,20 +233,6 @@
             });
         });
         function showProject(id){
-            {{--var table = $('.data-table').DataTable({--}}
-            {{--    destroy: true,--}}
-            {{--    displayLength: 50,--}}
-            {{--    lengthMenu: [5, 10, 25, 50, 75, 100],--}}
-            {{--    serverSide: true,--}}
-            {{--    $.ajax( {--}}
-            {{--        url : "{{ route('project.getIndex') }}?ma_da="+id,--}}
-            {{--        type: "post",--}}
-            {{--        success: function (data){--}}
-            {{--            alert(data)--}}
-            {{--        },--}}
-            {{--    })--}}
-
-            {{--});--}}
             var table = $('.data-table').DataTable({
                 destroy: true,
                 displayLength: 50,
@@ -261,9 +261,8 @@
                     }
                 ],
                 order: [[ 0, 'desc' ]],
-
             });
-            {{--table.draw();--}}
+
         }
     </script>
 @endsection

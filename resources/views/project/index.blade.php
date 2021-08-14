@@ -13,6 +13,7 @@
 <!-- Select2 Js  -->
 <link href="plugins/select2/css/select2.min.css" rel="stylesheet" type="text/css" />
 
+
 @endsection
 
 @section('breadcrumb')
