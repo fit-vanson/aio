@@ -44,7 +44,7 @@
                             <th>Mailrecovery</th>
                             <th>Họ và tên</th>
                             <th>Sinh nhật</th>
-                            <th>Ngày đăng ký</th>
+
 
                         </tr>
                         </thead>
@@ -101,7 +101,6 @@
                 {data: 'parent_mailrecovery', name: 'parent_mailrecovery'},
                 {data: 'hovaten', name: 'hovaten'},
                 {data: 'birth', name: 'birth'},
-                {data: 'timereg', name: 'timereg'},
             ],
             order:[2,'asc']
         });
