@@ -247,7 +247,7 @@
                 columns: [
                     {data: 'created_at', name: 'created_at',},
                     {title: 'logo',data: 'logo', name: 'logo',orderable: false},
-                    {title: 'Tên Project',data: 'ma_da', name: 'projectname'},
+                    {title: 'Tên Project',data: 'projectname', name: 'projectname'},
                     {title: 'Package',data: 'package', name: 'package',orderable: false},
                     {title: 'Status',data: 'status', name: 'status',orderable: false},
                     {title: 'Status',data: 'status', name: 'status',orderable: false},
