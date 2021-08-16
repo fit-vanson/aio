@@ -170,7 +170,7 @@ class ProjectController extends Controller
                 ->first();
 
             if(isset($ma_da)) {
-                $data_ma_da = '<p class="text-muted" style="line-height:0.5">Mã Dự án: '.$ma_da->ma_da.'</p>';
+                $data_ma_da = '<a href="'.$ma_da->link_store_vietmmo.'" > <p class="text-muted" style="line-height:0.5">Mã Dự án: '.$ma_da->ma_da.'</p></a>';
             }else{
                 $data_ma_da = '';
             }
@@ -451,6 +451,7 @@ class ProjectController extends Controller
     public function getIndexBuild(Request $request)
     {
 
+
         $draw = $request->get('draw');
         $start = $request->get("start");
         $rowperpage = $request->get("length"); // total number of rows per page
@@ -465,62 +466,124 @@ class ProjectController extends Controller
         $columnSortOrder = $order_arr[0]['dir']; // asc or desc
         $searchValue = $search_arr['value']; // Search value
 
-        // Total records
-        $totalRecords = ProjectModel::select('count(*) as allcount')
-            ->where(function ($q){
-                $q->where('buildinfo_console',1)
-                    ->orWhere('buildinfo_console',4);
-            })
-            ->count();
-        $totalRecordswithFilter = ProjectModel::select('count(*) as allcount')
-            ->join('ngocphandang_da','ngocphandang_da.id','=','ngocphandang_project.ma_da')
-            ->join('ngocphandang_template','ngocphandang_template.id','=','ngocphandang_project.template')
-            ->where(function ($a) use ($searchValue) {
-                $a->where('ngocphandang_da.ma_da', 'like', '%' . $searchValue . '%')
-                    ->orWhere('ngocphandang_project.projectname', 'like', '%' . $searchValue . '%')
-                    ->orWhere('ngocphandang_project.title_app', 'like', '%' . $searchValue . '%')
-                    ->orWhere('ngocphandang_template.template', 'like', '%' . $searchValue . '%')
-                    ->orWhere('ngocphandang_project.Chplay_package', 'like', '%' . $searchValue . '%')
-                    ->orWhere('ngocphandang_project.Amazon_package', 'like', '%' . $searchValue . '%')
-                    ->orWhere('ngocphandang_project.Samsung_package', 'like', '%' . $searchValue . '%')
-                    ->orWhere('ngocphandang_project.Xiaomi_package', 'like', '%' . $searchValue . '%')
-                    ->orWhere('ngocphandang_project.Oppo_package', 'like', '%' . $searchValue . '%')
-                    ->orWhere('ngocphandang_project.Vivo_package', 'like', '%' . $searchValue . '%');
-            })
-            ->where(function ($q){
-                $q->where('buildinfo_console','<>',0);
-//                    ->orWhere('buildinfo_console',4);
-            })
-            ->count();
+        if(isset($request->status_console)){
+            $status_console = $request->status_console;
+            $status_console = explode('%',$status_console);
+            // Total records
+            $totalRecords = ProjectModel::select('count(*) as allcount')
+                ->where(function ($q){
+                    $q->where('buildinfo_console','<>',0);
+                })
+                ->where(function ($q) use ($status_console) {
+                    $q->whereIn('buildinfo_console',$status_console);
+                })
+                ->count();
+            $totalRecordswithFilter = ProjectModel::select('count(*) as allcount')
+                ->leftjoin('ngocphandang_da','ngocphandang_da.id','=','ngocphandang_project.ma_da')
+                ->leftjoin('ngocphandang_template','ngocphandang_template.id','=','ngocphandang_project.template')
+                ->where(function ($a) use ($searchValue) {
+                    $a->where('ngocphandang_da.ma_da', 'like', '%' . $searchValue . '%')
+                        ->orWhere('ngocphandang_project.projectname', 'like', '%' . $searchValue . '%')
+                        ->orWhere('ngocphandang_project.title_app', 'like', '%' . $searchValue . '%')
+                        ->orWhere('ngocphandang_template.template', 'like', '%' . $searchValue . '%')
+                        ->orWhere('ngocphandang_project.Chplay_package', 'like', '%' . $searchValue . '%')
+                        ->orWhere('ngocphandang_project.Amazon_package', 'like', '%' . $searchValue . '%')
+                        ->orWhere('ngocphandang_project.Samsung_package', 'like', '%' . $searchValue . '%')
+                        ->orWhere('ngocphandang_project.Xiaomi_package', 'like', '%' . $searchValue . '%')
+                        ->orWhere('ngocphandang_project.Oppo_package', 'like', '%' . $searchValue . '%')
+                        ->orWhere('ngocphandang_project.Vivo_package', 'like', '%' . $searchValue . '%');
+                })
+                ->where(function ($q){
+                    $q->where('buildinfo_console','<>',0);
+                })
 
-        // Get records, also we have included search filter as well
-        $records = ProjectModel::orderBy($columnName, $columnSortOrder)
-            ->join('ngocphandang_da','ngocphandang_da.id','=','ngocphandang_project.ma_da')
-            ->join('ngocphandang_template','ngocphandang_template.id','=','ngocphandang_project.template')
+                ->where(function ($q) use ($status_console) {
+                    $q->whereIn('buildinfo_console',$status_console);
+                })
+                ->count();
 
-            ->where(function ($a) use ($searchValue) {
-                $a->where('ngocphandang_da.ma_da', 'like', '%' . $searchValue . '%')
-                    ->orWhere('ngocphandang_project.projectname', 'like', '%' . $searchValue . '%')
-                    ->orWhere('ngocphandang_project.title_app', 'like', '%' . $searchValue . '%')
-                    ->orWhere('ngocphandang_template.template', 'like', '%' . $searchValue . '%')
-                    ->orWhere('ngocphandang_project.Chplay_package', 'like', '%' . $searchValue . '%')
-                    ->orWhere('ngocphandang_project.Amazon_package', 'like', '%' . $searchValue . '%')
-                    ->orWhere('ngocphandang_project.Samsung_package', 'like', '%' . $searchValue . '%')
-                    ->orWhere('ngocphandang_project.Xiaomi_package', 'like', '%' . $searchValue . '%')
-                    ->orWhere('ngocphandang_project.Oppo_package', 'like', '%' . $searchValue . '%')
-                    ->orWhere('ngocphandang_project.Vivo_package', 'like', '%' . $searchValue . '%');
+            // Get records, also we have included search filter as well
+            $records = ProjectModel::orderBy($columnName, $columnSortOrder)
+                ->leftjoin('ngocphandang_da','ngocphandang_da.id','=','ngocphandang_project.ma_da')
+                ->leftjoin('ngocphandang_template','ngocphandang_template.id','=','ngocphandang_project.template')
 
-            })
-            ->where(function ($q){
-                $q->where('buildinfo_console','<>',0);
+                ->where(function ($a) use ($searchValue) {
+                    $a->where('ngocphandang_da.ma_da', 'like', '%' . $searchValue . '%')
+                        ->orWhere('ngocphandang_project.projectname', 'like', '%' . $searchValue . '%')
+                        ->orWhere('ngocphandang_project.title_app', 'like', '%' . $searchValue . '%')
+                        ->orWhere('ngocphandang_template.template', 'like', '%' . $searchValue . '%')
+                        ->orWhere('ngocphandang_project.Chplay_package', 'like', '%' . $searchValue . '%')
+                        ->orWhere('ngocphandang_project.Amazon_package', 'like', '%' . $searchValue . '%')
+                        ->orWhere('ngocphandang_project.Samsung_package', 'like', '%' . $searchValue . '%')
+                        ->orWhere('ngocphandang_project.Xiaomi_package', 'like', '%' . $searchValue . '%')
+                        ->orWhere('ngocphandang_project.Oppo_package', 'like', '%' . $searchValue . '%')
+                        ->orWhere('ngocphandang_project.Vivo_package', 'like', '%' . $searchValue . '%');
+                })
+                ->where(function ($q){
+                    $q->where('buildinfo_console','<>',0);
+                })
+                ->where(function ($q) use ($status_console) {
+                    $q->whereIn('buildinfo_console',$status_console);
+                })
+                ->select('ngocphandang_project.*')
+                ->skip($start)
+                ->take($rowperpage)
+                ->get();
 
-            })
-            ->select('ngocphandang_project.*')
-            ->skip($start)
-            ->take($rowperpage)
-            ->get();
+        }else{
+            // Total records
+            $totalRecords = ProjectModel::select('count(*) as allcount')
+                ->where(function ($q){
+                    $q->where('buildinfo_console','<>',0);
+                })
+                ->count();
+
+            $totalRecordswithFilter = ProjectModel::select('count(*) as allcount')
+                ->leftjoin('ngocphandang_da','ngocphandang_da.id','=','ngocphandang_project.ma_da')
+                ->leftjoin('ngocphandang_template','ngocphandang_template.id','=','ngocphandang_project.template')
+                ->where(function ($a) use ($searchValue) {
+                    $a->where('ngocphandang_da.ma_da', 'like', '%' . $searchValue . '%')
+                        ->orWhere('ngocphandang_project.projectname', 'like', '%' . $searchValue . '%')
+                        ->orWhere('ngocphandang_project.title_app', 'like', '%' . $searchValue . '%')
+                        ->orWhere('ngocphandang_template.template', 'like', '%' . $searchValue . '%')
+                        ->orWhere('ngocphandang_project.Chplay_package', 'like', '%' . $searchValue . '%')
+                        ->orWhere('ngocphandang_project.Amazon_package', 'like', '%' . $searchValue . '%')
+                        ->orWhere('ngocphandang_project.Samsung_package', 'like', '%' . $searchValue . '%')
+                        ->orWhere('ngocphandang_project.Xiaomi_package', 'like', '%' . $searchValue . '%')
+                        ->orWhere('ngocphandang_project.Oppo_package', 'like', '%' . $searchValue . '%')
+                        ->orWhere('ngocphandang_project.Vivo_package', 'like', '%' . $searchValue . '%');
+                })
+                ->where(function ($q){
+                    $q->where('ngocphandang_project.buildinfo_console','<>',0);
+                })
+                ->count();
 
 
+            // Get records, also we have included search filter as well
+            $records = ProjectModel::orderBy($columnName, $columnSortOrder)
+                ->leftjoin('ngocphandang_da','ngocphandang_da.id','=','ngocphandang_project.ma_da')
+                ->leftjoin('ngocphandang_template','ngocphandang_template.id','=','ngocphandang_project.template')
+
+                ->where(function ($a) use ($searchValue) {
+                    $a->where('ngocphandang_da.ma_da', 'like', '%' . $searchValue . '%')
+                        ->orWhere('ngocphandang_project.projectname', 'like', '%' . $searchValue . '%')
+                        ->orWhere('ngocphandang_project.title_app', 'like', '%' . $searchValue . '%')
+                        ->orWhere('ngocphandang_template.template', 'like', '%' . $searchValue . '%')
+                        ->orWhere('ngocphandang_project.Chplay_package', 'like', '%' . $searchValue . '%')
+                        ->orWhere('ngocphandang_project.Amazon_package', 'like', '%' . $searchValue . '%')
+                        ->orWhere('ngocphandang_project.Samsung_package', 'like', '%' . $searchValue . '%')
+                        ->orWhere('ngocphandang_project.Xiaomi_package', 'like', '%' . $searchValue . '%')
+                        ->orWhere('ngocphandang_project.Oppo_package', 'like', '%' . $searchValue . '%')
+                        ->orWhere('ngocphandang_project.Vivo_package', 'like', '%' . $searchValue . '%');
+                })
+                ->where(function ($q){
+                    $q->where('ngocphandang_project.buildinfo_console','<>',0);
+                })
+                ->select('ngocphandang_project.*')
+                ->skip($start)
+                ->take($rowperpage)
+                ->get();
+        }
         $data_arr = array();
         foreach ($records as $record) {
             $btn = ' <a href="javascript:void(0)" data-toggle="tooltip"  data-id="'.$record->projectid.'" data-original-title="Delete" class="btn btn-warning removeProject"><i class="mdi mdi-file-move"></i></a>';
@@ -663,8 +726,11 @@ class ProjectController extends Controller
             }else{
                 $logo = '<img class="rounded mx-auto d-block" width="100px" height="100px" src="assets\images\logo-sm.png">';
             }
+            $mess_info = '';
+            $full_mess ='null';
             if ($record->buildinfo_mess){
                 $mess_info = '';
+                $full_mess ='null';
                 $buildinfo_mess = $record->buildinfo_mess;
                 $full_mess =  (str_replace('|','<br>',$buildinfo_mess));
                 $buildinfo_mess =  (explode('|',$buildinfo_mess));
@@ -676,12 +742,11 @@ class ProjectController extends Controller
                         $mess_info .=  $buildinfo_mess[$i].'<br>';
                     }
                 }
-
             }
             $data_arr[] = array(
                 "created_at" => $record->created_at,
                 "logo" => $logo,
-                "projectid"=>$record->projectname,
+                "name"=>$record->projectname,
                 "projectname"=>$data_projectname.$data_template.$data_ma_da.$data_title_app.$abc,
                 "package" => $package_chplay.$package_amazon.$package_samsung.$package_xiaomi.$package_oppo.$package_vivo,
                 "buildinfo_mess" => $mess_info,
@@ -1804,6 +1869,7 @@ class ProjectController extends Controller
         $data['buildinfo_keystore'] = $request->buildinfo_keystore;
         $data['buildinfo_sdk'] = $request->buildinfo_sdk;
         $data['link_store_vietmmo'] = $request->link_store_vietmmo;
+        $data['buildinfo_mess'] = 'Trạng thái tĩnh';
 
         $data['Chplay_package'] = $request->Chplay_package;
         $data['Chplay_buildinfo_store_name_x'] = $request->Chplay_buildinfo_store_name_x;
