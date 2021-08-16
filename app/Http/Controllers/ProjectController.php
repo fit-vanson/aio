@@ -170,8 +170,7 @@ class ProjectController extends Controller
                 ->first();
 
             if(isset($ma_da)) {
-                $data_ma_da =
-                    '<span style="line-height:3">Mã Dự án: ' . $ma_da->ma_da . '</span>';
+                $data_ma_da = '<p class="text-muted" style="line-height:0.5">Mã Dự án: '.$ma_da->ma_da.'</p>';
             }else{
                 $data_ma_da = '';
             }
@@ -182,7 +181,9 @@ class ProjectController extends Controller
             }
 
             if(isset($record->projectname)) {
-                $data_projectname =  '<p class="text-muted" style="line-height:0.5">Project: '.$record->projectname.'</p>';
+
+                $data_projectname =   '<span style="line-height:3">Mã Project: ' . $record->projectname . '</span>';
+
             }else{
                 $data_projectname='';
             }
@@ -419,14 +420,18 @@ class ProjectController extends Controller
             $status =  $policy.'<br> CH Play: '.$Chplay_status.'<br> Amazon: '.$Amazon_status.'<br> SamSung: '.$Samsung_status.'<br> Xiaomi: '.$Xiaomi_status.'<br> Oppo: '.$Oppo_status.'<br> Vivo: '.$Vivo_status;
 
             if(isset($record->logo)){
-                $logo = "<img class='rounded mx-auto d-block'  width='100px'  height='100px'  src='../uploads/project/$record->projectname/thumbnail/$record->logo'>";
+                if (isset($record->link_store_vietmmo)){
+                    $logo = "<a href='".$record->link_store_vietmmo."' target='_blank'>  <img class='rounded mx-auto d-block'  width='100px'  height='100px'  src='../uploads/project/$record->projectname/thumbnail/$record->logo'></a>";
+                }else{
+                    $logo = "<img class='rounded mx-auto d-block'  width='100px'  height='100px'  src='../uploads/project/$record->projectname/thumbnail/$record->logo'>";
+                }
             }else{
                 $logo = '<img class="rounded mx-auto d-block" width="100px" height="100px" src="assets\images\logo-sm.png">';
             }
             $data_arr[] = array(
-                "updated_at" => $record->updated_at,
+                "created_at" => $record->created_at,
                 "logo" => $logo,
-                "ma_da"=>$data_ma_da.$data_template.$data_projectname.$data_title_app,
+                "projectname"=>$data_projectname.$data_template.$data_ma_da.$data_title_app,
                 "package" => $package_chplay.$package_amazon.$package_samsung.$package_xiaomi.$package_oppo.$package_vivo,
                 "status" => $status,
                 "action"=> $btn,
@@ -514,6 +519,7 @@ class ProjectController extends Controller
             ->take($rowperpage)
             ->get();
 
+
         $data_arr = array();
         foreach ($records as $record) {
             $btn = ' <a href="javascript:void(0)" data-toggle="tooltip"  data-id="'.$record->projectid.'" data-original-title="Delete" class="btn btn-warning removeProject"><i class="mdi mdi-file-move"></i></a>';
@@ -529,7 +535,7 @@ class ProjectController extends Controller
 
             if(isset($ma_da)) {
                 $data_ma_da =
-                    '<span style="line-height:3"> Mã Dự án: ' . $ma_da->ma_da . '</span>';
+                    '<p class="text-muted" style="line-height:0.5">Mã Dự án: '.$ma_da->ma_da.'</p>';
             }else{
                 $data_ma_da = '';
             }
@@ -540,7 +546,8 @@ class ProjectController extends Controller
             }
 
             if(isset($record->projectname)) {
-                $data_projectname =  '<p class="text-muted" style="line-height:0.5">Project: '.$record->projectname.'</p>';
+                $data_projectname =   '<span style="line-height:3"> Mã Project: ' . $record->projectname . '</span>';
+
             }else{
                 $data_projectname='';
             }
@@ -666,9 +673,9 @@ class ProjectController extends Controller
 
             }
             $data_arr[] = array(
-                "updated_at" => $record->updated_at,
+                "created_at" => $record->created_at,
                 "logo" => $logo,
-                "ma_da"=>$data_ma_da.$data_template.$data_projectname.$data_title_app,
+                "projectname"=>$data_projectname.$data_template.$data_ma_da.$data_title_app,
                 "package" => $package_chplay.$package_amazon.$package_samsung.$package_xiaomi.$package_oppo.$package_vivo,
                 "buildinfo_mess" => $mess_info,
                 "buildinfo_console" =>$buildinfo_console,
@@ -1788,6 +1795,7 @@ class ProjectController extends Controller
         $data['buildinfo_verstr'] = $request->buildinfo_verstr;
         $data['buildinfo_keystore'] = $request->buildinfo_keystore;
         $data['buildinfo_sdk'] = $request->buildinfo_sdk;
+        $data['link_store_vietmmo'] = $request->link_store_vietmmo;
 
         $data['Chplay_package'] = $request->Chplay_package;
         $data['Chplay_buildinfo_store_name_x'] = $request->Chplay_buildinfo_store_name_x;
@@ -1976,6 +1984,7 @@ class ProjectController extends Controller
         $data->buildinfo_verstr = $request->buildinfo_verstr;
         $data->buildinfo_keystore = $request->buildinfo_keystore;
         $data->buildinfo_sdk = $request->buildinfo_sdk;
+        $data->link_store_vietmmo = $request->link_store_vietmmo;
 
         $data->Chplay_package = $request->Chplay_package;
         $data->Chplay_buildinfo_store_name_x = $request->Chplay_buildinfo_store_name_x;

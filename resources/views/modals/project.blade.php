@@ -156,13 +156,18 @@
 
                                             </div>
                                             <div data-repeater-item="" class="row input_buildinfo">
-                                                <div class="form-group col-lg-6 ">
+                                                <div class="form-group col-lg-4 ">
                                                     <label for="name">Key API APP</label>
                                                     <input type="text" id="buildinfo_api_key_x" name="buildinfo_api_key_x" class="form-control" >
                                                 </div>
-                                                <div class="form-group col-lg-6 ">
+                                                <div class="form-group col-lg-4 ">
                                                     <label for="name">Link Website</label>
                                                     <input type="text" id="buildinfo_link_website" name="buildinfo_link_website" class="form-control" >
+                                                </div>
+                                                <div class="form-group col-lg-4 ">
+                                                    <label for="name">Link Store VietMMO</label>
+                                                    <input type="text" id="link_store_vietmmo" name="link_store_vietmmo" class="form-control" >
+
                                                 </div>
                                             </div>
                                             <div data-repeater-item="" class="row input_buildinfo">

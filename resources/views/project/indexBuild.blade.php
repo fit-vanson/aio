@@ -31,7 +31,7 @@
                         <tr>
                             <th >ID</th>
                             <th width="10%">Logo</th>
-                            <th width="20%">Mã dự án</th>
+                            <th width="20%">Mã Project</th>
                             <th width="30%">Package</th>
                             <th width="30%">Message</th>
                             <th width="30%">Trạng thái Console</th>
@@ -93,9 +93,9 @@
                 type: "post"
             },
             columns: [
-                {data: 'updated_at', name: 'updated_at',},
+                {data: 'created_at', name: 'created_at',},
                 {data: 'logo', name: 'logo',orderable: false},
-                {data: 'ma_da', name: 'ma_da'},
+                {data: 'projectname', name: 'projectname'},
                 {data: 'package', name: 'package',orderable: false},
                 {data: 'buildinfo_mess', name: 'buildinfo_mess',orderable: false},
                 {data: 'buildinfo_console', name: 'buildinfo_console',orderable: false},

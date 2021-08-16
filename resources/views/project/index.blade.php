@@ -40,7 +40,7 @@
                         <tr>
                             <th >ID</th>
                             <th width="10%">Logo</th>
-                            <th width="20%">Mã dự án</th>
+                            <th width="20%">Mã Project</th>
                             <th width="30%">Package</th>
                             <th width="30%">Trạng thái Ứng dụng | Policy</th>
                             <th width="10%">Action</th>
@@ -101,9 +101,9 @@
                 type: "post"
             },
             columns: [
-                {data: 'updated_at', name: 'updated_at',},
+                {data: 'created_at', name: 'created_at',},
                 {data: 'logo', name: 'logo',orderable: false},
-                {data: 'ma_da', name: 'ma_da'},
+                {data: 'projectname', name: 'projectname'},
                 {data: 'package', name: 'package',orderable: false},
                 {data: 'status', name: 'status',orderable: false},
                 {data: 'action', name: 'action', orderable: false, searchable: false},
@@ -303,6 +303,7 @@
             $('#buildinfo_link_fanpage').val(data[0].buildinfo_link_fanpage);
             $('#buildinfo_api_key_x').val(data[0].buildinfo_api_key_x);
             $('#buildinfo_link_website').val(data[0].buildinfo_link_website);
+            $('#link_store_vietmmo').val(data[0].link_store_vietmmo);
 
 
             $('#Chplay_package').val(data[0].Chplay_package);
