@@ -666,7 +666,10 @@ class ProjectController extends Controller
             if ($record->buildinfo_mess){
                 $mess_info = '';
                 $buildinfo_mess = $record->buildinfo_mess;
+                $full_mess =  (str_replace('|','<br>',$buildinfo_mess));
                 $buildinfo_mess =  (explode('|',$buildinfo_mess));
+
+
                 $buildinfo_mess = array_reverse($buildinfo_mess);
                 for($i = 0 ; $i < 6 ; $i++){
                     if(isset($buildinfo_mess[$i])){
@@ -681,6 +684,7 @@ class ProjectController extends Controller
                 "projectname"=>$data_projectname.$data_template.$data_ma_da.$data_title_app.$abc,
                 "package" => $package_chplay.$package_amazon.$package_samsung.$package_xiaomi.$package_oppo.$package_vivo,
                 "buildinfo_mess" => $mess_info,
+                "full_mess" => $full_mess,
                 "buildinfo_console" =>$buildinfo_console,
                 "action"=> $btn,
             );

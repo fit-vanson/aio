@@ -19,6 +19,23 @@
 <div class="col-sm-6">
     <h4 class="page-title">Tiến trình xử lý Project</h4>
 </div>
+<div class="modal fade bd-example-modal-xl" id="showMess" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-scrollable">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title" id="modelHeadingPolicy"></h4>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+            </div>
+            <div class="modal-body">
+                <p class="message-full"></p>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+            </div>
+        </div>
+    </div>
+</div>
+
 @endsection
 @section('content')
 
@@ -30,12 +47,12 @@
                         <thead>
                         <tr>
                             <th >ID</th>
-                            <th width="10%">Logo</th>
-                            <th width="20%">Mã Project</th>
-                            <th width="30%">Package</th>
-                            <th width="30%">Message</th>
-                            <th width="30%">Trạng thái Console</th>
-                            <th width="10%">Action</th>
+                            <th style="width:10%">Logo</th>
+                            <th style="width:20%">Mã Project</th>
+                            <th style="width:30%">Package</th>
+                            <th style="width:30%">Message</th>
+                            <th style="width:30%">Trạng thái Console</th>
+                            <th style="width:10%">Action</th>
                         </tr>
                         </thead>
                         <tbody>
@@ -45,6 +62,7 @@
             </div>
         </div> <!-- end col -->
     </div> <!-- end row -->
+
 
 @endsection
 @section('script')
@@ -108,8 +126,21 @@
                     "searchable": false
                 }
             ],
+
             order: [[ 0, 'desc' ]]
         });
+        table.on('click', 'td:nth-child(4)', e => {
+            e.preventDefault();
+            const row = table.row(e.target.closest('tr'));
+            const rowData = row.data();
+            $('#modelHeadingPolicy').html("Show Mess");
+            $('#showMess').modal('show');
+
+            $('.message-full').html(rowData.full_mess);
+
+        });
+
+
 
         setInterval( function () {
             table.ajax.reload();
@@ -141,7 +172,31 @@
                     swal("Đã di chuyển!",'', "success");
                 });
         });
+
+
+
+
+        // $(".data-table ").on("click", "td:nth-child(4)", function(data) {
+        //
+        //
+        //     var form_data  = table.rows().data();
+        //     console.log(form_data)
+        //     var f = form_data;
+        //     for(var i=0 ; f.length>i;i++){
+        //         var n = f[i].length;
+        //         for(var j = 0 ; f.length>j;j++){
+        //             alert(f[i][j])
+        //         }
+        //     }
+        //     // $('.message-full').var()
+        //     $('#modelHeadingPolicy').html("Show Mess");
+        //     $('#showMess').modal('show');
+        //     $('.modal').on('hidden.bs.modal', function (e) {
+        //         $('body').addClass('modal-open');
+        //     });
+        // });
     });
+
 </script>
 
 
