@@ -20,7 +20,7 @@
     <h4 class="page-title">Tiến trình xử lý Project</h4>
 </div>
 <div class="modal fade bd-example-modal-xl" id="showMess" aria-hidden="true">
-    <div class="modal-dialog modal-dialog-scrollable">
+    <div class="modal-dialog modal-xl modal-dialog-scrollable">
         <div class="modal-content">
             <div class="modal-header">
                 <h4 class="modal-title" id="modelHeadingPolicy"></h4>
@@ -133,7 +133,8 @@
             e.preventDefault();
             const row = table.row(e.target.closest('tr'));
             const rowData = row.data();
-            $('#modelHeadingPolicy').html("Show Mess");
+            console.log(row.data())
+            $('#modelHeadingPolicy').html(row.data().projectid);
             $('#showMess').modal('show');
 
             $('.message-full').html(rowData.full_mess);

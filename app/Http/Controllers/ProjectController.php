@@ -681,6 +681,7 @@ class ProjectController extends Controller
             $data_arr[] = array(
                 "created_at" => $record->created_at,
                 "logo" => $logo,
+                "projectid"=>$record->projectname,
                 "projectname"=>$data_projectname.$data_template.$data_ma_da.$data_title_app.$abc,
                 "package" => $package_chplay.$package_amazon.$package_samsung.$package_xiaomi.$package_oppo.$package_vivo,
                 "buildinfo_mess" => $mess_info,
