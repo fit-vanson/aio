@@ -133,7 +133,6 @@
             e.preventDefault();
             const row = table.row(e.target.closest('tr'));
             const rowData = row.data();
-            console.log(row.data())
             $('#modelHeadingPolicy').html(row.data().projectid);
             $('#showMess').modal('show');
 
