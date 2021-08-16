@@ -170,7 +170,7 @@ class ProjectController extends Controller
                 ->first();
 
             if(isset($ma_da)) {
-                $data_ma_da = '<a href="'.$ma_da->link_store_vietmmo.'" > <p class="text-muted" style="line-height:0.5">Mã Dự án: '.$ma_da->ma_da.'</p></a>';
+                $data_ma_da = '<a href="'.$ma_da->link_store_vietmmo.'" target="_blank" > <p class="text-muted" style="line-height:0.5">Mã Dự án: '.$ma_da->ma_da.'</p></a>';
             }else{
                 $data_ma_da = '';
             }
