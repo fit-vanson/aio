@@ -175,7 +175,7 @@ class ProjectController extends Controller
                 $data_ma_da = '';
             }
             if(isset($template)) {
-                $data_template =  '<p class="text-muted" style="line-height:0.5">Template: '.$template->template.'</p>';
+                $data_template =  '<a href="'.$template->link_store_vietmmo.'" target="_blank" ><p class="text-muted" style="line-height:0.5">Template: '.$template->template.'</p></a>';
             }else{
                 $data_template='';
             }
@@ -729,13 +729,9 @@ class ProjectController extends Controller
             $mess_info = '';
             $full_mess ='null';
             if ($record->buildinfo_mess){
-                $mess_info = '';
-                $full_mess ='null';
                 $buildinfo_mess = $record->buildinfo_mess;
                 $full_mess =  (str_replace('|','<br>',$buildinfo_mess));
                 $buildinfo_mess =  (explode('|',$buildinfo_mess));
-
-
                 $buildinfo_mess = array_reverse($buildinfo_mess);
                 for($i = 0 ; $i < 6 ; $i++){
                     if(isset($buildinfo_mess[$i])){
@@ -746,7 +742,7 @@ class ProjectController extends Controller
             $data_arr[] = array(
                 "created_at" => $record->created_at,
                 "logo" => $logo,
-                "name"=>$record->projectname,
+                "name_projectname"=>$record->projectname,
                 "projectname"=>$data_projectname.$data_template.$data_ma_da.$data_title_app.$abc,
                 "package" => $package_chplay.$package_amazon.$package_samsung.$package_xiaomi.$package_oppo.$package_vivo,
                 "buildinfo_mess" => $mess_info,
