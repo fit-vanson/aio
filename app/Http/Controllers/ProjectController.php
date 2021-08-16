@@ -428,10 +428,11 @@ class ProjectController extends Controller
             }else{
                 $logo = '<img class="rounded mx-auto d-block" width="100px" height="100px" src="assets\images\logo-sm.png">';
             }
+            $abc = '<p class="text-muted" style="line-height:0.5">'.$record->buildinfo_keystore. '   |   '.$record->buildinfo_vernum.'   |   '.$record->buildinfo_verstr.'</p>';
             $data_arr[] = array(
                 "created_at" => $record->created_at,
                 "logo" => $logo,
-                "projectname"=>$data_projectname.$data_template.$data_ma_da.$data_title_app,
+                "projectname"=>$data_projectname.$data_template.$data_ma_da.$data_title_app.$abc,
                 "package" => $package_chplay.$package_amazon.$package_samsung.$package_xiaomi.$package_oppo.$package_vivo,
                 "status" => $status,
                 "action"=> $btn,
@@ -558,6 +559,8 @@ class ProjectController extends Controller
                 $data_title_app='';
             }
 
+            $abc = '<p class="text-muted" style="line-height:0.5">'.$record->buildinfo_keystore. '   |   '.$record->buildinfo_vernum.'   |   '.$record->buildinfo_verstr.'</p>';
+
             if(isset(json_decode($record->Chplay_ads,true)['ads_id'])
                 || isset(json_decode($record->Chplay_ads,true)['ads_banner'])
                 || isset(json_decode($record->Chplay_ads,true)['ads_inter'])
@@ -675,7 +678,7 @@ class ProjectController extends Controller
             $data_arr[] = array(
                 "created_at" => $record->created_at,
                 "logo" => $logo,
-                "projectname"=>$data_projectname.$data_template.$data_ma_da.$data_title_app,
+                "projectname"=>$data_projectname.$data_template.$data_ma_da.$data_title_app.$abc,
                 "package" => $package_chplay.$package_amazon.$package_samsung.$package_xiaomi.$package_oppo.$package_vivo,
                 "buildinfo_mess" => $mess_info,
                 "buildinfo_console" =>$buildinfo_console,
