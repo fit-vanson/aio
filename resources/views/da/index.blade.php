@@ -245,7 +245,7 @@
 
                 },
                 columns: [
-                    {data: 'updated_at', name: 'updated_at',},
+                    {data: 'created_at', name: 'created_at',},
                     {title: 'logo',data: 'logo', name: 'logo',orderable: false},
                     {title: 'Mã Dự án',data: 'ma_da', name: 'ma_da'},
                     {title: 'Package',data: 'package', name: 'package',orderable: false},
