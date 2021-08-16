@@ -139,9 +139,6 @@
             $('.message-full').html(rowData.full_mess);
 
         });
-
-
-
         setInterval( function () {
             table.ajax.reload();
         }, 5000 );
@@ -173,28 +170,6 @@
                 });
         });
 
-
-
-
-        // $(".data-table ").on("click", "td:nth-child(4)", function(data) {
-        //
-        //
-        //     var form_data  = table.rows().data();
-        //     console.log(form_data)
-        //     var f = form_data;
-        //     for(var i=0 ; f.length>i;i++){
-        //         var n = f[i].length;
-        //         for(var j = 0 ; f.length>j;j++){
-        //             alert(f[i][j])
-        //         }
-        //     }
-        //     // $('.message-full').var()
-        //     $('#modelHeadingPolicy').html("Show Mess");
-        //     $('#showMess').modal('show');
-        //     $('.modal').on('hidden.bs.modal', function (e) {
-        //         $('body').addClass('modal-open');
-        //     });
-        // });
     });
 
 </script>
