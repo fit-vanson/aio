@@ -488,8 +488,8 @@ class ProjectController extends Controller
                     ->orWhere('ngocphandang_project.Vivo_package', 'like', '%' . $searchValue . '%');
             })
             ->where(function ($q){
-                $q->where('buildinfo_console',1)
-                    ->orWhere('buildinfo_console',4);
+                $q->where('buildinfo_console','<>',0);
+//                    ->orWhere('buildinfo_console',4);
             })
             ->count();
 
@@ -512,8 +512,8 @@ class ProjectController extends Controller
 
             })
             ->where(function ($q){
-                $q->where('buildinfo_console',1)
-                    ->orWhere('buildinfo_console',4);
+                $q->where('buildinfo_console','<>',0);
+
             })
             ->select('ngocphandang_project.*')
             ->skip($start)
