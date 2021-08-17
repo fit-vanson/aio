@@ -166,12 +166,20 @@ class ProjectController extends Controller
                 ->first();
 
             if(isset($ma_da)) {
-                $data_ma_da = '<a href="'.$ma_da->link_store_vietmmo.'" target="_blank" > <p class="text-muted" style="line-height:0.5">Mã Dự án: '.$ma_da->ma_da.'</p></a>';
+                if (isset($ma_da->link_store_vietmmo)){
+                    $data_ma_da = '<a href="'.$ma_da->link_store_vietmmo.'" target="_blank" > <p class="text-muted" style="line-height:0.5">Mã Dự án: '.$ma_da->ma_da.'</p></a>';
+                }else{
+                    $data_ma_da = '<p class="text-muted" style="line-height:0.5">Mã Dự án: '.$ma_da->ma_da.'</p>';
+                }
             }else{
                 $data_ma_da = '';
             }
             if(isset($template)) {
-                $data_template =  '<a href="'.$template->link_store_vietmmo.'" target="_blank" ><p class="text-muted" style="line-height:0.5">Template: '.$template->template.'</p></a>';
+                if (isset($template->link_store_vietmmo)){
+                    $data_template =  '<a href="'.$template->link_store_vietmmo.'" target="_blank" ><p class="text-muted" style="line-height:0.5">Template: '.$template->template.'</p></a>';
+                }else{
+                    $data_template =  '<p class="text-muted" style="line-height:0.5">Template: '.$template->template.'</p>';
+                }
             }else{
                 $data_template='';
             }
@@ -597,13 +605,20 @@ class ProjectController extends Controller
                 ->first();
 
             if(isset($ma_da)) {
-                $data_ma_da =
-                    '<p class="text-muted" style="line-height:0.5">Mã Dự án: '.$ma_da->ma_da.'</p>';
+                if (isset($ma_da->link_store_vietmmo)){
+                    $data_ma_da = '<a href="'.$ma_da->link_store_vietmmo.'" target="_blank" > <p class="text-muted" style="line-height:0.5">Mã Dự án: '.$ma_da->ma_da.'</p></a>';
+                }else{
+                    $data_ma_da = '<p class="text-muted" style="line-height:0.5">Mã Dự án: '.$ma_da->ma_da.'</p>';
+                }
             }else{
                 $data_ma_da = '';
             }
             if(isset($template)) {
-                $data_template =  '<p class="text-muted" style="line-height:0.5">Template: '.$template->template.'</p>';
+                if (isset($template->link_store_vietmmo)){
+                    $data_template =  '<a href="'.$template->link_store_vietmmo.'" target="_blank" ><p class="text-muted" style="line-height:0.5">Template: '.$template->template.'</p></a>';
+                }else{
+                    $data_template =  '<p class="text-muted" style="line-height:0.5">Template: '.$template->template.'</p>';
+                }
             }else{
                 $data_template='';
             }
@@ -698,7 +713,11 @@ class ProjectController extends Controller
             }
 //
             if(isset($record->logo)){
-                $logo = "<img class='rounded mx-auto d-block'  width='100px'  height='100px'  src='../uploads/project/$record->projectname/thumbnail/$record->logo'>";
+                if (isset($record->link_store_vietmmo)){
+                    $logo = "<a href='".$record->link_store_vietmmo."' target='_blank'>  <img class='rounded mx-auto d-block'  width='100px'  height='100px'  src='../uploads/project/$record->projectname/thumbnail/$record->logo'></a>";
+                }else{
+                    $logo = "<img class='rounded mx-auto d-block'  width='100px'  height='100px'  src='../uploads/project/$record->projectname/thumbnail/$record->logo'>";
+                }
             }else{
                 $logo = '<img class="rounded mx-auto d-block" width="100px" height="100px" src="assets\images\logo-sm.png">';
             }
