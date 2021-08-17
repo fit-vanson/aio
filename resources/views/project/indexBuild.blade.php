@@ -113,7 +113,7 @@
         var table = $('.data-table').DataTable({
             displayLength: 50,
             lengthMenu: [5, 10, 25, 50, 75, 100],
-            processing: true,
+            // processing: true,
             serverSide: true,
             ajax: {
                 url: "{{ route('project.getIndexBuild') }}",
