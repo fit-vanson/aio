@@ -696,34 +696,6 @@ class ProjectController extends Controller
             }else{
                 $package_vivo = '<p style="color:red;line-height:0.5">Vivo: '.$record->Vivo_package.'</p>';
             }
-
-            if ($record['buildinfo_console']==0  ) {
-                $buildinfo_console = 'Trạng thái tĩnh';
-            }
-            elseif($record['buildinfo_console']== 1){
-                $buildinfo_console = '<span class="badge badge-dark">Build App</span>';
-            }
-            elseif($record['buildinfo_console']==2){
-                $buildinfo_console =  '<span class="badge badge-warning">Đang xử lý Build App</span>';
-            }
-            elseif($record['buildinfo_console']==3){
-                $buildinfo_console =  '<span class="badge badge-info">Build App (Thành công)</span>';
-            }
-            elseif($record['buildinfo_console']==7){
-                $buildinfo_console =  '<span class="badge badge-danger">Build App (Thất bại)</span>';
-            }
-            elseif($record['buildinfo_console']==4){
-                $buildinfo_console =  '<span class="badge badge-primary">Check Data Project</span>';
-            }
-            elseif($record['buildinfo_console']==5){
-                $buildinfo_console =  '<span class="badge badge-secondary">Đang xử lý check dữ liệu của Project</span>';
-            }
-            elseif($record['buildinfo_console']==6){
-                $buildinfo_console =  '<span class="badge badge-success">Kết thúc Check</span>';
-            }
-            elseif($record['buildinfo_console']==8){
-                $buildinfo_console =  '<span class="badge badge-danger">Kết thúc (Dự liệu thiếu) </span>';
-            }
 //
             if(isset($record->logo)){
                 $logo = "<img class='rounded mx-auto d-block'  width='100px'  height='100px'  src='../uploads/project/$record->projectname/thumbnail/$record->logo'>";
