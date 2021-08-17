@@ -170,19 +170,15 @@
             }
             if (data == 4) {
                 return '<span class="badge badge-primary">Check Data Project</span>';
-
             }
             if (data == 5) {
                 return '<span class="badge badge-secondary">Đang xử lý check dữ liệu của Project</span>';
-
             }
             if (data == 6) {
                 return '<span class="badge badge-success">Kết thúc Check</span>';
-
             }
             if (data == 7) {
                 return '<span class="badge badge-danger">Build App (Thất bại)</span>';
-
             }
             if (data == 8) {
                 return '<span class="badge badge-danger">Kết thúc (Dự liệu thiếu) </span>';

@@ -34,15 +34,15 @@
         <div class="col-12">
             <div class="card">
                 <div class="card-body">
-                    <div class="button-items">
-                        <button type="button" class="btn btn-primary waves-effect waves-light" onclick="All()">All</button>
-                        <button type="button" class="btn btn-success waves-effect" onclick="Public()" >Public</button>
-                        <button type="button" class="btn btn-warning waves-effect" onclick="Pending()">Pending</button>
-                        <button type="button" class="btn btn-danger waves-effect waves-light" onclick="Check()">Check</button>
-                        <button type="button" class="btn btn-info waves-effect waves-light" onclick="UbPublish()">UbPublish</button>
-                        <button type="button" class="btn btn-secondary waves-effect waves-light" onclick="Remove()">Remove</button>
-                        <button type="button" class="btn btn-dark waves-effect waves-light" onclick="Reject()">Reject</button>
-                        <button type="button" class="btn btn-link waves-effect waves-light" onclick="Suppend()">Suppend</button>
+                    <div class="button-items status_app_button">
+                        <button type="button" class="btn btn-primary waves-effect waves-light" id="All">All</button>
+                        <button type="button" class="btn btn-success waves-effect" id="Public" >Public</button>
+                        <button type="button" class="btn btn-warning waves-effect"id="Pending">Pending</button>
+                        <button type="button" class="btn btn-danger waves-effect waves-light" id="Check">Check</button>
+                        <button type="button" class="btn btn-info waves-effect waves-light" id="UbPublish">UbPublish</button>
+                        <button type="button" class="btn btn-secondary waves-effect waves-light" id="Remove">Remove</button>
+                        <button type="button" class="btn btn-dark waves-effect waves-light" id="Reject">Reject</button>
+                        <button type="button" class="btn btn-link waves-effect waves-light" id="Suppend">Suppend</button>
                     </div>
                 </div>
                 <div class="card-body">
@@ -113,6 +113,11 @@
             ajax: {
                 url: "{{ route('project.getChplay') }}",
                 type: "post",
+                data: function (d){
+                    return $.extend({},d,{
+                        "status_app": $('.status_app_button').val(),
+                    })
+                }
             },
             columns: [
                 {data: 'updated_at', name: 'updated_at',},
@@ -163,593 +168,43 @@
                 }
             },
         });
+    $('#All').on('click', function () {
+        $('.status_app_button').val(null);
+        table.draw();
+    });
+    $('#Public').on('click', function () {
+        $('.status_app_button').val('1');
+        table.draw();
+    });
+    $('#Pending').on('click', function () {
+        $('.status_app_button').val('7');
+        table.draw();
+    });
+    $('#Check').on('click', function () {
+        $('.status_app_button').val('6');
+        table.draw();
+    });
 
-    function checkbox(id) {
-        $.get('{{asset('project/checkbox')}}/'+id,function (data) {
-            if(data.success){
-                $.notify(data.success, "success");
-                table.draw();
-            }
-            if(data.errors){
-                $.notify(data.errors,"error");
-            }
-        })
-    }
-    function detailChplay(id) {
-        $.get('{{asset('project/edit')}}/'+id,function (data) {
-            $("#detailApp input").prop("disabled", true);
-            $("#project_id").prop("disabled", false);
-            project_id
-            if(data[4] == null) { data[4] = {template: "Chưa có template"}}
-            if(data[3] == null) { data[3] = {ma_da: "Chưa có mã dự án"}}
-            if(data[2] == null) { data[2] = {store_name: "Chưa có Store Name"}}
-            var Chplay_ads = '';
-            $('#log_status').html('');
-            if(data[0].Chplay_ads) {
-                Chplay_ads = data[0].Chplay_ads;
-                Chplay_ads = JSON.parse(Chplay_ads);
-            }
-            if(data[0].Chplay_bot){
-                var bot = data[0].Chplay_bot;
-                var log_status = JSON.parse(bot).log_status
-                if(log_status == 0){
-                    $('#log_status').html('<div>Mặc định.</div>' );
-                }
-                if(log_status == 1){
-                    $('#log_status').html('<div class="alert alert-success" >Publish</div>' );
-                }
-                if(log_status == 2){
-                    $('#log_status').html('<div class="alert alert-danger" >Suppend</div>' );
-                }
-                if(log_status == 3){
-                    $('#log_status').html('<div class="alert alert-info" >UbPublish.</div>' );
-                }
-                if(log_status == 4){
-                    $('#log_status').html('<div class="alert alert-info" >Remove.</div>' );;
-                }
-                if(log_status == 5){
-                    $('#log_status').html('<div class="alert alert-info" >Reject.</div>' );
-                }
-                if(log_status == 6){
-                    $('#log_status').html('<div class="alert alert-danger" >Check.</div>' );
-                }
-                if(log_status == 7){
-                    $('#log_status').html('<div class="alert alert-warning" >Pending.</div>' );
-                }
-                if(JSON.parse(bot).logo){
-                    logo = JSON.parse(bot).logo;
-                }  else {
-                    if(data[0].logo) {
-                        logo = "../uploads/project/"+data[0].projectname+"/thumbnail/"+data[0].logo;
-                    }else {
-                        logo ="img/logo.png";
-                    }
-                }
-            }else {
-                if(data[0].logo) {
-                    logo = "../uploads/project/"+data[0].projectname+"/thumbnail/"+data[0].logo;
-                }else {
-                    logo ="img/logo.png";
-                }
-            }
-            $("#avatar").attr("src",logo);
-            $('#project_id').val(data[0].projectid);
-            $('#projectname').val(data[0].projectname);
-            $('#template').val(data[4].template);
-            $('#ma_da').val(data[3].ma_da);
-            $('#title_app').val(data[0].title_app);
-            $('#buildinfo_vernum').val(data[0].buildinfo_vernum);
-            $('#buildinfo_verstr').val(data[0].buildinfo_verstr);
-            $('#buildinfo_app_name_x').val(data[0].buildinfo_app_name_x);
-            $('#buildinfo_keystore').val(data[0].buildinfo_keystore);
-            $('#buildinfo_sdk').val(data[0].buildinfo_sdk);
-            $('#buildinfo_link_policy_x').val(data[0].buildinfo_link_policy_x);
-            $('#buildinfo_link_youtube_x').val(data[0].buildinfo_link_youtube_x);
-            $('#buildinfo_link_fanpage').val(data[0].buildinfo_link_fanpage);
-            $('#buildinfo_api_key_x').val(data[0].buildinfo_api_key_x);
-            $('#buildinfo_link_website').val(data[0].buildinfo_link_website);
+    $('#UbPublish').on('click', function () {
+            $('.status_app_button').val('3');
+            table.draw();
+    });
 
+    $('#Remove').on('click', function () {
+            $('.status_app_button').val('4');
+            table.draw();
+    });
 
-            $('#package').val(data[0].Chplay_package);
-            $('#buildinfo_store_name_x').val(data[2].store_name);
-            $('#ads_id').val(Chplay_ads.ads_id);
-            $('#banner').val(Chplay_ads.ads_banner);
-            $('#ads_inter').val(Chplay_ads.ads_inter);
-            $('#ads_reward').val(Chplay_ads.ads_reward);
-            $('#ads_native').val(Chplay_ads.ads_native);
-            $('#ads_open').val(Chplay_ads.ads_open);
+    $('#Reject').on('click', function () {
+            $('.status_app_button').val('5');
+            table.draw();
+    });
 
-            $('#Chplay_buildinfo_link_store').val(data[0].Chplay_buildinfo_link_store);
-            $('#Chplay_buildinfo_link_app').val(data[0].Chplay_buildinfo_link_app);
-            $('#Chplay_buildinfo_email_dev_x').val(data[0].Chplay_buildinfo_email_dev_x);
-            $('#Chplay_status').val(data[0].Chplay_status);
-            $('#modelHeading').html("Chi tiết");
-            $('#ajaxModel').modal('show');
-            $('.modal').on('hidden.bs.modal', function (e) {
-                $('body').addClass('modal-open');
-            });
-        })
-    }
-    function All(){
-        var table = $('.data-table').DataTable({
-            destroy: true,
-            displayLength: 50,
-            lengthMenu: [5, 10, 25, 50, 75, 100],
-            serverSide: true,
-            ajax: {
-                url: "{{ route('project.getChplay') }}",
-                type: "post",
-            },
-            columns: [
-                {data: 'updated_at', name: 'updated_at',},
-                {data: 'logo', name: 'logo',orderable: false},
-                {data: 'ma_da', name: 'ma_da'},
-                {data: 'Chplay_bot->installs', name: 'install'},
-                {data: 'Chplay_bot->numberVoters', name: 'numberVoters'},
-                {data: 'Chplay_bot->numberReviews', name: 'numberReviews'},
-                {data: 'Chplay_bot->score', name: 'score'},
-                {data: 'buildinfo_mess', name: 'buildinfo_mess',orderable: false},
-                {data: 'status', name: 'status',orderable: false},
-                {data: 'action', name: 'action', orderable: false, searchable: false},
-            ],
-            columnDefs: [
-                {
-                    "targets": [ 0],
-                    "visible": false,
-                    "searchable": false
-                }
-            ],
-            order: [[ 0, 'desc' ]],
-            fnRowCallback: function (nRow, aData, iDisplayIndex, iDisplayIndexFull) {
-                console.log(aData.status)
-                if (aData.status.includes('Chưa Publish')) {
-                    $('td', nRow).css('background-color', 'rgb(187 187 187 / 27%)');
-                }
+    $('#Suppend').on('click', function () {
+            $('.status_app_button').val('2');
+            table.draw();
+    });
 
-                if (aData.status.includes('Check')) {
-                    $('td', nRow).css('background-color', 'rgb(250 68 68 / 30%)');
-                }
-                if (aData.status.includes('Public')) {
-                    $('td', nRow).css('background-color', 'rgb(255 255 255)');
-                }
-                if (aData.status.includes('Reject')) {
-                    $('td', nRow).css('background-color', 'rgb(255 0 0 / 45%)');
-                }
-                if (aData.status.includes('UnPublish')) {
-                    $('td', nRow).css('background-color', 'rgb(56 164 248 / 69%)');
-                }
-                if (aData.status.includes('Remove')) {
-                    $('td', nRow).css('background-color', 'rgb(255 0 0 / 45%)');
-                }
-                if (aData.status.includes('Pending')) {
-                    $('td', nRow).css('background-color', 'rgb(253 222 114)');
-                }
-                if (aData.status.includes('Suppend')) {
-                    $('td', nRow).css('background-color', 'rgb(255 0 0 / 72%)');
-                }
-            },
-        });
-    }
-    function Public(){
-        var table = $('.data-table').DataTable({
-            destroy: true,
-            displayLength: 50,
-            lengthMenu: [5, 10, 25, 50, 75, 100],
-            serverSide: true,
-            ajax: {
-                url: "{{ route('project.getChplay') }}?status_app=1",
-                type: "post",
-            },
-            columns: [
-                {data: 'updated_at', name: 'updated_at',},
-                {data: 'logo', name: 'logo',orderable: false},
-                {data: 'ma_da', name: 'ma_da'},
-                {data: 'Chplay_bot->installs', name: 'install'},
-                {data: 'Chplay_bot->numberVoters', name: 'numberVoters'},
-                {data: 'Chplay_bot->numberReviews', name: 'numberReviews'},
-                {data: 'Chplay_bot->score', name: 'score'},
-                {data: 'buildinfo_mess', name: 'buildinfo_mess',orderable: false},
-                {data: 'status', name: 'status',orderable: false},
-                {data: 'action', name: 'action', orderable: false, searchable: false},
-            ],
-            columnDefs: [
-                {
-                    "targets": [ 0],
-                    "visible": false,
-                    "searchable": false
-                }
-            ],
-            order: [[ 0, 'desc' ]],
-            fnRowCallback: function (nRow, aData, iDisplayIndex, iDisplayIndexFull) {
-                console.log(aData.status)
-                if (aData.status.includes('Chưa Publish')) {
-                    $('td', nRow).css('background-color', 'rgb(187 187 187 / 27%)');
-                }
-
-                if (aData.status.includes('Check')) {
-                    $('td', nRow).css('background-color', 'rgb(250 68 68 / 30%)');
-                }
-                if (aData.status.includes('Public')) {
-                    $('td', nRow).css('background-color', 'rgb(255 255 255)');
-                }
-                if (aData.status.includes('Reject')) {
-                    $('td', nRow).css('background-color', 'rgb(255 0 0 / 45%)');
-                }
-                if (aData.status.includes('UnPublish')) {
-                    $('td', nRow).css('background-color', 'rgb(56 164 248 / 69%)');
-                }
-                if (aData.status.includes('Remove')) {
-                    $('td', nRow).css('background-color', 'rgb(255 0 0 / 45%)');
-                }
-                if (aData.status.includes('Pending')) {
-                    $('td', nRow).css('background-color', 'rgb(253 222 114)');
-                }
-                if (aData.status.includes('Suppend')) {
-                    $('td', nRow).css('background-color', 'rgb(255 0 0 / 72%)');
-                }
-            },
-        });
-    }
-    function Pending(){
-        var table = $('.data-table').DataTable({
-            destroy: true,
-            displayLength: 50,
-            lengthMenu: [5, 10, 25, 50, 75, 100],
-            serverSide: true,
-            ajax: {
-                url: "{{ route('project.getChplay') }}?status_app=7",
-                type: "post",
-            },
-            columns: [
-                {data: 'updated_at', name: 'updated_at',},
-                {data: 'logo', name: 'logo',orderable: false},
-                {data: 'ma_da', name: 'ma_da'},
-                {data: 'Chplay_bot->installs', name: 'install'},
-                {data: 'Chplay_bot->numberVoters', name: 'numberVoters'},
-                {data: 'Chplay_bot->numberReviews', name: 'numberReviews'},
-                {data: 'Chplay_bot->score', name: 'score'},
-                {data: 'buildinfo_mess', name: 'buildinfo_mess',orderable: false},
-                {data: 'status', name: 'status',orderable: false},
-                {data: 'action', name: 'action', orderable: false, searchable: false},
-            ],
-            columnDefs: [
-                {
-                    "targets": [ 0],
-                    "visible": false,
-                    "searchable": false
-                }
-            ],
-            order: [[ 0, 'desc' ]],
-            fnRowCallback: function (nRow, aData, iDisplayIndex, iDisplayIndexFull) {
-                console.log(aData.status)
-                if (aData.status.includes('Chưa Publish')) {
-                    $('td', nRow).css('background-color', 'rgb(187 187 187 / 27%)');
-                }
-
-                if (aData.status.includes('Check')) {
-                    $('td', nRow).css('background-color', 'rgb(250 68 68 / 30%)');
-                }
-                if (aData.status.includes('Public')) {
-                    $('td', nRow).css('background-color', 'rgb(255 255 255)');
-                }
-                if (aData.status.includes('Reject')) {
-                    $('td', nRow).css('background-color', 'rgb(255 0 0 / 45%)');
-                }
-                if (aData.status.includes('UnPublish')) {
-                    $('td', nRow).css('background-color', 'rgb(56 164 248 / 69%)');
-                }
-                if (aData.status.includes('Remove')) {
-                    $('td', nRow).css('background-color', 'rgb(255 0 0 / 45%)');
-                }
-                if (aData.status.includes('Pending')) {
-                    $('td', nRow).css('background-color', 'rgb(253 222 114)');
-                }
-                if (aData.status.includes('Suppend')) {
-                    $('td', nRow).css('background-color', 'rgb(255 0 0 / 72%)');
-                }
-            },
-        });
-    }
-    function Check(){
-        var table = $('.data-table').DataTable({
-            destroy: true,
-            displayLength: 50,
-            lengthMenu: [5, 10, 25, 50, 75, 100],
-            serverSide: true,
-            ajax: {
-                url: "{{ route('project.getChplay') }}?status_app=6",
-                type: "post",
-            },
-            columns: [
-                {data: 'updated_at', name: 'updated_at',},
-                {data: 'logo', name: 'logo',orderable: false},
-                {data: 'ma_da', name: 'ma_da'},
-                {data: 'Chplay_bot->installs', name: 'install'},
-                {data: 'Chplay_bot->numberVoters', name: 'numberVoters'},
-                {data: 'Chplay_bot->numberReviews', name: 'numberReviews'},
-                {data: 'Chplay_bot->score', name: 'score'},
-                {data: 'buildinfo_mess', name: 'buildinfo_mess',orderable: false},
-                {data: 'status', name: 'status',orderable: false},
-                {data: 'action', name: 'action', orderable: false, searchable: false},
-            ],
-            columnDefs: [
-                {
-                    "targets": [ 0],
-                    "visible": false,
-                    "searchable": false
-                }
-            ],
-            order: [[ 0, 'desc' ]],
-            fnRowCallback: function (nRow, aData, iDisplayIndex, iDisplayIndexFull) {
-                console.log(aData.status)
-                if (aData.status.includes('Chưa Publish')) {
-                    $('td', nRow).css('background-color', 'rgb(187 187 187 / 27%)');
-                }
-
-                if (aData.status.includes('Check')) {
-                    $('td', nRow).css('background-color', 'rgb(250 68 68 / 30%)');
-                }
-                if (aData.status.includes('Public')) {
-                    $('td', nRow).css('background-color', 'rgb(255 255 255)');
-                }
-                if (aData.status.includes('Reject')) {
-                    $('td', nRow).css('background-color', 'rgb(255 0 0 / 45%)');
-                }
-                if (aData.status.includes('UnPublish')) {
-                    $('td', nRow).css('background-color', 'rgb(56 164 248 / 69%)');
-                }
-                if (aData.status.includes('Remove')) {
-                    $('td', nRow).css('background-color', 'rgb(255 0 0 / 45%)');
-                }
-                if (aData.status.includes('Pending')) {
-                    $('td', nRow).css('background-color', 'rgb(253 222 114)');
-                }
-                if (aData.status.includes('Suppend')) {
-                    $('td', nRow).css('background-color', 'rgb(255 0 0 / 72%)');
-                }
-            },
-        });
-    }
-    function UbPublish(){
-        var table = $('.data-table').DataTable({
-            destroy: true,
-            displayLength: 50,
-            lengthMenu: [5, 10, 25, 50, 75, 100],
-            serverSide: true,
-            ajax: {
-                url: "{{ route('project.getChplay') }}?status_app=3",
-                type: "post",
-            },
-            columns: [
-                {data: 'updated_at', name: 'updated_at',},
-                {data: 'logo', name: 'logo',orderable: false},
-                {data: 'ma_da', name: 'ma_da'},
-                {data: 'Chplay_bot->installs', name: 'install'},
-                {data: 'Chplay_bot->numberVoters', name: 'numberVoters'},
-                {data: 'Chplay_bot->numberReviews', name: 'numberReviews'},
-                {data: 'Chplay_bot->score', name: 'score'},
-                {data: 'buildinfo_mess', name: 'buildinfo_mess',orderable: false},
-                {data: 'status', name: 'status',orderable: false},
-                {data: 'action', name: 'action', orderable: false, searchable: false},
-            ],
-            columnDefs: [
-                {
-                    "targets": [ 0],
-                    "visible": false,
-                    "searchable": false
-                }
-            ],
-            order: [[ 0, 'desc' ]],
-            fnRowCallback: function (nRow, aData, iDisplayIndex, iDisplayIndexFull) {
-                console.log(aData.status)
-                if (aData.status.includes('Chưa Publish')) {
-                    $('td', nRow).css('background-color', 'rgb(187 187 187 / 27%)');
-                }
-
-                if (aData.status.includes('Check')) {
-                    $('td', nRow).css('background-color', 'rgb(250 68 68 / 30%)');
-                }
-                if (aData.status.includes('Public')) {
-                    $('td', nRow).css('background-color', 'rgb(255 255 255)');
-                }
-                if (aData.status.includes('Reject')) {
-                    $('td', nRow).css('background-color', 'rgb(255 0 0 / 45%)');
-                }
-                if (aData.status.includes('UnPublish')) {
-                    $('td', nRow).css('background-color', 'rgb(56 164 248 / 69%)');
-                }
-                if (aData.status.includes('Remove')) {
-                    $('td', nRow).css('background-color', 'rgb(255 0 0 / 45%)');
-                }
-                if (aData.status.includes('Pending')) {
-                    $('td', nRow).css('background-color', 'rgb(253 222 114)');
-                }
-                if (aData.status.includes('Suppend')) {
-                    $('td', nRow).css('background-color', 'rgb(255 0 0 / 72%)');
-                }
-            },
-        });
-    }
-    function Remove(){
-        var table = $('.data-table').DataTable({
-            destroy: true,
-            displayLength: 50,
-            lengthMenu: [5, 10, 25, 50, 75, 100],
-            serverSide: true,
-            ajax: {
-                url: "{{ route('project.getChplay') }}?status_app=4",
-                type: "post",
-            },
-            columns: [
-                {data: 'updated_at', name: 'updated_at',},
-                {data: 'logo', name: 'logo',orderable: false},
-                {data: 'ma_da', name: 'ma_da'},
-                {data: 'Chplay_bot->installs', name: 'install'},
-                {data: 'Chplay_bot->numberVoters', name: 'numberVoters'},
-                {data: 'Chplay_bot->numberReviews', name: 'numberReviews'},
-                {data: 'Chplay_bot->score', name: 'score'},
-                {data: 'buildinfo_mess', name: 'buildinfo_mess',orderable: false},
-                {data: 'status', name: 'status',orderable: false},
-                {data: 'action', name: 'action', orderable: false, searchable: false},
-            ],
-            columnDefs: [
-                {
-                    "targets": [ 0],
-                    "visible": false,
-                    "searchable": false
-                }
-            ],
-            order: [[ 0, 'desc' ]],
-            fnRowCallback: function (nRow, aData, iDisplayIndex, iDisplayIndexFull) {
-                console.log(aData.status)
-                if (aData.status.includes('Chưa Publish')) {
-                    $('td', nRow).css('background-color', 'rgb(187 187 187 / 27%)');
-                }
-
-                if (aData.status.includes('Check')) {
-                    $('td', nRow).css('background-color', 'rgb(250 68 68 / 30%)');
-                }
-                if (aData.status.includes('Public')) {
-                    $('td', nRow).css('background-color', 'rgb(255 255 255)');
-                }
-                if (aData.status.includes('Reject')) {
-                    $('td', nRow).css('background-color', 'rgb(255 0 0 / 45%)');
-                }
-                if (aData.status.includes('UnPublish')) {
-                    $('td', nRow).css('background-color', 'rgb(56 164 248 / 69%)');
-                }
-                if (aData.status.includes('Remove')) {
-                    $('td', nRow).css('background-color', 'rgb(255 0 0 / 45%)');
-                }
-                if (aData.status.includes('Pending')) {
-                    $('td', nRow).css('background-color', 'rgb(253 222 114)');
-                }
-                if (aData.status.includes('Suppend')) {
-                    $('td', nRow).css('background-color', 'rgb(255 0 0 / 72%)');
-                }
-            },
-        });
-    }
-    function Reject(){
-        var table = $('.data-table').DataTable({
-            destroy: true,
-            displayLength: 50,
-            lengthMenu: [5, 10, 25, 50, 75, 100],
-            serverSide: true,
-            ajax: {
-                url: "{{ route('project.getChplay') }}?status_app=5",
-                type: "post",
-            },
-            columns: [
-                {data: 'updated_at', name: 'updated_at',},
-                {data: 'logo', name: 'logo',orderable: false},
-                {data: 'ma_da', name: 'ma_da'},
-                {data: 'Chplay_bot->installs', name: 'install'},
-                {data: 'Chplay_bot->numberVoters', name: 'numberVoters'},
-                {data: 'Chplay_bot->numberReviews', name: 'numberReviews'},
-                {data: 'Chplay_bot->score', name: 'score'},
-                {data: 'buildinfo_mess', name: 'buildinfo_mess',orderable: false},
-                {data: 'status', name: 'status',orderable: false},
-                {data: 'action', name: 'action', orderable: false, searchable: false},
-            ],
-            columnDefs: [
-                {
-                    "targets": [ 0],
-                    "visible": false,
-                    "searchable": false
-                }
-            ],
-            order: [[ 0, 'desc' ]],
-            fnRowCallback: function (nRow, aData, iDisplayIndex, iDisplayIndexFull) {
-                console.log(aData.status)
-                if (aData.status.includes('Chưa Publish')) {
-                    $('td', nRow).css('background-color', 'rgb(187 187 187 / 27%)');
-                }
-
-                if (aData.status.includes('Check')) {
-                    $('td', nRow).css('background-color', 'rgb(250 68 68 / 30%)');
-                }
-                if (aData.status.includes('Public')) {
-                    $('td', nRow).css('background-color', 'rgb(255 255 255)');
-                }
-                if (aData.status.includes('Reject')) {
-                    $('td', nRow).css('background-color', 'rgb(255 0 0 / 45%)');
-                }
-                if (aData.status.includes('UnPublish')) {
-                    $('td', nRow).css('background-color', 'rgb(56 164 248 / 69%)');
-                }
-                if (aData.status.includes('Remove')) {
-                    $('td', nRow).css('background-color', 'rgb(255 0 0 / 45%)');
-                }
-                if (aData.status.includes('Pending')) {
-                    $('td', nRow).css('background-color', 'rgb(253 222 114)');
-                }
-                if (aData.status.includes('Suppend')) {
-                    $('td', nRow).css('background-color', 'rgb(255 0 0 / 72%)');
-                }
-            },
-        });
-    }
-    function Suppend(){
-        var table = $('.data-table').DataTable({
-            destroy: true,
-            displayLength: 50,
-            lengthMenu: [5, 10, 25, 50, 75, 100],
-            serverSide: true,
-            ajax: {
-                url: "{{ route('project.getChplay') }}?status_app=2",
-                type: "post",
-            },
-            columns: [
-                {data: 'updated_at', name: 'updated_at',},
-                {data: 'logo', name: 'logo',orderable: false},
-                {data: 'ma_da', name: 'ma_da'},
-                {data: 'Chplay_bot->installs', name: 'install'},
-                {data: 'Chplay_bot->numberVoters', name: 'numberVoters'},
-                {data: 'Chplay_bot->numberReviews', name: 'numberReviews'},
-                {data: 'Chplay_bot->score', name: 'score'},
-                {data: 'buildinfo_mess', name: 'buildinfo_mess',orderable: false},
-                {data: 'status', name: 'status',orderable: false},
-                {data: 'action', name: 'action', orderable: false, searchable: false},
-            ],
-            columnDefs: [
-                {
-                    "targets": [ 0],
-                    "visible": false,
-                    "searchable": false
-                }
-            ],
-            order: [[ 0, 'desc' ]],
-            fnRowCallback: function (nRow, aData, iDisplayIndex, iDisplayIndexFull) {
-                console.log(aData.status)
-                if (aData.status.includes('Chưa Publish')) {
-                    $('td', nRow).css('background-color', 'rgb(187 187 187 / 27%)');
-                }
-
-                if (aData.status.includes('Check')) {
-                    $('td', nRow).css('background-color', 'rgb(250 68 68 / 30%)');
-                }
-                if (aData.status.includes('Public')) {
-                    $('td', nRow).css('background-color', 'rgb(255 255 255)');
-                }
-                if (aData.status.includes('Reject')) {
-                    $('td', nRow).css('background-color', 'rgb(255 0 0 / 45%)');
-                }
-                if (aData.status.includes('UnPublish')) {
-                    $('td', nRow).css('background-color', 'rgb(56 164 248 / 69%)');
-                }
-                if (aData.status.includes('Remove')) {
-                    $('td', nRow).css('background-color', 'rgb(255 0 0 / 45%)');
-                }
-                if (aData.status.includes('Pending')) {
-                    $('td', nRow).css('background-color', 'rgb(253 222 114)');
-                }
-                if (aData.status.includes('Suppend')) {
-                    $('td', nRow).css('background-color', 'rgb(255 0 0 / 72%)');
-                }
-            },
-        });
-    }
     $('#detailApp').on('submit',function (event){
         event.preventDefault();
         var formData = new FormData($("#detailApp")[0]);

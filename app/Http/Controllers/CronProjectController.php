@@ -74,7 +74,5 @@ class CronProjectController extends Controller
 
            }
        }
-        echo '<br>'.'Trở lại sau 3s';
-        echo '<META http-equiv="refresh" content="3;URL=' . url("/project/appChplay") . '">';
     }
 }
