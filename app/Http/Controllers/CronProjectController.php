@@ -13,7 +13,7 @@ class CronProjectController extends Controller
         dd(1);
     }
     public function Chplay(){
-       $appsChplay = ProjectModel::where('Chplay_status','<>',3)->where('Chplay_status','<>',0)->get();
+       $appsChplay = ProjectModel::where('Chplay_status','<>',3)->get();
 
        foreach ($appsChplay as $appChplay){
            $package = $appChplay->Chplay_package;
