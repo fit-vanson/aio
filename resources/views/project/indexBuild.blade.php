@@ -113,7 +113,7 @@
         var table = $('.data-table').DataTable({
             displayLength: 50,
             lengthMenu: [5, 10, 25, 50, 75, 100],
-            // processing: true,
+            processing: true,
             serverSide: true,
             ajax: {
                 url: "{{ route('project.getIndexBuild') }}",
@@ -202,9 +202,9 @@
             $('.message-full').html(rowData.full_mess);
 
         });
-        // setInterval( function () {
-        //     table.ajax.reload();
-        // }, 5000 );
+        setInterval( function () {
+            table.ajax.reload();
+        }, 5000 );
 
         $('#all').on('click', function () {
             $('.console_status_button').val(null);
@@ -222,9 +222,6 @@
             $('.console_status_button').val('3%6%7%8');
             table.draw();
         });
-
-
-
         $(document).on('click','.removeProject', function (data){
             var project_id = $(this).data("id");
             swal({
@@ -251,246 +248,6 @@
                 });
         });
     });
-
-        {{--function All(){--}}
-        {{--    var table1 = $('.data-table').DataTable({--}}
-        {{--        destroy: true,--}}
-        {{--        displayLength: 50,--}}
-        {{--        lengthMenu: [5, 10, 25, 50, 75, 100],--}}
-        {{--        serverSide: true,--}}
-        {{--        ajax: {--}}
-        {{--            url: "{{ route('project.getIndexBuild') }}",--}}
-        {{--            type: "post",--}}
-        {{--        },--}}
-        {{--        columns: [--}}
-        {{--            {data: 'created_at', name: 'created_at',},--}}
-        {{--            {data: 'logo', name: 'logo',orderable: false},--}}
-        {{--            {data: 'projectname', name: 'projectname'},--}}
-        {{--            {data: 'package', name: 'package',orderable: false},--}}
-        {{--            {data: 'buildinfo_mess', name: 'buildinfo_mess',orderable: false},--}}
-        {{--            {data: 'buildinfo_console', name: 'buildinfo_console',orderable: false},--}}
-        {{--            {data: 'action', name: 'action', orderable: false, searchable: false},--}}
-        {{--        ],--}}
-        {{--        columnDefs: [--}}
-        {{--            {--}}
-        {{--                "targets": [ 0],--}}
-        {{--                "visible": false,--}}
-        {{--                "searchable": false--}}
-        {{--            }--}}
-        {{--        ],--}}
-        {{--        order: [[ 0, 'desc' ]],--}}
-        //         fnRowCallback: function (nRow, aData, iDisplayIndex, iDisplayIndexFull) {
-        //             console.log(aData.status)
-        //             if (aData.status.includes('Chưa Publish')) {
-        //                 $('td', nRow).css('background-color', 'rgb(187 187 187 / 27%)');
-        //             }
-        //
-        //             if (aData.status.includes('Check')) {
-        //                 $('td', nRow).css('background-color', 'rgb(250 68 68 / 30%)');
-        //             }
-        //             if (aData.status.includes('Public')) {
-        //                 $('td', nRow).css('background-color', 'rgb(255 255 255)');
-        //             }
-        //             if (aData.status.includes('Reject')) {
-        //                 $('td', nRow).css('background-color', 'rgb(255 0 0 / 45%)');
-        //             }
-        //             if (aData.status.includes('UnPublish')) {
-        //                 $('td', nRow).css('background-color', 'rgb(56 164 248 / 69%)');
-        //             }
-        //             if (aData.status.includes('Remove')) {
-        //                 $('td', nRow).css('background-color', 'rgb(255 0 0 / 45%)');
-        //             }
-        //             if (aData.status.includes('Pending')) {
-        //                 $('td', nRow).css('background-color', 'rgb(253 222 114)');
-        //             }
-        //             if (aData.status.includes('Suppend')) {
-        //                 $('td', nRow).css('background-color', 'rgb(255 0 0 / 72%)');
-        //             }
-        //         },
-        //     });
-        //     $('.data-table tbody').on('click', 'tr', function () {
-        {{--        var data1 = table1.row( this ).data();--}}
-        {{--        console.log(data1)--}}
-
-        {{--    } );--}}
-
-
-        {{--}--}}
-        {{--function WaitProcessing(){--}}
-        {{--    var table = $('.data-table').DataTable({--}}
-        {{--        destroy: true,--}}
-        {{--        displayLength: 50,--}}
-        {{--        lengthMenu: [5, 10, 25, 50, 75, 100],--}}
-        {{--        serverSide: true,--}}
-        {{--        ajax: {--}}
-        {{--            url: "{{ route('project.getIndexBuild') }}?status_console=1%4",--}}
-        {{--            type: "post",--}}
-        {{--        },--}}
-        {{--        columns: [--}}
-        {{--            {data: 'created_at', name: 'created_at',},--}}
-        {{--            {data: 'logo', name: 'logo',orderable: false},--}}
-        {{--            {data: 'projectname', name: 'projectname'},--}}
-        {{--            {data: 'package', name: 'package',orderable: false},--}}
-        {{--            {data: 'buildinfo_mess', name: 'buildinfo_mess',orderable: false},--}}
-        {{--            {data: 'buildinfo_console', name: 'buildinfo_console',orderable: false},--}}
-        {{--            {data: 'action', name: 'action', orderable: false, searchable: false},--}}
-        {{--        ],--}}
-        {{--        columnDefs: [--}}
-        {{--            {--}}
-        {{--                "targets": [ 0],--}}
-        {{--                "visible": false,--}}
-        {{--                "searchable": false--}}
-        {{--            }--}}
-        {{--        ],--}}
-        {{--        order: [[ 0, 'desc' ]],--}}
-        {{--        // fnRowCallback: function (nRow, aData, iDisplayIndex, iDisplayIndexFull) {--}}
-        {{--        //     console.log(aData.status)--}}
-        {{--        //     if (aData.status.includes('Chưa Publish')) {--}}
-        {{--        //         $('td', nRow).css('background-color', 'rgb(187 187 187 / 27%)');--}}
-        {{--        //     }--}}
-        {{--        //--}}
-        {{--        //     if (aData.status.includes('Check')) {--}}
-        {{--        //         $('td', nRow).css('background-color', 'rgb(250 68 68 / 30%)');--}}
-        {{--        //     }--}}
-        {{--        //     if (aData.status.includes('Public')) {--}}
-        {{--        //         $('td', nRow).css('background-color', 'rgb(255 255 255)');--}}
-        {{--        //     }--}}
-        {{--        //     if (aData.status.includes('Reject')) {--}}
-        {{--        //         $('td', nRow).css('background-color', 'rgb(255 0 0 / 45%)');--}}
-        {{--        //     }--}}
-        {{--        //     if (aData.status.includes('UnPublish')) {--}}
-        {{--        //         $('td', nRow).css('background-color', 'rgb(56 164 248 / 69%)');--}}
-        {{--        //     }--}}
-        {{--        //     if (aData.status.includes('Remove')) {--}}
-        {{--        //         $('td', nRow).css('background-color', 'rgb(255 0 0 / 45%)');--}}
-        {{--        //     }--}}
-        {{--        //     if (aData.status.includes('Pending')) {--}}
-        {{--        //         $('td', nRow).css('background-color', 'rgb(253 222 114)');--}}
-        {{--        //     }--}}
-        {{--        //     if (aData.status.includes('Suppend')) {--}}
-        {{--        //         $('td', nRow).css('background-color', 'rgb(255 0 0 / 72%)');--}}
-        {{--        //     }--}}
-        {{--        // },--}}
-        {{--    });--}}
-        {{--    console.log(table.rows().data())--}}
-        {{--}--}}
-        {{--function Processing(){--}}
-        {{--    var table = $('.data-table').DataTable({--}}
-        {{--        destroy: true,--}}
-        {{--        displayLength: 50,--}}
-        {{--        lengthMenu: [5, 10, 25, 50, 75, 100],--}}
-        {{--        serverSide: true,--}}
-        {{--        ajax: {--}}
-        {{--            url: "{{ route('project.getIndexBuild') }}?status_console=2%5",--}}
-        {{--            type: "post",--}}
-        {{--        },--}}
-        {{--        columns: [--}}
-        {{--            {data: 'created_at', name: 'created_at',},--}}
-        {{--            {data: 'logo', name: 'logo',orderable: false},--}}
-        {{--            {data: 'projectname', name: 'projectname'},--}}
-        {{--            {data: 'package', name: 'package',orderable: false},--}}
-        {{--            {data: 'buildinfo_mess', name: 'buildinfo_mess',orderable: false},--}}
-        {{--            {data: 'buildinfo_console', name: 'buildinfo_console',orderable: false},--}}
-        {{--            {data: 'action', name: 'action', orderable: false, searchable: false},--}}
-        {{--        ],--}}
-        {{--        columnDefs: [--}}
-        {{--            {--}}
-        {{--                "targets": [ 0],--}}
-        {{--                "visible": false,--}}
-        {{--                "searchable": false--}}
-        {{--            }--}}
-        {{--        ],--}}
-        {{--        order: [[ 0, 'desc' ]],--}}
-        {{--        // fnRowCallback: function (nRow, aData, iDisplayIndex, iDisplayIndexFull) {--}}
-        {{--        //     console.log(aData.status)--}}
-        {{--        //     if (aData.status.includes('Chưa Publish')) {--}}
-        {{--        //         $('td', nRow).css('background-color', 'rgb(187 187 187 / 27%)');--}}
-        {{--        //     }--}}
-        {{--        //--}}
-        {{--        //     if (aData.status.includes('Check')) {--}}
-        {{--        //         $('td', nRow).css('background-color', 'rgb(250 68 68 / 30%)');--}}
-        {{--        //     }--}}
-        {{--        //     if (aData.status.includes('Public')) {--}}
-        {{--        //         $('td', nRow).css('background-color', 'rgb(255 255 255)');--}}
-        {{--        //     }--}}
-        {{--        //     if (aData.status.includes('Reject')) {--}}
-        {{--        //         $('td', nRow).css('background-color', 'rgb(255 0 0 / 45%)');--}}
-        {{--        //     }--}}
-        {{--        //     if (aData.status.includes('UnPublish')) {--}}
-        {{--        //         $('td', nRow).css('background-color', 'rgb(56 164 248 / 69%)');--}}
-        {{--        //     }--}}
-        {{--        //     if (aData.status.includes('Remove')) {--}}
-        {{--        //         $('td', nRow).css('background-color', 'rgb(255 0 0 / 45%)');--}}
-        {{--        //     }--}}
-        {{--        //     if (aData.status.includes('Pending')) {--}}
-        {{--        //         $('td', nRow).css('background-color', 'rgb(253 222 114)');--}}
-        {{--        //     }--}}
-        {{--        //     if (aData.status.includes('Suppend')) {--}}
-        {{--        //         $('td', nRow).css('background-color', 'rgb(255 0 0 / 72%)');--}}
-        {{--        //     }--}}
-        {{--        // },--}}
-        {{--    });--}}
-        {{--}--}}
-        {{--function End(){--}}
-        {{--    var table = $('.data-table').DataTable({--}}
-        {{--        destroy: true,--}}
-        {{--        displayLength: 50,--}}
-        {{--        lengthMenu: [5, 10, 25, 50, 75, 100],--}}
-        {{--        serverSide: true,--}}
-        {{--        ajax: {--}}
-        {{--            url: "{{ route('project.getIndexBuild') }}?status_console=3%6%7%8",--}}
-        {{--            type: "post",--}}
-        {{--        },--}}
-        {{--        columns: [--}}
-        {{--            {data: 'created_at', name: 'created_at',},--}}
-        {{--            {data: 'logo', name: 'logo',orderable: false},--}}
-        {{--            {data: 'projectname', name: 'projectname'},--}}
-        {{--            {data: 'package', name: 'package',orderable: false},--}}
-        {{--            {data: 'buildinfo_mess', name: 'buildinfo_mess',orderable: false},--}}
-        {{--            {data: 'buildinfo_console', name: 'buildinfo_console',orderable: false},--}}
-        {{--            {data: 'action', name: 'action', orderable: false, searchable: false},--}}
-        {{--        ],--}}
-        {{--        columnDefs: [--}}
-        {{--            {--}}
-        {{--                "targets": [ 0],--}}
-        {{--                "visible": false,--}}
-        {{--                "searchable": false--}}
-        {{--            }--}}
-        {{--        ],--}}
-        {{--        order: [[ 0, 'desc' ]],--}}
-        {{--        // fnRowCallback: function (nRow, aData, iDisplayIndex, iDisplayIndexFull) {--}}
-        {{--        //     console.log(aData.status)--}}
-        {{--        //     if (aData.status.includes('Chưa Publish')) {--}}
-        {{--        //         $('td', nRow).css('background-color', 'rgb(187 187 187 / 27%)');--}}
-        {{--        //     }--}}
-        {{--        //--}}
-        {{--        //     if (aData.status.includes('Check')) {--}}
-        {{--        //         $('td', nRow).css('background-color', 'rgb(250 68 68 / 30%)');--}}
-        {{--        //     }--}}
-        {{--        //     if (aData.status.includes('Public')) {--}}
-        {{--        //         $('td', nRow).css('background-color', 'rgb(255 255 255)');--}}
-        {{--        //     }--}}
-        {{--        //     if (aData.status.includes('Reject')) {--}}
-        {{--        //         $('td', nRow).css('background-color', 'rgb(255 0 0 / 45%)');--}}
-        {{--        //     }--}}
-        {{--        //     if (aData.status.includes('UnPublish')) {--}}
-        {{--        //         $('td', nRow).css('background-color', 'rgb(56 164 248 / 69%)');--}}
-        {{--        //     }--}}
-        {{--        //     if (aData.status.includes('Remove')) {--}}
-        {{--        //         $('td', nRow).css('background-color', 'rgb(255 0 0 / 45%)');--}}
-        {{--        //     }--}}
-        {{--        //     if (aData.status.includes('Pending')) {--}}
-        {{--        //         $('td', nRow).css('background-color', 'rgb(253 222 114)');--}}
-        {{--        //     }--}}
-        {{--        //     if (aData.status.includes('Suppend')) {--}}
-        {{--        //         $('td', nRow).css('background-color', 'rgb(255 0 0 / 72%)');--}}
-        {{--        //     }--}}
-        {{--        // },--}}
-        {{--    });--}}
-        {{--}--}}
-
-
-
 
 </script>
 

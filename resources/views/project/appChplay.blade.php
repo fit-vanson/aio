@@ -23,7 +23,22 @@
     <div class="float-right d-none d-md-block">
         <a class="btn btn-outline btn-info" href="../../cronProject/ch-play" >Cập nhật</a>
     </div>
-
+</div>
+<div class="modal fade bd-example-modal-xl" id="showMess" aria-hidden="true">
+    <div class="modal-dialog modal-xl modal-dialog-scrollable">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title" id="modelHeadingPolicy"></h4>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+            </div>
+            <div class="modal-body">
+                <p class="message-full"></p>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+            </div>
+        </div>
+    </div>
 </div>
 @include('modals.detailApps')
 @endsection
@@ -140,7 +155,6 @@
                 ],
             order: [[ 0, 'desc' ]],
             fnRowCallback: function (nRow, aData, iDisplayIndex, iDisplayIndexFull) {
-                console.log(aData.status)
                 if (aData.status.includes('Chưa Publish')) {
                     $('td', nRow).css('background-color', 'rgb(187 187 187 / 27%)');
                 }
@@ -168,6 +182,20 @@
                 }
             },
         });
+    table.on('click', 'td:nth-child(7)', e=> {
+        e.preventDefault();
+        const row = table.row(e.target.closest('tr'));
+
+        const rowData = row.data();
+        console.log(rowData)
+
+        $('#modelHeadingPolicy').html(rowData.name_projectname);
+        $('#showMess').modal('show');
+        // console.log(table.row(this).data())
+
+        $('.message-full').html(rowData.full_mess);
+
+    });
     $('#All').on('click', function () {
         $('.status_app_button').val(null);
         table.draw();

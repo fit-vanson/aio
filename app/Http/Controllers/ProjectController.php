@@ -874,8 +874,10 @@ class ProjectController extends Controller
             }
 
             $mess_info = '';
+            $full_mess ='';
             if ($record->buildinfo_mess){
                 $buildinfo_mess = $record->buildinfo_mess;
+                $full_mess =  (str_replace('|','<br>',$buildinfo_mess));
                 $buildinfo_mess =  (explode('|',$buildinfo_mess));
                 $buildinfo_mess = array_reverse($buildinfo_mess);
                 for($i = 0 ; $i < 6 ; $i++){
@@ -899,12 +901,14 @@ class ProjectController extends Controller
                 $data_arr[] = array(
                     "updated_at" => strtotime($record->updated_at),
                     "logo" => $logo,
+                    "name_projectname"=>$record->projectname,
                     "ma_da"=>$data_projectname.$package_chplay,
                     "Chplay_bot->installs" => $bot['installs'],
                     "Chplay_bot->numberVoters" => $bot['numberVoters'],
                     "Chplay_bot->numberReviews" => $bot['numberReviews'],
                     "Chplay_bot->score" => number_format($bot['score'],2),
                     "buildinfo_mess" => $mess_info,
+                    "full_mess" => $full_mess,
                     "status" =>'Console: '.$buildinfo_console.'<br> Ứng dụng: '.$Chplay_status,
                     "action"=> $btn .'  '. $check,
                 );
@@ -913,12 +917,14 @@ class ProjectController extends Controller
                 $data_arr[] = array(
                     "updated_at" => strtotime($record->updated_at),
                     "logo" => $logo,
+                    "name_projectname"=>$record->projectname,
                     "ma_da"=>$data_projectname.$package_chplay,
                     "Chplay_bot->installs" => 0,
                     "Chplay_bot->numberVoters" => 0,
                     "Chplay_bot->numberReviews" => 0,
                     "Chplay_bot->score" => 0,
                     "buildinfo_mess" => $mess_info,
+                    "full_mess" => $full_mess,
                     "status" =>'Console: '.$buildinfo_console.'<br> Ứng dụng: '.$Chplay_status,
                     "action"=> $btn .'  '. $check,
                 );
