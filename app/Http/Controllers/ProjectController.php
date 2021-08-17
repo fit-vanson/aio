@@ -80,10 +80,6 @@ class ProjectController extends Controller
 
     public function getIndex(Request $request)
     {
-//        dd($request->all());
-
-
-
         $draw = $request->get('draw');
         $start = $request->get("start");
         $rowperpage = $request->get("length"); // total number of rows per page
@@ -450,8 +446,6 @@ class ProjectController extends Controller
 
     public function getIndexBuild(Request $request)
     {
-
-
         $draw = $request->get('draw');
         $start = $request->get("start");
         $rowperpage = $request->get("length"); // total number of rows per page
@@ -461,13 +455,14 @@ class ProjectController extends Controller
         $order_arr = $request->get('order');
         $search_arr = $request->get('search');
 
+
         $columnIndex = $columnIndex_arr[0]['column']; // Column index
         $columnName = $columnName_arr[$columnIndex]['data']; // Column name
         $columnSortOrder = $order_arr[0]['dir']; // asc or desc
         $searchValue = $search_arr['value']; // Search value
 
-        if(isset($request->status_console)){
-            $status_console = $request->status_console;
+        if(isset($request->console_status)){
+            $status_console = $request->console_status;
             $status_console = explode('%',$status_console);
             // Total records
             $totalRecords = ProjectModel::select('count(*) as allcount')
@@ -551,7 +546,8 @@ class ProjectController extends Controller
                         ->orWhere('ngocphandang_project.Samsung_package', 'like', '%' . $searchValue . '%')
                         ->orWhere('ngocphandang_project.Xiaomi_package', 'like', '%' . $searchValue . '%')
                         ->orWhere('ngocphandang_project.Oppo_package', 'like', '%' . $searchValue . '%')
-                        ->orWhere('ngocphandang_project.Vivo_package', 'like', '%' . $searchValue . '%');
+                        ->orWhere('ngocphandang_project.Vivo_package', 'like', '%' . $searchValue . '%')
+                        ->orWhere('ngocphandang_project.buildinfo_console', $searchValue );
                 })
                 ->where(function ($q){
                     $q->where('ngocphandang_project.buildinfo_console','<>',0);
@@ -565,7 +561,8 @@ class ProjectController extends Controller
                 ->leftjoin('ngocphandang_template','ngocphandang_template.id','=','ngocphandang_project.template')
 
                 ->where(function ($a) use ($searchValue) {
-                    $a->where('ngocphandang_da.ma_da', 'like', '%' . $searchValue . '%')
+                    $a
+                        ->where('ngocphandang_da.ma_da', 'like', '%' . $searchValue . '%')
                         ->orWhere('ngocphandang_project.projectname', 'like', '%' . $searchValue . '%')
                         ->orWhere('ngocphandang_project.title_app', 'like', '%' . $searchValue . '%')
                         ->orWhere('ngocphandang_template.template', 'like', '%' . $searchValue . '%')
@@ -574,7 +571,9 @@ class ProjectController extends Controller
                         ->orWhere('ngocphandang_project.Samsung_package', 'like', '%' . $searchValue . '%')
                         ->orWhere('ngocphandang_project.Xiaomi_package', 'like', '%' . $searchValue . '%')
                         ->orWhere('ngocphandang_project.Oppo_package', 'like', '%' . $searchValue . '%')
-                        ->orWhere('ngocphandang_project.Vivo_package', 'like', '%' . $searchValue . '%');
+                        ->orWhere('ngocphandang_project.Vivo_package', 'like', '%' . $searchValue . '%')
+                        ->orWhere('ngocphandang_project.buildinfo_console', 'like', '%' . $searchValue . '%');
+
                 })
                 ->where(function ($q){
                     $q->where('ngocphandang_project.buildinfo_console','<>',0);
@@ -703,22 +702,27 @@ class ProjectController extends Controller
             }
             elseif($record['buildinfo_console']== 1){
                 $buildinfo_console = '<span class="badge badge-dark">Build App</span>';
-
             }
             elseif($record['buildinfo_console']==2){
                 $buildinfo_console =  '<span class="badge badge-warning">Đang xử lý Build App</span>';
             }
             elseif($record['buildinfo_console']==3){
-                $buildinfo_console =  '<span class="badge badge-info">Kết thúc Build App</span>';
+                $buildinfo_console =  '<span class="badge badge-info">Build App (Thành công)</span>';
+            }
+            elseif($record['buildinfo_console']==7){
+                $buildinfo_console =  '<span class="badge badge-danger">Build App (Thất bại)</span>';
             }
             elseif($record['buildinfo_console']==4){
                 $buildinfo_console =  '<span class="badge badge-primary">Check Data Project</span>';
             }
             elseif($record['buildinfo_console']==5){
-                $buildinfo_console =  '<span class="badge badge-success">Đang xử lý check dữ liệu của Project</span>';
+                $buildinfo_console =  '<span class="badge badge-secondary">Đang xử lý check dữ liệu của Project</span>';
             }
             elseif($record['buildinfo_console']==6){
-                $buildinfo_console =  '<span class="badge badge-danger">Kết thúc Check</span>';
+                $buildinfo_console =  '<span class="badge badge-success">Kết thúc Check</span>';
+            }
+            elseif($record['buildinfo_console']==8){
+                $buildinfo_console =  '<span class="badge badge-danger">Kết thúc (Dự liệu thiếu) </span>';
             }
 //
             if(isset($record->logo)){
@@ -747,7 +751,7 @@ class ProjectController extends Controller
                 "package" => $package_chplay.$package_amazon.$package_samsung.$package_xiaomi.$package_oppo.$package_vivo,
                 "buildinfo_mess" => $mess_info,
                 "full_mess" => $full_mess,
-                "buildinfo_console" =>$buildinfo_console,
+                "buildinfo_console" =>$record->buildinfo_console,
                 "action"=> $btn,
             );
         }

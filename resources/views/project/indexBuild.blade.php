@@ -43,6 +43,14 @@
         <div class="col-12">
             <div class="card">
                 <div class="card-body">
+                    <div class="button-items console_status_button">
+                        <button type="button" class="btn btn-primary waves-effect waves-light" id="all">All</button>
+                        <button type="button" class="btn btn-warning waves-effect" id="WaitProcessing" >Chờ xử lý</button>
+                        <button type="button" class="btn btn-info waves-effect" id="Processing">Đang xử lý</button>
+                        <button type="button" class="btn btn-success waves-effect waves-light" id="End">Kết thúc</button>
+                    </div>
+                </div>
+                <div class="card-body">
                     <table class="table table-bordered dt-responsive nowrap data-table" style="border-collapse: collapse; border-spacing: 0; width: 100%;">
                         <thead>
                         <tr>
@@ -96,6 +104,7 @@
 
 <script type="text/javascript">
     $(function () {
+
         $.ajaxSetup({
             headers: {
                 'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
@@ -108,7 +117,12 @@
             serverSide: true,
             ajax: {
                 url: "{{ route('project.getIndexBuild') }}",
-                type: "post"
+                type: "post",
+                data: function (d){
+                    return $.extend({},d,{
+                        "console_status": $('.console_status_button').val(),
+                    })
+                }
             },
             columns: [
                 {data: 'created_at', name: 'created_at',},
@@ -116,7 +130,7 @@
                 {data: 'projectname', name: 'projectname'},
                 {data: 'package', name: 'package',orderable: false},
                 {data: 'buildinfo_mess', name: 'buildinfo_mess',orderable: false},
-                {data: 'buildinfo_console', name: 'buildinfo_console',orderable: false},
+                {data: 'buildinfo_console', render:renderStatus,  name: 'buildinfo_console',orderable: false},
                 {data: 'action', name: 'action', orderable: false, searchable: false},
             ],
             columnDefs: [
@@ -124,24 +138,95 @@
                     "targets": [ 0 ],
                     "visible": false,
                     "searchable": false
-                }
+                },
             ],
 
-            order: [[ 0, 'desc' ]]
+            order: [[ 0, 'desc' ]],
+            fnRowCallback: function (nRow, aData, iDisplayIndex, iDisplayIndexFull) {
+                console.log(aData.buildinfo_console)
+                if (aData.buildinfo_console == 3) {
+                    $('td', nRow).css('background-color', 'rgb(19 164 2 / 47%)');
+                }
+                if (aData.buildinfo_console == 6) {
+                    $('td', nRow).css('background-color', '#38a4f84f');
+                }
+                if (aData.buildinfo_console == 7) {
+                    $('td', nRow).css('background-color', 'rgb(255 0 0 / 46%)');
+                }
+                if (aData.buildinfo_console == 8) {
+                    $('td', nRow).css('background-color', 'rgb(255 0 0 / 21%)');
+                }
+            },
         });
-        table.on('click', 'td:nth-child(4)', e => {
+        function renderStatus(data, type, row) {
+            if (data == 1) {
+                return '<span class="badge badge-dark">Build App</span>';
+            }
+            if (data == 2) {
+                return '<span class="badge badge-warning">Đang xử lý Build App</span>';
+            }
+            if (data == 3) {
+                return '<span class="badge badge-info">Build App (Thành công)</span>';
+            }
+            if (data == 4) {
+                return '<span class="badge badge-primary">Check Data Project</span>';
+
+            }
+            if (data == 5) {
+                return '<span class="badge badge-secondary">Đang xử lý check dữ liệu của Project</span>';
+
+            }
+            if (data == 6) {
+                return '<span class="badge badge-success">Kết thúc Check</span>';
+
+            }
+            if (data == 7) {
+                return '<span class="badge badge-danger">Build App (Thất bại)</span>';
+
+            }
+            if (data == 8) {
+                return '<span class="badge badge-danger">Kết thúc (Dự liệu thiếu) </span>';
+            }
+        }
+
+        $('.data-table tbody').on('click', 'tr', function () {
+            var data = table.row( this ).data();
+            // console.log(data)
+
+        } );
+        table.on('click', 'td:nth-child(4)', e=> {
             e.preventDefault();
             const row = table.row(e.target.closest('tr'));
             const rowData = row.data();
-            $('#modelHeadingPolicy').html(row.data().projectid);
+
+            $('#modelHeadingPolicy').html(rowData.name_projectname);
             $('#showMess').modal('show');
+            // console.log(table.row(this).data())
 
             $('.message-full').html(rowData.full_mess);
 
         });
-        setInterval( function () {
-            table.ajax.reload();
-        }, 5000 );
+        // setInterval( function () {
+        //     table.ajax.reload();
+        // }, 5000 );
+
+        $('#all').on('click', function () {
+            $('.console_status_button').val(null);
+            table.draw();
+        });
+        $('#WaitProcessing').on('click', function () {
+            $('.console_status_button').val('1%4');
+            table.draw();
+        });
+        $('#Processing').on('click', function () {
+            $('.console_status_button').val('2%5');
+            table.draw();
+        });
+        $('#End').on('click', function () {
+            $('.console_status_button').val('3%6%7%8');
+            table.draw();
+        });
+
 
 
         $(document).on('click','.removeProject', function (data){
@@ -169,8 +254,247 @@
                     swal("Đã di chuyển!",'', "success");
                 });
         });
-
     });
+
+        {{--function All(){--}}
+        {{--    var table1 = $('.data-table').DataTable({--}}
+        {{--        destroy: true,--}}
+        {{--        displayLength: 50,--}}
+        {{--        lengthMenu: [5, 10, 25, 50, 75, 100],--}}
+        {{--        serverSide: true,--}}
+        {{--        ajax: {--}}
+        {{--            url: "{{ route('project.getIndexBuild') }}",--}}
+        {{--            type: "post",--}}
+        {{--        },--}}
+        {{--        columns: [--}}
+        {{--            {data: 'created_at', name: 'created_at',},--}}
+        {{--            {data: 'logo', name: 'logo',orderable: false},--}}
+        {{--            {data: 'projectname', name: 'projectname'},--}}
+        {{--            {data: 'package', name: 'package',orderable: false},--}}
+        {{--            {data: 'buildinfo_mess', name: 'buildinfo_mess',orderable: false},--}}
+        {{--            {data: 'buildinfo_console', name: 'buildinfo_console',orderable: false},--}}
+        {{--            {data: 'action', name: 'action', orderable: false, searchable: false},--}}
+        {{--        ],--}}
+        {{--        columnDefs: [--}}
+        {{--            {--}}
+        {{--                "targets": [ 0],--}}
+        {{--                "visible": false,--}}
+        {{--                "searchable": false--}}
+        {{--            }--}}
+        {{--        ],--}}
+        {{--        order: [[ 0, 'desc' ]],--}}
+        //         fnRowCallback: function (nRow, aData, iDisplayIndex, iDisplayIndexFull) {
+        //             console.log(aData.status)
+        //             if (aData.status.includes('Chưa Publish')) {
+        //                 $('td', nRow).css('background-color', 'rgb(187 187 187 / 27%)');
+        //             }
+        //
+        //             if (aData.status.includes('Check')) {
+        //                 $('td', nRow).css('background-color', 'rgb(250 68 68 / 30%)');
+        //             }
+        //             if (aData.status.includes('Public')) {
+        //                 $('td', nRow).css('background-color', 'rgb(255 255 255)');
+        //             }
+        //             if (aData.status.includes('Reject')) {
+        //                 $('td', nRow).css('background-color', 'rgb(255 0 0 / 45%)');
+        //             }
+        //             if (aData.status.includes('UnPublish')) {
+        //                 $('td', nRow).css('background-color', 'rgb(56 164 248 / 69%)');
+        //             }
+        //             if (aData.status.includes('Remove')) {
+        //                 $('td', nRow).css('background-color', 'rgb(255 0 0 / 45%)');
+        //             }
+        //             if (aData.status.includes('Pending')) {
+        //                 $('td', nRow).css('background-color', 'rgb(253 222 114)');
+        //             }
+        //             if (aData.status.includes('Suppend')) {
+        //                 $('td', nRow).css('background-color', 'rgb(255 0 0 / 72%)');
+        //             }
+        //         },
+        //     });
+        //     $('.data-table tbody').on('click', 'tr', function () {
+        {{--        var data1 = table1.row( this ).data();--}}
+        {{--        console.log(data1)--}}
+
+        {{--    } );--}}
+
+
+        {{--}--}}
+        {{--function WaitProcessing(){--}}
+        {{--    var table = $('.data-table').DataTable({--}}
+        {{--        destroy: true,--}}
+        {{--        displayLength: 50,--}}
+        {{--        lengthMenu: [5, 10, 25, 50, 75, 100],--}}
+        {{--        serverSide: true,--}}
+        {{--        ajax: {--}}
+        {{--            url: "{{ route('project.getIndexBuild') }}?status_console=1%4",--}}
+        {{--            type: "post",--}}
+        {{--        },--}}
+        {{--        columns: [--}}
+        {{--            {data: 'created_at', name: 'created_at',},--}}
+        {{--            {data: 'logo', name: 'logo',orderable: false},--}}
+        {{--            {data: 'projectname', name: 'projectname'},--}}
+        {{--            {data: 'package', name: 'package',orderable: false},--}}
+        {{--            {data: 'buildinfo_mess', name: 'buildinfo_mess',orderable: false},--}}
+        {{--            {data: 'buildinfo_console', name: 'buildinfo_console',orderable: false},--}}
+        {{--            {data: 'action', name: 'action', orderable: false, searchable: false},--}}
+        {{--        ],--}}
+        {{--        columnDefs: [--}}
+        {{--            {--}}
+        {{--                "targets": [ 0],--}}
+        {{--                "visible": false,--}}
+        {{--                "searchable": false--}}
+        {{--            }--}}
+        {{--        ],--}}
+        {{--        order: [[ 0, 'desc' ]],--}}
+        {{--        // fnRowCallback: function (nRow, aData, iDisplayIndex, iDisplayIndexFull) {--}}
+        {{--        //     console.log(aData.status)--}}
+        {{--        //     if (aData.status.includes('Chưa Publish')) {--}}
+        {{--        //         $('td', nRow).css('background-color', 'rgb(187 187 187 / 27%)');--}}
+        {{--        //     }--}}
+        {{--        //--}}
+        {{--        //     if (aData.status.includes('Check')) {--}}
+        {{--        //         $('td', nRow).css('background-color', 'rgb(250 68 68 / 30%)');--}}
+        {{--        //     }--}}
+        {{--        //     if (aData.status.includes('Public')) {--}}
+        {{--        //         $('td', nRow).css('background-color', 'rgb(255 255 255)');--}}
+        {{--        //     }--}}
+        {{--        //     if (aData.status.includes('Reject')) {--}}
+        {{--        //         $('td', nRow).css('background-color', 'rgb(255 0 0 / 45%)');--}}
+        {{--        //     }--}}
+        {{--        //     if (aData.status.includes('UnPublish')) {--}}
+        {{--        //         $('td', nRow).css('background-color', 'rgb(56 164 248 / 69%)');--}}
+        {{--        //     }--}}
+        {{--        //     if (aData.status.includes('Remove')) {--}}
+        {{--        //         $('td', nRow).css('background-color', 'rgb(255 0 0 / 45%)');--}}
+        {{--        //     }--}}
+        {{--        //     if (aData.status.includes('Pending')) {--}}
+        {{--        //         $('td', nRow).css('background-color', 'rgb(253 222 114)');--}}
+        {{--        //     }--}}
+        {{--        //     if (aData.status.includes('Suppend')) {--}}
+        {{--        //         $('td', nRow).css('background-color', 'rgb(255 0 0 / 72%)');--}}
+        {{--        //     }--}}
+        {{--        // },--}}
+        {{--    });--}}
+        {{--    console.log(table.rows().data())--}}
+        {{--}--}}
+        {{--function Processing(){--}}
+        {{--    var table = $('.data-table').DataTable({--}}
+        {{--        destroy: true,--}}
+        {{--        displayLength: 50,--}}
+        {{--        lengthMenu: [5, 10, 25, 50, 75, 100],--}}
+        {{--        serverSide: true,--}}
+        {{--        ajax: {--}}
+        {{--            url: "{{ route('project.getIndexBuild') }}?status_console=2%5",--}}
+        {{--            type: "post",--}}
+        {{--        },--}}
+        {{--        columns: [--}}
+        {{--            {data: 'created_at', name: 'created_at',},--}}
+        {{--            {data: 'logo', name: 'logo',orderable: false},--}}
+        {{--            {data: 'projectname', name: 'projectname'},--}}
+        {{--            {data: 'package', name: 'package',orderable: false},--}}
+        {{--            {data: 'buildinfo_mess', name: 'buildinfo_mess',orderable: false},--}}
+        {{--            {data: 'buildinfo_console', name: 'buildinfo_console',orderable: false},--}}
+        {{--            {data: 'action', name: 'action', orderable: false, searchable: false},--}}
+        {{--        ],--}}
+        {{--        columnDefs: [--}}
+        {{--            {--}}
+        {{--                "targets": [ 0],--}}
+        {{--                "visible": false,--}}
+        {{--                "searchable": false--}}
+        {{--            }--}}
+        {{--        ],--}}
+        {{--        order: [[ 0, 'desc' ]],--}}
+        {{--        // fnRowCallback: function (nRow, aData, iDisplayIndex, iDisplayIndexFull) {--}}
+        {{--        //     console.log(aData.status)--}}
+        {{--        //     if (aData.status.includes('Chưa Publish')) {--}}
+        {{--        //         $('td', nRow).css('background-color', 'rgb(187 187 187 / 27%)');--}}
+        {{--        //     }--}}
+        {{--        //--}}
+        {{--        //     if (aData.status.includes('Check')) {--}}
+        {{--        //         $('td', nRow).css('background-color', 'rgb(250 68 68 / 30%)');--}}
+        {{--        //     }--}}
+        {{--        //     if (aData.status.includes('Public')) {--}}
+        {{--        //         $('td', nRow).css('background-color', 'rgb(255 255 255)');--}}
+        {{--        //     }--}}
+        {{--        //     if (aData.status.includes('Reject')) {--}}
+        {{--        //         $('td', nRow).css('background-color', 'rgb(255 0 0 / 45%)');--}}
+        {{--        //     }--}}
+        {{--        //     if (aData.status.includes('UnPublish')) {--}}
+        {{--        //         $('td', nRow).css('background-color', 'rgb(56 164 248 / 69%)');--}}
+        {{--        //     }--}}
+        {{--        //     if (aData.status.includes('Remove')) {--}}
+        {{--        //         $('td', nRow).css('background-color', 'rgb(255 0 0 / 45%)');--}}
+        {{--        //     }--}}
+        {{--        //     if (aData.status.includes('Pending')) {--}}
+        {{--        //         $('td', nRow).css('background-color', 'rgb(253 222 114)');--}}
+        {{--        //     }--}}
+        {{--        //     if (aData.status.includes('Suppend')) {--}}
+        {{--        //         $('td', nRow).css('background-color', 'rgb(255 0 0 / 72%)');--}}
+        {{--        //     }--}}
+        {{--        // },--}}
+        {{--    });--}}
+        {{--}--}}
+        {{--function End(){--}}
+        {{--    var table = $('.data-table').DataTable({--}}
+        {{--        destroy: true,--}}
+        {{--        displayLength: 50,--}}
+        {{--        lengthMenu: [5, 10, 25, 50, 75, 100],--}}
+        {{--        serverSide: true,--}}
+        {{--        ajax: {--}}
+        {{--            url: "{{ route('project.getIndexBuild') }}?status_console=3%6%7%8",--}}
+        {{--            type: "post",--}}
+        {{--        },--}}
+        {{--        columns: [--}}
+        {{--            {data: 'created_at', name: 'created_at',},--}}
+        {{--            {data: 'logo', name: 'logo',orderable: false},--}}
+        {{--            {data: 'projectname', name: 'projectname'},--}}
+        {{--            {data: 'package', name: 'package',orderable: false},--}}
+        {{--            {data: 'buildinfo_mess', name: 'buildinfo_mess',orderable: false},--}}
+        {{--            {data: 'buildinfo_console', name: 'buildinfo_console',orderable: false},--}}
+        {{--            {data: 'action', name: 'action', orderable: false, searchable: false},--}}
+        {{--        ],--}}
+        {{--        columnDefs: [--}}
+        {{--            {--}}
+        {{--                "targets": [ 0],--}}
+        {{--                "visible": false,--}}
+        {{--                "searchable": false--}}
+        {{--            }--}}
+        {{--        ],--}}
+        {{--        order: [[ 0, 'desc' ]],--}}
+        {{--        // fnRowCallback: function (nRow, aData, iDisplayIndex, iDisplayIndexFull) {--}}
+        {{--        //     console.log(aData.status)--}}
+        {{--        //     if (aData.status.includes('Chưa Publish')) {--}}
+        {{--        //         $('td', nRow).css('background-color', 'rgb(187 187 187 / 27%)');--}}
+        {{--        //     }--}}
+        {{--        //--}}
+        {{--        //     if (aData.status.includes('Check')) {--}}
+        {{--        //         $('td', nRow).css('background-color', 'rgb(250 68 68 / 30%)');--}}
+        {{--        //     }--}}
+        {{--        //     if (aData.status.includes('Public')) {--}}
+        {{--        //         $('td', nRow).css('background-color', 'rgb(255 255 255)');--}}
+        {{--        //     }--}}
+        {{--        //     if (aData.status.includes('Reject')) {--}}
+        {{--        //         $('td', nRow).css('background-color', 'rgb(255 0 0 / 45%)');--}}
+        {{--        //     }--}}
+        {{--        //     if (aData.status.includes('UnPublish')) {--}}
+        {{--        //         $('td', nRow).css('background-color', 'rgb(56 164 248 / 69%)');--}}
+        {{--        //     }--}}
+        {{--        //     if (aData.status.includes('Remove')) {--}}
+        {{--        //         $('td', nRow).css('background-color', 'rgb(255 0 0 / 45%)');--}}
+        {{--        //     }--}}
+        {{--        //     if (aData.status.includes('Pending')) {--}}
+        {{--        //         $('td', nRow).css('background-color', 'rgb(253 222 114)');--}}
+        {{--        //     }--}}
+        {{--        //     if (aData.status.includes('Suppend')) {--}}
+        {{--        //         $('td', nRow).css('background-color', 'rgb(255 0 0 / 72%)');--}}
+        {{--        //     }--}}
+        {{--        // },--}}
+        {{--    });--}}
+        {{--}--}}
+
+
+
 
 </script>
 
