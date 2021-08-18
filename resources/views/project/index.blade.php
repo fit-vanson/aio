@@ -250,7 +250,6 @@
 <script>
     function editProject(id) {
         $.get('{{asset('project/edit')}}/'+id,function (data) {
-            console.log(data)
             var Chplay_ads = '';
             var Amazon_ads = '';
             var Samsung_ads = '';
@@ -306,7 +305,10 @@
             $('#link_store_vietmmo').val(data[0].link_store_vietmmo);
 
 
-            $('#Chplay_package').val(data[0].Chplay_package);
+             $('#Chplay_package').val(data[0].Chplay_package);
+            if(data[0].Chplay_package == null){
+                $('#Chplay_package').attr("placeholder", data[4].package);
+            }
             $('#Chplay_ads_id').val(Chplay_ads.ads_id);
             $('#Chplay_ads_banner').val(Chplay_ads.ads_banner);
             $('#Chplay_ads_inter').val(Chplay_ads.ads_inter);
@@ -536,7 +538,6 @@
         }
     }
     function rebuildTemplateOption(template){
-        console.log(template)
         var elementSelect = $("#template");
         if(elementSelect.length <= 0){
             return false;

@@ -179,7 +179,7 @@
                                             <div data-repeater-item="" class="row">
                                                 <div class="form-group col-lg-3 input_package">
                                                     <label for="name">Tên Package CH-Play </label>
-                                                    <input type="text" id="Chplay_package" name="Chplay_package" class="form-control">
+                                                    <input type="text" id="Chplay_package"  placeholder=""  name="Chplay_package" class="form-control">
                                                 </div>
                                                 <div class="form-group col-lg-9">
                                                     <label for="name">Ads CHPlay</label>
