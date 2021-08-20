@@ -55,6 +55,43 @@
                                 <input type="url" id="link_store_vietmmo" name="link_store_vietmmo" class="form-control" >
                             </div>
                         </div>
+
+                        <div data-repeater-item="" class="row">
+                            <div class="form-group col-lg-4">
+                                <label for="name">Ads ID</label>
+                                <input type="checkbox" class="control-input" id="Check_ads_id" onclick="myFunction()">
+                                <input type="text"  style="display: none" id="ads_id" name="ads_id" class="form-control" >
+                            </div>
+                            <div class="form-group col-lg-4">
+                                <label for="name">Ads banner</label>
+                                <input type="checkbox" class="control-input" id="Check_ads_banner" onclick="myFunction()">
+                                <input type="text" style="display: none" id="banner" name="banner" class="form-control" >
+                            </div>
+                            <div class="form-group col-lg-4 ">
+                                <label for="name">Ads inter</label>
+                                <input type="checkbox" class="control-input" id="Check_ads_inter" onclick="myFunction()">
+                                <input type="text" id="ads_inter" style="display: none" name="ads_inter" class="form-control" >
+                            </div>
+                        </div>
+
+                        <div data-repeater-item="" class="row">
+                            <div class="form-group col-lg-4">
+                                <label for="name">Ads reward</label>
+                                <input type="checkbox" class="control-input" id="Check_ads_reward" onclick="myFunction()">
+                                <input type="text" style="display: none" id="ads_reward" name="ads_reward" class="form-control" >
+                            </div>
+                            <div class="form-group col-lg-4">
+                                <label for="name">Ads native</label>
+                                <input type="checkbox" class="control-input" id="Check_ads_native" onclick="myFunction()">
+                                <input type="text" style="display: none" id="ads_native" name="ads_native" class="form-control" >
+                            </div>
+                            <div class="form-group col-lg-4 ">
+                                <label for="name">Ads open</label>
+                                <input type="checkbox" class="control-input" id="Check_ads_open" onclick="myFunction()">
+                                <input type="text" style="display: none" id="ads_open" name="ads_open" class="form-control" >
+                            </div>
+                        </div>
+
                         <div data-repeater-item="" class="row">
                             <div class="form-group col-lg-6 input_package">
                                 <label for="name">script_copy </label>
@@ -129,10 +166,6 @@
                                 <input type="text" id="Vivo_category" name="Vivo_category" class="form-control">
                             </div>
                         </div>
-
-
-
-
                     </div>
                     <div class="col-sm-offset-2 col-sm-10">
                         <button type="submit" class="btn btn-primary" id="saveBtn" value="create">Save changes

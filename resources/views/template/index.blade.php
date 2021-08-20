@@ -218,6 +218,82 @@
 <script>
     function editTemplate(id) {
         $.get('{{asset('template/edit')}}/'+id,function (data) {
+            var text_ads_id = document.getElementById("ads_id");
+            text_ads_id.style.display = "none";
+            $("#Check_ads_id").prop('checked', false);
+            var text_ads_banner = document.getElementById("banner");
+            text_ads_banner.style.display = "none";
+            $("#Check_ads_banner").prop('checked', false);
+            var text_ads_inter= document.getElementById("ads_inter");
+            text_ads_inter.style.display = "none";
+            $("#Check_ads_inter").prop('checked', false);
+            var text_ads_reward = document.getElementById("ads_reward");
+            text_ads_reward.style.display = "none";
+            $("#Check_ads_reward").prop('checked', false);
+            var text_ads_native = document.getElementById("ads_native");
+            text_ads_native.style.display = "none";
+            $("#Check_ads_native").prop('checked', false);
+            var text_ads_open = document.getElementById("ads_open");
+            text_ads_open.style.display = "none";
+            $("#Check_ads_open").prop('checked', false);
+
+
+            if(data.ads != null){
+                var ads = jQuery.parseJSON(data.ads);
+                console.log(ads)
+                if(ads.ads_id !=null){
+                    text_ads_id.style.display = "block";
+                    $('#ads_id').val(ads.ads_id);
+                    $("#Check_ads_id").prop('checked', true);
+                }else{
+                    $("#Check_ads_id").prop('checked', false);
+                    $('#ads_id').val('');
+                }
+                if(ads.ads_banner !=null){
+                    text_ads_banner.style.display = "block";
+                    $('#banner').val(ads.ads_banner);
+                    $("#Check_ads_banner").prop('checked', true);
+                }else{
+                    $("#Check_ads_banner").prop('checked', false);
+                    $('#banner').val('');
+                }
+                if(ads.ads_inter!=null){
+
+                    text_ads_inter.style.display = "block";
+                    $('#ads_inter').val(ads.ads_inter);
+                    $("#Check_ads_inter").prop('checked', true);
+                }else{
+                    $("#Check_ads_inter").prop('checked', false);
+                    $('#ads_inter').val('');
+                }
+                if(ads.ads_reward !=null){
+
+                    text_ads_reward.style.display = "block";
+                    $('#ads_reward').val(ads.ads_reward);
+                    $("#Check_ads_reward").prop('checked', true);
+                }else{
+                    $("#Check_ads_reward").prop('checked', false);
+                    $('#ads_reward').val('');
+                }
+                if(ads.ads_native !=null){
+
+                    text_ads_native.style.display = "block";
+                    $('#ads_native').val(ads.ads_native);
+                    $("#Check_ads_native").prop('checked', true);
+                }else{
+                    $("#Check_ads_native").prop('checked', false);
+                    $('#ads_native').val('');
+                }
+                if(ads.ads_open !=null){
+
+                    text_ads_open.style.display = "block";
+                    $('#ads_open').val(ads.ads_open);
+                    $("#Check_ads_open").prop('checked', true);
+                }else{
+                    $("#Check_ads_open").prop('checked', false);
+                    $('#ads_open').val('');
+                }
+            }
             $('#template_id').val(data.id);
             $('#template').val(data.template);
             $('#ver_build').val(data.ver_build);
@@ -248,6 +324,61 @@
                 $('body').addClass('modal-open');
             });
         })
+    }
+    function myFunction() {
+        var checkBox_ads_id= document.getElementById("Check_ads_id");
+        var text_ads_id = document.getElementById("ads_id");
+        if (checkBox_ads_id.checked == true){
+            text_ads_id.style.display = "block";
+        } else {
+            text_ads_id.style.display = "none";
+            $('#ads_id').val('');
+        }
+
+        var checkBox_ads_banner = document.getElementById("Check_ads_banner");
+        var text_ads_banner = document.getElementById("banner");
+        if (checkBox_ads_banner.checked == true){
+            text_ads_banner.style.display = "block";
+        } else {
+            text_ads_banner.style.display = "none";
+            $('#banner').val('');
+        }
+
+        var checkBox_ads_inter = document.getElementById("Check_ads_inter");
+        var text_ads_inter = document.getElementById("ads_inter");
+        if (checkBox_ads_inter.checked == true){
+            text_ads_inter.style.display = "block";
+        } else {
+            text_ads_inter.style.display = "none";
+            $('#ads_inter').val('');
+        }
+
+        var checkBox_ads_reward = document.getElementById("Check_ads_reward");
+        var text_ads_reward = document.getElementById("ads_reward");
+        if (checkBox_ads_reward.checked == true){
+            text_ads_reward.style.display = "block";
+        } else {
+            text_ads_reward.style.display = "none";
+            $('#ads_reward').val('');
+        }
+
+        var checkBox_ads_native = document.getElementById("Check_ads_native");
+        var text_ads_native = document.getElementById("ads_native");
+        if (checkBox_ads_native.checked == true){
+            text_ads_native.style.display = "block";
+        } else {
+            text_ads_native.style.display = "none";
+            $('#ads_native').val('');
+        }
+
+        var checkBox_ads_open = document.getElementById("Check_ads_open");
+        var text_ads_open = document.getElementById("ads_open");
+        if (checkBox_ads_open.checked == true){
+            text_ads_open.style.display = "block";
+        } else {
+            text_ads_open.style.display = "none";
+            $('#ads_open').val('');
+        }
     }
 
 </script>

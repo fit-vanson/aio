@@ -192,6 +192,15 @@ class TemplateController extends Controller
         if($error->fails()){
             return response()->json(['errors'=> $error->errors()->all()]);
         }
+        $ads = [
+            'ads_id' => $request->ads_id,
+            'ads_banner' => $request->banner,
+            'ads_inter' => $request->ads_inter,
+            'ads_reward' => $request->ads_reward,
+            'ads_native' => $request->ads_native,
+            'ads_open' => $request->ads_open
+        ];
+        $ads =  json_encode($ads);
         $data = new Template();
         $data['template'] = $request->template;
         $data['ver_build'] = $request->ver_build;
@@ -206,7 +215,7 @@ class TemplateController extends Controller
         $data['time_update'] = time();
         $data['time_get'] = time();
         $data['note'] = $request->note;
-
+        $data['ads'] = $ads;
         $data['package'] = $request->package;
         $data['link'] = $request->link;
         $data['convert_aab'] = $request->convert_aab;
@@ -282,6 +291,15 @@ class TemplateController extends Controller
         if($error->fails()){
             return response()->json(['errors'=> $error->errors()->all()]);
         }
+        $ads = [
+            'ads_id' => $request->ads_id,
+            'ads_banner' => $request->banner,
+            'ads_inter' => $request->ads_inter,
+            'ads_reward' => $request->ads_reward,
+            'ads_native' => $request->ads_native,
+            'ads_open' => $request->ads_open
+        ];
+        $ads =  json_encode($ads);
         $data = Template::find($id);
         $data->template = $request->template;
         $data->ver_build = $request->ver_build;
@@ -294,6 +312,7 @@ class TemplateController extends Controller
         $data->policy2 = $request->policy2;
         $data->time_update = time();
         $data->note = $request->note;
+        $data->ads = $ads;
         $data->package = $request->package;
         $data->link = $request->link;
         $data->convert_aab = $request->convert_aab;
