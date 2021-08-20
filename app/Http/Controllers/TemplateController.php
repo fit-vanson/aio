@@ -180,6 +180,7 @@ class TemplateController extends Controller
     public function create(Request  $request)
     {
 
+
         $rules = [
             'template' =>'unique:ngocphandang_template,template'
         ];
@@ -193,12 +194,12 @@ class TemplateController extends Controller
             return response()->json(['errors'=> $error->errors()->all()]);
         }
         $ads = [
-            'ads_id' => $request->ads_id,
-            'ads_banner' => $request->banner,
-            'ads_inter' => $request->ads_inter,
-            'ads_reward' => $request->ads_reward,
-            'ads_native' => $request->ads_native,
-            'ads_open' => $request->ads_open
+            'ads_id' => $request->Check_ads_id,
+            'ads_banner' => $request->Check_ads_banner,
+            'ads_inter' => $request->Check_ads_inter,
+            'ads_reward' => $request->Check_ads_reward,
+            'ads_native' => $request->Check_ads_native,
+            'ads_open' => $request->Check_ads_open
         ];
         $ads =  json_encode($ads);
         $data = new Template();
@@ -292,13 +293,14 @@ class TemplateController extends Controller
             return response()->json(['errors'=> $error->errors()->all()]);
         }
         $ads = [
-            'ads_id' => $request->ads_id,
-            'ads_banner' => $request->banner,
-            'ads_inter' => $request->ads_inter,
-            'ads_reward' => $request->ads_reward,
-            'ads_native' => $request->ads_native,
-            'ads_open' => $request->ads_open
+            'ads_id' => $request->Check_ads_id,
+            'ads_banner' => $request->Check_ads_banner,
+            'ads_inter' => $request->Check_ads_inter,
+            'ads_reward' => $request->Check_ads_reward,
+            'ads_native' => $request->Check_ads_native,
+            'ads_open' => $request->Check_ads_open
         ];
+
         $ads =  json_encode($ads);
         $data = Template::find($id);
         $data->template = $request->template;

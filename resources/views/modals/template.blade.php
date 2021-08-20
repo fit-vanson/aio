@@ -57,38 +57,31 @@
                         </div>
 
                         <div data-repeater-item="" class="row">
-                            <div class="form-group col-lg-4">
+                            <div class="form-group col-lg-2">
                                 <label for="name">Ads ID</label>
-                                <input type="checkbox" class="control-input" id="Check_ads_id" onclick="myFunction()">
-                                <input type="text"  style="display: none" id="ads_id" name="ads_id" class="form-control" >
+                                <input type="checkbox" class="control-input" name="Check_ads_id" id="Check_ads_id" value="1">
                             </div>
-                            <div class="form-group col-lg-4">
+                            <div class="form-group col-lg-2">
                                 <label for="name">Ads banner</label>
-                                <input type="checkbox" class="control-input" id="Check_ads_banner" onclick="myFunction()">
-                                <input type="text" style="display: none" id="banner" name="banner" class="form-control" >
-                            </div>
-                            <div class="form-group col-lg-4 ">
-                                <label for="name">Ads inter</label>
-                                <input type="checkbox" class="control-input" id="Check_ads_inter" onclick="myFunction()">
-                                <input type="text" id="ads_inter" style="display: none" name="ads_inter" class="form-control" >
-                            </div>
-                        </div>
+                                <input type="checkbox" class="control-input" name="Check_ads_banner" id="Check_ads_banner" value="1">
 
-                        <div data-repeater-item="" class="row">
-                            <div class="form-group col-lg-4">
+                            </div>
+                            <div class="form-group col-lg-2 ">
+                                <label for="name">Ads inter</label>
+                                <input type="checkbox" class="control-input" name="Check_ads_inter" id="Check_ads_inter" value="1">
+
+                            </div>
+                            <div class="form-group col-lg-2">
                                 <label for="name">Ads reward</label>
-                                <input type="checkbox" class="control-input" id="Check_ads_reward" onclick="myFunction()">
-                                <input type="text" style="display: none" id="ads_reward" name="ads_reward" class="form-control" >
+                                <input type="checkbox" class="control-input" name="Check_ads_reward" id="Check_ads_reward" value="1">
                             </div>
-                            <div class="form-group col-lg-4">
+                            <div class="form-group col-lg-2">
                                 <label for="name">Ads native</label>
-                                <input type="checkbox" class="control-input" id="Check_ads_native" onclick="myFunction()">
-                                <input type="text" style="display: none" id="ads_native" name="ads_native" class="form-control" >
+                                <input type="checkbox" class="control-input" name="Check_ads_native" id="Check_ads_native" value="1">
                             </div>
-                            <div class="form-group col-lg-4 ">
+                            <div class="form-group col-lg-2 ">
                                 <label for="name">Ads open</label>
-                                <input type="checkbox" class="control-input" id="Check_ads_open" onclick="myFunction()">
-                                <input type="text" style="display: none" id="ads_open" name="ads_open" class="form-control" >
+                                <input type="checkbox" class="control-input" name="Check_ads_open" id="Check_ads_open" value="1">
                             </div>
                         </div>
 
