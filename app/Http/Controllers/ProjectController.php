@@ -2237,7 +2237,9 @@ class ProjectController extends Controller
             ]
         );
         return response()->json(['success'=> $data->projectname.' đang chờ duyệt']);
-
-
+    }
+    public function select_template(Request $request){
+        $template = Template::select('package','ads')->where('id',$request->template)->first();
+        return response()->json($template);
     }
 }

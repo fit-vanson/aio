@@ -346,4 +346,5 @@ class TemplateController extends Controller
     {
         return parent::callAction($method, array_values($parameters));
     }
+
 }

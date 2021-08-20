@@ -218,9 +218,6 @@
 <script>
     function editTemplate(id) {
         $.get('{{asset('template/edit')}}/'+id,function (data) {
-
-
-
             if(data.ads != null){
                 var ads = jQuery.parseJSON(data.ads);
                 if(ads.ads_id !=null){

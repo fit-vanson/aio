@@ -84,7 +84,7 @@
                                                     <label for="name">Mã template <span style="color: red">*</span></label>
                                                     <div class="inner row">
                                                         <div class="col-md-10 col-10">
-                                                            <select class="form-control" id="template" name="template">
+                                                            <select class="form-control choose_template" id="template" name="template">
                                                                 <option value="0">---Vui lòng chọn---</option>
                                                                 @foreach($template as $item)
                                                                     <option value="{{$item->id}}">{{$item->template}}</option>
@@ -185,27 +185,27 @@
                                                     <label for="name">Ads CHPlay</label>
                                                     <div class="row" >
                                                         <div class="col-lg-2">
-                                                            <input type="text" id="Chplay_ads_id" name="Chplay_ads_id" placeholder="id" class="form-control" >
+                                                            <input type="text" id="Chplay_ads_id" name="Chplay_ads_id" placeholder="id"  class="form-control" style="display: none" >
                                                         </div>
 
                                                         <div class="col-lg-2">
-                                                            <input type="text" id="Chplay_ads_banner" name="Chplay_ads_banner" placeholder="banner"  class="form-control" >
+                                                            <input type="text" id="Chplay_ads_banner" name="Chplay_ads_banner" placeholder="banner"   class="form-control" style="display: none" >
                                                         </div>
 
                                                         <div class="col-lg-2">
-                                                            <input type="text" id="Chplay_ads_inter" name="Chplay_ads_inter" placeholder="inter"  class="form-control" >
+                                                            <input type="text" id="Chplay_ads_inter" name="Chplay_ads_inter" placeholder="inter"   class="form-control" style="display: none" >
                                                         </div>
 
                                                         <div class="col-lg-2">
-                                                            <input type="text" id="Chplay_ads_reward" name="Chplay_ads_reward" placeholder="reward"  class="form-control" >
+                                                            <input type="text" id="Chplay_ads_reward" name="Chplay_ads_reward" placeholder="reward"   class="form-control" style="display: none" >
                                                         </div>
 
                                                         <div class="col-lg-2">
-                                                            <input type="text" id="Chplay_ads_native" name="Chplay_ads_native" placeholder="native"  class="form-control" >
+                                                            <input type="text" id="Chplay_ads_native" name="Chplay_ads_native" placeholder="native"   class="form-control"  style="display: none">
                                                         </div>
 
                                                         <div class="col-lg-2">
-                                                            <input type="text" id="Chplay_ads_open" name="Chplay_ads_open" placeholder="open"  class="form-control" >
+                                                            <input type="text" id="Chplay_ads_open" name="Chplay_ads_open" placeholder="open"   class="form-control" style="display: none" >
                                                         </div>
                                                     </div>
                                                 </div>
