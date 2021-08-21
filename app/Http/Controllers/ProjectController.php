@@ -1945,7 +1945,7 @@ class ProjectController extends Controller
         $policy = Template::select('policy1','policy2')->where('id',$project->template)->first();
         $store_name= Dev::select('store_name')->where('id',$project->Chplay_buildinfo_store_name_x)->first();
         $da= Da::select('ma_da')->where('id',$project->ma_da)->first();
-        $template= Template::select('template','package')->where('id',$project->template)->first();
+        $template= Template::select('template','package','ads')->where('id',$project->template)->first();
 
         return response()->json([$project,$policy,$store_name,$da,$template]);
     }

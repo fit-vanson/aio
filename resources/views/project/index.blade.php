@@ -291,7 +291,9 @@
 <script>
     function editProject(id) {
         $.get('{{asset('project/edit')}}/'+id,function (data) {
-            console.log(data[0].Chplay_ads)
+
+            var ads = JSON.parse(data[4].ads);
+            console.log(ads)
             var Chplay_ads = '';
             var Amazon_ads = '';
             var Samsung_ads = '';
@@ -327,6 +329,97 @@
             }else {
                 $("#avatar").attr("src","img/logo.png");
             }
+            if(ads.ads_id !=null){
+                $('#Chplay_ads_id').show();
+                $('#Amazon_ads_id').show();
+                $('#Samsung_ads_id').show();
+                $('#Xiaomi_ads_id').show();
+                $('#Oppo_ads_id').show();
+                $('#Vivo_ads_id').show();
+            }else {
+                $('#Chplay_ads_id').hide();
+                $('#Amazon_ads_id').hide();
+                $('#Samsung_ads_id').hide();
+                $('#Xiaomi_ads_id').hide();
+                $('#Oppo_ads_id').hide();
+                $('#Vivo_ads_id').hide();
+            }
+            if(ads.ads_banner!=null){
+                $('#Chplay_ads_banner').show();
+                $('#Amazon_ads_banner').show();
+                $('#Samsung_ads_banner').show();
+                $('#Xiaomi_ads_banner').show();
+                $('#Oppo_ads_banner').show();
+                $('#Vivo_ads_banner').show();
+            }else {
+                $('#Chplay_ads_banner').hide();
+                $('#Amazon_ads_banner').hide();
+                $('#Samsung_ads_banner').hide();
+                $('#Xiaomi_ads_banner').hide();
+                $('#Oppo_ads_banner').hide();
+                $('#Vivo_ads_banner').hide();
+            }
+            if(ads.ads_inter !=null){
+                $('#Chplay_ads_inter').show();
+                $('#Amazon_ads_inter').show();
+                $('#Samsung_ads_inter').show();
+                $('#Xiaomi_ads_inter').show();
+                $('#Oppo_ads_inter').show();
+                $('#Vivo_ads_inter').show();
+            }else {
+                $('#Chplay_ads_inter').hide();
+                $('#Amazon_ads_inter').hide();
+                $('#Samsung_ads_inter').hide();
+                $('#Xiaomi_ads_inter').hide();
+                $('#Oppo_ads_inter').hide();
+                $('#Vivo_ads_inter').hide();
+            }
+            if(ads.ads_reward !=null){
+                $('#Chplay_ads_reward').show();
+                $('#Amazon_ads_reward').show();
+                $('#Samsung_ads_reward').show();
+                $('#Xiaomi_ads_reward').show();
+                $('#Oppo_ads_reward').show();
+                $('#Vivo_ads_reward').show();
+            }else {
+                $('#Chplay_ads_reward').hide();
+                $('#Amazon_ads_reward').hide();
+                $('#Samsung_ads_reward').hide();
+                $('#Xiaomi_ads_reward').hide();
+                $('#Oppo_ads_reward').hide();
+                $('#Vivo_ads_reward').hide();
+            }
+            if(ads.ads_native !=null){
+                $('#Chplay_ads_native').show();
+                $('#Amazon_ads_native').show();
+                $('#Samsung_ads_native').show();
+                $('#Xiaomi_ads_native').show();
+                $('#Oppo_ads_native').show();
+                $('#Vivo_ads_native').show();
+            }else {
+                $('#Chplay_ads_native').hide();
+                $('#Amazon_ads_native').hide();
+                $('#Samsung_ads_native').hide();
+                $('#Xiaomi_ads_native').hide();
+                $('#Oppo_ads_native').hide();
+                $('#Vivo_ads_native').hide();
+            }
+            if(ads.ads_open !=null){
+                $('#Chplay_ads_open').show();
+                $('#Amazon_ads_open').show();
+                $('#Samsung_ads_open').show();
+                $('#Xiaomi_ads_open').show();
+                $('#Oppo_ads_open').show();
+                $('#Vivo_ads_open').show();
+            }else {
+                $('#Chplay_ads_open').hide();
+                $('#Amazon_ads_open').hide();
+                $('#Samsung_ads_open').hide();
+                $('#Xiaomi_ads_open').hide();
+                $('#Oppo_ads_open').hide();
+                $('#Vivo_ads_open').hide();
+            }
+
             $('#project_id').val(data[0].projectid);
             $('#projectname').val(data[0].projectname);
             $('#template').val(data[0].template);
@@ -350,47 +443,14 @@
             if(data[0].Chplay_package == null){
                 $('#Chplay_package').attr("placeholder", data[4].package);
             }
-            if(Chplay_ads.ads_id != null){
-                $('#Chplay_ads_id').show();
+
                 $('#Chplay_ads_id').val(Chplay_ads.ads_id);
-            }else {
-                $('#Chplay_ads_id').hide();
-            }
-
-            if(Chplay_ads.ads_banner != null){
-                $('#Chplay_ads_banner').show();
                 $('#Chplay_ads_banner').val(Chplay_ads.ads_banner);
-            }else {
-                $('#Chplay_ads_banner').hide();
-            }
-
-            if(Chplay_ads.ads_inter != null){
-                $('#Chplay_ads_inter').show();
                 $('#Chplay_ads_inter').val(Chplay_ads.ads_inter);
-            }else {
-                $('#Chplay_ads_inter').hide();
-            }
-
-            if(Chplay_ads.ads_reward != null){
-                $('#Chplay_ads_reward').show();
                 $('#Chplay_ads_reward').val(Chplay_ads.ads_reward);
-            }else {
-                $('#Chplay_ads_reward').hide();
-            }
-
-            if(Chplay_ads.ads_native != null){
-                $('#Chplay_ads_native').show();
                 $('#Chplay_ads_native').val(Chplay_ads.ads_native);
-            }else {
-                $('#Chplay_ads_native').hide();
-            }
-
-            if(Chplay_ads.ads_open != null){
-                $('#Chplay_ads_open').show();
                 $('#Chplay_ads_open').val(Chplay_ads.ads_open);
-            }else {
-                $('#Chplay_ads_open').hide();
-            }
+
 
             $('#Chplay_buildinfo_store_name_x').val(data[0].Chplay_buildinfo_store_name_x);
             $('#Chplay_buildinfo_link_store').val(data[0].Chplay_buildinfo_link_store);
@@ -402,47 +462,14 @@
             if(data[0].Amazon_package == null){
                 $('#Amazon_package').attr("placeholder", data[4].package);
             }
-            if(Amazon_ads.ads_id != null){
-                $('#Amazon_ads_id').show();
+
                 $('#Amazon_ads_id').val(Amazon_ads.ads_id);
-            }else {
-                $('#Amazon_ads_id').hide();
-            }
-
-            if(Amazon_ads.ads_banner != null){
-                $('#Amazon_ads_banner').show();
                 $('#Amazon_ads_banner').val(Amazon_ads.ads_banner);
-            }else {
-                $('#Amazon_ads_banner').hide();
-            }
-
-            if(Amazon_ads.ads_inter != null){
-                $('#Amazon_ads_inter').show();
                 $('#Amazon_ads_inter').val(Amazon_ads.ads_inter);
-            }else {
-                $('#Amazon_ads_inter').hide();
-            }
-
-            if(Amazon_ads.ads_reward != null){
-                $('#Amazon_ads_reward').show();
                 $('#Amazon_ads_reward').val(Amazon_ads.ads_reward);
-            }else {
-                $('#Amazon_ads_reward').hide();
-            }
-
-            if(Amazon_ads.ads_native != null){
-                $('#Amazon_ads_native').show();
                 $('#Amazon_ads_native').val(Amazon_ads.ads_native);
-            }else {
-                $('#Amazon_ads_native').hide();
-            }
-
-            if(Amazon_ads.ads_open != null){
-                $('#Amazon_ads_open').show();
                 $('#Amazon_ads_open').val(Amazon_ads.ads_open);
-            }else {
-                $('#Amazon_ads_open').hide();
-            }
+
             $('#Amazon_buildinfo_store_name_x').val(data[0].Amazon_buildinfo_store_name_x);
             $('#Amazon_buildinfo_link_store').val(data[0].Amazon_buildinfo_link_store);
             $('#Amazon_buildinfo_link_app').val(data[0].Amazon_buildinfo_link_app);
@@ -453,47 +480,14 @@
             if(data[0].Samsung_package == null){
                 $('#Samsung_package').attr("placeholder", data[4].package);
             }
-            if(Samsung_ads.ads_id != null){
-                $('#Samsung_ads_id').show();
+
                 $('#Samsung_ads_id').val(Samsung_ads.ads_id);
-            }else {
-                $('#Samsung_ads_id').hide();
-            }
-
-            if(Samsung_ads.ads_banner != null){
-                $('#Samsung_ads_banner').show();
                 $('#Samsung_ads_banner').val(Samsung_ads.ads_banner);
-            }else {
-                $('#Samsung_ads_banner').hide();
-            }
-
-            if(Samsung_ads.ads_inter != null){
-                $('#Samsung_ads_inter').show();
                 $('#Samsung_ads_inter').val(Samsung_ads.ads_inter);
-            }else {
-                $('#Samsung_ads_inter').hide();
-            }
-
-            if(Samsung_ads.ads_reward != null){
-                $('#Samsung_ads_reward').show();
-                $('#Samsung_ads_reward').val(Samsung_ads.ads_reward);
-            }else {
-                $('#Samsung_ads_reward').hide();
-            }
-
-            if(Samsung_ads.ads_native != null){
-                $('#Samsung_ads_native').show();
                 $('#Samsung_ads_native').val(Samsung_ads.ads_native);
-            }else {
-                $('#Samsung_ads_native').hide();
-            }
-
-            if(Samsung_ads.ads_open != null){
-                $('#Samsung_ads_open').show();
+            $('#Samsung_ads').val(Samsung_ads.ads_reward);
                 $('#Samsung_ads_open').val(Samsung_ads.ads_open);
-            }else {
-                $('#Samsung_ads_open').hide();
-            }
+
             $('#Samsung_buildinfo_store_name_x').val(data[0].Samsung_buildinfo_store_name_x);
             $('#Samsung_buildinfo_link_store').val(data[0].Samsung_buildinfo_link_store);
             $('#Samsung_buildinfo_link_app').val(data[0].Samsung_buildinfo_link_app);
@@ -504,47 +498,20 @@
             if(data[0].Xiaomi_package == null){
                 $('#Xiaomi_package').attr("placeholder", data[4].package);
             }
-            if(Xiaomi_ads.ads_id != null){
-                $('#Xiaomi_ads_id').show();
+
+
                 $('#Xiaomi_ads_id').val(Xiaomi_ads.ads_id);
-            }else {
-                $('#Xiaomi_ads_id').hide();
-            }
 
-            if(Xiaomi_ads.ads_banner != null){
-                $('#Xiaomi_ads_banner').show();
                 $('#Xiaomi_ads_banner').val(Xiaomi_ads.ads_banner);
-            }else {
-                $('#Xiaomi_ads_banner').hide();
-            }
 
-            if(Xiaomi_ads.ads_inter != null){
-                $('#Xiaomi_ads_inter').show();
                 $('#Xiaomi_ads_inter').val(Xiaomi_ads.ads_inter);
-            }else {
-                $('#Xiaomi_ads_inter').hide();
-            }
 
-            if(Xiaomi_ads.ads_reward != null){
-                $('#Xiaomi_ads_reward').show();
                 $('#Xiaomi_ads_reward').val(Xiaomi_ads.ads_reward);
-            }else {
-                $('#Xiaomi_ads_reward').hide();
-            }
 
-            if(Xiaomi_ads.ads_native != null){
-                $('#Xiaomi_ads_native').show();
                 $('#Xiaomi_ads_native').val(Xiaomi_ads.ads_native);
-            }else {
-                $('#Xiaomi_ads_native').hide();
-            }
 
-            if(Xiaomi_ads.ads_open != null){
-                $('#Xiaomi_ads_open').show();
                 $('#Xiaomi_ads_open').val(Xiaomi_ads.ads_open);
-            }else {
-                $('#Xiaomi_ads_open').hide();
-            }
+
             $('#Xiaomi_buildinfo_store_name_x').val(data[0].Xiaomi_buildinfo_store_name_x);
             $('#Xiaomi_buildinfo_link_store').val(data[0].Xiaomi_buildinfo_link_store);
             $('#Xiaomi_buildinfo_link_app').val(data[0].Xiaomi_buildinfo_link_app);
@@ -555,47 +522,14 @@
             if(data[0].Oppo_package == null){
                 $('#Oppo_package').attr("placeholder", data[4].package);
             }
-            if(Oppo_ads.ads_id != null){
-                $('#Oppo_ads_id').show();
+
                 $('#Oppo_ads_id').val(Oppo_ads.ads_id);
-            }else {
-                $('#Oppo_ads_id').hide();
-            }
-
-            if(Oppo_ads.ads_banner != null){
-                $('#Oppo_ads_banner').show();
                 $('#Oppo_ads_banner').val(Oppo_ads.ads_banner);
-            }else {
-                $('#Oppo_ads_banner').hide();
-            }
-
-            if(Oppo_ads.ads_inter != null){
-                $('#Oppo_ads_inter').show();
                 $('#Oppo_ads_inter').val(Oppo_ads.ads_inter);
-            }else {
-                $('#Oppo_ads_inter').hide();
-            }
-
-            if(Oppo_ads.ads_reward != null){
-                $('#Oppo_ads_reward').show();
                 $('#Oppo_ads_reward').val(Oppo_ads.ads_reward);
-            }else {
-                $('#Oppo_ads_reward').hide();
-            }
-
-            if(Oppo_ads.ads_native != null){
-                $('#Oppo_ads_native').show();
                 $('#Oppo_ads_native').val(Oppo_ads.ads_native);
-            }else {
-                $('#Oppo_ads_native').hide();
-            }
-
-            if(Oppo_ads.ads_open != null){
-                $('#Oppo_ads_open').show();
                 $('#Oppo_ads_open').val(Oppo_ads.ads_open);
-            }else {
-                $('#Oppo_ads_open').hide();
-            }
+
             $('#Oppo_buildinfo_store_name_x').val(data[0].Oppo_buildinfo_store_name_x);
             $('#Oppo_buildinfo_link_store').val(data[0].Oppo_buildinfo_link_store);
             $('#Oppo_buildinfo_link_app').val(data[0].Oppo_buildinfo_link_app);
@@ -606,47 +540,14 @@
             if(data[0].Vivo_package == null){
                 $('#Vivo_package').attr("placeholder", data[4].package);
             }
-            if(Vivo_ads.ads_id != null){
-                $('#Vivo_ads_id').show();
+
                 $('#Vivo_ads_id').val(Vivo_ads.ads_id);
-            }else {
-                $('#Vivo_ads_id').hide();
-            }
-
-            if(Vivo_ads.ads_banner != null){
-                $('#Vivo_ads_banner').show();
                 $('#Vivo_ads_banner').val(Vivo_ads.ads_banner);
-            }else {
-                $('#Vivo_ads_banner').hide();
-            }
-
-            if(Vivo_ads.ads_inter != null){
-                $('#Vivo_ads_inter').show();
                 $('#Vivo_ads_inter').val(Vivo_ads.ads_inter);
-            }else {
-                $('#Vivo_ads_inter').hide();
-            }
-
-            if(Vivo_ads.ads_reward != null){
-                $('#Vivo_ads_reward').show();
                 $('#Vivo_ads_reward').val(Vivo_ads.ads_reward);
-            }else {
-                $('#Vivo_ads_reward').hide();
-            }
-
-            if(Vivo_ads.ads_native != null){
-                $('#Vivo_ads_native').show();
                 $('#Vivo_ads_native').val(Vivo_ads.ads_native);
-            }else {
-                $('#Vivo_ads_native').hide();
-            }
-
-            if(Vivo_ads.ads_open != null){
-                $('#Vivo_ads_open').show();
                 $('#Vivo_ads_open').val(Vivo_ads.ads_open);
-            }else {
-                $('#Vivo_ads_open').hide();
-            }
+
             $('#Vivo_buildinfo_store_name_x').val(data[0].Vivo_buildinfo_store_name_x);
             $('#Vivo_buildinfo_link_store').val(data[0].Vivo_buildinfo_link_store);
             $('#Vivo_buildinfo_link_app').val(data[0].Vivo_buildinfo_link_app);
