@@ -293,7 +293,7 @@
         $.get('{{asset('project/edit')}}/'+id,function (data) {
 
             var ads = JSON.parse(data[4].ads);
-            console.log(ads)
+
             var Chplay_ads = '';
             var Amazon_ads = '';
             var Samsung_ads = '';
