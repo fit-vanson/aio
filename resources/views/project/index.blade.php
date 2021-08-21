@@ -764,9 +764,7 @@
             beForeSend : () => {
             },
             success:function (data) {
-
                 var ads = jQuery.parseJSON(data.temp[0].ads);
-                console.log(ads)
 
                 if(ads.ads_id != null){
                     $('#Chplay_ads_id').show();
