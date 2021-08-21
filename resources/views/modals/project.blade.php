@@ -755,7 +755,7 @@
 
 
 <div class="modal fade" id="addTemplate" tabindex="-1" role="dialog">
-    <div class="modal-dialog">
+    <div class="modal-dialog modal-lg">
         <div class="modal-content">
             <div class="modal-header">
                 <h5 class="modal-title" id="exampleModalLabel">Thêm mới Template</h5>
@@ -766,12 +766,60 @@
                 <form id="AddTempForm" name="AddTempForm" class="form-horizontal">
                     <input type="hidden" name="template_id" id="template_id">
 
-                        <div data-repeater-item="" class="row">
+                    <div data-repeater-item="" class="row">
                             <div class="form-group col-lg-12 ">
                                 <label for="name">Tên Template <span style="color: red">*</span></label>
                                 <input type="text" id="add_template" name="template" class="form-control" required>
                             </div>
                         </div>
+                    <div data-repeater-item="" class="row">
+                        <div class="form-group col-lg-6 ">
+                            <label for="name">Convert Aab</label>
+                            <div>
+                                <select class="form-control" id="convert_aab" name="convert_aab">
+                                    <option value="0">No</option>
+                                    <option value="1">Yes</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="form-group col-lg-6 input_status">
+                            <label for="name">Trạng thái</label>
+                            <div>
+                                <select class="form-control" id="startus" name="startus">
+                                    <option value="0">Mở</option>
+                                    <option value="1">Tắt</option>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+                    <div data-repeater-item="" class="row">
+                        <div class="form-group col-lg-2">
+                            <label for="name">Ads ID</label>
+                            <input type="checkbox" class="control-input" name="Check_ads_id" id="Check_ads_id" value="1">
+                        </div>
+                        <div class="form-group col-lg-2">
+                            <label for="name">Ads banner</label>
+                            <input type="checkbox" class="control-input" name="Check_ads_banner" id="Check_ads_banner" value="1">
+
+                        </div>
+                        <div class="form-group col-lg-2 ">
+                            <label for="name">Ads inter</label>
+                            <input type="checkbox" class="control-input" name="Check_ads_inter" id="Check_ads_inter" value="1">
+
+                        </div>
+                        <div class="form-group col-lg-2">
+                            <label for="name">Ads reward</label>
+                            <input type="checkbox" class="control-input" name="Check_ads_reward" id="Check_ads_reward" value="1">
+                        </div>
+                        <div class="form-group col-lg-2">
+                            <label for="name">Ads native</label>
+                            <input type="checkbox" class="control-input" name="Check_ads_native" id="Check_ads_native" value="1">
+                        </div>
+                        <div class="form-group col-lg-2 ">
+                            <label for="name">Ads open</label>
+                            <input type="checkbox" class="control-input" name="Check_ads_open" id="Check_ads_open" value="1">
+                        </div>
+                    </div>
 
                     <div class="col-sm-offset-2 col-sm-10">
                         <button type="submit" class="btn btn-primary">Thêm mới</button>

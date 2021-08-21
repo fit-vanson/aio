@@ -765,6 +765,100 @@
             },
             success:function (data) {
 
+                var ads = jQuery.parseJSON(data.temp[0].ads);
+                console.log(ads)
+
+                if(ads.ads_id != null){
+                    $('#Chplay_ads_id').show();
+                    $('#Amazon_ads_id').show();
+                    $('#Samsung_ads_id').show();
+                    $('#Xiaomi_ads_id').show();
+                    $('#Oppo_ads_id').show();
+                    $('#Vivo_ads_id').show();
+                }else {
+                    $('#Chplay_ads_id').hide();
+                    $('#Amazon_ads_id').hide();
+                    $('#Samsung_ads_id').hide();
+                    $('#Xiaomi_ads_id').hide();
+                    $('#Oppo_ads_id').hide();
+                    $('#Vivo_ads_id').hide();
+                }
+                if(ads.ads_banner != null){
+                    $('#Chplay_ads_banner').show();
+                    $('#Amazon_ads_banner').show();
+                    $('#Xiaomi_ads_banner').show();
+                    $('#Samsung_ads_banner').show();
+                    $('#Oppo_ads_banner').show();
+                    $('#Vivo_ads_banner').show();
+                }else {
+                    $('#Chplay_ads_banner').hide();
+                    $('#Amazon_ads_banner').hide();
+                    $('#Xiaomi_ads_banner').hide();
+                    $('#Samsung_ads_banner').hide();
+                    $('#Oppo_ads_banner').hide();
+                    $('#Vivo_ads_banner').hide();
+                }
+                if(ads.ads_inter != null){
+                    $('#Chplay_ads_inter').show();
+                    $('#Amazon_ads_inter').show();
+                    $('#Xiaomi_ads_inter').show();
+                    $('#Samsung_ads_inter').show();
+                    $('#Oppo_ads_inter').show();
+                    $('#Vivo_ads_inter').show();
+                }else {
+                    $('#Chplay_ads_inter').hide();
+                    $('#Amazon_ads_inter').hide();
+                    $('#Xiaomi_ads_inter').hide();
+                    $('#Samsung_ads_inter').hide();
+                    $('#Oppo_ads_inter').hide();
+                    $('#Vivo_ads_inter').hide();
+                }
+                if(ads.ads_reward != null){
+                    $('#Chplay_ads_reward').show();
+                    $('#Amazon_ads_reward').show();
+                    $('#Samsung_ads_reward').show();
+                    $('#Xiaomi_ads_reward').show();
+                    $('#Oppo_ads_reward').show();
+                    $('#Vivo_ads_reward').show();
+                }else {
+                    $('#Chplay_ads_reward').hide();
+                    $('#Amazon_ads_reward').hide();
+                    $('#Samsung_ads_reward').hide();
+                    $('#Xiaomi_ads_reward').hide();
+                    $('#Oppo_ads_reward').hide();
+                    $('#Vivo_ads_reward').hide();
+                }
+                if(ads.ads_native != null){
+                    $('#Chplay_ads_native').show();
+                    $('#Amazon_ads_native').show();
+                    $('#Samsung_ads_native').show();
+                    $('#Xiaomi_ads_native').show();
+                    $('#Oppo_ads_native').show();
+                    $('#Vivo_ads_native').show();
+                }else {
+                    $('#Chplay_ads_native').hide();
+                    $('#Amazon_ads_native').hide();
+                    $('#Samsung_ads_native').hide();
+                    $('#Xiaomi_ads_native').hide();
+                    $('#Oppo_ads_native').hide();
+                    $('#Vivo_ads_native').hide();
+                }
+                if(ads.ads_open != null){
+                    $('#Chplay_ads_open').show();
+                    $('#Amazon_ads_open').show();
+                    $('#Samsung_ads_open').show();
+                    $('#Xiaomi_ads_open').show();
+                    $('#Oppo_ads_open').show();
+                    $('#Vivo_ads_open').show();
+                }else {
+                    $('#Chplay_ads_open').hide();
+                    $('#Amazon_ads_open').hide();
+                    $('#Samsung_ads_open').hide();
+                    $('#Xiaomi_ads_open').hide();
+                    $('#Oppo_ads_open').hide();
+                    $('#Vivo_ads_open').hide();
+                }
+
                 if(data.errors){
                     for( var count=0 ; count <data.errors.length; count++){
                         $("#AddTempForm").notify(
