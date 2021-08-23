@@ -312,8 +312,6 @@
         $(document).on('click','.showLog_Project', e=>{
             const row = table.row(e.target.closest('tr'));
             const rowData = row.data();
-            console.log(rowData)
-
             $('#modelHeadingPolicy').html(rowData.name_projectname);
             $('#showMess').modal('show');
             $('.message-full').html(rowData.log);
