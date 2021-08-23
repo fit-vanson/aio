@@ -194,6 +194,13 @@
             $('#Vivo_ads_reward').hide();
             $('#Vivo_ads_native').hide();
             $('#Vivo_ads_open').hide();
+
+            $('.a_chplay').hide();
+            $('.a_amazon').hide();
+            $('.a_samsung').hide();
+            $('.a_xiaomi').hide();
+            $('.a_oppo').hide();
+            $('.a_vivo').hide();
         });
 
 
@@ -322,10 +329,7 @@
 <script>
     function editProject(id) {
         $.get('{{asset('project/edit')}}/'+id,function (data) {
-
-
             var ads = JSON.parse(data[4].ads);
-
             var Chplay_ads = '';
             var Amazon_ads = '';
             var Samsung_ads = '';
@@ -364,6 +368,7 @@
 
             if(data[4].Chplay_category !=null){
                 $('.market_chplay').show()
+                $('.a_chplay').show()
                 $('#Chplay_package').val(data[0].Chplay_package);
                 if(data[0].Chplay_package == null){
                     $('#Chplay_package').attr("placeholder", data[4].package);
@@ -376,6 +381,7 @@
                 $('#Chplay_ads_open').val(Chplay_ads.ads_open);
             }else{
                 $('.market_chplay').hide()
+                $('.a_chplay').hide()
                 $('#Chplay_package').val('');
                 $('#Chplay_ads_id').val('');
                 $('#Chplay_ads_banner').val('');
@@ -387,6 +393,7 @@
 
             if(data[4].Amazon_category !=null){
                 $('.market_amazon').show()
+                $('.a_amazon').show()
                 $('#Amazon_package').val(data[0].Amazon_package);
                 if(data[0].Amazon_package == null){
                     $('#Amazon_package').attr("placeholder", data[4].package);
@@ -400,6 +407,7 @@
 
             }else{
                 $('.market_amazon').hide()
+                $('.a_amazon').hide()
                 $('#Amazon_ads_id').val('');
                 $('#Amazon_ads_banner').val('');
                 $('#Amazon_ads_inter').val('');
@@ -410,6 +418,7 @@
             }
             if(data[4].Samsung_category !=null){
                 $('.market_samsung').show()
+                $('.a_samsung').show()
                 $('#Samsung_package').val(data[0].Samsung_package);
                 if(data[0].Samsung_package == null){
                     $('#Samsung_package').attr("placeholder", data[4].package);
@@ -422,6 +431,7 @@
                 $('#Samsung_ads_open').val(Samsung_ads.ads_open);
             }else{
                 $('.market_samsung').hide()
+                $('.a_samsung').hide()
                 $('#Samsung_ads_id').val('');
                 $('#Samsung_ads_banner').val('');
                 $('#Samsung_ads_inter').val('');
@@ -431,6 +441,8 @@
             }
             if(data[4].Xiaomi_category !=null){
                 $('.market_xiaomi').show()
+                $('.a_xiaomi').show()
+                $('#Xiaomi_package').val(data[0].Xiaomi_package);
                 $('#Xiaomi_package').val(data[0].Xiaomi_package);
                 if(data[0].Xiaomi_package == null){
                     $('#Xiaomi_package').attr("placeholder", data[4].package);
@@ -443,6 +455,7 @@
                 $('#Xiaomi_ads_open').val(Xiaomi_ads.ads_open);
             }else{
                 $('.market_xiaomi').hide()
+                $('.a_xiaomi').hide()
                 $('#Xiaomi_ads_id').val('');
                 $('#Xiaomi_ads_banner').val('');
                 $('#Xiaomi_ads_inter').val('');
@@ -452,7 +465,7 @@
             }
             if(data[4].Oppo_category !=null){
                 $('.market_oppo').show()
-
+                $('.ma_oppo').show()
                 $('#Oppo_package').val(data[0].Oppo_package);
                 if(data[0].Oppo_package == null){
                     $('#Oppo_package').attr("placeholder", data[4].package);
@@ -465,6 +478,7 @@
                 $('#Oppo_ads_open').val(Oppo_ads.ads_open);
             }else{
                 $('.market_oppo').hide()
+                $('.a_oppo').hide()
                 $('#Oppo_ads_id').val('');
                 $('#Oppo_ads_banner').val('');
                 $('#Oppo_ads_inter').val('');
@@ -474,6 +488,7 @@
             }
             if(data[4].Vivo_category !=null){
                 $('.market_vivo').show()
+                $('.a_vivo').show()
                 $('#Vivo_package').val(data[0].Vivo_package);
                 if(data[0].Vivo_package == null){
                     $('#Vivo_package').attr("placeholder", data[4].package);
@@ -487,6 +502,7 @@
 
             }else{
                 $('.market_vivo').hide()
+                $('.a_vivo').hide()
                 $('#Vivo_ads_id').val('');
                 $('#Vivo_ads_banner').val('');
                 $('#Vivo_ads_inter').val('');
@@ -894,38 +910,49 @@
                 $('#Vivo_package').attr("placeholder",data.package);
                 if(data.Chplay_category != null){
                     $('.market_chplay').show();
+                    $('.a_chplay').show();
                 }else {
                     $('.market_chplay').hide();
+                    $('.a_chplay').hide();
                 }
 
                 if(data.Amazon_category != null){
                     $('.market_amazon').show();
+                    $('.a_amazon').show();
                 }else {
                     $('.market_amazon').hide();
+                    $('.a_amazon').hide();
                 }
 
                 if(data.Samsung_category != null){
                     $('.market_samsung').show();
+                    $('.a_samsung').show();
                 }else {
                     $('.market_samsung').hide();
+                    $('.a_samsung').hide();
                 }
 
                 if(data.Xiaomi_category != null){
                     $('.market_xiaomi').show();
+                    $('.a_xiaomi').show();
                 }else {
                     $('.market_xiaomi').hide();
+                    $('.a_xiaomi').hide();
                 }
 
                 if(data.Oppo_category != null){
                     $('.market_oppo').show();
+                    $('.a_oppo').show();
                 }else {
                     $('.market_oppo').hide();
+                    $('.a_oppo').hide();
                 }
 
                 if(data.Chplay_category != null){
                     $('.market_chplay').show();
+                    $('.a_chplay').show();
                 }else {
-                    $('.market_chplay').hide();
+                    $('.a_chplay').hide();
                 }
                 if(ads != null){
                     if(ads.ads_id != null){

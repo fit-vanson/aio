@@ -1,5 +1,5 @@
 
-<div class="modal fade bd-example-modal-xl" id="ajaxModel" tabindex="-1" role="dialog">
+<div class="modal fade bd-example-modal-xl" id="ajaxModel"  role="dialog">
     <div class="modal-dialog modal-xl">
         <div class="modal-content">
             <div class="modal-header">
@@ -27,33 +27,33 @@
                                                 <span class="d-none d-sm-block">Home</span>
                                             </a>
                                         </li>
-                                        <li class="nav-item">
-                                            <a class="nav-link" data-toggle="tab" href="#chplay" role="tab">
+                                        <li class="nav-item hide">
+                                            <a class="nav-link a_chplay" data-toggle="tab" href="#chplay"  role="tab">
                                                 <span class="d-none d-sm-block">CH Play</span>
                                             </a>
                                         </li>
                                         <li class="nav-item">
-                                            <a class="nav-link" data-toggle="tab" href="#amazon" role="tab">
+                                            <a class="nav-link a_amazon" data-toggle="tab" href="#amazon" role="tab">
                                                 <span class="d-none d-sm-block">Amazon</span>
                                             </a>
                                         </li>
                                         <li class="nav-item">
-                                            <a class="nav-link" data-toggle="tab" href="#samsung" role="tab">
+                                            <a class="nav-link a_samsung" data-toggle="tab" href="#samsung" role="tab">
                                                 <span class="d-none d-sm-block">SamSung</span>
                                             </a>
                                         </li>
                                         <li class="nav-item">
-                                            <a class="nav-link" data-toggle="tab" href="#xiaomi" role="tab">
+                                            <a class="nav-link a_xiaomi" data-toggle="tab" href="#xiaomi" role="tab">
                                                 <span class="d-none d-sm-block">Xiaomi</span>
                                             </a>
                                         </li>
                                         <li class="nav-item">
-                                            <a class="nav-link" data-toggle="tab" href="#oppo" role="tab">
+                                            <a class="nav-link a_oppo" data-toggle="tab" href="#oppo" role="tab">
                                                 <span class="d-none d-sm-block">Oppo</span>
                                             </a>
                                         </li>
                                         <li class="nav-item">
-                                            <a class="nav-link" data-toggle="tab" href="#vivo" role="tab">
+                                            <a class="nav-link a_vivo" data-toggle="tab" href="#vivo" role="tab">
                                                 <span class="d-none d-sm-block">Vivo</span>
                                             </a>
                                         </li>
@@ -67,7 +67,7 @@
                                                     <label for="name">Mã dự án <span style="color: red">*</span></label>
                                                     <div class="inner row">
                                                         <div class="col-md-10 col-10">
-                                                            <select class="form-control" id="ma_da" name="ma_da">
+                                                            <select class="form-control select2" id="ma_da" name="ma_da">
                                                                 <option value="0">---Vui lòng chọn---</option>
                                                                 @foreach($da as $item)
                                                                     <option value="{{$item->id}}">{{$item->ma_da}}</option>
