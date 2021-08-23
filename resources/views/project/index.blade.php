@@ -309,6 +309,16 @@
                     swal("Đã xóa!", "Your imaginary file has been deleted.", "success");
                 });
         });
+        $(document).on('click','.showLog_Project', e=>{
+            const row = table.row(e.target.closest('tr'));
+            const rowData = row.data();
+            console.log(rowData)
+
+            $('#modelHeadingPolicy').html(rowData.name_projectname);
+            $('#showMess').modal('show');
+            $('.message-full').html(rowData.log);
+
+        });
     });
 </script>
 <script>
@@ -646,9 +656,7 @@
             });
         })
     }
-    function showLog_Project(id){
-        alert(1)
-    }
+
 
     function quickEditProject(id) {
         $.get('{{asset('project/edit')}}/'+id,function (data) {

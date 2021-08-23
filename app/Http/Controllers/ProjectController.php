@@ -150,13 +150,16 @@ class ProjectController extends Controller
         // Total records
         $data_arr = array();
         foreach ($records as $record) {
+            $full_mess ='';
             $btn = ' <a href="javascript:void(0)" onclick="editProject('.$record->projectid.')" class="btn btn-warning"><i class="ti-pencil-alt"></i></a>';
             if($record->buildinfo_console == 0){
                 $btn = $btn. ' <a href="javascript:void(0)" onclick="quickEditProject('.$record->projectid.')" class="btn btn-success"><i class="mdi mdi-android-head"></i></a>';
             }
             $btn = $btn.' <a href="javascript:void(0)" data-toggle="tooltip"  data-id="'.$record->projectid.'" data-original-title="Delete" class="btn btn-danger deleteProject"><i class="ti-trash"></i></a>';
             if(isset($record->log)){
-                $btn .= '  <a href="javascript:void(0)" onclick="showLog_Project('.$record->projectid.')" class="btn btn-secondary"><i class="mdi mdi-file"></i></a>';
+                $btn .= '  <a href="javascript:void(0)" data-toggle="tooltip"  data-id="'.$record->projectid.'" data-original-title="Log" class="btn btn-secondary showLog_Project"><i class="mdi mdi-file"></i></a>';
+                $log = $record->log->buildinfo_mess;
+                $full_mess =  (str_replace('|','<br>',$log));
             }
 
             $ma_da = DB::table('ngocphandang_project')
@@ -436,9 +439,12 @@ class ProjectController extends Controller
                 $logo = '<img class="rounded mx-auto d-block" width="100px" height="100px" src="assets\images\logo-sm.png">';
             }
             $abc = '<p class="text-muted" style="line-height:0.5">'.$record->buildinfo_keystore. '   |   '.$record->buildinfo_vernum.'   |   '.$record->buildinfo_verstr.'</p>';
+
             $data_arr[] = array(
                 "created_at" => $record->created_at,
                 "logo" => $logo,
+                "log" => $full_mess,
+                "name_projectname"=>$record->projectname,
                 "projectname"=>$data_projectname.$data_template.$data_ma_da.$data_title_app.$abc,
                 "package" => $package_chplay.$package_amazon.$package_samsung.$package_xiaomi.$package_oppo.$package_vivo,
                 "status" => $status,
