@@ -11,4 +11,7 @@ class ProjectModel extends Model
     protected $table = 'ngocphandang_project';
     protected $primaryKey = 'projectid';
     protected $guarded =[];
+    public function log(){
+        return $this->hasOne(log::class,'projectname','projectname');
+    }
 }

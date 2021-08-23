@@ -170,13 +170,11 @@
 
                                                 </div>
                                             </div>
-                                            <div data-repeater-item="" class="row input_buildinfo">
-                                            </div>
 
                                             <div class="progress m-b-10" style="height: 3px;">
                                                 <div class="progress-bar"  role="progressbar" style="background-color: #0b0b0b;width: 100%;"></div>
                                             </div>
-                                            <div data-repeater-item="" class="row">
+                                            <div data-repeater-item="" class="row market_chplay" id="market_chplay">
                                                 <div class="form-group col-lg-3 input_package">
                                                     <label for="name">Tên Package CH-Play </label>
                                                     <input type="text" id="Chplay_package"  placeholder=""  name="Chplay_package" class="form-control">
@@ -210,9 +208,9 @@
                                                     </div>
                                                 </div>
 
-                                            </div>
+                                            </div >
 
-                                            <div data-repeater-item="" class="row">
+                                            <div data-repeater-item="" class="row market_amazon" id="market_amazon">
                                                 <div class="form-group col-lg-3 input_package">
                                                     <label for="name">Tên Package Amazon</label>
                                                     <input type="text" id="Amazon_package" name="Amazon_package" class="form-control">
@@ -249,7 +247,7 @@
 
                                             </div>
 
-                                            <div data-repeater-item="" class="row">
+                                            <div data-repeater-item="" class="row market_samsung">
                                                 <div class="form-group col-lg-3 input_package">
                                                     <label for="name">Tên Package SamSung </label>
                                                     <input type="text" id="Samsung_package" name="Samsung_package" class="form-control">
@@ -286,7 +284,7 @@
 
                                             </div>
 
-                                            <div data-repeater-item="" class="row">
+                                            <div data-repeater-item="" class="row market_xiaomi">
                                                 <div class="form-group col-lg-3 input_package">
                                                     <label for="name">Tên Package Xiaomi </label>
                                                     <input type="text" id="Xiaomi_package" name="Xiaomi_package" class="form-control">
@@ -323,7 +321,7 @@
 
                                             </div>
 
-                                            <div data-repeater-item="" class="row">
+                                            <div data-repeater-item="" class="row market_oppo">
                                                 <div class="form-group col-lg-3 input_package">
                                                     <label for="name">Tên Package Oppo </label>
                                                     <input type="text" id="Oppo_package" name="Oppo_package" class="form-control">
@@ -360,12 +358,11 @@
 
                                             </div>
 
-                                            <div data-repeater-item="" class="row">
+                                            <div data-repeater-item="" class="row market_vivo" >
                                                 <div class="form-group col-lg-3 input_package">
                                                     <label for="name">Tên Package Vivo </label>
                                                     <input type="text" id="Vivo_package" name="Vivo_package" class="form-control">
                                                 </div>
-
                                                 <div class="form-group col-lg-9">
                                                     <label for="name">Ads Vivo</label>
                                                     <div class="row" >

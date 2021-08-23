@@ -129,7 +129,7 @@ class ProjectController extends Controller
                 ->orWhere('ngocphandang_project.Vivo_package', 'like', '%' . $searchValue . '%')
                 ->count();
             // Get records, also we have included search filter as well
-            $records = ProjectModel::orderBy($columnName, $columnSortOrder)
+            $records = ProjectModel::with('log')->orderBy($columnName, $columnSortOrder)
                 ->leftjoin('ngocphandang_da','ngocphandang_da.id','=','ngocphandang_project.ma_da')
                 ->leftjoin('ngocphandang_template','ngocphandang_template.id','=','ngocphandang_project.template') ->where('ngocphandang_da.ma_da', 'like', '%' . $searchValue . '%')
                 ->orWhere('ngocphandang_project.projectname', 'like', '%' . $searchValue . '%')
@@ -145,11 +145,9 @@ class ProjectController extends Controller
                 ->skip($start)
                 ->take($rowperpage)
                 ->get();
+
         }
-
         // Total records
-
-
         $data_arr = array();
         foreach ($records as $record) {
             $btn = ' <a href="javascript:void(0)" onclick="editProject('.$record->projectid.')" class="btn btn-warning"><i class="ti-pencil-alt"></i></a>';
@@ -157,6 +155,9 @@ class ProjectController extends Controller
                 $btn = $btn. ' <a href="javascript:void(0)" onclick="quickEditProject('.$record->projectid.')" class="btn btn-success"><i class="mdi mdi-android-head"></i></a>';
             }
             $btn = $btn.' <a href="javascript:void(0)" data-toggle="tooltip"  data-id="'.$record->projectid.'" data-original-title="Delete" class="btn btn-danger deleteProject"><i class="ti-trash"></i></a>';
+            if(isset($record->log)){
+                $btn .= '  <a href="javascript:void(0)" onclick="showLog_Project('.$record->projectid.')" class="btn btn-secondary"><i class="mdi mdi-file"></i></a>';
+            }
 
             $ma_da = DB::table('ngocphandang_project')
                 ->join('ngocphandang_da','ngocphandang_da.id','=','ngocphandang_project.ma_da')
@@ -1763,6 +1764,8 @@ class ProjectController extends Controller
 
     public function create(Request  $request)
     {
+        dd($request->all());
+
         $rules = [
             'projectname' =>'required|unique:ngocphandang_project,projectname',
             'ma_da' => 'required|not_in:0',
@@ -1945,13 +1948,14 @@ class ProjectController extends Controller
         $policy = Template::select('policy1','policy2')->where('id',$project->template)->first();
         $store_name= Dev::select('store_name')->where('id',$project->Chplay_buildinfo_store_name_x)->first();
         $da= Da::select('ma_da')->where('id',$project->ma_da)->first();
-        $template= Template::select('template','package','ads')->where('id',$project->template)->first();
+        $template= Template::select('template','package','ads','Chplay_category','Amazon_category','Samsung_category','Xiaomi_category','Oppo_category','Vivo_category')->where('id',$project->template)->first();
 
         return response()->json([$project,$policy,$store_name,$da,$template]);
     }
 
     public function update(Request $request)
     {
+        dd($request->all());
         $id = $request->project_id;
         $rules = [
             'projectname' =>'unique:ngocphandang_project,projectname,'.$id.',projectid',
@@ -2129,10 +2133,10 @@ class ProjectController extends Controller
             $image->move($destinationPath, $data['logo']);
         }
         $data->projectname = $request->projectname;
+
         $data->save();
         return response()->json(['success'=>'Cập nhật thành công']);
     }
-
     public function updateQuick(Request $request){
         $id = $request->project_id;
 
@@ -2239,7 +2243,7 @@ class ProjectController extends Controller
         return response()->json(['success'=> $data->projectname.' đang chờ duyệt']);
     }
     public function select_template(Request $request){
-        $template = Template::select('package','ads')->where('id',$request->template)->first();
+        $template = Template::select('package','ads','Chplay_category','Amazon_category','Samsung_category','Xiaomi_category','Oppo_category','Vivo_category')->where('id',$request->template)->first();
         return response()->json($template);
     }
 }

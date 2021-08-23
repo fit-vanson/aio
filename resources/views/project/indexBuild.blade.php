@@ -143,7 +143,6 @@
 
             order: [[ 0, 'desc' ]],
             fnRowCallback: function (nRow, aData, iDisplayIndex, iDisplayIndexFull) {
-                console.log(aData.buildinfo_console)
                 if (aData.buildinfo_console == 3) {
                     $('td', nRow).css('background-color', 'rgb(19 164 2 / 47%)');
                 }
@@ -185,11 +184,7 @@
             }
         }
 
-        $('.data-table tbody').on('click', 'tr', function () {
-            var data = table.row( this ).data();
-            // console.log(data)
 
-        } );
         table.on('click', 'td:nth-child(4)', e=> {
             e.preventDefault();
             const row = table.row(e.target.closest('tr'));
@@ -197,8 +192,6 @@
 
             $('#modelHeadingPolicy').html(rowData.name_projectname);
             $('#showMess').modal('show');
-            // console.log(table.row(this).data())
-
             $('.message-full').html(rowData.full_mess);
 
         });
