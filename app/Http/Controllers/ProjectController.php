@@ -1764,8 +1764,6 @@ class ProjectController extends Controller
 
     public function create(Request  $request)
     {
-        dd($request->all());
-
         $rules = [
             'projectname' =>'required|unique:ngocphandang_project,projectname',
             'ma_da' => 'required|not_in:0',
@@ -1955,7 +1953,6 @@ class ProjectController extends Controller
 
     public function update(Request $request)
     {
-        dd($request->all());
         $id = $request->project_id;
         $rules = [
             'projectname' =>'unique:ngocphandang_project,projectname,'.$id.',projectid',
