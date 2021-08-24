@@ -282,7 +282,7 @@ class ProjectController extends Controller
                 $Chplay_status = 'Mặc định';
             }
             elseif($record['Chplay_status']== 1){
-                $Chplay_status = '<span class="badge badge-dark">Publish</span>';
+                $Chplay_status = '<span class="badge badge-success">Publish</span>';
             }
             elseif($record['Chplay_status']==2){
                 $Chplay_status =  '<span class="badge badge-warning">Suppend</span>';
@@ -294,7 +294,7 @@ class ProjectController extends Controller
                 $Chplay_status =  '<span class="badge badge-primary">Remove</span>';
             }
             elseif($record['Chplay_status']==5){
-                $Chplay_status =  '<span class="badge badge-success">Reject</span>';
+                $Chplay_status =  '<span class="badge badge-dark">Reject</span>';
             }
             elseif($record['Chplay_status']==6){
                 $Chplay_status =  '<span class="badge badge-danger">Check</span>';
@@ -306,7 +306,7 @@ class ProjectController extends Controller
                 $Amazon_status = 'Mặc định';
             }
             elseif($record['Amazon_status']== 1){
-                $Amazon_status = '<span class="badge badge-dark">Publish</span>';
+                $Amazon_status = '<span class="badge badge-success">Publish</span>';
 
             }
             elseif($record['Amazon_status']==2){
@@ -319,7 +319,7 @@ class ProjectController extends Controller
                 $Amazon_status =  '<span class="badge badge-primary">Remove</span>';
             }
             elseif($record['Amazon_status']==5){
-                $Amazon_status =  '<span class="badge badge-success">Reject</span>';
+                $Amazon_status =  '<span class="badge badge-dark">Reject</span>';
             }
             elseif($record['Amazon_status']==6){
                 $Amazon_status =  '<span class="badge badge-danger">Check</span>';
@@ -352,7 +352,7 @@ class ProjectController extends Controller
                 $Xiaomi_status = 'Mặc định';
             }
             elseif($record['Xiaomi_status']== 1){
-                $Xiaomi_status = '<span class="badge badge-dark">Publish</span>';
+                $Xiaomi_status = '<span class="badge badge-success">Publish</span>';
 
             }
             elseif($record['Xiaomi_status']==2){
@@ -365,7 +365,7 @@ class ProjectController extends Controller
                 $Xiaomi_status =  '<span class="badge badge-primary">Remove</span>';
             }
             elseif($record['Xiaomi_status']==5){
-                $Xiaomi_status =  '<span class="badge badge-success">Reject</span>';
+                $Xiaomi_status =  '<span class="badge badge-dark">Reject</span>';
             }
             elseif($record['Xiaomi_status']==6){
                 $Xiaomi_status =  '<span class="badge badge-danger">Check</span>';
@@ -376,7 +376,7 @@ class ProjectController extends Controller
                 $Oppo_status = 'Mặc định';
             }
             elseif($record['Oppo_status']== 1){
-                $Oppo_status = '<span class="badge badge-dark">Publish</span>';
+                $Oppo_status = '<span class="badge badge-success">Publish</span>';
 
             }
             elseif($record['Oppo_status']==2){
@@ -389,7 +389,7 @@ class ProjectController extends Controller
                 $Oppo_status =  '<span class="badge badge-primary">Remove</span>';
             }
             elseif($record['Oppo_status']==5){
-                $Oppo_status =  '<span class="badge badge-success">Reject</span>';
+                $Oppo_status =  '<span class="badge badge-dark">Reject</span>';
             }
             elseif($record['Oppo_status']==6){
                 $Oppo_status =  '<span class="badge badge-danger">Check</span>';
@@ -399,7 +399,7 @@ class ProjectController extends Controller
                 $Vivo_status = 'Mặc định';
             }
             elseif($record['Vivo_status']== 1){
-                $Vivo_status = '<span class="badge badge-dark">Publish</span>';
+                $Vivo_status = '<span class="badge badge-success">Publish</span>';
 
             }
             elseif($record['Vivo_status']==2){
@@ -412,7 +412,7 @@ class ProjectController extends Controller
                 $Vivo_status =  '<span class="badge badge-primary">Remove</span>';
             }
             elseif($record['Vivo_status']==5){
-                $Vivo_status =  '<span class="badge badge-success">Reject</span>';
+                $Vivo_status =  '<span class="badge badge-dark">Reject</span>';
             }
             elseif($record['Vivo_status']==6){
                 $Vivo_status =  '<span class="badge badge-danger">Check</span>';
