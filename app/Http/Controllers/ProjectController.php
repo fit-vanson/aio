@@ -329,7 +329,7 @@ class ProjectController extends Controller
                 $Samsung_status = 'Mặc định';
             }
             elseif($record['Samsung_status']== 1){
-                $Samsung_status = '<span class="badge badge-dark">Publish</span>';
+                $Samsung_status = '<span class="badge badge-success">Publish</span>';
 
             }
             elseif($record['Samsung_status']==2){
@@ -342,7 +342,7 @@ class ProjectController extends Controller
                 $Samsung_status =  '<span class="badge badge-primary">Remove</span>';
             }
             elseif($record['Samsung_status']==5){
-                $Samsung_status =  '<span class="badge badge-success">Reject</span>';
+                $Samsung_status =  '<span class="badge badge-dark">Reject</span>';
             }
             elseif($record['Samsung_status']==6){
                 $Samsung_status =  '<span class="badge badge-danger">Check</span>';
