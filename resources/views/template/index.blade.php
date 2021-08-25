@@ -50,9 +50,6 @@
                             <th>Phân loại</th>
                             <th>Link CHPlay</th>
                             <th>script_copy | IMG | svg2xml | file</th>
-                            <th>Thời gian tạo</th>
-                            <th>Update</th>
-                            <th>Time Get</th>
                             <th width="5%">Action</th>
                         </tr>
                         </thead>
@@ -110,9 +107,6 @@
                 {data: 'category'},
                 {data: 'link'},
                 {data: 'script'},
-                {data: 'time_create'},
-                {data: 'time_update'},
-                {data: 'time_get'},
                 {data: 'action', name: 'action', orderable: false, searchable: false},
             ],
             "columnDefs": [
@@ -213,6 +207,37 @@
         });
 
     });
+    function showProject(id){
+        var table = $('.data-table').DataTable({
+            destroy: true,
+            displayLength: 50,
+            searching:false,
+            lengthMenu: [5, 10, 25, 50, 75, 100],
+            serverSide: true,
+            ajax: {
+                url : "{{ route('project.getIndex') }}?template="+id,
+                type: "post",
+
+            },
+            columns: [
+                {title: 'Logo',data: 'logo', name: 'logo',orderable: false},
+                {title: 'Template',data: 'template', name: 'template'},
+                {title: 'Tên Project',data: 'projectname', name: 'projectname'},
+                {title: 'Package',data: 'package', name: 'package',orderable: false},
+
+                {title: 'Status',data: 'status', name: 'status',orderable: false},
+            ],
+            // columnDefs: [
+            //     {
+            //         "targets": [ 0,4],
+            //         "visible": false,
+            //         "searchable": false
+            //     }
+            // ],
+            order: [[ 0, 'desc' ]],
+        });
+
+    }
 </script>
 
 <script>
@@ -297,6 +322,8 @@
             });
         })
     }
+
+
 
 
 </script>

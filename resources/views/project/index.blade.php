@@ -601,7 +601,50 @@
                     $('#Oppo_ads_open').hide();
                     $('#Vivo_ads_open').hide();
                 }
+            }else {
+                $('#Chplay_ads_id').hide();
+                $('#Amazon_ads_id').hide();
+                $('#Samsung_ads_id').hide();
+                $('#Xiaomi_ads_id').hide();
+                $('#Oppo_ads_id').hide();
+                $('#Vivo_ads_id').hide();
+
+                $('#Chplay_ads_banner').hide();
+                $('#Amazon_ads_banner').hide();
+                $('#Samsung_ads_banner').hide();
+                $('#Xiaomi_ads_banner').hide();
+                $('#Oppo_ads_banner').hide();
+                $('#Vivo_ads_banner').hide();
+
+                $('#Chplay_ads_inter').hide();
+                $('#Amazon_ads_inter').hide();
+                $('#Samsung_ads_inter').hide();
+                $('#Xiaomi_ads_inter').hide();
+                $('#Oppo_ads_inter').hide();
+                $('#Vivo_ads_inter').hide();
+
+                $('#Chplay_ads_reward').hide();
+                $('#Amazon_ads_reward').hide();
+                $('#Samsung_ads_reward').hide();
+                $('#Xiaomi_ads_reward').hide();
+                $('#Oppo_ads_reward').hide();
+                $('#Vivo_ads_reward').hide();
+
+                $('#Chplay_ads_native').hide();
+                $('#Amazon_ads_native').hide();
+                $('#Samsung_ads_native').hide();
+                $('#Xiaomi_ads_native').hide();
+                $('#Oppo_ads_native').hide();
+                $('#Vivo_ads_native').hide();
+
+                $('#Chplay_ads_open').hide();
+                $('#Amazon_ads_open').hide();
+                $('#Samsung_ads_open').hide();
+                $('#Xiaomi_ads_open').hide();
+                $('#Oppo_ads_open').hide();
+                $('#Vivo_ads_open').hide();
             }
+
             $('#project_id').val(data[0].projectid);
             $('#projectname').val(data[0].projectname);
             $('#template').val(data[0].template);

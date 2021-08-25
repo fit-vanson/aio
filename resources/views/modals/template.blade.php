@@ -12,17 +12,16 @@
                     <input type="hidden" name="template_id" id="template_id">
                     <div data-repeater-list="group-a">
                         <div data-repeater-item="" class="row">
-                            <div class="form-group col-lg-6 input_ma_da">
+                            <div class="form-group col-lg-3 input_ma_da">
                                 <label for="name">Tên Template <span style="color: red">*</span></label>
                                 <input type="text" id="template" name="template" class="form-control" required>
                             </div>
-                            <div class="form-group col-lg-6 ">
+                            <div class="form-group col-lg-3 ">
                                 <label for="name">Ver Build</label>
                                 <input type="text" id="ver_build" name="ver_build" class="form-control">
                             </div>
-                        </div>
-                        <div data-repeater-item="" class="row">
-                            <div class="form-group col-lg-6 ">
+
+                            <div class="form-group col-lg-3 ">
                                 <label for="name">Convert Aab</label>
                                 <div>
                                     <select class="form-control" id="convert_aab" name="convert_aab">
@@ -31,7 +30,7 @@
                                     </select>
                                 </div>
                             </div>
-                            <div class="form-group col-lg-6 input_status">
+                            <div class="form-group col-lg-3 input_status">
                                 <label for="name">Trạng thái</label>
                                 <div>
                                     <select class="form-control" id="startus" name="startus">

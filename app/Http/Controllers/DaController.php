@@ -32,10 +32,8 @@ class DaController extends Controller
                         ->join('ngocphandang_project','ngocphandang_da.id','=','ngocphandang_project.ma_da')
                         ->where('ngocphandang_project.ma_da',$row->id)
                         ->count();
-//                    return '<a href="../../project/getIndex?ma_da='.$row->id.'" target="_blank">'.$row->ma_da.'  - ('.$project.')</a>';
                     return '<a href="javascript:void(0)" onclick="showProject('.$row->id.')">'.$row->ma_da.'  - ('.$project.')</a>';
-                    return route('project.getIndex');
-                    return redirect()->route('project.getIndex', [$row->id]);
+
                 })
                 ->rawColumns(['action','link_store_vietmmo','ma_da'])
                 ->make(true);

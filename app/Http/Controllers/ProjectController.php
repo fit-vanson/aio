@@ -80,6 +80,7 @@ class ProjectController extends Controller
 
     public function getIndex(Request $request)
     {
+
         $draw = $request->get('draw');
         $start = $request->get("start");
         $rowperpage = $request->get("length"); // total number of rows per page
@@ -112,7 +113,27 @@ class ProjectController extends Controller
                 ->take($rowperpage)
                 ->get();
 
-        }else{
+        }
+        elseif (isset($request->template)){
+        $totalRecords = ProjectModel::select('count(*) as allcount')->where('ma_da',$request->ma_da)->count();
+        $totalRecordswithFilter = ProjectModel::select('count(*) as allcount')
+            ->leftjoin('ngocphandang_da','ngocphandang_da.id','=','ngocphandang_project.ma_da')
+            ->leftjoin('ngocphandang_template','ngocphandang_template.id','=','ngocphandang_project.template')
+            ->where('ngocphandang_project.template',$request->template)
+            ->count();
+
+        // Get records, also we have included search filter as well
+        $records = ProjectModel::orderBy($columnName, $columnSortOrder)
+            ->leftjoin('ngocphandang_da','ngocphandang_da.id','=','ngocphandang_project.ma_da')
+            ->leftjoin('ngocphandang_template','ngocphandang_template.id','=','ngocphandang_project.template') ->where('ngocphandang_da.ma_da', 'like', '%' . $searchValue . '%')
+            ->where('ngocphandang_project.template',$request->template)
+            ->select('ngocphandang_project.*')
+            ->skip($start)
+            ->take($rowperpage)
+            ->get();
+
+        }
+        else{
             $totalRecords = ProjectModel::select('count(*) as allcount')->count();
             $totalRecordswithFilter = ProjectModel::select('count(*) as allcount')
                 ->leftjoin('ngocphandang_da','ngocphandang_da.id','=','ngocphandang_project.ma_da')
@@ -445,6 +466,7 @@ class ProjectController extends Controller
                 "logo" => $logo,
                 "log" => $full_mess,
                 "name_projectname"=>$record->projectname,
+                "template"=>$data_template,
                 "projectname"=>$data_projectname.$data_template.$data_ma_da.$data_title_app.$abc,
                 "package" => $package_chplay.$package_amazon.$package_samsung.$package_xiaomi.$package_oppo.$package_vivo,
                 "status" => $status,
@@ -872,10 +894,10 @@ class ProjectController extends Controller
                 $buildinfo_console =  '<span class="badge badge-danger">Kết thúc Check</span>';
             }
             elseif($record['buildinfo_console']== 7){
-                $Chplay_status =  '<span class="badge badge-danger">Build App (Thất bại)</span>';
+                $buildinfo_console =  '<span class="badge badge-danger">Build App (Thất bại)</span>';
             }
             elseif($record['buildinfo_console']== 8){
-                $Chplay_status =  '<span class="badge badge-danger">Kết thúc (Dự liệu thiếu) </span>';
+                $buildinfo_console =  '<span class="badge badge-danger">Kết thúc (Dự liệu thiếu) </span>';
             }
 
             if ($record['Chplay_status'] ==0  ) {

@@ -7,6 +7,7 @@ use App\Models\ProjectModel;
 use App\Models\Template;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Validator;
 use Yajra\DataTables\Facades\DataTables;
 
@@ -67,8 +68,16 @@ class TemplateController extends Controller
             $btn = ' <a href="javascript:void(0)" onclick="editTemplate('.$record->id.')" class="btn btn-warning"><i class="ti-pencil-alt"></i></a>';
             $btn = $btn.' <a href="javascript:void(0)" data-toggle="tooltip"  data-id="'.$record->id.'" data-original-title="Delete" class="btn btn-danger deleteTemplate"><i class="ti-trash"></i></a>';
 
-            $template = ' <span>'.$record->template.'</span>
-                                    <p class="text-muted m-b-30 ">'.$record->ver_build.'</p>';
+
+            $project = DB::table('ngocphandang_template')
+                ->join('ngocphandang_project','ngocphandang_template.id','=','ngocphandang_project.template')
+                ->where('ngocphandang_project.template',$record->id)
+                ->count();
+            $template = '<a href="javascript:void(0)" onclick="showProject('.$record->id.')"> <span>'.$record->template.' - ('.$project.')</span></a>
+                            <p class="text-muted m-b-30 ">'.$record->ver_build.'</p>';
+
+
+
 
             if($record['script_copy'] !== Null){
                 $script_copy = "<i style='color:green;' class='ti-check-box h5'></i>";
@@ -90,7 +99,59 @@ class TemplateController extends Controller
             } else {
                 $script_file = "<i style='color:red;' class='ti-close h5'></i>";
             }
-            $script = $script_copy .' '. $script_img.' '. $script_svg2xml .' '.$script_file;
+            $script = 'Script_copy | IMG | svg2xml | File : '. $script_copy .' '. $script_img.' '. $script_svg2xml .' '.$script_file;
+
+            $ads = json_decode($record->ads,true);
+
+           if(!isset($ads['ads_id'])){
+               $ads_id = "<i style='color:red;' class='ti-close h5'></i>";
+           }else{
+               $ads_id = "<i style='color:green;' class='ti-check-box h5'></i>";
+           }
+
+            if(!isset($ads['ads_banner'])){
+                $ads_banner = "<i style='color:red;' class='ti-close h5'></i>";
+            }else{
+                $ads_banner = "<i style='color:green;' class='ti-check-box h5'></i>";
+            }
+
+            if(!isset($ads['ads_inter'])){
+                $ads_inter = "<i style='color:red;' class='ti-close h5'></i>";
+            }else{
+                $ads_inter = "<i style='color:green;' class='ti-check-box h5'></i>";
+            }
+
+            if(!isset($ads['ads_reward'])){
+                $ads_reward = "<i style='color:red;' class='ti-close h5'></i>";
+            }else{
+                $ads_reward = "<i style='color:green;' class='ti-check-box h5'></i>";
+            }
+
+            if(!isset($ads['ads_native'])){
+                $ads_native = "<i style='color:red;' class='ti-close h5'></i>";
+            }else{
+                $ads_native = "<i style='color:green;' class='ti-check-box h5'></i>";
+            }
+
+            if(isset($ads['ads_open'])){
+                $ads_open = "<i style='color:green;' class='ti-check-box h5'></i>";
+            }else{
+                $ads_open = "<i style='color:red;' class='ti-close h5'></i>";
+            }
+             $ads ='<br>'. 'Id | Banner | Inter | Reward | Native | Open : '. $ads_id.$ads_banner.$ads_inter.$ads_reward.$ads_native.$ads_open;
+
+
+            if($record->convert_aab != 0){
+                $convert_aab = '<br> Aad: '."<i style='color:green;' class='ti-check-box h5'></i>";
+            }else{
+                $convert_aab = '<br> Aad: '."<i style='color:red;' class='ti-close h5'></i>";
+            }
+
+            if($record->startus == 0){
+                $startus = '<br> Status: '."<i style='color:green;' class='ti-check-box h5'></i>";
+            }else{
+                $startus = '<br> Status: '."<i style='color:red;' class='ti-close h5'></i>";
+            }
 
             if($record->time_create == 0 ){
                 $time_create =   null;
@@ -156,7 +217,7 @@ class TemplateController extends Controller
                 "template" => $template,
                 "category"=>$Chplay_category.'<br>'.$Amazon_category.'<br>'.$Samsung_category.'<br>'.$Xiaomi_category.'<br>'.$Oppo_category.'<br>'.$Vivo_category,
                 "link" => $link,
-                "script" => $script,
+                "script" => $script.$ads.$convert_aab.$startus,
                 "time_create"=> $time_create,
                 "time_update"=> $time_update,
                 "time_get"=> $time_get,
