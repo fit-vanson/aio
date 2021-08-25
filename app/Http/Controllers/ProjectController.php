@@ -871,10 +871,10 @@ class ProjectController extends Controller
             elseif($record['buildinfo_console']== 6){
                 $buildinfo_console =  '<span class="badge badge-danger">Kết thúc Check</span>';
             }
-            elseif($record['buildinfo_console']==7){
+            elseif($record['buildinfo_console']== 7){
                 $Chplay_status =  '<span class="badge badge-danger">Build App (Thất bại)</span>';
             }
-            elseif($record['buildinfo_console']==8){
+            elseif($record['buildinfo_console']== 8){
                 $Chplay_status =  '<span class="badge badge-danger">Kết thúc (Dự liệu thiếu) </span>';
             }
 
