@@ -766,8 +766,6 @@ class ProjectController extends Controller
     }
     public function getChplay(Request $request)
     {
-
-
         $draw = $request->get('draw');
         $start = $request->get("start");
         $rowperpage = $request->get("length"); // total number of rows per page
@@ -776,9 +774,7 @@ class ProjectController extends Controller
         $columnName_arr = $request->get('columns');
         $order_arr = $request->get('order');
         $search_arr = $request->get('search');
-
         $columnIndex = $columnIndex_arr[0]['column']; // Column index
-
 
         $columnName = $columnName_arr[$columnIndex]['data']; // Column name
 
@@ -817,7 +813,7 @@ class ProjectController extends Controller
         }    else {
         // Total records
         $totalRecords = ProjectModel::select('count(*) as allcount')
-            ->where('ngocphandang_project.Chplay_package','<>','null')
+            ->where('ngocphandang_project.Chplay_package','<>',null)
             ->count();
         $totalRecordswithFilter = ProjectModel::select('count(*) as allcount')
             ->where(function ($a) use ($searchValue) {
@@ -854,26 +850,32 @@ class ProjectController extends Controller
                 $data_projectname='';
             }
             $package_chplay = '<a href="http://play.google.com/store/apps/details?id='.$record->Chplay_package.'" target="_blank"<p style="line-height:0.5">'.$record->Chplay_package.'</p></a>';
-            if ($record['buildinfo_console']==0  ) {
+            if ($record['buildinfo_console']== 0  ) {
                 $buildinfo_console = 'Trạng thái tĩnh';
             }
             elseif($record['buildinfo_console']== 1){
                 $buildinfo_console = '<span class="badge badge-dark">Build App</span>';
             }
-            elseif($record['buildinfo_console']==2){
+            elseif($record['buildinfo_console']== 2){
                 $buildinfo_console =  '<span class="badge badge-warning">Đang xử lý Build App</span>';
             }
-            elseif($record['buildinfo_console']==3){
+            elseif($record['buildinfo_console']== 3){
                 $buildinfo_console =  '<span class="badge badge-info">Kết thúc Build App</span>';
             }
-            elseif($record['buildinfo_console']==4){
+            elseif($record['buildinfo_console']== 4){
                 $buildinfo_console =  '<span class="badge badge-primary">Check Data Project</span>';
             }
-            elseif($record['buildinfo_console']==5){
+            elseif($record['buildinfo_console']== 5){
                 $buildinfo_console =  '<span class="badge badge-success">Đang xử lý check dữ liệu của Project</span>';
             }
-            elseif($record['buildinfo_console']==6){
+            elseif($record['buildinfo_console']== 6){
                 $buildinfo_console =  '<span class="badge badge-danger">Kết thúc Check</span>';
+            }
+            elseif($record['buildinfo_console']==7){
+                $Chplay_status =  '<span class="badge badge-danger">Build App (Thất bại)</span>';
+            }
+            elseif($record['buildinfo_console']==8){
+                $Chplay_status =  '<span class="badge badge-danger">Kết thúc (Dự liệu thiếu) </span>';
             }
 
             if ($record['Chplay_status'] ==0  ) {
