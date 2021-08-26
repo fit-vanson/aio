@@ -438,6 +438,10 @@
                                                     <label for="name">Link App</label>
                                                     <input type="text" id="Chplay_buildinfo_link_app" name="Chplay_buildinfo_link_app" class="form-control" >
                                                 </div>
+                                                <div class="form-group col-lg-6 input_buildinfo_keystore">
+                                                    <label for="name">Link Policy</label>
+                                                    <input type="text" id="Chplay_policy" name="Chplay_policy" class="form-control" >
+                                                </div>
                                             </div>
 
                                         </div>
@@ -482,6 +486,10 @@
                                                     <label for="name">Link App</label>
                                                     <input type="text" id="Amazon_buildinfo_link_app" name="Amazon_buildinfo_link_app" class="form-control" >
                                                 </div>
+                                                <div class="form-group col-lg-6 input_buildinfo_keystore">
+                                                    <label for="name">Link Policy</label>
+                                                    <input type="text" id="Amazon_policy" name="Amazon_policy" class="form-control" >
+                                                </div>
                                             </div>
                                         </div>
                                         <div class="tab-pane p-3" id="samsung" role="tabpanel">
@@ -524,6 +532,10 @@
                                                 <div class="form-group col-lg-6 input_buildinfo_keystore">
                                                     <label for="name">Link App</label>
                                                     <input type="text" id="Samsung_buildinfo_link_app" name="Samsung_buildinfo_link_app" class="form-control" >
+                                                </div>
+                                                <div class="form-group col-lg-6 input_buildinfo_keystore">
+                                                    <label for="name">Link Policy</label>
+                                                    <input type="text" id="Samsung_policy" name="Samsung_policy" class="form-control" >
                                                 </div>
                                             </div>
                                         </div>
@@ -568,6 +580,10 @@
                                                     <label for="name">Link App</label>
                                                     <input type="text" id="Xiaomi_buildinfo_link_app" name="Xiaomi_buildinfo_link_app" class="form-control" >
                                                 </div>
+                                                <div class="form-group col-lg-6 input_buildinfo_keystore">
+                                                    <label for="name">Link Policy</label>
+                                                    <input type="text" id="Xiaomi_policy" name="Xiaomi_policy" class="form-control" >
+                                                </div>
                                             </div>
                                         </div>
                                         <div class="tab-pane p-3" id="oppo" role="tabpanel">
@@ -611,6 +627,10 @@
                                                     <label for="name">Link App</label>
                                                     <input type="text" id="Oppo_buildinfo_link_app" name="Oppo_buildinfo_link_app" class="form-control" >
                                                 </div>
+                                                <div class="form-group col-lg-6 input_buildinfo_keystore">
+                                                    <label for="name">Link Policy</label>
+                                                    <input type="text" id="Oppo_policy" name="Oppo_policy" class="form-control" >
+                                                </div>
                                             </div>
                                         </div>
                                         <div class="tab-pane p-3" id="vivo" role="tabpanel">
@@ -653,6 +673,10 @@
                                                 <div class="form-group col-lg-6 input_buildinfo_keystore">
                                                     <label for="name">Link App</label>
                                                     <input type="text" id="Vivo_buildinfo_link_app" name="Vivo_buildinfo_link_app" class="form-control" >
+                                                </div>
+                                                <div class="form-group col-lg-6 input_buildinfo_keystore">
+                                                    <label for="name">Link Policy</label>
+                                                    <input type="text" id="Vivo_policy" name="Vivo_policy" class="form-control" >
                                                 </div>
                                             </div>
                                         </div>

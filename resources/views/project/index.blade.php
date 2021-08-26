@@ -21,8 +21,15 @@
     <h4 class="page-title">Quản lý Project</h4>
 </div>
 <div class="col-sm-6">
-    <div class="float-right">
-        <a class="btn btn-success" href="javascript:void(0)" id="createNewProject"> Create New Project</a>
+    <div class="col-sm-6 float-right">
+        <div >
+            <a class="btn btn-success" href="javascript:void(0)" id="createNewProject"> Create New Project</a>
+        </div>
+    </div>
+    <div class="col-sm-6 float-right">
+        <div class="float-right">
+            <a class="btn btn-warning" href="javascript:void(0)" id="checkData">Check data</a>
+        </div>
     </div>
 </div>
 <div class="modal fade bd-example-modal-xl" id="showMess" aria-hidden="true">
@@ -202,8 +209,6 @@
             $('.a_oppo').hide();
             $('.a_vivo').hide();
         });
-
-
         $('#projectForm2').on('submit',function (event){
             event.preventDefault();
             var formData = new FormData($("#projectForm2")[0]);
@@ -323,6 +328,29 @@
             $('#showMess').modal('show');
             $('.message-full').html(rowData.log);
 
+        });
+        $(document).on('click','#checkData', function (data){
+            swal({
+                    title: "Bạn có chắc muốn check Data?",
+                    type: "warning",
+                    showCancelButton: true,
+                    confirmButtonClass: "btn-danger",
+                    confirmButtonText: "Xác nhận!",
+                    closeOnConfirm: false
+                },
+                function(){
+                    $.ajax({
+                        type: "get",
+                        url: "{{ asset("project/checkData") }}/",
+                        success: function (data) {
+                            table.draw();
+                        },
+                        error: function (data) {
+                            console.log('Error:', data);
+                        }
+                    });
+                    swal("OK!", '', "success");
+                });
         });
     });
 </script>
@@ -669,12 +697,14 @@
             $('#Chplay_buildinfo_link_app').val(data[0].Chplay_buildinfo_link_app);
             $('#Chplay_buildinfo_email_dev_x').val(data[0].Chplay_buildinfo_email_dev_x);
             $('#Chplay_status').val(data[0].Chplay_status);
+            $('#Chplay_policy').val(data[0].Chplay_policy);
 
             $('#Amazon_buildinfo_store_name_x').val(data[0].Amazon_buildinfo_store_name_x);
             $('#Amazon_buildinfo_link_store').val(data[0].Amazon_buildinfo_link_store);
             $('#Amazon_buildinfo_link_app').val(data[0].Amazon_buildinfo_link_app);
             $('#Amazon_buildinfo_email_dev_x').val(data[0].Amazon_buildinfo_email_dev_x);
             $('#Amazon_status').val(data[0].Amazon_status);
+            $('#Amazon_policy').val(data[0].Amazon_policy);
 
 
 
@@ -683,20 +713,21 @@
             $('#Samsung_buildinfo_link_app').val(data[0].Samsung_buildinfo_link_app);
             $('#Samsung_buildinfo_email_dev_x').val(data[0].Samsung_buildinfo_email_dev_x);
             $('#Samsung_status').val(data[0].Samsung_status);
-
-
+            $('#Samsung_policy').val(data[0].Samsung_policy);
 
             $('#Xiaomi_buildinfo_store_name_x').val(data[0].Xiaomi_buildinfo_store_name_x);
             $('#Xiaomi_buildinfo_link_store').val(data[0].Xiaomi_buildinfo_link_store);
             $('#Xiaomi_buildinfo_link_app').val(data[0].Xiaomi_buildinfo_link_app);
             $('#Xiaomi_buildinfo_email_dev_x').val(data[0].Xiaomi_buildinfo_email_dev_x);
             $('#Xiaomi_status').val(data[0].Xiaomi_status);
+            $('#Xiaomi_policy').val(data[0].Xiaomi_policy);
 
             $('#Oppo_buildinfo_store_name_x').val(data[0].Oppo_buildinfo_store_name_x);
             $('#Oppo_buildinfo_link_store').val(data[0].Oppo_buildinfo_link_store);
             $('#Oppo_buildinfo_link_app').val(data[0].Oppo_buildinfo_link_app);
             $('#Oppo_buildinfo_email_dev_x').val(data[0].Oppo_buildinfo_email_dev_x);
             $('#Oppo_status').val(data[0].Oppo_status);
+            $('#Oppo_policy').val(data[0].Oppo_policy);
 
 
             $('#Vivo_buildinfo_store_name_x').val(data[0].Vivo_buildinfo_store_name_x);
@@ -704,6 +735,7 @@
             $('#Vivo_buildinfo_link_app').val(data[0].Vivo_buildinfo_link_app);
             $('#Vivo_buildinfo_email_dev_x').val(data[0].Vivo_buildinfo_email_dev_x);
             $('#Vivo_status').val(data[0].Vivo_status);
+            $('#Vivo_policy').val(data[0].Vivo_policy);
 
             $('#modelHeading').html("Edit Project");
             $('#saveBtn').val("edit-project");
