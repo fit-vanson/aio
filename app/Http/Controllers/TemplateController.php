@@ -73,8 +73,14 @@ class TemplateController extends Controller
                 ->join('ngocphandang_project','ngocphandang_template.id','=','ngocphandang_project.template')
                 ->where('ngocphandang_project.template',$record->id)
                 ->count();
-            $template = '<a href="javascript:void(0)" onclick="showProject('.$record->id.')"> <span>'.$record->template.' - ('.$project.')</span></a>
+            if($record->link_store_vietmmo){
+                $template = '<a href="javascript:void(0)" onclick="showProject('.$record->id.')"> <span>'.$record->template.' - ('.$project.')</span></a>
+                            <a href="'.$record->link_store_vietmmo.'" target="_blank"> <p class="text-muted m-b-30 ">'.$record->ver_build.'</p></a>';
+            }else{
+                $template = '<a href="javascript:void(0)" onclick="showProject('.$record->id.')"> <span>'.$record->template.' - ('.$project.')</span></a>
                             <p class="text-muted m-b-30 ">'.$record->ver_build.'</p>';
+            }
+
 
 
 
