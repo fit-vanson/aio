@@ -440,32 +440,32 @@ class ProjectController extends Controller
             }
 
             if(isset($record->Chplay_policy)){
-                $Chplay_policy = "<i style='color:green;' class='mdi mdi-check-circle-outline'></i>";
+                $Chplay_policy = "<a href='$record->Chplay_policy' target='_blank' <i style='color:green;' class='mdi mdi-check-circle-outline'></i></a>";
             }else{
                 $Chplay_policy = "<i style='color:red;' class='mdi mdi-close-circle-outline'></i>";
             }
             if(isset($record->Amazon_policy)){
-                $Amazon_policy = "<i style='color:green;' class='mdi mdi-check-circle-outline'></i>";
+                $Amazon_policy = "<a href='$record->Amazon_policy' target='_blank <i style='color:green;' class='mdi mdi-check-circle-outline'></i></a>";
             }else{
                 $Amazon_policy = "<i style='color:red;' class='mdi mdi-close-circle-outline'></i>";
             }
             if(isset($record->Samsung_policy)){
-                $Samsung_policy = "<i style='color:green;' class='mdi mdi-check-circle-outline'></i>";
+                $Samsung_policy = "<a href='$record->Samsung_policy' target='_blank <i style='color:green;' class='mdi mdi-check-circle-outline'></i></a>";
             }else{
                 $Samsung_policy = "<i style='color:red;' class='mdi mdi-close-circle-outline'></i>";
             }
             if(isset($record->Xiaomi_policy)){
-                $Xiaomi_policy = "<i style='color:green;' class='mdi mdi-check-circle-outline'></i>";
+                $Xiaomi_policy = "<a href='$record->Xiaomi_policy' target='_blank <i style='color:green;' class='mdi mdi-check-circle-outline'></i></a>";
             }else{
                 $Xiaomi_policy = "<i style='color:red;' class='mdi mdi-close-circle-outline'></i>";
             }
             if(isset($record->Oppo_policy)){
-                $Oppo_policy = "<i style='color:green;' class='mdi mdi-check-circle-outline'></i>";
+                $Oppo_policy = "<a href='$record->Oppo_policy' target='_blank <i style='color:green;' class='mdi mdi-check-circle-outline'></i></a>";
             }else{
                 $Oppo_policy = "<i style='color:red;' class='mdi mdi-close-circle-outline'></i>";
             }
             if(isset($record->Vivo_policy)){
-                $Vivo_policy = "<i style='color:green;' class='mdi mdi-check-circle-outline'></i>";
+                $Vivo_policy = "<a href='$record->Vivo_policy' target='_blank <i style='color:green;' class='mdi mdi-check-circle-outline'></i></a>";
             }else{
                 $Vivo_policy = "<i style='color:red;' class='mdi mdi-close-circle-outline'></i>";
             }
