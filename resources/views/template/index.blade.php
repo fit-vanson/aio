@@ -48,7 +48,6 @@
                         <tr>
                             <th>Tên Template</th>
                             <th>Phân loại</th>
-                            <th>Link CHPlay</th>
                             <th>script_copy | IMG | svg2xml | file</th>
                             <th width="5%">Action</th>
                         </tr>
@@ -105,7 +104,6 @@
             columns: [
                 {data: 'template'},
                 {data: 'category'},
-                {data: 'link'},
                 {data: 'script'},
                 {data: 'action', name: 'action', orderable: false, searchable: false},
             ],
@@ -221,20 +219,11 @@
             },
             columns: [
                 {title: 'Logo',data: 'logo', name: 'logo',orderable: false},
-                {title: 'Template',data: 'template', name: 'template'},
                 {title: 'Tên Project',data: 'projectname', name: 'projectname'},
                 {title: 'Package',data: 'package', name: 'package',orderable: false},
-
                 {title: 'Status',data: 'status', name: 'status',orderable: false},
             ],
-            // columnDefs: [
-            //     {
-            //         "targets": [ 0,4],
-            //         "visible": false,
-            //         "searchable": false
-            //     }
-            // ],
-            order: [[ 0, 'desc' ]],
+            order: [[1, 'desc' ]],
         });
 
     }
