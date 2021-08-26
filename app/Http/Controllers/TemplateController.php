@@ -216,8 +216,7 @@ class TemplateController extends Controller
             $data_arr[] = array(
                 "template" => $template. '<br>'.$link,
                 "category"=>$Chplay_category.'<br>'.$Amazon_category.'<br>'.$Samsung_category.'<br>'.$Xiaomi_category.'<br>'.$Oppo_category.'<br>'.$Vivo_category,
-
-                "script" => $script.$ads.$convert_aab.$startus,
+                "script" => $script.$ads.$convert_aab.$startus.'<br>'.$record->package,
                 "time_create"=> $time_create,
                 "time_update"=> $time_update,
                 "time_get"=> $time_get,
