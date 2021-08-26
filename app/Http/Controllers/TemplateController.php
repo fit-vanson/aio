@@ -142,9 +142,9 @@ class TemplateController extends Controller
 
 
             if($record->convert_aab != 0){
-                $convert_aab = '<br> Aad: '."<i style='color:green;' class='ti-check-box h5'></i>";
+                $convert_aab = '<br> Aab: '."<i style='color:green;' class='ti-check-box h5'></i>";
             }else{
-                $convert_aab = '<br> Aad: '."<i style='color:red;' class='ti-close h5'></i>";
+                $convert_aab = '<br> Aab: '."<i style='color:red;' class='ti-close h5'></i>";
             }
 
             if($record->startus == 0){

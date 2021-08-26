@@ -48,7 +48,7 @@
                         <tr>
                             <th>Tên Template</th>
                             <th>Phân loại</th>
-                            <th>script_copy | IMG | svg2xml | file</th>
+                            <th>Thông tin Template</th>
                             <th width="5%">Action</th>
                         </tr>
                         </thead>
