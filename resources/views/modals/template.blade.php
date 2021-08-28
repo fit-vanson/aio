@@ -13,7 +13,7 @@
                     <div data-repeater-list="group-a">
                         <div data-repeater-item="" class="row">
                             <div class="form-group col-lg-3 input_ma_da">
-                                <label for="name">Tên Template <span style="color: red">*</span></label>
+                                <label for="name">Mã Template <span style="color: red">*</span></label>
                                 <input type="text" id="template" name="template" class="form-control" required>
                             </div>
                             <div class="form-group col-lg-3 ">
