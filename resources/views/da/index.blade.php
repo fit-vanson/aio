@@ -108,7 +108,7 @@
                     {data: 'keywords'},
                     {data: 'link_store_vietmmo'},
                     {data: 'note'},
-                    {data: 'action', name: 'action', orderable: false, searchable: false},
+                    {data: 'action',className: "text-center", name: 'action', orderable: false, searchable: false},
                 ],
                 columnDefs: [
                     {

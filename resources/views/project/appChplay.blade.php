@@ -65,15 +65,15 @@
                         <thead>
                         <tr>
                             <th >ID</th>
-                            <th width="10%">Logo</th>
-                            <th width="15%">Mã dự án</th>
-                            <th width="5%">Install</th>
-                            <th width="5%">Voters</th>
-                            <th width="5%">Review</th>
-                            <th width="5%">Score</th>
-                            <th width="20%">Message</th>
-                            <th width="15%">Trạng thái</th>
-                            <th width="5%">Action</th>
+                            <th>Logo</th>
+                            <th>Mã dự án</th>
+                            <th>Install</th>
+                            <th>Voters</th>
+                            <th>Review</th>
+                            <th>Score</th>
+                            <th>Message</th>
+                            <th>Trạng thái</th>
+                            <th>Action</th>
                         </tr>
                         </thead>
                         <tbody>
@@ -144,7 +144,7 @@
                 {data: 'Chplay_bot->score', name: 'score'},
                 {data: 'buildinfo_mess', name: 'buildinfo_mess',orderable: false},
                 {data: 'status', name: 'status',orderable: false},
-                {data: 'action', name: 'action', orderable: false, searchable: false},
+                {data: 'action', className: "text-center",name: 'action', orderable: false, searchable: false},
             ],
             columnDefs: [
                     {

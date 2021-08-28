@@ -62,11 +62,11 @@
                         <thead>
                         <tr>
                             <th >ID</th>
-                            <th width="10%">Logo</th>
-                            <th width="20%">Mã Project</th>
-                            <th width="30%">Package</th>
-                            <th width="30%">Trạng thái Ứng dụng | Policy</th>
-                            <th width="10%">Action</th>
+                            <th>Logo</th>
+                            <th >Mã Project</th>
+                            <th>Package</th>
+                            <th>Trạng thái Ứng dụng | Policy</th>
+                            <th>Action</th>
                         </tr>
                         </thead>
                         <tbody>
@@ -129,7 +129,7 @@
                 {data: 'projectname', name: 'projectname'},
                 {data: 'package', name: 'package',orderable: false},
                 {data: 'status', name: 'status',orderable: false},
-                {data: 'action', name: 'action', orderable: false, searchable: false},
+                {data: 'action', name: 'action',className: "text-center", orderable: false, searchable: false},
             ],
             columnDefs: [
                 {

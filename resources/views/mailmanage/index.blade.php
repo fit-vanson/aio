@@ -40,7 +40,7 @@
                             <th>Tên mail</th>
                             <th>Code 2FA</th>
                             <th>Time Update</th>
-                            <th width="20%px">Action</th>
+                            <th>Action</th>
                         </tr>
                         </thead>
                         <tbody>
@@ -91,7 +91,7 @@
                 {data: 'email', name: 'email'},
                 {data: 'secret_code', name: 'secret_code'},
                 {data: 'updated_at', name: 'updated_at'},
-                {data: 'action', name: 'action', orderable: false, searchable: false},
+                {data: 'action',className: "text-center", name: 'action', orderable: false, searchable: false},
             ]
         });
         setInterval( function () {

@@ -32,11 +32,11 @@
                         <thead>
                         <tr>
                             <th >ID</th>
-                            <th width="10%">Logo</th>
-                            <th width="20%">Mã dự án</th>
-                            <th width="30%">Package</th>
-                            <th width="30%">Trạng thái Console</th>
-                            <th width="10%">Action</th>
+                            <th>Logo</th>
+                            <th>Mã dự án</th>
+                            <th>Package</th>
+                            <th>Trạng thái Console</th>
+                            <th>Action</th>
                         </tr>
                         </thead>
                         <tbody>
@@ -100,7 +100,7 @@
                 {data: 'package', name: 'package',orderable: false},
                 // {data: 'buildinfo_mess', name: 'buildinfo_mess',orderable: false},
                 {data: 'buildinfo_console', name: 'buildinfo_console',orderable: false},
-                {data: 'action', name: 'action', orderable: false, searchable: false},
+                {data: 'action',className: "text-center", name: 'action', orderable: false, searchable: false},
             ],
             columnDefs: [
                 {

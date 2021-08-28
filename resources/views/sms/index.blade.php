@@ -56,7 +56,7 @@
                             <th>Code</th>
                             <th>SMS</th>
                             <th>Thời gian nhận code</th>
-                            <th width="20%px">Action</th>
+                            <th>Action</th>
                         </tr>
                         </thead>
                         <tbody>
@@ -115,7 +115,7 @@
                 {data: 'code', name: 'code'},
                 {data: 'sms', name: 'sms'},
                 {data: 'timecode', name: 'timecode'},
-                {data: 'action', name: 'action', orderable: false, searchable: false},
+                {data: 'action',className: "text-center", name: 'action', orderable: false, searchable: false},
             ]
         });
 

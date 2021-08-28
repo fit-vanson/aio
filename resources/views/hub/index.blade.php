@@ -48,7 +48,7 @@
 
                             <th>Update</th>
                             <th>Lock Auto <input id="checkAll" type="checkbox"></th>
-                            <th width="20px">Action</th>
+                            <th>Action</th>
                         </tr>
                         </thead>
                         <tbody>
@@ -116,7 +116,7 @@
 
                 {data: 'timeupdate', name: 'timeupdate'},
                 {data: 'lockauto', name: 'lockauto'},
-                {data: 'action', name: 'action', orderable: false, searchable: false},
+                {data: 'action',className: "text-center", name: 'action', orderable: false, searchable: false},
             ]
         });
 

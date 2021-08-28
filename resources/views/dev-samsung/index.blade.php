@@ -44,7 +44,7 @@
                             <th>Pass </th>
                             <th>Trạng thái</th>
                             <th>Ghi chú</th>
-                            <th width="5%">Action</th>
+                            <th>Action</th>
                         </tr>
                         </thead>
                         <tbody>
@@ -101,7 +101,7 @@
                     {data: 'samsung_pass'},
                     {data: 'samsung_status'},
                     {data: 'samsung_note'},
-                    {data: 'action', name: 'action', orderable: false, searchable: false},
+                    {data: 'action',className: "text-center", name: 'action', orderable: false, searchable: false},
                 ],
             });
             $('#createNewDev').click(function () {

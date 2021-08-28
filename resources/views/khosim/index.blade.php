@@ -45,7 +45,7 @@
                             <th>Cọc Sim</th>
                             <th>STT trong cọc sim</th>
                             <th>Time</th>
-                            <th width="20px">Action</th>
+                            <th>Action</th>
                         </tr>
                         </thead>
                         <tbody>
@@ -107,7 +107,7 @@
                 {data: 'cocsim', name: 'cocsim'},
                 {data: 'stt', name: 'stt'},
                 {data: 'time', name: 'time'},
-                {data: 'action', name: 'action', orderable: false, searchable: false},
+                {data: 'action',className: "text-center", name: 'action', orderable: false, searchable: false},
             ]
         });
         $('#createNewKhosim').click(function () {

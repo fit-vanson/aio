@@ -52,7 +52,7 @@
                             <th>VPN</th>
                             <th>Backup Code</th>
                             <th>Ghi chú</th>
-                            <th width="5%">Action</th>
+                            <th>Action</th>
                         </tr>
                         </thead>
                         <tbody>
@@ -112,7 +112,7 @@
                     {data: 'vpn_iplogin'},
                     {data: 'backup_code'},
                     {data: 'note'},
-                    {data: 'action', name: 'action', orderable: false, searchable: false},
+                    {data: 'action',className: "text-center", name: 'action', orderable: false, searchable: false},
                 ],
 
 

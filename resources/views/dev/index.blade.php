@@ -37,7 +37,7 @@
                     <table class="table table-bordered dt-responsive nowrap data-table" style="border-collapse: collapse; border-spacing: 0; width: 100%;">
                         <thead>
                         <tr>
-                            <th width="60px">IMG</th>
+                            <th>IMG</th>
                             <th>Ga name</th>
                             <th>Dev name</th>
                             <th>Gmail </th>
@@ -104,7 +104,7 @@
                     {data: 'info_phone'},
                     {data: 'info_url'},
                     {data: 'status'},
-                    {data: 'action', name: 'action', orderable: false, searchable: false},
+                    {data: 'action', className: "text-center",name: 'action', orderable: false, searchable: false},
                 ],
             });
             $('#createNewDev').click(function () {

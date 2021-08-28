@@ -100,7 +100,7 @@
                 {data: 'package', name: 'package',orderable: false},
                 // {data: 'buildinfo_mess', name: 'buildinfo_mess',orderable: false},
                 {data: 'buildinfo_console', name: 'buildinfo_console',orderable: false},
-                {data: 'action', name: 'action', orderable: false, searchable: false},
+                {data: 'action',className: "text-center", name: 'action', orderable: false, searchable: false},
             ],
             columnDefs: [
                 {

@@ -49,7 +49,7 @@
                             <th>Tên Template</th>
                             <th>Phân loại</th>
                             <th>Thông tin Template</th>
-                            <th width="5%">Action</th>
+                            <th>Action</th>
                         </tr>
                         </thead>
                         <tbody>
@@ -105,7 +105,7 @@
                 {data: 'template'},
                 {data: 'category'},
                 {data: 'script'},
-                {data: 'action', name: 'action', orderable: false, searchable: false},
+                {data: 'action',className: "text-center", name: 'action', orderable: false, searchable: false},
             ],
             "columnDefs": [
                 { "orderable": false, "targets": [1,2,3] }

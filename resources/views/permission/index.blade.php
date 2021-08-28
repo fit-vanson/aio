@@ -42,7 +42,7 @@
                             <th>STT</th>
                             <th>Tên quyền</th>
                             <th>Mô tả </th>
-                            <th width="10px">Action</th>
+                            <th>Action</th>
                         </tr>
                         </thead>
                         <tbody>
@@ -93,7 +93,7 @@
                 {data: 'id', name: 'id'},
                 {data: 'name', name: 'name'},
                 {data: 'display_name', name: 'display_name'},
-                {data: 'action', name: 'action', orderable: false, searchable: false},
+                {data: 'action',className: "text-center", name: 'action', orderable: false, searchable: false},
             ]
         });
         $('#createNewPer').click(function () {
