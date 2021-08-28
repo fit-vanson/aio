@@ -42,7 +42,7 @@
                             <th>Điện thoại</th>
                             <th>Phương thức thanh tóan</th>
                             <th>Trạng thái</th>
-                            <th width="5%">Action</th>
+                            <th>Action</th>
                         </tr>
                         </thead>
                         <tbody>
@@ -113,7 +113,7 @@
 
                         "name": "status", "autoWidth": true
                     },
-                    {data: 'action', name: 'action', orderable: false, searchable: false},
+                    {data: 'action',className: "text-center", name: 'action', orderable: false, searchable: false},
                 ],
             });
             $('#createNewGa').click(function () {
