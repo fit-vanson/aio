@@ -171,17 +171,14 @@ class DevController extends Controller
     }
     public function create(Request  $request)
     {
-
         $rules = [
             'store_name' =>'unique:ngocphandang_dev,store_name',
             'dev_name' =>'unique:ngocphandang_dev,dev_name',
-            'id_ga' =>'required|not_in:0',
             'gmail_gadev_chinh' =>'required|not_in:0',
         ];
         $message = [
             'dev_name.unique'=>'Dev name đã tồn tại',
             'store_name.unique'=>'Store name tồn tại',
-            'id_ga.not_in'=>'Vui lòng chọn Ga Name',
             'gmail_gadev_chinh.not_in'=>'Vui lòng chọn Email',
 
         ];
