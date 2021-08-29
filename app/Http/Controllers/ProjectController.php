@@ -533,27 +533,27 @@ class ProjectController extends Controller
                 $Chplay_policy = "<i style='color:red;' class='mdi mdi-close-circle-outline'></i>";
             }
             if(isset($record->Amazon_policy)){
-                $Amazon_policy = "<a href='$record->Amazon_policy' target='_blank <i style='color:green;' class='mdi mdi-check-circle-outline'></i></a>";
+                $Amazon_policy = "<a href='$record->Amazon_policy' target='_blank' <i style='color:green;' class='mdi mdi-check-circle-outline'></i></a>";
             }else{
                 $Amazon_policy = "<i style='color:red;' class='mdi mdi-close-circle-outline'></i>";
             }
             if(isset($record->Samsung_policy)){
-                $Samsung_policy = "<a href='$record->Samsung_policy' target='_blank <i style='color:green;' class='mdi mdi-check-circle-outline'></i></a>";
+                $Samsung_policy = "<a href='$record->Samsung_policy' target='_blank' <i style='color:green;' class='mdi mdi-check-circle-outline'></i></a>";
             }else{
                 $Samsung_policy = "<i style='color:red;' class='mdi mdi-close-circle-outline'></i>";
             }
             if(isset($record->Xiaomi_policy)){
-                $Xiaomi_policy = "<a href='$record->Xiaomi_policy' target='_blank <i style='color:green;' class='mdi mdi-check-circle-outline'></i></a>";
+                $Xiaomi_policy = "<a href='$record->Xiaomi_policy' target='_blank' <i style='color:green;' class='mdi mdi-check-circle-outline'></i></a>";
             }else{
                 $Xiaomi_policy = "<i style='color:red;' class='mdi mdi-close-circle-outline'></i>";
             }
             if(isset($record->Oppo_policy)){
-                $Oppo_policy = "<a href='$record->Oppo_policy' target='_blank <i style='color:green;' class='mdi mdi-check-circle-outline'></i></a>";
+                $Oppo_policy = "<a href='$record->Oppo_policy' target='_blank' <i style='color:green;' class='mdi mdi-check-circle-outline'></i></a>";
             }else{
                 $Oppo_policy = "<i style='color:red;' class='mdi mdi-close-circle-outline'></i>";
             }
             if(isset($record->Vivo_policy)){
-                $Vivo_policy = "<a href='$record->Vivo_policy' target='_blank <i style='color:green;' class='mdi mdi-check-circle-outline'></i></a>";
+                $Vivo_policy = "<a href='$record->Vivo_policy' target='_blank' <i style='color:green;' class='mdi mdi-check-circle-outline'></i></a>";
             }else{
                 $Vivo_policy = "<i style='color:red;' class='mdi mdi-close-circle-outline'></i>";
             }
@@ -564,17 +564,22 @@ class ProjectController extends Controller
                 ->where('ngocphandang_template.id',$record->template)
                 ->first();
             if(isset($policy->policy1) || isset($policy->policy2)){
-                $policy = ' <a href="javascript:void(0)" onclick="showPolicy('.$record->projectid.')"><span class="badge badge-primary">Policy</span></a>';
+                $policy_chplay = ' <a href="javascript:void(0)" onclick="showPolicy_Chplay('.$record->projectid.')"><span class="badge badge-primary">Policy</span></a> ';
+                $policy_amazon = ' <a href="javascript:void(0)" onclick="showPolicy_Amazon('.$record->projectid.')"><span class="badge badge-primary">Policy</span></a> ';
+                $policy_xiaomi = ' <a href="javascript:void(0)" onclick="showPolicy_Xiaomi('.$record->projectid.')"><span class="badge badge-primary">Policy</span></a> ';
+                $policy_samsung = ' <a href="javascript:void(0)" onclick="showPolicy_Samsung('.$record->projectid.')"><span class="badge badge-primary">Policy</span></a> ';
+                $policy_oppo = ' <a href="javascript:void(0)" onclick="showPolicy_Oppo('.$record->projectid.')"><span class="badge badge-primary">Policy</span></a> ';
+                $policy_vivo = ' <a href="javascript:void(0)" onclick="showPolicy_Vivo('.$record->projectid.')"><span class="badge badge-primary">Policy</span></a> ';
             }else{
-                $policy = '';
+                $policy_chplay = $policy_amazon = $policy_xiaomi = $policy_samsung = $policy_oppo = $policy_vivo = "";
             }
-            $status =  $policy.
-                '<br>'.$Chplay_policy.' CH Play: '.$Chplay_status.
-                '<br>'.$Amazon_policy.' Amazon: '.$Amazon_status.
-                '<br>'.$Samsung_policy.' SamSung: '.$Samsung_status.
-                '<br>'.$Xiaomi_policy.' Xiaomi: '.$Xiaomi_status.
-                '<br>'.$Oppo_policy.' Oppo: '.$Oppo_status.
-                '<br>'.$Vivo_policy.' Vivo: '.$Vivo_status;
+            $status =
+                $policy_chplay.$Chplay_policy.' CH Play: '.$Chplay_status.
+                '<br>'.$policy_amazon.$Amazon_policy.' Amazon: '.$Amazon_status.
+                '<br>'.$policy_samsung.$Samsung_policy.' SamSung: '.$Samsung_status.
+                '<br>'.$policy_xiaomi.$Xiaomi_policy.' Xiaomi: '.$Xiaomi_status.
+                '<br>'.$policy_oppo.$Oppo_policy.' Oppo: '.$Oppo_status.
+                '<br>'.$policy_vivo.$Vivo_policy.' Vivo: '.$Vivo_status;
 
             if(isset($record->logo)){
                 if (isset($record->link_store_vietmmo)){
@@ -2100,18 +2105,23 @@ class ProjectController extends Controller
     }
     public function edit($id)
     {
-
         $policy = '';
-        $policy = '';
-
         $project = ProjectModel::where('projectid',$id)->first();
         $policy = Template::select('policy1','policy2')->where('id',$project->template)->first();
-        $store_name= Dev::select('store_name')->where('id',$project->Chplay_buildinfo_store_name_x)->first();
+        $store_name = Dev::select('store_name')->where('id',$project->Chplay_buildinfo_store_name_x)->first();
         $da= Da::select('ma_da')->where('id',$project->ma_da)->first();
         $template= Template::select('template','package','ads','Chplay_category','Amazon_category','Samsung_category','Xiaomi_category','Oppo_category','Vivo_category')->where('id',$project->template)->first();
 
-        return response()->json([$project,$policy,$store_name,$da,$template]);
+        $store_name_amazon= Dev_Amazon::select('amazon_store_name')->where('id',$project->Amazon_buildinfo_store_name_x)->first();
+        $store_name_samsung= Dev_Samsung::select('samsung_store_name')->where('id',$project->Samsung_buildinfo_store_name_x)->first();
+        $store_name_xiaomi= Dev_Xiaomi::select('xiaomi_store_name')->where('id',$project->Xiaomi_buildinfo_store_name_x)->first();
+        $store_name_oppo= Dev_Oppo::select('oppo_store_name')->where('id',$project->Oppo_buildinfo_store_name_x)->first();
+        $store_name_vivo= Dev_Vivo::select('vivo_store_name')->where('id',$project->Vivo_buildinfo_store_name_x)->first();
+
+        return response()->json([$project,$policy,$store_name,$da,$template,
+            $store_name_amazon,$store_name_samsung,$store_name_xiaomi,$store_name_oppo,$store_name_vivo]);
     }
+
 
     public function update(Request $request)
     {

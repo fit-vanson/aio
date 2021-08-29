@@ -149,6 +149,12 @@
             $('#projectForm2').trigger("reset");
             $('#template').select2();
             $('#ma_da').select2();
+            $('#Chplay_buildinfo_store_name_x').select2();
+            $('#Amazon_buildinfo_store_name_x').select2();
+            $('#Samssung_buildinfo_store_name_x').select2();
+            $('#Xiaomi_buildinfo_store_name_x').select2();
+            $('#Oppo_buildinfo_store_name_x').select2();
+            $('#Vivo_buildinfo_store_name_x').select2();
             $('#modelHeading').html("Thêm mới Project");
             $('#ajaxModel').modal('show');
             $('.modal').on('hidden.bs.modal', function (e) {
@@ -693,6 +699,7 @@
             $('#link_store_vietmmo').val(data[0].link_store_vietmmo);
 
             $('#Chplay_buildinfo_store_name_x').val(data[0].Chplay_buildinfo_store_name_x);
+            $('#Chplay_buildinfo_store_name_x').select2();
             $('#Chplay_buildinfo_link_store').val(data[0].Chplay_buildinfo_link_store);
             $('#Chplay_buildinfo_link_app').val(data[0].Chplay_buildinfo_link_app);
             $('#Chplay_buildinfo_email_dev_x').val(data[0].Chplay_buildinfo_email_dev_x);
@@ -700,6 +707,7 @@
             $('#Chplay_policy').val(data[0].Chplay_policy);
 
             $('#Amazon_buildinfo_store_name_x').val(data[0].Amazon_buildinfo_store_name_x);
+            $('#Amazon_buildinfo_store_name_x').select2();
             $('#Amazon_buildinfo_link_store').val(data[0].Amazon_buildinfo_link_store);
             $('#Amazon_buildinfo_link_app').val(data[0].Amazon_buildinfo_link_app);
             $('#Amazon_buildinfo_email_dev_x').val(data[0].Amazon_buildinfo_email_dev_x);
@@ -709,6 +717,7 @@
 
 
             $('#Samsung_buildinfo_store_name_x').val(data[0].Samsung_buildinfo_store_name_x);
+            $('#Samssung_buildinfo_store_name_x').select2();
             $('#Samsung_buildinfo_link_store').val(data[0].Samsung_buildinfo_link_store);
             $('#Samsung_buildinfo_link_app').val(data[0].Samsung_buildinfo_link_app);
             $('#Samsung_buildinfo_email_dev_x').val(data[0].Samsung_buildinfo_email_dev_x);
@@ -716,6 +725,7 @@
             $('#Samsung_policy').val(data[0].Samsung_policy);
 
             $('#Xiaomi_buildinfo_store_name_x').val(data[0].Xiaomi_buildinfo_store_name_x);
+            $('#Xiaomi_buildinfo_store_name_x').select2();
             $('#Xiaomi_buildinfo_link_store').val(data[0].Xiaomi_buildinfo_link_store);
             $('#Xiaomi_buildinfo_link_app').val(data[0].Xiaomi_buildinfo_link_app);
             $('#Xiaomi_buildinfo_email_dev_x').val(data[0].Xiaomi_buildinfo_email_dev_x);
@@ -723,6 +733,7 @@
             $('#Xiaomi_policy').val(data[0].Xiaomi_policy);
 
             $('#Oppo_buildinfo_store_name_x').val(data[0].Oppo_buildinfo_store_name_x);
+            $('#Oppo_buildinfo_store_name_x').select2();
             $('#Oppo_buildinfo_link_store').val(data[0].Oppo_buildinfo_link_store);
             $('#Oppo_buildinfo_link_app').val(data[0].Oppo_buildinfo_link_app);
             $('#Oppo_buildinfo_email_dev_x').val(data[0].Oppo_buildinfo_email_dev_x);
@@ -731,6 +742,7 @@
 
 
             $('#Vivo_buildinfo_store_name_x').val(data[0].Vivo_buildinfo_store_name_x);
+            $('#Vivo_buildinfo_store_name_x').select2();
             $('#Vivo_buildinfo_link_store').val(data[0].Vivo_buildinfo_link_store);
             $('#Vivo_buildinfo_link_app').val(data[0].Vivo_buildinfo_link_app);
             $('#Vivo_buildinfo_email_dev_x').val(data[0].Vivo_buildinfo_email_dev_x);
@@ -745,8 +757,6 @@
             });
         })
     }
-
-
     function quickEditProject(id) {
         $.get('{{asset('project/edit')}}/'+id,function (data) {
             $('#quick_project_id').val(data[0].projectid);
@@ -758,7 +768,7 @@
             $('#ajaxQuickModel').modal('show');
         })
     }
-    function showPolicy(id) {
+    function showPolicy_Chplay(id) {
         $.get('{{asset('project/edit')}}/'+id,function (data) {
             if(data[2] == null) { data[2] = {store_name: "(NO STORE NAME)"}}
             if(data[1].policy1){
@@ -789,6 +799,217 @@
                     .replaceAll("APP_NAME_X", app_name_x)
                     .replaceAll("{STORE_NAME_X}", data[2].store_name)
                     .replaceAll("STORE_NAME_X", data[2].store_name);
+                $('#policy2').val(policy2);
+            }else {
+                $('.policy-2').hide();
+            }
+            $('#modelHeadingPolicy').html("Show Policy");
+            $('#showPolicy').modal('show');
+            $('.modal').on('hidden.bs.modal', function (e) {
+                $('body').addClass('modal-open');
+            });
+        })
+    }
+    function showPolicy_Amazon(id) {
+        $.get('{{asset('project/edit')}}/'+id,function (data) {
+            console.log(data)
+            if(data[5] == null) { data[2] = {amazon_store_name: "(NO STORE NAME)"}}
+            if(data[1].policy1){
+                $('.policy-1').show();
+                if(data[0].buildinfo_app_name_x == null){
+                    var app_name_x = '(NO APP NAME)'
+                }else{
+                    var app_name_x = data[0].buildinfo_app_name_x;
+                }
+                let policy1 = data[1].policy1
+                    .replaceAll("{APP_NAME_X}", app_name_x)
+                    .replaceAll("APP_NAME_X", app_name_x)
+                    .replaceAll("{STORE_NAME_X}", data[5].amazon_store_name)
+                    .replaceAll("STORE_NAME_X", data[5].amazon_store_name);
+                $('#policy1').val(policy1);
+            }else {
+                $('.policy-1').hide();
+            }
+            if(data[1].policy2) {
+                $('.policy-2').show();
+                if(data[0].buildinfo_app_name_x == null){
+                    var app_name_x = '(NO APP NAME)'
+                }else{
+                    var app_name_x = data[0].buildinfo_app_name_x;
+                }
+                let policy2 = data[1].policy2
+                    .replaceAll("{APP_NAME_X}", app_name_x)
+                    .replaceAll("APP_NAME_X", app_name_x)
+                    .replaceAll("{STORE_NAME_X}", data[5].storamazon_store_namee_name)
+                    .replaceAll("STORE_NAME_X", data[5].amazon_store_name);
+                $('#policy2').val(policy2);
+            }else {
+                $('.policy-2').hide();
+            }
+            $('#modelHeadingPolicy').html("Show Policy");
+            $('#showPolicy').modal('show');
+            $('.modal').on('hidden.bs.modal', function (e) {
+                $('body').addClass('modal-open');
+            });
+        })
+    }
+    function showPolicy_Samsung(id) {
+        $.get('{{asset('project/edit')}}/'+id,function (data) {
+            if(data[6] == null) { data[6] = {samsung_store_name: "(NO STORE NAME)"}}
+            if(data[1].policy1){
+                $('.policy-1').show();
+                if(data[0].buildinfo_app_name_x == null){
+                    var app_name_x = '(NO APP NAME)'
+                }else{
+                    var app_name_x = data[0].buildinfo_app_name_x;
+                }
+                let policy1 = data[1].policy1
+                    .replaceAll("{APP_NAME_X}", app_name_x)
+                    .replaceAll("APP_NAME_X", app_name_x)
+                    .replaceAll("{STORE_NAME_X}", data[6].samsung_store_name)
+                    .replaceAll("STORE_NAME_X", data[6].samsung_store_name);
+                $('#policy1').val(policy1);
+            }else {
+                $('.policy-1').hide();
+            }
+            if(data[1].policy2) {
+                $('.policy-2').show();
+                if(data[0].buildinfo_app_name_x == null){
+                    var app_name_x = '(NO APP NAME)'
+                }else{
+                    var app_name_x = data[0].buildinfo_app_name_x;
+                }
+                let policy2 = data[1].policy2
+                    .replaceAll("{APP_NAME_X}", app_name_x)
+                    .replaceAll("APP_NAME_X", app_name_x)
+                    .replaceAll("{STORE_NAME_X}", data[6].samsung_store_name)
+                    .replaceAll("STORE_NAME_X", data[6].samsung_store_name);
+                $('#policy2').val(policy2);
+            }else {
+                $('.policy-2').hide();
+            }
+            $('#modelHeadingPolicy').html("Show Policy");
+            $('#showPolicy').modal('show');
+            $('.modal').on('hidden.bs.modal', function (e) {
+                $('body').addClass('modal-open');
+            });
+        })
+    }
+    function showPolicy_Xiaomi(id) {
+        $.get('{{asset('project/edit')}}/'+id,function (data) {
+            if(data[7] == null) { data[7] = {xiaomi_store_name: "(NO STORE NAME)"}}
+            if(data[1].policy1){
+                $('.policy-1').show();
+                if(data[0].buildinfo_app_name_x == null){
+                    var app_name_x = '(NO APP NAME)'
+                }else{
+                    var app_name_x = data[0].buildinfo_app_name_x;
+                }
+                let policy1 = data[1].policy1
+                    .replaceAll("{APP_NAME_X}", app_name_x)
+                    .replaceAll("APP_NAME_X", app_name_x)
+                    .replaceAll("{STORE_NAME_X}", data[7].xiaomi_store_name)
+                    .replaceAll("STORE_NAME_X", data[7].xiaomi_store_name);
+                $('#policy1').val(policy1);
+            }else {
+                $('.policy-1').hide();
+            }
+            if(data[1].policy2) {
+                $('.policy-2').show();
+                if(data[0].buildinfo_app_name_x == null){
+                    var app_name_x = '(NO APP NAME)'
+                }else{
+                    var app_name_x = data[0].buildinfo_app_name_x;
+                }
+                let policy2 = data[1].policy2
+                    .replaceAll("{APP_NAME_X}", app_name_x)
+                    .replaceAll("APP_NAME_X", app_name_x)
+                    .replaceAll("{STORE_NAME_X}", data[7].xiaomi_store_name)
+                    .replaceAll("STORE_NAME_X", data[7].xiaomi_store_name);
+                $('#policy2').val(policy2);
+            }else {
+                $('.policy-2').hide();
+            }
+            $('#modelHeadingPolicy').html("Show Policy");
+            $('#showPolicy').modal('show');
+            $('.modal').on('hidden.bs.modal', function (e) {
+                $('body').addClass('modal-open');
+            });
+        })
+    }
+    function showPolicy_Oppo(id) {
+        $.get('{{asset('project/edit')}}/'+id,function (data) {
+            if(data[8] == null) { data[8] = {oppo_store_name: "(NO STORE NAME)"}}
+            if(data[1].policy1){
+                $('.policy-1').show();
+                if(data[0].buildinfo_app_name_x == null){
+                    var app_name_x = '(NO APP NAME)'
+                }else{
+                    var app_name_x = data[0].buildinfo_app_name_x;
+                }
+                let policy1 = data[1].policy1
+                    .replaceAll("{APP_NAME_X}", app_name_x)
+                    .replaceAll("APP_NAME_X", app_name_x)
+                    .replaceAll("{STORE_NAME_X}", data[8].oppo_store_name)
+                    .replaceAll("STORE_NAME_X", data[8].oppo_store_name);
+                $('#policy1').val(policy1);
+            }else {
+                $('.policy-1').hide();
+            }
+            if(data[1].policy2) {
+                $('.policy-2').show();
+                if(data[0].buildinfo_app_name_x == null){
+                    var app_name_x = '(NO APP NAME)'
+                }else{
+                    var app_name_x = data[0].buildinfo_app_name_x;
+                }
+                let policy2 = data[1].policy2
+                    .replaceAll("{APP_NAME_X}", app_name_x)
+                    .replaceAll("APP_NAME_X", app_name_x)
+                    .replaceAll("{STORE_NAME_X}", data[8].oppo_store_name)
+                    .replaceAll("STORE_NAME_X", data[8].oppo_store_name);
+                $('#policy2').val(policy2);
+            }else {
+                $('.policy-2').hide();
+            }
+            $('#modelHeadingPolicy').html("Show Policy");
+            $('#showPolicy').modal('show');
+            $('.modal').on('hidden.bs.modal', function (e) {
+                $('body').addClass('modal-open');
+            });
+        })
+    }
+    function showPolicy_Vivo(id) {
+        $.get('{{asset('project/edit')}}/'+id,function (data) {
+            if(data[9] == null) { data[9] = {vivo_store_name: "(NO STORE NAME)"}}
+            if(data[1].policy1){
+                $('.policy-1').show();
+                if(data[0].buildinfo_app_name_x == null){
+                    var app_name_x = '(NO APP NAME)'
+                }else{
+                    var app_name_x = data[0].buildinfo_app_name_x;
+                }
+                let policy1 = data[1].policy1
+                    .replaceAll("{APP_NAME_X}", app_name_x)
+                    .replaceAll("APP_NAME_X", app_name_x)
+                    .replaceAll("{STORE_NAME_X}", data[9].vivo_store_name)
+                    .replaceAll("STORE_NAME_X", data[9].vivo_store_name);
+                $('#policy1').val(policy1);
+            }else {
+                $('.policy-1').hide();
+            }
+            if(data[1].policy2) {
+                $('.policy-2').show();
+                if(data[0].buildinfo_app_name_x == null){
+                    var app_name_x = '(NO APP NAME)'
+                }else{
+                    var app_name_x = data[0].buildinfo_app_name_x;
+                }
+                let policy2 = data[1].policy2
+                    .replaceAll("{APP_NAME_X}", app_name_x)
+                    .replaceAll("APP_NAME_X", app_name_x)
+                    .replaceAll("{STORE_NAME_X}", data[9].vivo_store_name)
+                    .replaceAll("STORE_NAME_X", data[9].vivo_store_name);
                 $('#policy2').val(policy2);
             }else {
                 $('.policy-2').hide();
