@@ -21,15 +21,8 @@
     <h4 class="page-title">Quản lý Project</h4>
 </div>
 <div class="col-sm-6">
-    <div class="col-sm-6 float-right">
-        <div >
-            <a class="btn btn-success" href="javascript:void(0)" id="createNewProject"> Create New Project</a>
-        </div>
-    </div>
-    <div class="col-sm-6 float-right">
-        <div class="float-right">
-            <a class="btn btn-warning" href="javascript:void(0)" id="checkData">Check data</a>
-        </div>
+    <div class="float-right">
+        <a class="btn btn-success" href="javascript:void(0)" id="createNewProject"> Create New Project</a>
     </div>
 </div>
 <div class="modal fade bd-example-modal-xl" id="showMess" aria-hidden="true">
@@ -335,29 +328,7 @@
             $('.message-full').html(rowData.log);
 
         });
-        $(document).on('click','#checkData', function (data){
-            swal({
-                    title: "Bạn có chắc muốn check Data?",
-                    type: "warning",
-                    showCancelButton: true,
-                    confirmButtonClass: "btn-danger",
-                    confirmButtonText: "Xác nhận!",
-                    closeOnConfirm: false
-                },
-                function(){
-                    $.ajax({
-                        type: "get",
-                        url: "{{ asset("project/checkData") }}/",
-                        success: function (data) {
-                            table.draw();
-                        },
-                        error: function (data) {
-                            console.log('Error:', data);
-                        }
-                    });
-                    swal("OK!", '', "success");
-                });
-        });
+
     });
 </script>
 <script>
@@ -812,7 +783,6 @@
     }
     function showPolicy_Amazon(id) {
         $.get('{{asset('project/edit')}}/'+id,function (data) {
-            console.log(data)
             if(data[5] == null) { data[5] = {amazon_store_name: "(NO STORE NAME)"}}
             if(data[1].policy1){
                 $('.policy-1').show();

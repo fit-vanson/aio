@@ -204,6 +204,31 @@
                 });
         });
 
+        $(document).on('click','.checkDataTemplate', function (data){
+            var id = $(this).data("id");
+            swal({
+                    title: "Bạn có chắc muốn check Data?",
+                    type: "warning",
+                    showCancelButton: true,
+                    confirmButtonClass: "btn-danger",
+                    confirmButtonText: "Xác nhận!",
+                    closeOnConfirm: false
+                },
+                function(){
+                    $.ajax({
+                        type: "get",
+                        url: "{{ asset("project/checkData") }}/" +id,
+                        success: function (data) {
+                            table.draw();
+                        },
+                        error: function (data) {
+                            console.log('Error:', data);
+                        }
+                    });
+                    swal("OK!", '', "success");
+                });
+        });
+
     });
     function showProject(id){
         var table = $('.data-table').DataTable({

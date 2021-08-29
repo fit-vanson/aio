@@ -2421,8 +2421,8 @@ class ProjectController extends Controller
         $template = Template::select('package','ads','Chplay_category','Amazon_category','Samsung_category','Xiaomi_category','Oppo_category','Vivo_category')->where('id',$request->template)->first();
         return response()->json($template);
     }
-    public function checkData(){
-        ProjectModel::where('buildinfo_console','<>','2')->Where('buildinfo_console','<>','5')->update(['buildinfo_console'=> 4]);
+    public function checkData($id){
+        ProjectModel::where('template',$id)->where('buildinfo_console','<>','2')->Where('buildinfo_console','<>','5')->update(['buildinfo_console'=> 4]);
         return response()->json(['success'=>'Thành công']);
     }
 }

@@ -66,6 +66,7 @@ class TemplateController extends Controller
         $data_arr = array();
         foreach ($records as $record) {
             $btn = ' <a href="javascript:void(0)" onclick="editTemplate('.$record->id.')" class="btn btn-warning"><i class="ti-pencil-alt"></i></a>';
+            $btn = $btn.' <a href="javascript:void(0)" data-toggle="tooltip"  data-id="'.$record->id.'" data-original-title="Check" class="btn btn-info checkDataTemplate"><i class="ti-file"></i></a>';
             $btn = $btn.' <a href="javascript:void(0)" data-toggle="tooltip"  data-id="'.$record->id.'" data-original-title="Delete" class="btn btn-danger deleteTemplate"><i class="ti-trash"></i></a>';
 
 
@@ -80,10 +81,6 @@ class TemplateController extends Controller
                 $template = '<a href="javascript:void(0)" onclick="showProject('.$record->id.')"> <span>'.$record->template.' - ('.$project.')</span></a>
                             <p class="text-muted m-b-30 ">'.$record->ver_build.'</p>';
             }
-
-
-
-
 
             if($record['script_copy'] !== Null){
                 $script_copy = "<i style='color:green;' class='ti-check-box h5'></i>";
