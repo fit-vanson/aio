@@ -40,8 +40,8 @@ class DevController extends Controller
         // Total records
         $totalRecords = Dev::select('count(*) as allcount')->count();
         $totalRecordswithFilter = Dev::select('count(*) as allcount')
-            ->join('ngocphandang_ga','ngocphandang_ga.id','=','ngocphandang_dev.id_ga')
-            ->join('ngocphandang_gadev','ngocphandang_gadev.id','=','ngocphandang_dev.gmail_gadev_chinh')
+            ->leftjoin('ngocphandang_ga','ngocphandang_ga.id','=','ngocphandang_dev.id_ga')
+            ->leftjoin('ngocphandang_gadev','ngocphandang_gadev.id','=','ngocphandang_dev.gmail_gadev_chinh')
             ->where('id_ga', 'like', '%' . $searchValue . '%')
             ->orwhere('ga_name', 'like', '%' . $searchValue . '%')
             ->orWhere('store_name', 'like', '%' . $searchValue . '%')
@@ -53,9 +53,9 @@ class DevController extends Controller
 
         // Get records, also we have included search filter as well
         $records = Dev::orderBy($columnName, $columnSortOrder)
-            ->join('ngocphandang_ga','ngocphandang_ga.id','=','ngocphandang_dev.id_ga')
-            ->join('ngocphandang_gadev','ngocphandang_gadev.id','=','ngocphandang_dev.gmail_gadev_chinh')
-            ->orwhere('ga_name', 'like', '%' . $searchValue . '%')
+            ->leftjoin('ngocphandang_ga','ngocphandang_ga.id','=','ngocphandang_dev.id_ga')
+            ->leftjoin('ngocphandang_gadev','ngocphandang_gadev.id','=','ngocphandang_dev.gmail_gadev_chinh')
+            ->orwhere('ngocphandang_ga.ga_name', 'like', '%' . $searchValue . '%')
             ->orWhere('ngocphandang_dev.store_name', 'like', '%' . $searchValue . '%')
             ->orWhere('ngocphandang_dev.dev_name', 'like', '%' . $searchValue . '%')
             ->orWhere('ngocphandang_gadev.gmail', 'like', '%' . $searchValue . '%')
@@ -65,9 +65,9 @@ class DevController extends Controller
             ->skip($start)
             ->take($rowperpage)
             ->get();
+        dd($records);
         $data_arr = array();
         foreach ($records as $record) {
-
             $btn = ' <a href="javascript:void(0)" onclick="editDev('.$record->id.')" class="btn btn-warning"><i class="ti-pencil-alt"></i></a>';
             $btn = $btn.' <a href="javascript:void(0)" data-toggle="tooltip"  data-id="'.$record->id.'" data-original-title="Delete" class="btn btn-danger deleteDev"><i class="ti-trash"></i></a>';
 

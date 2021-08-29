@@ -106,6 +106,7 @@
                     {data: 'status'},
                     {data: 'action', className: "text-center",name: 'action', orderable: false, searchable: false},
                 ],
+                order:[2,'asc']
             });
             $('#createNewDev').click(function () {
                 $('#saveBtn').val("create");
