@@ -998,6 +998,7 @@
             }else {
                 $('.policy-1').hide();
             }
+
             if(data[1].policy2) {
                 $('.policy-2').show();
                 if(data[0].buildinfo_app_name_x == null){
