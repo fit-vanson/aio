@@ -813,7 +813,7 @@
     function showPolicy_Amazon(id) {
         $.get('{{asset('project/edit')}}/'+id,function (data) {
             console.log(data)
-            if(data[5] == null) { data[2] = {amazon_store_name: "(NO STORE NAME)"}}
+            if(data[5] == null) { data[5] = {amazon_store_name: "(NO STORE NAME)"}}
             if(data[1].policy1){
                 $('.policy-1').show();
                 if(data[0].buildinfo_app_name_x == null){
