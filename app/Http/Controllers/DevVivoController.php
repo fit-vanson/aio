@@ -41,8 +41,8 @@ class DevVivoController extends Controller
         // Total records
         $totalRecords = Dev_Vivo::select('count(*) as allcount')->count();
         $totalRecordswithFilter = Dev_Vivo::select('count(*) as allcount')
-            ->join('ngocphandang_ga','ngocphandang_ga.id','=','ngocphandang_dev_vivo.vivo_ga_name')
-            ->join('ngocphandang_gadev','ngocphandang_gadev.id','=','ngocphandang_dev_vivo.vivo_email')
+            ->leftjoin('ngocphandang_ga','ngocphandang_ga.id','=','ngocphandang_dev_vivo.vivo_ga_name')
+            ->leftjoin('ngocphandang_gadev','ngocphandang_gadev.id','=','ngocphandang_dev_vivo.vivo_email')
             ->orwhere('ngocphandang_ga.ga_name', 'like', '%' . $searchValue . '%')
             ->orWhere('ngocphandang_dev_vivo.vivo_store_name', 'like', '%' . $searchValue . '%')
             ->orWhere('ngocphandang_dev_vivo.vivo_dev_name', 'like', '%' . $searchValue . '%')
@@ -53,8 +53,8 @@ class DevVivoController extends Controller
 
         // Get records, also we have included search filter as well
         $records = Dev_Vivo::orderBy($columnName, $columnSortOrder)
-            ->join('ngocphandang_ga','ngocphandang_ga.id','=','ngocphandang_dev_vivo.vivo_ga_name')
-            ->join('ngocphandang_gadev','ngocphandang_gadev.id','=','ngocphandang_dev_vivo.vivo_email')
+            ->leftjoin('ngocphandang_ga','ngocphandang_ga.id','=','ngocphandang_dev_vivo.vivo_ga_name')
+            ->leftjoin('ngocphandang_gadev','ngocphandang_gadev.id','=','ngocphandang_dev_vivo.vivo_email')
             ->orwhere('ngocphandang_ga.ga_name', 'like', '%' . $searchValue . '%')
             ->orWhere('ngocphandang_dev_vivo.vivo_store_name', 'like', '%' . $searchValue . '%')
             ->orWhere('ngocphandang_dev_vivo.vivo_dev_name', 'like', '%' . $searchValue . '%')

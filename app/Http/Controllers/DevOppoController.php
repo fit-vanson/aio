@@ -41,8 +41,8 @@ class DevOppoController extends Controller
         // Total records
         $totalRecords = Dev_Oppo::select('count(*) as allcount')->count();
         $totalRecordswithFilter = Dev_Oppo::select('count(*) as allcount')
-            ->join('ngocphandang_ga','ngocphandang_ga.id','=','ngocphandang_dev_oppo.oppo_ga_name')
-            ->join('ngocphandang_gadev','ngocphandang_gadev.id','=','ngocphandang_dev_oppo.oppo_email')
+            ->leftjoin('ngocphandang_ga','ngocphandang_ga.id','=','ngocphandang_dev_oppo.oppo_ga_name')
+            ->leftjoin('ngocphandang_gadev','ngocphandang_gadev.id','=','ngocphandang_dev_oppo.oppo_email')
             ->orwhere('ngocphandang_ga.ga_name', 'like', '%' . $searchValue . '%')
             ->orWhere('ngocphandang_dev_oppo.oppo_store_name', 'like', '%' . $searchValue . '%')
             ->orWhere('ngocphandang_dev_oppo.oppo_dev_name', 'like', '%' . $searchValue . '%')
@@ -53,8 +53,8 @@ class DevOppoController extends Controller
 
         // Get records, also we have included search filter as well
         $records = Dev_Oppo::orderBy($columnName, $columnSortOrder)
-            ->join('ngocphandang_ga','ngocphandang_ga.id','=','ngocphandang_dev_oppo.oppo_ga_name')
-            ->join('ngocphandang_gadev','ngocphandang_gadev.id','=','ngocphandang_dev_oppo.oppo_email')
+            ->leftjoin('ngocphandang_ga','ngocphandang_ga.id','=','ngocphandang_dev_oppo.oppo_ga_name')
+            ->leftjoin('ngocphandang_gadev','ngocphandang_gadev.id','=','ngocphandang_dev_oppo.oppo_email')
             ->orwhere('ngocphandang_ga.ga_name', 'like', '%' . $searchValue . '%')
             ->orWhere('ngocphandang_dev_oppo.oppo_store_name', 'like', '%' . $searchValue . '%')
             ->orWhere('ngocphandang_dev_oppo.oppo_dev_name', 'like', '%' . $searchValue . '%')

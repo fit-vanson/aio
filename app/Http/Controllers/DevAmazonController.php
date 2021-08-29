@@ -61,9 +61,6 @@ class DevAmazonController extends Controller
             ->skip($start)
             ->take($rowperpage)
             ->get();
-
-
-
         $data_arr = array();
         foreach ($records as $record) {
             $btn = ' <a href="javascript:void(0)" onclick="editDevAmazon('.$record->id.')" class="btn btn-warning"><i class="ti-pencil-alt"></i></a>';
@@ -77,8 +74,6 @@ class DevAmazonController extends Controller
                 ->join('ngocphandang_gadev','ngocphandang_gadev.id','=','ngocphandang_dev_amazon.amazon_email')
                 ->where('ngocphandang_gadev.id',$record->amazon_email)
                 ->first();
-
-
             if($record->amazon_status == 0){
                 $status =  '<span class="badge badge-dark">Chưa xử dụng</span>';
             }
