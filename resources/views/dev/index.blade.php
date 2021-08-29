@@ -81,6 +81,10 @@
     <script type="text/javascript" charset="utf8" src="https://cdn.datatables.net/plug-ins/1.10.20/sorting/datetime-moment.js"></script>
 
     <script src="plugins/select2/js/select2.min.js"></script>
+    <script>
+        $("#id_ga").select2({});
+        $("#gmail_gadev_chinh").select2({});
+    </script>
     <script type="text/javascript">
         $(function () {
             $.ajaxSetup({
@@ -114,8 +118,11 @@
                 $('#devAmazonForm').trigger("reset");
                 $('#modelHeading').html("Thêm mới");
                 $('#ajaxModelDev').modal('show');
-                $("#amazon_ga_name").select2({});
-                $("#amazon_email").select2({});
+                $('#id_ga').select2();
+                $('#gmail_gadev_chinh').select2();
+                $('#gmail_gadev_phu_1').select2();
+                $('#gmail_gadev_phu_2').select2();
+
             });
             $('#devForm').on('submit',function (event){
                 event.preventDefault();
@@ -209,14 +216,20 @@
                 $('#store_name').val(data.store_name);
                 $('#dev_name').val(data.dev_name);
                 $('#ma_hoa_don').val(data.ma_hoa_don);
+
                 $('#id_ga').val(data.id_ga);
                 $('#id_ga').select2();
+
+
                 $('#gmail_gadev_chinh').val(data.gmail_gadev_chinh);
                 $('#gmail_gadev_chinh').select2();
+
                 $('#gmail_gadev_phu_1').val(data.gmail_gadev_phu_1);
                 $('#gmail_gadev_phu_1').select2();
+
                 $('#gmail_gadev_phu_2').val(data.gmail_gadev_phu_2);
                 $('#gmail_gadev_phu_2').select2();
+
                 $('#info_phone').val(data.info_phone);
                 $('#pass').val(data.pass);
                 $('#info_andress').val(data.info_andress);

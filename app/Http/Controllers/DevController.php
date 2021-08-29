@@ -17,8 +17,8 @@ class DevController extends Controller
 {
     public function index()
     {
-        $ga_name = Ga::latest('id')->get();
-        $ga_dev = Ga_dev::latest('id')->get();
+        $ga_name = Ga::orderBy('ga_name','asc')->get();
+        $ga_dev = Ga_dev::orderBy('gmail','asc')->get();
         return view('dev.index',compact(['ga_name','ga_dev']));
     }
     public function getIndex(Request $request)
@@ -65,7 +65,7 @@ class DevController extends Controller
             ->skip($start)
             ->take($rowperpage)
             ->get();
-        dd($records);
+
         $data_arr = array();
         foreach ($records as $record) {
             $btn = ' <a href="javascript:void(0)" onclick="editDev('.$record->id.')" class="btn btn-warning"><i class="ti-pencil-alt"></i></a>';
