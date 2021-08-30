@@ -80,7 +80,6 @@ class ProjectController extends Controller
 
     public function getIndex(Request $request)
     {
-
         $draw = $request->get('draw');
         $start = $request->get("start");
         $rowperpage = $request->get("length"); // total number of rows per page
@@ -112,7 +111,6 @@ class ProjectController extends Controller
                 ->skip($start)
                 ->take($rowperpage)
                 ->get();
-
         }
         elseif (isset($request->template)){
         $totalRecords = ProjectModel::select('count(*) as allcount')->where('ma_da',$request->ma_da)->count();
@@ -266,7 +264,8 @@ class ProjectController extends Controller
             }
             $btn = $btn.'<br><br> <a href="javascript:void(0)" data-toggle="tooltip"  data-id="'.$record->projectid.'" data-original-title="Delete" class="btn btn-danger deleteProject"><i class="ti-trash"></i></a>';
             if(isset($record->log)){
-                $btn .= '   <a href="javascript:void(0)" data-toggle="tooltip"  data-id="'.$record->projectid.'" data-original-title="Log" class="btn btn-secondary showLog_Project"><i class="mdi mdi-file"></i></a>';
+//                $btn .= '   <a href="javascript:void(0)" data-toggle="tooltip"  data-id="'.$record->projectid.'" data-original-title="Log" class="btn btn-secondary showLog_Project"><i class="mdi mdi-file"></i></a>';
+                $btn .= '   <a href="../../project/showlog/'.$record->projectid.'" data-toggle="tooltip" class="btn btn-secondary"><i class="mdi mdi-file"></i></a>';
                 $log = $record->log->buildinfo_mess;
                 $full_mess =  (str_replace('|','<br>',$log));
             }
@@ -2425,4 +2424,34 @@ class ProjectController extends Controller
         ProjectModel::where('template',$id)->where('buildinfo_console','<>','2')->Where('buildinfo_console','<>','5')->update(['buildinfo_console'=> 4]);
         return response()->json(['success'=>'Thành công']);
     }
+
+    public function showlog($id){
+        $record = ProjectModel::with(['log','da','matemplate'])->where('projectid',$id)->first();
+        $logs = $record->log->buildinfo_mess;
+        $logs = explode('|',$logs);
+
+        foreach ($logs as $log){
+
+            $data_logs[] =[
+                'time' => substr($log,0,$this->substr_Index( $log , 3)),
+                'mess' => substr($log, $this->substr_Index( $log , 3) +1)
+            ];
+        }
+        return view('project.showlog',['record'=>$record,'data_logs'=>$data_logs]);
+    }
+
+public function substr_Index( $str, $nth ){
+        $str2 = '';
+        $posTotal = 0;
+        for($i=0; $i < $nth; $i++){
+            if($str2 != ''){
+                $str = $str2;
+            }
+            $pos   = strpos($str, ':');
+            $str2  = substr($str, $pos+1);
+            $posTotal += $pos+1;
+        }
+        return $posTotal-1;
+    }
+
 }

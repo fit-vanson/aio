@@ -119,6 +119,8 @@ Route::group(['prefix'=>'project','middleware'=>['CheckLogout','2fa']], function
     Route::post('/getVivo',[ProjectController::class,'getVivo'])->name('project.getVivo')->middleware('can:project-index');
 
     Route::post('/select-template',[ProjectController::class,'select_template']);
+    Route::get('/showlog/{id}',[ProjectController::class,'showlog'])->name('project.showlog')->middleware('can:project-index');
+
 
 
 

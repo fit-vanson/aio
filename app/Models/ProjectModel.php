@@ -14,4 +14,11 @@ class ProjectModel extends Model
     public function log(){
         return $this->hasOne(log::class,'projectname','projectname');
     }
+
+    public function da(){
+        return $this->belongsTo(Da::class,'ma_da');
+    }
+    public function matemplate(){
+        return $this->belongsTo(Template::class,'template');
+    }
 }
