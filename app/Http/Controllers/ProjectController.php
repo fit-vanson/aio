@@ -2037,6 +2037,7 @@ class ProjectController extends Controller
         $data['Chplay_buildinfo_email_dev_x'] = $request->Chplay_buildinfo_email_dev_x;
         $data['Chplay_buildinfo_link_app'] = $request->Chplay_buildinfo_link_app;
         $data['Chplay_policy'] = $request->Chplay_policy;
+        $data['Chplay_keystore_profile'] = $request->Chplay_keystore_profile;
         $data['Chplay_ads'] = $Chplay_ads;
         $data['Chplay_status'] = 0;
 
@@ -2046,6 +2047,7 @@ class ProjectController extends Controller
         $data['Amazon_buildinfo_email_dev_x'] = $request->Amazon_buildinfo_email_dev_x;
         $data['Amazon_buildinfo_link_app'] = $request->Amazon_buildinfo_link_app;
         $data['Amazon_policy'] = $request->Amazon_policy;
+        $data['Amazon_keystore_profile'] = $request->Amazon_keystore_profile;
         $data['Amazon_ads'] = $Amazon_ads;
         $data['Amazon_status'] = 0;
 
@@ -2054,6 +2056,7 @@ class ProjectController extends Controller
         $data['Samsung_buildinfo_link_store'] = $request->Samsung_buildinfo_link_store;
         $data['Samsung_buildinfo_email_dev_x'] = $request->Samsung_buildinfo_email_dev_x;
         $data['Samsung_buildinfo_link_app'] = $request->Samsung_buildinfo_link_app;
+        $data['Samsung_keystore_profile'] = $request->Samsung_keystore_profile;
         $data['Samsung_policy'] = $request->Samsung_policy;
         $data['Samsung_ads'] = $Samsung_ads;
         $data['Samsung_status'] = 0;
@@ -2064,6 +2067,7 @@ class ProjectController extends Controller
         $data['Xiaomi_buildinfo_email_dev_x'] = $request->Xiaomi_buildinfo_email_dev_x;
         $data['Xiaomi_buildinfo_link_app'] = $request->Xiaomi_buildinfo_link_app;
         $data['Xiaomi_policy'] = $request->Xiaomi_policy;
+        $data['Xiaomi_keystore_profile'] = $request->Xiaomi_keystore_profile;
         $data['Xiaomi_ads'] = $Xiaomi_ads;
         $data['Xiaomi_status'] = 0;
 
@@ -2073,6 +2077,7 @@ class ProjectController extends Controller
         $data['Oppo_buildinfo_email_dev_x'] = $request->Oppo_buildinfo_email_dev_x;
         $data['Oppo_buildinfo_link_app'] = $request->Oppo_buildinfo_link_app;
         $data['Oppo_policy'] = $request->Oppo_policy;
+        $data['Oppo_keystore_profile'] = $request->Oppo_keystore_profile;
         $data['Oppo_ads'] = $Oppo_ads;
         $data['Oppo_status'] = 0;
 
@@ -2082,6 +2087,7 @@ class ProjectController extends Controller
         $data['Vivo_buildinfo_email_dev_x'] = $request->Vivo_buildinfo_email_dev_x;
         $data['Vivo_buildinfo_link_app'] = $request->Vivo_buildinfo_link_app;
         $data['Vivo_policy'] = $request->Vivo_policy;
+        $data['Vivo_keystore_profile'] = $request->Vivo_keystore_profile;
         $data['Vivo_ads'] = $Vivo_ads;
         $data['Vivo_status'] = 0;
 
@@ -2124,6 +2130,7 @@ class ProjectController extends Controller
 
     public function update(Request $request)
     {
+
         $id = $request->project_id;
         $rules = [
             'projectname' =>'unique:ngocphandang_project,projectname,'.$id.',projectid',
@@ -2241,6 +2248,7 @@ class ProjectController extends Controller
 //        $data->Chplay_bot->log_status = $data->Chplay_bot->log_status.'|'.$data->Chplay_status;
         $data->Chplay_status = $request->Chplay_status;
         $data->Chplay_policy = $request->Chplay_policy;
+        $data->Chplay_keystore_profile = $request->Chplay_keystore_profile;
 
         $data->Amazon_package = $request->Amazon_package;
         $data->Amazon_buildinfo_store_name_x = $request->Amazon_buildinfo_store_name_x;
@@ -2250,6 +2258,7 @@ class ProjectController extends Controller
         $data->Amazon_ads = $Amazon_ads;
         $data->Amazon_status = $request->Amazon_status;
         $data->Amazon_policy = $request->Amazon_policy;
+        $data->Amazon_keystore_profile = $request->Amazon_keystore_profile;
 
         $data->Samsung_package = $request->Samsung_package;
         $data->Samsung_buildinfo_store_name_x = $request->Samsung_buildinfo_store_name_x;
@@ -2259,6 +2268,7 @@ class ProjectController extends Controller
         $data->Samsung_ads = $Samsung_ads;
         $data->Samsung_status = $request->Samsung_status;
         $data->Samsung_policy = $request->Samsung_policy;
+        $data->Samsung_keystore_profile = $request->Samsung_keystore_profile;
 
         $data->Xiaomi_package = $request->Xiaomi_package;
         $data->Xiaomi_buildinfo_store_name_x = $request->Xiaomi_buildinfo_store_name_x;
@@ -2268,6 +2278,7 @@ class ProjectController extends Controller
         $data->Xiaomi_ads = $Xiaomi_ads;
         $data->Xiaomi_status = $request->Xiaomi_status;
         $data->Xiaomi_policy = $request->Xiaomi_policy;
+        $data->Xiaomi_keystore_profile = $request->Xiaomi_keystore_profile;
 
         $data->Oppo_package = $request->Oppo_package;
         $data->Oppo_buildinfo_store_name_x = $request->Oppo_buildinfo_store_name_x;
@@ -2277,6 +2288,7 @@ class ProjectController extends Controller
         $data->Oppo_ads = $Oppo_ads;
         $data->Oppo_status = $request->Oppo_status;
         $data->Oppo_policy = $request->Oppo_policy;
+        $data->Oppo_keystore_profile = $request->Oppo_keystore_profile;
 
         $data->Vivo_package = $request->Vivo_package;
         $data->Vivo_buildinfo_store_name_x = $request->Vivo_buildinfo_store_name_x;
@@ -2286,6 +2298,7 @@ class ProjectController extends Controller
         $data->Vivo_ads = $Vivo_ads;
         $data->Vivo_status = $request->Vivo_status;
         $data->Vivo_policy = $request->Vivo_policy;
+        $data->Vivo_keystore_profile = $request->Vivo_keystore_profile;
         if($data->logo){
             if($data->projectname <> $request->projectname){
                 $dir = (public_path('uploads/project/'));

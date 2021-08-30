@@ -676,6 +676,7 @@
             $('#Chplay_buildinfo_email_dev_x').val(data[0].Chplay_buildinfo_email_dev_x);
             $('#Chplay_status').val(data[0].Chplay_status);
             $('#Chplay_policy').val(data[0].Chplay_policy);
+            $('#Chplay_keystore_profile').val(data[0].Chplay_keystore_profile);
 
             $('#Amazon_buildinfo_store_name_x').val(data[0].Amazon_buildinfo_store_name_x);
             $('#Amazon_buildinfo_store_name_x').select2();
@@ -684,6 +685,7 @@
             $('#Amazon_buildinfo_email_dev_x').val(data[0].Amazon_buildinfo_email_dev_x);
             $('#Amazon_status').val(data[0].Amazon_status);
             $('#Amazon_policy').val(data[0].Amazon_policy);
+            $('#Amazon_keystore_profile').val(data[0].Amazon_keystore_profile);
 
 
 
@@ -694,6 +696,7 @@
             $('#Samsung_buildinfo_email_dev_x').val(data[0].Samsung_buildinfo_email_dev_x);
             $('#Samsung_status').val(data[0].Samsung_status);
             $('#Samsung_policy').val(data[0].Samsung_policy);
+            $('#Samsung_keystore_profile').val(data[0].Samsung_keystore_profile);
 
             $('#Xiaomi_buildinfo_store_name_x').val(data[0].Xiaomi_buildinfo_store_name_x);
             $('#Xiaomi_buildinfo_store_name_x').select2();
@@ -702,6 +705,8 @@
             $('#Xiaomi_buildinfo_email_dev_x').val(data[0].Xiaomi_buildinfo_email_dev_x);
             $('#Xiaomi_status').val(data[0].Xiaomi_status);
             $('#Xiaomi_policy').val(data[0].Xiaomi_policy);
+            $('#Xiaomi_keystore_profile').val(data[0].Xiaomi_keystore_profile);
+
 
             $('#Oppo_buildinfo_store_name_x').val(data[0].Oppo_buildinfo_store_name_x);
             $('#Oppo_buildinfo_store_name_x').select2();
@@ -710,6 +715,7 @@
             $('#Oppo_buildinfo_email_dev_x').val(data[0].Oppo_buildinfo_email_dev_x);
             $('#Oppo_status').val(data[0].Oppo_status);
             $('#Oppo_policy').val(data[0].Oppo_policy);
+            $('#Oppo_keystore_profile').val(data[0].Oppo_keystore_profile);
 
 
             $('#Vivo_buildinfo_store_name_x').val(data[0].Vivo_buildinfo_store_name_x);
@@ -719,6 +725,7 @@
             $('#Vivo_buildinfo_email_dev_x').val(data[0].Vivo_buildinfo_email_dev_x);
             $('#Vivo_status').val(data[0].Vivo_status);
             $('#Vivo_policy').val(data[0].Vivo_policy);
+            $('#Vivo_keystore_profile').val(data[0].Vivo_keystore_profile);
 
             $('#modelHeading').html("Edit Project");
             $('#saveBtn').val("edit-project");

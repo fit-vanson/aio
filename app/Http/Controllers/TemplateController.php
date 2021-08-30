@@ -435,6 +435,7 @@ class TemplateController extends Controller
             $image->move($destinationPath, $data['logo']);
         }
         $data->template = $request->template;
+        $data->template_name = $request->template_name;
 
         $data->save();
         return response()->json(['success'=>'Cập nhật thành công']);

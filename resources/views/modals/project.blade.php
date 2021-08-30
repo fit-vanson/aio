@@ -434,13 +434,19 @@
                                                 </div>
                                             </div>
                                             <div data-repeater-item="" class="row">
-                                                <div class="form-group col-lg-6 input_buildinfo_keystore">
+                                                <div class="form-group col-lg-6">
                                                     <label for="name">Link App</label>
                                                     <input type="text" id="Chplay_buildinfo_link_app" name="Chplay_buildinfo_link_app" class="form-control" >
                                                 </div>
-                                                <div class="form-group col-lg-6 input_buildinfo_keystore">
+                                                <div class="form-group col-lg-6 ">
                                                     <label for="name">Link Policy</label>
                                                     <input type="text" id="Chplay_policy" name="Chplay_policy" class="form-control" >
+                                                </div>
+                                            </div>
+                                            <div data-repeater-item="" class="row">
+                                                <div class="form-group col-lg-6">
+                                                    <label for="name">Keystore Profile</label>
+                                                    <input type="text" id="Chplay_keystore_profile" name="Chplay_keystore_profile" class="form-control" >
                                                 </div>
                                             </div>
 
@@ -491,6 +497,12 @@
                                                     <input type="text" id="Amazon_policy" name="Amazon_policy" class="form-control" >
                                                 </div>
                                             </div>
+                                            <div data-repeater-item="" class="row">
+                                                <div class="form-group col-lg-6">
+                                                    <label for="name">Keystore Profile</label>
+                                                    <input type="text" id="Amazon_keystore_profile" name="Amazon_keystore_profile" class="form-control" >
+                                                </div>
+                                            </div>
                                         </div>
                                         <div class="tab-pane p-3" id="samsung" role="tabpanel">
                                             <div data-repeater-item="" class="row input_buildinfo">
@@ -536,6 +548,12 @@
                                                 <div class="form-group col-lg-6 input_buildinfo_keystore">
                                                     <label for="name">Link Policy</label>
                                                     <input type="text" id="Samsung_policy" name="Samsung_policy" class="form-control" >
+                                                </div>
+                                            </div>
+                                            <div data-repeater-item="" class="row">
+                                                <div class="form-group col-lg-6">
+                                                    <label for="name">Keystore Profile</label>
+                                                    <input type="text" id="Samsung_keystore_profile" name="Samsung_keystore_profile" class="form-control" >
                                                 </div>
                                             </div>
                                         </div>
@@ -585,6 +603,12 @@
                                                     <input type="text" id="Xiaomi_policy" name="Xiaomi_policy" class="form-control" >
                                                 </div>
                                             </div>
+                                            <div data-repeater-item="" class="row">
+                                                <div class="form-group col-lg-6">
+                                                    <label for="name">Keystore Profile</label>
+                                                    <input type="text" id="Xiaomi_keystore_profile" name="Xiaomi_keystore_profile" class="form-control" >
+                                                </div>
+                                            </div>
                                         </div>
                                         <div class="tab-pane p-3" id="oppo" role="tabpanel">
                                             <div data-repeater-item="" class="row input_buildinfo">
@@ -632,6 +656,12 @@
                                                     <input type="text" id="Oppo_policy" name="Oppo_policy" class="form-control" >
                                                 </div>
                                             </div>
+                                            <div data-repeater-item="" class="row">
+                                                <div class="form-group col-lg-6">
+                                                    <label for="name">Keystore Profile</label>
+                                                    <input type="text" id="Oppo_keystore_profile" name="Oppo_keystore_profile" class="form-control" >
+                                                </div>
+                                            </div>
                                         </div>
                                         <div class="tab-pane p-3" id="vivo" role="tabpanel">
                                             <div data-repeater-item="" class="row input_buildinfo">
@@ -677,6 +707,12 @@
                                                 <div class="form-group col-lg-6 input_buildinfo_keystore">
                                                     <label for="name">Link Policy</label>
                                                     <input type="text" id="Vivo_policy" name="Vivo_policy" class="form-control" >
+                                                </div>
+                                            </div>
+                                            <div data-repeater-item="" class="row">
+                                                <div class="form-group col-lg-6">
+                                                    <label for="name">Keystore Profile</label>
+                                                    <input type="text" id="Vivo_keystore_profile" name="Vivo_keystore_profile" class="form-control" >
                                                 </div>
                                             </div>
                                         </div>
