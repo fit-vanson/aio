@@ -46,6 +46,7 @@
                      <table class="table table-bordered dt-responsive nowrap data-table" style="border-collapse: collapse; border-spacing: 0; width: 100%;">
                         <thead>
                         <tr>
+                            <th>Logo</th>
                             <th>Tên Template</th>
                             <th>Phân loại</th>
                             <th>Thông tin Template</th>
@@ -102,15 +103,16 @@
                 type: "post"
             },
             columns: [
+                {data: 'logo'},
                 {data: 'template'},
                 {data: 'category'},
                 {data: 'script'},
                 {data: 'action',className: "text-center", name: 'action', orderable: false, searchable: false},
             ],
             "columnDefs": [
-                { "orderable": false, "targets": [1,2,3] }
+                { "orderable": false, "targets": [0,2,3] }
             ],
-            order:[0,'asc']
+            order:[1,'asc']
 
         });
 
@@ -125,12 +127,15 @@
         });
         $('#templateForm').on('submit',function (event){
             event.preventDefault();
+            var formData = new FormData($("#templateForm")[0]);
             if($('#saveBtn').val() == 'create-template'){
                 $.ajax({
-                    data: $('#templateForm').serialize(),
+                    data: formData,
                     url: "{{ route('template.create') }}",
                     type: "POST",
                     dataType: 'json',
+                    processData: false,
+                    contentType: false,
                     success: function (data) {
                         if(data.errors){
                             for( var count=0 ; count <data.errors.length; count++){
@@ -151,10 +156,12 @@
             }
             if($('#saveBtn').val() == 'edit-template'){
                 $.ajax({
-                    data: $('#templateForm').serialize(),
+                    data: formData,
                     url: "{{ route('template.update') }}",
                     type: "post",
                     dataType: 'json',
+                    processData: false,
+                    contentType: false,
                     success: function (data) {
                         if(data.errors){
                             for( var count=0 ; count <data.errors.length; count++){
@@ -244,9 +251,11 @@
             },
             columns: [
                 {title: 'Logo',data: 'logo', name: 'logo',orderable: false},
+                {title: 'Tên template',data: 'template', name: 'template'},
                 {title: 'Tên Project',data: 'projectname', name: 'projectname'},
                 {title: 'Package',data: 'package', name: 'package',orderable: false},
                 {title: 'Status',data: 'status', name: 'status',orderable: false},
+
             ],
             order: [[1, 'desc' ]],
         });
@@ -305,8 +314,15 @@
                 $("#Check_ads_native").prop('checked', false);
                 $("#Check_ads_open").prop('checked', false);
             }
+            if(data.logo) {
+                $("#avatar").attr("src","../uploads/template/"+data.template+"/thumbnail/"+data.logo);
+            }else {
+                $("#avatar").attr("src","img/logo.png");
+            }
+
             $('#template_id').val(data.id);
             $('#template').val(data.template);
+            $('#template_name').val(data.template_name);
             $('#ver_build').val(data.ver_build);
             $('#script_copy').val(data.script_copy);
             $('#script_img').val(data.script_img);

@@ -9,6 +9,7 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Validator;
+use Intervention\Image\Facades\Image;
 use Yajra\DataTables\Facades\DataTables;
 
 class TemplateController extends Controller
@@ -74,13 +75,10 @@ class TemplateController extends Controller
                 ->join('ngocphandang_project','ngocphandang_template.id','=','ngocphandang_project.template')
                 ->where('ngocphandang_project.template',$record->id)
                 ->count();
-            if($record->link_store_vietmmo){
-                $template = '<a href="javascript:void(0)" onclick="showProject('.$record->id.')"> <span>'.$record->template.' - ('.$project.')</span></a>
-                            <a href="'.$record->link_store_vietmmo.'" target="_blank"> <p class="text-muted m-b-30 ">'.$record->ver_build.'</p></a>';
-            }else{
-                $template = '<a href="javascript:void(0)" onclick="showProject('.$record->id.')"> <span>'.$record->template.' - ('.$project.')</span></a>
+
+            $template = '<a href="javascript:void(0)" onclick="showProject('.$record->id.')"> <span>'.$record->template.' - ('.$project.')</span></a>
                             <p class="text-muted m-b-30 ">'.$record->ver_build.'</p>';
-            }
+
 
             if($record['script_copy'] !== Null){
                 $script_copy = "<i style='color:green;' class='ti-check-box h5'></i>";
@@ -216,7 +214,19 @@ class TemplateController extends Controller
             else{
                 $link = null;
             }
+
+            if(isset($record->logo)){
+                if (isset($record->link_store_vietmmo)){
+                    $logo = "<a href='".$record->link_store_vietmmo."' target='_blank'>  <img class='rounded mx-auto d-block'  width='100px'  height='100px'  src='../uploads/template/$record->template/thumbnail/$record->logo'></a>";
+                }else{
+                    $logo = "<img class='rounded mx-auto d-block'  width='100px'  height='100px'  src='../uploads/template/$record->template/thumbnail/$record->logo'>";
+                }
+            }else{
+                $logo = '<img class="rounded mx-auto d-block" width="100px" height="100px" src="assets\images\logo-sm.png">';
+            }
+
             $data_arr[] = array(
+                "logo" => $logo,
                 "template" => $template. '<br>'.$link,
                 "category"=>$Chplay_category.'<br>'.$Amazon_category.'<br>'.$Samsung_category.'<br>'.$Xiaomi_category.'<br>'.$Oppo_category.'<br>'.$Vivo_category,
                 "script" => $script.$ads.$convert_aab.$startus.'<br>Package: '.$record->package,
@@ -242,8 +252,6 @@ class TemplateController extends Controller
 
     public function create(Request  $request)
     {
-
-
         $rules = [
             'template' =>'unique:ngocphandang_template,template'
         ];
@@ -267,6 +275,7 @@ class TemplateController extends Controller
         $ads =  json_encode($ads);
         $data = new Template();
         $data['template'] = $request->template;
+        $data['template_name'] = $request->template_name;
         $data['ver_build'] = $request->ver_build;
         $data['script_copy'] = $request->script_copy;
         $data['script_img'] = $request->script_img;
@@ -291,6 +300,21 @@ class TemplateController extends Controller
         $data['Xiaomi_category'] =  $request->Xiaomi_category;
         $data['Oppo_category'] =  $request->Oppo_category;
         $data['Vivo_category'] =  $request->Vivo_category;
+
+        if(isset($request->logo)){
+            $image = $request->file('logo');
+            $data['logo'] = 'logo_'.time().'.'.$image->extension();
+            $destinationPath = public_path('uploads/template/'.$request->template.'/thumbnail/');
+            $img = Image::make($image->path());
+            if (!file_exists($destinationPath)) {
+                mkdir($destinationPath, 777, true);
+            }
+            $img->resize(100, 100, function ($constraint) {
+                $constraint->aspectRatio();
+            })->save($destinationPath.$data['logo']);
+            $destinationPath = public_path('uploads/template/'.$request->template);
+            $image->move($destinationPath, $data['logo']);
+        }
 
         $data->save();
         $allTemp  = Template::latest('id')->get();
@@ -366,7 +390,7 @@ class TemplateController extends Controller
 
         $ads =  json_encode($ads);
         $data = Template::find($id);
-        $data->template = $request->template;
+
         $data->ver_build = $request->ver_build;
         $data->script_copy = $request->script_copy;
         $data->script_img= $request->script_img;
@@ -389,6 +413,29 @@ class TemplateController extends Controller
         $data->Xiaomi_category =  $request->Xiaomi_category;
         $data->Oppo_category =  $request->Oppo_category;
         $data->Vivo_category =  $request->Vivo_category;
+
+        if($data->logo){
+            if($data->template <> $request->template){
+                $dir = (public_path('uploads/template/'));
+                rename($dir.$data->template, $dir.$request->template);
+            }
+        }
+        if($request->logo){
+            $image = $request->file('logo');
+            $data['logo'] = 'logo_'.time().'.'.$image->extension();
+            $destinationPath = public_path('uploads/template/'.$request->template.'/thumbnail/');
+            $img = Image::make($image->path());
+            if (!file_exists($destinationPath)) {
+                mkdir($destinationPath, 777, true);
+            }
+            $img->resize(100, 100, function ($constraint) {
+                $constraint->aspectRatio();
+            })->save($destinationPath.$data['logo']);
+            $destinationPath = public_path('uploads/template/'.$request->template);
+            $image->move($destinationPath, $data['logo']);
+        }
+        $data->template = $request->template;
+
         $data->save();
         return response()->json(['success'=>'Cập nhật thành công']);
     }

@@ -8,20 +8,31 @@
             </div>
             <div class="modal-body">
 
-                <form id="templateForm" name="templateForm" class="form-horizontal">
+                <form id="templateForm" name="templateForm" enctype="multipart/form-data" class="form-horizontal">
                     <input type="hidden" name="template_id" id="template_id">
+                    <div class="form-group col-lg-4">
+                        <label>Logo</label>
+                        <input  id="logo" type="file" name="logo" class="form-control" hidden onchange="changeImg(this)">
+                        <img id="avatar" class="thumbnail" width="100px" src="img/logo.png">
+                    </div>
                     <div data-repeater-list="group-a">
                         <div data-repeater-item="" class="row">
-                            <div class="form-group col-lg-3 input_ma_da">
+                            <div class="form-group col-lg-6 input_ma_da">
                                 <label for="name">Mã Template <span style="color: red">*</span></label>
                                 <input type="text" id="template" name="template" class="form-control" required>
                             </div>
-                            <div class="form-group col-lg-3 ">
+                            <div class="form-group col-lg-6 ">
+                                <label for="name">Tên Template</label>
+                                <input type="text" id="template_name" name="template_name" class="form-control">
+                            </div>
+                        </div>
+                        <div data-repeater-item="" class="row">
+                            <div class="form-group col-lg-4 ">
                                 <label for="name">Ver Build</label>
                                 <input type="text" id="ver_build" name="ver_build" class="form-control">
                             </div>
 
-                            <div class="form-group col-lg-3 ">
+                            <div class="form-group col-lg-4 ">
                                 <label for="name">Convert Aab</label>
                                 <div>
                                     <select class="form-control" id="convert_aab" name="convert_aab">
@@ -30,7 +41,7 @@
                                     </select>
                                 </div>
                             </div>
-                            <div class="form-group col-lg-3 input_status">
+                            <div class="form-group col-lg-4 input_status">
                                 <label for="name">Trạng thái</label>
                                 <div>
                                     <select class="form-control" id="startus" name="startus">
@@ -86,22 +97,22 @@
 
                         <div data-repeater-item="" class="row">
                             <div class="form-group col-lg-6 input_package">
-                                <label for="name">script_copy </label>
+                                <label for="name">SCRIPT: Copy File & Folder </label>
                                 <textarea id="script_copy" name="script_copy" class="form-control" rows="4" ></textarea>
                             </div>
                             <div class="form-group col-lg-6 input_title_app">
-                                <label for="name">script_img</label>
+                                <label for="name">SCRIPT: IMG</label>
                                 <textarea id="script_img" name="script_img" class="form-control" rows="4" ></textarea>
                             </div>
                         </div>
 
                         <div data-repeater-item="" class="row">
                             <div class="form-group col-lg-6 input_package">
-                                <label for="name">script_svg2xml </label>
+                                <label for="name">SCRIPT: Convert SVG to XML </label>
                                 <textarea id="script_svg2xml" name="script_svg2xml" class="form-control" rows="4" ></textarea>
                             </div>
                             <div class="form-group col-lg-6 input_title_app">
-                                <label for="name">script_file</label>
+                                <label for="name">SCRIPT: Files</label>
                                 <textarea id="script_file" name="script_file" class="form-control" rows="4" ></textarea>
                             </div>
                         </div>
