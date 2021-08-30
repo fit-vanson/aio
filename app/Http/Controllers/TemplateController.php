@@ -39,6 +39,7 @@ class TemplateController extends Controller
         $totalRecords = Template::select('count(*) as allcount')->count();
         $totalRecordswithFilter = Template::select('count(*) as allcount')
             ->where('template', 'like', '%' . $searchValue . '%')
+            ->orwhere('template_name', 'like', '%' . $searchValue . '%')
             ->orWhere('ver_build', 'like', '%' . $searchValue . '%')
             ->orWhere('Chplay_category', 'like', '%' . $searchValue . '%')
             ->orWhere('Amazon_category', 'like', '%' . $searchValue . '%')
@@ -52,6 +53,7 @@ class TemplateController extends Controller
         // Get records, also we have included search filter as well
         $records = Template::orderBy($columnName, $columnSortOrder)
             ->where('template', 'like', '%' . $searchValue . '%')
+            ->orwhere('template_name', 'like', '%' . $searchValue . '%')
             ->orWhere('ver_build', 'like', '%' . $searchValue . '%')
             ->orWhere('Chplay_category', 'like', '%' . $searchValue . '%')
             ->orWhere('Amazon_category', 'like', '%' . $searchValue . '%')
