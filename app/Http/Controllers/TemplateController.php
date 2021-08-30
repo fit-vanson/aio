@@ -77,7 +77,8 @@ class TemplateController extends Controller
                 ->count();
 
             $template = '<a href="javascript:void(0)" onclick="showProject('.$record->id.')"> <span>'.$record->template.' - ('.$project.')</span></a>
-                            <p class="text-muted m-b-30 ">'.$record->ver_build.'</p>';
+                            <p class="text-muted" style="margin: 0">'.$record->ver_build.'</p>
+                            <p class="text-muted" style="margin: 0">'.$record->template_name.'</p>';
 
 
             if($record['script_copy'] !== Null){
