@@ -147,6 +147,14 @@ class ProjectController extends Controller
                 ->orWhere('ngocphandang_project.Xiaomi_package', 'like', '%' . $searchValue . '%')
                 ->orWhere('ngocphandang_project.Oppo_package', 'like', '%' . $searchValue . '%')
                 ->orWhere('ngocphandang_project.Vivo_package', 'like', '%' . $searchValue . '%')
+
+                ->orWhere('ngocphandang_project.Chplay_keystore_profile', 'like', '%' . $searchValue . '%')
+                ->orWhere('ngocphandang_project.Amazon_keystore_profile', 'like', '%' . $searchValue . '%')
+                ->orWhere('ngocphandang_project.Samsung_keystore_profile', 'like', '%' . $searchValue . '%')
+                ->orWhere('ngocphandang_project.Xiaomi_keystore_profile', 'like', '%' . $searchValue . '%')
+                ->orWhere('ngocphandang_project.Oppo_keystore_profile', 'like', '%' . $searchValue . '%')
+                ->orWhere('ngocphandang_project.Vivo_keystore_profile', 'like', '%' . $searchValue . '%')
+
                 ->orWhere('ngocphandang_project.Chplay_ads->ads_id', 'like', '%' . $searchValue . '%')
                 ->orWhere('ngocphandang_project.Chplay_ads->ads_banner', 'like', '%' . $searchValue . '%')
                 ->orWhere('ngocphandang_project.Chplay_ads->ads_inter', 'like', '%' . $searchValue . '%')
@@ -206,6 +214,13 @@ class ProjectController extends Controller
                 ->orWhere('ngocphandang_project.Vivo_package', 'like', '%' . $searchValue . '%')
                 ->orWhere('ngocphandang_project.Chplay_ads->ads_id', 'like', '%' . $searchValue . '%')
                 ->orWhere('ngocphandang_project.Chplay_ads->ads_banner', 'like', '%' . $searchValue . '%')
+
+                ->orWhere('ngocphandang_project.Chplay_keystore_profile', 'like', '%' . $searchValue . '%')
+                ->orWhere('ngocphandang_project.Amazon_keystore_profile', 'like', '%' . $searchValue . '%')
+                ->orWhere('ngocphandang_project.Samsung_keystore_profile', 'like', '%' . $searchValue . '%')
+                ->orWhere('ngocphandang_project.Xiaomi_keystore_profile', 'like', '%' . $searchValue . '%')
+                ->orWhere('ngocphandang_project.Oppo_keystore_profile', 'like', '%' . $searchValue . '%')
+                ->orWhere('ngocphandang_project.Vivo_keystore_profile', 'like', '%' . $searchValue . '%')
 
                 ->orWhere('ngocphandang_project.Chplay_ads->ads_id', 'like', '%' . $searchValue . '%')
                 ->orWhere('ngocphandang_project.Chplay_ads->ads_banner', 'like', '%' . $searchValue . '%')
@@ -579,6 +594,17 @@ class ProjectController extends Controller
                 '<br>'.$policy_xiaomi.$Xiaomi_policy.' Xiaomi: '.$Xiaomi_status.
                 '<br>'.$policy_oppo.$Oppo_policy.' Oppo: '.$Oppo_status.
                 '<br>'.$policy_vivo.$Vivo_policy.' Vivo: '.$Vivo_status;
+            $keystore_profile =
+                '<div>
+                    <span class="badge badge-primary" style="font-size: 12px">C: '.$record->Chplay_keystore_profile.'</span>
+                    <span class="badge badge-success"style="font-size: 12px">A: '.$record->Chplay_keystore_profile.'</span>
+                    <span class="badge badge-info"style="font-size: 12px">S: '.$record->Samsung_keystore_profile.'</span>
+                    <span class="badge badge-warning"style="font-size: 12px">X: '.$record->Xiaomi_keystore_profile.'</span>
+                    <span class="badge badge-danger"style="font-size: 12px">O: '.$record->Oppo_keystore_profile.'</span>
+                    <span class="badge badge-dark"style="font-size: 12px">V: '.$record->Vivo_keystore_profile.'</span>
+                </div>';
+
+
 
             if(isset($record->logo)){
                 if (isset($record->link_store_vietmmo)){
@@ -597,7 +623,7 @@ class ProjectController extends Controller
                 "log" => $full_mess,
                 "name_projectname"=>$record->projectname,
                 "template"=>$data_template,
-                "projectname"=>$data_projectname.$data_template.$data_ma_da.$data_title_app.$abc,
+                "projectname"=>$data_projectname.$data_template.$data_ma_da.$data_title_app.$abc.$keystore_profile,
                 "package" => $package_chplay.$package_amazon.$package_samsung.$package_xiaomi.$package_oppo.$package_vivo,
                 "status" => $status,
                 "action"=> $btn,
