@@ -597,7 +597,7 @@ class ProjectController extends Controller
             $keystore_profile =
                 '<div>
                     <span class="badge badge-primary" style="font-size: 12px">C: '.$record->Chplay_keystore_profile.'</span>
-                    <span class="badge badge-success"style="font-size: 12px">A: '.$record->Chplay_keystore_profile.'</span>
+                    <span class="badge badge-success"style="font-size: 12px">A: '.$record->Amazon_keystore_profile.'</span>
                     <span class="badge badge-info"style="font-size: 12px">S: '.$record->Samsung_keystore_profile.'</span>
                     <span class="badge badge-warning"style="font-size: 12px">X: '.$record->Xiaomi_keystore_profile.'</span>
                     <span class="badge badge-danger"style="font-size: 12px">O: '.$record->Oppo_keystore_profile.'</span>
