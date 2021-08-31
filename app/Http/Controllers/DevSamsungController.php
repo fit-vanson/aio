@@ -41,43 +41,32 @@ class DevSamsungController extends Controller
         // Total records
         $totalRecords = Dev_Samsung::select('count(*) as allcount')->count();
         $totalRecordswithFilter = Dev_Samsung::select('count(*) as allcount')
-            ->leftjoin('ngocphandang_ga','ngocphandang_ga.id','=','ngocphandang_dev_samsung.samsung_ga_name')
-            ->leftjoin('ngocphandang_gadev','ngocphandang_gadev.id','=','ngocphandang_dev_samsung.samsung_email')
-            ->orwhere('ngocphandang_ga.ga_name', 'like', '%' . $searchValue . '%')
-            ->orWhere('ngocphandang_dev_samsung.samsung_store_name', 'like', '%' . $searchValue . '%')
-            ->orWhere('ngocphandang_dev_samsung.samsung_dev_name', 'like', '%' . $searchValue . '%')
-            ->orWhere('ngocphandang_gadev.gmail', 'like', '%' . $searchValue . '%')
-            ->orWhere('ngocphandang_dev_samsung.samsung_phone', 'like', '%' . $searchValue . '%')
-            ->orWhere('ngocphandang_dev_samsung.samsung_note', 'like', '%' . $searchValue . '%')
+            ->where('samsung_ga_name', 'like', '%' . $searchValue . '%')
+            ->orWhere('samsung_dev_name', 'like', '%' . $searchValue . '%')
+            ->orWhere('samsung_store_name', 'like', '%' . $searchValue . '%')
+            ->orWhere('samsung_email', 'like', '%' . $searchValue . '%')
+            ->orWhere('samsung_status', 'like', '%' . $searchValue . '%')
+            ->orWhere('samsung_note', 'like', '%' . $searchValue . '%')
             ->count();
 
         // Get records, also we have included search filter as well
         $records = Dev_Samsung::orderBy($columnName, $columnSortOrder)
-            ->join('ngocphandang_ga','ngocphandang_ga.id','=','ngocphandang_dev_samsung.samsung_ga_name')
-            ->join('ngocphandang_gadev','ngocphandang_gadev.id','=','ngocphandang_dev_samsung.samsung_email')
-            ->orwhere('ngocphandang_ga.ga_name', 'like', '%' . $searchValue . '%')
-            ->orWhere('ngocphandang_dev_samsung.samsung_store_name', 'like', '%' . $searchValue . '%')
-            ->orWhere('ngocphandang_dev_samsung.samsung_dev_name', 'like', '%' . $searchValue . '%')
-            ->orWhere('ngocphandang_gadev.gmail', 'like', '%' . $searchValue . '%')
-            ->orWhere('ngocphandang_dev_samsung.samsung_phone', 'like', '%' . $searchValue . '%')
-            ->orWhere('ngocphandang_dev_samsung.samsung_note', 'like', '%' . $searchValue . '%')
+            ->where('samsung_ga_name', 'like', '%' . $searchValue . '%')
+            ->orWhere('samsung_dev_name', 'like', '%' . $searchValue . '%')
+            ->orWhere('samsung_store_name', 'like', '%' . $searchValue . '%')
+            ->orWhere('samsung_email', 'like', '%' . $searchValue . '%')
+            ->orWhere('samsung_status', 'like', '%' . $searchValue . '%')
+            ->orWhere('samsung_note', 'like', '%' . $searchValue . '%')
             ->select('ngocphandang_dev_samsung.*')
             ->skip($start)
             ->take($rowperpage)
             ->get();
-
-
-
-
         $data_arr = array();
         foreach ($records as $record) {
             $btn = ' <a href="javascript:void(0)" onclick="editDevSamsung('.$record->id.')" class="btn btn-warning"><i class="ti-pencil-alt"></i></a>';
             $btn = $btn.' <a href="javascript:void(0)" data-toggle="tooltip"  data-id="'.$record->id.'" data-original-title="Delete" class="btn btn-danger deleteDevSamsung"><i class="ti-trash"></i></a>';
 
-            $ga_name = DB::table('ngocphandang_dev_samsung')
-                ->join('ngocphandang_ga','ngocphandang_ga.id','=','ngocphandang_dev_samsung.samsung_ga_name')
-                ->where('ngocphandang_ga.id',$record->samsung_ga_name)
-                ->first();
+
             $email = DB::table('ngocphandang_dev_samsung')
                 ->join('ngocphandang_gadev','ngocphandang_gadev.id','=','ngocphandang_dev_samsung.samsung_email')
                 ->where('ngocphandang_gadev.id',$record->samsung_email)
@@ -96,12 +85,26 @@ class DevSamsungController extends Controller
             if($record->samsung_status == 3){
                 $status = '<span class="badge badge-danger">Suspend</span>';
             }
+            $project = DB::table('ngocphandang_dev_samsung')
+                ->join('ngocphandang_project','ngocphandang_project.Samsung_buildinfo_store_name_x','=','ngocphandang_dev_samsung.id')
+                ->where('ngocphandang_project.Samsung_buildinfo_store_name_x',$record->id)
+                ->count();
+
+            if($record->samsung_ga_name == 0 ){
+                $ga_name =  '<span class="badge badge-dark">Chưa có</span>';
+            }else{
+                $ga_name = DB::table('ngocphandang_dev_samsung')
+                    ->join('ngocphandang_ga','ngocphandang_ga.id','=','ngocphandang_dev_samsung.samsung_ga_name')
+                    ->where('ngocphandang_ga.id',$record->samsung_ga_name)
+                    ->first();
+                $ga_name = $ga_name->ga_name;
+            }
 
 
 
             $data_arr[] = array(
-                "samsung_ga_name" => $ga_name->ga_name,
-                "samsung_dev_name" => $record->samsung_dev_name,
+                "samsung_ga_name" => $ga_name,
+                "samsung_dev_name" => '<a href="javascript:void(0)" onclick="showProject('.$record->id.')"> <span>'.$record->samsung_dev_name.' - ('.$project.')</span></a>',
                 "samsung_store_name" => $record->samsung_store_name,
                 "samsung_email"=>$email->gmail,
                 "samsung_pass"=>$record->samsung_pass,
@@ -123,18 +126,14 @@ class DevSamsungController extends Controller
     }
     public function create(Request  $request)
     {
-
-
         $rules = [
             'samsung_store_name' =>'unique:ngocphandang_dev_samsung,samsung_store_name',
             'samsung_dev_name' =>'unique:ngocphandang_dev_samsung,samsung_dev_name',
-            'samsung_ga_name' =>'required|not_in:0',
             'samsung_email' =>'required|not_in:0',
         ];
         $message = [
             'samsung_dev_name.unique'=>'Dev name tồn tại',
             'samsung_store_name.unique'=>'Store name đã tồn tại',
-            'samsung_ga_name.not_in'=>'Vui lòng chọn Ga Name',
             'samsung_email.not_in'=>'Vui lòng chọn Email',
         ];
         $error = Validator::make($request->all(),$rules, $message );
@@ -168,13 +167,13 @@ class DevSamsungController extends Controller
         $rules = [
             'samsung_store_name' =>'unique:ngocphandang_dev_samsung,samsung_store_name,'.$id.',id',
             'samsung_dev_name' =>'unique:ngocphandang_dev_samsung,samsung_dev_name,'.$id.',id',
-            'samsung_ga_name' =>'required|not_in:0',
+
             'samsung_email' =>'required|not_in:0',
         ];
         $message = [
             'samsung_dev_name.unique'=>'Dev name tồn tại',
             'samsung_store_name.unique'=>'Store name đã tồn tại',
-            'samsung_ga_name.not_in'=>'Vui lòng chọn Ga Name',
+
             'samsung_email.not_in'=>'Vui lòng chọn Email',
         ];
 

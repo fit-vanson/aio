@@ -73,10 +73,7 @@ class DevXiaomiController extends Controller
             $btn = ' <a href="javascript:void(0)" onclick="editDevxiaomi('.$record->id.')" class="btn btn-warning"><i class="ti-pencil-alt"></i></a>';
             $btn = $btn.' <a href="javascript:void(0)" data-toggle="tooltip"  data-id="'.$record->id.'" data-original-title="Delete" class="btn btn-danger deleteDevxiaomi"><i class="ti-trash"></i></a>';
 
-            $ga_name = DB::table('ngocphandang_dev_xiaomi')
-                ->join('ngocphandang_ga','ngocphandang_ga.id','=','ngocphandang_dev_xiaomi.xiaomi_ga_name')
-                ->where('ngocphandang_ga.id',$record->xiaomi_ga_name)
-                ->first();
+
             $email = DB::table('ngocphandang_dev_xiaomi')
                 ->join('ngocphandang_gadev','ngocphandang_gadev.id','=','ngocphandang_dev_xiaomi.xiaomi_email')
                 ->where('ngocphandang_gadev.id',$record->xiaomi_email)
@@ -96,11 +93,25 @@ class DevXiaomiController extends Controller
                 $status = '<span class="badge badge-danger">Suspend</span>';
             }
 
+            $project = DB::table('ngocphandang_dev_xiaomi')
+                ->join('ngocphandang_project','ngocphandang_project.Xiaomi_buildinfo_store_name_x','=','ngocphandang_dev_xiaomi.id')
+                ->where('ngocphandang_project.Xiaomi_buildinfo_store_name_x',$record->id)
+                ->count();
+
+            if($record->xiaomi_ga_name == 0 ){
+                $ga_name =  '<span class="badge badge-dark">Chưa có</span>';
+            }else{
+                $ga_name = DB::table('ngocphandang_dev_xiaomi')
+                    ->join('ngocphandang_ga','ngocphandang_ga.id','=','ngocphandang_dev_xiaomi.xiaomi_ga_name')
+                    ->where('ngocphandang_ga.id',$record->xiaomi_ga_name)
+                    ->first();
+                $ga_name = $ga_name->ga_name;
+            }
 
 
             $data_arr[] = array(
-                "xiaomi_ga_name" => $ga_name->ga_name,
-                "xiaomi_dev_name" => $record->xiaomi_dev_name,
+                "xiaomi_ga_name" => $ga_name,
+                "xiaomi_dev_name" => '<a href="javascript:void(0)" onclick="showProject('.$record->id.')"> <span>'.$record->xiaomi_dev_name.' - ('.$project.')</span></a>',
                 "xiaomi_store_name" => $record->xiaomi_store_name,
                 "xiaomi_email"=>$email->gmail,
                 "xiaomi_pass"=>$record->xiaomi_pass,
@@ -126,13 +137,11 @@ class DevXiaomiController extends Controller
         $rules = [
             'xiaomi_store_name' =>'unique:ngocphandang_dev_xiaomi,xiaomi_store_name',
             'xiaomi_dev_name' =>'unique:ngocphandang_dev_xiaomi,xiaomi_dev_name',
-            'xiaomi_ga_name' =>'required|not_in:0',
             'xiaomi_email' =>'required|not_in:0',
         ];
         $message = [
             'xiaomi_dev_name.unique'=>'Dev name tồn tại',
             'xiaomi_store_name.unique'=>'Store name đã tồn tại',
-            'xiaomi_ga_name.not_in'=>'Vui lòng chọn Ga Name',
             'xiaomi_email.not_in'=>'Vui lòng chọn Email'
         ];
         $error = Validator::make($request->all(),$rules, $message );
@@ -167,13 +176,12 @@ class DevXiaomiController extends Controller
         $rules = [
             'xiaomi_store_name' =>'unique:ngocphandang_dev_xiaomi,xiaomi_store_name,'.$id.',id',
             'xiaomi_dev_name' =>'unique:ngocphandang_dev_xiaomi,xiaomi_dev_name,'.$id.',id',
-            'xiaomi_ga_name' =>'required|not_in:0',
+
             'xiaomi_email' =>'required|not_in:0',
         ];
         $message = [
             'xiaomi_dev_name.unique'=>'Dev name tồn tại',
             'xiaomi_store_name.unique'=>'Store name đã tồn tại',
-            'xiaomi_ga_name.not_in'=>'Vui lòng chọn Ga Name',
             'xiaomi_email.not_in'=>'Vui lòng chọn Email'
         ];
 

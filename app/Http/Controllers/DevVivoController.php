@@ -95,9 +95,24 @@ class DevVivoController extends Controller
             if($record->vivo_status == 3){
                 $status = '<span class="badge badge-danger">Suspend</span>';
             }
+            if($record->vivo_ga_name == 0 ){
+                $ga_name =  '<span class="badge badge-dark">Chưa có</span>';
+            }else{
+                $ga_name = DB::table('ngocphandang_dev_vivo')
+                    ->join('ngocphandang_ga','ngocphandang_ga.id','=','ngocphandang_dev_vivo.vivo_ga_name')
+                    ->where('ngocphandang_ga.id',$record->vivo_ga_name)
+                    ->first();
+                $ga_name = $ga_name->ga_name;
+            }
+
+            $project = DB::table('ngocphandang_dev_vivo')
+                ->join('ngocphandang_project','ngocphandang_project.Vivo_buildinfo_store_name_x','=','ngocphandang_dev_vivo.id')
+                ->where('ngocphandang_project.Vivo_buildinfo_store_name_x',$record->id)
+                ->count();
+
             $data_arr[] = array(
-                "vivo_ga_name" => $ga_name->ga_name,
-                "vivo_dev_name" => $record->vivo_dev_name,
+                "vivo_ga_name" => $ga_name,
+                "vivo_dev_name" => '<a href="javascript:void(0)" onclick="showProject('.$record->id.')"> <span>'.$record->vivo_dev_name.' - ('.$project.')</span></a>',
                 "vivo_store_name" => $record->vivo_store_name,
                 "vivo_email"=>$record->vivo_company.'<p class="text-muted">'.$email->gmail.'</p>',
                 "vivo_pass"=>$record->vivo_pass,
@@ -125,13 +140,12 @@ class DevVivoController extends Controller
         $rules = [
             'vivo_store_name' =>'unique:ngocphandang_dev_vivo,vivo_store_name',
             'vivo_dev_name' =>'unique:ngocphandang_dev_vivo,vivo_dev_name',
-            'vivo_ga_name' =>'required|not_in:0',
+
             'vivo_email' =>'required|not_in:0',
         ];
         $message = [
             'vivo_dev_name.unique'=>'Dev name đã tồn tại',
             'vivo_store_name.unique'=>'Store name tồn tại',
-            'vivo_ga_name.not_in'=>'Vui lòng chọn Ga Name',
             'vivo_email.not_in'=>'Vui lòng chọn Email',
         ];
         $error = Validator::make($request->all(),$rules, $message );
@@ -166,13 +180,13 @@ class DevVivoController extends Controller
         $rules = [
             'vivo_store_name' =>'unique:ngocphandang_dev_vivo,vivo_store_name,'.$id.',id',
             'vivo_dev_name' =>'unique:ngocphandang_dev_vivo,vivo_dev_name,'.$id.',id',
-            'vivo_ga_name' =>'required|not_in:0',
+
             'vivo_email' =>'required|not_in:0',
         ];
         $message = [
             'vivo_dev_name.unique'=>'Dev name đã tồn tại',
             'vivo_store_name.unique'=>'Store name tồn tại',
-            'vivo_ga_name.not_in'=>'Vui lòng chọn Ga Name',
+
             'vivo_email.not_in'=>'Vui lòng chọn Email',
         ];
         $error = Validator::make($request->all(),$rules, $message );

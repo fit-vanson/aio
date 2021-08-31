@@ -66,10 +66,7 @@ class DevAmazonController extends Controller
             $btn = ' <a href="javascript:void(0)" onclick="editDevAmazon('.$record->id.')" class="btn btn-warning"><i class="ti-pencil-alt"></i></a>';
             $btn = $btn.' <a href="javascript:void(0)" data-toggle="tooltip"  data-id="'.$record->id.'" data-original-title="Delete" class="btn btn-danger deleteDevAmazon"><i class="ti-trash"></i></a>';
 
-            $ga_name = DB::table('ngocphandang_dev_amazon')
-                ->join('ngocphandang_ga','ngocphandang_ga.id','=','ngocphandang_dev_amazon.amazon_ga_name')
-                ->where('ngocphandang_ga.id',$record->amazon_ga_name)
-                ->first();
+
             $email = DB::table('ngocphandang_dev_amazon')
                 ->join('ngocphandang_gadev','ngocphandang_gadev.id','=','ngocphandang_dev_amazon.amazon_email')
                 ->where('ngocphandang_gadev.id',$record->amazon_email)
@@ -87,11 +84,23 @@ class DevAmazonController extends Controller
                 $status = '<span class="badge badge-danger">Suspend</span>';
             }
 
+            $project = DB::table('ngocphandang_dev_amazon')
+                ->join('ngocphandang_project','ngocphandang_project.Amazon_buildinfo_store_name_x','=','ngocphandang_dev_amazon.id')
+                ->where('ngocphandang_project.Amazon_buildinfo_store_name_x',$record->id)
+                ->count();
 
-
+            if($record->amazon_ga_name == 0 ){
+                $ga_name =  '<span class="badge badge-dark">Chưa có</span>';
+            }else{
+                $ga_name = DB::table('ngocphandang_dev_amazon')
+                    ->join('ngocphandang_ga','ngocphandang_ga.id','=','ngocphandang_dev_amazon.amazon_ga_name')
+                    ->where('ngocphandang_ga.id',$record->amazon_ga_name)
+                    ->first();
+                $ga_name = $ga_name->ga_name;
+            }
             $data_arr[] = array(
-                "amazon_ga_name" => $ga_name->ga_name,
-                "amazon_dev_name" => $record->amazon_dev_name,
+                "amazon_ga_name" => $ga_name,
+                "amazon_dev_name" => '<a href="javascript:void(0)" onclick="showProject('.$record->id.')"> <span>'.$record->amazon_dev_name.' - ('.$project.')</span></a>',
                 "amazon_store_name" => $record->amazon_store_name,
                 "amazon_email"=>$email->gmail,
                 "amazon_pass"=>$record->amazon_pass,
@@ -117,13 +126,13 @@ class DevAmazonController extends Controller
         $rules = [
             'amazon_store_name' =>'unique:ngocphandang_dev_amazon,amazon_store_name',
             'amazon_dev_name' =>'unique:ngocphandang_dev_amazon,amazon_dev_name',
-            'amazon_ga_name' =>'required|not_in:0',
+
             'amazon_email' =>'required|not_in:0',
         ];
         $message = [
             'amazon_dev_name.unique'=>'Dev name đã tồn tại',
             'amazon_store_name.unique'=>'Store name tồn tại',
-            'amazon_ga_name.not_in'=>'Vui lòng chọn Ga Name',
+
             'amazon_email.not_in'=>'Vui lòng chọn Email',
         ];
         $error = Validator::make($request->all(),$rules, $message );
@@ -157,13 +166,11 @@ class DevAmazonController extends Controller
         $rules = [
             'amazon_store_name' =>'unique:ngocphandang_dev_amazon,amazon_store_name,'.$id.',id',
             'amazon_dev_name' =>'unique:ngocphandang_dev_amazon,amazon_dev_name,'.$id.',id',
-            'amazon_ga_name' =>'required|not_in:0',
             'amazon_email' =>'required|not_in:0',
         ];
         $message = [
             'amazon_dev_name.unique'=>'Dev name đã tồn tại',
             'amazon_store_name.unique'=>'Store name tồn tại',
-            'amazon_ga_name.not_in'=>'Vui lòng chọn Ga Name',
             'amazon_email.not_in'=>'Vui lòng chọn Email',
         ];
         $error = Validator::make($request->all(),$rules, $message );

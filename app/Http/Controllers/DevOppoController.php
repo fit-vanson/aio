@@ -75,10 +75,7 @@ class DevOppoController extends Controller
             $btn = ' <a href="javascript:void(0)" onclick="editDevoppo('.$record->id.')" class="btn btn-warning"><i class="ti-pencil-alt"></i></a>';
             $btn = $btn.' <a href="javascript:void(0)" data-toggle="tooltip"  data-id="'.$record->id.'" data-original-title="Delete" class="btn btn-danger deleteDevoppo"><i class="ti-trash"></i></a>';
 
-            $ga_name = DB::table('ngocphandang_dev_oppo')
-                ->join('ngocphandang_ga','ngocphandang_ga.id','=','ngocphandang_dev_oppo.oppo_ga_name')
-                ->where('ngocphandang_ga.id',$record->oppo_ga_name)
-                ->first();
+
             $email = DB::table('ngocphandang_dev_oppo')
                 ->join('ngocphandang_gadev','ngocphandang_gadev.id','=','ngocphandang_dev_oppo.oppo_email')
                 ->where('ngocphandang_gadev.id',$record->oppo_email)
@@ -97,12 +94,26 @@ class DevOppoController extends Controller
             if($record->oppo_status == 3){
                 $status = '<span class="badge badge-danger">Suspend</span>';
             }
+            if($record->oppo_ga_name == 0 ){
+                $ga_name =  '<span class="badge badge-dark">Chưa có</span>';
+            }else{
+                $ga_name = DB::table('ngocphandang_dev_oppo')
+                    ->join('ngocphandang_ga','ngocphandang_ga.id','=','ngocphandang_dev_oppo.oppo_ga_name')
+                    ->where('ngocphandang_ga.id',$record->oppo_ga_name)
+                    ->first();
+                $ga_name = $ga_name->ga_name;
+            }
+
+            $project = DB::table('ngocphandang_dev_oppo')
+                ->join('ngocphandang_project','ngocphandang_project.Oppo_buildinfo_store_name_x','=','ngocphandang_dev_oppo.id')
+                ->where('ngocphandang_project.Oppo_buildinfo_store_name_x',$record->id)
+                ->count();
 
 
 
             $data_arr[] = array(
-                "oppo_ga_name" => $ga_name->ga_name,
-                "oppo_dev_name" => $record->oppo_dev_name,
+                "oppo_ga_name" => $ga_name,
+                "oppo_dev_name" => '<a href="javascript:void(0)" onclick="showProject('.$record->id.')"> <span>'.$record->oppo_dev_name.' - ('.$project.')</span></a>',
                 "oppo_store_name" => $record->oppo_store_name,
                 "oppo_email"=>$email->gmail,
                 "oppo_pass"=>$record->oppo_pass,
@@ -128,13 +139,13 @@ class DevOppoController extends Controller
         $rules = [
             'oppo_store_name' =>'unique:ngocphandang_dev_oppo,oppo_store_name',
             'oppo_dev_name' =>'unique:ngocphandang_dev_oppo,oppo_dev_name',
-            'oppo_ga_name' =>'required|not_in:0',
+
             'oppo_email' =>'required|not_in:0',
         ];
         $message = [
             'oppo_dev_name.unique'=>'Dev name đã tồn tại',
             'oppo_store_name.unique'=>'Store name tồn tại',
-            'oppo_ga_name.not_in'=>'Vui lòng chọn Ga Name',
+
             'oppo_email.not_in'=>'Vui lòng chọn Email',
 
         ];
@@ -170,13 +181,12 @@ class DevOppoController extends Controller
         $rules = [
             'oppo_store_name' =>'unique:ngocphandang_dev_oppo,oppo_store_name,'.$id.',id',
             'oppo_dev_name' =>'unique:ngocphandang_dev_oppo,oppo_dev_name,'.$id.',id',
-            'oppo_ga_name' =>'required|not_in:0',
+
             'oppo_email' =>'required|not_in:0',
         ];
         $message = [
             'oppo_dev_name.unique'=>'Dev name đã tồn tại',
             'oppo_store_name.unique'=>'Store name tồn tại',
-            'oppo_ga_name.not_in'=>'Vui lòng chọn Ga Name',
             'oppo_email.not_in'=>'Vui lòng chọn Email',
 
         ];

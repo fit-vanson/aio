@@ -131,6 +131,120 @@ class ProjectController extends Controller
             ->get();
 
         }
+        elseif (isset($request->dev_chplay)){
+            $totalRecords = ProjectModel::select('count(*) as allcount')->where('ma_da',$request->ma_da)->count();
+            $totalRecordswithFilter = ProjectModel::select('count(*) as allcount')
+                ->leftjoin('ngocphandang_da','ngocphandang_da.id','=','ngocphandang_project.ma_da')
+                ->leftjoin('ngocphandang_template','ngocphandang_template.id','=','ngocphandang_project.template')
+                ->where('ngocphandang_project.Chplay_buildinfo_store_name_x',$request->dev_chplay)
+                ->count();
+
+            // Get records, also we have included search filter as well
+            $records = ProjectModel::orderBy($columnName, $columnSortOrder)
+                ->leftjoin('ngocphandang_da','ngocphandang_da.id','=','ngocphandang_project.ma_da')
+                ->leftjoin('ngocphandang_template','ngocphandang_template.id','=','ngocphandang_project.template') ->where('ngocphandang_da.ma_da', 'like', '%' . $searchValue . '%')
+                ->where('ngocphandang_project.Chplay_buildinfo_store_name_x',$request->dev_chplay)
+                ->select('ngocphandang_project.*')
+                ->skip($start)
+                ->take($rowperpage)
+                ->get();
+
+        }
+        elseif (isset($request->dev_amazon)){
+            $totalRecords = ProjectModel::select('count(*) as allcount')->where('ma_da',$request->ma_da)->count();
+            $totalRecordswithFilter = ProjectModel::select('count(*) as allcount')
+                ->leftjoin('ngocphandang_da','ngocphandang_da.id','=','ngocphandang_project.ma_da')
+                ->leftjoin('ngocphandang_template','ngocphandang_template.id','=','ngocphandang_project.template')
+                ->where('ngocphandang_project.Amazon_buildinfo_store_name_x',$request->dev_amazon)
+                ->count();
+
+            // Get records, also we have included search filter as well
+            $records = ProjectModel::orderBy($columnName, $columnSortOrder)
+                ->leftjoin('ngocphandang_da','ngocphandang_da.id','=','ngocphandang_project.ma_da')
+                ->leftjoin('ngocphandang_template','ngocphandang_template.id','=','ngocphandang_project.template') ->where('ngocphandang_da.ma_da', 'like', '%' . $searchValue . '%')
+                ->where('ngocphandang_project.Amazon_buildinfo_store_name_x',$request->dev_amazon)
+                ->select('ngocphandang_project.*')
+                ->skip($start)
+                ->take($rowperpage)
+                ->get();
+
+        }
+        elseif (isset($request->dev_samsung)){
+            $totalRecords = ProjectModel::select('count(*) as allcount')->where('ma_da',$request->ma_da)->count();
+            $totalRecordswithFilter = ProjectModel::select('count(*) as allcount')
+                ->leftjoin('ngocphandang_da','ngocphandang_da.id','=','ngocphandang_project.ma_da')
+                ->leftjoin('ngocphandang_template','ngocphandang_template.id','=','ngocphandang_project.template')
+                ->where('ngocphandang_project.Samsung_buildinfo_store_name_x',$request->dev_samsung)
+                ->count();
+
+            // Get records, also we have included search filter as well
+            $records = ProjectModel::orderBy($columnName, $columnSortOrder)
+                ->leftjoin('ngocphandang_da','ngocphandang_da.id','=','ngocphandang_project.ma_da')
+                ->leftjoin('ngocphandang_template','ngocphandang_template.id','=','ngocphandang_project.template') ->where('ngocphandang_da.ma_da', 'like', '%' . $searchValue . '%')
+                ->where('ngocphandang_project.Samsung_buildinfo_store_name_x',$request->dev_samsung)
+                ->select('ngocphandang_project.*')
+                ->skip($start)
+                ->take($rowperpage)
+                ->get();
+
+        }
+        elseif (isset($request->dev_xiaomi)){
+            $totalRecords = ProjectModel::select('count(*) as allcount')->where('ma_da',$request->ma_da)->count();
+            $totalRecordswithFilter = ProjectModel::select('count(*) as allcount')
+                ->leftjoin('ngocphandang_da','ngocphandang_da.id','=','ngocphandang_project.ma_da')
+                ->leftjoin('ngocphandang_template','ngocphandang_template.id','=','ngocphandang_project.template')
+                ->where('ngocphandang_project.Xiaomi_buildinfo_store_name_x',$request->dev_xiaomi)
+                ->count();
+
+            // Get records, also we have included search filter as well
+            $records = ProjectModel::orderBy($columnName, $columnSortOrder)
+                ->leftjoin('ngocphandang_da','ngocphandang_da.id','=','ngocphandang_project.ma_da')
+                ->leftjoin('ngocphandang_template','ngocphandang_template.id','=','ngocphandang_project.template') ->where('ngocphandang_da.ma_da', 'like', '%' . $searchValue . '%')
+                ->where('ngocphandang_project.Xiaomi_buildinfo_store_name_x',$request->dev_xiaomi)
+                ->select('ngocphandang_project.*')
+                ->skip($start)
+                ->take($rowperpage)
+                ->get();
+
+        }
+        elseif (isset($request->dev_oppo)){
+            $totalRecords = ProjectModel::select('count(*) as allcount')->where('ma_da',$request->ma_da)->count();
+            $totalRecordswithFilter = ProjectModel::select('count(*) as allcount')
+                ->leftjoin('ngocphandang_da','ngocphandang_da.id','=','ngocphandang_project.ma_da')
+                ->leftjoin('ngocphandang_template','ngocphandang_template.id','=','ngocphandang_project.template')
+                ->where('ngocphandang_project.Oppo_buildinfo_store_name_x',$request->dev_oppo)
+                ->count();
+
+            // Get records, also we have included search filter as well
+            $records = ProjectModel::orderBy($columnName, $columnSortOrder)
+                ->leftjoin('ngocphandang_da','ngocphandang_da.id','=','ngocphandang_project.ma_da')
+                ->leftjoin('ngocphandang_template','ngocphandang_template.id','=','ngocphandang_project.template') ->where('ngocphandang_da.ma_da', 'like', '%' . $searchValue . '%')
+                ->where('ngocphandang_project.Oppo_buildinfo_store_name_x',$request->dev_oppo)
+                ->select('ngocphandang_project.*')
+                ->skip($start)
+                ->take($rowperpage)
+                ->get();
+
+        }
+        elseif (isset($request->dev_vivo)){
+            $totalRecords = ProjectModel::select('count(*) as allcount')->where('ma_da',$request->ma_da)->count();
+            $totalRecordswithFilter = ProjectModel::select('count(*) as allcount')
+                ->leftjoin('ngocphandang_da','ngocphandang_da.id','=','ngocphandang_project.ma_da')
+                ->leftjoin('ngocphandang_template','ngocphandang_template.id','=','ngocphandang_project.template')
+                ->where('ngocphandang_project.Vivo_buildinfo_store_name_x',$request->dev_vivo)
+                ->count();
+
+            // Get records, also we have included search filter as well
+            $records = ProjectModel::orderBy($columnName, $columnSortOrder)
+                ->leftjoin('ngocphandang_da','ngocphandang_da.id','=','ngocphandang_project.ma_da')
+                ->leftjoin('ngocphandang_template','ngocphandang_template.id','=','ngocphandang_project.template') ->where('ngocphandang_da.ma_da', 'like', '%' . $searchValue . '%')
+                ->where('ngocphandang_project.Vivo_buildinfo_store_name_x',$request->dev_vivo)
+                ->select('ngocphandang_project.*')
+                ->skip($start)
+                ->take($rowperpage)
+                ->get();
+
+        }
         else{
             $totalRecords = ProjectModel::select('count(*) as allcount')->count();
             $totalRecordswithFilter = ProjectModel::select('count(*) as allcount')
@@ -293,6 +407,70 @@ class ProjectController extends Controller
                 ->join('ngocphandang_template','ngocphandang_template.id','=','ngocphandang_project.template')
                 ->where('ngocphandang_template.id',$record->template)
                 ->first();
+
+            $dev_name_chplay = DB::table('ngocphandang_project')
+                ->join('ngocphandang_dev','ngocphandang_dev.id','=','ngocphandang_project.Chplay_buildinfo_store_name_x')
+                ->where('ngocphandang_dev.id',$record->Chplay_buildinfo_store_name_x)
+                ->first();
+            $dev_name_amazon = DB::table('ngocphandang_project')
+                ->join('ngocphandang_dev_amazon','ngocphandang_dev_amazon.id','=','ngocphandang_project.Amazon_buildinfo_store_name_x')
+                ->where('ngocphandang_dev_amazon.id',$record->Amazon_buildinfo_store_name_x)
+                ->first();
+            $dev_name_samsung = DB::table('ngocphandang_project')
+                ->join('ngocphandang_dev_samsung','ngocphandang_dev_samsung.id','=','ngocphandang_project.Samsung_buildinfo_store_name_x')
+                ->where('ngocphandang_dev_samsung.id',$record->Samsung_buildinfo_store_name_x)
+                ->first();
+
+            $dev_name_xiaomi = DB::table('ngocphandang_project')
+                ->join('ngocphandang_dev_xiaomi','ngocphandang_dev_xiaomi.id','=','ngocphandang_project.Xiaomi_buildinfo_store_name_x')
+                ->where('ngocphandang_dev_xiaomi.id',$record->Xiaomi_buildinfo_store_name_x)
+                ->first();
+
+            $dev_name_oppo = DB::table('ngocphandang_project')
+                ->join('ngocphandang_dev_oppo','ngocphandang_dev_oppo.id','=','ngocphandang_project.Oppo_buildinfo_store_name_x')
+                ->where('ngocphandang_dev_oppo.id',$record->Oppo_buildinfo_store_name_x)
+                ->first();
+
+            $dev_name_vivo = DB::table('ngocphandang_project')
+                ->join('ngocphandang_dev_vivo','ngocphandang_dev_vivo.id','=','ngocphandang_project.Vivo_buildinfo_store_name_x')
+                ->where('ngocphandang_dev_vivo.id',$record->Vivo_buildinfo_store_name_x)
+                ->first();
+
+            if($dev_name_chplay){
+                $dev_name_chplay = $dev_name_chplay->dev_name;
+            }else{
+                $dev_name_chplay = '';
+            }
+
+            if($dev_name_amazon){
+                $dev_name_amazon = $dev_name_amazon->amazon_dev_name;
+            }else{
+                $dev_name_amazon = '';
+            }
+            if($dev_name_samsung){
+                $dev_name_samsung = $dev_name_samsung->samsung_dev_name;
+            }else{
+                $dev_name_samsung = '';
+            }
+
+            if($dev_name_xiaomi){
+                $dev_name_xiaomi = $dev_name_xiaomi->xiaomi_dev_name;
+            }else{
+                $dev_name_xiaomi = '';
+            }
+
+            if($dev_name_oppo){
+                $dev_name_oppo = $dev_name_oppo->oppo_dev_name;
+            }else{
+                $dev_name_oppo = '';
+            }
+
+            if($dev_name_vivo){
+                $dev_name_vivo = $dev_name_vivo->vivo_dev_name;
+            }else{
+                $dev_name_vivo = '';
+            }
+
 
             if(isset($ma_da)) {
                 if (isset($ma_da->link_store_vietmmo)){
@@ -626,6 +804,12 @@ class ProjectController extends Controller
                 "projectname"=>$data_projectname.$data_template.$data_ma_da.$data_title_app.$abc.$keystore_profile,
                 "package" => $package_chplay.$package_amazon.$package_samsung.$package_xiaomi.$package_oppo.$package_vivo,
                 "status" => $status,
+                'Chplay_buildinfo_store_name_x' => $dev_name_chplay,
+                'Amazon_buildinfo_store_name_x' => $dev_name_amazon,
+                'Samsung_buildinfo_store_name_x' => $dev_name_samsung,
+                'Xiaomi_buildinfo_store_name_x' => $dev_name_xiaomi,
+                'Oppo_buildinfo_store_name_x' => $dev_name_oppo,
+                'Vivo_buildinfo_store_name_x' => $dev_name_vivo,
                 "action"=> $btn,
             );
         }

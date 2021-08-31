@@ -66,11 +66,17 @@ class DevController extends Controller
             ->take($rowperpage)
             ->get();
 
+
+
         $data_arr = array();
         foreach ($records as $record) {
             $btn = ' <a href="javascript:void(0)" onclick="editDev('.$record->id.')" class="btn btn-warning"><i class="ti-pencil-alt"></i></a>';
             $btn = $btn.' <a href="javascript:void(0)" data-toggle="tooltip"  data-id="'.$record->id.'" data-original-title="Delete" class="btn btn-danger deleteDev"><i class="ti-trash"></i></a>';
 
+            $project = DB::table('ngocphandang_dev')
+                ->join('ngocphandang_project','ngocphandang_project.Chplay_buildinfo_store_name_x','=','ngocphandang_dev.id')
+                ->where('ngocphandang_project.Chplay_buildinfo_store_name_x',$record->id)
+                ->count();
             if($record->info_logo == null ){
                 $logo =  '<img width="60px" height="60px" src="assets\images\logo-member.jpg">';
             }else{
@@ -151,7 +157,8 @@ class DevController extends Controller
             $data_arr[] = array(
                 "info_logo" => $logo,
                 "ga_name" => $ga_name,
-                "dev_name" => $record->dev_name.'<p style="margin: auto"class="text-muted ">'.$record->store_name.'</p>',
+                "dev_name" => '<a href="javascript:void(0)" onclick="showProject('.$record->id.')"> <span>'.$record->dev_name.' - ('.$project.')</span></a>
+ <p style="margin: auto"class="text-muted ">'.$record->store_name.'</p>',
                 "gmail_gadev_chinh"=> $gmail.$gmail1.$gmail2,
                 "pass" =>$record->pass,
                 "info_phone"=> $info_phone,
