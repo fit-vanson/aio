@@ -512,9 +512,9 @@ class ProjectController extends Controller
                 || isset(json_decode($record->Chplay_ads,true)['ads_open'])
                 || isset(json_decode($record->Chplay_ads,true)['ads_reward'])
             ){
-                $package_chplay = '<a href="http://play.google.com/store/apps/details?id='.$record->Chplay_package.'" target="_blank" <p style="color:green;line-height:0.5">CH Play: '.$record->Chplay_package.'</p></a>';
+                $package_chplay = '<a href="'.$record->Chplay_buildinfo_link_app.'" target="_blank"> <p style="color:green;line-height:0.5">CH Play: '.$record->Chplay_package.'</p></a>';
             }else{
-                $package_chplay = '<a href="http://play.google.com/store/apps/details?id='.$record->Chplay_package.'" target="_blank" <p style="color:red;line-height:0.5">CH Play: '.$record->Chplay_package.'</p></a>';
+                $package_chplay = '<a href="'.$record->Chplay_buildinfo_link_app.'" target="_blank"> <p style="color:red;line-height:0.5">CH Play: '.$record->Chplay_package.'</p></a>';
             }
 
             if(isset(json_decode($record->Amazon_ads,true)['ads_id'])
@@ -524,9 +524,9 @@ class ProjectController extends Controller
                 || isset(json_decode($record->Amazon_ads,true)['ads_open'])
                 || isset(json_decode($record->Amazon_ads,true)['ads_reward'])
             ){
-                $package_amazon = '<p  style="color:green;line-height:0.5">Amazon: '.$record->Amazon_package.'</p>';
+                $package_amazon = '<a href="'.$record->Amazon_buildinfo_link_app.'" target="_blank"><p  style="color:green;line-height:0.5">Amazon: '.$record->Amazon_package.'</p></a>';
             }else{
-                $package_amazon = '<p style="color:red;line-height:0.5">Amazon: '.$record->Amazon_package.'</p>';
+                $package_amazon = '<a href="'.$record->Amazon_buildinfo_link_app.'" target="_blank"><p style="color:red;line-height:0.5">Amazon: '.$record->Amazon_package.'</p></a>';
             }
 
             if(isset(json_decode($record->Samsung_ads,true)['ads_id'])
@@ -536,9 +536,9 @@ class ProjectController extends Controller
                 || isset(json_decode($record->Samsung_ads,true)['ads_open'])
                 || isset(json_decode($record->Samsung_ads,true)['ads_reward'])
             ){
-                $package_samsung = '<p style="color:green;line-height:0.5">SamSung: '.$record->Samsung_package.'</p>';
+                $package_samsung = '<a href="'.$record->Samsung_buildinfo_link_app.'" target="_blank"><p style="color:green;line-height:0.5">SamSung: '.$record->Samsung_package.'</p></a>';
             }else{
-                $package_samsung = '<p style="color:red;line-height:0.5">SamSung: '.$record->Samsung_package.'</p>';
+                $package_samsung = '<a href="'.$record->Samsung_buildinfo_link_app.'" target="_blank"><p style="color:red;line-height:0.5">SamSung: '.$record->Samsung_package.'</p></a>';
             }
 
             if(isset(json_decode($record->Xiaomi_ads,true)['ads_id'])
@@ -548,9 +548,9 @@ class ProjectController extends Controller
                 || isset(json_decode($record->Xiaomi_ads,true)['ads_open'])
                 || isset(json_decode($record->Xiaomi_ads,true)['ads_reward'])
             ){
-                $package_xiaomi = '<p style="color:green;line-height:0.5">Xiaomi: '.$record->Xiaomi_package.'</p>';
+                $package_xiaomi = '<a href="'.$record->Xiaomi_buildinfo_link_app.'" target="_blank"><p style="color:green;line-height:0.5">Xiaomi: '.$record->Xiaomi_package.'</p></a>';
             }else{
-                $package_xiaomi = '<p style="color:red;line-height:0.5">Xiaomi: '.$record->Xiaomi_package.'</p>';
+                $package_xiaomi = '<a href="'.$record->Xiaomi_buildinfo_link_app.'" target="_blank"><p style="color:red;line-height:0.5">Xiaomi: '.$record->Xiaomi_package.'</p></a>';
             }
 
 
@@ -562,9 +562,9 @@ class ProjectController extends Controller
                 || isset(json_decode($record->Oppo_ads,true)['ads_open'])
                 || isset(json_decode($record->Oppo_ads,true)['ads_reward'])
             ){
-                $package_oppo = '<p style="color:green;line-height:0.5">Oppo: '.$record->Oppo_package.'</p>';
+                $package_oppo = '<a href="'.$record->Oppo_buildinfo_link_app.'" target="_blank"><p style="color:green;line-height:0.5">Oppo: '.$record->Oppo_package.'</p></a>';
             }else{
-                $package_oppo = '<p style="color:red;line-height:0.5">Oppo: '.$record->Oppo_package.'</p>';
+                $package_oppo = '<a href="'.$record->Oppo_buildinfo_link_app.'" target="_blank"><p style="color:red;line-height:0.5">Oppo: '.$record->Oppo_package.'</p></a>';
             }
 
             if(isset(json_decode($record->Vivo_ads,true)['ads_id'])
@@ -574,9 +574,9 @@ class ProjectController extends Controller
                 || isset(json_decode($record->Vivo_ads,true)['ads_open'])
                 || isset(json_decode($record->Vivo_ads,true)['ads_reward'])
             ){
-                $package_vivo = '<p style="color:green;line-height:0.5">Vivo: '.$record->Vivo_package.'</p>';
+                $package_vivo = '<a href="'.$record->Vivo_buildinfo_link_app.'" target="_blank"><p style="color:green;line-height:0.5">Vivo: '.$record->Vivo_package.'</p></a>';
             }else{
-                $package_vivo = '<p style="color:red;line-height:0.5">Vivo: '.$record->Vivo_package.'</p>';
+                $package_vivo = '<a href="'.$record->Vivo_buildinfo_link_app.'" target="_blank"><p style="color:red;line-height:0.5">Vivo: '.$record->Vivo_package.'</p></a>';
             }
 
             if ($record['Chplay_status']==0  ) {
