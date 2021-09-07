@@ -534,14 +534,14 @@ class ProjectController extends Controller
                 if($record->Amazon_buildinfo_link_app){
                     $package_amazon = '<a href="'.$record->Amazon_buildinfo_link_app.'" target="_blank"><p  style="color:green;line-height:0.5">Amazon: '.$record->Amazon_package.'</p></a>';
                 }else{
-                    $package_amazon = '<p style="color:green;line-height:0.5">CH Play: '.$record->Amazon_package.'</p>';
+                    $package_amazon = '<p style="color:green;line-height:0.5">Amazon: '.$record->Amazon_package.'</p>';
                 }
 
             }else{
                 if($record->Amazon_buildinfo_link_app){
                     $package_amazon = '<a href="'.$record->Amazon_buildinfo_link_app.'" target="_blank"><p  style="color:red;line-height:0.5">Amazon: '.$record->Amazon_package.'</p></a>';
                 }else{
-                    $package_amazon = '<p style="color:red;line-height:0.5">CH Play: '.$record->Amazon_package.'</p>';
+                    $package_amazon = '<p style="color:red;line-height:0.5">Amazon: '.$record->Amazon_package.'</p>';
                 }
             }
 
@@ -553,15 +553,15 @@ class ProjectController extends Controller
                 || isset(json_decode($record->Samsung_ads,true)['ads_reward'])
             ){
                 if($record->Samsung_buildinfo_link_app){
-                    $package_samsung = '<a href="'.$record->Samsung_buildinfo_link_app.'" target="_blank"><p  style="color:green;line-height:0.5">Amazon: '.$record->Samsung_package.'</p></a>';
+                    $package_samsung = '<a href="'.$record->Samsung_buildinfo_link_app.'" target="_blank"><p  style="color:green;line-height:0.5">SamSung: '.$record->Samsung_package.'</p></a>';
                 }else{
-                    $package_samsung = '<p style="color:green;line-height:0.5">CH Play: '.$record->Samsung_package.'</p>';
+                    $package_samsung = '<p style="color:green;line-height:0.5">SamSung: '.$record->Samsung_package.'</p>';
                 }
             }else{
                 if($record->Samsung_buildinfo_link_app){
                     $package_samsung = '<a href="'.$record->Samsung_buildinfo_link_app.'" target="_blank"><p style="color:red;line-height:0.5">SamSung: '.$record->Samsung_package.'</p></a>';
                 }else{
-                    $package_samsung = '<p style="color:red;line-height:0.5">CH Play: '.$record->Samsung_package.'</p>';
+                    $package_samsung = '<p style="color:red;line-height:0.5">SamSung: '.$record->Samsung_package.'</p>';
                 }
             }
 
@@ -601,9 +601,9 @@ class ProjectController extends Controller
 
             }else {
                 if ($record->Oppo_buildinfo_link_app) {
-                    $package_oppo = '<a href="' . $record->Oppo_buildinfo_link_app . '" target="_blank"><p style="color:red;line-height:0.5">Xiaomi: ' . $record->Oppo_package . '</p></a>';
+                    $package_oppo = '<a href="' . $record->Oppo_buildinfo_link_app . '" target="_blank"><p style="color:red;line-height:0.5">Oppo: ' . $record->Oppo_package . '</p></a>';
                 } else {
-                    $package_oppo = '<a href="' . $record->Oppo_buildinfo_link_app . '" target="_blank"><p style="color:red;line-height:0.5">Xiaomi: ' . $record->Oppo_package . '</p></a>';
+                    $package_oppo = '<p style="color:red;line-height:0.5">Oppo: ' . $record->Oppo_package . '</p>';
                 }
             }
 
@@ -624,9 +624,9 @@ class ProjectController extends Controller
 
             }else{
                 if ($record->Vivo_buildinfo_link_app) {
-                    $package_vivo = '<a href="' . $record->Vivo_buildinfo_link_app . '" target="_blank"><p style="color:red;line-height:0.5">Xiaomi: ' . $record->Vivo_package . '</p></a>';
+                    $package_vivo = '<a href="' . $record->Vivo_buildinfo_link_app . '" target="_blank"><p style="color:red;line-height:0.5">Vivo: ' . $record->Vivo_package . '</p></a>';
                 } else {
-                    $package_vivo = '<p style="color:red;line-height:0.5">Xiaomi: ' . $record->Vivo_package . '</p>';
+                    $package_vivo = '<p style="color:red;line-height:0.5">Vivo: ' . $record->Vivo_package . '</p>';
                 }
             }
 
