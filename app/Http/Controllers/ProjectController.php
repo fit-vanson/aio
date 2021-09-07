@@ -436,39 +436,99 @@ class ProjectController extends Controller
                 ->where('ngocphandang_dev_vivo.id',$record->Vivo_buildinfo_store_name_x)
                 ->first();
 
-            if($dev_name_chplay){
+            if($dev_name_chplay !=null){
+                $ga_name_chplay = DB::table('ngocphandang_dev')
+                    ->join('ngocphandang_ga','ngocphandang_dev.id_ga','=','ngocphandang_ga.id')
+                    ->where('ngocphandang_dev.id_ga',$dev_name_chplay->id_ga)
+                    ->first();
+                if($ga_name_chplay){
+                    $ga_name_chplay = $ga_name_chplay->ga_name;
+                }else{
+                    $ga_name_chplay = '';
+                }
                 $dev_name_chplay = $dev_name_chplay->dev_name;
             }else{
                 $dev_name_chplay = '';
+                $ga_name_chplay = '';
             }
 
-            if($dev_name_amazon){
+            if($dev_name_amazon != null){
+                $ga_name_amazon = DB::table('ngocphandang_dev_amazon')
+                    ->join('ngocphandang_ga','ngocphandang_dev_amazon.amazon_ga_name','=','ngocphandang_ga.id')
+                    ->where('ngocphandang_dev_amazon.amazon_ga_name',$dev_name_amazon->amazon_ga_name)
+                    ->first();
+                if($ga_name_amazon){
+                    $ga_name_amazon = $ga_name_amazon->ga_name;
+                }else{
+                    $ga_name_amazon = '';
+                }
                 $dev_name_amazon = $dev_name_amazon->amazon_dev_name;
             }else{
                 $dev_name_amazon = '';
+                $ga_name_amazon = '';
             }
             if($dev_name_samsung){
+                $ga_name_samsung = DB::table('ngocphandang_dev_samsung')
+                    ->join('ngocphandang_ga','ngocphandang_dev_samsung.samsung_ga_name','=','ngocphandang_ga.id')
+                    ->where('ngocphandang_dev_samsung.samsung_ga_name',$dev_name_samsung->samsung_ga_name)
+                    ->first();
+                if($ga_name_samsung){
+                    $ga_name_samsung = $ga_name_samsung->ga_name;
+                }else{
+                    $ga_name_samsung = '';
+                }
                 $dev_name_samsung = $dev_name_samsung->samsung_dev_name;
             }else{
                 $dev_name_samsung = '';
+                $ga_name_samsung = '';
             }
 
             if($dev_name_xiaomi){
+                $ga_name_xiaomi = DB::table('ngocphandang_dev_xiaomi')
+                    ->join('ngocphandang_ga','ngocphandang_dev_xiaomi.xiaomi_ga_name','=','ngocphandang_ga.id')
+                    ->where('ngocphandang_dev_xiaomi.xiaomi_ga_name',$dev_name_xiaomi->xiaomi_ga_name)
+                    ->first();
+                if($ga_name_xiaomi){
+                    $ga_name_xiaomi = $ga_name_xiaomi->ga_name;
+                }else{
+                    $ga_name_xiaomi = '';
+                }
                 $dev_name_xiaomi = $dev_name_xiaomi->xiaomi_dev_name;
             }else{
                 $dev_name_xiaomi = '';
+                $ga_name_xiaomi = '';
             }
 
             if($dev_name_oppo){
+                $ga_name_oppo = DB::table('ngocphandang_dev_oppo')
+                    ->join('ngocphandang_ga','ngocphandang_dev_oppo.oppo_ga_name','=','ngocphandang_ga.id')
+                    ->where('ngocphandang_dev_oppo.oppo_ga_name',$dev_name_oppo->oppo_ga_name)
+                    ->first();
+                if($ga_name_oppo){
+                    $ga_name_oppo = $ga_name_oppo->ga_name;
+                }else{
+                    $ga_name_oppo = '';
+                }
                 $dev_name_oppo = $dev_name_oppo->oppo_dev_name;
             }else{
                 $dev_name_oppo = '';
+                $ga_name_oppo = '';
             }
 
             if($dev_name_vivo){
+                $ga_name_vivo = DB::table('ngocphandang_dev_vivo')
+                    ->join('ngocphandang_ga','ngocphandang_dev_vivo.vivo_ga_name','=','ngocphandang_ga.id')
+                    ->where('ngocphandang_dev_vivo.vivo_ga_name',$dev_name_vivo->vivo_ga_name)
+                    ->first();
+                if($ga_name_vivo){
+                    $ga_name_vivo = $ga_name_vivo->ga_name;
+                }else{
+                    $ga_name_vivo = '';
+                }
                 $dev_name_vivo = $dev_name_vivo->vivo_dev_name;
             }else{
                 $dev_name_vivo = '';
+                $ga_name_vivo = '';
             }
 
 
@@ -817,12 +877,12 @@ class ProjectController extends Controller
                 $policy_chplay = $policy_amazon = $policy_xiaomi = $policy_samsung = $policy_oppo = $policy_vivo = "";
             }
             $status =
-                $policy_chplay.$Chplay_policy.' CH Play: '.$Chplay_status.
-                '<br>'.$policy_amazon.$Amazon_policy.' Amazon: '.$Amazon_status.
-                '<br>'.$policy_samsung.$Samsung_policy.' SamSung: '.$Samsung_status.
-                '<br>'.$policy_xiaomi.$Xiaomi_policy.' Xiaomi: '.$Xiaomi_status.
-                '<br>'.$policy_oppo.$Oppo_policy.' Oppo: '.$Oppo_status.
-                '<br>'.$policy_vivo.$Vivo_policy.' Vivo: '.$Vivo_status;
+                $policy_chplay.$Chplay_policy.' CH Play: '.$Chplay_status.'   '. '<span class="badge badge-info">'.$dev_name_chplay.'</span>'.'   '. '<span class="badge badge-warning">'.$ga_name_chplay.'</span>'.
+                '<br>'.$policy_amazon.$Amazon_policy.' Amazon: '.$Amazon_status.'   '. '<span class="badge badge-info">'.$dev_name_amazon.'</span>'.'   '. '<span class="badge badge-warning">'.$ga_name_amazon.'</span>'.
+                '<br>'.$policy_samsung.$Samsung_policy.' SamSung: '.$Samsung_status.'   '. '<span class="badge badge-info">'.$dev_name_samsung.'</span>'.'   '. '<span class="badge badge-warning">'.$ga_name_samsung.'</span>'.
+                '<br>'.$policy_xiaomi.$Xiaomi_policy.' Xiaomi: '.$Xiaomi_status.'   '. '<span class="badge badge-info">'.$dev_name_xiaomi.'</span>'.'   '. '<span class="badge badge-warning">'.$ga_name_xiaomi.'</span>'.
+                '<br>'.$policy_oppo.$Oppo_policy.' Oppo: '.$Oppo_status.'   '. '<span class="badge badge-info">'.$dev_name_oppo.'</span>'.'   '. '<span class="badge badge-warning">'.$ga_name_oppo.'</span>'.
+                '<br>'.$policy_vivo.$Vivo_policy.' Vivo: '.$Vivo_status.'   '. '<span class="badge badge-info">'.$dev_name_vivo.'</span>'.'   '. '<span class="badge badge-warning">'.$ga_name_vivo.'</span>';
             $keystore_profile =
                 '<div>
                     <span class="badge badge-primary" style="font-size: 12px">C: '.$record->Chplay_keystore_profile.'</span>
@@ -832,6 +892,9 @@ class ProjectController extends Controller
                     <span class="badge badge-danger"style="font-size: 12px">O: '.$record->Oppo_keystore_profile.'</span>
                     <span class="badge badge-dark"style="font-size: 12px">V: '.$record->Vivo_keystore_profile.'</span>
                 </div>';
+
+
+
 
 
 
