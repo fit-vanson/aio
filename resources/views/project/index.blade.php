@@ -727,6 +727,44 @@
             $('#Vivo_policy').val(data[0].Vivo_policy);
             $('#Vivo_keystore_profile').val(data[0].Vivo_keystore_profile);
 
+            if(data[2] == null){
+                $('#chplay_dev_ga').text('Không có '+ ' | '+ data[10])
+            }else {
+                $('#chplay_dev_ga').text(data[2].store_name+ ' | '+ data[10])
+            }
+
+            if(data[5] == null){
+                $('#amazon_dev_ga').text('Không có '+ ' | '+ data[11])
+            }else {
+                $('#amazon_dev_ga').text(data[5].amazon_store_name+ ' | '+ data[11])
+            }
+
+            if(data[6] == null){
+                $('#samsung_dev_ga').text('Không có '+ ' | '+ data[12])
+            }else {
+                $('#samsung_dev_ga').text(data[6].samsung_store_name+ ' | '+ data[12])
+            }
+
+            if(data[7] == null){
+                $('#xiaomi_dev_ga').text('Không có '+ ' | '+ data[13])
+            }else {
+                $('#xiaomi_dev_ga').text(data[7].xiaomi_store_name+ ' | '+ data[13])
+            }
+
+            if(data[8] == null){
+                $('#oppo_dev_ga').text('Không có '+ ' | '+ data[14])
+            }else {
+                $('#oppo_dev_ga').text(data[8].oppo_store_name+ ' | '+ data[14])
+            }
+
+            if(data[9] == null){
+                $('#vivo_dev_ga').text('Không có '+ ' | '+ data[15])
+            }else {
+                $('#vivo_dev_ga').text(data[9].vivo_store_name+ ' | '+ data[15])
+            }
+
+
+
             $('#modelHeading').html("Edit Project");
             $('#saveBtn').val("edit-project");
             $('#ajaxModel').modal('show');
@@ -1174,7 +1212,6 @@
                 _token:_token
             },
             success:function (data){
-
                 var ads = jQuery.parseJSON(data.ads);
                 $('#Chplay_package').attr("placeholder",data.package);
                 $('#Amazon_package').attr("placeholder",data.package);
@@ -1362,6 +1399,105 @@
                     $('#Vivo_ads_native').hide();
                     $('#Vivo_ads_open').hide();
                 }
+            }
+        });
+    });
+
+
+    $('#Chplay_buildinfo_store_name_x').change(function (){
+        var store_name = $(this).val();
+        var _token = $('input[name=_token]').val();
+        $.ajax({
+            url: '{{route('select_store_name_chplay')}}',
+            type: "post",
+            data: {
+                store_name:store_name,
+                _token:_token
+            },
+            success:function (data){
+                $('#chplay_dev_ga').text(data[0]+ ' | '+ data[1])
+
+            }
+        });
+    });
+    $('#Amazon_buildinfo_store_name_x').change(function (){
+        var store_name = $(this).val();
+        var _token = $('input[name=_token]').val();
+        $.ajax({
+            url: '{{route('select_store_name_amazon')}}',
+            type: "post",
+            data: {
+                store_name:store_name,
+                _token:_token
+            },
+            success:function (data){
+                $('#amazon_dev_ga').text(data[0]+ ' | '+ data[1])
+
+            }
+        });
+    });
+    $('#Samsung_buildinfo_store_name_x').change(function (){
+        var store_name = $(this).val();
+        var _token = $('input[name=_token]').val();
+        $.ajax({
+            url: '{{route('select_store_name_samsung')}}',
+            type: "post",
+            data: {
+                store_name:store_name,
+                _token:_token
+            },
+            success:function (data){
+                $('#samsung_dev_ga').text(data[0]+ ' | '+ data[1])
+
+            }
+        });
+    });
+    $('#Xiaomi_buildinfo_store_name_x').change(function (){
+        var store_name = $(this).val();
+        var _token = $('input[name=_token]').val();
+        $.ajax({
+            url: '{{route('select_store_name_xiaomi')}}',
+            type: "post",
+            data: {
+                store_name:store_name,
+                _token:_token
+            },
+            success:function (data){
+                $('#xiaomi_dev_ga').text(data[0]+ ' | '+ data[1])
+
+            }
+        });
+    });
+    $('#Oppo_buildinfo_store_name_x').change(function (){
+        var store_name = $(this).val();
+        var _token = $('input[name=_token]').val();
+        $.ajax({
+            url: '{{route('select_store_name_oppo')}}',
+            type: "post",
+            data: {
+                store_name:store_name,
+                _token:_token
+            },
+            success:function (data){
+                $('#oppo_dev_ga').text(data[0]+ ' | '+ data[1])
+
+            }
+        });
+    });
+    $('#Vivo_buildinfo_store_name_x').change(function (){
+        var store_name = $(this).val();
+        var _token = $('input[name=_token]').val();
+
+        $.ajax({
+            url: '{{route('select_store_name_vivo')}}',
+            type: "post",
+            data: {
+                store_name:store_name,
+                _token:_token
+            },
+            success:function (data){
+                $('#vivo_dev_ga').text(data[0]+ ' | '+ data[1])
+
             }
         });
     });

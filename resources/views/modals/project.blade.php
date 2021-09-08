@@ -181,6 +181,7 @@
                                                 </div>
                                                 <div class="form-group col-lg-9">
                                                     <label for="name">Ads CHPlay</label>
+                                                    <span id="chplay_dev_ga"></span>
                                                     <div class="row" >
                                                         <div class="col-lg-2">
                                                             <input type="text" id="Chplay_ads_id" name="Chplay_ads_id" placeholder="id"  class="form-control" style="display: none" >
@@ -218,6 +219,7 @@
 
                                                 <div class="form-group col-lg-9">
                                                     <label for="name">Ads Amazon</label>
+                                                    <span id="amazon_dev_ga"></span>
                                                     <div class="row" >
                                                         <div class="col-lg-2">
                                                             <input type="text" id="Amazon_ads_id" name="Amazon_ads_id" placeholder="id" class="form-control" >
@@ -255,6 +257,7 @@
 
                                                 <div class="form-group col-lg-9">
                                                     <label for="name">Ads Sam Sung</label>
+                                                    <span id="samsung_dev_ga"></span>
                                                     <div class="row" >
                                                         <div class="col-lg-2">
                                                             <input type="text" id="Samsung_ads_id" name="Samsung_ads_id" placeholder="id" class="form-control" >
@@ -292,6 +295,7 @@
 
                                                 <div class="form-group col-lg-9">
                                                     <label for="name">Ads Xiaomi</label>
+                                                    <span id="xiaomi_dev_ga"></span>
                                                     <div class="row" >
                                                         <div class="col-lg-2">
                                                             <input type="text" id="Xiaomi_ads_id" name="Xiaomi_ads_id" placeholder="id" class="form-control" >
@@ -329,6 +333,7 @@
 
                                                 <div class="form-group col-lg-9">
                                                     <label for="name">Ads Oppo</label>
+                                                    <span id="oppo_dev_ga"></span>
                                                     <div class="row" >
                                                         <div class="col-lg-2">
                                                             <input type="text" id="Oppo_ads_id" name="Oppo_ads_id" placeholder="id" class="form-control" >
@@ -365,6 +370,7 @@
                                                 </div>
                                                 <div class="form-group col-lg-9">
                                                     <label for="name">Ads Vivo</label>
+                                                    <span id="vivo_dev_ga"></span>
                                                     <div class="row" >
                                                         <div class="col-lg-2">
                                                             <input type="text" id="Vivo_ads_id" name="Vivo_ads_id" placeholder="id" class="form-control" >
@@ -390,11 +396,10 @@
                                                             <input type="text" id="Vivo_ads_open" name="Vivo_ads_open" placeholder="open"  class="form-control" >
                                                         </div>
                                                     </div>
+
+
                                                 </div>
-
                                             </div>
-
-
                                         </div>
                                         <div class="tab-pane p-3" id="chplay" role="tabpanel">
 
@@ -402,7 +407,7 @@
                                                 <div class="form-group col-lg-6">
                                                     <label for="name">Store Name (CH Play) </label>
                                                     <select class="form-control select2" id="Chplay_buildinfo_store_name_x" name="Chplay_buildinfo_store_name_x">
-                                                        <option >---Vui lòng chọn---</option>
+                                                        <option value="0" >---Vui lòng chọn---</option>
                                                         @foreach($store_name as $item)
                                                             <option value="{{$item->id}}">{{$item->dev_name}} : {{$item->store_name}}</option>
                                                         @endforeach
@@ -456,7 +461,7 @@
                                                 <div class="form-group col-lg-6">
                                                     <label for="name">Store Name (Amazon) </label>
                                                     <select class="form-control select2" id="Amazon_buildinfo_store_name_x" name="Amazon_buildinfo_store_name_x">
-                                                        <option >---Vui lòng chọn---</option>
+                                                        <option value="0" >---Vui lòng chọn---</option>
                                                         @foreach($store_name_amazon as $item)
                                                             <option value="{{$item->id}}">{{$item->amazon_dev_name}} : {{$item->amazon_store_name}}</option>
                                                         @endforeach
@@ -509,7 +514,7 @@
                                                 <div class="form-group col-lg-6">
                                                     <label for="name">Store Name (Samsung) </label>
                                                     <select class="form-control select2" id="Samsung_buildinfo_store_name_x" name="Samsung_buildinfo_store_name_x">
-                                                        <option >---Vui lòng chọn---</option>
+                                                        <option value="0"  >---Vui lòng chọn---</option>
                                                         @foreach($store_name_samsung as $item)
                                                             <option value="{{$item->id}}">{{$item->samsung_dev_name}} : {{$item->samsung_store_name}}</option>
                                                         @endforeach
@@ -562,7 +567,7 @@
                                                 <div class="form-group col-lg-6">
                                                     <label for="name">Store Name (Xiaomi) </label>
                                                     <select class="form-control select2" id="Xiaomi_buildinfo_store_name_x" name="Xiaomi_buildinfo_store_name_x">
-                                                        <option >---Vui lòng chọn---</option>
+                                                        <option value="0"  >---Vui lòng chọn---</option>
                                                         @foreach($store_name_xiaomi as $item)
                                                             <option value="{{$item->id}}">{{$item->xiaomi_dev_name}} : {{$item->xiaomi_store_name}}</option>
                                                         @endforeach
@@ -615,7 +620,7 @@
                                                 <div class="form-group col-lg-6">
                                                     <label for="name">Store Name (OPPO) </label>
                                                     <select class="form-control select2" id="Oppo_buildinfo_store_name_x" name="Oppo_buildinfo_store_name_x">
-                                                        <option >---Vui lòng chọn---</option>
+                                                        <option value="0"  >---Vui lòng chọn---</option>
                                                         @foreach($store_name_oppo as $item)
                                                             <option value="{{$item->id}}">{{$item->oppo_dev_name}} : {{$item->oppo_store_name}}</option>
                                                         @endforeach
@@ -668,7 +673,7 @@
                                                 <div class="form-group col-lg-6">
                                                     <label for="name">Store Name (Vivo) </label>
                                                     <select class="form-control select2" id="Vivo_buildinfo_store_name_x" name="Vivo_buildinfo_store_name_x">
-                                                        <option >---Vui lòng chọn---</option>
+                                                        <option value="0" >---Vui lòng chọn---</option>
                                                         @foreach($store_name_vivo as $item)
                                                             <option value="{{$item->id}}">{{$item->vivo_dev_name}} : {{$item->vivo_store_name}}</option>
                                                         @endforeach

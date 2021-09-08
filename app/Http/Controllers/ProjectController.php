@@ -2437,18 +2437,101 @@ class ProjectController extends Controller
         $policy = '';
         $project = ProjectModel::where('projectid',$id)->first();
         $policy = Template::select('policy1','policy2')->where('id',$project->template)->first();
-        $store_name = Dev::select('store_name')->where('id',$project->Chplay_buildinfo_store_name_x)->first();
+        $store_name = Dev::select('store_name','id_ga')->where('id',$project->Chplay_buildinfo_store_name_x)->first();
         $da= Da::select('ma_da')->where('id',$project->ma_da)->first();
         $template= Template::select('template','package','ads','Chplay_category','Amazon_category','Samsung_category','Xiaomi_category','Oppo_category','Vivo_category')->where('id',$project->template)->first();
 
-        $store_name_amazon= Dev_Amazon::select('amazon_store_name')->where('id',$project->Amazon_buildinfo_store_name_x)->first();
-        $store_name_samsung= Dev_Samsung::select('samsung_store_name')->where('id',$project->Samsung_buildinfo_store_name_x)->first();
-        $store_name_xiaomi= Dev_Xiaomi::select('xiaomi_store_name')->where('id',$project->Xiaomi_buildinfo_store_name_x)->first();
-        $store_name_oppo= Dev_Oppo::select('oppo_store_name')->where('id',$project->Oppo_buildinfo_store_name_x)->first();
-        $store_name_vivo= Dev_Vivo::select('vivo_store_name')->where('id',$project->Vivo_buildinfo_store_name_x)->first();
+
+        $store_name_amazon= Dev_Amazon::select('amazon_store_name','amazon_ga_name')->where('id',$project->Amazon_buildinfo_store_name_x)->first();
+        $store_name_samsung= Dev_Samsung::select('samsung_store_name','samsung_ga_name')->where('id',$project->Samsung_buildinfo_store_name_x)->first();
+        $store_name_xiaomi= Dev_Xiaomi::select('xiaomi_store_name','xiaomi_ga_name')->where('id',$project->Xiaomi_buildinfo_store_name_x)->first();
+        $store_name_oppo= Dev_Oppo::select('oppo_store_name','oppo_ga_name')->where('id',$project->Oppo_buildinfo_store_name_x)->first();
+        $store_name_vivo= Dev_Vivo::select('vivo_store_name','vivo_ga_name')->where('id',$project->Vivo_buildinfo_store_name_x)->first();
+
+
+        $ga_name_amazon = 'Chưa có';
+        $ga_name_chplay = 'Chưa có';
+        $ga_name_samsung = 'Chưa có';
+        $ga_name_xiaomi = 'Chưa có';
+        $ga_name_oppo = 'Chưa có';
+        $ga_name_vivo = 'Chưa có';
+        if($store_name){
+            if($store_name->id_ga != null){
+                $ga_name_chplay = DB::table('ngocphandang_dev')
+                    ->join('ngocphandang_ga','ngocphandang_dev.id_ga','=','ngocphandang_ga.id')
+                    ->where('ngocphandang_dev.id_ga',$store_name->id_ga)
+                    ->first();
+                $ga_name_chplay =$ga_name_chplay->ga_name;
+            }else{
+                $ga_name_chplay = 'Chưa có';
+            }
+        }
+        if($store_name_amazon){
+            if($store_name_amazon->amazon_ga_name != null){
+                $ga_name_amazon = DB::table('ngocphandang_dev_amazon')
+                    ->join('ngocphandang_ga','ngocphandang_dev_amazon.amazon_ga_name','=','ngocphandang_ga.id')
+                    ->where('ngocphandang_dev_amazon.amazon_ga_name',$store_name_amazon->amazon_ga_name)
+                    ->first();
+                $ga_name_amazon =$ga_name_amazon->ga_name;
+            }else{
+                $ga_name_amazon = 'Chưa có';
+            }
+        }
+        if($store_name_samsung){
+            if($store_name_samsung->samsung_ga_name != null){
+                $ga_name_samsung = DB::table('ngocphandang_dev_samsung')
+                    ->join('ngocphandang_ga','ngocphandang_dev_samsung.samsung_ga_name','=','ngocphandang_ga.id')
+                    ->where('ngocphandang_dev_samsung.samsung_ga_name',$store_name_samsung->samsung_ga_name)
+                    ->first();
+                if($ga_name_samsung){
+                    $ga_name_samsung =$ga_name_samsung->ga_name;
+                }else{
+                    $ga_name_samsung = 'Chưa có';
+                }
+            }else{
+                $ga_name_samsung = 'Chưa có';
+            }
+        }
+
+        if($store_name_xiaomi){
+            if($store_name_xiaomi->xiaomi_ga_name != null){
+                $ga_name_xiaomi = DB::table('ngocphandang_dev_xiaomi')
+                    ->join('ngocphandang_ga','ngocphandang_dev_xiaomi.xiaomi_ga_name','=','ngocphandang_ga.id')
+                    ->where('ngocphandang_dev_xiaomi.xiaomi_ga_name',$store_name_xiaomi->xiaomi_ga_name)
+                    ->first();
+                $ga_name_xiaomi =$ga_name_xiaomi->ga_name;
+            }else{
+                $ga_name_xiaomi = 'Chưa có';
+            }
+        }
+        if($store_name_oppo){
+            if($store_name_oppo->oppo_ga_name != null){
+                $ga_name_oppo = DB::table('ngocphandang_dev_oppo')
+                    ->join('ngocphandang_ga','ngocphandang_dev_oppo.oppo_ga_name','=','ngocphandang_ga.id')
+                    ->where('ngocphandang_dev_oppo.oppo_ga_name',$store_name_oppo->oppo_ga_name)
+                    ->first();
+                $ga_name_oppo =$ga_name_oppo->ga_name;
+            }else{
+                $ga_name_oppo = 'Chưa có';
+            }
+        }
+        if($store_name_vivo){
+            if($store_name_vivo->vivo_ga_name != null){
+                $ga_name_vivo = DB::table('ngocphandang_dev_vivo')
+                    ->join('ngocphandang_ga','ngocphandang_dev_vivo.vivo_ga_name','=','ngocphandang_ga.id')
+                    ->where('ngocphandang_dev_vivo.vivo_ga_name',$store_name_vivo->vivo_ga_name)
+                    ->first();
+                $ga_name_vivo =$ga_name_vivo->ga_name;
+            }else{
+                $ga_name_vivo = 'Chưa có';
+            }
+        }
+
 
         return response()->json([$project,$policy,$store_name,$da,$template,
-            $store_name_amazon,$store_name_samsung,$store_name_xiaomi,$store_name_oppo,$store_name_vivo]);
+            $store_name_amazon,$store_name_samsung,$store_name_xiaomi,$store_name_oppo,$store_name_vivo,
+            $ga_name_chplay,$ga_name_amazon,$ga_name_samsung,$ga_name_xiaomi,$ga_name_oppo,$ga_name_vivo
+        ]);
     }
 
 
@@ -2757,6 +2840,7 @@ class ProjectController extends Controller
         $template = Template::select('package','ads','Chplay_category','Amazon_category','Samsung_category','Xiaomi_category','Oppo_category','Vivo_category')->where('id',$request->template)->first();
         return response()->json($template);
     }
+
     public function checkData($id){
         ProjectModel::where('template',$id)->where('buildinfo_console','<>','2')->Where('buildinfo_console','<>','5')->update(['buildinfo_console'=> 4]);
         return response()->json(['success'=>'Thành công']);
@@ -2776,8 +2860,7 @@ class ProjectController extends Controller
         }
         return view('project.showlog',['record'=>$record,'data_logs'=>$data_logs]);
     }
-
-public function substr_Index( $str, $nth ){
+    public function substr_Index( $str, $nth ){
         $str2 = '';
         $posTotal = 0;
         for($i=0; $i < $nth; $i++){
@@ -2790,5 +2873,102 @@ public function substr_Index( $str, $nth ){
         }
         return $posTotal-1;
     }
+    public function select_store_name_chplay(Request $request){
+        $dev_name_chplay = DB::table('ngocphandang_dev')
+            ->where('ngocphandang_dev.id',$request->store_name)
+            ->first();
+        if($dev_name_chplay->id_ga != null){
+            $ga_name_chplay = DB::table('ngocphandang_dev')
+                ->join('ngocphandang_ga','ngocphandang_dev.id_ga','=','ngocphandang_ga.id')
+                ->where('ngocphandang_dev.id_ga',$dev_name_chplay->id_ga)
+                ->first();
+            $ga_name_chplay =$ga_name_chplay->ga_name;
+        }else{
+            $ga_name_chplay = 'Chưa có';
+        }
+        return response()->json([$dev_name_chplay->dev_name,$ga_name_chplay]);
+    }
+
+    public function select_store_name_amazon(Request $request){
+        $dev_name_amazon = DB::table('ngocphandang_dev_amazon')
+            ->where('ngocphandang_dev_amazon.id',$request->store_name)
+            ->first();
+        if($dev_name_amazon->amazon_ga_name != null){
+            $ga_name_amazon = DB::table('ngocphandang_dev_amazon')
+                ->join('ngocphandang_ga','ngocphandang_dev_amazon.amazon_ga_name','=','ngocphandang_ga.id')
+                ->where('ngocphandang_dev_amazon.amazon_ga_name',$dev_name_amazon->amazon_ga_name)
+                ->first();
+            $ga_name_amazon =$ga_name_amazon->ga_name;
+        }else{
+            $ga_name_amazon = 'Chưa có';
+        }
+        return response()->json([$dev_name_amazon->amazon_dev_name,$ga_name_amazon]);
+    }
+
+    public function select_store_name_samsung(Request $request){
+        $dev_name_samsung = DB::table('ngocphandang_dev_samsung')
+            ->where('ngocphandang_dev_samsung.id',$request->store_name)
+            ->first();
+        if($dev_name_samsung->	samsung_ga_name != null){
+            $ga_name_samsung = DB::table('ngocphandang_dev_samsung')
+                ->join('ngocphandang_ga','ngocphandang_dev_samsung.samsung_ga_name','=','ngocphandang_ga.id')
+                ->where('ngocphandang_dev_samsung.samsung_ga_name',$dev_name_samsung->samsung_ga_name)
+                ->first();
+            $ga_name_samsung =$ga_name_samsung->ga_name;
+        }else{
+            $ga_name_samsung = 'Chưa có';
+        }
+        return response()->json([$dev_name_samsung->samsung_dev_name,$ga_name_samsung]);
+    }
+
+    public function select_store_name_xiaomi(Request $request){
+        $dev_name_xiaomi = DB::table('ngocphandang_dev_xiaomi')
+            ->where('ngocphandang_dev_xiaomi.id',$request->store_name)
+            ->first();
+
+        if($dev_name_xiaomi->xiaomi_ga_name != null){
+            $ga_name_xiaomi = DB::table('ngocphandang_dev_xiaomi')
+                ->join('ngocphandang_ga','ngocphandang_dev_xiaomi.xiaomi_ga_name','=','ngocphandang_ga.id')
+                ->where('ngocphandang_dev_xiaomi.xiaomi_ga_name',$dev_name_xiaomi->xiaomi_ga_name)
+                ->first();
+            $ga_name_xiaomi =$ga_name_xiaomi->ga_name;
+        }else{
+            $ga_name_xiaomi = 'Chưa có';
+        }
+        return response()->json([$dev_name_xiaomi->xiaomi_dev_name,$ga_name_xiaomi]);
+    }
+
+    public function select_store_name_oppo(Request $request){
+        $dev_name_oppo = DB::table('ngocphandang_dev_oppo')
+            ->where('ngocphandang_dev_oppo.id',$request->store_name)
+            ->first();
+        if($dev_name_oppo->	oppo_ga_name != null){
+            $ga_name_oppo = DB::table('ngocphandang_dev_oppo')
+                ->join('ngocphandang_ga','ngocphandang_dev_oppo.oppo_ga_name','=','ngocphandang_ga.id')
+                ->where('ngocphandang_dev_oppo.oppo_ga_name',$dev_name_oppo->oppo_ga_name)
+                ->first();
+            $ga_name_oppo =$ga_name_oppo->ga_name;
+        }else{
+            $ga_name_oppo = 'Chưa có';
+        }
+        return response()->json([$dev_name_oppo->oppo_dev_name,$ga_name_oppo]);
+    }
+
+    public function select_store_name_vivo(Request $request){
+        $dev_name_vivo = DB::table('ngocphandang_dev_vivo')
+            ->where('ngocphandang_dev_vivo.id',$request->store_name)
+            ->first();
+        if($dev_name_vivo->	vivo_ga_name != null){
+            $ga_name_vivo = DB::table('ngocphandang_dev_vivo')
+                ->join('ngocphandang_ga','ngocphandang_dev_vivo.vivo_ga_name','=','ngocphandang_ga.id')
+                ->where('ngocphandang_dev_vivo.vivo_ga_name',$dev_name_vivo->vivo_ga_name)
+                ->first();
+            $ga_name_vivo =$ga_name_vivo->ga_name;
+        }else{
+            $ga_name_vivo = 'Chưa có';
+        }
+        return response()->json([$dev_name_vivo->vivo_dev_name,$ga_name_vivo]);
+    }
+
 
 }

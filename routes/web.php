@@ -119,6 +119,12 @@ Route::group(['prefix'=>'project','middleware'=>['CheckLogout','2fa']], function
     Route::post('/getVivo',[ProjectController::class,'getVivo'])->name('project.getVivo')->middleware('can:project-index');
 
     Route::post('/select-template',[ProjectController::class,'select_template']);
+    Route::post('/select-store-name-chplay',[ProjectController::class,'select_store_name_chplay'])->name('select_store_name_chplay');
+    Route::post('/select-store-name-amazon',[ProjectController::class,'select_store_name_amazon'])->name('select_store_name_amazon');
+    Route::post('/select-store-name-samsung',[ProjectController::class,'select_store_name_samsung'])->name('select_store_name_samsung');
+    Route::post('/select-store-name-xiaomi',[ProjectController::class,'select_store_name_xiaomi'])->name('select_store_name_xiaomi');
+    Route::post('/select-store-name-oppo',[ProjectController::class,'select_store_name_oppo'])->name('select_store_name_oppo');
+    Route::post('/select-store-name-vivo',[ProjectController::class,'select_store_name_vivo'])->name('select_store_name_vivo');
     Route::get('/showlog/{id}',[ProjectController::class,'showlog'])->name('project.showlog')->middleware('can:project-index');
 
 
