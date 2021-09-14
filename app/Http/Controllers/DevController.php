@@ -71,7 +71,7 @@ class DevController extends Controller
         $data_arr = array();
         foreach ($records as $record) {
             $btn = ' <a href="javascript:void(0)" onclick="editDev('.$record->id.')" class="btn btn-warning"><i class="ti-pencil-alt"></i></a>';
-            $btn = $btn.' <a href="javascript:void(0)" data-toggle="tooltip"  data-id="'.$record->id.'" data-original-title="Delete" class="btn btn-danger deleteDev"><i class="ti-trash"></i></a>';
+            $btn = $btn.' <a href="javascript:void(0)" data-toggle="tooltip"  data-id="'.$record->id.'" data-original-title="Delete" class="btn btn-danger deleteDevice"><i class="ti-trash"></i></a>';
 
             $project = DB::table('ngocphandang_dev')
                 ->join('ngocphandang_project','ngocphandang_project.Chplay_buildinfo_store_name_x','=','ngocphandang_dev.id')

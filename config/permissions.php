@@ -148,13 +148,21 @@ return [
         'mail_reg-update'  =>'edit_mail_reg',
         'mail_reg-delete'  =>'delete_mail_reg',
 
+        'device-index'  =>'index_device',
+        'device-show'  =>'show_device',
+        'device-add'  =>'add_device',
+        'device-edit'  =>'edit_device',
+        'device-update'  =>'edit_device',
+        'device-delete'  =>'delete_device',
+
     ],
 
 
     'table-module' => [
         'Dự án','Template','Project','Gadev','Dev','Dev Amazon','Dev SamSung','Dev Xiaomi','Dev Oppo','Dev Vivo','Ga',
         'User','Vai trò', 'Phân quyền',
-        'khosim','cocsim','sms','hub','Mail Manage', 'Mail Parent','Mail Reg'
+        'khosim','cocsim','sms','hub','Mail Manage', 'Mail Parent','Mail Reg',
+        'Device'
     ],
     'module-child' =>[
         'Index','Show','Add','Edit','Delete'

@@ -109,6 +109,15 @@
                                 </ul>
                             </li>
                             <li>
+                                <a href="javascript:void(0);" class="waves-effect"><i class="typcn typcn-device-desktop"></i> <span> Device Info<span class="float-right menu-arrow"><i class="mdi mdi-chevron-right"></i></span> </span> </a>
+                                <ul class="submenu">
+                                    @can('device-index')
+                                        <li><a href="{{route('device.index')}}">Quản lý Device</a></li>
+                                    @endcan
+
+                                </ul>
+                            </li>
+                            <li>
                                 <a href="javascript:void(0);" class="waves-effect"><i class="ti-archive"></i> <span> Quản trị phân quyền <span class="float-right menu-arrow"><i class="mdi mdi-chevron-right"></i></span> </span> </a>
                                 <ul class="submenu">
                                     @can('user-index')

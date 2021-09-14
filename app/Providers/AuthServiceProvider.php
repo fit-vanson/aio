@@ -6,6 +6,7 @@ use App\Http\Controllers\KhosimController;
 use App\Policies\CocsimPolicy;
 use App\Policies\DaPolicy;
 use App\Policies\DevAmazonPolicy;
+use App\Policies\DevicePolicy;
 use App\Policies\DevOppoPolicy;
 use App\Policies\DevPolicy;
 use App\Policies\DevSamsungPolicy;
@@ -69,6 +70,7 @@ class AuthServiceProvider extends ServiceProvider
        $this->defineMailManage();
        $this->defineMailParent();
        $this->defineMailReg();
+       $this->defineDevice();
     }
 
     public function defineProject(){
@@ -267,6 +269,15 @@ class AuthServiceProvider extends ServiceProvider
         Gate::define('mail_reg-delete', [MailRegPolicy::class, 'delete']);
     }
 
+
+    public function defineDevice(){
+        Gate::define('device-index', [DevicePolicy::class, 'index']);
+        Gate::define('device-show', [DevicePolicy::class, 'show']);
+        Gate::define('device-add', [DevicePolicy::class, 'add']);
+        Gate::define('device-edit', [DevicePolicy::class, 'edit']);
+        Gate::define('device-update', [DevicePolicy::class, 'update']);
+        Gate::define('device-delete', [DevicePolicy::class, 'delete']);
+    }
 
 
 

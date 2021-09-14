@@ -6,6 +6,7 @@ use App\Http\Controllers\DaController;
 use App\Http\Controllers\DevAmazonController;
 use App\Http\Controllers\DevController;
 
+use App\Http\Controllers\DeviceInfoController;
 use App\Http\Controllers\DevOppoController;
 use App\Http\Controllers\DevSamsungController;
 use App\Http\Controllers\DevVivoController;
@@ -156,6 +157,8 @@ Route::group(['prefix'=>'ga_dev','middleware'=>['CheckLogout','2fa']], function 
     Route::post('/update',[Ga_devController::class,'update'])->name('gadev.update')->middleware('can:gadev-update');
     Route::get('/delete/{id}',[Ga_devController::class,'delete'])->name('gadev.delete')->middleware('can:gadev-delete');
 });
+
+
 
 Route::group(['prefix'=>'dev','middleware'=>['CheckLogout','2fa']], function (){
     Route::get('/',[DevController::class,'index'])->name('dev.index')->middleware('can:dev-index');
@@ -310,6 +313,17 @@ Route::group(['prefix'=>'mail_reg','middleware'=>['CheckLogout','2fa']], functio
     Route::get('/',[MailRegController::class,'index'])->name('mail_reg.index')->middleware('can:mail_reg-index');
     Route::post('/getMailRegs/', [MailRegController::class, "getMailRegs"])->name('mail_reg.getMailRegs');
 
+});
+
+
+Route::group(['prefix'=>'device-info','middleware'=>['CheckLogout','2fa']], function (){
+    Route::get('/',[DeviceInfoController::class,'index'])->name('device.index')->middleware('can:device-index');
+    Route::post('/getIndex', [DeviceInfoController::class, "getIndex"])->name('device.getIndex');
+    Route::post('/create',[DeviceInfoController::class,'create'])->name('device.create')->middleware('can:device-add');
+    Route::get('/edit/{id}',[DeviceInfoController::class,'edit'])->name('device.edit')->middleware('can:device-edit');
+    Route::get('/show/{id}',[DeviceInfoController::class,'show'])->name('device.show')->middleware('can:device-show');
+    Route::post('/update',[DeviceInfoController::class,'update'])->name('device.update')->middleware('can:device-update');
+    Route::get('/delete/{id}',[DeviceInfoController::class,'delete'])->name('device.delete')->middleware('can:device-delete');
 });
 
 
