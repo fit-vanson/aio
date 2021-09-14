@@ -38,8 +38,14 @@
                         @endif
                         </div>
 
-                        <div class="form-group">
+                        <div class="form-group row m-t-20">
                             <div class="col-sm-6">
+                                <div class="custom-control custom-checkbox">
+                                    <input type="checkbox" class="custom-control-input" id="check_remember_me" name="remember_me">
+                                    <label class="custom-control-label" for="check_remember_me">Remember me</label>
+                                </div>
+                            </div>
+                            <div class="col-sm-6 text-right">
                                 <button class="btn btn-primary w-md waves-effect waves-light" type="submit">Đăng nhập</button>
                             </div>
                         </div>

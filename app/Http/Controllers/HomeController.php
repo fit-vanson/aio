@@ -43,9 +43,7 @@ class HomeController extends Controller
         $validate = Validator::make($request->all(),[
             'username' => 'required',
             'password' => 'required'
-
         ]);
-
         if($validate->fails()){
             return redirect()->back()
                 ->withErrors($validate)
@@ -53,7 +51,8 @@ class HomeController extends Controller
         }
         $name = $request->username;
         $password = $request->password;
-        if(Auth::attempt(['name'=>$name,'password'=>$password])){
+        $remember = $request->input('remember_me');
+        if(Auth::attempt(['name'=>$name,'password'=>$password],$remember)){
             return \redirect()->intended('admin/');
         }else{
             return back()->withInput()->with('error','Mật khẩu hoặc tài khoản không đúng!');
