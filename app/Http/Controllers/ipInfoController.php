@@ -20,20 +20,7 @@ class ipInfoController extends Controller
         $totalRecords = $totalRecordswithFilter = 1;
         $records =[];
         if($searchValue != null){
-            $pos = strrpos($searchValue,'.');
-            $ip = substr($searchValue,0,$pos);
-            $check = InfoIP::find($ip);
 
-            if(isset($check)){
-                $records['ip'] = $check->ip;
-                $records['city'] = $check->city;
-                $records['region'] = $check->region;
-                $records['country'] = $check->country;
-                $records['countryCode'] = $check->countryCode;
-                $records['latitude'] = $check->latitude;
-                $records['longitude'] = $check->longitude;
-                $records['timezone'] = $check->timezone;
-            }else{
                 $details = GeoLocation::lookup($searchValue);
                 $records['ip'] = $details->getIp();
                 $records['city'] = $details->getCity();
@@ -57,7 +44,7 @@ class ipInfoController extends Controller
                         'timezone' => $records['timezone']
                     ]
                 );
-            }
+
         }
         $link = 'https://www.google.com/maps/place/'.$records['latitude'].','.$records['longitude'];
 
@@ -87,34 +74,46 @@ class ipInfoController extends Controller
            $ip = $request->ip;
 
            if (filter_var($ip, FILTER_VALIDATE_IP)) {
-               $details = GeoLocation::lookup($ip);
-               $records['ip'] = $details->getIp();
-               $records['city'] = $details->getCity();
-               $records['region'] = $details->getRegion();
-               $records['country'] = $details->getCountry();
-               $records['countryCode'] = $details->getCountryCode();
-               $records['latitude'] = $details->getLatitude();
-               $records['longitude'] = $details->getLongitude();
+               $pos = strrpos($ip,'.');
+               $ipC = substr($ip,0,$pos);
+               $check = InfoIP::where('ip',$ipC)->first();
+               if(isset($check)){
+                   $records['ip'] = $check->ip;
+                   $records['city'] = $check->city;
+                   $records['region'] = $check->region;
+                   $records['country'] = $check->country;
+                   $records['countryCode'] = $check->countryCode;
+                   $records['latitude'] = $check->latitude;
+                   $records['longitude'] = $check->longitude;
+                   $records['timezone'] = $check->timezone;
+                   echo $records['ip'] . ' | ' .$records['city'] . ' | ' .$records['region'] . ' | ' .$records['country'] . ' | ' .$records['countryCode'] . ' | ' .$records['latitude'] . ' | ' .$records['longitude']. ' | ' .$records['timezone'];
+               }else{
+                   $details = GeoLocation::lookup($ip);
+                   $records['ip'] = $details->getIp();
+                   $records['city'] = $details->getCity();
+                   $records['region'] = $details->getRegion();
+                   $records['country'] = $details->getCountry();
+                   $records['countryCode'] = $details->getCountryCode();
+                   $records['latitude'] = $details->getLatitude();
+                   $records['longitude'] = $details->getLongitude();
+                   $records['timezone'] = $this->get_nearest_timezone($records['latitude'], $records['longitude'], $records['countryCode']);
 
-               $records['timezone'] = $this->get_nearest_timezone($records['latitude'], $records['longitude'], $records['countryCode']);
-
-
-
-               InfoIP::updateOrCreate(
-                   [
-                       'ip' => substr($details->getIp(),0,strrpos($details->getIp(),'.'))
-                   ],
-                   [
-                       'city' => $details->getCity(),
-                       'region' => $details->getRegion(),
-                       'country' => $details->getCountry(),
-                       'countryCode' => $details->getCountryCode(),
-                       'latitude' => $details->getLatitude(),
-                       'longitude' => $details->getLongitude(),
-                       'timezone' => $records['timezone']
-                   ]
-               );
-               echo $records['ip'] . ' | ' .$records['city'] . ' | ' .$records['region'] . ' | ' .$records['country'] . ' | ' .$records['countryCode'] . ' | ' .$records['latitude'] . ' | ' .$records['longitude']. ' | ' .$records['timezone'];
+                   InfoIP::updateOrCreate(
+                       [
+                           'ip' => substr($details->getIp(),0,strrpos($details->getIp(),'.'))
+                       ],
+                       [
+                           'city' => $details->getCity(),
+                           'region' => $details->getRegion(),
+                           'country' => $details->getCountry(),
+                           'countryCode' => $details->getCountryCode(),
+                           'latitude' => $details->getLatitude(),
+                           'longitude' => $details->getLongitude(),
+                           'timezone' => $records['timezone']
+                       ]
+                   );
+                   echo $records['ip'] . ' | ' .$records['city'] . ' | ' .$records['region'] . ' | ' .$records['country'] . ' | ' .$records['countryCode'] . ' | ' .$records['latitude'] . ' | ' .$records['longitude']. ' | ' .$records['timezone'];
+               }
            } else {
                echo("$ip is not a valid IP address");
            }
