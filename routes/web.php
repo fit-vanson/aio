@@ -15,6 +15,7 @@ use App\Http\Controllers\Ga_devController;
 use App\Http\Controllers\GaController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\HubController;
+use App\Http\Controllers\ipInfoController;
 use App\Http\Controllers\KhosimController;
 use App\Http\Controllers\MailManageController;
 use App\Http\Controllers\MailParentController;
@@ -344,6 +345,15 @@ Route::group(["middleware" => ["auth"], "prefix" => "two_face"], function() {
     Route::get('/',[VerifyTwoFaceController::class,'index'])->name('two_face.index');
     Route::post('/verify',[VerifyTwoFaceController::class,'verify'])->name('two_face.verify');
 });
+
+
+
+Route::group([ "prefix" => "infoIP"], function() {
+    Route::get('/',[ipInfoController::class,'index'])->name('inInfo.index');
+    Route::post('/getIP',[ipInfoController::class,'getIndex'])->name('inInfo.getIndex');
+
+});
+Route::get('IP2location',[ipInfoController::class,'IP2location'])->name('inInfo.IP2location');
 
 
 
