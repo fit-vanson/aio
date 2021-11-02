@@ -155,6 +155,13 @@ return [
         'device-update'  =>'edit_device',
         'device-delete'  =>'delete_device',
 
+        'script-index'  =>'index_script',
+        'script-show'  =>'show_script',
+        'script-add'  =>'add_script',
+        'script-edit'  =>'edit_script',
+        'script-update'  =>'edit_script',
+        'script-delete'  =>'delete_script',
+
     ],
 
 
@@ -162,7 +169,7 @@ return [
         'Dự án','Template','Project','Gadev','Dev','Dev Amazon','Dev SamSung','Dev Xiaomi','Dev Oppo','Dev Vivo','Ga',
         'User','Vai trò', 'Phân quyền',
         'khosim','cocsim','sms','hub','Mail Manage', 'Mail Parent','Mail Reg',
-        'Device'
+        'Device','Script'
     ],
     'module-child' =>[
         'Index','Show','Add','Edit','Delete'

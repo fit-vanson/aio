@@ -23,6 +23,7 @@ use App\Http\Controllers\MailRegController;
 use App\Http\Controllers\PermissionController;
 use App\Http\Controllers\ProjectController;
 use App\Http\Controllers\RoleController;
+use App\Http\Controllers\ScriptController;
 use App\Http\Controllers\SmsController;
 use App\Http\Controllers\TemplateController;
 use App\Http\Controllers\TwoFaceAuthsController;
@@ -326,6 +327,17 @@ Route::group(['prefix'=>'device-info','middleware'=>['CheckLogout','2fa']], func
     Route::post('/update',[DeviceInfoController::class,'update'])->name('device.update')->middleware('can:device-update');
     Route::get('/delete/{id}',[DeviceInfoController::class,'delete'])->name('device.delete')->middleware('can:device-delete');
 });
+
+Route::group(['prefix'=>'script','middleware'=>['CheckLogout','2fa']], function (){
+    Route::get('/',[ScriptController::class,'index'])->name('script.index')->middleware('can:script-index');
+    Route::post('/getIndex', [ScriptController::class, "getIndex"])->name('script.getIndex');
+    Route::post('/create',[ScriptController::class,'create'])->name('script.create')->middleware('can:script-add');
+    Route::get('/edit/{id}',[ScriptController::class,'edit'])->name('script.edit')->middleware('can:script-edit');
+    Route::get('/show/{id}',[ScriptController::class,'show'])->name('script.show')->middleware('can:script-show');
+    Route::post('/update',[ScriptController::class,'update'])->name('script.update')->middleware('can:script-update');
+    Route::get('/delete/{id}',[ScriptController::class,'delete'])->name('script.delete')->middleware('can:script-delete');
+});
+
 
 
 

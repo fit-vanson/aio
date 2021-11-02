@@ -21,6 +21,7 @@ use App\Policies\MaiManagePolicy;
 use App\Policies\PermissionPolicy;
 use App\Policies\ProjectPolicy;
 use App\Policies\RolePolicy;
+use App\Policies\ScriptPolicy;
 use App\Policies\SmsPolicy;
 use App\Policies\TemplatePolicy;
 use App\Policies\UserPolicy;
@@ -71,6 +72,7 @@ class AuthServiceProvider extends ServiceProvider
        $this->defineMailParent();
        $this->defineMailReg();
        $this->defineDevice();
+       $this->defineScript();
     }
 
     public function defineProject(){
@@ -277,6 +279,15 @@ class AuthServiceProvider extends ServiceProvider
         Gate::define('device-edit', [DevicePolicy::class, 'edit']);
         Gate::define('device-update', [DevicePolicy::class, 'update']);
         Gate::define('device-delete', [DevicePolicy::class, 'delete']);
+    }
+
+    public function defineScript(){
+        Gate::define('script-index', [ScriptPolicy::class, 'index']);
+        Gate::define('script-show', [ScriptPolicy::class, 'show']);
+        Gate::define('script-add', [ScriptPolicy::class, 'add']);
+        Gate::define('script-edit', [ScriptPolicy::class, 'edit']);
+        Gate::define('script-update', [ScriptPolicy::class, 'update']);
+        Gate::define('script-delete', [ScriptPolicy::class, 'delete']);
     }
 
 
