@@ -214,7 +214,7 @@
         }
 
 
-        table.on('click', 'td:nth-child(4)', e=> {
+        table.on('click', 'td:nth-child(5)', e=> {
             e.preventDefault();
             const row = table.row(e.target.closest('tr'));
             const rowData = row.data();
