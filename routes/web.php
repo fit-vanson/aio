@@ -100,6 +100,7 @@ Route::group(['prefix'=>'project','middleware'=>['CheckLogout','2fa']], function
     Route::post('/updateStatus',[ProjectController::class,'updateStatus'])->name('project.updateStatus')->middleware('can:project-update');
     Route::get('/delete/{id}',[ProjectController::class,'delete'])->name('project.delete')->middleware('can:project-delete');
     Route::get('/removeProject/{id}',[ProjectController::class,'removeProject'])->name('project.removeProject')->middleware('can:project-edit');
+    Route::post('/removeProjectA',[ProjectController::class,'removeProjectA'])->name('project.removeProjectA')->middleware('can:project-edit');
     Route::get('/checkData/{id}',[ProjectController::class,'checkData'])->name('project.checkData')->middleware('can:project-edit');
 
     Route::get('/appChplay',[ProjectController::class,'appChplay'])->name('project.appChplay')->middleware('can:project-index');

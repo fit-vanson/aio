@@ -51,21 +51,29 @@
                     </div>
                 </div>
                 <div class="card-body">
-                    <table class="table table-bordered dt-responsive nowrap data-table" style="border-collapse: collapse; border-spacing: 0; width: 100%;">
-                        <thead>
-                        <tr>
-                            <th >ID</th>
-                            <th style="width:10%">Logo</th>
-                            <th style="width:20%">Mã Project</th>
-                            <th style="width:30%">Package</th>
-                            <th style="width:30%">Message</th>
-                            <th style="width:30%">Trạng thái Console</th>
-                            <th style="width:10%">Action</th>
-                        </tr>
-                        </thead>
-                        <tbody>
-                        </tbody>
-                    </table>
+                    <form id="checkAppForm" name="checkAppForm">
+                        <table class="table table-bordered dt-responsive nowrap data-table" style="border-collapse: collapse; border-spacing: 0; width: 100%;">
+                            <thead>
+                            <tr>
+                                <th >ID</th>
+                                <th >ID</th>
+                                <th style="width:10%">Logo</th>
+                                <th style="width:20%">Mã Project</th>
+                                <th style="width:30%">Package</th>
+                                <th style="width:30%">Message</th>
+                                <th style="width:30%">Trạng thái Console</th>
+                                <th style="width:10%">Action</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            </tbody>
+                        </table>
+                        <div class="row">
+                            <div class="col-12">
+                                <button type="submit" class="btn btn-primary waves-effect waves-float waves-light">Submit</button>
+                            </div>
+                        </div>
+                    </form>
                 </div>
             </div>
         </div> <!-- end col -->
@@ -126,6 +134,7 @@
             },
             columns: [
                 {data: 'created_at', name: 'created_at',},
+                {data: 'projectid', name: 'projectid'},
                 {data: 'logo', name: 'logo',orderable: false},
                 {data: 'projectname', name: 'projectname'},
                 {data: 'package', name: 'package',orderable: false},
@@ -138,6 +147,26 @@
                     "targets": [ 0 ],
                     "visible": false,
                     "searchable": false
+                },
+                {
+                    // For Checkboxes
+                    targets: 1,
+                    orderable: false,
+                    responsivePriority: 3,
+                    render: function (data, type, full, meta) {
+                        console.log(full)
+                        return (
+                            '<div class="custom-control custom-checkbox"> <input class="custom-control-input dt-checkboxes" type="checkbox" value="'+[full.projectid]+'" name="id[]" id="checkbox' +
+                            data +
+                            '" /><label class="custom-control-label" for="checkbox' +
+                            data +
+                            '"></label></div>'
+                        );
+                    },
+                    checkboxes: {
+                        selectAllRender:
+                            '<div class="custom-control custom-checkbox"> <input class="custom-control-input" type="checkbox" value="" id="checkboxSelectAll" /><label class="custom-control-label" for="checkboxSelectAll"></label></div>'
+                    }
                 },
             ],
 
@@ -195,9 +224,9 @@
             $('.message-full').html(rowData.full_mess);
 
         });
-        setInterval( function () {
-            table.ajax.reload();
-        }, 5000 );
+        // setInterval( function () {
+        //     table.ajax.reload();
+        // }, 5000 );
 
         $('#all').on('click', function () {
             $('.console_status_button').val(null);
@@ -239,6 +268,19 @@
                     });
                     swal("Đã di chuyển!",'', "success");
                 });
+        });
+
+        $('#checkAppForm').on('submit',function (event){
+            event.preventDefault();
+            $.ajax({
+                data: $('#checkAppForm').serialize(),
+                url: "{{ route('project.removeProjectA') }}",
+                type: "post",
+                dataType: 'json',
+                success: function (data) {
+                    table.draw();
+                },
+            });
         });
     });
 

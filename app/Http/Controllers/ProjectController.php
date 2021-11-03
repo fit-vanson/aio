@@ -1222,6 +1222,7 @@ class ProjectController extends Controller
             $data_arr[] = array(
                 "created_at" => $record->created_at,
                 "logo" => $logo,
+                "projectid"=>$record->projectid,
                 "name_projectname"=>$record->projectname,
                 "projectname"=>$data_projectname.$data_template.$data_ma_da.$data_title_app.$abc,
                 "package" => $package_chplay.$package_amazon.$package_samsung.$package_xiaomi.$package_oppo.$package_vivo,
@@ -2810,6 +2811,43 @@ class ProjectController extends Controller
                 'buildinfo_mess' => $mess
             ]
         );
+        return response()->json(['success'=>'Cập nhật thành công']);
+    }
+
+    public function removeProjectA(Request $request){
+        $id = $request->id;
+
+
+
+
+        $projects = ProjectModel::whereIn('projectid',$id)->get();
+        foreach ($projects as $project){
+            ProjectModel::updateOrCreate(
+                [
+                    "projectid" => $project->projectid,
+                ],
+                [
+                    'buildinfo_console' => 0,
+                    'buildinfo_mess' => '',
+                    'time_mess' =>time(),
+                    'buildinfo_time' => time(),
+
+                ]);
+            $log_mess = log::where('projectname',$project->projectname)->first();
+            if($log_mess){
+                $mess = $log_mess->buildinfo_mess .'|'.$project->buildinfo_mess;
+            }else{
+                $mess = $project->buildinfo_mess;
+            }
+            log::updateOrCreate(
+                [
+                    "projectname" => $project->projectname,
+                ],
+                [
+                    'buildinfo_mess' => $mess
+                ]
+            );
+        }
         return response()->json(['success'=>'Cập nhật thành công']);
     }
 
