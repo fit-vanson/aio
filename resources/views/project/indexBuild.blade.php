@@ -203,7 +203,7 @@
         });
         setInterval( function () {
             table.ajax.reload();
-        }, 5000 );
+        }, 15000 );
 
         $('#all').on('click', function () {
             $('.console_status_button').val(null);
