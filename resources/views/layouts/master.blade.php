@@ -13,8 +13,16 @@
     </head>
 <body>
     <div id="wrapper">
-         @include('layouts.header')
-         @include('layouts.sidebar')
+        <?php
+        if(isset(Auth::user()->name)){
+
+        ?>
+            @include('layouts.header')
+            @include('layouts.sidebar')
+        <?php
+        }
+        ?>
+
          <div class="content-page">
             <div class="content">
                 <div class="container-fluid">
