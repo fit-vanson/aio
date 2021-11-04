@@ -41,17 +41,18 @@
 
     <div class="row">
         <div class="col-12">
-            <div class="card">
-                <div class="card-body">
-                    <div class="button-items console_status_button">
-                        <button type="button" class="btn btn-primary waves-effect waves-light" id="all">All</button>
-                        <button type="button" class="btn btn-warning waves-effect" id="WaitProcessing" >Chờ xử lý</button>
-                        <button type="button" class="btn btn-info waves-effect" id="Processing">Đang xử lý</button>
-                        <button type="button" class="btn btn-success waves-effect waves-light" id="End">Kết thúc</button>
+
+                <div class="card">
+                    <div class="card-body">
+                        <div class="button-items console_status_button">
+                            <button type="button" class="btn btn-primary waves-effect waves-light" id="all">All</button>
+                            <button type="button" class="btn btn-warning waves-effect" id="WaitProcessing" >Chờ xử lý</button>
+                            <button type="button" class="btn btn-info waves-effect" id="Processing">Đang xử lý</button>
+                            <button type="button" class="btn btn-success waves-effect waves-light" id="End">Kết thúc</button>
+                            <button type="button" class="btn btn-danger waves-effect waves-light float-right" id="RemoveA">Submit</button>
+                        </div>
                     </div>
-                </div>
-                <div class="card-body">
-                    <form id="checkAppForm" name="checkAppForm">
+                    <div class="card-body">
                         <table class="table table-bordered dt-responsive nowrap data-table" style="border-collapse: collapse; border-spacing: 0; width: 100%;">
                             <thead>
                             <tr>
@@ -68,14 +69,9 @@
                             <tbody>
                             </tbody>
                         </table>
-                        <div class="row">
-                            <div class="col-12">
-                                <button type="submit" class="btn btn-primary waves-effect waves-float waves-light">Submit</button>
-                            </div>
-                        </div>
-                    </form>
+                    </div>
                 </div>
-            </div>
+
         </div> <!-- end col -->
     </div> <!-- end row -->
 
@@ -107,12 +103,12 @@
     $("#template").select2({});
     $("#ma_da").select2({});
     $("#buildinfo_store_name_x").select2({});
+    $('#RemoveA').hide();
 </script>
 
 
 <script type="text/javascript">
     $(function () {
-
         $.ajaxSetup({
             headers: {
                 'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
@@ -129,6 +125,7 @@
                 data: function (d){
                     return $.extend({},d,{
                         "console_status": $('.console_status_button').val(),
+                        "remove_status": $('#RemoveA').val(),
                     })
                 }
             },
@@ -144,29 +141,9 @@
             ],
             columnDefs: [
                 {
-                    "targets": [ 0 ],
+                    "targets": [ 0,1 ],
                     "visible": false,
                     "searchable": false
-                },
-                {
-                    // For Checkboxes
-                    targets: 1,
-                    orderable: false,
-                    responsivePriority: 3,
-                    render: function (data, type, full, meta) {
-                        console.log(full)
-                        return (
-                            '<div class="custom-control custom-checkbox"> <input class="custom-control-input dt-checkboxes" type="checkbox" value="'+[full.projectid]+'" name="id[]" id="checkbox' +
-                            data +
-                            '" /><label class="custom-control-label" for="checkbox' +
-                            data +
-                            '"></label></div>'
-                        );
-                    },
-                    checkboxes: {
-                        selectAllRender:
-                            '<div class="custom-control custom-checkbox"> <input class="custom-control-input" type="checkbox" value="" id="checkboxSelectAll" /><label class="custom-control-label" for="checkboxSelectAll"></label></div>'
-                    }
                 },
             ],
 
@@ -214,7 +191,7 @@
         }
 
 
-        table.on('click', 'td:nth-child(5)', e=> {
+        table.on('click', 'td:nth-child(4)', e=> {
             e.preventDefault();
             const row = table.row(e.target.closest('tr'));
             const rowData = row.data();
@@ -230,58 +207,47 @@
 
         $('#all').on('click', function () {
             $('.console_status_button').val(null);
+            $('#RemoveA').val('');
+            $('#RemoveA').hide();
             table.draw();
         });
         $('#WaitProcessing').on('click', function () {
             $('.console_status_button').val('1%4');
+            $('#RemoveA').val('');
+            $('#RemoveA').hide();
             table.draw();
         });
         $('#Processing').on('click', function () {
             $('.console_status_button').val('2%5');
+            $('#RemoveA').val('');
+            $('#RemoveA').hide();
             table.draw();
         });
         $('#End').on('click', function () {
             $('.console_status_button').val('3%6%7%8');
+            $('#RemoveA').val('');
+            $('#RemoveA').show();
             table.draw();
         });
-        $(document).on('click','.removeProject', function (data){
-            var project_id = $(this).data("id");
-            swal({
-                    title: "Bạn có chắc muốn kết thúc?",
-                    text: "",
-                    type: "warning",
-                    showCancelButton: true,
-                    confirmButtonClass: "btn-danger",
-                    confirmButtonText: "Xác nhận!",
-                    closeOnConfirm: false
-                },
-                function(){
-                    $.ajax({
-                        type: "get",
-                        url: "{{ asset("project/removeProject") }}/" + project_id,
-                        success: function (data) {
-                            table.draw();
-                        },
-                        error: function (data) {
-                            console.log('Error:', data);
-                        }
-                    });
-                    swal("Đã di chuyển!",'', "success");
-                });
+        $('#RemoveA').on('click', function () {
+            $('#RemoveA').val('3%6%7%8');
+            table.ajax.reload();
         });
 
-        $('#checkAppForm').on('submit',function (event){
-            event.preventDefault();
+        $(document).on('click','.removeProject', function (data){
+            var project_id = $(this).data("id");
             $.ajax({
-                data: $('#checkAppForm').serialize(),
-                url: "{{ route('project.removeProjectA') }}",
-                type: "post",
-                dataType: 'json',
+                type: "get",
+                url: "{{ asset("project/removeProject") }}/" + project_id,
                 success: function (data) {
                     table.draw();
                 },
+                error: function (data) {
+                    console.log('Error:', data);
+                }
             });
         });
+
     });
 
 </script>

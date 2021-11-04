@@ -954,6 +954,40 @@ class ProjectController extends Controller
         $columnSortOrder = $order_arr[0]['dir']; // asc or desc
         $searchValue = $search_arr['value']; // Search value
 
+
+        if(isset($request->remove_status)){
+            $status_console = $request->remove_status;
+            $status_console = explode('%',$status_console);
+            $projects = ProjectModel::whereIn('buildinfo_console',$status_console)->get();
+            foreach ($projects as $project){
+                ProjectModel::updateOrCreate(
+                    [
+                        "projectid" => $project->projectid,
+                    ],
+                    [
+                        'buildinfo_console' => 0,
+                        'buildinfo_mess' => '',
+                        'time_mess' =>time(),
+                        'buildinfo_time' => time(),
+
+                    ]);
+                $log_mess = log::where('projectname',$project->projectname)->first();
+                if($log_mess){
+                    $mess = $log_mess->buildinfo_mess .'|'.$project->buildinfo_mess;
+                }else{
+                    $mess = $project->buildinfo_mess;
+                }
+                log::updateOrCreate(
+                    [
+                        "projectname" => $project->projectname,
+                    ],
+                    [
+                        'buildinfo_mess' => $mess
+                    ]
+                );
+            }
+        }
+
         if(isset($request->console_status)){
             $status_console = $request->console_status;
             $status_console = explode('%',$status_console);
@@ -1018,7 +1052,8 @@ class ProjectController extends Controller
                 ->take($rowperpage)
                 ->get();
 
-        }else{
+        }
+        else{
             // Total records
             $totalRecords = ProjectModel::select('count(*) as allcount')
                 ->where(function ($q){
@@ -2814,42 +2849,6 @@ class ProjectController extends Controller
         return response()->json(['success'=>'Cập nhật thành công']);
     }
 
-    public function removeProjectA(Request $request){
-        $id = $request->id;
-
-
-
-
-        $projects = ProjectModel::whereIn('projectid',$id)->get();
-        foreach ($projects as $project){
-            ProjectModel::updateOrCreate(
-                [
-                    "projectid" => $project->projectid,
-                ],
-                [
-                    'buildinfo_console' => 0,
-                    'buildinfo_mess' => '',
-                    'time_mess' =>time(),
-                    'buildinfo_time' => time(),
-
-                ]);
-            $log_mess = log::where('projectname',$project->projectname)->first();
-            if($log_mess){
-                $mess = $log_mess->buildinfo_mess .'|'.$project->buildinfo_mess;
-            }else{
-                $mess = $project->buildinfo_mess;
-            }
-            log::updateOrCreate(
-                [
-                    "projectname" => $project->projectname,
-                ],
-                [
-                    'buildinfo_mess' => $mess
-                ]
-            );
-        }
-        return response()->json(['success'=>'Cập nhật thành công']);
-    }
 
     public function checkbox($id){
         $data = ProjectModel::find($id);
