@@ -15,6 +15,7 @@ use App\Http\Controllers\Ga_devController;
 use App\Http\Controllers\GaController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\HubController;
+use App\Http\Controllers\ImeiController;
 use App\Http\Controllers\ipInfoController;
 use App\Http\Controllers\KhosimController;
 use App\Http\Controllers\MailManageController;
@@ -366,6 +367,14 @@ Route::group([ "prefix" => "infoIP"], function() {
     Route::post('/getIP',[ipInfoController::class,'getIndex'])->name('inInfo.getIndex');
 
 });
+
+Route::group(['prefix'=>'imei'], function (){
+    Route::get('/',[ImeiController::class,'index'])->name('imei.index');
+    Route::post('/create',[ImeiController::class,'create'])->name('imei.create');
+    Route::get('/gen_imei',[ImeiController::class,'gen_imei'])->name('imei.gen_imei');
+    Route::get('/getBrand',[ImeiController::class,'getBrand'])->name('imei.getBrand');
+});
+
 Route::get('IP2location',[ipInfoController::class,'IP2location'])->name('inInfo.IP2location');
 
 
