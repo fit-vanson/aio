@@ -36,7 +36,6 @@ class ImeiController extends Controller
         $data->brand = $request->brand;
         $data->model= $request->model;
         $data->save();
-
     }
     public function import(){
         ini_set('max_execution_time',30000);
@@ -74,10 +73,8 @@ class ImeiController extends Controller
             }
             $tac .= $this->calc_check_digit($tac);
             $TAC[] = $tac;
-
         }
         return response()->json(['data'=>$TAC]);
-
     }
     public function calc_check_digit($number,$alphabet='0123456789'){
         $check_digit = $this->checksum($number.$alphabet[0]);
