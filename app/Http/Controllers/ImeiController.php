@@ -39,12 +39,8 @@ class ImeiController extends Controller
 
     }
     public function import(){
-        dd(1);
         ini_set('max_execution_time',30000);
         $file = file('C:\Users\Administrator\Desktop\data\imeidb.csv');
-
-
-//        $data = array_splice($file,1);
         $parts = (array_chunk($file,1000));
         foreach ($parts as $part){
             $items = array_map('str_getcsv',$part);
@@ -63,6 +59,7 @@ class ImeiController extends Controller
     }
 
     public function gen_imei($tac,$show=1){
+
         if(isset($_GET['show'])){
             $show = $_GET['show'];
         }
@@ -71,11 +68,13 @@ class ImeiController extends Controller
         }
         $TAC = [];
         for ($i=0; $i<$show;$i++){
+            $tac = substr($tac,0,8);
             while (strlen($tac) < 14){
                 $tac .= (string)rand(0,9);
             }
             $tac .= $this->calc_check_digit($tac);
             $TAC[] = $tac;
+
         }
         return response()->json(['data'=>$TAC]);
 
@@ -105,15 +104,23 @@ class ImeiController extends Controller
 
     public function show_imei(Request $request){
        if($request->brand){
-           $model = Imei::inRandomOrder()->where('brand',$request->brand)->limit(5)->get();
-           foreach ($model as $item){
-               if(isset($request->model)){
-                   $tac = Imei::inRandomOrder()->where('brand',$request->brand)->where('model',$request->model)->first();
-                   $gen_imei =  $this->gen_imei($tac->tac_code,1);
-                   return $request->brand . ' | ' .$request->model. ' | '.$gen_imei->getData()->data[0];
-               }else{
-                   echo '<a href="?brand='.$item->brand.'&model='.$item->model.'">'.$item->model.'</a><br />';
+           $model = Imei::inRandomOrder()->where('brand','like', '%' . $request->brand . '%')->limit(5)->get();
+           if(count($model)>0){
+               foreach ($model as $item){
+                   if(isset($request->model)){
+                       $tac = Imei::inRandomOrder()->where('brand','like', '%' . $request->brand . '%')->where('model','like', '%' . $request->model . '%')->first();
+                       if(isset($tac)){
+                           $gen_imei =  $this->gen_imei($tac->tac_code,1);
+                           return $tac->brand . ' | ' .$tac->model. ' | '.$gen_imei->getData()->data[0];
+                       }else{
+                           return 'Chưa có dữ liệu';
+                       }
+                   }else{
+                       echo '<a href="?brand='.$item->brand.'&model='.$item->model.'">'.$item->model.'</a><br />';
+                   }
                }
+           }else{
+               return 'Chưa có dữ liệu';
            }
        }elseif ($request->tac_code){
            $tac_code = $request->tac_code;
@@ -121,7 +128,7 @@ class ImeiController extends Controller
            echo $a->getData()->data[0];
        }
        else{
-           $brand = Imei::inRandomOrder()->limit(20)->get();
+           $brand = Imei::inRandomOrder()->select('brand')->distinct('brand')->limit(20)->get();
            foreach ($brand as $item){
                echo '<a href="?brand='.$item->brand.'">'.$item->brand.'</a><br />';
            }
