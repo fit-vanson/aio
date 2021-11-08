@@ -372,7 +372,9 @@ Route::group(['prefix'=>'imei'], function (){
     Route::get('/',[ImeiController::class,'index'])->name('imei.index');
     Route::post('/create',[ImeiController::class,'create'])->name('imei.create');
     Route::get('/gen_imei',[ImeiController::class,'gen_imei'])->name('imei.gen_imei');
+    Route::get('/show_imei',[ImeiController::class,'show_imei'])->name('imei.show_imei');
     Route::get('/getBrand',[ImeiController::class,'getBrand'])->name('imei.getBrand');
+    Route::get('/import',[ImeiController::class,'import']);
 });
 
 Route::get('IP2location',[ipInfoController::class,'IP2location'])->name('inInfo.IP2location');

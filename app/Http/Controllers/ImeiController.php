@@ -38,126 +38,93 @@ class ImeiController extends Controller
         $data->save();
 
     }
-
-    public function gen_imei(Request $request){
-        if($request->brand){
-            $brand = $request->brand;
-            $data = Imei::where('brand',$brand)->where('imei_code','<>','null')->get();
-            if(count($data)>0){
-                foreach ($data as $item){
-                    echo '<a href="?b='.$brand.'&m='.$item->model.'">'.$item->model.'</a><br />';
-
-                }
-                return;
-            }else{
-                return 'Chưa có dữ liệu';
-            }
-        }
-        if (isset($request->m) && isset($request->b)) {
-            $imei = Imei::where('brand',$request->b)->where('model',$request->m)->first();
-            if(isset($imei)){
-                $imei = $imei->imei_code;
-                $imei = substr($imei,0,10);
-                $imei_length = strlen($imei);
-                $chars_left = (14 - (int) $imei_length);
-                $range_start = substr(pow(31, ($chars_left - 1)), 0, $chars_left);
-                $range_diff = 842;
-                $new_imei = $imei . $range_start;
-                for ($i = 0; $i < 5; $i++) {
-                    $imei_total = 0;
-                    $imei_chunked = str_split($new_imei);
-
-                    for ($x = 0; $x < count($imei_chunked); $x++) {
-                        // echo $imei_chunked[$x] . ' - ' . $x . ' - ' . $x%2 . "<br >"; //debugging each only
-                        $imei_each = $imei_chunked[$x];
-                        if ($x % 2) {
-                            $imei_each = 2 * $imei_each;
-                            if (strlen($imei_each) == 2) {
-                                $imei_each = array_sum(str_split($imei_each));
-                            }
-                        }
-                        $imei_total += $imei_each;
-                    }
-
-                    // to get the imei check number..
-                    $love = str_split($imei_total);
-                    $check_number = (10 - (int) $love[1]);
-                    if ($check_number == 10) {
-                        $check_number = 0;
-                    }
-
-                    $imei_gen = $new_imei . $check_number;
-//                echo  "<input value=\"" . $new_imei . $check_number . "\" class=\"form-control\" /><br>";
-
-                    $new_imei += $range_diff;
-                    echo $request->b . ' | '. $request->m .' | '.$imei_gen.'<br>';
-                }
-                return;
-            }
-            else {
-                return 'Chưa có dữ liệu';
-            }
-        }
-        if (isset($request->model) && is_numeric($request->model)) {
-            $imei_input = $request->model;
-            $imei = substr($imei_input,0,10);
-            $imei_length = strlen($imei);
-            $chars_left = (14 - (int) $imei_length);
-            $range_start = substr(pow(31, ($chars_left - 1)), 0, $chars_left);
-            $range_diff = 842;
-            $new_imei = $imei . $range_start;
-            for ($i = 0; $i < 5; $i++) {
-                $imei_total = 0;
-                $imei_chunked = str_split($new_imei);
-
-                for ($x = 0; $x < count($imei_chunked); $x++) {
-                    // echo $imei_chunked[$x] . ' - ' . $x . ' - ' . $x%2 . "<br >"; //debugging each only
-                    $imei_each = $imei_chunked[$x];
-                    if ($x % 2) {
-                        $imei_each = 2 * $imei_each;
-                        if (strlen($imei_each) == 2) {
-                            $imei_each = array_sum(str_split($imei_each));
-                        }
-                    }
-                    $imei_total += $imei_each;
-                }
-
-                // to get the imei check number..
-                $love = str_split($imei_total);
-                $check_number = (10 - (int) $love[1]);
-                if ($check_number == 10) {
-                    $check_number = 0;
-                }
-
-                $imei_gen[] = $new_imei . $check_number;
-//                echo  "<input value=\"" . $new_imei . $check_number . "\" class=\"form-control\" /><br>";
-
-                $new_imei += $range_diff;
-            }
-            return response([
-                'data'=>$imei_gen
-            ]);
-        } else {
-            return response([
-                'error'=>'Chưa có dữ liệu'
-            ]);
-        }
-    }
-
     public function import(){
         dd(1);
-        $file = file('C:\Users\Administrator\Desktop\data\phone_full.csv');
-        $data = array_splice($file,1);
-        $parts = (array_chunk($data,5000));
+        ini_set('max_execution_time',30000);
+        $file = file('C:\Users\Administrator\Desktop\data\imeidb.csv');
+
+
+//        $data = array_splice($file,1);
+        $parts = (array_chunk($file,1000));
         foreach ($parts as $part){
             $items = array_map('str_getcsv',$part);
             foreach ($items as $item){
-                Imei::updateOrCreate([
-                    'brand' => $item[0],
-                    'model' => $item[1],
-                ]) ;
+                Imei::updateOrCreate(
+                    [
+                        'tac_code' => $item[0]
+                    ],
+                    [
+                        'brand' => $item[1],
+                        'model' => $item[2],
+                    ]
+                ) ;
             }
         }
     }
 
+    public function gen_imei($tac,$show=1){
+        if(isset($_GET['show'])){
+            $show = $_GET['show'];
+        }
+        if(isset($_GET['tac_code'])) {
+            $tac = $_GET['tac_code'];
+        }
+        $TAC = [];
+        for ($i=0; $i<$show;$i++){
+            while (strlen($tac) < 14){
+                $tac .= (string)rand(0,9);
+            }
+            $tac .= $this->calc_check_digit($tac);
+            $TAC[] = $tac;
+        }
+        return response()->json(['data'=>$TAC]);
+
+    }
+    public function calc_check_digit($number,$alphabet='0123456789'){
+        $check_digit = $this->checksum($number.$alphabet[0]);
+    return $alphabet[-$check_digit];
+    }
+    public function checksum($number,$alphabet='0123456789'){
+        $n = strlen($alphabet);
+        $number = array_reverse(array_map('intval', str_split($number)));
+        $b = 0;
+        $sum = 0;
+        foreach ($number as $key=>$num){
+            if($key%2 !=1){
+                $sum+= $num;
+            }else{
+                $a = $num;
+                $div = (int)floor($a*2/$n);
+                $mov = $a*2%$n;
+                $b += $div+$mov;
+            }
+        }
+        $total = $sum+$b;
+        return $total%$n;
+    }
+
+    public function show_imei(Request $request){
+       if($request->brand){
+           $model = Imei::inRandomOrder()->where('brand',$request->brand)->limit(5)->get();
+           foreach ($model as $item){
+               if(isset($request->model)){
+                   $tac = Imei::inRandomOrder()->where('brand',$request->brand)->where('model',$request->model)->first();
+                   $gen_imei =  $this->gen_imei($tac->tac_code,1);
+                   return $request->brand . ' | ' .$request->model. ' | '.$gen_imei->getData()->data[0];
+               }else{
+                   echo '<a href="?brand='.$item->brand.'&model='.$item->model.'">'.$item->model.'</a><br />';
+               }
+           }
+       }elseif ($request->tac_code){
+           $tac_code = $request->tac_code;
+           $a = $this->gen_imei($tac_code,1);
+           echo $a->getData()->data[0];
+       }
+       else{
+           $brand = Imei::inRandomOrder()->limit(20)->get();
+           foreach ($brand as $item){
+               echo '<a href="?brand='.$item->brand.'">'.$item->brand.'</a><br />';
+           }
+       }
+    }
 }
