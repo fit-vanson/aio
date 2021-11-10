@@ -1433,6 +1433,7 @@
                     $('.a_vivo').show();
                 }else {
                     $('.a_vivo').hide();
+                    $('.market_vivo').hide();
                 }
 
                 if(data.Huawei_category != null){
@@ -1440,6 +1441,7 @@
                     $('.a_huawei').show();
                 }else {
                     $('.a_huawei').hide();
+                    $('.market_huawei').hide();
                 }
 
                 if(ads != null){
