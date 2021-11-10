@@ -47,6 +47,7 @@ class TemplateController extends Controller
             ->orWhere('Xiaomi_category', 'like', '%' . $searchValue . '%')
             ->orWhere('Oppo_category', 'like', '%' . $searchValue . '%')
             ->orWhere('Vivo_category', 'like', '%' . $searchValue . '%')
+            ->orWhere('Huawei_category', 'like', '%' . $searchValue . '%')
             ->count();
 
 
@@ -61,6 +62,7 @@ class TemplateController extends Controller
             ->orWhere('Xiaomi_category', 'like', '%' . $searchValue . '%')
             ->orWhere('Oppo_category', 'like', '%' . $searchValue . '%')
             ->orWhere('Vivo_category', 'like', '%' . $searchValue . '%')
+            ->orWhere('Huawei_category', 'like', '%' . $searchValue . '%')
             ->select('*')
             ->skip($start)
             ->take($rowperpage)
@@ -84,77 +86,83 @@ class TemplateController extends Controller
 
 
             if($record['script_copy'] !== Null){
-                $script_copy = "<i style='color:green;' class='ti-check-box h5'></i>";
+                $script_copy = "<span style='color:green;'> Script_copy</span> - ";
             } else {
-                $script_copy = "<i style='color:red;' class='ti-close h5'></i>";
+                $script_copy = "<span style='color:red;'> Script_copy</span> - ";
             }
             if($record['script_img'] !== Null){
-                $script_img = "<i style='color:green;' class='ti-check-box h5'></i>";
+                $script_img = "<span style='color:green;'> IMG</span> - ";
             } else {
-                $script_img = "<i style='color:red;' class='ti-close h5'></i>";
+                $script_img = "<span style='color:red;'> IMG</span> - ";
             }
             if($record['script_svg2xml'] !== Null){
-                $script_svg2xml = "<i style='color:green;' class='ti-check-box h5'></i>";
+                $script_svg2xml = "<span style='color:green;'> svg2xml</span> - ";
             } else {
-                $script_svg2xml = "<i style='color:red;' class='ti-close h5'></i>";
+                $script_svg2xml = "<span style='color:red;'> svg2xml</span> - ";
             }
             if($record['script_file'] !== Null){
-                $script_file = "<i style='color:green;' class='ti-check-box h5'></i>";
+                $script_file = "<span style='color:green;'> File</span>";
             } else {
-                $script_file = "<i style='color:red;' class='ti-close h5'></i>";
+                $script_file = "<span style='color:red;'> File</span>";
             }
-            $script = 'Script_copy | IMG | svg2xml | File : '. $script_copy .' '. $script_img.' '. $script_svg2xml .' '.$script_file;
+            $script = $script_copy . $script_img. $script_svg2xml .$script_file;
 
             $ads = json_decode($record->ads,true);
 
-           if(!isset($ads['ads_id'])){
-               $ads_id = "<i style='color:red;' class='ti-close h5'></i>";
+           if(isset($ads['ads_id'])){
+               $ads_id = "<span style='color:green;'> Id</span> - ";
            }else{
-               $ads_id = "<i style='color:green;' class='ti-check-box h5'></i>";
+               $ads_id = "<span style='color:red;'> Id</span> - ";
            }
 
-            if(!isset($ads['ads_banner'])){
-                $ads_banner = "<i style='color:red;' class='ti-close h5'></i>";
+            if(isset($ads['ads_banner'])){
+                $ads_banner = "<span style='color:green;'> Banner</span> - ";
             }else{
-                $ads_banner = "<i style='color:green;' class='ti-check-box h5'></i>";
+                $ads_banner = "<span style='color:red;'> Banner</span> - ";
             }
 
-            if(!isset($ads['ads_inter'])){
-                $ads_inter = "<i style='color:red;' class='ti-close h5'></i>";
+            if(isset($ads['ads_inter'])){
+                $ads_inter = "<span style='color:green;'> Inter</span> - ";
             }else{
-                $ads_inter = "<i style='color:green;' class='ti-check-box h5'></i>";
+                $ads_inter = "<span style='color:red;'> Inter</span> - ";
             }
 
-            if(!isset($ads['ads_reward'])){
-                $ads_reward = "<i style='color:red;' class='ti-close h5'></i>";
+            if(isset($ads['ads_reward'])){
+                $ads_reward = "<span style='color:green;'> Reward</span> - ";
             }else{
-                $ads_reward = "<i style='color:green;' class='ti-check-box h5'></i>";
+                $ads_reward = "<span style='color:red;'> Reward</span> - ";
             }
 
-            if(!isset($ads['ads_native'])){
-                $ads_native = "<i style='color:red;' class='ti-close h5'></i>";
+            if(isset($ads['ads_native'])){
+                $ads_native = "<span style='color:green;'> Native</span> - ";
             }else{
-                $ads_native = "<i style='color:green;' class='ti-check-box h5'></i>";
+                $ads_native = "<span style='color:red;'> Native</span> - ";
             }
 
             if(isset($ads['ads_open'])){
-                $ads_open = "<i style='color:green;' class='ti-check-box h5'></i>";
+                $ads_open = "<span style='color:green;'> Open</span> - ";
             }else{
-                $ads_open = "<i style='color:red;' class='ti-close h5'></i>";
+                $ads_open = "<span style='color:red;'> Open</span> - ";
             }
-             $ads ='<br>'. 'Id | Banner | Inter | Reward | Native | Open : '. $ads_id.$ads_banner.$ads_inter.$ads_reward.$ads_native.$ads_open;
+
+            if(isset($ads['ads_start'])){
+                $ads_start = "<span style='color:green;'> Start</span>";
+            }else{
+                $ads_start = "<span style='color:red;'> Start</span>";
+            }
+             $ads ='<br>'.$ads_id.$ads_banner.$ads_inter.$ads_reward.$ads_native.$ads_open.$ads_start;
 
 
             if($record->convert_aab != 0){
-                $convert_aab = '<br> Aab: '."<i style='color:green;' class='ti-check-box h5'></i>";
+                $convert_aab = '<br>'. "<span style='color:green;'> Aab</span>";
             }else{
-                $convert_aab = '<br> Aab: '."<i style='color:red;' class='ti-close h5'></i>";
+                $convert_aab = '<br>'. "<span style='color:red;'> Aab</span>";
             }
 
             if($record->startus == 0){
-                $startus = '<br> Status: '."<i style='color:green;' class='ti-check-box h5'></i>";
+                $startus = '<br>'. "<span style='color:green;'> Status</span>";
             }else{
-                $startus = '<br> Status: '."<i style='color:red;' class='ti-close h5'></i>";
+                $startus = '<br>'. "<span style='color:red;'> Status</span>";
             }
 
             if($record->time_create == 0 ){
@@ -210,6 +218,12 @@ class TemplateController extends Controller
                 $Vivo_category ='';
             }
 
+            if(isset($record->Huawei_category)){
+                $Huawei_category = 'Huawei: '.$record->Huawei_category;
+            }else{
+                $Huawei_category ='';
+            }
+
 
             if ($record->link_chplay !== null){
                 $link= "<a  target= _blank href='$record->link_chplay'>Link</a>";
@@ -231,7 +245,7 @@ class TemplateController extends Controller
             $data_arr[] = array(
                 "logo" => $logo,
                 "template" => $template. '<br>'.$link,
-                "category"=>$Chplay_category.'<br>'.$Amazon_category.'<br>'.$Samsung_category.'<br>'.$Xiaomi_category.'<br>'.$Oppo_category.'<br>'.$Vivo_category,
+                "category"=>$Chplay_category.'<br>'.$Amazon_category.'<br>'.$Samsung_category.'<br>'.$Xiaomi_category.'<br>'.$Oppo_category.'<br>'.$Vivo_category.'<br>'.$Huawei_category,
                 "script" => $script.$ads.$convert_aab.$startus.'<br>Package: '.$record->package,
                 "time_create"=> $time_create,
                 "time_update"=> $time_update,
@@ -273,7 +287,8 @@ class TemplateController extends Controller
             'ads_inter' => $request->Check_ads_inter,
             'ads_reward' => $request->Check_ads_reward,
             'ads_native' => $request->Check_ads_native,
-            'ads_open' => $request->Check_ads_open
+            'ads_open' => $request->Check_ads_open,
+            'ads_start' => $request->Check_ads_start,
         ];
         $ads =  json_encode($ads);
         $data = new Template();
@@ -303,6 +318,7 @@ class TemplateController extends Controller
         $data['Xiaomi_category'] =  $request->Xiaomi_category;
         $data['Oppo_category'] =  $request->Oppo_category;
         $data['Vivo_category'] =  $request->Vivo_category;
+        $data['Huawei_category'] =  $request->Huawei_category;
 
         if(isset($request->logo)){
             $image = $request->file('logo');
@@ -388,7 +404,8 @@ class TemplateController extends Controller
             'ads_inter' => $request->Check_ads_inter,
             'ads_reward' => $request->Check_ads_reward,
             'ads_native' => $request->Check_ads_native,
-            'ads_open' => $request->Check_ads_open
+            'ads_open' => $request->Check_ads_open,
+            'ads_start' => $request->Check_ads_start,
         ];
 
         $ads =  json_encode($ads);
@@ -416,6 +433,7 @@ class TemplateController extends Controller
         $data->Xiaomi_category =  $request->Xiaomi_category;
         $data->Oppo_category =  $request->Oppo_category;
         $data->Vivo_category =  $request->Vivo_category;
+        $data->Huawei_category =  $request->Huawei_category;
 
         if($data->logo){
             if($data->template <> $request->template){

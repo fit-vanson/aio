@@ -6,6 +6,7 @@ use App\Http\Controllers\DaController;
 use App\Http\Controllers\DevAmazonController;
 use App\Http\Controllers\DevController;
 
+use App\Http\Controllers\DevHuaweiController;
 use App\Http\Controllers\DeviceInfoController;
 use App\Http\Controllers\DevOppoController;
 use App\Http\Controllers\DevSamsungController;
@@ -123,6 +124,9 @@ Route::group(['prefix'=>'project','middleware'=>['CheckLogout','2fa']], function
     Route::get('/appVivo',[ProjectController::class,'appVivo'])->name('project.appVivo')->middleware('can:project-index');
     Route::post('/getVivo',[ProjectController::class,'getVivo'])->name('project.getVivo')->middleware('can:project-index');
 
+    Route::get('/appHuawei',[ProjectController::class,'appHuawei'])->name('project.appHuawei')->middleware('can:project-index');
+    Route::post('/getHuawei',[ProjectController::class,'getHuawei'])->name('project.getHuawei')->middleware('can:project-index');
+
     Route::post('/select-template',[ProjectController::class,'select_template']);
     Route::post('/select-store-name-chplay',[ProjectController::class,'select_store_name_chplay'])->name('select_store_name_chplay');
     Route::post('/select-store-name-amazon',[ProjectController::class,'select_store_name_amazon'])->name('select_store_name_amazon');
@@ -130,6 +134,7 @@ Route::group(['prefix'=>'project','middleware'=>['CheckLogout','2fa']], function
     Route::post('/select-store-name-xiaomi',[ProjectController::class,'select_store_name_xiaomi'])->name('select_store_name_xiaomi');
     Route::post('/select-store-name-oppo',[ProjectController::class,'select_store_name_oppo'])->name('select_store_name_oppo');
     Route::post('/select-store-name-vivo',[ProjectController::class,'select_store_name_vivo'])->name('select_store_name_vivo');
+    Route::post('/select-store-name-huawei',[ProjectController::class,'select_store_name_huawei'])->name('select_store_name_huawei');
     Route::get('/showlog/{id}',[ProjectController::class,'showlog'])->name('project.showlog')->middleware('can:project-index');
 
 
@@ -227,6 +232,18 @@ Route::group(['prefix'=>'dev-vivo','middleware'=>['CheckLogout','2fa']], functio
     Route::post('/update',[DevVivoController::class,'update'])->name('dev_vivo.update')->middleware('can:dev_vivo-update');
     Route::get('/delete/{id}',[DevVivoController::class,'delete'])->name('dev_vivo.delete')->middleware('can:dev_vivo-delete');
 });
+
+Route::group(['prefix'=>'dev-huawei','middleware'=>['CheckLogout','2fa']], function (){
+    Route::get('/',[DevHuaweiController::class,'index'])->name('dev_huawei.index')->middleware('can:dev_huawei-index');
+    Route::post('/getIndex',[DevHuaweiController::class,'getIndex'])->name('dev_huawei.getIndex')->middleware('can:dev_huawei-index');
+
+    Route::post('/create',[DevHuaweiController::class,'create'])->name('dev_huawei.create')->middleware('can:dev_huawei-add');
+    Route::get('/edit/{id}',[DevHuaweiController::class,'edit'])->name('dev_huawei.edit')->middleware('can:dev_huawei-edit');
+    Route::get('/show/{id}',[DevHuaweiController::class,'show'])->name('dev_huawei.show')->middleware('can:dev_huawei-show');
+    Route::post('/update',[DevHuaweiController::class,'update'])->name('dev_huawei.update')->middleware('can:dev_huawei-update');
+    Route::get('/delete/{id}',[DevHuaweiController::class,'delete'])->name('dev_huawei.delete')->middleware('can:dev_huawei-delete');
+});
+
 
 Route::group(['prefix'=>'ga','middleware'=>['CheckLogout','2fa']], function (){
     Route::get('/',[GaController::class,'index'])->name('ga.index')->middleware('can:ga-index');

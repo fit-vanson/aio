@@ -78,6 +78,13 @@ return [
         'dev_vivo-update'  =>'edit_dev_vivo',
         'dev_vivo-delete'  =>'delete_dev_vivo',
 
+        'dev_huawei-index'  =>'index_dev_huawei',
+        'dev_huawei-show'  =>'show_dev_huawei',
+        'dev_huawei-add'  =>'add_dev_huawei',
+        'dev_huawei-edit'  =>'edit_dev_huawei',
+        'dev_huawei-update'  =>'edit_dev_huawei',
+        'dev_huawei-delete'  =>'delete_dev_huawei',
+
         'user-index'  =>'index_user',
         'user-show'  =>'show_user',
         'user-add'  =>'add_user',
@@ -166,7 +173,7 @@ return [
 
 
     'table-module' => [
-        'Dự án','Template','Project','Gadev','Dev','Dev Amazon','Dev SamSung','Dev Xiaomi','Dev Oppo','Dev Vivo','Ga',
+        'Dự án','Template','Project','Gadev','Dev','Dev Amazon','Dev SamSung','Dev Xiaomi','Dev Oppo','Dev Vivo','Dev Huawei','Ga',
         'User','Vai trò', 'Phân quyền',
         'khosim','cocsim','sms','hub','Mail Manage', 'Mail Parent','Mail Reg',
         'Device','Script'

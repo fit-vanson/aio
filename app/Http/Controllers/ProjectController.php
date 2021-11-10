@@ -6,6 +6,7 @@ use App\Models\Da;
 use App\Models\Dev;
 
 use App\Models\Dev_Amazon;
+use App\Models\Dev_Huawei;
 use App\Models\Dev_Oppo;
 use App\Models\Dev_Samsung;
 use App\Models\Dev_Vivo;
@@ -36,48 +37,45 @@ class ProjectController extends Controller
         $store_name_xiaomi  =  Dev_Xiaomi::latest('id')->get();
         $store_name_oppo    =  Dev_Oppo::latest('id')->get();
         $store_name_vivo    =  Dev_Vivo::latest('id')->get();
+        $store_name_huawei   =  Dev_Huawei::latest('id')->get();
         return view('project.index',compact([
             'template','da','store_name',
             'store_name_amazon','store_name_samsung',
-            'store_name_xiaomi','store_name_oppo','store_name_vivo'
+            'store_name_xiaomi','store_name_oppo','store_name_vivo','store_name_huawei'
         ]));
     }
-
     public function indexBuild()
     {
         return view('project.indexBuild');
     }
-
     public function appAmazon()
     {
         return view('project.appAmazon');
     }
-
     public function appSamsung()
     {
         return view('project.appSamsung');
     }
-
     public function appXiaomi()
     {
         return view('project.appXiaomi');
     }
-
     public function appOppo()
     {
         return view('project.appOppo');
     }
-
     public function appVivo()
     {
         return view('project.appVivo');
     }
-
+    public function appHuawei()
+    {
+        return view('project.appHuawei');
+    }
     public function appChplay()
     {
         return view('project.appChplay');
     }
-
     public function getIndex(Request $request)
     {
         $draw = $request->get('draw');
@@ -245,6 +243,25 @@ class ProjectController extends Controller
                 ->get();
 
         }
+        elseif (isset($request->dev_huawei)){
+            $totalRecords = ProjectModel::select('count(*) as allcount')->where('ma_da',$request->ma_da)->count();
+            $totalRecordswithFilter = ProjectModel::select('count(*) as allcount')
+                ->leftjoin('ngocphandang_da','ngocphandang_da.id','=','ngocphandang_project.ma_da')
+                ->leftjoin('ngocphandang_template','ngocphandang_template.id','=','ngocphandang_project.template')
+                ->where('ngocphandang_project.Huawei_buildinfo_store_name_x',$request->dev_huawei)
+                ->count();
+
+            // Get records, also we have included search filter as well
+            $records = ProjectModel::orderBy($columnName, $columnSortOrder)
+                ->leftjoin('ngocphandang_da','ngocphandang_da.id','=','ngocphandang_project.ma_da')
+                ->leftjoin('ngocphandang_template','ngocphandang_template.id','=','ngocphandang_project.template') ->where('ngocphandang_da.ma_da', 'like', '%' . $searchValue . '%')
+                ->where('ngocphandang_project.Huawei_buildinfo_store_name_x',$request->dev_huawei)
+                ->select('ngocphandang_project.*')
+                ->skip($start)
+                ->take($rowperpage)
+                ->get();
+
+        }
         else{
             $totalRecords = ProjectModel::select('count(*) as allcount')->count();
             $totalRecordswithFilter = ProjectModel::select('count(*) as allcount')
@@ -261,6 +278,7 @@ class ProjectController extends Controller
                 ->orWhere('ngocphandang_project.Xiaomi_package', 'like', '%' . $searchValue . '%')
                 ->orWhere('ngocphandang_project.Oppo_package', 'like', '%' . $searchValue . '%')
                 ->orWhere('ngocphandang_project.Vivo_package', 'like', '%' . $searchValue . '%')
+                ->orWhere('ngocphandang_project.Huawei_package', 'like', '%' . $searchValue . '%')
 
                 ->orWhere('ngocphandang_project.Chplay_keystore_profile', 'like', '%' . $searchValue . '%')
                 ->orWhere('ngocphandang_project.Amazon_keystore_profile', 'like', '%' . $searchValue . '%')
@@ -268,6 +286,7 @@ class ProjectController extends Controller
                 ->orWhere('ngocphandang_project.Xiaomi_keystore_profile', 'like', '%' . $searchValue . '%')
                 ->orWhere('ngocphandang_project.Oppo_keystore_profile', 'like', '%' . $searchValue . '%')
                 ->orWhere('ngocphandang_project.Vivo_keystore_profile', 'like', '%' . $searchValue . '%')
+                ->orWhere('ngocphandang_project.Huawei_keystore_profile', 'like', '%' . $searchValue . '%')
 
                 ->orWhere('ngocphandang_project.Chplay_ads->ads_id', 'like', '%' . $searchValue . '%')
                 ->orWhere('ngocphandang_project.Chplay_ads->ads_banner', 'like', '%' . $searchValue . '%')
@@ -310,6 +329,13 @@ class ProjectController extends Controller
                 ->orWhere('ngocphandang_project.Vivo_ads->ads_reward', 'like', '%' . $searchValue . '%')
                 ->orWhere('ngocphandang_project.Vivo_ads->ads_native', 'like', '%' . $searchValue . '%')
                 ->orWhere('ngocphandang_project.Vivo_ads->ads_open', 'like', '%' . $searchValue . '%')
+
+                ->orWhere('ngocphandang_project.Huawei_ads->ads_id', 'like', '%' . $searchValue . '%')
+                ->orWhere('ngocphandang_project.Huawei_ads->ads_banner', 'like', '%' . $searchValue . '%')
+                ->orWhere('ngocphandang_project.Huawei_ads->ads_inter', 'like', '%' . $searchValue . '%')
+                ->orWhere('ngocphandang_project.Huawei_ads->ads_reward', 'like', '%' . $searchValue . '%')
+                ->orWhere('ngocphandang_project.Huawei_ads->ads_native', 'like', '%' . $searchValue . '%')
+                ->orWhere('ngocphandang_project.Huawei_ads->ads_open', 'like', '%' . $searchValue . '%')
 
                 ->count();
             // Get records, also we have included search filter as well
@@ -326,6 +352,7 @@ class ProjectController extends Controller
                 ->orWhere('ngocphandang_project.Xiaomi_package', 'like', '%' . $searchValue . '%')
                 ->orWhere('ngocphandang_project.Oppo_package', 'like', '%' . $searchValue . '%')
                 ->orWhere('ngocphandang_project.Vivo_package', 'like', '%' . $searchValue . '%')
+                ->orWhere('ngocphandang_project.Huawei_package', 'like', '%' . $searchValue . '%')
                 ->orWhere('ngocphandang_project.Chplay_ads->ads_id', 'like', '%' . $searchValue . '%')
                 ->orWhere('ngocphandang_project.Chplay_ads->ads_banner', 'like', '%' . $searchValue . '%')
 
@@ -335,6 +362,7 @@ class ProjectController extends Controller
                 ->orWhere('ngocphandang_project.Xiaomi_keystore_profile', 'like', '%' . $searchValue . '%')
                 ->orWhere('ngocphandang_project.Oppo_keystore_profile', 'like', '%' . $searchValue . '%')
                 ->orWhere('ngocphandang_project.Vivo_keystore_profile', 'like', '%' . $searchValue . '%')
+                ->orWhere('ngocphandang_project.Huawei_keystore_profile', 'like', '%' . $searchValue . '%')
 
                 ->orWhere('ngocphandang_project.Chplay_ads->ads_id', 'like', '%' . $searchValue . '%')
                 ->orWhere('ngocphandang_project.Chplay_ads->ads_banner', 'like', '%' . $searchValue . '%')
@@ -377,6 +405,13 @@ class ProjectController extends Controller
                 ->orWhere('ngocphandang_project.Vivo_ads->ads_reward', 'like', '%' . $searchValue . '%')
                 ->orWhere('ngocphandang_project.Vivo_ads->ads_native', 'like', '%' . $searchValue . '%')
                 ->orWhere('ngocphandang_project.Vivo_ads->ads_open', 'like', '%' . $searchValue . '%')
+
+                ->orWhere('ngocphandang_project.Huawei_ads->ads_id', 'like', '%' . $searchValue . '%')
+                ->orWhere('ngocphandang_project.Huawei_ads->ads_banner', 'like', '%' . $searchValue . '%')
+                ->orWhere('ngocphandang_project.Huawei_ads->ads_inter', 'like', '%' . $searchValue . '%')
+                ->orWhere('ngocphandang_project.Huawei_ads->ads_reward', 'like', '%' . $searchValue . '%')
+                ->orWhere('ngocphandang_project.Huawei_ads->ads_native', 'like', '%' . $searchValue . '%')
+                ->orWhere('ngocphandang_project.Huawei_ads->ads_open', 'like', '%' . $searchValue . '%')
                 ->select('ngocphandang_project.*')
                 ->skip($start)
                 ->take($rowperpage)
@@ -434,6 +469,11 @@ class ProjectController extends Controller
             $dev_name_vivo = DB::table('ngocphandang_project')
                 ->join('ngocphandang_dev_vivo','ngocphandang_dev_vivo.id','=','ngocphandang_project.Vivo_buildinfo_store_name_x')
                 ->where('ngocphandang_dev_vivo.id',$record->Vivo_buildinfo_store_name_x)
+                ->first();
+
+            $dev_name_huawei = DB::table('ngocphandang_project')
+                ->join('ngocphandang_dev_huawei','ngocphandang_dev_huawei.id','=','ngocphandang_project.Huawei_buildinfo_store_name_x')
+                ->where('ngocphandang_dev_huawei.id',$record->Huawei_buildinfo_store_name_x)
                 ->first();
 
             if($dev_name_chplay !=null){
@@ -531,6 +571,22 @@ class ProjectController extends Controller
                 $ga_name_vivo = '';
             }
 
+            if($dev_name_huawei){
+                $ga_name_huawei = DB::table('ngocphandang_dev_huawei')
+                    ->join('ngocphandang_ga','ngocphandang_dev_huawei.huawei_ga_name','=','ngocphandang_ga.id')
+                    ->where('ngocphandang_dev_huawei.huawei_ga_name',$dev_name_huawei->huawei_ga_name)
+                    ->first();
+                if($ga_name_huawei){
+                    $ga_name_huawei = $ga_name_huawei->ga_name;
+                }else{
+                    $ga_name_huawei = '';
+                }
+                $dev_name_huawei = $dev_name_huawei->huawei_dev_name;
+            }else{
+                $dev_name_huawei = '';
+                $ga_name_huawei = '';
+            }
+
 
             if(isset($ma_da)) {
                 if (isset($ma_da->link_store_vietmmo)){
@@ -571,6 +627,7 @@ class ProjectController extends Controller
                 || isset(json_decode($record->Chplay_ads,true)['ads_native'])
                 || isset(json_decode($record->Chplay_ads,true)['ads_open'])
                 || isset(json_decode($record->Chplay_ads,true)['ads_reward'])
+                || isset(json_decode($record->Chplay_ads,true)['ads_start'])
             ){
                 if($record->Chplay_buildinfo_link_app){
                     $package_chplay = '<a href="'.$record->Chplay_buildinfo_link_app.'" target="_blank"> <p style="color:green;line-height:0.5">CH Play: '.$record->Chplay_package.'</p></a>';
@@ -590,6 +647,7 @@ class ProjectController extends Controller
                 || isset(json_decode($record->Amazon_ads,true)['ads_native'])
                 || isset(json_decode($record->Amazon_ads,true)['ads_open'])
                 || isset(json_decode($record->Amazon_ads,true)['ads_reward'])
+                || isset(json_decode($record->Amazon_ads,true)['ads_start'])
             ){
                 if($record->Amazon_buildinfo_link_app){
                     $package_amazon = '<a href="'.$record->Amazon_buildinfo_link_app.'" target="_blank"><p  style="color:green;line-height:0.5">Amazon: '.$record->Amazon_package.'</p></a>';
@@ -611,6 +669,7 @@ class ProjectController extends Controller
                 || isset(json_decode($record->Samsung_ads,true)['ads_native'])
                 || isset(json_decode($record->Samsung_ads,true)['ads_open'])
                 || isset(json_decode($record->Samsung_ads,true)['ads_reward'])
+                || isset(json_decode($record->Samsung_ads,true)['ads_start'])
             ){
                 if($record->Samsung_buildinfo_link_app){
                     $package_samsung = '<a href="'.$record->Samsung_buildinfo_link_app.'" target="_blank"><p  style="color:green;line-height:0.5">SamSung: '.$record->Samsung_package.'</p></a>';
@@ -631,6 +690,7 @@ class ProjectController extends Controller
                 || isset(json_decode($record->Xiaomi_ads,true)['ads_native'])
                 || isset(json_decode($record->Xiaomi_ads,true)['ads_open'])
                 || isset(json_decode($record->Xiaomi_ads,true)['ads_reward'])
+                || isset(json_decode($record->Xiaomi_ads,true)['ads_start'])
             ){
                 if($record->Xiaomi_buildinfo_link_app){
                     $package_xiaomi = '<a href="'.$record->Xiaomi_buildinfo_link_app.'" target="_blank"><p style="color:green;line-height:0.5">Xiaomi: '.$record->Xiaomi_package.'</p></a>';
@@ -652,6 +712,7 @@ class ProjectController extends Controller
                 || isset(json_decode($record->Oppo_ads,true)['ads_native'])
                 || isset(json_decode($record->Oppo_ads,true)['ads_open'])
                 || isset(json_decode($record->Oppo_ads,true)['ads_reward'])
+                || isset(json_decode($record->Oppo_ads,true)['ads_start'])
             ){
                 if($record->Oppo_buildinfo_link_app){
                     $package_oppo = '<a href="'.$record->Oppo_buildinfo_link_app.'" target="_blank"><p style="color:green;line-height:0.5">Oppo: '.$record->Oppo_package.'</p></a>';
@@ -675,6 +736,7 @@ class ProjectController extends Controller
                 || isset(json_decode($record->Vivo_ads,true)['ads_native'])
                 || isset(json_decode($record->Vivo_ads,true)['ads_open'])
                 || isset(json_decode($record->Vivo_ads,true)['ads_reward'])
+                || isset(json_decode($record->Vivo_ads,true)['ads_start'])
             ){
                 if($record->Vivo_buildinfo_link_app){
                     $package_vivo = '<a href="'.$record->Vivo_buildinfo_link_app.'" target="_blank"><p style="color:green;line-height:0.5">Vivo: '.$record->Vivo_package.'</p></a>';
@@ -687,6 +749,30 @@ class ProjectController extends Controller
                     $package_vivo = '<a href="' . $record->Vivo_buildinfo_link_app . '" target="_blank"><p style="color:red;line-height:0.5">Vivo: ' . $record->Vivo_package . '</p></a>';
                 } else {
                     $package_vivo = '<p style="color:red;line-height:0.5">Vivo: ' . $record->Vivo_package . '</p>';
+                }
+            }
+
+
+
+            if(isset(json_decode($record->Huawei_ads,true)['ads_id'])
+                || isset(json_decode($record->Huawei_ads,true)['ads_banner'])
+                || isset(json_decode($record->Huawei_ads,true)['ads_inter'])
+                || isset(json_decode($record->Huawei_ads,true)['ads_native'])
+                || isset(json_decode($record->Huawei_ads,true)['ads_open'])
+                || isset(json_decode($record->Huawei_ads,true)['ads_reward'])
+                || isset(json_decode($record->Huawei_ads,true)['ads_start'])
+            ){
+                if($record->Huawei_buildinfo_link_app){
+                    $package_Huawei = '<a href="'.$record->Huawei_buildinfo_link_app.'" target="_blank"><p style="color:green;line-height:0.5">Huawei: '.$record->Huawei_package.'</p></a>';
+                }else{
+                    $package_Huawei = '<p style="color:green;line-height:0.5">Huawei: '.$record->Huawei_package.'</p>';
+                }
+
+            }else{
+                if ($record->Huawei_buildinfo_link_app) {
+                    $package_Huawei = '<a href="' . $record->Huawei_buildinfo_link_app . '" target="_blank"><p style="color:red;line-height:0.5">Huawei: ' . $record->Huawei_package . '</p></a>';
+                } else {
+                    $package_Huawei = '<p style="color:red;line-height:0.5">Huawei: ' . $record->Huawei_package . '</p>';
                 }
             }
 
@@ -830,6 +916,29 @@ class ProjectController extends Controller
                 $Vivo_status =  '<span class="badge badge-danger">Check</span>';
             }
 
+            if ($record['Huawei_status']==0  ) {
+                $Huawei_status = 'Mặc định';
+            }
+            elseif($record['Huawei_status']== 1){
+                $Huawei_status = '<span class="badge badge-success">Publish</span>';
+
+            }
+            elseif($record['Huawei_status']==2){
+                $Huawei_status =  '<span class="badge badge-warning">Suppend</span>';
+            }
+            elseif($record['Huawei_status']==3){
+                $Huawei_status =  '<span class="badge badge-info">UnPublish</span>';
+            }
+            elseif($record['Huawei_status']==4){
+                $Huawei_status =  '<span class="badge badge-primary">Remove</span>';
+            }
+            elseif($record['Huawei_status']==5){
+                $Huawei_status =  '<span class="badge badge-dark">Reject</span>';
+            }
+            elseif($record['Huawei_status']==6){
+                $Huawei_status =  '<span class="badge badge-danger">Check</span>';
+            }
+
             if(isset($record->Chplay_policy)){
                 $Chplay_policy = "<a href='$record->Chplay_policy' target='_blank' <i style='color:green;' class='mdi mdi-check-circle-outline'></i></a>";
             }else{
@@ -861,6 +970,12 @@ class ProjectController extends Controller
                 $Vivo_policy = "<i style='color:red;' class='mdi mdi-close-circle-outline'></i>";
             }
 
+            if(isset($record->Huawei_policy)){
+                $Huawei_policy = "<a href='$record->Huawei_policy' target='_blank' <i style='color:green;' class='mdi mdi-check-circle-outline'></i></a>";
+            }else{
+                $Huawei_policy = "<i style='color:red;' class='mdi mdi-close-circle-outline'></i>";
+            }
+
 
             $policy = DB::table('ngocphandang_project')
                 ->join('ngocphandang_template','ngocphandang_template.id','=','ngocphandang_project.template')
@@ -873,8 +988,9 @@ class ProjectController extends Controller
                 $policy_samsung = ' <a href="javascript:void(0)" onclick="showPolicy_Samsung('.$record->projectid.')"><span class="badge badge-primary">Policy</span></a> ';
                 $policy_oppo = ' <a href="javascript:void(0)" onclick="showPolicy_Oppo('.$record->projectid.')"><span class="badge badge-primary">Policy</span></a> ';
                 $policy_vivo = ' <a href="javascript:void(0)" onclick="showPolicy_Vivo('.$record->projectid.')"><span class="badge badge-primary">Policy</span></a> ';
+                $policy_huawei = ' <a href="javascript:void(0)" onclick="showPolicy_Huawei('.$record->projectid.')"><span class="badge badge-primary">Policy</span></a> ';
             }else{
-                $policy_chplay = $policy_amazon = $policy_xiaomi = $policy_samsung = $policy_oppo = $policy_vivo = "";
+                $policy_chplay = $policy_amazon = $policy_xiaomi = $policy_samsung = $policy_oppo = $policy_vivo = $policy_huawei = "";
             }
             $status =
                 $policy_chplay.$Chplay_policy.' CH Play: '.$Chplay_status.'   '. '<span class="badge badge-info">'.$dev_name_chplay.'</span>'.'   '. '<span class="badge badge-warning">'.$ga_name_chplay.'</span>'.
@@ -882,7 +998,8 @@ class ProjectController extends Controller
                 '<br>'.$policy_samsung.$Samsung_policy.' SamSung: '.$Samsung_status.'   '. '<span class="badge badge-info">'.$dev_name_samsung.'</span>'.'   '. '<span class="badge badge-warning">'.$ga_name_samsung.'</span>'.
                 '<br>'.$policy_xiaomi.$Xiaomi_policy.' Xiaomi: '.$Xiaomi_status.'   '. '<span class="badge badge-info">'.$dev_name_xiaomi.'</span>'.'   '. '<span class="badge badge-warning">'.$ga_name_xiaomi.'</span>'.
                 '<br>'.$policy_oppo.$Oppo_policy.' Oppo: '.$Oppo_status.'   '. '<span class="badge badge-info">'.$dev_name_oppo.'</span>'.'   '. '<span class="badge badge-warning">'.$ga_name_oppo.'</span>'.
-                '<br>'.$policy_vivo.$Vivo_policy.' Vivo: '.$Vivo_status.'   '. '<span class="badge badge-info">'.$dev_name_vivo.'</span>'.'   '. '<span class="badge badge-warning">'.$ga_name_vivo.'</span>';
+                '<br>'.$policy_vivo.$Vivo_policy.' Vivo: '.$Vivo_status.'   '. '<span class="badge badge-info">'.$dev_name_vivo.'</span>'.'   '. '<span class="badge badge-warning">'.$ga_name_vivo.'</span>'.
+                '<br>'.$policy_huawei.$Huawei_policy.' Huawei: '.$Huawei_status.'   '. '<span class="badge badge-info">'.$dev_name_huawei.'</span>'.'   '. '<span class="badge badge-warning">'.$ga_name_huawei.'</span>';
             $keystore_profile =
                 '<div>
                     <span class="badge badge-primary" style="font-size: 12px">C: '.$record->Chplay_keystore_profile.'</span>
@@ -891,6 +1008,7 @@ class ProjectController extends Controller
                     <span class="badge badge-warning"style="font-size: 12px">X: '.$record->Xiaomi_keystore_profile.'</span>
                     <span class="badge badge-danger"style="font-size: 12px">O: '.$record->Oppo_keystore_profile.'</span>
                     <span class="badge badge-dark"style="font-size: 12px">V: '.$record->Vivo_keystore_profile.'</span>
+                    <span class="badge badge-primary"style="font-size: 12px">H: '.$record->Huawei_keystore_profile.'</span>
                 </div>';
 
 
@@ -916,7 +1034,7 @@ class ProjectController extends Controller
                 "name_projectname"=>$record->projectname,
                 "template"=>$data_template,
                 "projectname"=>$data_projectname.$data_template.$data_ma_da.$data_title_app.$abc.$keystore_profile,
-                "package" => $package_chplay.$package_amazon.$package_samsung.$package_xiaomi.$package_oppo.$package_vivo,
+                "package" => $package_chplay.$package_amazon.$package_samsung.$package_xiaomi.$package_oppo.$package_vivo.$package_Huawei,
                 "status" => $status,
                 'Chplay_buildinfo_store_name_x' => $dev_name_chplay,
                 'Amazon_buildinfo_store_name_x' => $dev_name_amazon,
@@ -924,6 +1042,7 @@ class ProjectController extends Controller
                 'Xiaomi_buildinfo_store_name_x' => $dev_name_xiaomi,
                 'Oppo_buildinfo_store_name_x' => $dev_name_oppo,
                 'Vivo_buildinfo_store_name_x' => $dev_name_vivo,
+                'Huawei_buildinfo_store_name_x' => $dev_name_huawei,
                 "action"=> $btn,
             );
         }
@@ -936,7 +1055,6 @@ class ProjectController extends Controller
 
         echo json_encode($response);
     }
-
     public function getIndexBuild(Request $request)
     {
         $draw = $request->get('draw');
@@ -1013,7 +1131,8 @@ class ProjectController extends Controller
                         ->orWhere('ngocphandang_project.Samsung_package', 'like', '%' . $searchValue . '%')
                         ->orWhere('ngocphandang_project.Xiaomi_package', 'like', '%' . $searchValue . '%')
                         ->orWhere('ngocphandang_project.Oppo_package', 'like', '%' . $searchValue . '%')
-                        ->orWhere('ngocphandang_project.Vivo_package', 'like', '%' . $searchValue . '%');
+                        ->orWhere('ngocphandang_project.Vivo_package', 'like', '%' . $searchValue . '%')
+                        ->orWhere('ngocphandang_project.Huawei_package', 'like', '%' . $searchValue . '%');
                 })
                 ->where(function ($q){
                     $q->where('buildinfo_console','<>',0);
@@ -1039,7 +1158,8 @@ class ProjectController extends Controller
                         ->orWhere('ngocphandang_project.Samsung_package', 'like', '%' . $searchValue . '%')
                         ->orWhere('ngocphandang_project.Xiaomi_package', 'like', '%' . $searchValue . '%')
                         ->orWhere('ngocphandang_project.Oppo_package', 'like', '%' . $searchValue . '%')
-                        ->orWhere('ngocphandang_project.Vivo_package', 'like', '%' . $searchValue . '%');
+                        ->orWhere('ngocphandang_project.Vivo_package', 'like', '%' . $searchValue . '%')
+                        ->orWhere('ngocphandang_project.Huawei_package', 'like', '%' . $searchValue . '%');
                 })
                 ->where(function ($q){
                     $q->where('buildinfo_console','<>',0);
@@ -1075,6 +1195,7 @@ class ProjectController extends Controller
                         ->orWhere('ngocphandang_project.Xiaomi_package', 'like', '%' . $searchValue . '%')
                         ->orWhere('ngocphandang_project.Oppo_package', 'like', '%' . $searchValue . '%')
                         ->orWhere('ngocphandang_project.Vivo_package', 'like', '%' . $searchValue . '%')
+                        ->orWhere('ngocphandang_project.Huawei_package', 'like', '%' . $searchValue . '%')
                         ->orWhere('ngocphandang_project.buildinfo_console', $searchValue );
                 })
                 ->where(function ($q){
@@ -1100,6 +1221,7 @@ class ProjectController extends Controller
                         ->orWhere('ngocphandang_project.Xiaomi_package', 'like', '%' . $searchValue . '%')
                         ->orWhere('ngocphandang_project.Oppo_package', 'like', '%' . $searchValue . '%')
                         ->orWhere('ngocphandang_project.Vivo_package', 'like', '%' . $searchValue . '%')
+                        ->orWhere('ngocphandang_project.Huawei_package', 'like', '%' . $searchValue . '%')
                         ->orWhere('ngocphandang_project.buildinfo_console', 'like', '%' . $searchValue . '%');
 
                 })
@@ -1164,6 +1286,7 @@ class ProjectController extends Controller
                 || isset(json_decode($record->Chplay_ads,true)['ads_native'])
                 || isset(json_decode($record->Chplay_ads,true)['ads_open'])
                 || isset(json_decode($record->Chplay_ads,true)['ads_reward'])
+                || isset(json_decode($record->Chplay_ads,true)['ads_start'])
             ){
                 $package_chplay = '<p style="color:green;line-height:0.5">CH Play: '.$record->Chplay_package.'</p>';
             }else{
@@ -1176,6 +1299,7 @@ class ProjectController extends Controller
                 || isset(json_decode($record->Amazon_ads,true)['ads_native'])
                 || isset(json_decode($record->Amazon_ads,true)['ads_open'])
                 || isset(json_decode($record->Amazon_ads,true)['ads_reward'])
+                || isset(json_decode($record->Amazon_ads,true)['ads_start'])
             ){
                 $package_amazon = '<p  style="color:green;line-height:0.5">Amazon: '.$record->Amazon_package.'</p>';
             }else{
@@ -1188,6 +1312,7 @@ class ProjectController extends Controller
                 || isset(json_decode($record->Samsung_ads,true)['ads_native'])
                 || isset(json_decode($record->Samsung_ads,true)['ads_open'])
                 || isset(json_decode($record->Samsung_ads,true)['ads_reward'])
+                || isset(json_decode($record->Samsung_ads,true)['ads_start'])
             ){
                 $package_samsung = '<p style="color:green;line-height:0.5">SamSung: '.$record->Samsung_package.'</p>';
             }else{
@@ -1200,6 +1325,7 @@ class ProjectController extends Controller
                 || isset(json_decode($record->Xiaomi_ads,true)['ads_native'])
                 || isset(json_decode($record->Xiaomi_ads,true)['ads_open'])
                 || isset(json_decode($record->Xiaomi_ads,true)['ads_reward'])
+                || isset(json_decode($record->Xiaomi_ads,true)['ads_start'])
             ){
                 $package_xiaomi = '<p style="color:green;line-height:0.5">Xiaomi: '.$record->Xiaomi_package.'</p>';
             }else{
@@ -1214,6 +1340,7 @@ class ProjectController extends Controller
                 || isset(json_decode($record->Oppo_ads,true)['ads_native'])
                 || isset(json_decode($record->Oppo_ads,true)['ads_open'])
                 || isset(json_decode($record->Oppo_ads,true)['ads_reward'])
+                || isset(json_decode($record->Oppo_ads,true)['ads_start'])
             ){
                 $package_oppo = '<p style="color:green;line-height:0.5">Oppo: '.$record->Oppo_package.'</p>';
             }else{
@@ -1226,11 +1353,26 @@ class ProjectController extends Controller
                 || isset(json_decode($record->Vivo_ads,true)['ads_native'])
                 || isset(json_decode($record->Vivo_ads,true)['ads_open'])
                 || isset(json_decode($record->Vivo_ads,true)['ads_reward'])
+                || isset(json_decode($record->Vivo_ads,true)['ads_start'])
             ){
                 $package_vivo = '<p style="color:green;line-height:0.5">Vivo: '.$record->Vivo_package.'</p>';
             }else{
                 $package_vivo = '<p style="color:red;line-height:0.5">Vivo: '.$record->Vivo_package.'</p>';
             }
+
+            if(isset(json_decode($record->Huawei_ads,true)['ads_id'])
+                || isset(json_decode($record->Huawei_ads,true)['ads_banner'])
+                || isset(json_decode($record->Huawei_ads,true)['ads_inter'])
+                || isset(json_decode($record->Huawei_ads,true)['ads_native'])
+                || isset(json_decode($record->Huawei_ads,true)['ads_open'])
+                || isset(json_decode($record->Huawei_ads,true)['ads_reward'])
+                || isset(json_decode($record->Huawei_ads,true)['ads_start'])
+            ){
+                $package_Huawei = '<p style="color:green;line-height:0.5">Huawei: '.$record->Huawei_package.'</p>';
+            }else{
+                $package_Huawei = '<p style="color:red;line-height:0.5">Huawei: '.$record->Huawei_package.'</p>';
+            }
+
 //
             if(isset($record->logo)){
                 if (isset($record->link_store_vietmmo)){
@@ -1260,7 +1402,7 @@ class ProjectController extends Controller
                 "projectid"=>$record->projectid,
                 "name_projectname"=>$record->projectname,
                 "projectname"=>$data_projectname.$data_template.$data_ma_da.$data_title_app.$abc,
-                "package" => $package_chplay.$package_amazon.$package_samsung.$package_xiaomi.$package_oppo.$package_vivo,
+                "package" => $package_chplay.$package_amazon.$package_samsung.$package_xiaomi.$package_oppo.$package_vivo.$package_Huawei,
                 "buildinfo_mess" => $mess_info,
                 "full_mess" => $full_mess,
                 "buildinfo_console" =>$record->buildinfo_console,
@@ -1801,7 +1943,6 @@ class ProjectController extends Controller
 
         echo json_encode($response);
     }
-
     public function getXiaomi(Request $request)
     {
 
@@ -1961,7 +2102,6 @@ class ProjectController extends Controller
 
         echo json_encode($response);
     }
-
     public function getOppo(Request $request)
     {
 
@@ -2121,7 +2261,6 @@ class ProjectController extends Controller
 
         echo json_encode($response);
     }
-
     public function getVivo(Request $request)
     {
 
@@ -2281,7 +2420,165 @@ class ProjectController extends Controller
 
         echo json_encode($response);
     }
+    public function getHuawei(Request $request)
+    {
 
+        $draw = $request->get('draw');
+        $start = $request->get("start");
+        $rowperpage = $request->get("length"); // total number of rows per page
+
+        $columnIndex_arr = $request->get('order');
+        $columnName_arr = $request->get('columns');
+        $order_arr = $request->get('order');
+        $search_arr = $request->get('search');
+
+        $columnIndex = $columnIndex_arr[0]['column']; // Column index
+        $columnName = $columnName_arr[$columnIndex]['data']; // Column name
+        $columnSortOrder = $order_arr[0]['dir']; // asc or desc
+        $searchValue = $search_arr['value']; // Search value
+
+        // Total records
+        $totalRecords = ProjectModel::select('count(*) as allcount')
+            ->where('ngocphandang_project.Huawei_package','<>','null')
+            ->count();
+        $totalRecordswithFilter = ProjectModel::select('count(*) as allcount')
+            ->leftjoin('ngocphandang_da','ngocphandang_da.id','=','ngocphandang_project.ma_da')
+            ->leftjoin('ngocphandang_template','ngocphandang_template.id','=','ngocphandang_project.template')
+            ->where(function ($a) use ($searchValue) {
+                $a->where('ngocphandang_da.ma_da', 'like', '%' . $searchValue . '%')
+                    ->orWhere('ngocphandang_project.projectname', 'like', '%' . $searchValue . '%')
+                    ->orWhere('ngocphandang_project.title_app', 'like', '%' . $searchValue . '%')
+                    ->orWhere('ngocphandang_template.template', 'like', '%' . $searchValue . '%')
+                    ->orWhere('ngocphandang_project.Huawei_package', 'like', '%' . $searchValue . '%');
+            })
+            ->where('ngocphandang_project.Huawei_package','<>','null')
+            ->count();
+
+
+        // Get records, also we have included search filter as well
+        $records = ProjectModel::orderBy($columnName, $columnSortOrder)
+            ->leftjoin('ngocphandang_da','ngocphandang_da.id','=','ngocphandang_project.ma_da')
+            ->leftjoin('ngocphandang_template','ngocphandang_template.id','=','ngocphandang_project.template')
+
+            ->where(function ($a) use ($searchValue) {
+                $a->where('ngocphandang_da.ma_da', 'like', '%' . $searchValue . '%')
+                    ->orWhere('ngocphandang_project.projectname', 'like', '%' . $searchValue . '%')
+                    ->orWhere('ngocphandang_project.title_app', 'like', '%' . $searchValue . '%')
+                    ->orWhere('ngocphandang_template.template', 'like', '%' . $searchValue . '%')
+                    ->orWhere('ngocphandang_project.Huawei_package', 'like', '%' . $searchValue . '%');
+
+            })
+            ->where('ngocphandang_project.Huawei_package','<>',null)
+            ->select('ngocphandang_project.*')
+            ->skip($start)
+            ->take($rowperpage)
+            ->get();
+
+
+        $data_arr = array();
+        foreach ($records as $record) {
+            $btn = ' <a href="javascript:void(0)" onclick="detailHuawei('.$record->projectid.')" class="btn btn-outline-warning"><i class="mdi mdi-clipboard-text"></i></a>';
+            $ma_da = DB::table('ngocphandang_project')
+                ->join('ngocphandang_da','ngocphandang_da.id','=','ngocphandang_project.ma_da')
+                ->where('ngocphandang_da.id',$record->ma_da)
+                ->first();
+            $template = DB::table('ngocphandang_project')
+                ->join('ngocphandang_template','ngocphandang_template.id','=','ngocphandang_project.template')
+                ->where('ngocphandang_template.id',$record->template)
+                ->first();
+
+            if(isset($ma_da)) {
+                $data_ma_da =
+                    '<span style="line-height:3"> Mã Dự án: ' . $ma_da->ma_da . '</span>';
+            }else{
+                $data_ma_da = '';
+            }
+            if(isset($template)) {
+                $data_template =  '<p class="text-muted" style="line-height:0.5">Template: '.$template->template.'</p>';
+            }else{
+                $data_template='';
+            }
+
+            if(isset($record->projectname)) {
+                $data_projectname =  '<p class="text-muted" style="line-height:0.5">Project: '.$record->projectname.'</p>';
+            }else{
+                $data_projectname='';
+            }
+
+            if(isset($record->title_app)) {
+                $data_title_app=  '<p class="text-muted" style="line-height:0.5">'.$record->title_app.'</p>';
+            }else{
+                $data_title_app='';
+            }
+            $ads = json_decode($record->Huawei_ads,true);
+            $package_Huawei = '<p style="line-height:0.5">'.$record->Huawei_package.'</p>';
+            $ads_banner = '<p class="text-muted" style="line-height:0.5">ads_banner: '.$ads['ads_banner'].'</p>';
+            $ads_inter = '<p class="text-muted" style="line-height:0.5">ads_inter: '.$ads['ads_inter'].'</p>';
+            $ads_native = '<p class="text-muted" style="line-height:0.5">ads_native: '.$ads['ads_native'].'</p>';
+            $ads_open = '<p class="text-muted" style="line-height:0.5">ads_open: '.$ads['ads_open'].'</p>';
+            $ads_reward = '<p class="text-muted" style="line-height:0.5">ads_reward: '.$ads['ads_reward'].'</p>';
+//
+
+
+            if ($record['buildinfo_console']==0  ) {
+                $buildinfo_console = 'Trạng thái tĩnh';
+            }
+            elseif($record['buildinfo_console']== 1){
+                $buildinfo_console = '<span class="badge badge-dark">Build App</span>';
+
+            }
+            elseif($record['buildinfo_console']==2){
+                $buildinfo_console =  '<span class="badge badge-warning">Đang xử lý Build App</span>';
+            }
+            elseif($record['buildinfo_console']==3){
+                $buildinfo_console =  '<span class="badge badge-info">Kết thúc Build App</span>';
+            }
+            elseif($record['buildinfo_console']==4){
+                $buildinfo_console =  '<span class="badge badge-primary">Check Data Project</span>';
+            }
+            elseif($record['buildinfo_console']==5){
+                $buildinfo_console =  '<span class="badge badge-success">Đang xử lý check dữ liệu của Project</span>';
+            }
+            elseif($record['buildinfo_console']==6){
+                $buildinfo_console =  '<span class="badge badge-danger">Kết thúc Check</span>';
+            }
+//
+            if(isset($record->logo)){
+                $logo = "<img class='rounded mx-auto d-block'  width='100px'  height='100px'  src='../uploads/project/$record->projectname/thumbnail/$record->logo'>";
+            }else{
+                $logo = '<img class="rounded mx-auto d-block" width="100px" height="100px" src="assets\images\logo-sm.png">';
+            }
+            if ($record->buildinfo_mess){
+                $mess_info = '';
+                $buildinfo_mess = $record->buildinfo_mess;
+                $buildinfo_mess =  (explode('|',$buildinfo_mess));
+                $buildinfo_mess = array_reverse($buildinfo_mess);
+                for($i = 0 ; $i < 6 ; $i++){
+                    if(isset($buildinfo_mess[$i])){
+                        $mess_info .=  $buildinfo_mess[$i].'<br>';
+                    }
+                }
+
+            }
+            $data_arr[] = array(
+                "updated_at" => $record->updated_at,
+                "logo" => $logo,
+                "ma_da"=>$data_ma_da.$data_template.$data_projectname.$data_title_app,
+                "package" => $package_Huawei.$ads_banner.$ads_inter.$ads_native.$ads_open.$ads_reward,
+//                "buildinfo_mess" => $mess_info,
+                "buildinfo_console" =>$buildinfo_console,
+                "action"=> $btn,
+            );
+        }
+        $response = array(
+            "draw" => intval($draw),
+            "iTotalRecords" => $totalRecords,
+            "iTotalDisplayRecords" => $totalRecordswithFilter,
+            "aaData" => $data_arr,
+        );
+
+        echo json_encode($response);
+    }
     public function create(Request  $request)
     {
         $rules = [
@@ -2318,7 +2615,8 @@ class ProjectController extends Controller
             'ads_inter' => $request->Chplay_ads_inter,
             'ads_reward' => $request->Chplay_ads_reward,
             'ads_native' => $request->Chplay_ads_native,
-            'ads_open' => $request->Chplay_ads_open
+            'ads_open' => $request->Chplay_ads_open,
+            'ads_start' => $request->Chplay_ads_start
         ];
         $Chplay_ads =  json_encode($Chplay_ads);
 
@@ -2328,7 +2626,8 @@ class ProjectController extends Controller
             'ads_inter' => $request->Amazon_ads_inter,
             'ads_reward' => $request->Amazon_ads_reward,
             'ads_native' => $request->Amazon_ads_native,
-            'ads_open' => $request->Amazon_ads_open
+            'ads_open' => $request->Amazon_ads_open,
+            'ads_start' => $request->Amazon_ads_start,
         ];
         $Amazon_ads =  json_encode($Amazon_ads);
 
@@ -2338,7 +2637,8 @@ class ProjectController extends Controller
             'ads_inter' => $request->Samsung_ads_inter,
             'ads_reward' => $request->Samsung_ads_reward,
             'ads_native' => $request->Samsung_ads_native,
-            'ads_open' => $request->Samsung_ads_open
+            'ads_open' => $request->Samsung_ads_open,
+            'ads_start' => $request->Samsung_ads_start,
         ];
         $Samsung_ads =  json_encode($Samsung_ads);
 
@@ -2348,7 +2648,8 @@ class ProjectController extends Controller
             'ads_inter' => $request->Xiaomi_ads_inter,
             'ads_reward' => $request->Xiaomi_ads_reward,
             'ads_native' => $request->Xiaomi_ads_native,
-            'ads_open' => $request->Xiaomi_ads_open
+            'ads_open' => $request->Xiaomi_ads_open,
+            'ads_start' => $request->Xiaomi_ads_start
         ];
         $Xiaomi_ads =  json_encode($Xiaomi_ads);
 
@@ -2358,7 +2659,8 @@ class ProjectController extends Controller
             'ads_inter' => $request->Oppo_ads_inter,
             'ads_reward' => $request->Oppo_ads_reward,
             'ads_native' => $request->Oppo_ads_native,
-            'ads_open' => $request->Oppo_ads_open
+            'ads_open' => $request->Oppo_ads_open,
+            'ads_start' => $request->Oppo_ads_start,
         ];
         $Oppo_ads =  json_encode($Oppo_ads);
 
@@ -2368,9 +2670,21 @@ class ProjectController extends Controller
             'ads_inter' => $request->Vivo_ads_inter,
             'ads_reward' => $request->Vivo_ads_reward,
             'ads_native' => $request->Vivo_ads_native,
-            'ads_open' => $request->Vivo_ads_open
+            'ads_open' => $request->Vivo_ads_open,
+            'ads_start' => $request->Vivo_ads_start
         ];
         $Vivo_ads =  json_encode($Vivo_ads);
+
+        $Huawei_ads = [
+            'ads_id' => $request->Huawei_ads_id,
+            'ads_banner' => $request->Huawei_ads_banner,
+            'ads_inter' => $request->Huawei_ads_inter,
+            'ads_reward' => $request->Huawei_ads_reward,
+            'ads_native' => $request->Huawei_ads_native,
+            'ads_open' => $request->Huawei_ads_open,
+            'ads_start' => $request->Huawei_ads_start
+        ];
+        $Huawei_ads =  json_encode($Huawei_ads);
 
         $data = new ProjectModel();
         $data['projectname'] = $request->projectname;
@@ -2451,6 +2765,16 @@ class ProjectController extends Controller
         $data['Vivo_ads'] = $Vivo_ads;
         $data['Vivo_status'] = 0;
 
+        $data['Huawei_package'] = $request->Huawei_package;
+        $data['Huawei_buildinfo_store_name_x'] = $request->Huawei_buildinfo_store_name_x;
+        $data['Huawei_buildinfo_link_store'] = $request->Huawei_buildinfo_link_store;
+        $data['Huawei_buildinfo_email_dev_x'] = $request->Huawei_buildinfo_email_dev_x;
+        $data['Huawei_buildinfo_link_app'] = $request->Huawei_buildinfo_link_app;
+        $data['Huawei_policy'] = $request->Huawei_policy;
+        $data['Huawei_keystore_profile'] = $request->Huawei_keystore_profile;
+        $data['Huawei_ads'] = $Huawei_ads;
+        $data['Huawei_status'] = 0;
+
         if(isset($request->logo)){
             $image = $request->file('logo');
             $data['logo'] = 'logo_'.time().'.'.$image->extension();
@@ -2475,7 +2799,7 @@ class ProjectController extends Controller
         $policy = Template::select('policy1','policy2')->where('id',$project->template)->first();
         $store_name = Dev::select('store_name','id_ga')->where('id',$project->Chplay_buildinfo_store_name_x)->first();
         $da= Da::select('ma_da')->where('id',$project->ma_da)->first();
-        $template= Template::select('template','package','ads','Chplay_category','Amazon_category','Samsung_category','Xiaomi_category','Oppo_category','Vivo_category')->where('id',$project->template)->first();
+        $template= Template::select('template','package','ads','Chplay_category','Amazon_category','Samsung_category','Xiaomi_category','Oppo_category','Vivo_category','Huawei_category')->where('id',$project->template)->first();
 
 
         $store_name_amazon= Dev_Amazon::select('amazon_store_name','amazon_ga_name')->where('id',$project->Amazon_buildinfo_store_name_x)->first();
@@ -2483,6 +2807,7 @@ class ProjectController extends Controller
         $store_name_xiaomi= Dev_Xiaomi::select('xiaomi_store_name','xiaomi_ga_name')->where('id',$project->Xiaomi_buildinfo_store_name_x)->first();
         $store_name_oppo= Dev_Oppo::select('oppo_store_name','oppo_ga_name')->where('id',$project->Oppo_buildinfo_store_name_x)->first();
         $store_name_vivo= Dev_Vivo::select('vivo_store_name','vivo_ga_name')->where('id',$project->Vivo_buildinfo_store_name_x)->first();
+        $store_name_huawei= Dev_Huawei::select('huawei_store_name','huawei_ga_name')->where('id',$project->Huawei_buildinfo_store_name_x)->first();
 
 
         $ga_name_amazon = 'Chưa có';
@@ -2491,6 +2816,7 @@ class ProjectController extends Controller
         $ga_name_xiaomi = 'Chưa có';
         $ga_name_oppo = 'Chưa có';
         $ga_name_vivo = 'Chưa có';
+        $ga_name_huawei = 'Chưa có';
         if($store_name){
             if($store_name->id_ga != null){
                 $ga_name_chplay = DB::table('ngocphandang_dev')
@@ -2528,7 +2854,6 @@ class ProjectController extends Controller
                 $ga_name_samsung = 'Chưa có';
             }
         }
-
         if($store_name_xiaomi){
             if($store_name_xiaomi->xiaomi_ga_name != null){
                 $ga_name_xiaomi = DB::table('ngocphandang_dev_xiaomi')
@@ -2562,15 +2887,25 @@ class ProjectController extends Controller
                 $ga_name_vivo = 'Chưa có';
             }
         }
+        if($store_name_huawei){
+            if($store_name_huawei->huawei_ga_name != null){
+                $ga_name_huawei = DB::table('ngocphandang_dev_huawei')
+                    ->join('ngocphandang_ga','ngocphandang_dev_huawei.huawei_ga_name','=','ngocphandang_ga.id')
+                    ->where('ngocphandang_dev_huawei.huawei_ga_name',$store_name_huawei->huawei_ga_name)
+                    ->first();
+                $ga_name_huawei =$ga_name_huawei->ga_name;
+            }else{
+                $ga_name_huawei= 'Chưa có';
+            }
+        }
 
 
         return response()->json([$project,$policy,$store_name,$da,$template,
             $store_name_amazon,$store_name_samsung,$store_name_xiaomi,$store_name_oppo,$store_name_vivo,
-            $ga_name_chplay,$ga_name_amazon,$ga_name_samsung,$ga_name_xiaomi,$ga_name_oppo,$ga_name_vivo
+            $ga_name_chplay,$ga_name_amazon,$ga_name_samsung,$ga_name_xiaomi,$ga_name_oppo,$ga_name_vivo,
+            $store_name_huawei,$ga_name_huawei,
         ]);
     }
-
-
     public function update(Request $request)
     {
 
@@ -2609,7 +2944,8 @@ class ProjectController extends Controller
             'ads_inter' => $request->Chplay_ads_inter,
             'ads_reward' => $request->Chplay_ads_reward,
             'ads_native' => $request->Chplay_ads_native,
-            'ads_open' => $request->Chplay_ads_open
+            'ads_open' => $request->Chplay_ads_open,
+            'ads_start' => $request->Chplay_ads_start,
         ];
         $Chplay_ads =  json_encode($Chplay_ads);
 
@@ -2619,7 +2955,8 @@ class ProjectController extends Controller
             'ads_inter' => $request->Amazon_ads_inter,
             'ads_reward' => $request->Amazon_ads_reward,
             'ads_native' => $request->Amazon_ads_native,
-            'ads_open' => $request->Amazon_ads_open
+            'ads_open' => $request->Amazon_ads_open,
+            'ads_start' => $request->Amazon_ads_start,
         ];
         $Amazon_ads =  json_encode($Amazon_ads);
 
@@ -2629,7 +2966,8 @@ class ProjectController extends Controller
             'ads_inter' => $request->Samsung_ads_inter,
             'ads_reward' => $request->Samsung_ads_reward,
             'ads_native' => $request->Samsung_ads_native,
-            'ads_open' => $request->Samsung_ads_open
+            'ads_open' => $request->Samsung_ads_open,
+            'ads_start' => $request->Samsung_ads_start,
         ];
         $Samsung_ads =  json_encode($Samsung_ads);
 
@@ -2639,7 +2977,8 @@ class ProjectController extends Controller
             'ads_inter' => $request->Xiaomi_ads_inter,
             'ads_reward' => $request->Xiaomi_ads_reward,
             'ads_native' => $request->Xiaomi_ads_native,
-            'ads_open' => $request->Xiaomi_ads_open
+            'ads_open' => $request->Xiaomi_ads_open,
+            'ads_start' => $request->Xiaomi_ads_start,
         ];
         $Xiaomi_ads =  json_encode($Xiaomi_ads);
 
@@ -2649,7 +2988,8 @@ class ProjectController extends Controller
             'ads_inter' => $request->Oppo_ads_inter,
             'ads_reward' => $request->Oppo_ads_reward,
             'ads_native' => $request->Oppo_ads_native,
-            'ads_open' => $request->Oppo_ads_open
+            'ads_open' => $request->Oppo_ads_open,
+            'ads_start' => $request->Oppo_ads_start,
         ];
         $Oppo_ads =  json_encode($Oppo_ads);
 
@@ -2659,12 +2999,24 @@ class ProjectController extends Controller
             'ads_inter' => $request->Vivo_ads_inter,
             'ads_reward' => $request->Vivo_ads_reward,
             'ads_native' => $request->Vivo_ads_native,
-            'ads_open' => $request->Vivo_ads_open
+            'ads_open' => $request->Vivo_ads_open,
+            'ads_start' => $request->Vivo_ads_start,
         ];
         $Vivo_ads =  json_encode($Vivo_ads);
 
-        $data = ProjectModel::find($id);
+        $Huawei_ads = [
+            'ads_id' => $request->Huawei_ads_id,
+            'ads_banner' => $request->Huawei_ads_banner,
+            'ads_inter' => $request->Huawei_ads_inter,
+            'ads_reward' => $request->Huawei_ads_reward,
+            'ads_native' => $request->Huawei_ads_native,
+            'ads_open' => $request->Huawei_ads_open,
+            'ads_start' => $request->Huawei_ads_start,
+        ];
+        $Huawei_ads =  json_encode($Huawei_ads);
 
+
+        $data = ProjectModel::find($id);
 
         $data->template = $request->template;
         $data->ma_da = $request->ma_da;
@@ -2742,6 +3094,16 @@ class ProjectController extends Controller
         $data->Vivo_status = $request->Vivo_status;
         $data->Vivo_policy = $request->Vivo_policy;
         $data->Vivo_keystore_profile = $request->Vivo_keystore_profile;
+
+        $data->Huawei_package = $request->Huawei_package;
+        $data->Huawei_buildinfo_store_name_x = $request->Huawei_buildinfo_store_name_x;
+        $data->Huawei_buildinfo_link_store = $request->Huawei_buildinfo_link_store;
+        $data->Huawei_buildinfo_link_app = $request->Huawei_buildinfo_link_app;
+        $data->Huawei_buildinfo_email_dev_x = $request->Huawei_buildinfo_email_dev_x;
+        $data->Huawei_ads = $Huawei_ads;
+        $data->Huawei_status = $request->Huawei_status;
+        $data->Huawei_policy = $request->Huawei_policy;
+        $data->Huawei_keystore_profile = $request->Huawei_keystore_profile;
         if($data->logo){
             if($data->projectname <> $request->projectname){
                 $dir = (public_path('uploads/project/'));
@@ -2800,23 +3162,17 @@ class ProjectController extends Controller
                 'Chplay_bot->log_status' => $data->Chplay_status,
             ]);
         return response()->json(['success'=>'Cập nhật thành công']);
-
-
     }
-
-
     public function delete($id)
     {
         ProjectModel::find($id)->delete();
         return response()->json(['success'=>'Xóa thành công.']);
     }
-
     public function callAction($method, $parameters)
     {
 //        $this->AuthLogin();
         return parent::callAction($method, array_values($parameters));
     }
-
     public function removeProject($id){
 
         $project = ProjectModel::where('projectid',$id)->first();
@@ -2848,8 +3204,6 @@ class ProjectController extends Controller
         );
         return response()->json(['success'=>'Cập nhật thành công']);
     }
-
-
     public function checkbox($id){
         $data = ProjectModel::find($id);
         ProjectModel::updateOrCreate(
@@ -2874,15 +3228,13 @@ class ProjectController extends Controller
         return response()->json(['success'=> $data->projectname.' đang chờ duyệt']);
     }
     public function select_template(Request $request){
-        $template = Template::select('package','ads','Chplay_category','Amazon_category','Samsung_category','Xiaomi_category','Oppo_category','Vivo_category')->where('id',$request->template)->first();
+        $template = Template::select('package','ads','Chplay_category','Amazon_category','Samsung_category','Xiaomi_category','Oppo_category','Vivo_category','Huawei_category')->where('id',$request->template)->first();
         return response()->json($template);
     }
-
     public function checkData($id){
         ProjectModel::where('template',$id)->where('buildinfo_console','<>','2')->Where('buildinfo_console','<>','5')->update(['buildinfo_console'=> 4]);
         return response()->json(['success'=>'Thành công']);
     }
-
     public function showlog($id){
         $record = ProjectModel::with(['log','da','matemplate'])->where('projectid',$id)->first();
         $logs = $record->log->buildinfo_mess;
@@ -2925,7 +3277,6 @@ class ProjectController extends Controller
         }
         return response()->json([$dev_name_chplay->dev_name,$ga_name_chplay]);
     }
-
     public function select_store_name_amazon(Request $request){
         $dev_name_amazon = DB::table('ngocphandang_dev_amazon')
             ->where('ngocphandang_dev_amazon.id',$request->store_name)
@@ -2941,7 +3292,6 @@ class ProjectController extends Controller
         }
         return response()->json([$dev_name_amazon->amazon_dev_name,$ga_name_amazon]);
     }
-
     public function select_store_name_samsung(Request $request){
         $dev_name_samsung = DB::table('ngocphandang_dev_samsung')
             ->where('ngocphandang_dev_samsung.id',$request->store_name)
@@ -2957,7 +3307,6 @@ class ProjectController extends Controller
         }
         return response()->json([$dev_name_samsung->samsung_dev_name,$ga_name_samsung]);
     }
-
     public function select_store_name_xiaomi(Request $request){
         $dev_name_xiaomi = DB::table('ngocphandang_dev_xiaomi')
             ->where('ngocphandang_dev_xiaomi.id',$request->store_name)
@@ -2974,7 +3323,6 @@ class ProjectController extends Controller
         }
         return response()->json([$dev_name_xiaomi->xiaomi_dev_name,$ga_name_xiaomi]);
     }
-
     public function select_store_name_oppo(Request $request){
         $dev_name_oppo = DB::table('ngocphandang_dev_oppo')
             ->where('ngocphandang_dev_oppo.id',$request->store_name)
@@ -2990,7 +3338,6 @@ class ProjectController extends Controller
         }
         return response()->json([$dev_name_oppo->oppo_dev_name,$ga_name_oppo]);
     }
-
     public function select_store_name_vivo(Request $request){
         $dev_name_vivo = DB::table('ngocphandang_dev_vivo')
             ->where('ngocphandang_dev_vivo.id',$request->store_name)
@@ -3005,6 +3352,21 @@ class ProjectController extends Controller
             $ga_name_vivo = 'Chưa có';
         }
         return response()->json([$dev_name_vivo->vivo_dev_name,$ga_name_vivo]);
+    }
+    public function select_store_name_huawei(Request $request){
+        $dev_name_huawei = DB::table('ngocphandang_dev_huawei')
+            ->where('ngocphandang_dev_huawei.id',$request->store_name)
+            ->first();
+        if($dev_name_huawei->huawei_ga_name != null){
+            $ga_name_huawei = DB::table('ngocphandang_dev_huawei')
+                ->join('ngocphandang_ga','ngocphandang_dev_huawei.huawei_ga_name','=','ngocphandang_ga.id')
+                ->where('ngocphandang_dev_huawei.huawei_ga_name',$dev_name_huawei->huawei_ga_name)
+                ->first();
+            $ga_name_huawei =$ga_name_huawei->ga_name;
+        }else{
+            $ga_name_huawei = 'Chưa có';
+        }
+        return response()->json([$dev_name_huawei->huawei_dev_name,$ga_name_huawei]);
     }
 
 

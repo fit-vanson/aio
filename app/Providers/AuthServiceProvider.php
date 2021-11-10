@@ -6,6 +6,7 @@ use App\Http\Controllers\KhosimController;
 use App\Policies\CocsimPolicy;
 use App\Policies\DaPolicy;
 use App\Policies\DevAmazonPolicy;
+use App\Policies\DevHuaweiPolicy;
 use App\Policies\DevicePolicy;
 use App\Policies\DevOppoPolicy;
 use App\Policies\DevPolicy;
@@ -61,6 +62,7 @@ class AuthServiceProvider extends ServiceProvider
        $this->defineDevXiaomi();
        $this->defineDevOppo();
        $this->defineDevVivo();
+       $this->defineDevHuawei();
        $this->defineUser();
        $this->defineVaitro();
        $this->definePhan_quyen();
@@ -180,6 +182,16 @@ class AuthServiceProvider extends ServiceProvider
         Gate::define('dev_vivo-edit', [DevVivoPolicy::class, 'edit']);
         Gate::define('dev_vivo-update', [DevVivoPolicy::class, 'update']);
         Gate::define('dev_vivo-delete', [DevVivoPolicy::class, 'delete']);
+    }
+
+    public function defineDevHuawei(){
+
+        Gate::define('dev_huawei-index', [DevHuaweiPolicy::class, 'index']);
+        Gate::define('dev_huawei-show', [DevHuaweiPolicy::class, 'show']);
+        Gate::define('dev_huawei-add', [DevHuaweiPolicy::class, 'add']);
+        Gate::define('dev_huawei-edit', [DevHuaweiPolicy::class, 'edit']);
+        Gate::define('dev_huawei-update', [DevHuaweiPolicy::class, 'update']);
+        Gate::define('dev_huawei-delete', [DevHuaweiPolicy::class, 'delete']);
     }
 
 

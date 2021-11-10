@@ -67,8 +67,8 @@
                                 <input type="url" id="link_store_vietmmo" name="link_store_vietmmo" class="form-control" >
                             </div>
                         </div>
-
                         <div data-repeater-item="" class="row">
+
                             <div class="form-group col-lg-2">
                                 <label for="name">Ads ID</label>
                                 <input type="checkbox" class="control-input" name="Check_ads_id" id="Check_ads_id" value="1">
@@ -94,6 +94,11 @@
                             <div class="form-group col-lg-2 ">
                                 <label for="name">Ads open</label>
                                 <input type="checkbox" class="control-input" name="Check_ads_open" id="Check_ads_open" value="1">
+                            </div>
+
+                            <div class="form-group col-lg-2 ">
+                                <label for="name" style="color:#00d986">Ads Start</label>
+                                <input type="checkbox" class="control-input" name="Check_ads_start" id="Check_ads_start" value="1">
                             </div>
                         </div>
 
@@ -171,6 +176,14 @@
                                 <input type="text" id="Vivo_category" name="Vivo_category" class="form-control">
                             </div>
                         </div>
+
+                        <div data-repeater-item="" class="row">
+                            <div class="form-group col-lg-6 input_projectname">
+                                <label for="name">Category Huawei</label>
+                                <input type="text" id="Huawei_category" name="Huawei_category" class="form-control">
+                            </div>
+                        </div>
+
                     </div>
                     <div class="col-sm-offset-2 col-sm-10">
                         <button type="submit" class="btn btn-primary" id="saveBtn" value="create">Save changes

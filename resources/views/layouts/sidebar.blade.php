@@ -34,6 +34,7 @@
                                         <li><a href="{{route('project.appXiaomi')}}">Quản lý APP (Xiaomi)</a></li>
                                         <li><a href="{{route('project.appOppo')}}">Quản lý APP (Oppo)</a></li>
                                         <li><a href="{{route('project.appVivo')}}">Quản lý APP (Vivo)</a></li>
+                                        <li><a href="{{route('project.appHuawei')}}">Quản lý APP (Huawei)</a></li>
                                     @endcan
                                 </ul>
                             </li>
@@ -61,6 +62,10 @@
                                     @endcan
                                     @can('dev_vivo-index')
                                         <li><a href="{{route('dev_vivo.index')}}">Quản lý DEV (Vivo)</a></li>
+                                    @endcan
+
+                                    @can('dev_huawei-index')
+                                        <li><a href="{{route('dev_huawei.index')}}">Quản lý DEV (Huawei)</a></li>
                                     @endcan
 
                                     @can('ga-index')

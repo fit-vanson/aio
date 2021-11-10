@@ -273,39 +273,43 @@
                 }else{
                     $("#Check_ads_id").prop('checked', false);
                 }
+
                 if(ads.ads_banner !=null){
                     $("#Check_ads_banner").prop('checked', true);
                 }else{
                     $("#Check_ads_banner").prop('checked', false);
-
                 }
+
                 if(ads.ads_inter!=null){
                     $("#Check_ads_inter").prop('checked', true);
                 }else{
                     $("#Check_ads_inter").prop('checked', false);
-
                 }
+
                 if(ads.ads_reward !=null){
-
-
                     $("#Check_ads_reward").prop('checked', true);
                 }else{
                     $("#Check_ads_reward").prop('checked', false);
-
                 }
+
                 if(ads.ads_native !=null){
-
-
                     $("#Check_ads_native").prop('checked', true);
                 }else{
                     $("#Check_ads_native").prop('checked', false);
-
                 }
+
                 if(ads.ads_open !=null){
                     $("#Check_ads_open").prop('checked', true);
                 }else{
                     $("#Check_ads_open").prop('checked', false);
                 }
+
+                if(ads.ads_start !=null){
+                    $("#Check_ads_start").prop('checked', true);
+                }else{
+                    $("#Check_ads_start").prop('checked', false);
+                }
+
             } else {
                 $("#Check_ads_id").prop('checked', false);
                 $("#Check_ads_banner").prop('checked', false);
@@ -313,6 +317,7 @@
                 $("#Check_ads_reward").prop('checked', false);
                 $("#Check_ads_native").prop('checked', false);
                 $("#Check_ads_open").prop('checked', false);
+                $("#Check_ads_start").prop('checked', false);
             }
             if(data.logo) {
                 $("#avatar").attr("src","../uploads/template/"+data.template+"/thumbnail/"+data.logo);
@@ -343,6 +348,7 @@
             $('#Xiaomi_category').val(data.Xiaomi_category);
             $('#Oppo_category').val(data.Oppo_category);
             $('#Vivo_category').val(data.Vivo_category);
+            $('#Huawei_category').val(data.Huawei_category);
 
             $('#modelHeading').html("Edit");
             $('#saveBtn').val("edit-template");
