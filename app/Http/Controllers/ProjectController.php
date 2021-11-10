@@ -2899,7 +2899,6 @@ class ProjectController extends Controller
             }
         }
 
-
         return response()->json([$project,$policy,$store_name,$da,$template,
             $store_name_amazon,$store_name_samsung,$store_name_xiaomi,$store_name_oppo,$store_name_vivo,
             $ga_name_chplay,$ga_name_amazon,$ga_name_samsung,$ga_name_xiaomi,$ga_name_oppo,$ga_name_vivo,

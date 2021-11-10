@@ -1163,7 +1163,8 @@
     }
     function showPolicy_Huawei(id) {
         $.get('{{asset('project/edit')}}/'+id,function (data) {
-            if(data[16] == null) { data[9] = {huawei_store_name: "(NO STORE NAME)"}}
+
+            if(data[16] == null) { data[16] = {huawei_store_name: "(NO STORE NAME)"}}
             if(data[1].policy1){
                 $('.policy-1').show();
                 if(data[0].buildinfo_app_name_x == null){
