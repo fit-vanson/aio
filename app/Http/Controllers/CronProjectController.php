@@ -85,7 +85,6 @@ class CronProjectController extends Controller
             $existApp =  $appInfo->existsApp($package);
             if($existApp){
                 $appInfo = $appInfo->getAppInfo($package);
-                echo 'link  |   tittle  |   Version |   Score   |   Install'.'<br><br>';
                 echo
                     $appInfo->getIcon(). ' |   '.
                     $appInfo->getName(). ' |   '.
@@ -94,7 +93,7 @@ class CronProjectController extends Controller
                     number_format($appInfo->getInstalls());
                 return;
             }else{
-                return 'Package không tồn tại';
+                return 'null';
             }
         }
         return URL::current().'?id=xyz';
