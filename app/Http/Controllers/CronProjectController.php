@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\ProjectModel;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\URL;
 use Nelexa\GPlay\GPlayApps;
 
 class CronProjectController extends Controller
@@ -74,5 +75,42 @@ class CronProjectController extends Controller
 
            }
        }
+    }
+
+    public function getPackage(Request $request)
+    {
+        if ($request->id) {
+            $package = $request->id;
+            $appInfo = new GPlayApps();
+            $existApp =  $appInfo->existsApp($package);
+            if($existApp){
+                $appInfo = $appInfo->getAppInfo($package);
+//                dd($appInfo);
+
+
+
+                echo 'logo: <a target= "_blank" href="'.$appInfo->getUrl().'"> <img src="'.$appInfo->getIcon()->getUrl() .'" width="30" height="30"></a><br>';
+                echo 'Install: '.number_format($appInfo->getInstalls()) .'<br>';
+                echo 'numberVoters: '.number_format($appInfo->getNumberVoters()) .'<br>';
+                echo 'numberReviews: '.number_format($appInfo->getNumberReviews()) .'<br>';
+                echo 'score: '. number_format($appInfo->getScore(),2) .'<br>';
+                echo 'appVersion: '.$appInfo->getAppVersion() .'<br>';
+
+                return;
+
+
+//                if($request->json == 1){
+//                    return json_encode($data,true);
+//                }
+//                echo '<pre>';
+//                print_r($data);
+//                echo '</pre>';
+//                die();
+            }else{
+                return 'Package không tồn tại';
+            }
+
+        }
+        return URL::current().'?id=xyz';
     }
 }
