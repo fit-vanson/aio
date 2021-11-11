@@ -85,31 +85,17 @@ class CronProjectController extends Controller
             $existApp =  $appInfo->existsApp($package);
             if($existApp){
                 $appInfo = $appInfo->getAppInfo($package);
-//                dd($appInfo);
-
-
-
-                echo 'logo: <a target= "_blank" href="'.$appInfo->getUrl().'"> <img src="'.$appInfo->getIcon()->getUrl() .'" width="30" height="30"></a><br>';
-                echo 'Install: '.number_format($appInfo->getInstalls()) .'<br>';
-                echo 'numberVoters: '.number_format($appInfo->getNumberVoters()) .'<br>';
-                echo 'numberReviews: '.number_format($appInfo->getNumberReviews()) .'<br>';
-                echo 'score: '. number_format($appInfo->getScore(),2) .'<br>';
-                echo 'appVersion: '.$appInfo->getAppVersion() .'<br>';
-
+                echo 'link  |   tittle  |   Version |   Score   |   Install'.'<br><br>';
+                echo
+                    $appInfo->getIcon(). ' |   '.
+                    $appInfo->getName(). ' |   '.
+                    $appInfo->getAppVersion(). ' |   '.
+                    number_format($appInfo->getScore(),1). ' |   '.
+                    number_format($appInfo->getInstalls());
                 return;
-
-
-//                if($request->json == 1){
-//                    return json_encode($data,true);
-//                }
-//                echo '<pre>';
-//                print_r($data);
-//                echo '</pre>';
-//                die();
             }else{
                 return 'Package không tồn tại';
             }
-
         }
         return URL::current().'?id=xyz';
     }
