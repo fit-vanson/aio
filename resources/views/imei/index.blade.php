@@ -14,6 +14,10 @@
             <div class="card">
                 <div class="card-body">
                     <h4 class="card-title">Gen Imei</h4>
+                    <b>Use: </b>
+                        <p class="card-title-desc">Ramdom brand: <a target="_blank" href="{{URL::to('/imei/show_imei')}}">{{URL::to('/imei/show_imei')}}</a></p>
+                        <p class="card-title-desc">Ramdom model: <a target="_blank" href="{{URL::to('/imei/show_imei?brand=samsung')}}">{{URL::to('/imei/show_imei?brand=')}}</a><code class="highlighter-rouge">samsung</code></p>
+                        <p class="card-title-desc">Ramdom imei by TAC : <a target="_blank" href="{{URL::to('/imei/show_imei?tac_code=12345678')}}">{{URL::to('/imei/show_imei?tac_code=')}}</a><code class="highlighter-rouge">12345678</code> (Min > 8 number,  <a target="_blank" href="https://en.wikipedia.org/wiki/Type_Allocation_Code">tac_code ???</a>)</p>
                     <form>
                         <div class="form-group">
                             <label class="control-label">Hãng</label>
