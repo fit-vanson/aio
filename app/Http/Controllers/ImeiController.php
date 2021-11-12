@@ -167,7 +167,7 @@ class ImeiController extends Controller
         }
         $ICCID = [];
         for ($i=0; $i<$show;$i++){
-            $iccid = substr($iccid,0,16);
+            $iccid = substr($iccid,0,17);
             while (strlen($iccid) < 19){
                 $iccid .= (string)rand(0,9);
             }
