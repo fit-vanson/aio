@@ -24,7 +24,7 @@
                             <select class="select2 form-select js_country" data-type="country">
                                 <option>--Country--</option>
                                 @foreach($country as $item)
-                                    <option value="{{$item->country}}">{{$item->country}}</option>
+                                    <option value="{{$item->country}}">{{$item->country.' - '.$item->countrycode}}</option>
                                 @endforeach
                             </select>
                         </div>

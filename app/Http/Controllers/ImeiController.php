@@ -137,7 +137,7 @@ class ImeiController extends Controller
 
     public function index_iccid()
     {
-        $country = ICCID::select('country')->distinct('country')->get();
+        $country = ICCID::select('country','countrycode')->distinct('country')->get();
         $breadcrumbs = [
             ['link' => "home", 'name' => "Home"], ['name' => "Index"]
         ];
