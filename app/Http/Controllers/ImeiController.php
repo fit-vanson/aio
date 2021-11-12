@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\ICCID;
 use App\Models\Imei;
 use Illuminate\Http\Request;
 use function PHPUnit\Framework\isEmpty;
@@ -130,5 +131,83 @@ class ImeiController extends Controller
                echo '<a href="?brand='.$item->brand.'">'.$item->brand.'</a><br />';
            }
        }
+    }
+
+
+
+    public function index_iccid()
+    {
+        $country = ICCID::select('country')->distinct('country')->get();
+        $breadcrumbs = [
+            ['link' => "home", 'name' => "Home"], ['name' => "Index"]
+        ];
+        return view('iccid.index', [
+            'breadcrumbs' => $breadcrumbs,
+            'country' =>$country,
+        ]);
+    }
+
+    public function getCountry(Request $request){
+        $country= $request->country;
+        if($country){
+            $network = ICCID::where('Country',$country)->get();
+            return response([
+                'data'=>$network
+            ]);
+        }
+    }
+
+    public function gen_iccid($iccid='89',$show=1){
+        if(isset($_GET['show'])){
+            $show = $_GET['show'];
+        }
+        if(isset($_GET['iccid'])) {
+            $iccid .= $_GET['iccid'];
+
+        }
+        $ICCID = [];
+        for ($i=0; $i<$show;$i++){
+            $iccid = substr($iccid,0,17);
+            while (strlen($iccid) < 18){
+                $iccid .= (string)rand(0,9);
+            }
+            $iccid .= $this->calc_check_digit($iccid);
+            $ICCID[] = $iccid;
+        }
+        return response()->json(['data'=>$ICCID]);
+    }
+
+    public function show_iccid(Request $request){
+        if($request->country){
+            $network = ICCID::where('country','like', '%' . $request->country . '%')->get();
+            if(count($network)>0){
+                foreach ($network as $item){
+                    if(isset($request->network)){
+                        $iccid = ICCID::inRandomOrder()->where('country','like', '%' . $request->country . '%')->where('network','like', '%' . $request->network . '%')->first();
+                        if(isset($iccid)){
+                            $id = '89'.$iccid->countrycode.$iccid->mnc;
+                            $gen_iccid =  $this->gen_iccid($id,1);
+                            return $iccid->country . ' | ' .$iccid->network. ' | '.$gen_iccid->getData()->data[0];
+                        }else{
+                            return 'Chưa có dữ liệu';
+                        }
+                    }else{
+                        echo '<a href="?country='.$item->country.'&network='.$item->network.'">'.$item->network.' - '.$item->mnc.'</a><br />';
+                    }
+                }
+            }else{
+                return 'Chưa có dữ liệu';
+            }
+        }elseif ($request->iccid){
+            $iccid = $request->iccid;
+            $a = $this->gen_iccid($iccid,1);
+            echo $a->getData()->data[0];
+        }
+        else{
+            $country = ICCID::inRandomOrder()->select('country')->distinct('country')->limit(20)->get();
+            foreach ($country as $item){
+                echo '<a href="?country='.$item->country.'">'.$item->country.'</a><br />';
+            }
+        }
     }
 }

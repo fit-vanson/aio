@@ -121,6 +121,7 @@
                                     @endcan
 
                                         <li><a href="{{route('imei.index')}}">Gen Imei</a></li>
+                                        <li><a href="{{route('iccid.index')}}">Gen ICCID</a></li>
                                 </ul>
                             </li>
                             <li>

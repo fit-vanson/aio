@@ -395,6 +395,15 @@ Route::group(['prefix'=>'imei'], function (){
     Route::get('/import',[ImeiController::class,'import']);
 });
 
+Route::group(['prefix'=>'iccid'], function (){
+    Route::get('/',[ImeiController::class,'index_iccid'])->name('iccid.index');
+//    Route::post('/create',[ImeiController::class,'create'])->name('iccid.create');
+    Route::get('/gen_iccid',[ImeiController::class,'gen_iccid'])->name('iccid.gen_iccid');
+    Route::get('/show_iccid',[ImeiController::class,'show_iccid'])->name('iccid.show_iccid');
+    Route::get('/getCountry',[ImeiController::class,'getCountry'])->name('iccid.getCountry');
+//    Route::get('/import',[ImeiController::class,'import']);
+});
+
 Route::get('IP2location',[ipInfoController::class,'IP2location'])->name('inInfo.IP2location');
 
 
