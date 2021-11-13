@@ -85,7 +85,6 @@ class CronProjectController extends Controller
             $existApp =  $appInfo->existsApp($package);
             if($existApp){
                 $appInfo = $appInfo->getAppInfo($package);
-//                dd($appInfo->getAppVersion());
                 echo $appInfo->getIcon();
                 echo ' | '. $appInfo->getName();
                 echo ' | '. $appVersion = ($appInfo->getAppVersion() != null)  ? number_format($appInfo->getAppVersion()) : 'null';
