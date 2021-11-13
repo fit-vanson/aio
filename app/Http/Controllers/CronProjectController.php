@@ -85,12 +85,12 @@ class CronProjectController extends Controller
             $existApp =  $appInfo->existsApp($package);
             if($existApp){
                 $appInfo = $appInfo->getAppInfo($package);
-                echo
-                    $appInfo->getIcon(). ' |   '.
-                    $appInfo->getName(). ' |   '.
-                    $appInfo->getAppVersion(). ' |   '.
-                    number_format($appInfo->getScore(),1). ' |   '.
-                    number_format($appInfo->getInstalls());
+//                dd($appInfo->getAppVersion());
+                echo $appInfo->getIcon();
+                echo ' | '. $appInfo->getName();
+                echo ' | '. $appVersion = ($appInfo->getAppVersion() != null)  ? number_format($appInfo->getAppVersion()) : 'null';
+                echo ' | '. $score = ($appInfo->getScore() != null)  ? number_format($appInfo->getScore(),1) : 'null';
+                echo ' | '. $install =  ($appInfo->getInstalls() != null)  ? number_format($appInfo->getInstalls()) : 'null';
                 return;
             }else{
                 return 'null';
