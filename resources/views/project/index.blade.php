@@ -108,7 +108,7 @@
             }
         });
         var table = $('.data-table').DataTable({
-            displayLength: 5,
+            displayLength: 50,
             lengthMenu: [5, 10, 25, 50, 75, 100],
             // processing: true,
             serverSide: true,
