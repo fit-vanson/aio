@@ -269,6 +269,8 @@ class TemplateController extends Controller
 
     public function create(Request  $request)
     {
+
+
         $rules = [
             'template' =>'unique:ngocphandang_template,template'
         ];
@@ -289,6 +291,13 @@ class TemplateController extends Controller
             'ads_native' => $request->Check_ads_native,
             'ads_open' => $request->Check_ads_open,
             'ads_start' => $request->Check_ads_start,
+            'ads_banner_huawei' => $request->Check_ads_banner_huawei,
+            'ads_inter_huawei' => $request->Check_ads_inter_huawei,
+            'ads_reward_huawei' => $request->Check_ads_reward_huawei,
+            'ads_native_huawei' => $request->Check_ads_native_huawei,
+            'ads_splash_huawei' => $request->Check_ads_splash_huawei,
+            'ads_roll_huawei' => $request->Check_ads_roll_huawei,
+
         ];
         $ads =  json_encode($ads);
         $data = new Template();
@@ -406,6 +415,12 @@ class TemplateController extends Controller
             'ads_native' => $request->Check_ads_native,
             'ads_open' => $request->Check_ads_open,
             'ads_start' => $request->Check_ads_start,
+            'ads_banner_huawei' => $request->Check_ads_banner_huawei,
+            'ads_inter_huawei' => $request->Check_ads_inter_huawei,
+            'ads_reward_huawei' => $request->Check_ads_reward_huawei,
+            'ads_native_huawei' => $request->Check_ads_native_huawei,
+            'ads_splash_huawei' => $request->Check_ads_splash_huawei,
+            'ads_roll_huawei' => $request->Check_ads_roll_huawei,
         ];
 
         $ads =  json_encode($ads);

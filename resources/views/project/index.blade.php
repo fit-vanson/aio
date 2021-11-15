@@ -108,7 +108,7 @@
             }
         });
         var table = $('.data-table').DataTable({
-            displayLength: 50,
+            displayLength: 5,
             lengthMenu: [5, 10, 25, 50, 75, 100],
             // processing: true,
             serverSide: true,
@@ -409,6 +409,12 @@
                 $('#Chplay_ads_native').val(Chplay_ads.ads_native);
                 $('#Chplay_ads_open').val(Chplay_ads.ads_open);
                 $('#Chplay_ads_start').val(Chplay_ads.ads_start);
+                $('#Chplay_ads_roll_huawei').val(Chplay_ads.ads_roll_huawei);
+                $('#Chplay_ads_banner_huawei').val(Chplay_ads.ads_banner_huawei);
+                $('#Chplay_ads_inter_huawei').val(Chplay_ads.ads_inter_huawei);
+                $('#Chplay_ads_reward_huawei').val(Chplay_ads.ads_reward_huawei);
+                $('#Chplay_ads_native_huawei').val(Chplay_ads.ads_native_huawei);
+                $('#Chplay_ads_splash_huawei').val(Chplay_ads.ads_splash_huawei);
             }else{
                 $('.market_chplay').hide()
                 $('.a_chplay').hide()
@@ -420,6 +426,12 @@
                 $('#Chplay_ads_native').val('');
                 $('#Chplay_ads_open').val('');
                 $('#Chplay_ads_start').val('');
+                $('#Chplay_ads_roll_huawei').val('');
+                $('#Chplay_ads_banner_huawei').val('');
+                $('#Chplay_ads_inter_huawei').val('');
+                $('#Chplay_ads_reward_huawei').val('');
+                $('#Chplay_ads_native_huawei').val('');
+                $('#Chplay_ads_splash_huawei').val('');
             }
 
             if(data[4].Amazon_category !=null){
@@ -436,6 +448,12 @@
                 $('#Amazon_ads_native').val(Amazon_ads.ads_native);
                 $('#Amazon_ads_open').val(Amazon_ads.ads_open);
                 $('#Amazon_ads_start').val(Amazon_ads.ads_start);
+                $('#Amazon_ads_roll_huawei').val(Amazon_ads.ads_roll_huawei);
+                $('#Amazon_ads_banner_huawei').val(Amazon_ads.ads_banner_huawei);
+                $('#Amazon_ads_inter_huawei').val(Amazon_ads.ads_inter_huawei);
+                $('#Amazon_ads_reward_huawei').val(Amazon_ads.ads_reward_huawei);
+                $('#Amazon_ads_native_huawei').val(Amazon_ads.ads_native_huawei);
+                $('#Amazon_ads_splash_huawei').val(Amazon_ads.ads_splash_huawei);
 
             }else{
                 $('.market_amazon').hide()
@@ -447,6 +465,13 @@
                 $('#Amazon_ads_native').val('');
                 $('#Amazon_ads_open').val('');
                 $('#Amazon_ads_start').val('');
+                $('#Amazon_ads_roll_huawei').val('');
+                $('#Amazon_ads_banner_huawei').val('');
+                $('#Amazon_ads_inter_huawei').val('');
+                $('#Amazon_ads_reward_huawei').val('');
+                $('#Amazon_ads_native_huawei').val('');
+                $('#Amazon_ads_splash_huawei').val('');
+
 
             }
             if(data[4].Samsung_category !=null){
@@ -460,9 +485,16 @@
                 $('#Samsung_ads_banner').val(Samsung_ads.ads_banner);
                 $('#Samsung_ads_inter').val(Samsung_ads.ads_inter);
                 $('#Samsung_ads_native').val(Samsung_ads.ads_native);
-                $('#Samsung_ads').val(Samsung_ads.ads_reward);
+                $('#Samsung_ads_reward').val(Samsung_ads.ads_reward);
                 $('#Samsung_ads_open').val(Samsung_ads.ads_open);
                 $('#Samsung_ads_start').val(Samsung_ads.ads_start);
+                $('#Samsung_ads_roll_huawei').val(Samsung_ads.ads_roll_huawei);
+                $('#Samsung_ads_banner_huawei').val(Samsung_ads.ads_banner_huawei);
+                $('#Samsung_ads_inter_huawei').val(Samsung_ads.ads_inter_huawei);
+                $('#Samsung_ads_reward_huawei').val(Samsung_ads.ads_reward_huawei);
+                $('#Samsung_ads_native_huawei').val(Samsung_ads.ads_native_huawei);
+                $('#Samsung_ads_splash_huawei').val(Samsung_ads.ads_splash_huawei);
+
             }else{
                 $('.market_samsung').hide()
                 $('.a_samsung').hide()
@@ -473,6 +505,12 @@
                 $('#Samsung_ads').val('');
                 $('#Samsung_ads_open').val('');
                 $('#Samsung_ads_start').val('');
+                $('#Samsung_ads_roll_huawei').val('');
+                $('#Samsung_ads_banner_huawei').val('');
+                $('#Samsung_ads_inter_huawei').val('');
+                $('#Samsung_ads_reward_huawei').val('');
+                $('#Samsung_ads_native_huawei').val('');
+                $('#Samsung_ads_splash_huawei').val('');
             }
             if(data[4].Xiaomi_category !=null){
                 $('.market_xiaomi').show()
@@ -489,6 +527,12 @@
                 $('#Xiaomi_ads_native').val(Xiaomi_ads.ads_native);
                 $('#Xiaomi_ads_open').val(Xiaomi_ads.ads_open);
                 $('#Xiaomi_ads_start').val(Xiaomi_ads.ads_start);
+                $('#Xiaomi_ads_roll_huawei').val(Xiaomi_ads.ads_roll_huawei);
+                $('#Xiaomi_ads_banner_huawei').val(Xiaomi_ads.ads_banner_huawei);
+                $('#Xiaomi_ads_inter_huawei').val(Xiaomi_ads.ads_inter_huawei);
+                $('#Xiaomi_ads_reward_huawei').val(Xiaomi_ads.ads_reward_huawei);
+                $('#Xiaomi_ads_native_huawei').val(Xiaomi_ads.ads_native_huawei);
+                $('#Xiaomi_ads_splash_huawei').val(Xiaomi_ads.ads_splash_huawei);
             }else{
                 $('.market_xiaomi').hide()
                 $('.a_xiaomi').hide()
@@ -499,6 +543,12 @@
                 $('#Xiaomi_ads_native').val('');
                 $('#Xiaomi_ads_open').val('');
                 $('#Xiaomi_ads_start').val('');
+                $('#Xiaomi_ads_roll_huawei').val('');
+                $('#Xiaomi_ads_banner_huawei').val('');
+                $('#Xiaomi_ads_inter_huawei').val('');
+                $('#Xiaomi_ads_reward_huawei').val('');
+                $('#Xiaomi_ads_native_huawei').val('');
+                $('#Xiaomi_ads_splash_huawei').val('');
             }
             if(data[4].Oppo_category !=null){
                 $('.market_oppo').show()
@@ -514,6 +564,12 @@
                 $('#Oppo_ads_native').val(Oppo_ads.ads_native);
                 $('#Oppo_ads_open').val(Oppo_ads.ads_open);
                 $('#Oppo_ads_start').val(Oppo_ads.ads_start);
+                $('#Oppo_ads_roll_huawei').val(Oppo_ads.ads_roll_huawei);
+                $('#Oppo_ads_banner_huawei').val(Oppo_ads.ads_banner_huawei);
+                $('#Oppo_ads_inter_huawei').val(Oppo_ads.ads_inter_huawei);
+                $('#Oppo_ads_reward_huawei').val(Oppo_ads.ads_reward_huawei);
+                $('#Oppo_ads_native_huawei').val(Oppo_ads.ads_native_huawei);
+                $('#Oppo_ads_splash_huawei').val(Oppo_ads.ads_splash_huawei);
             }else{
                 $('.market_oppo').hide()
                 $('.a_oppo').hide()
@@ -524,6 +580,12 @@
                 $('#Oppo_ads_native').val('');
                 $('#Oppo_ads_open').val('');
                 $('#Oppo_ads_start').val('');
+                $('#Oppo_ads_roll_huawei').val('');
+                $('#Oppo_ads_banner_huawei').val('');
+                $('#Oppo_ads_inter_huawei').val('');
+                $('#Oppo_ads_reward_huawei').val('');
+                $('#Oppo_ads_native_huawei').val('');
+                $('#Oppo_ads_splash_huawei').val('');
             }
             if(data[4].Vivo_category !=null){
                 $('.market_vivo').show()
@@ -539,6 +601,12 @@
                 $('#Vivo_ads_native').val(Vivo_ads.ads_native);
                 $('#Vivo_ads_open').val(Vivo_ads.ads_open);
                 $('#Vivo_ads_start').val(Vivo_ads.ads_start);
+                $('#Vivo_ads_roll_huawei').val(Vivo_ads.ads_roll_huawei);
+                $('#Vivo_ads_banner_huawei').val(Vivo_ads.ads_banner_huawei);
+                $('#Vivo_ads_inter_huawei').val(Vivo_ads.ads_inter_huawei);
+                $('#Vivo_ads_reward_huawei').val(Vivo_ads.ads_reward_huawei);
+                $('#Vivo_ads_native_huawei').val(Vivo_ads.ads_native_huawei);
+                $('#Vivo_ads_splash_huawei').val(Vivo_ads.ads_splash_huawei);
 
             }else{
                 $('.market_vivo').hide()
@@ -550,8 +618,13 @@
                 $('#Vivo_ads_native').val('');
                 $('#Vivo_ads_open').val('');
                 $('#Vivo_ads_start').val('');
+                $('#Vivo_ads_roll_huawei').val('');
+                $('#Vivo_ads_banner_huawei').val('');
+                $('#Vivo_ads_inter_huawei').val('');
+                $('#Vivo_ads_reward_huawei').val('');
+                $('#Vivo_ads_native_huawei').val('');
+                $('#Vivo_ads_splash_huawei').val('');
             }
-
             if(data[4].Huawei_category !=null){
                 $('.market_huawei').show()
                 $('.a_huawei').show()
@@ -566,6 +639,12 @@
                 $('#Huawei_ads_native').val(Huawei_ads.ads_native);
                 $('#Huawei_ads_open').val(Huawei_ads.ads_open);
                 $('#Huawei_ads_start').val(Huawei_ads.ads_start);
+                $('#Huawei_ads_roll_huawei').val(Huawei_ads.ads_roll_huawei);
+                $('#Huawei_ads_banner_huawei').val(Huawei_ads.ads_banner_huawei);
+                $('#Huawei_ads_inter_huawei').val(Huawei_ads.ads_inter_huawei);
+                $('#Huawei_ads_reward_huawei').val(Huawei_ads.ads_reward_huawei);
+                $('#Huawei_ads_native_huawei').val(Huawei_ads.ads_native_huawei);
+                $('#Huawei_ads_splash_huawei').val(Huawei_ads.ads_splash_huawei);
 
             }else{
                 $('.market_huawei').hide()
@@ -577,8 +656,13 @@
                 $('#Huawei_ads_native').val('');
                 $('#Huawei_ads_open').val('');
                 $('#Huawei_ads_start').val('');
+                $('#Huawei_ads_roll_huawei').val('');
+                $('#Huawei_ads_banner_huawei').val('');
+                $('#Huawei_ads_inter_huawei').val('');
+                $('#Huawei_ads_reward_huawei').val('');
+                $('#Huawei_ads_native_huawei').val('');
+                $('#Huawei_ads_splash_huawei').val('');
             }
-
             if(ads !=null){
                 if(ads.ads_id !=null){
                     $('#Chplay_ads_id').show();
@@ -685,6 +769,7 @@
                 }
 
                 if(ads.ads_start !=null){
+                    $('.ads_start').show();
                     $('#Chplay_ads_start').show();
                     $('#Amazon_ads_start').show();
                     $('#Samsung_ads_start').show();
@@ -693,6 +778,8 @@
                     $('#Huawei_ads_start').show();
                     $('#Vivo_ads_start').show();
                 }else {
+                    $('.ads_start').hide();
+
                     $('#Chplay_ads_start').hide();
                     $('#Amazon_ads_start').hide();
                     $('#Samsung_ads_start').hide();
@@ -700,6 +787,114 @@
                     $('#Oppo_ads_start').hide();
                     $('#Vivo_ads_start').hide();
                     $('#Huawei_ads_start').hide();
+                }
+
+                if(ads.ads_banner_huawei !=null){
+                    $('#Chplay_ads_banner_huawei').show();
+                    $('#Amazon_ads_banner_huawei').show();
+                    $('#Samsung_ads_banner_huawei').show();
+                    $('#Xiaomi_ads_banner_huawei').show();
+                    $('#Oppo_ads_banner_huawei').show();
+                    $('#Vivo_ads_banner_huawei').show();
+                    $('#Huawei_ads_banner_huawei').show();
+                }else {
+                    $('#Chplay_ads_banner_huawei').hide();
+                    $('#Amazon_ads_banner_huawei').hide();
+                    $('#Samsung_ads_banner_huawei').hide();
+                    $('#Xiaomi_ads_banner_huawei').hide();
+                    $('#Oppo_ads_banner_huawei').hide();
+                    $('#Vivo_ads_banner_huawei').hide();
+                    $('#Huawei_ads_banner_huawei').hide();
+                }
+
+                if(ads.ads_native_huawei !=null){
+                    $('#Chplay_ads_native_huawei').show();
+                    $('#Amazon_ads_native_huawei').show();
+                    $('#Samsung_ads_native_huawei').show();
+                    $('#Xiaomi_ads_native_huawei').show();
+                    $('#Oppo_ads_native_huawei').show();
+                    $('#Vivo_ads_native_huawei').show();
+                    $('#Huawei_ads_native_huawei').show();
+                }else {
+                    $('#Chplay_ads_native_huawei').hide();
+                    $('#Amazon_ads_native_huawei').hide();
+                    $('#Samsung_ads_native_huawei').hide();
+                    $('#Xiaomi_ads_native_huawei').hide();
+                    $('#Oppo_ads_native_huawei').hide();
+                    $('#Vivo_ads_native_huawei').hide();
+                    $('#Huawei_ads_native_huawei').hide();
+                }
+
+                if(ads.ads_reward_huawei !=null){
+                    $('#Chplay_ads_reward_huawei').show();
+                    $('#Amazon_ads_reward_huawei').show();
+                    $('#Samsung_ads_reward_huawei').show();
+                    $('#Xiaomi_ads_reward_huawei').show();
+                    $('#Oppo_ads_reward_huawei').show();
+                    $('#Vivo_ads_reward_huawei').show();
+                    $('#Huawei_ads_reward_huawei').show();
+                }else {
+                    $('#Chplay_ads_reward_huawei').hide();
+                    $('#Amazon_ads_reward_huawei').hide();
+                    $('#Samsung_ads_reward_huawei').hide();
+                    $('#Xiaomi_ads_reward_huawei').hide();
+                    $('#Oppo_ads_reward_huawei').hide();
+                    $('#Vivo_ads_reward_huawei').hide();
+                    $('#Huawei_ads_reward_huawei').hide();
+                }
+
+                if(ads.ads_inter_huawei !=null){
+                    $('#Chplay_ads_inter_huawei').show();
+                    $('#Amazon_ads_inter_huawei').show();
+                    $('#Samsung_ads_inter_huawei').show();
+                    $('#Xiaomi_ads_inter_huawei').show();
+                    $('#Oppo_ads_inter_huawei').show();
+                    $('#Vivo_ads_inter_huawei').show();
+                    $('#Huawei_ads_inter_huawei').show();
+                }else {
+                    $('#Chplay_ads_inter_huawei').hide();
+                    $('#Amazon_ads_inter_huawei').hide();
+                    $('#Samsung_ads_inter_huawei').hide();
+                    $('#Xiaomi_ads_inter_huawei').hide();
+                    $('#Oppo_ads_inter_huawei').hide();
+                    $('#Vivo_ads_inter_huawei').hide();
+                    $('#Huawei_ads_inter_huawei').hide();
+                }
+
+                if(ads.ads_splash_huawei!=null){
+                    $('#Chplay_ads_splash_huawei').show();
+                    $('#Amazon_ads_splash_huawei').show();
+                    $('#Samsung_ads_splash_huawei').show();
+                    $('#Xiaomi_ads_splash_huawei').show();
+                    $('#Oppo_ads_splash_huawei').show();
+                    $('#Vivo_ads_splash_huawei').show();
+                    $('#Huawei_ads_splash_huawei').show();
+                }else {
+                    $('#Chplay_ads_splash_huawei').hide();
+                    $('#Amazon_ads_splash_huawei').hide();
+                    $('#Samsung_ads_splash_huawei').hide();
+                    $('#Xiaomi_ads_splash_huawei').hide();
+                    $('#Oppo_ads_splash_huawei').hide();
+                    $('#Vivo_ads_splash_huawei').hide();
+                    $('#Huawei_ads_splash_huawei').hide();
+                }
+
+                if(ads.ads_roll_huawei !=null){
+                    $('#Chplay_ads_roll_huawei').show();
+                    $('#Amazon_ads_roll_huawei').show();
+                    $('#Samsung_ads_roll_huawei').show();
+                    $('#Xiaomi_ads_roll_huawei').show();
+                    $('#Oppo_ads_roll_huawei').show();
+                    $('#Vivo_ads_roll_huawei').show();
+                    $('#Huawei_ads_roll_huawei').show();
+                }else {
+                    $('#Chplay_ads_roll_huawei').hide();
+                    $('#Amazon_ads_roll_huawei').hide();
+                    $('#Samsung_ads_roll_huawei').hide();
+                    $('#Xiaomi_ads_roll_huawei').hide();
+                    $('#Oppo_ads_roll_huawei').hide();
+                    $('#Vivo_ads_roll_huawei').hide();
+                    $('#Huawei_ads_roll_huawei').hide();
                 }
             }else {
                 $('#Chplay_ads_id').hide();
@@ -757,6 +952,19 @@
                 $('#Oppo_ads_start').hide();
                 $('#Vivo_ads_start').hide();
                 $('#Huawei_ads_start').hide();
+            }
+            if(ads.ads_id != null || ads.ads_banner != null || ads.ads_inter != null|| ads.ads_reward != null||ads.ads_native != null||ads.ads_open != null )
+            {
+                $('.ads_admod').show();
+            }else{
+                $('.ads_admod').hide() ;
+            }
+
+            if(ads.ads_id_huawei != null || ads.ads_banner_huawei != null || ads.ads_inter_huawei != null|| ads.ads_reward_huawei != null||ads.ads_native_huawei != null||ads.ads_open_huawei != null )
+            {
+                $('.ads_huawei').show();
+            }else{
+                $('.ads_huawei').hide() ;
             }
 
             $('#project_id').val(data[0].projectid);
@@ -1380,7 +1588,6 @@
                 _token:_token
             },
             success:function (data){
-                console.log(data)
                 var ads = jQuery.parseJSON(data.ads);
                 $('#Chplay_package').attr("placeholder",data.package);
                 $('#Amazon_package').attr("placeholder",data.package);
@@ -1550,6 +1757,8 @@
                     }
 
                     if(ads.ads_start != null){
+                        $('.ads_start').show();
+
                         $('#Chplay_ads_start').show();
                         $('#Amazon_ads_start').show();
                         $('#Samsung_ads_start').show();
@@ -1558,6 +1767,7 @@
                         $('#Vivo_ads_start').show();
                         $('#Huawei_ads_start').show();
                     }else {
+                        $('.ads_start').hide();
                         $('#Chplay_ads_start').hide();
                         $('#Amazon_ads_start').hide();
                         $('#Samsung_ads_start').hide();
@@ -1565,6 +1775,114 @@
                         $('#Oppo_ads_start').hide();
                         $('#Vivo_ads_start').hide();
                         $('#Huawei_ads_start').hide();
+                    }
+
+                    if(ads.ads_banner_huawei != null){
+                        $('#Chplay_ads_banner_huawei').show();
+                        $('#Amazon_ads_banner_huawei').show();
+                        $('#Xiaomi_ads_banner_huawei').show();
+                        $('#Samsung_ads_banner_huawei').show();
+                        $('#Oppo_ads_banner_huawei').show();
+                        $('#Vivo_ads_banner_huawei').show();
+                        $('#Huawei_ads_banner_huawei').show();
+                    }else {
+                        $('#Chplay_ads_banner_huawei').hide();
+                        $('#Amazon_ads_banner_huawei').hide();
+                        $('#Xiaomi_ads_banner_huawei').hide();
+                        $('#Samsung_ads_banner_huawei').hide();
+                        $('#Oppo_ads_banner_huawei').hide();
+                        $('#Vivo_ads_banner_huawei').hide();
+                        $('#Huawei_ads_banner_huawei').hide();
+                    }
+
+                    if(ads.ads_inter_huawei != null){
+                        $('#Chplay_ads_inter_huawei').show();
+                        $('#Amazon_ads_inter_huawei').show();
+                        $('#Xiaomi_ads_inter_huawei').show();
+                        $('#Samsung_ads_inter_huawei').show();
+                        $('#Oppo_ads_inter_huawei').show();
+                        $('#Vivo_ads_inter_huawei').show();
+                        $('#Huawei_ads_inter_huawei').show();
+                    }else {
+                        $('#Chplay_ads_inter_huawei').hide();
+                        $('#Amazon_ads_inter_huawei').hide();
+                        $('#Xiaomi_ads_inter_huawei').hide();
+                        $('#Samsung_ads_inter_huawei').hide();
+                        $('#Oppo_ads_inter_huawei').hide();
+                        $('#Vivo_ads_inter_huawei').hide();
+                        $('#Huawei_ads_inter_huawei').hide();
+                    }
+
+                    if(ads.ads_native_huawei != null){
+                        $('#Chplay_ads_native_huawei').show();
+                        $('#Amazon_ads_native_huawei').show();
+                        $('#Xiaomi_ads_native_huawei').show();
+                        $('#Samsung_ads_native_huawei').show();
+                        $('#Oppo_ads_native_huawei').show();
+                        $('#Vivo_ads_native_huawei').show();
+                        $('#Huawei_ads_native_huawei').show();
+                    }else {
+                        $('#Chplay_ads_native_huawei').hide();
+                        $('#Amazon_ads_native_huawei').hide();
+                        $('#Xiaomi_ads_native_huawei').hide();
+                        $('#Samsung_ads_native_huawei').hide();
+                        $('#Oppo_ads_native_huawei').hide();
+                        $('#Vivo_ads_native_huawei').hide();
+                        $('#Huawei_ads_native_huawei').hide();
+                    }
+
+                    if(ads.ads_reward_huawei != null){
+                        $('#Chplay_ads_reward_huawei').show();
+                        $('#Amazon_ads_reward_huawei').show();
+                        $('#Xiaomi_ads_reward_huawei').show();
+                        $('#Samsung_ads_reward_huawei').show();
+                        $('#Oppo_ads_reward_huawei').show();
+                        $('#Vivo_ads_reward_huawei').show();
+                        $('#Huawei_ads_reward_huawei').show();
+                    }else {
+                        $('#Chplay_ads_reward_huawei').hide();
+                        $('#Amazon_ads_reward_huawei').hide();
+                        $('#Xiaomi_ads_reward_huawei').hide();
+                        $('#Samsung_ads_rewardr_huawei').hide();
+                        $('#Oppo_ads_reward_huawei').hide();
+                        $('#Vivo_ads_reward_huawei').hide();
+                        $('#Huawei_ads_reward_huawei').hide();
+                    }
+
+                    if(ads.ads_splash_huawei != null){
+                        $('#Chplay_ads_splash_huawei').show();
+                        $('#Amazon_ads_splash_huawei').show();
+                        $('#Xiaomi_ads_splash_huawei').show();
+                        $('#Samsung_ads_splash_huawei').show();
+                        $('#Oppo_ads_splash_huawei').show();
+                        $('#Vivo_ads_splash_huawei').show();
+                        $('#Huawei_ads_splash_huawei').show();
+                    }else {
+                        $('#Chplay_ads_splash_huawei').hide();
+                        $('#Amazon_ads_splash_huawei').hide();
+                        $('#Xiaomi_ads_splash_huawei').hide();
+                        $('#Samsung_ads_splash_huawei').hide();
+                        $('#Oppo_ads_splash_huawei').hide();
+                        $('#Vivo_ads_splash_huawei').hide();
+                        $('#Huawei_ads_splash_huawei').hide();
+                    }
+
+                    if(ads.ads_roll_huawei != null){
+                        $('#Chplay_ads_roll_huawei').show();
+                        $('#Amazon_ads_roll_huawei').show();
+                        $('#Xiaomi_ads_roll_huawei').show();
+                        $('#Samsung_ads_roll_huawei').show();
+                        $('#Oppo_ads_roll_huawei').show();
+                        $('#Vivo_ads_roll_huawei').show();
+                        $('#Huawei_ads_roll_huawei').show();
+                    }else {
+                        $('#Chplay_ads_roll_huawei').hide();
+                        $('#Amazon_ads_roll_huawei').hide();
+                        $('#Xiaomi_ads_roll_huawei').hide();
+                        $('#Samsung_ads_roll_huawei').hide();
+                        $('#Oppo_ads_roll_huawei').hide();
+                        $('#Vivo_ads_roll_huawei').hide();
+                        $('#Huawei_ads_roll_huawei').hide();
                     }
                 }else {
                     $('#Chplay_ads_id').hide();
@@ -1574,6 +1892,12 @@
                     $('#Chplay_ads_native').hide();
                     $('#Chplay_ads_open').hide();
                     $('#Chplay_ads_start').hide();
+                    $('#Chplay_ads_roll_huawei').hide();
+                    $('#Chplay_ads_banner_huawei').hide();
+                    $('#Chplay_ads_inter_huawei').hide();
+                    $('#Chplay_ads_reward_huawei').hide();
+                    $('#Chplay_ads_native_huawei').hide();
+                    $('#Chplay_ads_splash_huawei').hide();
 
                     $('#Amazon_ads_id').hide();
                     $('#Amazon_ads_banner').hide();
@@ -1582,6 +1906,12 @@
                     $('#Amazon_ads_native').hide();
                     $('#Amazon_ads_open').hide();
                     $('#Amazon_ads_start').hide();
+                    $('#Amazon_ads_roll_huawei').hide();
+                    $('#Amazon_ads_banner_huawei').hide();
+                    $('#Amazon_ads_inter_huawei').hide();
+                    $('#Amazon_ads_reward_huawei').hide();
+                    $('#Amazon_ads_native_huawei').hide();
+                    $('#Amazon_ads_splash_huawei').hide();
 
                     $('#Xiaomi_ads_id').hide();
                     $('#Xiaomi_ads_banner').hide();
@@ -1590,6 +1920,12 @@
                     $('#Xiaomi_ads_native').hide();
                     $('#Xiaomi_ads_open').hide();
                     $('#Xiaomi_ads_start').hide();
+                    $('#Xiaomi_ads_roll_huawei').hide();
+                    $('#Xiaomi_ads_banner_huawei').hide();
+                    $('#Xiaomi_ads_inter_huawei').hide();
+                    $('#Xiaomi_ads_reward_huawei').hide();
+                    $('#Xiaomi_ads_native_huawei').hide();
+                    $('#Xiaomi_ads_splash_huawei').hide();
 
                     $('#Samsung_ads_id').hide();
                     $('#Samsung_ads_banner').hide();
@@ -1598,6 +1934,12 @@
                     $('#Samsung_ads_native').hide();
                     $('#Samsung_ads_open').hide();
                     $('#Samsung_ads_start').hide();
+                    $('#Samsung_ads_roll_huawei').hide();
+                    $('#Samsung_ads_banner_huawei').hide();
+                    $('#Samsung_ads_inter_huawei').hide();
+                    $('#Samsung_ads_reward_huawei').hide();
+                    $('#Samsung_ads_native_huawei').hide();
+                    $('#Samsung_ads_splash_huawei').hide();
 
                     $('#Oppo_ads_id').hide();
                     $('#Oppo_ads_banner').hide();
@@ -1606,6 +1948,12 @@
                     $('#Oppo_ads_native').hide();
                     $('#Oppo_ads_open').hide();
                     $('#Oppo_ads_start').hide();
+                    $('#Oppo_ads_roll_huawei').hide();
+                    $('#Oppo_ads_banner_huawei').hide();
+                    $('#Oppo_ads_inter_huawei').hide();
+                    $('#Oppo_ads_reward_huawei').hide();
+                    $('#Oppo_ads_native_huawei').hide();
+                    $('#Oppo_ads_splash_huawei').hide();
 
                     $('#Vivo_ads_id').hide();
                     $('#Vivo_ads_banner').hide();
@@ -1614,6 +1962,12 @@
                     $('#Vivo_ads_native').hide();
                     $('#Vivo_ads_open').hide();
                     $('#Vivo_ads_start').hide();
+                    $('#Vivo_ads_roll_huawei').hide();
+                    $('#Vivo_ads_banner_huawei').hide();
+                    $('#Vivo_ads_inter_huawei').hide();
+                    $('#Vivo_ads_reward_huawei').hide();
+                    $('#Vivo_ads_native_huawei').hide();
+                    $('#Vivo_ads_splash_huawei').hide();
 
                     $('#Huawei_ads_id').hide();
                     $('#Huawei_ads_banner').hide();
@@ -1622,6 +1976,25 @@
                     $('#Huawei_ads_native').hide();
                     $('#Huawei_ads_open').hide();
                     $('#Huawei_ads_start').hide();
+                    $('#Huawei_ads_roll_huawei').hide();
+                    $('#Huawei_ads_banner_huawei').hide();
+                    $('#Huawei_ads_inter_huawei').hide();
+                    $('#Huawei_ads_reward_huawei').hide();
+                    $('#Huawei_ads_native_huawei').hide();
+                    $('#Huawei_ads_splash_huawei').hide();
+                }
+
+                if(ads.ads_id != null || ads.ads_banner != null || ads.ads_inter != null|| ads.ads_reward != null||ads.ads_native != null||ads.ads_open != null )
+                {
+                    $('.ads_admod').show();
+                }else{
+                    $('.ads_admod').hide() ;
+                }
+                if(ads.ads_id_huawei != null || ads.ads_banner_huawei != null || ads.ads_inter_huawei != null|| ads.ads_reward_huawei != null||ads.ads_native_huawei != null||ads.ads_open_huawei != null )
+                {
+                    $('.ads_huawei').show();
+                }else{
+                    $('.ads_huawei').hide() ;
                 }
             }
         });

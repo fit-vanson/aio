@@ -2609,6 +2609,7 @@ class ProjectController extends Controller
             return response()->json(['errors'=> $error->errors()->all()]);
         }
 
+
         $Chplay_ads = [
             'ads_id' => $request->Chplay_ads_id,
             'ads_banner' => $request->Chplay_ads_banner,
@@ -2616,7 +2617,13 @@ class ProjectController extends Controller
             'ads_reward' => $request->Chplay_ads_reward,
             'ads_native' => $request->Chplay_ads_native,
             'ads_open' => $request->Chplay_ads_open,
-            'ads_start' => $request->Chplay_ads_start
+            'ads_start' => $request->Chplay_ads_start,
+            'ads_banner_huawei' => $request->Chplay_ads_banner_huawei,
+            'ads_inter_huawei' => $request->Chplay_ads_inter_huawei,
+            'ads_reward_huawei' => $request->Chplay_ads_reward_huawei,
+            'ads_native_huawei' => $request->Chplay_ads_native_huawei,
+            'ads_splash_huawei' => $request->Chplay_ads_splash_huawei,
+            'ads_roll_huawei' => $request->Chplay_ads_roll_huawei,
         ];
         $Chplay_ads =  json_encode($Chplay_ads);
 
@@ -2628,6 +2635,12 @@ class ProjectController extends Controller
             'ads_native' => $request->Amazon_ads_native,
             'ads_open' => $request->Amazon_ads_open,
             'ads_start' => $request->Amazon_ads_start,
+            'ads_banner_huawei' => $request->Amazon_ads_banner_huawei,
+            'ads_inter_huawei' => $request->Amazon_ads_inter_huawei,
+            'ads_reward_huawei' => $request->Amazon_ads_reward_huawei,
+            'ads_native_huawei' => $request->Amazon_ads_native_huawei,
+            'ads_splash_huawei' => $request->Amazon_ads_splash_huawei,
+            'ads_roll_huawei' => $request->Amazon_ads_roll_huawei,
         ];
         $Amazon_ads =  json_encode($Amazon_ads);
 
@@ -2639,6 +2652,12 @@ class ProjectController extends Controller
             'ads_native' => $request->Samsung_ads_native,
             'ads_open' => $request->Samsung_ads_open,
             'ads_start' => $request->Samsung_ads_start,
+            'ads_banner_huawei' => $request->Samsung_ads_banner_huawei,
+            'ads_inter_huawei' => $request->Samsung_ads_inter_huawei,
+            'ads_reward_huawei' => $request->Samsung_ads_reward_huawei,
+            'ads_native_huawei' => $request->Samsung_ads_native_huawei,
+            'ads_splash_huawei' => $request->Samsung_ads_splash_huawei,
+            'ads_roll_huawei' => $request->Samsung_ads_roll_huawei,
         ];
         $Samsung_ads =  json_encode($Samsung_ads);
 
@@ -2649,7 +2668,13 @@ class ProjectController extends Controller
             'ads_reward' => $request->Xiaomi_ads_reward,
             'ads_native' => $request->Xiaomi_ads_native,
             'ads_open' => $request->Xiaomi_ads_open,
-            'ads_start' => $request->Xiaomi_ads_start
+            'ads_start' => $request->Xiaomi_ads_start,
+            'ads_banner_huawei' => $request->Xiaomi_ads_banner_huawei,
+            'ads_inter_huawei' => $request->Xiaomi_ads_inter_huawei,
+            'ads_reward_huawei' => $request->Xiaomi_ads_reward_huawei,
+            'ads_native_huawei' => $request->Xiaomi_ads_native_huawei,
+            'ads_splash_huawei' => $request->Xiaomi_ads_splash_huawei,
+            'ads_roll_huawei' => $request->Xiaomi_ads_roll_huawei,
         ];
         $Xiaomi_ads =  json_encode($Xiaomi_ads);
 
@@ -2661,6 +2686,12 @@ class ProjectController extends Controller
             'ads_native' => $request->Oppo_ads_native,
             'ads_open' => $request->Oppo_ads_open,
             'ads_start' => $request->Oppo_ads_start,
+            'ads_banner_huawei' => $request->Oppo_ads_banner_huawei,
+            'ads_inter_huawei' => $request->Oppo_ads_inter_huawei,
+            'ads_reward_huawei' => $request->Oppo_ads_reward_huawei,
+            'ads_native_huawei' => $request->Oppo_ads_native_huawei,
+            'ads_splash_huawei' => $request->Oppo_ads_splash_huawei,
+            'ads_roll_huawei' => $request->Oppo_ads_roll_huawei,
         ];
         $Oppo_ads =  json_encode($Oppo_ads);
 
@@ -2671,7 +2702,13 @@ class ProjectController extends Controller
             'ads_reward' => $request->Vivo_ads_reward,
             'ads_native' => $request->Vivo_ads_native,
             'ads_open' => $request->Vivo_ads_open,
-            'ads_start' => $request->Vivo_ads_start
+            'ads_start' => $request->Vivo_ads_start,
+            'ads_banner_huawei' => $request->Vivo_ads_banner_huawei,
+            'ads_inter_huawei' => $request->Vivo_ads_inter_huawei,
+            'ads_reward_huawei' => $request->Vivo_ads_reward_huawei,
+            'ads_native_huawei' => $request->Vivo_ads_native_huawei,
+            'ads_splash_huawei' => $request->Vivo_ads_splash_huawei,
+            'ads_roll_huawei' => $request->Vivo_ads_roll_huawei,
         ];
         $Vivo_ads =  json_encode($Vivo_ads);
 
@@ -2682,7 +2719,13 @@ class ProjectController extends Controller
             'ads_reward' => $request->Huawei_ads_reward,
             'ads_native' => $request->Huawei_ads_native,
             'ads_open' => $request->Huawei_ads_open,
-            'ads_start' => $request->Huawei_ads_start
+            'ads_start' => $request->Huawei_ads_start,
+            'ads_banner_huawei' => $request->Huawei_ads_banner_huawei,
+            'ads_inter_huawei' => $request->Huawei_ads_inter_huawei,
+            'ads_reward_huawei' => $request->Huawei_ads_reward_huawei,
+            'ads_native_huawei' => $request->Huawei_ads_native_huawei,
+            'ads_splash_huawei' => $request->Huawei_ads_splash_huawei,
+            'ads_roll_huawei' => $request->Huawei_ads_roll_huawei,
         ];
         $Huawei_ads =  json_encode($Huawei_ads);
 
@@ -2908,6 +2951,7 @@ class ProjectController extends Controller
     public function update(Request $request)
     {
 
+
         $id = $request->project_id;
         $rules = [
             'projectname' =>'unique:ngocphandang_project,projectname,'.$id.',projectid',
@@ -2945,6 +2989,12 @@ class ProjectController extends Controller
             'ads_native' => $request->Chplay_ads_native,
             'ads_open' => $request->Chplay_ads_open,
             'ads_start' => $request->Chplay_ads_start,
+            'ads_banner_huawei' => $request->Chplay_ads_banner_huawei,
+            'ads_inter_huawei' => $request->Chplay_ads_inter_huawei,
+            'ads_reward_huawei' => $request->Chplay_ads_reward_huawei,
+            'ads_native_huawei' => $request->Chplay_ads_native_huawei,
+            'ads_splash_huawei' => $request->Chplay_ads_splash_huawei,
+            'ads_roll_huawei' => $request->Chplay_ads_roll_huawei,
         ];
         $Chplay_ads =  json_encode($Chplay_ads);
 
@@ -2956,6 +3006,12 @@ class ProjectController extends Controller
             'ads_native' => $request->Amazon_ads_native,
             'ads_open' => $request->Amazon_ads_open,
             'ads_start' => $request->Amazon_ads_start,
+            'ads_banner_huawei' => $request->Amazon_ads_banner_huawei,
+            'ads_inter_huawei' => $request->Amazon_ads_inter_huawei,
+            'ads_reward_huawei' => $request->Amazon_ads_reward_huawei,
+            'ads_native_huawei' => $request->Amazon_ads_native_huawei,
+            'ads_splash_huawei' => $request->Amazon_ads_splash_huawei,
+            'ads_roll_huawei' => $request->Amazon_ads_roll_huawei,
         ];
         $Amazon_ads =  json_encode($Amazon_ads);
 
@@ -2967,6 +3023,12 @@ class ProjectController extends Controller
             'ads_native' => $request->Samsung_ads_native,
             'ads_open' => $request->Samsung_ads_open,
             'ads_start' => $request->Samsung_ads_start,
+            'ads_banner_huawei' => $request->Samsung_ads_banner_huawei,
+            'ads_inter_huawei' => $request->Samsung_ads_inter_huawei,
+            'ads_reward_huawei' => $request->Samsung_ads_reward_huawei,
+            'ads_native_huawei' => $request->Samsung_ads_native_huawei,
+            'ads_splash_huawei' => $request->Samsung_ads_splash_huawei,
+            'ads_roll_huawei' => $request->Samsung_ads_roll_huawei,
         ];
         $Samsung_ads =  json_encode($Samsung_ads);
 
@@ -2978,6 +3040,12 @@ class ProjectController extends Controller
             'ads_native' => $request->Xiaomi_ads_native,
             'ads_open' => $request->Xiaomi_ads_open,
             'ads_start' => $request->Xiaomi_ads_start,
+            'ads_banner_huawei' => $request->Xiaomi_ads_banner_huawei,
+            'ads_inter_huawei' => $request->Xiaomi_ads_inter_huawei,
+            'ads_reward_huawei' => $request->Xiaomi_ads_reward_huawei,
+            'ads_native_huawei' => $request->Xiaomi_ads_native_huawei,
+            'ads_splash_huawei' => $request->Xiaomi_ads_splash_huawei,
+            'ads_roll_huawei' => $request->Xiaomi_ads_roll_huawei,
         ];
         $Xiaomi_ads =  json_encode($Xiaomi_ads);
 
@@ -2989,6 +3057,12 @@ class ProjectController extends Controller
             'ads_native' => $request->Oppo_ads_native,
             'ads_open' => $request->Oppo_ads_open,
             'ads_start' => $request->Oppo_ads_start,
+            'ads_banner_huawei' => $request->Oppo_ads_banner_huawei,
+            'ads_inter_huawei' => $request->Oppo_ads_inter_huawei,
+            'ads_reward_huawei' => $request->Oppo_ads_reward_huawei,
+            'ads_native_huawei' => $request->Oppo_ads_native_huawei,
+            'ads_splash_huawei' => $request->Oppo_ads_splash_huawei,
+            'ads_roll_huawei' => $request->Oppo_ads_roll_huawei,
         ];
         $Oppo_ads =  json_encode($Oppo_ads);
 
@@ -3000,6 +3074,12 @@ class ProjectController extends Controller
             'ads_native' => $request->Vivo_ads_native,
             'ads_open' => $request->Vivo_ads_open,
             'ads_start' => $request->Vivo_ads_start,
+            'ads_banner_huawei' => $request->Vivo_ads_banner_huawei,
+            'ads_inter_huawei' => $request->Vivo_ads_inter_huawei,
+            'ads_reward_huawei' => $request->Vivo_ads_reward_huawei,
+            'ads_native_huawei' => $request->Vivo_ads_native_huawei,
+            'ads_splash_huawei' => $request->Vivo_ads_splash_huawei,
+            'ads_roll_huawei' => $request->Vivo_ads_roll_huawei,
         ];
         $Vivo_ads =  json_encode($Vivo_ads);
 
@@ -3011,6 +3091,12 @@ class ProjectController extends Controller
             'ads_native' => $request->Huawei_ads_native,
             'ads_open' => $request->Huawei_ads_open,
             'ads_start' => $request->Huawei_ads_start,
+            'ads_banner_huawei' => $request->Huawei_ads_banner_huawei,
+            'ads_inter_huawei' => $request->Huawei_ads_inter_huawei,
+            'ads_reward_huawei' => $request->Huawei_ads_reward_huawei,
+            'ads_native_huawei' => $request->Huawei_ads_native_huawei,
+            'ads_splash_huawei' => $request->Huawei_ads_splash_huawei,
+            'ads_roll_huawei' => $request->Huawei_ads_roll_huawei,
         ];
         $Huawei_ads =  json_encode($Huawei_ads);
 

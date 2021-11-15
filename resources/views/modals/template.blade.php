@@ -67,40 +67,91 @@
                                 <input type="url" id="link_store_vietmmo" name="link_store_vietmmo" class="form-control" >
                             </div>
                         </div>
-                        <div data-repeater-item="" class="row">
 
-                            <div class="form-group col-lg-2">
-                                <label for="name">Ads ID</label>
-                                <input type="checkbox" class="control-input" name="Check_ads_id" id="Check_ads_id" value="1">
-                            </div>
-                            <div class="form-group col-lg-2">
-                                <label for="name">Ads banner</label>
-                                <input type="checkbox" class="control-input" name="Check_ads_banner" id="Check_ads_banner" value="1">
+                        <div class="divider divider-start">
+                            <div class="divider-text"><b>Admod</b></div>
+                        </div>
+                        <div>
+                            <div class="col-lg-11 text-right">
+                                <div data-repeater-item="" class="row">
+                                    <div class="form-group col-lg-2">
+                                        <label for="name">Ads ID</label>
+                                        <input type="checkbox" class="control-input" name="Check_ads_id" id="Check_ads_id" value="1">
+                                    </div>
+                                    <div class="form-group col-lg-2">
+                                        <label for="name">Ads banner</label>
+                                        <input type="checkbox" class="control-input" name="Check_ads_banner" id="Check_ads_banner" value="1">
 
-                            </div>
-                            <div class="form-group col-lg-2 ">
-                                <label for="name">Ads inter</label>
-                                <input type="checkbox" class="control-input" name="Check_ads_inter" id="Check_ads_inter" value="1">
+                                    </div>
+                                    <div class="form-group col-lg-2 ">
+                                        <label for="name">Ads inter</label>
+                                        <input type="checkbox" class="control-input" name="Check_ads_inter" id="Check_ads_inter" value="1">
 
-                            </div>
-                            <div class="form-group col-lg-2">
-                                <label for="name">Ads reward</label>
-                                <input type="checkbox" class="control-input" name="Check_ads_reward" id="Check_ads_reward" value="1">
-                            </div>
-                            <div class="form-group col-lg-2">
-                                <label for="name">Ads native</label>
-                                <input type="checkbox" class="control-input" name="Check_ads_native" id="Check_ads_native" value="1">
-                            </div>
-                            <div class="form-group col-lg-2 ">
-                                <label for="name">Ads open</label>
-                                <input type="checkbox" class="control-input" name="Check_ads_open" id="Check_ads_open" value="1">
-                            </div>
-
-                            <div class="form-group col-lg-2 ">
-                                <label for="name" style="color:#00d986">Ads Start</label>
-                                <input type="checkbox" class="control-input" name="Check_ads_start" id="Check_ads_start" value="1">
+                                    </div>
+                                    <div class="form-group col-lg-2">
+                                        <label for="name">Ads reward</label>
+                                        <input type="checkbox" class="control-input" name="Check_ads_reward" id="Check_ads_reward" value="1">
+                                    </div>
+                                    <div class="form-group col-lg-2">
+                                        <label for="name">Ads native</label>
+                                        <input type="checkbox" class="control-input" name="Check_ads_native" id="Check_ads_native" value="1">
+                                    </div>
+                                    <div class="form-group col-lg-2 ">
+                                        <label for="name">Ads open</label>
+                                        <input type="checkbox" class="control-input" name="Check_ads_open" id="Check_ads_open" value="1">
+                                    </div>
+                                </div>
                             </div>
                         </div>
+                        <div class="divider divider-start">
+                            <div class="divider-text"><b>Start.io</b></div>
+                        </div>
+                        <div>
+                            <div class="col-lg-11 text-right">
+                                <div data-repeater-item="" class="row">
+                                    <div class="form-group col-lg-2 ">
+                                        <label for="name" style="color:#00d986">Ads Start</label>
+                                        <input type="checkbox" class="control-input" name="Check_ads_start" id="Check_ads_start" value="1">
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="divider divider-start">
+                            <div class="divider-text"><b>Huawei</b></div>
+                        </div>
+                        <div>
+                            <div class="col-lg-11 text-right">
+                                <div data-repeater-item="" class="row">
+                                    <div class="form-group col-lg-2">
+                                        <label for="name">Ads banner</label>
+                                        <input type="checkbox" class="control-input" name="Check_ads_banner_huawei" id="Check_ads_banner_huawei" value="1">
+                                    </div>
+                                    <div class="form-group col-lg-2 ">
+                                        <label for="name">Ads inter</label>
+                                        <input type="checkbox" class="control-input" name="Check_ads_inter_huawei" id="Check_ads_inter_huawei" value="1">
+
+                                    </div>
+                                    <div class="form-group col-lg-2">
+                                        <label for="name">Ads reward</label>
+                                        <input type="checkbox" class="control-input" name="Check_ads_reward_huawei" id="Check_ads_reward_huawei" value="1">
+                                    </div>
+                                    <div class="form-group col-lg-2">
+                                        <label for="name">Ads native</label>
+                                        <input type="checkbox" class="control-input" name="Check_ads_native_huawei" id="Check_ads_native_huawei" value="1">
+                                    </div>
+                                    <div class="form-group col-lg-2 ">
+                                        <label for="name">Ads Splash</label>
+                                        <input type="checkbox" class="control-input" name="Check_ads_splash_huawei" id="Check_ads_splash_huawei" value="1">
+                                    </div>
+                                    <div class="form-group col-lg-2 ">
+                                        <label for="name">Ads Roll</label>
+                                        <input type="checkbox" class="control-input" name="Check_ads_roll_huawei" id="Check_ads_roll_huawei" value="1">
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
 
                         <div data-repeater-item="" class="row">
                             <div class="form-group col-lg-6 input_package">

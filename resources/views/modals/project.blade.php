@@ -19,7 +19,6 @@
                         <div class="col-lg-12">
                             <div class="card">
                                 <div class="card-body">
-
                                     <!-- Nav tabs -->
                                     <ul class="nav nav-tabs nav-tabs-custom" role="tablist">
                                         <li class="nav-item">
@@ -64,7 +63,6 @@
                                             </a>
                                         </li>
                                     </ul>
-
                                     <!-- Tab panes -->
                                     <div class="tab-content">
                                         <div class="tab-pane active p-3" id="home1" role="tabpanel">
@@ -139,13 +137,8 @@
                                                     <label for="name">SDK </label>
                                                     <input type="text" id="buildinfo_sdk" name="buildinfo_sdk" class="form-control" >
                                                 </div>
-
-
-
                                             </div>
-
                                             <div data-repeater-item="" class="row input_buildinfo">
-
                                                 <div class="form-group col-lg-4 ">
                                                     <label for="name">Link Policy</label>
                                                     <input type="text" id="buildinfo_link_policy_x" name="buildinfo_link_policy_x" class="form-control" >
@@ -181,295 +174,681 @@
                                                 <div class="progress-bar"  role="progressbar" style="background-color: #0b0b0b;width: 100%;"></div>
                                             </div>
                                             <div data-repeater-item="" class="row market_chplay" id="market_chplay">
-                                                <div class="form-group col-lg-3 input_package">
+                                                <div class="form-group col-lg-12 input_package">
                                                     <label for="name">Tên Package CH-Play </label>
                                                     <input type="text" id="Chplay_package"  placeholder=""  name="Chplay_package" class="form-control">
                                                 </div>
-                                                <div class="form-group col-lg-9">
-                                                    <label for="name">Ads CHPlay</label>
-                                                    <span id="chplay_dev_ga"></span>
-                                                    <div class="row" >
-                                                        <div class="col-sm">
-                                                            <input type="text" id="Chplay_ads_id" name="Chplay_ads_id" placeholder="id"  class="form-control" style="display: none" >
-                                                        </div>
+                                                <div class="form-group col-lg-1"></div>
+                                                <div class="form-group col-lg-11">
+                                                    <div id="accordion">
+                                                        <div class="card mb-1">
+                                                            <div class="card-header p-3" id="heading_chplay">
+                                                                <h6 class="m-0 font-14">
+                                                                    <a href="#collapse_chplay" class="text-dark" data-toggle="collapse"
+                                                                       aria-controls="collapse_chplay">
+                                                                        Ads
+                                                                    </a>
+                                                                </h6>
+                                                            </div>
+                                                            <div id="collapse_chplay" class="collapse" aria-labelledby="heading_chplay"
+                                                                 data-parent="#accordion">
+                                                                <div class="card-body">
+                                                                    <div class="ads_admod">
+                                                                        <div class="divider divider-start divider_admod">
+                                                                            <div class="divider-text"><b>Admod</b> <span id="chplay_dev_ga"></span></div>
+                                                                        </div>
+                                                                        <div class="row" >
+                                                                            <div class="form-group col-sm-4">
+                                                                                <input type="text" id="Chplay_ads_id" name="Chplay_ads_id" placeholder="id"  class="form-control" style="display: none" >
+                                                                            </div>
 
-                                                        <div class="col-sm">
-                                                            <input type="text" id="Chplay_ads_banner" name="Chplay_ads_banner" placeholder="banner"   class="form-control" style="display: none" >
-                                                        </div>
+                                                                            <div class="form-group col-sm-4">
+                                                                                <input type="text" id="Chplay_ads_banner" name="Chplay_ads_banner" placeholder="banner"   class="form-control" style="display: none" >
+                                                                            </div>
 
-                                                        <div class="col-sm">
-                                                            <input type="text" id="Chplay_ads_inter" name="Chplay_ads_inter" placeholder="inter"   class="form-control" style="display: none" >
-                                                        </div>
+                                                                            <div class="form-group col-sm-4">
+                                                                                <input type="text" id="Chplay_ads_inter" name="Chplay_ads_inter" placeholder="inter"   class="form-control" style="display: none" >
+                                                                            </div>
 
-                                                        <div class="col-sm">
-                                                            <input type="text" id="Chplay_ads_reward" name="Chplay_ads_reward" placeholder="reward"   class="form-control" style="display: none" >
-                                                        </div>
+                                                                            <div class="form-group col-sm-4">
+                                                                                <input type="text" id="Chplay_ads_reward" name="Chplay_ads_reward" placeholder="reward"   class="form-control" style="display: none" >
+                                                                            </div>
 
-                                                        <div class="col-sm">
-                                                            <input type="text" id="Chplay_ads_native" name="Chplay_ads_native" placeholder="native"   class="form-control"  style="display: none">
-                                                        </div>
+                                                                            <div class="form-group col-sm-4">
+                                                                                <input type="text" id="Chplay_ads_native" name="Chplay_ads_native" placeholder="native"   class="form-control"  style="display: none">
+                                                                            </div>
 
-                                                        <div class="col-sm">
-                                                            <input type="text" id="Chplay_ads_open" name="Chplay_ads_open" placeholder="open"   class="form-control" style="display: none" >
-                                                        </div>
+                                                                            <div class="form-group col-sm-4">
+                                                                                <input type="text" id="Chplay_ads_open" name="Chplay_ads_open" placeholder="open"   class="form-control" style="display: none" >
+                                                                            </div>
+                                                                        </div>
+                                                                    </div>
+                                                                    <div class="ads_start">
+                                                                        <div class="divider divider-start divider_start">
+                                                                            <div class="divider-text"><b>Start.io</b></div>
+                                                                        </div>
+                                                                        <div class="row" >
+                                                                            <div class="col-sm">
+                                                                                <input type="text" id="Chplay_ads_start" name="Chplay_ads_start" placeholder="start"  class="form-control" >
+                                                                            </div>
+                                                                        </div>
+                                                                    </div>
+                                                                    <div class="ads_huawei">
+                                                                        <div class="divider divider-start divider_huawei">
+                                                                            <div class="divider-text"><b>Huawei</b></div>
+                                                                        </div>
+                                                                        <div class="row" >
+                                                                            <div class="form-group col-sm-4">
+                                                                                <input type="text" id="Chplay_ads_banner_huawei" name="Chplay_ads_banner_huawei" placeholder="banner"   class="form-control" style="display: none" >
+                                                                            </div>
 
-                                                        <div class="col-sm">
-                                                            <input type="text" id="Chplay_ads_start" name="Chplay_ads_start" placeholder="start"  class="form-control" >
+                                                                            <div class="form-group col-sm-4">
+                                                                                <input type="text" id="Chplay_ads_inter_huawei" name="Chplay_ads_inter_huawei" placeholder="inter"   class="form-control" style="display: none" >
+                                                                            </div>
+
+                                                                            <div class="form-group col-sm-4">
+                                                                                <input type="text" id="Chplay_ads_reward_huawei" name="Chplay_ads_reward_huawei" placeholder="reward"   class="form-control" style="display: none" >
+                                                                            </div>
+
+                                                                            <div class="form-group col-sm-4">
+                                                                                <input type="text" id="Chplay_ads_native_huawei" name="Chplay_ads_native_huawei" placeholder="native"   class="form-control"  style="display: none">
+                                                                            </div>
+
+                                                                            <div class="form-group col-sm-4">
+                                                                                <input type="text" id="Chplay_ads_splash_huawei" name="Chplay_ads_splash_huawei" placeholder="splash"   class="form-control" style="display: none" >
+                                                                            </div>
+                                                                            <div class="form-group col-sm-4">
+                                                                                <input type="text" id="Chplay_ads_roll_huawei" name="Chplay_ads_roll_huawei" placeholder="roll"   class="form-control" style="display: none" >
+                                                                            </div>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
                                                         </div>
                                                     </div>
                                                 </div>
-
                                             </div >
 
                                             <div data-repeater-item="" class="row market_amazon" id="market_amazon">
-                                                <div class="form-group col-lg-3 input_package">
+                                                <div class="form-group col-lg-12 input_package">
                                                     <label for="name">Tên Package Amazon</label>
                                                     <input type="text" id="Amazon_package" name="Amazon_package" class="form-control">
                                                 </div>
+                                                <div class="form-group col-lg-1"></div>
+                                                <div class="form-group col-lg-11">
+                                                    <div id="accordion">
+                                                        <div class="card mb-1">
+                                                            <div class="card-header p-3" id="heading_amazon">
+                                                                <h6 class="m-0 font-14">
+                                                                    <a href="#collapse_amazon" class="text-dark" data-toggle="collapse"
+                                                                       aria-controls="collapse_amazon">
+                                                                        Ads
+                                                                    </a>
+                                                                </h6>
+                                                            </div>
+                                                            <div id="collapse_amazon" class="collapse" aria-labelledby="heading_amazon"
+                                                                 data-parent="#accordion">
+                                                                <div class="card-body">
+                                                                    <div class="ads_admod">
+                                                                        <div class="divider divider-start divider_admod">
+                                                                            <div class="divider-text"><b>Admod</b> <span id="amazon_dev_ga"></span></div>
+                                                                        </div>
+                                                                        <div class="row" >
+                                                                            <div class="form-group col-sm-4">
+                                                                                <input type="text" id="Amazon_ads_id" name="Amazon_ads_id" placeholder="id" class="form-control" >
+                                                                            </div>
 
-                                                <div class="form-group col-lg-9">
-                                                    <label for="name">Ads Amazon</label>
-                                                    <span id="amazon_dev_ga"></span>
-                                                    <div class="row" >
-                                                        <div class="col-sm">
-                                                            <input type="text" id="Amazon_ads_id" name="Amazon_ads_id" placeholder="id" class="form-control" >
-                                                        </div>
+                                                                            <div class="form-group col-sm-4">
+                                                                                <input type="text" id="Amazon_ads_banner" name="Amazon_ads_banner" placeholder="banner"  class="form-control" >
+                                                                            </div>
 
-                                                        <div class="col-sm">
-                                                            <input type="text" id="Amazon_ads_banner" name="Amazon_ads_banner" placeholder="banner"  class="form-control" >
-                                                        </div>
+                                                                            <div class="form-group col-sm-4">
+                                                                                <input type="text" id="Amazon_ads_inter" name="Amazon_ads_inter" placeholder="inter"  class="form-control" >
+                                                                            </div>
 
-                                                        <div class="col-sm">
-                                                            <input type="text" id="Amazon_ads_inter" name="Amazon_ads_inter" placeholder="inter"  class="form-control" >
-                                                        </div>
+                                                                            <div class="form-group col-sm-4">
+                                                                                <input type="text" id="Amazon_ads_reward" name="Amazon_ads_reward" placeholder="reward"  class="form-control" >
+                                                                            </div>
 
-                                                        <div class="col-sm">
-                                                            <input type="text" id="Amazon_ads_reward" name="Amazon_ads_reward" placeholder="reward"  class="form-control" >
-                                                        </div>
+                                                                            <div class="form-group col-sm-4">
+                                                                                <input type="text" id="Amazon_ads_native" name="Amazon_ads_native" placeholder="native"  class="form-control" >
+                                                                            </div>
 
-                                                        <div class="col-sm">
-                                                            <input type="text" id="Amazon_ads_native" name="Amazon_ads_native" placeholder="native"  class="form-control" >
-                                                        </div>
+                                                                            <div class="form-group col-sm-4">
+                                                                                <input type="text" id="Amazon_ads_open" name="Amazon_ads_open" placeholder="open"  class="form-control" >
+                                                                            </div>
+                                                                        </div>
+                                                                    </div>
+                                                                    <div class="ads_start">
+                                                                        <div class="divider divider-start divider_start">
+                                                                            <div class="divider-text"><b>Start.io</b></div>
+                                                                        </div>
+                                                                        <div class="row" >
+                                                                            <div class="col-sm">
+                                                                                <input type="text" id="Amazon_ads_start" name="Amazon_ads_start" placeholder="start"  class="form-control" >
+                                                                            </div>
+                                                                        </div>
+                                                                    </div>
+                                                                    <div class="ads_huawei">
+                                                                        <div class="divider divider-start divider_huawei">
+                                                                            <div class="divider-text"><b>Huawei</b></div>
+                                                                        </div>
+                                                                        <div class="row" >
+                                                                            <div class="form-group col-sm-4">
+                                                                                <input type="text" id="Amazon_ads_banner_huawei" name="Amazon_ads_banner_huawei" placeholder="banner"   class="form-control" style="display: none" >
+                                                                            </div>
 
-                                                        <div class="col-sm">
-                                                            <input type="text" id="Amazon_ads_open" name="Amazon_ads_open" placeholder="open"  class="form-control" >
-                                                        </div>
+                                                                            <div class="form-group col-sm-4">
+                                                                                <input type="text" id="Amazon_ads_inter_huawei" name="Amazon_ads_inter_huawei" placeholder="inter"   class="form-control" style="display: none" >
+                                                                            </div>
 
-                                                        <div class="col-sm">
-                                                            <input type="text" id="Amazon_ads_start" name="Amazon_ads_start" placeholder="start"  class="form-control" >
+                                                                            <div class="form-group col-sm-4">
+                                                                                <input type="text" id="Amazon_ads_reward_huawei" name="Amazon_ads_reward_huawei" placeholder="reward"   class="form-control" style="display: none" >
+                                                                            </div>
+
+                                                                            <div class="form-group col-sm-4">
+                                                                                <input type="text" id="Amazon_ads_native_huawei" name="Amazon_ads_native_huawei" placeholder="native"   class="form-control"  style="display: none">
+                                                                            </div>
+
+                                                                            <div class="form-group col-sm-4">
+                                                                                <input type="text" id="Amazon_ads_splash_huawei" name="Amazon_ads_splash_huawei" placeholder="open"   class="form-control" style="display: none" >
+                                                                            </div>
+                                                                            <div class="form-group col-sm-4">
+                                                                                <input type="text" id="Amazon_ads_roll _huawei" name="Amazon_ads_roll _huawei" placeholder="open"   class="form-control" style="display: none" >
+                                                                            </div>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
                                                         </div>
                                                     </div>
                                                 </div>
-
                                             </div>
 
                                             <div data-repeater-item="" class="row market_samsung">
-                                                <div class="form-group col-lg-3 input_package">
+                                                <div class="form-group col-lg-12 input_package">
                                                     <label for="name">Tên Package SamSung </label>
                                                     <input type="text" id="Samsung_package" name="Samsung_package" class="form-control">
                                                 </div>
+                                                <div class="form-group col-lg-1"></div>
+                                                <div class="form-group col-lg-11">
+                                                    <div id="accordion">
+                                                        <div class="card mb-1">
+                                                            <div class="card-header p-3" id="heading_samsung">
+                                                                <h6 class="m-0 font-14">
+                                                                    <a href="#collapse_samsung" class="text-dark" data-toggle="collapse"
+                                                                       aria-controls="collapse_samsung">
+                                                                        Ads
+                                                                    </a>
+                                                                </h6>
+                                                            </div>
+                                                            <div id="collapse_samsung" class="collapse" aria-labelledby="heading_samsung"
+                                                                 data-parent="#accordion">
+                                                                <div class="card-body">
+                                                                    <div class="ads_admod">
+                                                                        <div class="divider divider-start divider_admod">
+                                                                            <div class="divider-text"><b>Admod</b> <span id="samsung_dev_ga"></span></div>
+                                                                        </div>
+                                                                        <div class="row" >
+                                                                            <div class="form-group col-sm-4">
+                                                                                <input type="text" id="Samsung_ads_id" name="Samsung_ads_id" placeholder="id" class="form-control" >
+                                                                            </div>
 
-                                                <div class="form-group col-lg-9">
-                                                    <label for="name">Ads Sam Sung</label>
-                                                    <span id="samsung_dev_ga"></span>
-                                                    <div class="row" >
-                                                        <div class="col-sm">
-                                                            <input type="text" id="Samsung_ads_id" name="Samsung_ads_id" placeholder="id" class="form-control" >
-                                                        </div>
+                                                                            <div class="form-group col-sm-4">
+                                                                                <input type="text" id="Samsung_ads_banner" name="Samsung_ads_banner" placeholder="banner"  class="form-control" >
+                                                                            </div>
 
-                                                        <div class="col-sm">
-                                                            <input type="text" id="Samsung_ads_banner" name="Samsung_ads_banner" placeholder="banner"  class="form-control" >
-                                                        </div>
+                                                                            <div class="form-group col-sm-4">
+                                                                                <input type="text" id="Samsung_ads_inter" name="Samsung_ads_inter" placeholder="inter"  class="form-control" >
+                                                                            </div>
 
-                                                        <div class="col-sm">
-                                                            <input type="text" id="Samsung_ads_inter" name="Samsung_ads_inter" placeholder="inter"  class="form-control" >
-                                                        </div>
+                                                                            <div class="form-group col-sm-4">
+                                                                                <input type="text" id="Samsung_ads_reward" name="Samsung_ads_reward" placeholder="reward"  class="form-control" >
+                                                                            </div>
 
-                                                        <div class="col-sm">
-                                                            <input type="text" id="Samsung_ads_reward" name="Samsung_ads_reward" placeholder="reward"  class="form-control" >
-                                                        </div>
+                                                                            <div class="form-group col-sm-4">
+                                                                                <input type="text" id="Samsung_ads_native" name="Samsung_ads_native" placeholder="native"  class="form-control" >
+                                                                            </div>
 
-                                                        <div class="col-sm">
-                                                            <input type="text" id="Samsung_ads_native" name="Samsung_ads_native" placeholder="native"  class="form-control" >
-                                                        </div>
+                                                                            <div class="form-group col-sm-4">
+                                                                                <input type="text" id="Samsung_ads_open" name="Samsung_ads_open" placeholder="open"  class="form-control" >
+                                                                            </div>
 
-                                                        <div class="col-sm">
-                                                            <input type="text" id="Samsung_ads_open" name="Samsung_ads_open" placeholder="open"  class="form-control" >
-                                                        </div>
+                                                                        </div>
+                                                                    </div>
+                                                                    <div class="ads_start">
+                                                                        <div class="divider divider-start divider_start">
+                                                                            <div class="divider-text"><b>Start.io</b></div>
+                                                                        </div>
+                                                                        <div class="row">
+                                                                            <div class="form-group col-sm-4">
+                                                                                <input type="text" id="Samsung_ads_start" name="Samsung_ads_start" placeholder="start"  class="form-control" >
+                                                                            </div>
+                                                                        </div>
+                                                                    </div>
+                                                                    <div class="ads_huawei">
+                                                                        <div class="divider divider-start divider_huawei">
+                                                                            <div class="divider-text"><b>Huawei</b></div>
+                                                                        </div>
+                                                                        <div class="row" >
+                                                                            <div class="form-group col-sm-4">
+                                                                                <input type="text" id="Samsung_ads_banner_huawei" name="Samsung_ads_banner_huawei" placeholder="banner"   class="form-control" style="display: none" >
+                                                                            </div>
 
-                                                        <div class="col-sm">
-                                                            <input type="text" id="Samsung_ads_start" name="Samsung_ads_start" placeholder="start"  class="form-control" >
+                                                                            <div class="form-group col-sm-4">
+                                                                                <input type="text" id="Samsung_ads_inter_huawei" name="Samsung_ads_inter_huawei" placeholder="inter"   class="form-control" style="display: none" >
+                                                                            </div>
+
+                                                                            <div class="form-group col-sm-4">
+                                                                                <input type="text" id="Samsung_ads_reward_huawei" name="Samsung_ads_reward_huawei" placeholder="reward"   class="form-control" style="display: none" >
+                                                                            </div>
+
+                                                                            <div class="form-group col-sm-4">
+                                                                                <input type="text" id="Samsung_ads_native_huawei" name="Samsung_ads_native_huawei" placeholder="native"   class="form-control"  style="display: none">
+                                                                            </div>
+
+                                                                            <div class="form-group col-sm-4">
+                                                                                <input type="text" id="Samsung_ads_splash_huawei" name="Samsung_ads_splash_huawei" placeholder="splash"   class="form-control" style="display: none" >
+                                                                            </div>
+                                                                            <div class="form-group col-sm-4">
+                                                                                <input type="text" id="Samsung_ads_roll_huawei" name="Samsung_ads_roll_huawei" placeholder="roll"   class="form-control" style="display: none" >
+                                                                            </div>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
                                                         </div>
                                                     </div>
                                                 </div>
-
                                             </div>
 
                                             <div data-repeater-item="" class="row market_xiaomi">
-                                                <div class="form-group col-lg-3 input_package">
+                                                <div class="form-group col-lg-12 input_package">
                                                     <label for="name">Tên Package Xiaomi </label>
                                                     <input type="text" id="Xiaomi_package" name="Xiaomi_package" class="form-control">
                                                 </div>
+                                                <div class="form-group col-lg-1"></div>
+                                                <div class="form-group col-lg-11">
 
-                                                <div class="form-group col-lg-9">
-                                                    <label for="name">Ads Xiaomi</label>
-                                                    <span id="xiaomi_dev_ga"></span>
-                                                    <div class="row" >
-                                                        <div class="col-sm">
-                                                            <input type="text" id="Xiaomi_ads_id" name="Xiaomi_ads_id" placeholder="id" class="form-control" >
-                                                        </div>
+                                                    <div id="accordion">
+                                                        <div class="card mb-1">
+                                                            <div class="card-header p-3" id="heading_xiaomi">
+                                                                <h6 class="m-0 font-14">
+                                                                    <a href="#collapse_xiaomi" class="text-dark" data-toggle="collapse"
+                                                                       aria-controls="collapse_xiaomi">
+                                                                        Ads
+                                                                    </a>
+                                                                </h6>
+                                                            </div>
+                                                            <div id="collapse_xiaomi" class="collapse" aria-labelledby="heading_xiaomi"
+                                                                 data-parent="#accordion">
+                                                                <div class="card-body">
+                                                                    <div class="ads_admod">
+                                                                        <div class="divider divider-start divider_admod">
+                                                                            <div class="divider-text"><b>Admod</b> <span id="xiaomi_dev_ga"></span></div>
+                                                                        </div>
+                                                                        <div class="row" >
+                                                                            <div class="form-group col-sm-4">
+                                                                                <input type="text" id="Xiaomi_ads_id" name="Xiaomi_ads_id" placeholder="id" class="form-control" >
+                                                                            </div>
 
-                                                        <div class="col-sm">
-                                                            <input type="text" id="Xiaomi_ads_banner" name="Xiaomi_ads_banner" placeholder="banner"  class="form-control" >
-                                                        </div>
+                                                                            <div class="form-group col-sm-4">
+                                                                                <input type="text" id="Xiaomi_ads_banner" name="Xiaomi_ads_banner" placeholder="banner"  class="form-control" >
+                                                                            </div>
 
-                                                        <div class="col-sm">
-                                                            <input type="text" id="Xiaomi_ads_inter" name="Xiaomi_ads_inter" placeholder="inter"  class="form-control" >
-                                                        </div>
+                                                                            <div class="form-group col-sm-4">
+                                                                                <input type="text" id="Xiaomi_ads_inter" name="Xiaomi_ads_inter" placeholder="inter"  class="form-control" >
+                                                                            </div>
 
-                                                        <div class="col-sm">
-                                                            <input type="text" id="Xiaomi_ads_reward" name="Xiaomi_ads_reward" placeholder="reward"  class="form-control" >
-                                                        </div>
+                                                                            <div class="form-group col-sm-4">
+                                                                                <input type="text" id="Xiaomi_ads_reward" name="Xiaomi_ads_reward" placeholder="reward"  class="form-control" >
+                                                                            </div>
 
-                                                        <div class="col-sm">
-                                                            <input type="text" id="Xiaomi_ads_native" name="Xiaomi_ads_native" placeholder="native"  class="form-control" >
-                                                        </div>
+                                                                            <div class="form-group col-sm-4">
+                                                                                <input type="text" id="Xiaomi_ads_native" name="Xiaomi_ads_native" placeholder="native"  class="form-control" >
+                                                                            </div>
 
-                                                        <div class="col-sm">
-                                                            <input type="text" id="Xiaomi_ads_open" name="Xiaomi_ads_open" placeholder="open"  class="form-control" >
-                                                        </div>
+                                                                            <div class="form-group col-sm-4">
+                                                                                <input type="text" id="Xiaomi_ads_open" name="Xiaomi_ads_open" placeholder="open"  class="form-control" >
+                                                                            </div>
+                                                                        </div>
+                                                                    </div>
+                                                                    <div class="ads_start">
+                                                                        <div class="divider divider-start divider_start">
+                                                                            <div class="divider-text"><b>Start.io</b></div>
+                                                                        </div>
+                                                                        <div class="row">
+                                                                            <div class="form-group col-sm-4">
+                                                                                <input type="text" id="Xiaomi_ads_start" name="Xiaomi_ads_start" placeholder="start"  class="form-control" >
+                                                                            </div>
+                                                                        </div>
+                                                                    </div>
+                                                                    <div class="ads_huawei">
+                                                                        <div class="divider divider-start divider_huawei">
+                                                                            <div class="divider-text"><b>Huawei</b></div>
+                                                                        </div>
+                                                                        <div class="row" >
+                                                                            <div class="form-group col-sm-4">
+                                                                                <input type="text" id="Xiaomi_ads_banner_huawei" name="Xiaomi_ads_banner_huawei" placeholder="banner"   class="form-control" style="display: none" >
+                                                                            </div>
 
-                                                        <div class="col-sm">
-                                                            <input type="text" id="Xiaomi_ads_start" name="Xiaomi_ads_start" placeholder="start"  class="form-control" >
+                                                                            <div class="form-group col-sm-4">
+                                                                                <input type="text" id="Xiaomi_ads_inter_huawei" name="Xiaomi_ads_inter_huawei" placeholder="inter"   class="form-control" style="display: none" >
+                                                                            </div>
+
+                                                                            <div class="form-group col-sm-4">
+                                                                                <input type="text" id="Xiaomi_ads_reward_huawei" name="Xiaomi_ads_reward_huawei" placeholder="reward"   class="form-control" style="display: none" >
+                                                                            </div>
+
+                                                                            <div class="form-group col-sm-4">
+                                                                                <input type="text" id="Xiaomi_ads_native_huawei" name="Xiaomi_ads_native_huawei" placeholder="native"   class="form-control"  style="display: none">
+                                                                            </div>
+
+                                                                            <div class="form-group col-sm-4">
+                                                                                <input type="text" id="Xiaomi_ads_splash_huawei" name="Xiaomi_ads_splash_huawei" placeholder="splash"   class="form-control" style="display: none" >
+                                                                            </div>
+                                                                            <div class="form-group col-sm-4">
+                                                                                <input type="text" id="Xiaomi_ads_roll_huawei" name="Xiaomi_ads_roll_huawei" placeholder="roll"   class="form-control" style="display: none" >
+                                                                            </div>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
                                                         </div>
                                                     </div>
                                                 </div>
-
                                             </div>
 
                                             <div data-repeater-item="" class="row market_oppo">
-                                                <div class="form-group col-lg-3 input_package">
+                                                <div class="form-group col-lg-12 input_package">
                                                     <label for="name">Tên Package Oppo </label>
                                                     <input type="text" id="Oppo_package" name="Oppo_package" class="form-control">
                                                 </div>
+                                                <div class="form-group col-lg-1"></div>
+                                                <div class="form-group col-lg-11">
 
-                                                <div class="form-group col-lg-9">
-                                                    <label for="name">Ads Oppo</label>
-                                                    <span id="oppo_dev_ga"></span>
-                                                    <div class="row" >
-                                                        <div class="col-sm">
-                                                            <input type="text" id="Oppo_ads_id" name="Oppo_ads_id" placeholder="id" class="form-control" >
-                                                        </div>
+                                                    <div id="accordion">
+                                                        <div class="card mb-1">
+                                                            <div class="card-header p-3" id="heading_oppo">
+                                                                <h6 class="m-0 font-14">
+                                                                    <a href="#collapse_oppo" class="text-dark" data-toggle="collapse"
+                                                                       aria-controls="collapse_oppo">
+                                                                        Ads
+                                                                    </a>
+                                                                </h6>
+                                                            </div>
+                                                            <div id="collapse_oppo" class="collapse" aria-labelledby="heading_oppo"
+                                                                 data-parent="#accordion">
+                                                                <div class="card-body">
+                                                                    <div class="ads_admod">
+                                                                        <div class="divider divider-start divider_admod">
+                                                                            <div class="divider-text"><b>Admod</b> <span id="oppo_dev_ga"></span></div>
+                                                                        </div>
+                                                                        <div class="row" >
+                                                                            <div class="form-group col-sm-4">
+                                                                                <input type="text" id="Oppo_ads_id" name="Oppo_ads_id" placeholder="id" class="form-control" >
+                                                                            </div>
 
-                                                        <div class="col-sm">
-                                                            <input type="text" id="Oppo_ads_banner" name="Oppo_ads_banner" placeholder="banner"  class="form-control" >
-                                                        </div>
+                                                                            <div class="form-group col-sm-4">
+                                                                                <input type="text" id="Oppo_ads_banner" name="Oppo_ads_banner" placeholder="banner"  class="form-control" >
+                                                                            </div>
 
-                                                        <div class="col-sm">
-                                                            <input type="text" id="Oppo_ads_inter" name="Oppo_ads_inter" placeholder="inter"  class="form-control" >
-                                                        </div>
+                                                                            <div class="form-group col-sm-4">
+                                                                                <input type="text" id="Oppo_ads_inter" name="Oppo_ads_inter" placeholder="inter"  class="form-control" >
+                                                                            </div>
 
-                                                        <div class="col-sm">
-                                                            <input type="text" id="Oppo_ads_reward" name="Oppo_ads_reward" placeholder="reward"  class="form-control" >
-                                                        </div>
+                                                                            <div class="form-group col-sm-4">
+                                                                                <input type="text" id="Oppo_ads_reward" name="Oppo_ads_reward" placeholder="reward"  class="form-control" >
+                                                                            </div>
 
-                                                        <div class="col-sm">
-                                                            <input type="text" id="Oppo_ads_native" name="Oppo_ads_native" placeholder="native"  class="form-control" >
-                                                        </div>
+                                                                            <div class="form-group col-sm-4">
+                                                                                <input type="text" id="Oppo_ads_native" name="Oppo_ads_native" placeholder="native"  class="form-control" >
+                                                                            </div>
 
-                                                        <div class="col-sm">
-                                                            <input type="text" id="Oppo_ads_open" name="Oppo_ads_open" placeholder="open"  class="form-control" >
-                                                        </div>
+                                                                            <div class="form-group col-sm-4">
+                                                                                <input type="text" id="Oppo_ads_open" name="Oppo_ads_open" placeholder="open"  class="form-control" >
+                                                                            </div>
+                                                                        </div>
+                                                                    </div>
+                                                                    <div class="ads_start">
+                                                                        <div class="divider divider-start divider_start">
+                                                                            <div class="divider-text"><b>Start.io</b></div>
+                                                                        </div>
+                                                                        <div class="row">
+                                                                            <div class="form-group col-sm-4">
+                                                                                <input type="text" id="Oppo_ads_start" name="Oppo_ads_start" placeholder="start"  class="form-control" >
+                                                                            </div>
+                                                                        </div>
+                                                                    </div>
+                                                                    <div class="ads_huawei">
+                                                                        <div class="divider divider-start divider_huawei">
+                                                                            <div class="divider-text"><b>Huawei</b></div>
+                                                                        </div>
+                                                                        <div class="row" >
+                                                                            <div class="form-group col-sm-4">
+                                                                                <input type="text" id="Oppo_ads_banner_huawei" name="Oppo_ads_banner_huawei" placeholder="banner"   class="form-control" style="display: none" >
+                                                                            </div>
 
-                                                        <div class="col-sm">
-                                                            <input type="text" id="Oppo_ads_start" name="Oppo_ads_start" placeholder="start"  class="form-control" >
+                                                                            <div class="form-group col-sm-4">
+                                                                                <input type="text" id="Oppo_ads_inter_huawei" name="Oppo_ads_inter_huawei" placeholder="inter"   class="form-control" style="display: none" >
+                                                                            </div>
+
+                                                                            <div class="form-group col-sm-4">
+                                                                                <input type="text" id="Oppo_ads_reward_huawei" name="Oppo_ads_reward_huawei" placeholder="reward"   class="form-control" style="display: none" >
+                                                                            </div>
+
+                                                                            <div class="form-group col-sm-4">
+                                                                                <input type="text" id="Oppo_ads_native_huawei" name="Oppo_ads_native_huawei" placeholder="native"   class="form-control"  style="display: none">
+                                                                            </div>
+
+                                                                            <div class="form-group col-sm-4">
+                                                                                <input type="text" id="Oppo_ads_splash_huawei" name="Oppo_ads_splash_huawei" placeholder="splash"   class="form-control" style="display: none" >
+                                                                            </div>
+                                                                            <div class="form-group col-sm-4">
+                                                                                <input type="text" id="Oppo_ads_roll_huawei" name="Oppo_ads_roll_huawei" placeholder="roll"   class="form-control" style="display: none" >
+                                                                            </div>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
                                                         </div>
                                                     </div>
                                                 </div>
-
                                             </div>
 
                                             <div data-repeater-item="" class="row market_vivo" >
-                                                <div class="form-group col-lg-3 input_package">
+                                                <div class="form-group col-lg-12 input_package">
                                                     <label for="name">Tên Package Vivo </label>
                                                     <input type="text" id="Vivo_package" name="Vivo_package" class="form-control">
                                                 </div>
-                                                <div class="form-group col-lg-9">
-                                                    <label for="name">Ads Vivo</label>
-                                                    <span id="vivo_dev_ga"></span>
-                                                    <div class="row" >
-                                                        <div class="col-sm">
-                                                            <input type="text" id="Vivo_ads_id" name="Vivo_ads_id" placeholder="id" class="form-control" >
-                                                        </div>
 
-                                                        <div class="col-sm">
-                                                            <input type="text" id="Vivo_ads_banner" name="Vivo_ads_banner" placeholder="banner"  class="form-control" >
-                                                        </div>
+                                                <div class="form-group col-lg-1"></div>
+                                                <div class="form-group col-lg-11">
 
-                                                        <div class="col-sm">
-                                                            <input type="text" id="Vivo_ads_inter" name="Vivo_ads_inter" placeholder="inter"  class="form-control" >
-                                                        </div>
+                                                    <div id="accordion">
+                                                        <div class="card mb-1">
+                                                            <div class="card-header p-3" id="heading_vivo">
+                                                                <h6 class="m-0 font-14">
+                                                                    <a href="#collapse_vivo" class="text-dark" data-toggle="collapse"
+                                                                       aria-controls="collapse_vivo">
+                                                                        Ads
+                                                                    </a>
+                                                                </h6>
+                                                            </div>
+                                                            <div id="collapse_vivo" class="collapse" aria-labelledby="heading_vivo"
+                                                                 data-parent="#accordion">
+                                                                <div class="card-body">
+                                                                    <div class="ads_admod">
+                                                                        <div class="divider divider-start divider_admod">
+                                                                            <div class="divider-text"><b>Admod</b> <span id="vivo_dev_ga"></span></div>
+                                                                        </div>
+                                                                        <div class="row" >
+                                                                            <div class="form-group col-sm-4">
+                                                                                <input type="text" id="Vivo_ads_id" name="Vivo_ads_id" placeholder="id" class="form-control" >
+                                                                            </div>
 
-                                                        <div class="col-sm">
-                                                            <input type="text" id="Vivo_ads_reward" name="Vivo_ads_reward" placeholder="reward"  class="form-control" >
-                                                        </div>
+                                                                            <div class="form-group col-sm-4">
+                                                                                <input type="text" id="Vivo_ads_banner" name="Vivo_ads_banner" placeholder="banner"  class="form-control" >
+                                                                            </div>
 
-                                                        <div class="col-sm">
-                                                            <input type="text" id="Vivo_ads_native" name="Vivo_ads_native" placeholder="native"  class="form-control" >
-                                                        </div>
+                                                                            <div class="form-group col-sm-4">
+                                                                                <input type="text" id="Vivo_ads_inter" name="Vivo_ads_inter" placeholder="inter"  class="form-control" >
+                                                                            </div>
 
-                                                        <div class="col-sm">
-                                                            <input type="text" id="Vivo_ads_open" name="Vivo_ads_open" placeholder="open"  class="form-control" >
-                                                        </div>
+                                                                            <div class="form-group col-sm-4">
+                                                                                <input type="text" id="Vivo_ads_reward" name="Vivo_ads_reward" placeholder="reward"  class="form-control" >
+                                                                            </div>
 
-                                                        <div class="col-sm">
-                                                            <input type="text" id="Vivo_ads_start" name="Vivo_ads_start" placeholder="start"  class="form-control" >
+                                                                            <div class="form-group col-sm-4">
+                                                                                <input type="text" id="Vivo_ads_native" name="Vivo_ads_native" placeholder="native"  class="form-control" >
+                                                                            </div>
+
+                                                                            <div class="form-group col-sm-4">
+                                                                                <input type="text" id="Vivo_ads_open" name="Vivo_ads_open" placeholder="open"  class="form-control" >
+                                                                            </div>
+
+                                                                        </div>
+                                                                    </div>
+                                                                    <div class="ads_start">
+                                                                        <div class="divider divider-start divider_start">
+                                                                            <div class="divider-text"><b>Start.io</b></div>
+                                                                        </div>
+                                                                        <div class="row">
+                                                                            <div class="form-group col-sm-4">
+                                                                                <input type="text" id="Vivo_ads_start" name="Vivo_ads_start" placeholder="start"  class="form-control" >
+                                                                            </div>
+                                                                        </div>
+                                                                    </div>
+                                                                    <div class="ads_huawei">
+                                                                        <div class="divider divider-start divider_huawei">
+                                                                            <div class="divider-text"><b>Huawei</b></div>
+                                                                        </div>
+                                                                        <div class="row" >
+                                                                            <div class="form-group col-sm-4">
+                                                                                <input type="text" id="Vivo_ads_banner_huawei" name="Vivo_ads_banner_huawei" placeholder="banner"   class="form-control" style="display: none" >
+                                                                            </div>
+
+                                                                            <div class="form-group col-sm-4">
+                                                                                <input type="text" id="Vivo_ads_inter_huawei" name="Vivo_ads_inter_huawei" placeholder="inter"   class="form-control" style="display: none" >
+                                                                            </div>
+
+                                                                            <div class="form-group col-sm-4">
+                                                                                <input type="text" id="Vivo_ads_reward_huawei" name="Vivo_ads_reward_huawei" placeholder="reward"   class="form-control" style="display: none" >
+                                                                            </div>
+
+                                                                            <div class="form-group col-sm-4">
+                                                                                <input type="text" id="Vivo_ads_native_huawei" name="Vivo_ads_native_huawei" placeholder="native"   class="form-control"  style="display: none">
+                                                                            </div>
+
+                                                                            <div class="form-group col-sm-4">
+                                                                                <input type="text" id="Vivo_ads_splash_huawei" name="Vivo_ads_splash_huawei" placeholder="splash"   class="form-control" style="display: none" >
+                                                                            </div>
+                                                                            <div class="form-group col-sm-4">
+                                                                                <input type="text" id="Vivo_ads_roll_huawei" name="Vivo_ads_roll_huawei" placeholder="roll"   class="form-control" style="display: none" >
+                                                                            </div>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
                                                         </div>
                                                     </div>
-
-
                                                 </div>
                                             </div>
 
                                             <div data-repeater-item="" class="row market_huawei" >
-                                                <div class="form-group col-lg-3 input_package">
+                                                <div class="form-group col-lg-12 input_package">
                                                     <label for="name">Tên Package Huawei</label>
                                                     <input type="text" id="Huawei_package" name="Huawei_package" class="form-control">
                                                 </div>
-                                                <div class="form-group col-lg-9">
-                                                    <label for="name">Ads Huawei</label>
-                                                    <span id="huawei_dev_ga"></span>
-                                                    <div class="row" >
-                                                        <div class="col-sm">
-                                                            <input type="text" id="Huawei_ads_id" name="Huawei_ads_id" placeholder="id" class="form-control" >
-                                                        </div>
+                                                <div class="form-group col-lg-1"></div>
+                                                <div class="form-group col-lg-11">
+                                                    <div id="accordion">
+                                                        <div class="card mb-1">
+                                                            <div class="card-header p-3" id="heading_huawei">
+                                                                <h6 class="m-0 font-14">
+                                                                    <a href="#collapse_huawei" class="text-dark" data-toggle="collapse"
+                                                                       aria-controls="collapse_huawei">
+                                                                        Ads
+                                                                    </a>
+                                                                </h6>
+                                                            </div>
+                                                            <div id="collapse_huawei" class="collapse" aria-labelledby="heading_huawei"
+                                                                 data-parent="#accordion">
+                                                                <div class="card-body">
+                                                                    <div class="ads_admod">
+                                                                        <div class="divider divider-start divider_admod">
+                                                                            <div class="divider-text"><b>Admod</b> <span id="huawei_dev_ga"></span></div>
+                                                                        </div>
+                                                                        <div class="row" >
+                                                                            <div class="form-group col-sm-4">
+                                                                                <input type="text" id="Huawei_ads_id" name="Huawei_ads_id" placeholder="id" class="form-control" >
+                                                                            </div>
 
-                                                        <div class="col-sm">
-                                                            <input type="text" id="Huawei_ads_banner" name="Huawei_ads_banner" placeholder="banner"  class="form-control" >
-                                                        </div>
+                                                                            <div class="form-group col-sm-4">
+                                                                                <input type="text" id="Huawei_ads_banner" name="Huawei_ads_banner" placeholder="banner"  class="form-control" >
+                                                                            </div>
 
-                                                        <div class="col-sm">
-                                                            <input type="text" id="Huawei_ads_inter" name="Huawei_ads_inter" placeholder="inter"  class="form-control" >
-                                                        </div>
+                                                                            <div class="form-group col-sm-4">
+                                                                                <input type="text" id="Huawei_ads_inter" name="Huawei_ads_inter" placeholder="inter"  class="form-control" >
+                                                                            </div>
 
-                                                        <div class="col-sm">
-                                                            <input type="text" id="Huawei_ads_reward" name="Huawei_ads_reward" placeholder="reward"  class="form-control" >
-                                                        </div>
+                                                                            <div class="form-group col-sm-4">
+                                                                                <input type="text" id="Huawei_ads_reward" name="Huawei_ads_reward" placeholder="reward"  class="form-control" >
+                                                                            </div>
 
-                                                        <div class="col-sm">
-                                                            <input type="text" id="Huawei_ads_native" name="Huawei_ads_native" placeholder="native"  class="form-control" >
-                                                        </div>
+                                                                            <div class="form-group col-sm-4">
+                                                                                <input type="text" id="Huawei_ads_native" name="Huawei_ads_native" placeholder="native"  class="form-control" >
+                                                                            </div>
 
-                                                        <div class="col-sm">
-                                                            <input type="text" id="Huawei_ads_open" name="Huawei_ads_open" placeholder="open"  class="form-control" >
-                                                        </div>
+                                                                            <div class="form-group col-sm-4">
+                                                                                <input type="text" id="Huawei_ads_open" name="Huawei_ads_open" placeholder="open"  class="form-control" >
+                                                                            </div>
 
-                                                        <div class="col-sm">
-                                                            <input type="text" id="Huawei_ads_start" name="Huawei_ads_start" placeholder="start"  class="form-control" >
+                                                                        </div>
+                                                                    </div>
+                                                                    <div class="ads_start">
+                                                                        <div class="divider divider-start divider_start">
+                                                                            <div class="divider-text"><b>Start.io</b></div>
+                                                                        </div>
+                                                                        <div class="row">
+                                                                            <div class="form-group col-sm-4">
+                                                                                <input type="text" id="Huawei_ads_start" name="Huawei_ads_start" placeholder="start"  class="form-control" >
+                                                                            </div>
+                                                                        </div>
+                                                                    </div>
+                                                                    <div class="ads_huawei">
+                                                                        <div class="divider divider-start divider_huawei">
+                                                                            <div class="divider-text"><b>Huawei</b></div>
+                                                                        </div>
+                                                                        <div class="row" >
+                                                                            <div class="form-group col-sm-4">
+                                                                                <input type="text" id="Huawei_ads_banner_huawei" name="Huawei_ads_banner_huawei" placeholder="banner"   class="form-control" style="display: none" >
+                                                                            </div>
+
+                                                                            <div class="form-group col-sm-4">
+                                                                                <input type="text" id="Huawei_ads_inter_huawei" name="Huawei_ads_inter_huawei" placeholder="inter"   class="form-control" style="display: none" >
+                                                                            </div>
+
+                                                                            <div class="form-group col-sm-4">
+                                                                                <input type="text" id="Huawei_ads_reward_huawei" name="Huawei_ads_reward_huawei" placeholder="reward"   class="form-control" style="display: none" >
+                                                                            </div>
+
+                                                                            <div class="form-group col-sm-4">
+                                                                                <input type="text" id="Huawei_ads_native_huawei" name="Huawei_ads_native_huawei" placeholder="native"   class="form-control"  style="display: none">
+                                                                            </div>
+
+                                                                            <div class="form-group col-sm-4">
+                                                                                <input type="text" id="Huawei_ads_splash_huawei" name="Huawei_ads_splash_huawei" placeholder="splash"   class="form-control" style="display: none" >
+                                                                            </div>
+                                                                            <div class="form-group col-sm-4">
+                                                                                <input type="text" id="Huawei_ads_roll_huawei" name="Huawei_ads_roll_huawei" placeholder="roll"   class="form-control" style="display: none" >
+                                                                            </div>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
                                                         </div>
                                                     </div>
-
-
                                                 </div>
                                             </div>
                                         </div>

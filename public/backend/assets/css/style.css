@@ -3884,4 +3884,70 @@ form .form-control:placeholder {
 }
 
 
+.divider {
+    display: block;
+    text-align: center;
+    overflow: hidden;
+    white-space: nowrap;
+
+}
+
+.divider .divider-text {
+    position: relative;
+    display: inline-block;
+    font-size: 0.9375rem;
+    padding: 0 1rem; }
+
+.divider .divider-text i,
+.divider .divider-text svg {
+    height: 1rem;
+    width: 1rem;
+    font-size: 1rem; }
+
+.divider .divider-text:before, .divider .divider-text:after {
+    content: '';
+    position: absolute;
+    top: 50%;
+    width: 9999px;
+    border-top: 3px solid #fa6363; }
+
+.divider .divider-text:before {
+    right: 100%; }
+
+.divider .divider-text:after {
+    left: 100%; }
+
+.divider.divider-start .divider-text {
+    float: left;
+    padding-left: 0; }
+
+.divider.divider-start .divider-text:before {
+    display: none; }
+
+.divider.divider-start-center .divider-text {
+    left: -25%; }
+
+.divider.divider-end .divider-text {
+    float: right;
+    padding-right: 0; }
+
+.divider.divider-end .divider-text:after {
+    display: none; }
+
+.divider.divider-end-center .divider-text {
+    right: -25%; }
+
+.divider.divider-dotted .divider-text:before, .divider.divider-dotted .divider-text:after {
+    border-style: dotted;
+    border-width: 1px;
+    border-top-width: 0;
+    border-color: #ebe9f1; }
+
+.divider.divider-dashed .divider-text:before, .divider.divider-dashed .divider-text:after {
+    border-style: dashed;
+    border-width: 1px;
+    border-top-width: 0;
+    border-color: #ebe9f1; }
+
+
 /*# sourceMappingURL=style.css.map */

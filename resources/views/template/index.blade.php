@@ -310,6 +310,42 @@
                     $("#Check_ads_start").prop('checked', false);
                 }
 
+                if(ads.ads_banner_huawei !=null){
+                    $("#Check_ads_banner_huawei").prop('checked', true);
+                }else{
+                    $("#Check_ads_banner_huawei").prop('checked', false);
+                }
+
+                if(ads.ads_native_huawei !=null){
+                    $("#Check_ads_native_huawei").prop('checked', true);
+                }else{
+                    $("#Check_ads_native_huawei").prop('checked', false);
+                }
+
+                if(ads.ads_reward_huawei !=null){
+                    $("#Check_ads_reward_huawei").prop('checked', true);
+                }else{
+                    $("#Check_ads_reward_huawei").prop('checked', false);
+                }
+
+                if(ads.ads_inter_huawei !=null){
+                    $("#Check_ads_inter_huawei").prop('checked', true);
+                }else{
+                    $("#Check_ads_inter_huawei").prop('checked', false);
+                }
+
+                if(ads.ads_splash_huawei !=null){
+                    $("#Check_ads_splash_huawei").prop('checked', true);
+                }else{
+                    $("#Check_ads_splash_huawei").prop('checked', false);
+                }
+
+                if(ads.ads_roll_huawei !=null){
+                    $("#Check_ads_roll_huawei").prop('checked', true);
+                }else{
+                    $("#Check_ads_roll_huawei").prop('checked', false);
+                }
+
             } else {
                 $("#Check_ads_id").prop('checked', false);
                 $("#Check_ads_banner").prop('checked', false);
@@ -318,6 +354,13 @@
                 $("#Check_ads_native").prop('checked', false);
                 $("#Check_ads_open").prop('checked', false);
                 $("#Check_ads_start").prop('checked', false);
+
+                $("#Check_ads_roll_huawei").prop('checked', false);
+                $("#Check_ads_banner_huawei").prop('checked', false);
+                $("#Check_ads_inter_huawei").prop('checked', false);
+                $("#Check_ads_reward_huawei").prop('checked', false);
+                $("#Check_ads_native_huawei").prop('checked', false);
+                $("#Check_ads_splash_huawei").prop('checked', false);
             }
             if(data.logo) {
                 $("#avatar").attr("src","../uploads/template/"+data.template+"/thumbnail/"+data.logo);
