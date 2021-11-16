@@ -105,7 +105,7 @@ class CronProjectController extends Controller
                 $data = json_decode($data,true);
                 if(count($data['layoutData'])>0)
                 {
-                    echo '<a href="'.$data['layoutData'][0]['dataList'][0]['downurl'].'">'.$data['layoutData'][0]['dataList'][0]['name'].'</a>';
+                    echo '<a href="https://appgallery.cloud.huawei.com/appdl/'.$request->id.'">'.$data['layoutData'][0]['dataList'][0]['name'].'</a>';
                     return;
                 }else{
                     return 'null';
