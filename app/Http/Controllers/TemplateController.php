@@ -80,9 +80,9 @@ class TemplateController extends Controller
                 ->where('ngocphandang_project.template',$record->id)
                 ->count();
 
-            $template = '<a href="javascript:void(0)" onclick="showProject('.$record->id.')"> <span>'.$record->template.' - ('.$project.')</span></a>
-                            <p class="text-muted" style="margin: 0">'.$record->ver_build.'</p>
-                            <p class="text-muted" style="margin: 0">'.$record->template_name.'</p>';
+            $template = '<p style="margin: 0"><b>'.$record->template_name.'</b></p>
+                            <a href="javascript:void(0)" onclick="showProject('.$record->id.')"> <span>'.$record->template.' - ('.$project.')</span></a>
+                            <p class="text-muted" style="margin: 0">'.$record->ver_build.'</p>';
 
 
             if($record['script_copy'] !== Null){
