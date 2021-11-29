@@ -11,6 +11,7 @@ use App\Models\Dev_Oppo;
 use App\Models\Dev_Samsung;
 use App\Models\Dev_Vivo;
 use App\Models\Dev_Xiaomi;
+use App\Models\Keystore;
 use App\Models\log;
 use App\Models\ProjectModel;
 use App\Models\Template;
@@ -30,6 +31,7 @@ class ProjectController extends Controller
     public function index(Request $request)
     {
         $da =  Da::latest('id')->get();
+        $keystore =  Keystore::latest('id')->get();
         $template =  Template::latest('id')->get();
         $store_name =  Dev::latest('id')->get();
         $store_name_amazon  =  Dev_Amazon::latest('id')->get();
@@ -39,7 +41,7 @@ class ProjectController extends Controller
         $store_name_vivo    =  Dev_Vivo::latest('id')->get();
         $store_name_huawei   =  Dev_Huawei::latest('id')->get();
         return view('project.index',compact([
-            'template','da','store_name',
+            'template','da','store_name','keystore',
             'store_name_amazon','store_name_samsung',
             'store_name_xiaomi','store_name_oppo','store_name_vivo','store_name_huawei'
         ]));

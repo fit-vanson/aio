@@ -97,6 +97,7 @@
     $("#template").select2({});
     $("#ma_da").select2({});
     $("#buildinfo_store_name_x").select2({});
+    $("#buildinfo_keystore").select2({});
 </script>
 
 
@@ -142,6 +143,14 @@
             $('#projectForm2').trigger("reset");
             $('#template').select2();
             $('#ma_da').select2();
+            $('#buildinfo_keystore').select2();
+            $('#Chplay_keystore_profile').select2();
+            $('#Amazon_keystore_profile').select2();
+            $('#Samsung_keystore_profile').select2();
+            $('#Xiaomi_keystore_profile').select2();
+            $('#Oppo_keystore_profile').select2();
+            $('#Vivo_keystore_profile').select2();
+            $('#Huawei_keystore_profile').select2();
             $('#Chplay_buildinfo_store_name_x').select2();
             $('#Amazon_buildinfo_store_name_x').select2();
             $('#Samssung_buildinfo_store_name_x').select2();
@@ -978,6 +987,7 @@
             $('#buildinfo_verstr').val(data[0].buildinfo_verstr);
             $('#buildinfo_app_name_x').val(data[0].buildinfo_app_name_x);
             $('#buildinfo_keystore').val(data[0].buildinfo_keystore);
+            $('#buildinfo_keystore').select2();
             $('#buildinfo_sdk').val(data[0].buildinfo_sdk);
             $('#buildinfo_link_policy_x').val(data[0].buildinfo_link_policy_x);
             $('#buildinfo_link_youtube_x').val(data[0].buildinfo_link_youtube_x);
@@ -994,6 +1004,7 @@
             $('#Chplay_status').val(data[0].Chplay_status);
             $('#Chplay_policy').val(data[0].Chplay_policy);
             $('#Chplay_keystore_profile').val(data[0].Chplay_keystore_profile);
+            $('#Chplay_keystore_profile').select2();
 
             $('#Amazon_buildinfo_store_name_x').val(data[0].Amazon_buildinfo_store_name_x);
             $('#Amazon_buildinfo_store_name_x').select2();
@@ -1003,6 +1014,7 @@
             $('#Amazon_status').val(data[0].Amazon_status);
             $('#Amazon_policy').val(data[0].Amazon_policy);
             $('#Amazon_keystore_profile').val(data[0].Amazon_keystore_profile);
+            $('#Amazon_keystore_profile').select2();
 
 
 
@@ -1014,6 +1026,7 @@
             $('#Samsung_status').val(data[0].Samsung_status);
             $('#Samsung_policy').val(data[0].Samsung_policy);
             $('#Samsung_keystore_profile').val(data[0].Samsung_keystore_profile);
+            $('#Samsung_keystore_profile').select2();
 
             $('#Xiaomi_buildinfo_store_name_x').val(data[0].Xiaomi_buildinfo_store_name_x);
             $('#Xiaomi_buildinfo_store_name_x').select2();
@@ -1023,6 +1036,7 @@
             $('#Xiaomi_status').val(data[0].Xiaomi_status);
             $('#Xiaomi_policy').val(data[0].Xiaomi_policy);
             $('#Xiaomi_keystore_profile').val(data[0].Xiaomi_keystore_profile);
+            $('#Xiaomi_keystore_profile').select2();
 
 
             $('#Oppo_buildinfo_store_name_x').val(data[0].Oppo_buildinfo_store_name_x);
@@ -1033,6 +1047,7 @@
             $('#Oppo_status').val(data[0].Oppo_status);
             $('#Oppo_policy').val(data[0].Oppo_policy);
             $('#Oppo_keystore_profile').val(data[0].Oppo_keystore_profile);
+            $('#Oppo_keystore_profile').select2();
 
 
             $('#Vivo_buildinfo_store_name_x').val(data[0].Vivo_buildinfo_store_name_x);
@@ -1043,6 +1058,7 @@
             $('#Vivo_status').val(data[0].Vivo_status);
             $('#Vivo_policy').val(data[0].Vivo_policy);
             $('#Vivo_keystore_profile').val(data[0].Vivo_keystore_profile);
+            $('#Vivo_keystore_profile').select2();
 
             $('#Huawei_buildinfo_store_name_x').val(data[0].Huawei_buildinfo_store_name_x);
             $('#Huawei_buildinfo_store_name_x').select2();
@@ -1052,6 +1068,7 @@
             $('#Huawei_status').val(data[0].Huawei_status);
             $('#Huawei_policy').val(data[0].Huawei_policy);
             $('#Huawei_keystore_profile').val(data[0].Huawei_keystore_profile);
+            $('#Huawei_keystore_profile').select2();
 
             if(data[2] == null){
                 $('#chplay_dev_ga').text('Không có '+ ' | '+ data[10])
@@ -1572,6 +1589,41 @@
                 }
                 if(typeof rebuildTemplateOption == 'function'){
                     rebuildTemplateOption(data.temp)
+                }
+            }
+        });
+
+    });
+    $("#keystoreForm").submit(function (e) {
+        e.preventDefault();
+        let data = new FormData(document.getElementById('keystoreForm'));
+        $.ajax({
+            url:"{{route('keystore.create')}}",
+            type: "post",
+            data:data,
+            processData: false,
+            contentType: false,
+            dataType: 'json',
+            beForeSend : () => {
+            },
+            success:function (data) {
+                if(data.errors){
+                    for( var count=0 ; count <data.errors.length; count++){
+                        $("#keystoreForm").notify(
+                            data.errors[count],"error",
+                            { position:"right" }
+                        );
+                    }
+                }
+                $.notify(data.success, "success");
+                $('#keystoreForm').trigger("reset");
+                $('#addKeystore').modal('hide');
+
+                if(typeof data.keys == 'undefined'){
+                    data.keys = {};
+                }
+                if(typeof rebuildKeystoreOption == 'function'){
+                    rebuildKeystoreOption(data.keys)
                 }
             }
         });
@@ -2146,6 +2198,23 @@
                 $("<option></option>", {
                     value : temp.id
                 }).text(temp.template)
+            );
+        }
+    }
+    function rebuildKeystoreOption(keystore){
+        console.log(keystore)
+        var elementSelect = $("#buildinfo_keystore");
+
+        if(elementSelect.length <= 0){
+            return false;
+        }
+        elementSelect.empty();
+
+        for(var keys of keystore){
+            elementSelect.append(
+                $("<option></option>", {
+                    value : keys.name_keystore
+                }).text(keys.name_keystore)
             );
         }
     }

@@ -16,6 +16,7 @@ use App\Policies\DevXiaomiPolicy;
 use App\Policies\Ga_devPolicy;
 use App\Policies\GaPolicy;
 use App\Policies\HubPolicy;
+use App\Policies\KeystorePolicy;
 use App\Policies\MailParentPolicy;
 use App\Policies\MailRegPolicy;
 use App\Policies\MaiManagePolicy;
@@ -54,6 +55,7 @@ class AuthServiceProvider extends ServiceProvider
        $this->defineProject();
        $this->defineDu_an();
        $this->defineTemplate();
+       $this->defineKeystore();
        $this->defineGadev();
        $this->defineGa();
        $this->defineDev();
@@ -102,6 +104,15 @@ class AuthServiceProvider extends ServiceProvider
         Gate::define('template-edit', [TemplatePolicy::class, 'edit']);
         Gate::define('template-update', [TemplatePolicy::class, 'update']);
         Gate::define('template-delete', [TemplatePolicy::class, 'delete']);
+    }
+
+    public function defineKeystore(){
+        Gate::define('keystore-index', [KeystorePolicy::class, 'index']);
+        Gate::define('keystore-show', [KeystorePolicy::class, 'show']);
+        Gate::define('keystore-add', [KeystorePolicy::class, 'add']);
+        Gate::define('keystore-edit', [KeystorePolicy::class, 'edit']);
+        Gate::define('keystore-update', [KeystorePolicy::class, 'update']);
+        Gate::define('keystore-delete', [KeystorePolicy::class, 'delete']);
     }
     public function defineGadev(){
         Gate::define('gadev-index', [Ga_devPolicy::class, 'index']);

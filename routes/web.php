@@ -18,6 +18,7 @@ use App\Http\Controllers\HomeController;
 use App\Http\Controllers\HubController;
 use App\Http\Controllers\ImeiController;
 use App\Http\Controllers\ipInfoController;
+use App\Http\Controllers\KeystoreController;
 use App\Http\Controllers\KhosimController;
 use App\Http\Controllers\MailManageController;
 use App\Http\Controllers\MailParentController;
@@ -402,6 +403,16 @@ Route::group(['prefix'=>'iccid'], function (){
     Route::get('/show_iccid',[ImeiController::class,'show_iccid'])->name('iccid.show_iccid');
     Route::get('/getCountry',[ImeiController::class,'getCountry'])->name('iccid.getCountry');
 //    Route::get('/import',[ImeiController::class,'import']);
+});
+
+Route::group(['prefix'=>'keystore','middleware'=>['CheckLogout','2fa']], function (){
+    Route::get('/',[KeystoreController::class,'index'])->name('keystore.index')->middleware('can:keystore-index');
+    Route::post('/getIndex',[KeystoreController::class,'getIndex'])->name('keystore.getIndex')->middleware('can:keystore-index');
+    Route::post('/create',[KeystoreController::class,'create'])->name('keystore.create')->middleware('can:keystore-add');
+    Route::get('/edit/{id}',[KeystoreController::class,'edit'])->name('keystore.edit')->middleware('can:keystore-edit');
+    Route::get('/show/{id}',[KeystoreController::class,'edit'])->name('keystore.show')->middleware('can:keystore-show');
+    Route::post('/update',[KeystoreController::class,'update'])->name('keystore.update')->middleware('can:keystore-update');
+    Route::get('/delete/{id}',[KeystoreController::class,'delete'])->name('keystore.delete')->middleware('can:keystore-delete');
 });
 
 Route::get('IP2location',[ipInfoController::class,'IP2location'])->name('inInfo.IP2location');

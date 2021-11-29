@@ -36,6 +36,9 @@
                                         <li><a href="{{route('project.appVivo')}}">Quản lý APP (Vivo)</a></li>
                                         <li><a href="{{route('project.appHuawei')}}">Quản lý APP (Huawei)</a></li>
                                     @endcan
+                                    @can('keystore-index')
+                                        <li><a href="{{route('keystore.index')}}">Quản lý Keystore</a></li>
+                                    @endcan
                                 </ul>
                             </li>
                             <li>

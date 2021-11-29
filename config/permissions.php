@@ -169,6 +169,13 @@ return [
         'script-update'  =>'edit_script',
         'script-delete'  =>'delete_script',
 
+        'keystore-index'  =>'index_keystore',
+        'keystore-show'  =>'show_keystore',
+        'keystore-add'  =>'add_keystore',
+        'keystore-edit'  =>'edit_keystore',
+        'keystore-update'  =>'edit_keystore',
+        'keystore-delete'  =>'delete_keystore',
+
     ],
 
 
@@ -176,7 +183,7 @@ return [
         'Dự án','Template','Project','Gadev','Dev','Dev Amazon','Dev SamSung','Dev Xiaomi','Dev Oppo','Dev Vivo','Dev Huawei','Ga',
         'User','Vai trò', 'Phân quyền',
         'khosim','cocsim','sms','hub','Mail Manage', 'Mail Parent','Mail Reg',
-        'Device','Script'
+        'Device','Script', 'Keystore'
     ],
     'module-child' =>[
         'Index','Show','Add','Edit','Delete'

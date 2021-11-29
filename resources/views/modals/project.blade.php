@@ -131,7 +131,21 @@
                                                 </div>
                                                 <div class="form-group col-lg-4 ">
                                                     <label for="name">Keystore Profile </label>
-                                                    <input type="text" id="buildinfo_keystore" name="buildinfo_keystore" class="form-control" >
+                                                    <div class="inner row">
+                                                        <div class="col-md-10 col-10">
+                                                            <select class="form-control select2" id="buildinfo_keystore" name="buildinfo_keystore">
+                                                                <option value="0">---Vui lòng chọn---</option>
+                                                                @foreach($keystore as $item)
+                                                                    <option value="{{$item->name_keystore}}">{{$item->name_keystore}}</option>
+                                                                @endforeach
+                                                            </select>
+                                                        </div>
+                                                        <div class="col-md-2 col-4">
+                                                            <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#addKeystore" style="border-radius: 0 3px 3px 0; box-shadow: none;">...
+                                                            </button>
+                                                        </div>
+                                                    </div>
+{{--                                                    <input type="text" id="buildinfo_keystore" name="buildinfo_keystore" class="form-control" >--}}
                                                 </div>
                                                 <div class="form-group col-lg-4 ">
                                                     <label for="name">SDK </label>
@@ -902,7 +916,21 @@
                                             <div data-repeater-item="" class="row">
                                                 <div class="form-group col-lg-6">
                                                     <label for="name">Keystore Profile</label>
-                                                    <input type="text" id="Chplay_keystore_profile" name="Chplay_keystore_profile" class="form-control" >
+                                                    <div class="inner row">
+                                                        <div class="col-md-10 col-10">
+                                                            <select class="form-control select2" id="Chplay_keystore_profile" name="Chplay_keystore_profile">
+                                                                <option value="0">---Vui lòng chọn---</option>
+                                                                @foreach($keystore as $item)
+                                                                    <option value="{{$item->name_keystore}}">{{$item->name_keystore}}</option>
+                                                                @endforeach
+                                                            </select>
+                                                        </div>
+                                                        <div class="col-md-2 col-4">
+                                                            <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#addKeystore" style="border-radius: 0 3px 3px 0; box-shadow: none;">...
+                                                            </button>
+                                                        </div>
+                                                    </div>
+{{--                                                    <input type="text" id="Chplay_keystore_profile" name="Chplay_keystore_profile" class="form-control" >--}}
                                                 </div>
                                             </div>
 
@@ -956,7 +984,22 @@
                                             <div data-repeater-item="" class="row">
                                                 <div class="form-group col-lg-6">
                                                     <label for="name">Keystore Profile</label>
-                                                    <input type="text" id="Amazon_keystore_profile" name="Amazon_keystore_profile" class="form-control" >
+                                                    <div class="inner row">
+                                                        <div class="col-md-10 col-10">
+                                                            <select class="form-control select2" id="Amazon_keystore_profile" name="Amazon_keystore_profile">
+                                                                <option value="0">---Vui lòng chọn---</option>
+                                                                @foreach($keystore as $item)
+                                                                    <option value="{{$item->name_keystore}}">{{$item->name_keystore}}</option>
+                                                                @endforeach
+                                                            </select>
+                                                        </div>
+                                                        <div class="col-md-2 col-4">
+                                                            <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#addKeystore" style="border-radius: 0 3px 3px 0; box-shadow: none;">...
+                                                            </button>
+                                                        </div>
+                                                    </div>
+
+{{--                                                    <input type="text" id="Amazon_keystore_profile" name="Amazon_keystore_profile" class="form-control" >--}}
                                                 </div>
                                             </div>
                                         </div>
@@ -1009,7 +1052,20 @@
                                             <div data-repeater-item="" class="row">
                                                 <div class="form-group col-lg-6">
                                                     <label for="name">Keystore Profile</label>
-                                                    <input type="text" id="Samsung_keystore_profile" name="Samsung_keystore_profile" class="form-control" >
+                                                    <div class="inner row">
+                                                        <div class="col-md-10 col-10">
+                                                            <select class="form-control select2" id="Samsung_keystore_profile" name="Samsung_keystore_profile">
+                                                                <option value="0">---Vui lòng chọn---</option>
+                                                                @foreach($keystore as $item)
+                                                                    <option value="{{$item->name_keystore}}">{{$item->name_keystore}}</option>
+                                                                @endforeach
+                                                            </select>
+                                                        </div>
+                                                        <div class="col-md-2 col-4">
+                                                            <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#addKeystore" style="border-radius: 0 3px 3px 0; box-shadow: none;">...
+                                                            </button>
+                                                        </div>
+                                                    </div>
                                                 </div>
                                             </div>
                                         </div>
@@ -1062,7 +1118,21 @@
                                             <div data-repeater-item="" class="row">
                                                 <div class="form-group col-lg-6">
                                                     <label for="name">Keystore Profile</label>
-                                                    <input type="text" id="Xiaomi_keystore_profile" name="Xiaomi_keystore_profile" class="form-control" >
+                                                    <div class="inner row">
+                                                        <div class="col-md-10 col-10">
+                                                            <select class="form-control select2" id="Xiaomi_keystore_profile" name="Xiaomi_keystore_profile">
+                                                                <option value="0">---Vui lòng chọn---</option>
+                                                                @foreach($keystore as $item)
+                                                                    <option value="{{$item->name_keystore}}">{{$item->name_keystore}}</option>
+                                                                @endforeach
+                                                            </select>
+                                                        </div>
+                                                        <div class="col-md-2 col-4">
+                                                            <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#addKeystore" style="border-radius: 0 3px 3px 0; box-shadow: none;">...
+                                                            </button>
+                                                        </div>
+                                                    </div>
+{{--                                                    <input type="text" id="Xiaomi_keystore_profile" name="Xiaomi_keystore_profile" class="form-control" >--}}
                                                 </div>
                                             </div>
                                         </div>
@@ -1115,7 +1185,21 @@
                                             <div data-repeater-item="" class="row">
                                                 <div class="form-group col-lg-6">
                                                     <label for="name">Keystore Profile</label>
-                                                    <input type="text" id="Oppo_keystore_profile" name="Oppo_keystore_profile" class="form-control" >
+                                                    <div class="inner row">
+                                                        <div class="col-md-10 col-10">
+                                                            <select class="form-control select2" id="Oppo_keystore_profile" name="Oppo_keystore_profile">
+                                                                <option value="0">---Vui lòng chọn---</option>
+                                                                @foreach($keystore as $item)
+                                                                    <option value="{{$item->name_keystore}}">{{$item->name_keystore}}</option>
+                                                                @endforeach
+                                                            </select>
+                                                        </div>
+                                                        <div class="col-md-2 col-4">
+                                                            <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#addKeystore" style="border-radius: 0 3px 3px 0; box-shadow: none;">...
+                                                            </button>
+                                                        </div>
+                                                    </div>
+{{--                                                    <input type="text" id="Oppo_keystore_profile" name="Oppo_keystore_profile" class="form-control" >--}}
                                                 </div>
                                             </div>
                                         </div>
@@ -1168,7 +1252,21 @@
                                             <div data-repeater-item="" class="row">
                                                 <div class="form-group col-lg-6">
                                                     <label for="name">Keystore Profile</label>
-                                                    <input type="text" id="Vivo_keystore_profile" name="Vivo_keystore_profile" class="form-control" >
+                                                    <div class="inner row">
+                                                        <div class="col-md-10 col-10">
+                                                            <select class="form-control select2" id="Vivo_keystore_profile" name="Vivo_keystore_profile">
+                                                                <option value="0">---Vui lòng chọn---</option>
+                                                                @foreach($keystore as $item)
+                                                                    <option value="{{$item->name_keystore}}">{{$item->name_keystore}}</option>
+                                                                @endforeach
+                                                            </select>
+                                                        </div>
+                                                        <div class="col-md-2 col-4">
+                                                            <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#addKeystore" style="border-radius: 0 3px 3px 0; box-shadow: none;">...
+                                                            </button>
+                                                        </div>
+                                                    </div>
+{{--                                                    <input type="text" id="Vivo_keystore_profile" name="Vivo_keystore_profile" class="form-control" >--}}
                                                 </div>
                                             </div>
                                         </div>
@@ -1221,7 +1319,21 @@
                                             <div data-repeater-item="" class="row">
                                                 <div class="form-group col-lg-6">
                                                     <label for="name">Keystore Profile</label>
-                                                    <input type="text" id="Huawei_keystore_profile" name="Huawei_keystore_profile" class="form-control" >
+                                                    <div class="inner row">
+                                                        <div class="col-md-10 col-10">
+                                                            <select class="form-control select2" id="Huawei_keystore_profile" name="Huawei_keystore_profile">
+                                                                <option value="0">---Vui lòng chọn---</option>
+                                                                @foreach($keystore as $item)
+                                                                    <option value="{{$item->name_keystore}}">{{$item->name_keystore}}</option>
+                                                                @endforeach
+                                                            </select>
+                                                        </div>
+                                                        <div class="col-md-2 col-4">
+                                                            <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#addKeystore" style="border-radius: 0 3px 3px 0; box-shadow: none;">...
+                                                            </button>
+                                                        </div>
+                                                    </div>
+{{--                                                    <input type="text" id="Huawei_keystore_profile" name="Huawei_keystore_profile" class="form-control" >--}}
                                                 </div>
                                             </div>
                                         </div>
@@ -1273,8 +1385,8 @@
                                 <option value="2" hidden>Đang xử lý Build App</option>
                                 <option value="3" hidden >Kết thúc Build App</option>
                                 <option value="4">Check Data Project</option>
-                                <option value="5"hidden>Đang xử lý check dữ liệu của Project</option>
-                                <option value="6"hidden>Kết thúc Check</option>
+                                <option value="5" hidden>Đang xử lý check dữ liệu của Project</option>
+                                <option value="6" hidden>Kết thúc Check</option>
                             </select>
                         </div>
                     </div>
@@ -1389,6 +1501,57 @@
 
                     <div class="col-sm-offset-2 col-sm-10">
                         <button type="submit" class="btn btn-primary">Thêm mới</button>
+                        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                    </div>
+                </form>
+
+            </div>
+
+        </div>
+    </div>
+</div>
+
+
+<div class="modal fade" id="addKeystore" tabindex="-1" role="dialog">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">Thêm mới Keystore</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+            </div>
+            <div class="modal-body">
+                <form id="keystoreForm" name="keystoreForm" class="form-horizontal">
+                    <div data-repeater-item="" class="row">
+                        <div class="form-group col-lg-6 ">
+                            <label for="name">Tên Keystore</label>
+                            <input type="hidden" name="keystore_id" id="keystore_id">
+                            <input type="text" class="form-control" id="name_keystore" name="name_keystore" required>
+                        </div>
+                        <div class="form-group col-lg-6 ">
+                            <label for="name">Pass Keystore</label>
+                            <input type="text" id="pass_keystore" name="pass_keystore" class="form-control" >
+                        </div>
+                    </div>
+
+                    <div data-repeater-item="" class="row">
+                        <div class="form-group col-lg-6 ">
+                            <label for="name">Aliases Keystore</label>
+                            <textarea id="aliases_keystore" name="aliases_keystore" class="form-control" rows="4" ></textarea>
+                        </div>
+                        <div class="form-group col-lg-6">
+                            <label for="name">SHA_256 Keystore</label>
+                            <textarea id="SHA_256_keystore" name="SHA_256_keystore" class="form-control" rows="4" ></textarea>
+                        </div>
+                    </div>
+                    <div data-repeater-item="" class="row">
+                        <div class="form-group col-lg-6 ">
+                            <label for="name">Ghi chú</label>
+                            <textarea id="note" name="note" class="form-control" rows="4" ></textarea>
+                        </div>
+                    </div>
+                    <div class="col-sm-offset-2 col-sm-10">
+                        <button type="submit" class="btn btn-primary" id="saveBtn" value="create">Thêm mới
+                        </button>
                         <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
                     </div>
                 </form>
