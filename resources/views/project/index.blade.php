@@ -370,6 +370,7 @@
             var Oppo_ads = '';
             var Vivo_ads = '';
             var Huawei_ads = '';
+            var keystore = keystore_chplay = keystore_amazon =  keystore_samsung = keystore_xiaomi =  keystore_oppo =  keystore_vivo =  keystore_huawei =  '';
             if(data[0].Chplay_ads) {
                 Chplay_ads = data[0].Chplay_ads;
                 Chplay_ads = JSON.parse(Chplay_ads);
@@ -977,6 +978,31 @@
                 $('.ads_huawei').hide() ;
             }
 
+            if(data[18]) {
+                keystore = data[18].SHA_256_keystore;
+            }
+            if(data[19]) {
+                keystore_chplay = data[19].SHA_256_keystore;
+            }
+            if(data[20]) {
+                keystore_amazon = data[20].SHA_256_keystore;
+            }
+            if(data[21]) {
+                keystore_samsung = data[21].SHA_256_keystore;
+            }
+            if(data[22]) {
+                keystore_xiaomi = data[22].SHA_256_keystore;
+            }
+            if(data[23]) {
+                keystore_oppo = data[23].SHA_256_keystore;
+            }
+            if(data[24]) {
+                keystore_vivo = data[24].SHA_256_keystore;
+            }
+            if(data[25]) {
+                keystore_huawei = data[25].SHA_256_keystore;
+            }
+
             $('#project_id').val(data[0].projectid);
             $('#projectname').val(data[0].projectname);
             $('#template').val(data[0].template);
@@ -988,7 +1014,7 @@
             $('#buildinfo_verstr').val(data[0].buildinfo_verstr);
             $('#buildinfo_app_name_x').val(data[0].buildinfo_app_name_x);
             $('#buildinfo_keystore').val(data[0].buildinfo_keystore);
-            $('#p_buildinfo_keystore').text(data[18].SHA_256_keystore);
+            $('#p_buildinfo_keystore').text(keystore);
             $('#buildinfo_keystore').select2();
             $('#buildinfo_sdk').val(data[0].buildinfo_sdk);
             $('#buildinfo_link_policy_x').val(data[0].buildinfo_link_policy_x);
@@ -1007,7 +1033,7 @@
             $('#Chplay_policy').val(data[0].Chplay_policy);
             $('#Chplay_keystore_profile').val(data[0].Chplay_keystore_profile);
             $('#Chplay_keystore_profile').select2();
-            $('#p_buildinfo_keystore_chplay').text(data[19].SHA_256_keystore);
+            $('#p_buildinfo_keystore_chplay').text(keystore_chplay);
 
             $('#Amazon_buildinfo_store_name_x').val(data[0].Amazon_buildinfo_store_name_x);
             $('#Amazon_buildinfo_store_name_x').select2();
@@ -1018,7 +1044,7 @@
             $('#Amazon_policy').val(data[0].Amazon_policy);
             $('#Amazon_keystore_profile').val(data[0].Amazon_keystore_profile);
             $('#Amazon_keystore_profile').select2();
-            $('#p_buildinfo_keystore_amazon').text(data[20].SHA_256_keystore);
+            $('#p_buildinfo_keystore_amazon').text(keystore_amazon);
 
 
 
@@ -1031,7 +1057,7 @@
             $('#Samsung_policy').val(data[0].Samsung_policy);
             $('#Samsung_keystore_profile').val(data[0].Samsung_keystore_profile);
             $('#Samsung_keystore_profile').select2();
-            $('#p_buildinfo_keystore_samsung').text(data[21].SHA_256_keystore);
+            $('#p_buildinfo_keystore_samsung').text(keystore_samsung);
 
             $('#Xiaomi_buildinfo_store_name_x').val(data[0].Xiaomi_buildinfo_store_name_x);
             $('#Xiaomi_buildinfo_store_name_x').select2();
@@ -1042,7 +1068,7 @@
             $('#Xiaomi_policy').val(data[0].Xiaomi_policy);
             $('#Xiaomi_keystore_profile').val(data[0].Xiaomi_keystore_profile);
             $('#Xiaomi_keystore_profile').select2();
-            $('#p_buildinfo_keystore_xiaomi').text(data[22].SHA_256_keystore);
+            $('#p_buildinfo_keystore_xiaomi').text(keystore_xiaomi);
 
 
             $('#Oppo_buildinfo_store_name_x').val(data[0].Oppo_buildinfo_store_name_x);
@@ -1054,7 +1080,7 @@
             $('#Oppo_policy').val(data[0].Oppo_policy);
             $('#Oppo_keystore_profile').val(data[0].Oppo_keystore_profile);
             $('#Oppo_keystore_profile').select2();
-            $('#p_buildinfo_keystore_oppo').text(data[23].SHA_256_keystore);
+            $('#p_buildinfo_keystore_oppo').text(keystore_oppo);
 
 
             $('#Vivo_buildinfo_store_name_x').val(data[0].Vivo_buildinfo_store_name_x);
@@ -1066,7 +1092,7 @@
             $('#Vivo_policy').val(data[0].Vivo_policy);
             $('#Vivo_keystore_profile').val(data[0].Vivo_keystore_profile);
             $('#Vivo_keystore_profile').select2();
-            $('#p_buildinfo_keystore_vivo').text(data[24].SHA_256_keystore);
+            $('#p_buildinfo_keystore_vivo').text(keystore_vivo);
 
             $('#Huawei_buildinfo_store_name_x').val(data[0].Huawei_buildinfo_store_name_x);
             $('#Huawei_buildinfo_store_name_x').select2();
@@ -1077,7 +1103,7 @@
             $('#Huawei_policy').val(data[0].Huawei_policy);
             $('#Huawei_keystore_profile').val(data[0].Huawei_keystore_profile);
             $('#Huawei_keystore_profile').select2();
-            $('#p_buildinfo_keystore_huawei').text(data[25].SHA_256_keystore);
+            $('#p_buildinfo_keystore_huawei').text(keystore_huawei);
 
             if(data[2] == null){
                 $('#chplay_dev_ga').text('Không có '+ ' | '+ data[10])
