@@ -2224,30 +2224,37 @@
                 if(data[1].Chplay_keystore_profile == '0' || data[1].Chplay_keystore_profile == null ){
                     $('#Chplay_keystore_profile').val(data[0].name_keystore);
                     $('#Chplay_keystore_profile').select2();
+                    $('#p_buildinfo_keystore_chplay').text(sha_256)
                 }
                 if(data[1].Amazon_keystore_profile == '0' || data[1].Amazon_keystore_profile == null ){
                     $('#Amazon_keystore_profile').val(data[0].name_keystore);
                     $('#Amazon_keystore_profile').select2();
+                    $('#p_buildinfo_keystore_amazon').text(sha_256)
                 }
                 if(data[1].Samsung_keystore_profile == '0' || data[1].Samsung_keystore_profile == null ){
                     $('#Samsung_keystore_profile').val(data[0].name_keystore);
                     $('#Samsung_keystore_profile').select2();
+                    $('#p_buildinfo_keystore_samsung').text(sha_256)
                 }
                 if(data[1].Xiaomi_keystore_profile == '0' || data[1].Xiaomi_keystore_profile == null ){
                     $('#Xiaomi_keystore_profile').val(data[0].name_keystore);
                     $('#Xiaomi_keystore_profile').select2();
+                    $('#p_buildinfo_keystore_xiaomi').text(sha_256)
                 }
                 if(data[1].Oppo_keystore_profile == '0' || data[1].Oppo_keystore_profile == null ){
                     $('#Oppo_keystore_profile').val(data[0].name_keystore);
                     $('#Oppo_keystore_profile').select2();
+                    $('#p_buildinfo_keystore_oppo').text(sha_256)
                 }
                 if(data[1].Vivo_keystore_profile == '0' || data[1].Vivo_keystore_profile == null ){
                     $('#Vivo_keystore_profile').val(data[0].name_keystore);
                     $('#Vivo_keystore_profile').select2();
+                    $('#p_buildinfo_keystore_vivo').text(sha_256)
                 }
                 if(data[1].Huawei_keystore_profile == '0' || data[1].Huawei_keystore_profile == null ){
                     $('#Huawei_keystore_profile').val(data[0].name_keystore);
                     $('#Huawei_keystore_profile').select2();
+                    $('#p_buildinfo_keystore_huawei').text(sha_256)
                 }
             }
         });
