@@ -183,6 +183,8 @@
 
                                                 </div>
                                             </div>
+                                            <span class="card-title-desc" id="p_buildinfo_keystore"></span>
+                                            <button type="button" class="btn btn-link waves-effect" id="button_buildinfo_keystore"><i class="mdi mdi-content-copy"></i></button></td>
 
                                             <div class="progress m-b-10" style="height: 3px;">
                                                 <div class="progress-bar"  role="progressbar" style="background-color: #0b0b0b;width: 100%;"></div>
@@ -934,6 +936,9 @@
                                                 </div>
                                             </div>
 
+                                            <span class="card-title-desc" id="p_buildinfo_keystore_chplay"></span>
+                                            <button type="button" class="btn btn-link waves-effect" id="button_buildinfo_keystore_chplay"><i class="mdi mdi-content-copy"></i></button></td>
+
                                         </div>
                                         <div class="tab-pane p-3" id="amazon" role="tabpanel">
                                             <div data-repeater-item="" class="row input_buildinfo">
@@ -1002,7 +1007,10 @@
 {{--                                                    <input type="text" id="Amazon_keystore_profile" name="Amazon_keystore_profile" class="form-control" >--}}
                                                 </div>
                                             </div>
+                                            <span class="card-title-desc" id="p_buildinfo_keystore_amazon"></span>
+                                            <button type="button" class="btn btn-link waves-effect" id="button_buildinfo_keystore_amazon"><i class="mdi mdi-content-copy"></i></button></td>
                                         </div>
+
                                         <div class="tab-pane p-3" id="samsung" role="tabpanel">
                                             <div data-repeater-item="" class="row input_buildinfo">
                                                 <div class="form-group col-lg-6">
@@ -1068,6 +1076,8 @@
                                                     </div>
                                                 </div>
                                             </div>
+                                            <span class="card-title-desc" id="p_buildinfo_keystore_samsung"></span>
+                                            <button type="button" class="btn btn-link waves-effect" id="button_buildinfo_keystore_samsung"><i class="mdi mdi-content-copy"></i></button></td>
                                         </div>
                                         <div class="tab-pane p-3" id="xiaomi" role="tabpanel">
                                             <div data-repeater-item="" class="row input_buildinfo">
@@ -1135,6 +1145,8 @@
 {{--                                                    <input type="text" id="Xiaomi_keystore_profile" name="Xiaomi_keystore_profile" class="form-control" >--}}
                                                 </div>
                                             </div>
+                                            <span class="card-title-desc" id="p_buildinfo_keystore_xiaomi"></span>
+                                            <button type="button" class="btn btn-link waves-effect" id="button_buildinfo_keystore_xiaomi"><i class="mdi mdi-content-copy"></i></button></td>
                                         </div>
                                         <div class="tab-pane p-3" id="oppo" role="tabpanel">
                                             <div data-repeater-item="" class="row input_buildinfo">
@@ -1202,6 +1214,8 @@
 {{--                                                    <input type="text" id="Oppo_keystore_profile" name="Oppo_keystore_profile" class="form-control" >--}}
                                                 </div>
                                             </div>
+                                            <span class="card-title-desc" id="p_buildinfo_keystore_oppo"></span>
+                                            <button type="button" class="btn btn-link waves-effect" id="button_buildinfo_keystore_oppo"><i class="mdi mdi-content-copy"></i></button></td>
                                         </div>
                                         <div class="tab-pane p-3" id="vivo" role="tabpanel">
                                             <div data-repeater-item="" class="row input_buildinfo">
@@ -1269,6 +1283,8 @@
 {{--                                                    <input type="text" id="Vivo_keystore_profile" name="Vivo_keystore_profile" class="form-control" >--}}
                                                 </div>
                                             </div>
+                                            <span class="card-title-desc" id="p_buildinfo_keystore_vivo"></span>
+                                            <button type="button" class="btn btn-link waves-effect" id="button_buildinfo_keystore_vivo"><i class="mdi mdi-content-copy"></i></button></td>
                                         </div>
                                         <div class="tab-pane p-3" id="huawei" role="tabpanel">
                                             <div data-repeater-item="" class="row input_buildinfo">
@@ -1336,7 +1352,10 @@
 {{--                                                    <input type="text" id="Huawei_keystore_profile" name="Huawei_keystore_profile" class="form-control" >--}}
                                                 </div>
                                             </div>
+                                            <span class="card-title-desc" id="p_buildinfo_keystore_huawei"></span>
+                                            <button type="button" class="btn btn-link waves-effect" id="button_buildinfo_keystore_huawei"><i class="mdi mdi-content-copy"></i></button></td>
                                         </div>
+
                                     </div>
 
                                 </div>

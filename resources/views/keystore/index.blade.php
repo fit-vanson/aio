@@ -176,7 +176,6 @@
 
         });
 
-
         $(document).on('click','.deleteKeystore', function (data){
             var keystore_id = $(this).data("id");
             swal({
@@ -258,11 +257,13 @@
 <script>
     function editKeytore(id) {
         $.get('{{asset('keystore/edit')}}/'+id,function (data) {
+            console.log(data)
             $('#keystore_id').val(data.id);
             $('#name_keystore').val(data.name_keystore);
             $('#pass_keystore').val(data.pass_keystore);
             $('#aliases_keystore').val(data.aliases_keystore);
             $('#SHA_256_keystore').val(data.SHA_256_keystore);
+            $('#keystore_file').val(data.keystore_file);
             $('#note').val(data.note);
 
             $('#modelHeading').html("Edit");

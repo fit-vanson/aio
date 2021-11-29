@@ -136,6 +136,18 @@ Route::group(['prefix'=>'project','middleware'=>['CheckLogout','2fa']], function
     Route::post('/select-store-name-oppo',[ProjectController::class,'select_store_name_oppo'])->name('select_store_name_oppo');
     Route::post('/select-store-name-vivo',[ProjectController::class,'select_store_name_vivo'])->name('select_store_name_vivo');
     Route::post('/select-store-name-huawei',[ProjectController::class,'select_store_name_huawei'])->name('select_store_name_huawei');
+
+    Route::post('/select-buildinfo_keystore',[ProjectController::class,'select_buildinfo_keystore']);
+//    Route::post('/select-chplay_buildinfo_keystore',[ProjectController::class,'select_chplay_buildinfo_keystore']);
+//    Route::post('/select-amazon_buildinfo_keystore',[ProjectController::class,'select_amazon_buildinfo_keystore']);
+//    Route::post('/select-samsung_buildinfo_keystore',[ProjectController::class,'select_samsung_buildinfo_keystore']);
+//    Route::post('/select-xiaomi_buildinfo_keystore',[ProjectController::class,'select_xiaomi_buildinfo_keystore']);
+//    Route::post('/select-oppo_buildinfo_keystore',[ProjectController::class,'select_oppo_buildinfo_keystore']);
+//    Route::post('/select-vivo_buildinfo_keystore',[ProjectController::class,'select_vivo_buildinfo_keystore']);
+//    Route::post('/select-huawei_buildinfo_keystore',[ProjectController::class,'select_huawei_buildinfo_keystore']);
+
+
+
     Route::get('/showlog/{id}',[ProjectController::class,'showlog'])->name('project.showlog')->middleware('can:project-index');
 
 

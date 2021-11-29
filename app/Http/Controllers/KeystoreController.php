@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Dev;
 use App\Models\ProjectModel;
 use App\Models\Keystore;
+use Faker\Provider\File;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
@@ -256,11 +257,14 @@ class KeystoreController extends Controller
 
     public function create(Request  $request)
     {
+
         $rules = [
-            'name_keystore' =>'unique:ngocphandang_keystores,name_keystore'
+            'name_keystore' =>'unique:ngocphandang_keystores,name_keystore',
+            'file' => 'mimes:zip,jks'
         ];
         $message = [
             'name_keystore.unique'=>'Tên Keystore đã tồn tại',
+            'file.mimes'=>'Định dạng File: *.zip, *.jks',
         ];
 
         $error = Validator::make($request->all(),$rules, $message );
@@ -268,13 +272,22 @@ class KeystoreController extends Controller
         if($error->fails()){
             return response()->json(['errors'=> $error->errors()->all()]);
         }
-
         $data = new Keystore();
         $data['name_keystore'] = $request->name_keystore;
         $data['pass_keystore'] = $request->pass_keystore;
         $data['aliases_keystore'] = $request->aliases_keystore;
         $data['SHA_256_keystore'] = $request->SHA_256_keystore;
         $data['note'] = $request->note;
+
+        $destinationPath = public_path('uploads/keystore/'.$request->name_keystore);
+        if (!file_exists($destinationPath)) {
+            mkdir($destinationPath, 0777, true);
+        }
+        if(isset($request->keystore_file)){
+            $file = $request->file('keystore_file');
+            $data['file'] = 'keystore_'.time().'.'.$file->extension();
+            $file->move($destinationPath, $data['file']);
+        }
 
         $data->save();
         $allKeys  = Keystore::latest('id')->get();
@@ -328,12 +341,15 @@ class KeystoreController extends Controller
      */
     public function update(Request $request)
     {
+
         $id = $request->keystore_id;
         $rules = [
             'name_keystore' =>'unique:ngocphandang_keystores,name_keystore,'.$id.',id',
+            'file' => 'mimes:zip,jks'
         ];
         $message = [
             'name_keystore.unique'=>'Tên Keystore đã tồn tại',
+            'file.mimes'=>'Định dạng File: *.zip, *.jks',
         ];
         $error = Validator::make($request->all(),$rules, $message );
         if($error->fails()){
@@ -341,13 +357,25 @@ class KeystoreController extends Controller
         }
 
         $data = Keystore::find($id);
+        if($data->name_keystore <> $request->name_keystore){
+            $dir = (public_path('uploads/keystore/'));
+            rename($dir.$data->name_keystore, $dir.$request->name_keystore);
+        }
+        if(isset($request->keystore_file)){
+            $file = $request->file('keystore_file');
+            $data['file'] = 'keystore_'.time().'.'.$file->extension();
+            $destinationPath = public_path('uploads/keystore/'.$request->name_keystore);
+            if (!file_exists($destinationPath)) {
+                mkdir($destinationPath, 0777, true);
+            }
+            $file->move($destinationPath, $data['file']);
 
+        }
         $data->name_keystore = $request->name_keystore;
         $data->pass_keystore = $request->pass_keystore;
         $data->aliases_keystore= $request->aliases_keystore;
         $data->SHA_256_keystore = $request->SHA_256_keystore;
         $data->note = $request->note;
-
         $data->save();
         return response()->json(['success'=>'Cập nhật thành công']);
     }

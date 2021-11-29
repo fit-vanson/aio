@@ -139,6 +139,7 @@
         $('#createNewProject').click(function () {
             $('#saveBtn').val("create-project");
             $('#project_id').val('');
+            $('#p_buildinfo_keystore').text('');
             $("#avatar").attr("src","img/logo.png");
             $('#projectForm2').trigger("reset");
             $('#template').select2();
@@ -987,6 +988,7 @@
             $('#buildinfo_verstr').val(data[0].buildinfo_verstr);
             $('#buildinfo_app_name_x').val(data[0].buildinfo_app_name_x);
             $('#buildinfo_keystore').val(data[0].buildinfo_keystore);
+            $('#p_buildinfo_keystore').text(data[18].SHA_256_keystore);
             $('#buildinfo_keystore').select2();
             $('#buildinfo_sdk').val(data[0].buildinfo_sdk);
             $('#buildinfo_link_policy_x').val(data[0].buildinfo_link_policy_x);
@@ -1005,6 +1007,7 @@
             $('#Chplay_policy').val(data[0].Chplay_policy);
             $('#Chplay_keystore_profile').val(data[0].Chplay_keystore_profile);
             $('#Chplay_keystore_profile').select2();
+            $('#p_buildinfo_keystore_chplay').text(data[19].SHA_256_keystore);
 
             $('#Amazon_buildinfo_store_name_x').val(data[0].Amazon_buildinfo_store_name_x);
             $('#Amazon_buildinfo_store_name_x').select2();
@@ -1015,6 +1018,7 @@
             $('#Amazon_policy').val(data[0].Amazon_policy);
             $('#Amazon_keystore_profile').val(data[0].Amazon_keystore_profile);
             $('#Amazon_keystore_profile').select2();
+            $('#p_buildinfo_keystore_amazon').text(data[20].SHA_256_keystore);
 
 
 
@@ -1027,6 +1031,7 @@
             $('#Samsung_policy').val(data[0].Samsung_policy);
             $('#Samsung_keystore_profile').val(data[0].Samsung_keystore_profile);
             $('#Samsung_keystore_profile').select2();
+            $('#p_buildinfo_keystore_samsung').text(data[21].SHA_256_keystore);
 
             $('#Xiaomi_buildinfo_store_name_x').val(data[0].Xiaomi_buildinfo_store_name_x);
             $('#Xiaomi_buildinfo_store_name_x').select2();
@@ -1037,6 +1042,7 @@
             $('#Xiaomi_policy').val(data[0].Xiaomi_policy);
             $('#Xiaomi_keystore_profile').val(data[0].Xiaomi_keystore_profile);
             $('#Xiaomi_keystore_profile').select2();
+            $('#p_buildinfo_keystore_xiaomi').text(data[22].SHA_256_keystore);
 
 
             $('#Oppo_buildinfo_store_name_x').val(data[0].Oppo_buildinfo_store_name_x);
@@ -1048,6 +1054,7 @@
             $('#Oppo_policy').val(data[0].Oppo_policy);
             $('#Oppo_keystore_profile').val(data[0].Oppo_keystore_profile);
             $('#Oppo_keystore_profile').select2();
+            $('#p_buildinfo_keystore_oppo').text(data[23].SHA_256_keystore);
 
 
             $('#Vivo_buildinfo_store_name_x').val(data[0].Vivo_buildinfo_store_name_x);
@@ -1059,6 +1066,7 @@
             $('#Vivo_policy').val(data[0].Vivo_policy);
             $('#Vivo_keystore_profile').val(data[0].Vivo_keystore_profile);
             $('#Vivo_keystore_profile').select2();
+            $('#p_buildinfo_keystore_vivo').text(data[24].SHA_256_keystore);
 
             $('#Huawei_buildinfo_store_name_x').val(data[0].Huawei_buildinfo_store_name_x);
             $('#Huawei_buildinfo_store_name_x').select2();
@@ -1069,6 +1077,7 @@
             $('#Huawei_policy').val(data[0].Huawei_policy);
             $('#Huawei_keystore_profile').val(data[0].Huawei_keystore_profile);
             $('#Huawei_keystore_profile').select2();
+            $('#p_buildinfo_keystore_huawei').text(data[25].SHA_256_keystore);
 
             if(data[2] == null){
                 $('#chplay_dev_ga').text('Không có '+ ' | '+ data[10])
@@ -2150,7 +2159,6 @@
             }
         });
     });
-
     $('#Huawei_buildinfo_store_name_x').change(function (){
         var store_name = $(this).val();
         var _token = $('input[name=_token]').val();
@@ -2165,6 +2173,197 @@
             success:function (data){
                 $('#huawei_dev_ga').text(data[0]+ ' | '+ data[1])
 
+            }
+        });
+    });
+
+    $('#buildinfo_keystore').change(function (){
+        var project_id = $('#project_id').val();
+        var buildinfo_keystore = $(this).val();
+        var _token = $('input[name=_token]').val();
+        $.ajax({
+            url: '{{asset('project/select-buildinfo_keystore')}}',
+            type: "post",
+            data: {
+                buildinfo_keystore:buildinfo_keystore,
+                project_id:project_id,
+                _token:_token
+            },
+            success:function (data){
+                var sha_256 = 'null';
+                if(data[0].SHA_256_keystore){
+                    sha_256 = data[0].SHA_256_keystore
+                }
+                $('#p_buildinfo_keystore').text(sha_256)
+                if(data[1].Chplay_keystore_profile == '0' || data[1].Chplay_keystore_profile == null ){
+                    $('#Chplay_keystore_profile').val(data[0].name_keystore);
+                    $('#Chplay_keystore_profile').select2();
+                }
+                if(data[1].Amazon_keystore_profile == '0' || data[1].Amazon_keystore_profile == null ){
+                    $('#Amazon_keystore_profile').val(data[0].name_keystore);
+                    $('#Amazon_keystore_profile').select2();
+                }
+                if(data[1].Samsung_keystore_profile == '0' || data[1].Samsung_keystore_profile == null ){
+                    $('#Samsung_keystore_profile').val(data[0].name_keystore);
+                    $('#Samsung_keystore_profile').select2();
+                }
+                if(data[1].Xiaomi_keystore_profile == '0' || data[1].Xiaomi_keystore_profile == null ){
+                    $('#Xiaomi_keystore_profile').val(data[0].name_keystore);
+                    $('#Xiaomi_keystore_profile').select2();
+                }
+                if(data[1].Oppo_keystore_profile == '0' || data[1].Oppo_keystore_profile == null ){
+                    $('#Oppo_keystore_profile').val(data[0].name_keystore);
+                    $('#Oppo_keystore_profile').select2();
+                }
+                if(data[1].Vivo_keystore_profile == '0' || data[1].Vivo_keystore_profile == null ){
+                    $('#Vivo_keystore_profile').val(data[0].name_keystore);
+                    $('#Vivo_keystore_profile').select2();
+                }
+                if(data[1].Huawei_keystore_profile == '0' || data[1].Huawei_keystore_profile == null ){
+                    $('#Huawei_keystore_profile').val(data[0].name_keystore);
+                    $('#Huawei_keystore_profile').select2();
+                }
+            }
+        });
+    });
+
+    $('#Chplay_keystore_profile').change(function (){
+        var buildinfo_keystore = $(this).val();
+        var _token = $('input[name=_token]').val();
+        $.ajax({
+            url: '{{asset('project/select-buildinfo_keystore')}}',
+            type: "post",
+            data: {
+                buildinfo_keystore:buildinfo_keystore,
+                _token:_token
+            },
+            success:function (data){
+
+                var sha_256 = 'null';
+                if(data[0].SHA_256_keystore){
+                    sha_256 = data[0].SHA_256_keystore
+                }
+                $('#p_buildinfo_keystore_chplay').text(sha_256)
+            }
+        });
+    });
+    $('#Amazon_keystore_profile').change(function (){
+        var buildinfo_keystore = $(this).val();
+        var _token = $('input[name=_token]').val();
+        $.ajax({
+            url: '{{asset('project/select-buildinfo_keystore')}}',
+            type: "post",
+            data: {
+                buildinfo_keystore:buildinfo_keystore,
+                _token:_token
+            },
+            success:function (data){
+
+                var sha_256 = 'null';
+                if(data[0].SHA_256_keystore){
+                    sha_256 = data[0].SHA_256_keystore
+                }
+                $('#p_buildinfo_keystore_amazon').text(sha_256)
+            }
+        });
+    });
+    $('#Samsung_keystore_profile').change(function (){
+        var buildinfo_keystore = $(this).val();
+        var _token = $('input[name=_token]').val();
+        $.ajax({
+            url: '{{asset('project/select-buildinfo_keystore')}}',
+            type: "post",
+            data: {
+                buildinfo_keystore:buildinfo_keystore,
+                _token:_token
+            },
+            success:function (data){
+
+                var sha_256 = 'null';
+                if(data[0].SHA_256_keystore){
+                    sha_256 = data[0].SHA_256_keystore
+                }
+                $('#p_buildinfo_keystore_samsung').text(sha_256)
+            }
+        });
+    });
+    $('#Xiaomi_keystore_profile').change(function (){
+        var buildinfo_keystore = $(this).val();
+        var _token = $('input[name=_token]').val();
+        $.ajax({
+            url: '{{asset('project/select-buildinfo_keystore')}}',
+            type: "post",
+            data: {
+                buildinfo_keystore:buildinfo_keystore,
+                _token:_token
+            },
+            success:function (data){
+
+                var sha_256 = 'null';
+                if(data[0].SHA_256_keystore){
+                    sha_256 = data[0].SHA_256_keystore
+                }
+                $('#p_buildinfo_keystore_xiaomi').text(sha_256)
+            }
+        });
+    });
+    $('#Oppo_keystore_profile').change(function (){
+        var buildinfo_keystore = $(this).val();
+        var _token = $('input[name=_token]').val();
+        $.ajax({
+            url: '{{asset('project/select-buildinfo_keystore')}}',
+            type: "post",
+            data: {
+                buildinfo_keystore:buildinfo_keystore,
+                _token:_token
+            },
+            success:function (data){
+
+                var sha_256 = 'null';
+                if(data[0].SHA_256_keystore){
+                    sha_256 = data[0].SHA_256_keystore
+                }
+                $('#p_buildinfo_keystore_oppo').text(sha_256)
+            }
+        });
+    });
+    $('#Vivo_keystore_profile').change(function (){
+        var buildinfo_keystore = $(this).val();
+        var _token = $('input[name=_token]').val();
+        $.ajax({
+            url: '{{asset('project/select-buildinfo_keystore')}}',
+            type: "post",
+            data: {
+                buildinfo_keystore:buildinfo_keystore,
+                _token:_token
+            },
+            success:function (data){
+
+                var sha_256 = 'null';
+                if(data[0].SHA_256_keystore){
+                    sha_256 = data[0].SHA_256_keystore
+                }
+                $('#p_buildinfo_keystore_vivo').text(sha_256)
+            }
+        });
+    });
+    $('#Huawei_keystore_profile').change(function (){
+        var buildinfo_keystore = $(this).val();
+        var _token = $('input[name=_token]').val();
+        $.ajax({
+            url: '{{asset('project/select-buildinfo_keystore')}}',
+            type: "post",
+            data: {
+                buildinfo_keystore:buildinfo_keystore,
+                _token:_token
+            },
+            success:function (data){
+
+                var sha_256 = 'null';
+                if(data[0].SHA_256_keystore){
+                    sha_256 = data[0].SHA_256_keystore
+                }
+                $('#p_buildinfo_keystore_huawei').text(sha_256)
             }
         });
     });
@@ -2202,7 +2401,6 @@
         }
     }
     function rebuildKeystoreOption(keystore){
-        console.log(keystore)
         var elementSelect = $("#buildinfo_keystore");
 
         if(elementSelect.length <= 0){
@@ -2218,6 +2416,89 @@
             );
         }
     }
+
+
+    document.getElementById("button_buildinfo_keystore").addEventListener("click", copy);
+    document.getElementById("button_buildinfo_keystore_chplay").addEventListener("click", copy_key_chplay);
+    document.getElementById("button_buildinfo_keystore_amazon").addEventListener("click", copy_key_amazon);
+    document.getElementById("button_buildinfo_keystore_samsung").addEventListener("click", copy_key_samsung);
+    document.getElementById("button_buildinfo_keystore_xiaomi").addEventListener("click", copy_key_xiaomi);
+    document.getElementById("button_buildinfo_keystore_oppo").addEventListener("click", copy_key_oppo);
+    document.getElementById("button_buildinfo_keystore_vivo").addEventListener("click", copy_key_vivo);
+    document.getElementById("button_buildinfo_keystore_huawei").addEventListener("click", copy_key_huawei);
+    function copy() {
+        var copyText = document.getElementById("p_buildinfo_keystore");
+        var textArea = document.createElement("textarea");
+        textArea.value = copyText.textContent;
+        document.body.appendChild(textArea);
+        textArea.select();
+        document.execCommand("Copy");
+        textArea.remove();
+    }
+    function copy_key_chplay() {
+        var copyText = document.getElementById("p_buildinfo_keystore_chplay");
+        var textArea = document.createElement("textarea");
+        textArea.value = copyText.textContent;
+        document.body.appendChild(textArea);
+        textArea.select();
+        document.execCommand("Copy");
+        textArea.remove();
+    }
+    function copy_key_amazon() {
+        var copyText = document.getElementById("p_buildinfo_keystore_amazon");
+        var textArea = document.createElement("textarea");
+        textArea.value = copyText.textContent;
+        document.body.appendChild(textArea);
+        textArea.select();
+        document.execCommand("Copy");
+        textArea.remove();
+    }
+    function copy_key_samsung() {
+        var copyText = document.getElementById("p_buildinfo_keystore_samsung");
+        var textArea = document.createElement("textarea");
+        textArea.value = copyText.textContent;
+        document.body.appendChild(textArea);
+        textArea.select();
+        document.execCommand("Copy");
+        textArea.remove();
+    }
+    function copy_key_xiaomi() {
+        var copyText = document.getElementById("p_buildinfo_keystore_xiaomi");
+        var textArea = document.createElement("textarea");
+        textArea.value = copyText.textContent;
+        document.body.appendChild(textArea);
+        textArea.select();
+        document.execCommand("Copy");
+        textArea.remove();
+    }
+    function copy_key_oppo() {
+        var copyText = document.getElementById("p_buildinfo_keystore_oppo");
+        var textArea = document.createElement("textarea");
+        textArea.value = copyText.textContent;
+        document.body.appendChild(textArea);
+        textArea.select();
+        document.execCommand("Copy");
+        textArea.remove();
+    }
+    function copy_key_vivo() {
+        var copyText = document.getElementById("p_buildinfo_keystore_vivo");
+        var textArea = document.createElement("textarea");
+        textArea.value = copyText.textContent;
+        document.body.appendChild(textArea);
+        textArea.select();
+        document.execCommand("Copy");
+        textArea.remove();
+    }
+    function copy_key_huawei() {
+        var copyText = document.getElementById("p_buildinfo_keystore_huawei");
+        var textArea = document.createElement("textarea");
+        textArea.value = copyText.textContent;
+        document.body.appendChild(textArea);
+        textArea.select();
+        document.execCommand("Copy");
+        textArea.remove();
+    }
+
 </script>
 
 

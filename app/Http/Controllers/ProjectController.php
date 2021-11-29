@@ -2844,17 +2844,24 @@ class ProjectController extends Controller
         $policy = Template::select('policy1','policy2')->where('id',$project->template)->first();
         $store_name = Dev::select('store_name','id_ga')->where('id',$project->Chplay_buildinfo_store_name_x)->first();
         $da= Da::select('ma_da')->where('id',$project->ma_da)->first();
+        $keystore= Keystore::where('name_keystore',$project->buildinfo_keystore)->first();
+
+
+        $keystore_chplay= Keystore::where('name_keystore',$project->Chplay_keystore_profile)->first();
+        $keystore_amazon= Keystore::where('name_keystore',$project->Amazon_keystore_profile)->first();
+        $keystore_samsung= Keystore::where('name_keystore',$project->Samsung_keystore_profile)->first();
+        $keystore_xiaomi= Keystore::where('name_keystore',$project->Xiaomi_keystore_profile)->first();
+        $keystore_oppo= Keystore::where('name_keystore',$project->Oppo_keystore_profile)->first();
+        $keystore_vivo= Keystore::where('name_keystore',$project->Vivo_keystore_profile)->first();
+        $keystore_huawei= Keystore::where('name_keystore',$project->Huawei_keystore_profile)->first();
+
         $template= Template::select('template','package','ads','Chplay_category','Amazon_category','Samsung_category','Xiaomi_category','Oppo_category','Vivo_category','Huawei_category')->where('id',$project->template)->first();
-
-
         $store_name_amazon= Dev_Amazon::select('amazon_store_name','amazon_ga_name')->where('id',$project->Amazon_buildinfo_store_name_x)->first();
         $store_name_samsung= Dev_Samsung::select('samsung_store_name','samsung_ga_name')->where('id',$project->Samsung_buildinfo_store_name_x)->first();
         $store_name_xiaomi= Dev_Xiaomi::select('xiaomi_store_name','xiaomi_ga_name')->where('id',$project->Xiaomi_buildinfo_store_name_x)->first();
         $store_name_oppo= Dev_Oppo::select('oppo_store_name','oppo_ga_name')->where('id',$project->Oppo_buildinfo_store_name_x)->first();
         $store_name_vivo= Dev_Vivo::select('vivo_store_name','vivo_ga_name')->where('id',$project->Vivo_buildinfo_store_name_x)->first();
         $store_name_huawei= Dev_Huawei::select('huawei_store_name','huawei_ga_name')->where('id',$project->Huawei_buildinfo_store_name_x)->first();
-
-
         $ga_name_amazon = 'Chưa có';
         $ga_name_chplay = 'Chưa có';
         $ga_name_samsung = 'Chưa có';
@@ -2948,6 +2955,7 @@ class ProjectController extends Controller
             $store_name_amazon,$store_name_samsung,$store_name_xiaomi,$store_name_oppo,$store_name_vivo,
             $ga_name_chplay,$ga_name_amazon,$ga_name_samsung,$ga_name_xiaomi,$ga_name_oppo,$ga_name_vivo,
             $store_name_huawei,$ga_name_huawei,
+            $keystore,$keystore_chplay,$keystore_amazon,$keystore_samsung,$keystore_xiaomi,$keystore_oppo,$keystore_vivo,$keystore_huawei
         ]);
     }
     public function update(Request $request)
@@ -3455,6 +3463,50 @@ class ProjectController extends Controller
         }
         return response()->json([$dev_name_huawei->huawei_dev_name,$ga_name_huawei]);
     }
+
+
+    public function select_buildinfo_keystore(Request $request){
+        $keystore = $request->buildinfo_keystore;
+        $project_id = $request->project_id;
+        $buildinfo_keystore = Keystore::where('name_keystore',$keystore)->first();
+        $project = ProjectModel::where('projectid',$project_id)->first();
+        return response()->json([$buildinfo_keystore,$project]);
+    }
+//    public function select_chplay_buildinfo_keystore(Request $request){
+//            $keystore = $request->buildinfo_keystore;
+//            $buildinfo_keystore = Keystore::where('name_keystore',$keystore)->first();
+//            return response()->json($buildinfo_keystore);
+//    }
+
+//    public function select_amazon_buildinfo_keystore(Request $request){
+//        $keystore = $request->buildinfo_keystore;
+//        $buildinfo_keystore = Keystore::where('name_keystore',$keystore)->first();
+//        return response()->json($buildinfo_keystore);
+//    }
+//
+//    public function select_chplay_buildinfo_keystore(Request $request){
+//        $keystore = $request->buildinfo_keystore;
+//        $buildinfo_keystore = Keystore::where('name_keystore',$keystore)->first();
+//        return response()->json($buildinfo_keystore);
+//    }
+//
+//    public function select_chplay_buildinfo_keystore(Request $request){
+//        $keystore = $request->buildinfo_keystore;
+//        $buildinfo_keystore = Keystore::where('name_keystore',$keystore)->first();
+//        return response()->json($buildinfo_keystore);
+//    }
+//
+//    public function select_chplay_buildinfo_keystore(Request $request){
+//        $keystore = $request->buildinfo_keystore;
+//        $buildinfo_keystore = Keystore::where('name_keystore',$keystore)->first();
+//        return response()->json($buildinfo_keystore);
+//    }
+//
+//    public function select_chplay_buildinfo_keystore(Request $request){
+//        $keystore = $request->buildinfo_keystore;
+//        $buildinfo_keystore = Keystore::where('name_keystore',$keystore)->first();
+//        return response()->json($buildinfo_keystore);
+//    }
 
 
 }
