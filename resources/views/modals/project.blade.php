@@ -1298,29 +1298,20 @@
                                                     </select>
                                                 </div>
                                                 <div class="form-group col-lg-6 ">
-                                                    <label for="name">Link Store </label>
-                                                    <input type="text" id="Huawei_buildinfo_link_store" name="Huawei_buildinfo_link_store" class="form-control" >
+                                                    <label for="name">AppID </label>
+                                                    <input type="text" id="Huawei_appId" name="Huawei_appId" class="form-control" >
                                                 </div>
                                             </div>
                                             <div data-repeater-item="" class="row">
+                                                <div class="form-group col-lg-6 ">
+                                                    <label for="name">Link Store </label>
+                                                    <input type="text" id="Huawei_buildinfo_link_store" name="Huawei_buildinfo_link_store" class="form-control" >
+                                                </div>
                                                 <div class="form-group col-lg-6 input_buildinfo_keystore">
                                                     <label for="name">Email Dev</label>
                                                     <input type="text" id="Huawei_buildinfo_email_dev_x" name="Huawei_buildinfo_email_dev_x" class="form-control" >
                                                 </div>
-                                                <div class="form-group col-lg-6 input_status">
-                                                    <label for="name">Trạng thái Ứng dụng</label>
-                                                    <div>
-                                                        <select class="form-control" id="Huawei_status" name="Huawei_status">
-                                                            <option value="0">Mặc định</option>
-                                                            <option value="1">Publish</option>
-                                                            <option value="2">Suppend</option>
-                                                            <option value="3">UnPublish</option>
-                                                            <option value="4">Remove</option>
-                                                            <option value="5">Reject</option>
-                                                            <option value="6">Check</option>
-                                                        </select>
-                                                    </div>
-                                                </div>
+
                                             </div>
                                             <div data-repeater-item="" class="row">
                                                 <div class="form-group col-lg-6 input_buildinfo_keystore">
@@ -1350,6 +1341,20 @@
                                                         </div>
                                                     </div>
 {{--                                                    <input type="text" id="Huawei_keystore_profile" name="Huawei_keystore_profile" class="form-control" >--}}
+                                                </div>
+                                                <div class="form-group col-lg-6 input_status">
+                                                    <label for="name">Trạng thái Ứng dụng</label>
+                                                    <div>
+                                                        <select class="form-control" id="Huawei_status" name="Huawei_status">
+                                                            <option value="0">Mặc định</option>
+                                                            <option value="1">Publish</option>
+                                                            <option value="2">Suppend</option>
+                                                            <option value="3">UnPublish</option>
+                                                            <option value="4">Remove</option>
+                                                            <option value="5">Reject</option>
+                                                            <option value="6">Check</option>
+                                                        </select>
+                                                    </div>
                                                 </div>
                                             </div>
                                             <span class="card-title-desc" id="p_buildinfo_keystore_huawei"></span>

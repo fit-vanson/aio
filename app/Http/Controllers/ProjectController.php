@@ -2811,6 +2811,7 @@ class ProjectController extends Controller
         $data['Vivo_status'] = 0;
 
         $data['Huawei_package'] = $request->Huawei_package;
+        $data['Huawei_appId'] = $request->Huawei_appId;
         $data['Huawei_buildinfo_store_name_x'] = $request->Huawei_buildinfo_store_name_x;
         $data['Huawei_buildinfo_link_store'] = $request->Huawei_buildinfo_link_store;
         $data['Huawei_buildinfo_email_dev_x'] = $request->Huawei_buildinfo_email_dev_x;
@@ -3191,6 +3192,7 @@ class ProjectController extends Controller
         $data->Vivo_keystore_profile = $request->Vivo_keystore_profile;
 
         $data->Huawei_package = $request->Huawei_package;
+        $data->Huawei_appId = $request->Huawei_appId;
         $data->Huawei_buildinfo_store_name_x = $request->Huawei_buildinfo_store_name_x;
         $data->Huawei_buildinfo_link_store = $request->Huawei_buildinfo_link_store;
         $data->Huawei_buildinfo_link_app = $request->Huawei_buildinfo_link_app;

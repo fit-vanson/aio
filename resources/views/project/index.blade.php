@@ -1097,6 +1097,7 @@
             $('#Huawei_buildinfo_store_name_x').val(data[0].Huawei_buildinfo_store_name_x);
             $('#Huawei_buildinfo_store_name_x').select2();
             $('#Huawei_buildinfo_link_store').val(data[0].Huawei_buildinfo_link_store);
+            $('#Huawei_appId').val(data[0].Huawei_appId);
             $('#Huawei_buildinfo_link_app').val(data[0].Huawei_buildinfo_link_app);
             $('#Huawei_buildinfo_email_dev_x').val(data[0].Huawei_buildinfo_email_dev_x);
             $('#Huawei_status').val(data[0].Huawei_status);
