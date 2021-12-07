@@ -80,9 +80,9 @@ class CronProjectController extends Controller
     public function getPackage(Request $request)
     {
         if ($request->id){
-            $pattern = "/^(com).*/i";
+            $pattern = "/^C+[0-9].*/i";
             $regex = preg_match($pattern,$request->id);
-            if($regex){
+            if($regex != 1){
                 $package = $request->id;
                 $appInfo = new GPlayApps();
                 $existApp =  $appInfo->existsApp($package);
