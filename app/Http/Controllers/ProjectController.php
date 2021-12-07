@@ -2946,7 +2946,9 @@ class ProjectController extends Controller
                     ->join('ngocphandang_ga','ngocphandang_dev_huawei.huawei_ga_name','=','ngocphandang_ga.id')
                     ->where('ngocphandang_dev_huawei.huawei_ga_name',$store_name_huawei->huawei_ga_name)
                     ->first();
-                $ga_name_huawei =$ga_name_huawei->ga_name;
+                if($ga_name_huawei){
+                    $ga_name_huawei =$ga_name_huawei->ga_name;
+                }
             }else{
                 $ga_name_huawei= 'Chưa có';
             }
@@ -3459,7 +3461,9 @@ class ProjectController extends Controller
                 ->join('ngocphandang_ga','ngocphandang_dev_huawei.huawei_ga_name','=','ngocphandang_ga.id')
                 ->where('ngocphandang_dev_huawei.huawei_ga_name',$dev_name_huawei->huawei_ga_name)
                 ->first();
-            $ga_name_huawei =$ga_name_huawei->ga_name;
+            if($ga_name_huawei){
+                $ga_name_huawei =$ga_name_huawei->ga_name;
+            }
         }else{
             $ga_name_huawei = 'Chưa có';
         }
