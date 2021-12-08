@@ -89,7 +89,7 @@
         });
         var table = $('.data-table').DataTable({
             searching: true,
-            displayLength: 5000,
+            displayLength: 500,
             lengthMenu: [500, 1000, 2000, 5000],
             serverSide: true,
             processing: true,
