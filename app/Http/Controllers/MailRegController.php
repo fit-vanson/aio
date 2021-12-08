@@ -46,8 +46,6 @@ class MailRegController extends Controller
                 'ngocphandang_parent.phone'
             )
             ->count();
-        dd($totalRecordswithFilter);
-
         // Get records, also we have included search filter as well
         $records = MailReg::orderBy($columnName, $columnSortOrder)
             ->leftjoin('ngocphandang_parent','ngocphandang_parent.user','=','ngocphandang_gmailreg.mailrecovery')
