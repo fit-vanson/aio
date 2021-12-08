@@ -67,6 +67,7 @@
 <!-- Responsive examples -->
 <script src="plugins/datatables/dataTables.responsive.min.js"></script>
 <script src="plugins/datatables/responsive.bootstrap4.min.js"></script>
+<script type="text/javascript" src="https://cdn.datatables.net/plug-ins/1.11.3/pagination/input.js"></script>
 
 <!-- Datatable init js -->
 <script src="assets/pages/datatables.init.js"></script>
@@ -82,7 +83,8 @@
             }
         });
         var table = $('.data-table').DataTable({
-            displayLength: 5000,
+            displayLength: 500,
+            pagingType: "input",
             lengthMenu: [500, 1000, 2000, 5000],
             searching: true,
             serverSide: true,

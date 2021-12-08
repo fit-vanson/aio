@@ -85,10 +85,7 @@
     <!-- Moment.js: -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.24.0/moment.min.js"></script>
     <script type="text/javascript" charset="utf8" src="https://cdn.datatables.net/plug-ins/1.10.20/sorting/datetime-moment.js"></script>
-
-
-
-
+    <script type="text/javascript" src="https://cdn.datatables.net/plug-ins/1.11.3/pagination/input.js"></script>
     <script type="text/javascript">
         $(function () {
             $.ajaxSetup({
@@ -98,6 +95,7 @@
             });
             var table = $('.data-table').DataTable({
                 processing: true,
+                pagingType: "input",
                 serverSide: true,
                 ajax: "{{ route('gadev.index') }}",
                 columns: [
