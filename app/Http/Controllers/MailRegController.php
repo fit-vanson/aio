@@ -32,7 +32,7 @@ class MailRegController extends Controller
         // Total records
         $totalRecords = MailReg::select('count(*) as allcount')->count();
         $totalRecordswithFilter = MailReg::select('count(*) as allcount')
-            ->rightjoin('ngocphandang_parent','ngocphandang_parent.user','=','ngocphandang_gmailreg.mailrecovery')
+            ->leftjoin('ngocphandang_parent','ngocphandang_parent.user','=','ngocphandang_gmailreg.mailrecovery')
             ->where('ngocphandang_gmailreg.gmail', 'like', '%' . $searchValue . '%')
             ->orWhere('ngocphandang_gmailreg.mailrecovery', 'like', '%' . $searchValue . '%')
             ->orWhere('ngocphandang_gmailreg.ho', 'like', '%' . $searchValue . '%')
