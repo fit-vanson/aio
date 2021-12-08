@@ -39,13 +39,14 @@ class MailRegController extends Controller
             ->orWhere('ngocphandang_gmailreg.ten', 'like', '%' . $searchValue . '%')
             ->orWhere('ngocphandang_gmailreg.birth', 'like', '%' . $searchValue . '%')
             ->orWhere('ngocphandang_gmailreg.timereg', 'like', '%' . $searchValue . '%')
-//            ->select('ngocphandang_gmailreg.*',
-//                'ngocphandang_parent.user',
-//                'ngocphandang_parent.pass as parent_pass',
-//                'ngocphandang_parent.mailrecovery as parent_mailrecovery',
-//                'ngocphandang_parent.phone'
-//            )
+            ->select('ngocphandang_gmailreg.*',
+                'ngocphandang_parent.user',
+                'ngocphandang_parent.pass as parent_pass',
+                'ngocphandang_parent.mailrecovery as parent_mailrecovery',
+                'ngocphandang_parent.phone'
+            )
             ->count();
+        dd($totalRecordswithFilter);
 
         // Get records, also we have included search filter as well
         $records = MailReg::orderBy($columnName, $columnSortOrder)
@@ -56,12 +57,12 @@ class MailRegController extends Controller
             ->orWhere('ngocphandang_gmailreg.ten', 'like', '%' . $searchValue . '%')
             ->orWhere('ngocphandang_gmailreg.birth', 'like', '%' . $searchValue . '%')
             ->orWhere('ngocphandang_gmailreg.timereg', 'like', '%' . $searchValue . '%')
-//            ->select('ngocphandang_gmailreg.*',
-//                'ngocphandang_parent.user',
-//                'ngocphandang_parent.pass as parent_pass',
-//                'ngocphandang_parent.mailrecovery as parent_mailrecovery',
-//                'ngocphandang_parent.phone'
-//            )
+            ->select('ngocphandang_gmailreg.*',
+                'ngocphandang_parent.user',
+                'ngocphandang_parent.pass as parent_pass',
+                'ngocphandang_parent.mailrecovery as parent_mailrecovery',
+                'ngocphandang_parent.phone'
+            )
             ->skip($start)
             ->take($rowperpage)
             ->get();
