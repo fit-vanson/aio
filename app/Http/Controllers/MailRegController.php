@@ -50,7 +50,7 @@ class MailRegController extends Controller
 
         // Get records, also we have included search filter as well
         $records = MailReg::orderBy($columnName, $columnSortOrder)
-            ->join('ngocphandang_parent','ngocphandang_parent.user','=','ngocphandang_gmailreg.mailrecovery')
+            ->leftjoin('ngocphandang_parent','ngocphandang_parent.user','=','ngocphandang_gmailreg.mailrecovery')
             ->where('ngocphandang_gmailreg.gmail', 'like', '%' . $searchValue . '%')
             ->orWhere('ngocphandang_gmailreg.mailrecovery', 'like', '%' . $searchValue . '%')
             ->orWhere('ngocphandang_gmailreg.ho', 'like', '%' . $searchValue . '%')
