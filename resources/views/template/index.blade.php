@@ -84,9 +84,6 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.24.0/moment.min.js"></script>
 <script type="text/javascript" charset="utf8" src="https://cdn.datatables.net/plug-ins/1.10.20/sorting/datetime-moment.js"></script>
 
-
-
-
 <script type="text/javascript">
     $(function () {
         $.ajaxSetup({
@@ -237,30 +234,6 @@
         });
 
     });
-    function showProject(id){
-        var table = $('.data-table').DataTable({
-            destroy: true,
-            displayLength: 50,
-            searching:false,
-            lengthMenu: [5, 10, 25, 50, 75, 100],
-            serverSide: true,
-            ajax: {
-                url : "{{ route('project.getIndex') }}?template="+id,
-                type: "post",
-
-            },
-            columns: [
-                {title: 'Logo',data: 'logo', name: 'logo',orderable: false},
-                {title: 'Tên template',data: 'template', name: 'template'},
-                {title: 'Tên Project',data: 'projectname', name: 'projectname'},
-                {title: 'Package',data: 'package', name: 'package',orderable: false},
-                {title: 'Status',data: 'status', name: 'status',orderable: false},
-
-            ],
-            order: [[1, 'desc' ]],
-        });
-
-    }
 </script>
 
 <script>

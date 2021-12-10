@@ -175,7 +175,6 @@
                 }
 
             });
-
             $(document).on('click','.deleteDev', function (data){
                 var id = $(this).data("id");
 
@@ -202,46 +201,8 @@
                         swal("Đã xóa!", "Your imaginary file has been deleted.", "success");
                     });
             });
-
-
         });
-
-        function showProject(id){
-            var table = $('.data-table').DataTable({
-                destroy: true,
-                displayLength: 50,
-                searching:false,
-                lengthMenu: [5, 10, 25, 50, 75, 100],
-                serverSide: true,
-                ajax: {
-                    url : "{{ route('project.getIndex') }}?dev_chplay="+id,
-                    type: "post",
-                },
-                columns: [
-                    {title: 'Logo',data: 'logo', name: 'logo',orderable: false},
-                    {title: 'Tên Dev name',data: 'Chplay_buildinfo_store_name_x', name: 'Chplay_buildinfo_store_name_x'},
-                    {title: 'Tên Project',data: 'projectname', name: 'projectname'},
-                    {title: 'Package',data: 'package', name: 'package',orderable: false},
-                    {title: 'Package',data: 'package', name: 'package',orderable: false},
-                    {title: 'Package',data: 'package', name: 'package',orderable: false},
-                    {title: 'Package',data: 'package', name: 'package',orderable: false},
-                    {title: 'Package',data: 'package', name: 'package',orderable: false},
-                    {title: 'Status',data: 'status', name: 'status',orderable: false},
-
-                ],
-                columnDefs: [
-                    {
-                        "targets": [ 4,5,6,7 ],
-                        "visible": false
-                    }
-                ],
-                order: [[1, 'desc' ]],
-            });
-
-        }
     </script>
-
-
     <script>
         function editDev(id) {
             $.get('{{asset('dev/edit')}}/'+id,function (data) {
@@ -285,9 +246,7 @@
                 });
             })
         }
-
     </script>
-
     <script>
         $("#addGaDevForm").submit(function (e) {
             e.preventDefault();

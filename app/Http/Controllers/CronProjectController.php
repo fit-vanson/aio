@@ -113,8 +113,6 @@ class CronProjectController extends Controller
                 curl_close($ch);
                 return;
             }
-
-
         }
         return URL::current().'?id=xyz';
     }

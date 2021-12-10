@@ -104,7 +104,7 @@ class DevSamsungController extends Controller
 
             $data_arr[] = array(
                 "samsung_ga_name" => $ga_name,
-                "samsung_dev_name" => '<<a href="/project?q=dev_samsung&id='.$record->id.'"> <span>'.$record->samsung_dev_name.' - ('.$project.')</span></a>',
+                "samsung_dev_name" => '<a href="/project?q=dev_samsung&id='.$record->id.'"> <span>'.$record->samsung_dev_name.' - ('.$project.')</span></a>',
                 "samsung_store_name" => $record->samsung_store_name,
                 "samsung_email"=>$email->gmail,
                 "samsung_pass"=>$record->samsung_pass,

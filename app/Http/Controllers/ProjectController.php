@@ -138,7 +138,7 @@ class ProjectController extends Controller
                     ->get();
 
             }
-            elseif ($q= 'dev_amazon'){
+            elseif ($q == 'dev_amazon'){
                 $totalRecords = ProjectModel::select('count(*) as allcount')->where('Amazon_buildinfo_store_name_x',$request->id)->count();
                 $totalRecordswithFilter = ProjectModel::select('count(*) as allcount')
                     ->where('ngocphandang_project.Amazon_buildinfo_store_name_x',$request->id)
@@ -153,7 +153,7 @@ class ProjectController extends Controller
                     ->get();
 
             }
-            elseif ($q = 'dev_samsung'){
+            elseif ($q == 'dev_samsung'){
                 $totalRecords = ProjectModel::select('count(*) as allcount')->where('Samsung_buildinfo_store_name_x',$request->id)->count();
                 $totalRecordswithFilter = ProjectModel::select('count(*) as allcount')
                     ->where('ngocphandang_project.Samsung_buildinfo_store_name_x',$request->id)
@@ -168,7 +168,7 @@ class ProjectController extends Controller
                     ->get();
 
             }
-            elseif ($q = 'dev_xiaomi'){
+            elseif ($q == 'dev_xiaomi'){
                 $totalRecords = ProjectModel::select('count(*) as allcount')->where('Xiaomi_buildinfo_store_name_x',$request->id)->count();
                 $totalRecordswithFilter = ProjectModel::select('count(*) as allcount')
                     ->where('ngocphandang_project.Xiaomi_buildinfo_store_name_x',$request->id)
@@ -183,7 +183,7 @@ class ProjectController extends Controller
                     ->get();
 
             }
-            elseif ($q = 'dev_oppo'){
+            elseif ($q == 'dev_oppo'){
                 $totalRecords = ProjectModel::select('count(*) as allcount')->where('Oppo_buildinfo_store_name_x',$request->id)->count();
                 $totalRecordswithFilter = ProjectModel::select('count(*) as allcount')
                     ->where('ngocphandang_project.Oppo_buildinfo_store_name_x',$request->id)
@@ -198,7 +198,7 @@ class ProjectController extends Controller
                     ->get();
 
             }
-            elseif ($q = 'dev_vivo'){
+            elseif ($q == 'dev_vivo'){
                 $totalRecords = ProjectModel::select('count(*) as allcount')->where('Vivo_buildinfo_store_name_x',$request->id)->count();
                 $totalRecordswithFilter = ProjectModel::select('count(*) as allcount')
                     ->where('ngocphandang_project.Vivo_buildinfo_store_name_x',$request->id)
@@ -213,7 +213,7 @@ class ProjectController extends Controller
                     ->get();
 
             }
-            elseif ($q = 'dev_huawei'){
+            elseif ($q == 'dev_huawei'){
                 $totalRecords = ProjectModel::select('count(*) as allcount')->where('Huawei_buildinfo_store_name_x',$request->id)->count();
                 $totalRecordswithFilter = ProjectModel::select('count(*) as allcount')
                     ->where('ngocphandang_project.Huawei_buildinfo_store_name_x',$request->id)
@@ -222,6 +222,44 @@ class ProjectController extends Controller
                 // Get records, also we have included search filter as well
                 $records = ProjectModel::orderBy($columnName, $columnSortOrder)
                     ->where('ngocphandang_project.Huawei_buildinfo_store_name_x',$request->id)
+                    ->select('ngocphandang_project.*')
+                    ->skip($start)
+                    ->take($rowperpage)
+                    ->get();
+            }
+            elseif ($q == 'key_store'){
+                $totalRecords = ProjectModel::select('count(*) as allcount')
+                    ->where('buildinfo_keystore',$request->id)
+                    ->orWhere('Chplay_keystore_profile',$request->id)
+                    ->orWhere('Amazon_keystore_profile',$request->id)
+                    ->orWhere('Samsung_keystore_profile',$request->id)
+                    ->orWhere('Xiaomi_keystore_profile',$request->id)
+                    ->orWhere('Oppo_keystore_profile',$request->id)
+                    ->orWhere('Vivo_keystore_profile',$request->id)
+                    ->orWhere('Huawei_keystore_profile',$request->id)
+                    ->count();
+                $totalRecordswithFilter = ProjectModel::select('count(*) as allcount')
+                    ->where('buildinfo_keystore',$request->id)
+                    ->orWhere('Chplay_keystore_profile',$request->id)
+                    ->orWhere('Amazon_keystore_profile',$request->id)
+                    ->orWhere('Samsung_keystore_profile',$request->id)
+                    ->orWhere('Xiaomi_keystore_profile',$request->id)
+                    ->orWhere('Oppo_keystore_profile',$request->id)
+                    ->orWhere('Vivo_keystore_profile',$request->id)
+                    ->orWhere('Huawei_keystore_profile',$request->id)
+                    ->count();
+
+
+                // Get records, also we have included search filter as well
+                $records = ProjectModel::orderBy($columnName, $columnSortOrder)
+                    ->where('buildinfo_keystore',$request->id)
+                    ->orWhere('Chplay_keystore_profile',$request->id)
+                    ->orWhere('Amazon_keystore_profile',$request->id)
+                    ->orWhere('Samsung_keystore_profile',$request->id)
+                    ->orWhere('Xiaomi_keystore_profile',$request->id)
+                    ->orWhere('Oppo_keystore_profile',$request->id)
+                    ->orWhere('Vivo_keystore_profile',$request->id)
+                    ->orWhere('Huawei_keystore_profile',$request->id)
                     ->select('ngocphandang_project.*')
                     ->skip($start)
                     ->take($rowperpage)

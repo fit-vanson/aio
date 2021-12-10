@@ -194,39 +194,6 @@
             });
 
         });
-
-        function showProject(id){
-            var table = $('.data-table').DataTable({
-                destroy: true,
-                displayLength: 50,
-                searching:false,
-                lengthMenu: [5, 10, 25, 50, 75, 100],
-                serverSide: true,
-                ajax: {
-                    url : "{{ route('project.getIndex') }}?dev_xiaomi="+id,
-                    type: "post",
-                },
-                columns: [
-                    {title: 'Logo',data: 'logo', name: 'logo',orderable: false},
-                    {title: 'Tên Dev name',data: 'Amazon_buildinfo_store_name_x', name: 'Amazon_buildinfo_store_name_x'},
-                    {title: 'Tên Project',data: 'projectname', name: 'projectname'},
-                    {title: 'Package',data: 'package', name: 'package',orderable: false},
-                    {title: 'Package',data: 'package', name: 'package',orderable: false},
-                    {title: 'Package',data: 'package', name: 'package',orderable: false},
-                    {title: 'Package',data: 'package', name: 'package',orderable: false},
-                    {title: 'Status',data: 'status', name: 'status',orderable: false},
-
-                ],
-                columnDefs: [
-                    {
-                        "targets": [ 4,5,6 ],
-                        "visible": false
-                    }
-                ],
-                order: [[1, 'desc' ]],
-            });
-
-        }
     </script>
 
 

@@ -64,175 +64,21 @@ class KeystoreController extends Controller
             $btn = $btn.' <a href="javascript:void(0)" data-toggle="tooltip"  data-id="'.$record->id.'" data-original-title="Delete" class="btn btn-danger deleteKeystore"><i class="ti-trash"></i></a>';
 
 
-            $project = DB::table('ngocphandang_keystores')
-                ->join('ngocphandang_project','ngocphandang_keystores.id','=','ngocphandang_project.buildinfo_keystore')
-                ->where('ngocphandang_project.buildinfo_keystore',$record->id)
+            $project = DB::table('ngocphandang_project')
+                ->where('ngocphandang_project.buildinfo_keystore',$record->name_keystore)
+                ->orWhere('ngocphandang_project.Chplay_keystore_profile', $record->name_keystore)
+                ->orWhere('ngocphandang_project.Amazon_keystore_profile', $record->name_keystore)
+                ->orWhere('ngocphandang_project.Samsung_keystore_profile', $record->name_keystore)
+                ->orWhere('ngocphandang_project.Xiaomi_keystore_profile', $record->name_keystore)
+                ->orWhere('ngocphandang_project.Oppo_keystore_profile', $record->name_keystore)
+                ->orWhere('ngocphandang_project.Vivo_keystore_profile', $record->name_keystore)
+                ->orWhere('ngocphandang_project.Huawei_keystore_profile', $record->name_keystore)
                 ->count();
 
-            $template = '<p style="margin: 0"><b>'.$record->template_name.'</b></p>
-                            <a href="javascript:void(0)" onclick="showProject('.$record->id.')"> <span>'.$record->template.' - ('.$project.')</span></a>
-                            <p class="text-muted" style="margin: 0">'.$record->ver_build.'</p>';
-
-
-            if($record['script_copy'] !== Null){
-                $script_copy = "<span style='color:green;'> Script_copy</span> - ";
-            } else {
-                $script_copy = "<span style='color:red;'> Script_copy</span> - ";
-            }
-            if($record['script_img'] !== Null){
-                $script_img = "<span style='color:green;'> IMG</span> - ";
-            } else {
-                $script_img = "<span style='color:red;'> IMG</span> - ";
-            }
-            if($record['script_svg2xml'] !== Null){
-                $script_svg2xml = "<span style='color:green;'> svg2xml</span> - ";
-            } else {
-                $script_svg2xml = "<span style='color:red;'> svg2xml</span> - ";
-            }
-            if($record['script_file'] !== Null){
-                $script_file = "<span style='color:green;'> File</span>";
-            } else {
-                $script_file = "<span style='color:red;'> File</span>";
-            }
-            $script = $script_copy . $script_img. $script_svg2xml .$script_file;
-
-            $ads = json_decode($record->ads,true);
-
-            if(isset($ads['ads_id'])){
-                $ads_id = "<span style='color:green;'> Id</span> - ";
-            }else{
-                $ads_id = "<span style='color:red;'> Id</span> - ";
-            }
-
-            if(isset($ads['ads_banner'])){
-                $ads_banner = "<span style='color:green;'> Banner</span> - ";
-            }else{
-                $ads_banner = "<span style='color:red;'> Banner</span> - ";
-            }
-
-            if(isset($ads['ads_inter'])){
-                $ads_inter = "<span style='color:green;'> Inter</span> - ";
-            }else{
-                $ads_inter = "<span style='color:red;'> Inter</span> - ";
-            }
-
-            if(isset($ads['ads_reward'])){
-                $ads_reward = "<span style='color:green;'> Reward</span> - ";
-            }else{
-                $ads_reward = "<span style='color:red;'> Reward</span> - ";
-            }
-
-            if(isset($ads['ads_native'])){
-                $ads_native = "<span style='color:green;'> Native</span> - ";
-            }else{
-                $ads_native = "<span style='color:red;'> Native</span> - ";
-            }
-
-            if(isset($ads['ads_open'])){
-                $ads_open = "<span style='color:green;'> Open</span> - ";
-            }else{
-                $ads_open = "<span style='color:red;'> Open</span> - ";
-            }
-
-            if(isset($ads['ads_start'])){
-                $ads_start = "<span style='color:green;'> Start</span>";
-            }else{
-                $ads_start = "<span style='color:red;'> Start</span>";
-            }
-            $ads ='<br>'.$ads_id.$ads_banner.$ads_inter.$ads_reward.$ads_native.$ads_open.$ads_start;
-
-
-            if($record->convert_aab != 0){
-                $convert_aab = '<br>'. "<span style='color:green;'> Aab</span>";
-            }else{
-                $convert_aab = '<br>'. "<span style='color:red;'> Aab</span>";
-            }
-
-            if($record->startus == 0){
-                $startus = '<br>'. "<span style='color:green;'> Status</span>";
-            }else{
-                $startus = '<br>'. "<span style='color:red;'> Status</span>";
-            }
-
-            if($record->time_create == 0 ){
-                $time_create =   null;
-            }else{
-                $time_create =  date( 'd/m/Y',$record->time_create);
-            }
-
-            if($record->time_update == 0 ){
-                $time_update =   null;
-            }else{
-                $time_update =  date( 'd/m/Y',$record->time_update);
-            }
-
-            if($record->time_get == 0 ){
-                $time_get =   null;
-            }else{
-                $time_get =  date( 'd/m/Y',$record->time_get);
-            }
-            if(isset($record->Chplay_category)){
-                $Chplay_category = 'CH Play: '.$record->Chplay_category;
-            }else{
-                $Chplay_category ='';
-            }
-
-            if(isset($record->Amazon_category)){
-                $Amazon_category = 'Amazon: '.$record->Amazon_category;
-            }else{
-                $Amazon_category ='';
-            }
-
-            if(isset($record->Samsung_category)){
-                $Samsung_category = 'Samsung: '.$record->Samsung_category;
-            }else{
-                $Samsung_category ='';
-            }
-
-            if(isset($record->Xiaomi_category)){
-                $Xiaomi_category = 'Xiaomi: '.$record->Xiaomi_category;
-            }else{
-                $Xiaomi_category ='';
-            }
-
-            if(isset($record->Oppo_category)){
-                $Oppo_category = 'Oppo: '.$record->Oppo_category;
-            }else{
-                $Oppo_category ='';
-            }
-
-            if(isset($record->Vivo_category)){
-                $Vivo_category = 'Vivo: '.$record->Vivo_category;
-            }else{
-                $Vivo_category ='';
-            }
-
-            if(isset($record->Huawei_category)){
-                $Huawei_category = 'Huawei: '.$record->Huawei_category;
-            }else{
-                $Huawei_category ='';
-            }
-
-
-            if ($record->link_chplay !== null){
-                $link= "<a  target= _blank href='$record->link_chplay'>Link</a>";
-            }
-            else{
-                $link = null;
-            }
-
-            if(isset($record->logo)){
-                if (isset($record->link_store_vietmmo)){
-                    $logo = "<a href='".$record->link_store_vietmmo."' target='_blank'>  <img class='rounded mx-auto d-block'  width='100px'  height='100px'  src='../uploads/template/$record->template/thumbnail/$record->logo'></a>";
-                }else{
-                    $logo = "<img class='rounded mx-auto d-block'  width='100px'  height='100px'  src='../uploads/template/$record->template/thumbnail/$record->logo'>";
-                }
-            }else{
-                $logo = '<img class="rounded mx-auto d-block" width="100px" height="100px" src="assets\images\logo-sm.png">';
-            }
 
             $data_arr[] = array(
-                "name_keystore" => $record->name_keystore,
+//                "name_keystore" => $record->name_keystore,
+                "name_keystore" => '<a href="/project?q=key_store&id='.$record->name_keystore.'"> <span>'.$record->name_keystore.' - ('.$project.')</span></a>',
                 "pass_keystore" => $record->pass_keystore,
                 "aliases_keystore" => $record->aliases_keystore,
                 "SHA_256_keystore" => $record->SHA_256_keystore,
