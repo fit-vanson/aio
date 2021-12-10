@@ -232,38 +232,6 @@
                 });
             });
         });
-        function showProject(id){
-            var table = $('.data-table').DataTable({
-                destroy: true,
-                displayLength: 50,
-                searching:false,
-                lengthMenu: [5, 10, 25, 50, 75, 100],
-                serverSide: true,
-                ajax: {
-                    url : "{{ route('project.getIndex') }}?ma_da="+id,
-                    type: "post",
-
-                },
-                columns: [
-                    {data: 'created_at', name: 'created_at',},
-                    {title: 'logo',data: 'logo', name: 'logo',orderable: false},
-                    {title: 'Tên Project',data: 'projectname', name: 'projectname'},
-                    {title: 'Package',data: 'package', name: 'package',orderable: false},
-                    {title: 'Status',data: 'status', name: 'status',orderable: false},
-                    {title: 'Status',data: 'status', name: 'status',orderable: false},
-                    {title: 'Action',data: 'action', name: 'action', orderable: false, searchable: false},
-                ],
-                columnDefs: [
-                    {
-                        "targets": [ 0,4,6],
-                        "visible": false,
-                        "searchable": false
-                    }
-                ],
-                order: [[ 0, 'desc' ]],
-            });
-
-        }
     </script>
 @endsection
 

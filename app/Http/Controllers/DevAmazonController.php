@@ -100,7 +100,7 @@ class DevAmazonController extends Controller
             }
             $data_arr[] = array(
                 "amazon_ga_name" => $ga_name,
-                "amazon_dev_name" => '<a href="javascript:void(0)" onclick="showProject('.$record->id.')"> <span>'.$record->amazon_dev_name.' - ('.$project.')</span></a>',
+                "amazon_dev_name" => '<<a href="/project?q=dev_amazon&id='.$record->id.'"> <span>'.$record->amazon_dev_name.' - ('.$project.')</span></a>',
                 "amazon_store_name" => $record->amazon_store_name,
                 "amazon_email"=>$email->gmail,
                 "amazon_pass"=>$record->amazon_pass,

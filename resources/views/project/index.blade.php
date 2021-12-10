@@ -108,13 +108,16 @@
                 'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
             }
         });
+        var url = window.location.href;
+        var hash = url.substring(url.indexOf('?')+1);
+        console.log(hash);
         var table = $('.data-table').DataTable({
             displayLength: 50,
             lengthMenu: [5, 10, 25, 50, 75, 100],
             // processing: true,
             serverSide: true,
             ajax: {
-                url: "{{ route('project.getIndex') }}",
+                url: "{{ route('project.getIndex')}}?"+hash,
                 type: "post"
             },
             columns: [

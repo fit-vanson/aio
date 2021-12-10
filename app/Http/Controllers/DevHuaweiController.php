@@ -111,7 +111,7 @@ class DevHuaweiController extends Controller
 
             $data_arr[] = array(
                 "huawei_ga_name" => $ga_name,
-                "huawei_dev_name" => '<a href="javascript:void(0)" onclick="showProject('.$record->id.')"> <span>'.$record->huawei_dev_name.' - ('.$project.')</span></a>',
+                "huawei_dev_name" => '<<a href="/project?q=dev_huawei&id='.$record->id.'"> <span>'.$record->huawei_dev_name.' - ('.$project.')</span></a>',
                 "huawei_store_name" => $record->huawei_store_name,
                 "huawei_email"=>$email->gmail,
                 "huawei_pass"=>$record->huawei_pass,

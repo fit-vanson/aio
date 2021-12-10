@@ -81,7 +81,7 @@ class TemplateController extends Controller
                 ->count();
 
             $template = '<p style="margin: 0"><b>'.$record->template_name.'</b></p>
-                            <a href="javascript:void(0)" onclick="showProject('.$record->id.')"> <span>'.$record->template.' - ('.$project.')</span></a>
+                            <a href="/project?q=template&id='.$record->id.'"> <span>'.$record->template.' - ('.$project.')</span></a>
                             <p class="text-muted" style="margin: 0">'.$record->ver_build.'</p>';
 
 

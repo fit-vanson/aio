@@ -111,7 +111,7 @@ class DevXiaomiController extends Controller
 
             $data_arr[] = array(
                 "xiaomi_ga_name" => $ga_name,
-                "xiaomi_dev_name" => '<a href="javascript:void(0)" onclick="showProject('.$record->id.')"> <span>'.$record->xiaomi_dev_name.' - ('.$project.')</span></a>',
+                "xiaomi_dev_name" => '<<a href="/project?q=dev_xiaomi&id='.$record->id.'"> <span>'.$record->xiaomi_dev_name.' - ('.$project.')</span></a>',
                 "xiaomi_store_name" => $record->xiaomi_store_name,
                 "xiaomi_email"=>$email->gmail,
                 "xiaomi_pass"=>$record->xiaomi_pass,

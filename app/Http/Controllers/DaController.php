@@ -32,7 +32,9 @@ class DaController extends Controller
                         ->join('ngocphandang_project','ngocphandang_da.id','=','ngocphandang_project.ma_da')
                         ->where('ngocphandang_project.ma_da',$row->id)
                         ->count();
-                    return '<a href="javascript:void(0)" onclick="showProject('.$row->id.')">'.$row->ma_da.'  - ('.$project.')</a>';
+//                    return '<a href="javascript:void(0)" onclick="showProject('.$row->id.')">'.$row->ma_da.'  - ('.$project.')</a>';
+                    return '<a href="/project?q=ma_da&id='.$row->id.'" >'.$row->ma_da.'  - ('.$project.')</a>';
+//                    http://localhost/aio1/project
 
                 })
                 ->rawColumns(['action','link_store_vietmmo','ma_da'])

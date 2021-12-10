@@ -46,7 +46,6 @@ class KeystoreController extends Controller
             ->orWhere('note', 'like', '%' . $searchValue . '%')
             ->count();
 
-
         // Get records, also we have included search filter as well
         $records = Keystore::orderBy($columnName, $columnSortOrder)
             ->where('name_keystore', 'like', '%' . $searchValue . '%')

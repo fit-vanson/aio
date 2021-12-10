@@ -93,178 +93,141 @@ class ProjectController extends Controller
         $columnName = $columnName_arr[$columnIndex]['data']; // Column name
         $columnSortOrder = $order_arr[0]['dir']; // asc or desc
         $searchValue = $search_arr['value']; // Search value
+        if(isset($request->q)){
+            $q = $request->q;
+            if($q == 'ma_da'){
+               $totalRecords = ProjectModel::select('count(*) as allcount')->where('ma_da',$request->id)->count();
+               $totalRecordswithFilter = ProjectModel::select('count(*) as allcount')
+                   ->where('ngocphandang_project.ma_da',$request->id)
+                   ->count();
 
-        if(isset($request->ma_da)){
-            $totalRecords = ProjectModel::select('count(*) as allcount')->where('ma_da',$request->ma_da)->count();
-            $totalRecordswithFilter = ProjectModel::select('count(*) as allcount')
-                ->leftjoin('ngocphandang_da','ngocphandang_da.id','=','ngocphandang_project.ma_da')
-                ->leftjoin('ngocphandang_template','ngocphandang_template.id','=','ngocphandang_project.template')
-                ->where('ngocphandang_project.ma_da',$request->ma_da)
-                ->count();
+               // Get records, also we have included search filter as well
+               $records = ProjectModel::orderBy($columnName, $columnSortOrder)
+                   ->where('ngocphandang_project.ma_da',$request->id)
+                   ->select('ngocphandang_project.*')
+                   ->skip($start)
+                   ->take($rowperpage)
+                   ->get();
+           }
+            elseif ($q =='template'){
+                $totalRecords = ProjectModel::select('count(*) as allcount')->where('template',$request->id)->count();
+                $totalRecordswithFilter = ProjectModel::select('count(*) as allcount')
+                    ->where('ngocphandang_project.template',$request->id)
+                    ->count();
 
-            // Get records, also we have included search filter as well
-            $records = ProjectModel::orderBy($columnName, $columnSortOrder)
-                ->leftjoin('ngocphandang_da','ngocphandang_da.id','=','ngocphandang_project.ma_da')
-                ->leftjoin('ngocphandang_template','ngocphandang_template.id','=','ngocphandang_project.template') ->where('ngocphandang_da.ma_da', 'like', '%' . $searchValue . '%')
-                ->where('ngocphandang_project.ma_da',$request->ma_da)
-                ->select('ngocphandang_project.*')
-                ->skip($start)
-                ->take($rowperpage)
-                ->get();
-        }
-        elseif (isset($request->template)){
-        $totalRecords = ProjectModel::select('count(*) as allcount')->where('ma_da',$request->ma_da)->count();
-        $totalRecordswithFilter = ProjectModel::select('count(*) as allcount')
-            ->leftjoin('ngocphandang_da','ngocphandang_da.id','=','ngocphandang_project.ma_da')
-            ->leftjoin('ngocphandang_template','ngocphandang_template.id','=','ngocphandang_project.template')
-            ->where('ngocphandang_project.template',$request->template)
-            ->count();
+                // Get records, also we have included search filter as well
+                $records = ProjectModel::orderBy($columnName, $columnSortOrder)
+                    ->where('ngocphandang_project.template',$request->id)
+                    ->select('ngocphandang_project.*')
+                    ->skip($start)
+                    ->take($rowperpage)
+                    ->get();
+            }
+            elseif ($q == 'dev_chplay'){
+                $totalRecords = ProjectModel::select('count(*) as allcount')->where('Chplay_buildinfo_store_name_x',$request->id)->count();
+                $totalRecordswithFilter = ProjectModel::select('count(*) as allcount')
+                    ->where('ngocphandang_project.Chplay_buildinfo_store_name_x',$request->id)
+                    ->count();
 
-        // Get records, also we have included search filter as well
-        $records = ProjectModel::orderBy($columnName, $columnSortOrder)
-            ->leftjoin('ngocphandang_da','ngocphandang_da.id','=','ngocphandang_project.ma_da')
-            ->leftjoin('ngocphandang_template','ngocphandang_template.id','=','ngocphandang_project.template') ->where('ngocphandang_da.ma_da', 'like', '%' . $searchValue . '%')
-            ->where('ngocphandang_project.template',$request->template)
-            ->select('ngocphandang_project.*')
-            ->skip($start)
-            ->take($rowperpage)
-            ->get();
+                // Get records, also we have included search filter as well
+                $records = ProjectModel::orderBy($columnName, $columnSortOrder)
+                    ->where('ngocphandang_project.Chplay_buildinfo_store_name_x',$request->id)
+                    ->select('ngocphandang_project.*')
+                    ->skip($start)
+                    ->take($rowperpage)
+                    ->get();
 
-        }
-        elseif (isset($request->dev_chplay)){
-            $totalRecords = ProjectModel::select('count(*) as allcount')->where('ma_da',$request->ma_da)->count();
-            $totalRecordswithFilter = ProjectModel::select('count(*) as allcount')
-                ->leftjoin('ngocphandang_da','ngocphandang_da.id','=','ngocphandang_project.ma_da')
-                ->leftjoin('ngocphandang_template','ngocphandang_template.id','=','ngocphandang_project.template')
-                ->where('ngocphandang_project.Chplay_buildinfo_store_name_x',$request->dev_chplay)
-                ->count();
+            }
+            elseif ($q= 'dev_amazon'){
+                $totalRecords = ProjectModel::select('count(*) as allcount')->where('Amazon_buildinfo_store_name_x',$request->id)->count();
+                $totalRecordswithFilter = ProjectModel::select('count(*) as allcount')
+                    ->where('ngocphandang_project.Amazon_buildinfo_store_name_x',$request->id)
+                    ->count();
 
-            // Get records, also we have included search filter as well
-            $records = ProjectModel::orderBy($columnName, $columnSortOrder)
-                ->leftjoin('ngocphandang_da','ngocphandang_da.id','=','ngocphandang_project.ma_da')
-                ->leftjoin('ngocphandang_template','ngocphandang_template.id','=','ngocphandang_project.template') ->where('ngocphandang_da.ma_da', 'like', '%' . $searchValue . '%')
-                ->where('ngocphandang_project.Chplay_buildinfo_store_name_x',$request->dev_chplay)
-                ->select('ngocphandang_project.*')
-                ->skip($start)
-                ->take($rowperpage)
-                ->get();
+                // Get records, also we have included search filter as well
+                $records = ProjectModel::orderBy($columnName, $columnSortOrder)
+                    ->where('ngocphandang_project.Amazon_buildinfo_store_name_x',$request->id)
+                    ->select('ngocphandang_project.*')
+                    ->skip($start)
+                    ->take($rowperpage)
+                    ->get();
 
-        }
-        elseif (isset($request->dev_amazon)){
-            $totalRecords = ProjectModel::select('count(*) as allcount')->where('ma_da',$request->ma_da)->count();
-            $totalRecordswithFilter = ProjectModel::select('count(*) as allcount')
-                ->leftjoin('ngocphandang_da','ngocphandang_da.id','=','ngocphandang_project.ma_da')
-                ->leftjoin('ngocphandang_template','ngocphandang_template.id','=','ngocphandang_project.template')
-                ->where('ngocphandang_project.Amazon_buildinfo_store_name_x',$request->dev_amazon)
-                ->count();
+            }
+            elseif ($q = 'dev_samsung'){
+                $totalRecords = ProjectModel::select('count(*) as allcount')->where('Samsung_buildinfo_store_name_x',$request->id)->count();
+                $totalRecordswithFilter = ProjectModel::select('count(*) as allcount')
+                    ->where('ngocphandang_project.Samsung_buildinfo_store_name_x',$request->id)
+                    ->count();
 
-            // Get records, also we have included search filter as well
-            $records = ProjectModel::orderBy($columnName, $columnSortOrder)
-                ->leftjoin('ngocphandang_da','ngocphandang_da.id','=','ngocphandang_project.ma_da')
-                ->leftjoin('ngocphandang_template','ngocphandang_template.id','=','ngocphandang_project.template') ->where('ngocphandang_da.ma_da', 'like', '%' . $searchValue . '%')
-                ->where('ngocphandang_project.Amazon_buildinfo_store_name_x',$request->dev_amazon)
-                ->select('ngocphandang_project.*')
-                ->skip($start)
-                ->take($rowperpage)
-                ->get();
+                // Get records, also we have included search filter as well
+                $records = ProjectModel::orderBy($columnName, $columnSortOrder)
+                    ->where('ngocphandang_project.Samsung_buildinfo_store_name_x',$request->id)
+                    ->select('ngocphandang_project.*')
+                    ->skip($start)
+                    ->take($rowperpage)
+                    ->get();
 
-        }
-        elseif (isset($request->dev_samsung)){
-            $totalRecords = ProjectModel::select('count(*) as allcount')->where('ma_da',$request->ma_da)->count();
-            $totalRecordswithFilter = ProjectModel::select('count(*) as allcount')
-                ->leftjoin('ngocphandang_da','ngocphandang_da.id','=','ngocphandang_project.ma_da')
-                ->leftjoin('ngocphandang_template','ngocphandang_template.id','=','ngocphandang_project.template')
-                ->where('ngocphandang_project.Samsung_buildinfo_store_name_x',$request->dev_samsung)
-                ->count();
+            }
+            elseif ($q = 'dev_xiaomi'){
+                $totalRecords = ProjectModel::select('count(*) as allcount')->where('Xiaomi_buildinfo_store_name_x',$request->id)->count();
+                $totalRecordswithFilter = ProjectModel::select('count(*) as allcount')
+                    ->where('ngocphandang_project.Xiaomi_buildinfo_store_name_x',$request->id)
+                    ->count();
 
-            // Get records, also we have included search filter as well
-            $records = ProjectModel::orderBy($columnName, $columnSortOrder)
-                ->leftjoin('ngocphandang_da','ngocphandang_da.id','=','ngocphandang_project.ma_da')
-                ->leftjoin('ngocphandang_template','ngocphandang_template.id','=','ngocphandang_project.template') ->where('ngocphandang_da.ma_da', 'like', '%' . $searchValue . '%')
-                ->where('ngocphandang_project.Samsung_buildinfo_store_name_x',$request->dev_samsung)
-                ->select('ngocphandang_project.*')
-                ->skip($start)
-                ->take($rowperpage)
-                ->get();
+                // Get records, also we have included search filter as well
+                $records = ProjectModel::orderBy($columnName, $columnSortOrder)
+                    ->where('ngocphandang_project.Xiaomi_buildinfo_store_name_x',$request->id)
+                    ->select('ngocphandang_project.*')
+                    ->skip($start)
+                    ->take($rowperpage)
+                    ->get();
 
-        }
-        elseif (isset($request->dev_xiaomi)){
-            $totalRecords = ProjectModel::select('count(*) as allcount')->where('ma_da',$request->ma_da)->count();
-            $totalRecordswithFilter = ProjectModel::select('count(*) as allcount')
-                ->leftjoin('ngocphandang_da','ngocphandang_da.id','=','ngocphandang_project.ma_da')
-                ->leftjoin('ngocphandang_template','ngocphandang_template.id','=','ngocphandang_project.template')
-                ->where('ngocphandang_project.Xiaomi_buildinfo_store_name_x',$request->dev_xiaomi)
-                ->count();
+            }
+            elseif ($q = 'dev_oppo'){
+                $totalRecords = ProjectModel::select('count(*) as allcount')->where('Oppo_buildinfo_store_name_x',$request->id)->count();
+                $totalRecordswithFilter = ProjectModel::select('count(*) as allcount')
+                    ->where('ngocphandang_project.Oppo_buildinfo_store_name_x',$request->id)
+                    ->count();
 
-            // Get records, also we have included search filter as well
-            $records = ProjectModel::orderBy($columnName, $columnSortOrder)
-                ->leftjoin('ngocphandang_da','ngocphandang_da.id','=','ngocphandang_project.ma_da')
-                ->leftjoin('ngocphandang_template','ngocphandang_template.id','=','ngocphandang_project.template') ->where('ngocphandang_da.ma_da', 'like', '%' . $searchValue . '%')
-                ->where('ngocphandang_project.Xiaomi_buildinfo_store_name_x',$request->dev_xiaomi)
-                ->select('ngocphandang_project.*')
-                ->skip($start)
-                ->take($rowperpage)
-                ->get();
+                // Get records, also we have included search filter as well
+                $records = ProjectModel::orderBy($columnName, $columnSortOrder)
+                    ->where('ngocphandang_project.Oppo_buildinfo_store_name_x',$request->id)
+                    ->select('ngocphandang_project.*')
+                    ->skip($start)
+                    ->take($rowperpage)
+                    ->get();
 
-        }
-        elseif (isset($request->dev_oppo)){
-            $totalRecords = ProjectModel::select('count(*) as allcount')->where('ma_da',$request->ma_da)->count();
-            $totalRecordswithFilter = ProjectModel::select('count(*) as allcount')
-                ->leftjoin('ngocphandang_da','ngocphandang_da.id','=','ngocphandang_project.ma_da')
-                ->leftjoin('ngocphandang_template','ngocphandang_template.id','=','ngocphandang_project.template')
-                ->where('ngocphandang_project.Oppo_buildinfo_store_name_x',$request->dev_oppo)
-                ->count();
+            }
+            elseif ($q = 'dev_vivo'){
+                $totalRecords = ProjectModel::select('count(*) as allcount')->where('Vivo_buildinfo_store_name_x',$request->id)->count();
+                $totalRecordswithFilter = ProjectModel::select('count(*) as allcount')
+                    ->where('ngocphandang_project.Vivo_buildinfo_store_name_x',$request->id)
+                    ->count();
 
-            // Get records, also we have included search filter as well
-            $records = ProjectModel::orderBy($columnName, $columnSortOrder)
-                ->leftjoin('ngocphandang_da','ngocphandang_da.id','=','ngocphandang_project.ma_da')
-                ->leftjoin('ngocphandang_template','ngocphandang_template.id','=','ngocphandang_project.template') ->where('ngocphandang_da.ma_da', 'like', '%' . $searchValue . '%')
-                ->where('ngocphandang_project.Oppo_buildinfo_store_name_x',$request->dev_oppo)
-                ->select('ngocphandang_project.*')
-                ->skip($start)
-                ->take($rowperpage)
-                ->get();
+                // Get records, also we have included search filter as well
+                $records = ProjectModel::orderBy($columnName, $columnSortOrder)
+                    ->where('ngocphandang_project.Vivo_buildinfo_store_name_x',$request->id)
+                    ->select('ngocphandang_project.*')
+                    ->skip($start)
+                    ->take($rowperpage)
+                    ->get();
 
-        }
-        elseif (isset($request->dev_vivo)){
-            $totalRecords = ProjectModel::select('count(*) as allcount')->where('ma_da',$request->ma_da)->count();
-            $totalRecordswithFilter = ProjectModel::select('count(*) as allcount')
-                ->leftjoin('ngocphandang_da','ngocphandang_da.id','=','ngocphandang_project.ma_da')
-                ->leftjoin('ngocphandang_template','ngocphandang_template.id','=','ngocphandang_project.template')
-                ->where('ngocphandang_project.Vivo_buildinfo_store_name_x',$request->dev_vivo)
-                ->count();
+            }
+            elseif ($q = 'dev_huawei'){
+                $totalRecords = ProjectModel::select('count(*) as allcount')->where('Huawei_buildinfo_store_name_x',$request->id)->count();
+                $totalRecordswithFilter = ProjectModel::select('count(*) as allcount')
+                    ->where('ngocphandang_project.Huawei_buildinfo_store_name_x',$request->id)
+                    ->count();
 
-            // Get records, also we have included search filter as well
-            $records = ProjectModel::orderBy($columnName, $columnSortOrder)
-                ->leftjoin('ngocphandang_da','ngocphandang_da.id','=','ngocphandang_project.ma_da')
-                ->leftjoin('ngocphandang_template','ngocphandang_template.id','=','ngocphandang_project.template') ->where('ngocphandang_da.ma_da', 'like', '%' . $searchValue . '%')
-                ->where('ngocphandang_project.Vivo_buildinfo_store_name_x',$request->dev_vivo)
-                ->select('ngocphandang_project.*')
-                ->skip($start)
-                ->take($rowperpage)
-                ->get();
-
-        }
-        elseif (isset($request->dev_huawei)){
-            $totalRecords = ProjectModel::select('count(*) as allcount')->where('ma_da',$request->ma_da)->count();
-            $totalRecordswithFilter = ProjectModel::select('count(*) as allcount')
-                ->leftjoin('ngocphandang_da','ngocphandang_da.id','=','ngocphandang_project.ma_da')
-                ->leftjoin('ngocphandang_template','ngocphandang_template.id','=','ngocphandang_project.template')
-                ->where('ngocphandang_project.Huawei_buildinfo_store_name_x',$request->dev_huawei)
-                ->count();
-
-            // Get records, also we have included search filter as well
-            $records = ProjectModel::orderBy($columnName, $columnSortOrder)
-                ->leftjoin('ngocphandang_da','ngocphandang_da.id','=','ngocphandang_project.ma_da')
-                ->leftjoin('ngocphandang_template','ngocphandang_template.id','=','ngocphandang_project.template') ->where('ngocphandang_da.ma_da', 'like', '%' . $searchValue . '%')
-                ->where('ngocphandang_project.Huawei_buildinfo_store_name_x',$request->dev_huawei)
-                ->select('ngocphandang_project.*')
-                ->skip($start)
-                ->take($rowperpage)
-                ->get();
-
-        }
-        else{
+                // Get records, also we have included search filter as well
+                $records = ProjectModel::orderBy($columnName, $columnSortOrder)
+                    ->where('ngocphandang_project.Huawei_buildinfo_store_name_x',$request->id)
+                    ->select('ngocphandang_project.*')
+                    ->skip($start)
+                    ->take($rowperpage)
+                    ->get();
+            }
+        }else{
             $totalRecords = ProjectModel::select('count(*) as allcount')->count();
             $totalRecordswithFilter = ProjectModel::select('count(*) as allcount')
                 ->leftjoin('ngocphandang_da','ngocphandang_da.id','=','ngocphandang_project.ma_da')
@@ -343,7 +306,8 @@ class ProjectController extends Controller
             // Get records, also we have included search filter as well
             $records = ProjectModel::with('log')->orderBy($columnName, $columnSortOrder)
                 ->leftjoin('ngocphandang_da','ngocphandang_da.id','=','ngocphandang_project.ma_da')
-                ->leftjoin('ngocphandang_template','ngocphandang_template.id','=','ngocphandang_project.template') ->where('ngocphandang_da.ma_da', 'like', '%' . $searchValue . '%')
+                ->leftjoin('ngocphandang_template','ngocphandang_template.id','=','ngocphandang_project.template')
+                ->where('ngocphandang_da.ma_da', 'like', '%' . $searchValue . '%')
                 ->orWhere('ngocphandang_project.projectname', 'like', '%' . $searchValue . '%')
                 ->orWhere('ngocphandang_project.title_app', 'like', '%' . $searchValue . '%')
                 ->orWhere('ngocphandang_project.buildinfo_keystore', 'like', '%' . $searchValue . '%')
@@ -420,6 +384,7 @@ class ProjectController extends Controller
                 ->get();
 
         }
+
         // Total records
         $data_arr = array();
         foreach ($records as $record) {
@@ -1048,6 +1013,7 @@ class ProjectController extends Controller
                 "action"=> $btn,
             );
         }
+
         $response = array(
             "draw" => intval($draw),
             "iTotalRecords" => $totalRecords,

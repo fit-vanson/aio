@@ -157,7 +157,7 @@ class DevController extends Controller
             $data_arr[] = array(
                 "info_logo" => $logo,
                 "ga_name" => $ga_name,
-                "dev_name" => '<a href="javascript:void(0)" onclick="showProject('.$record->id.')"> <span>'.$record->dev_name.' - ('.$project.')</span></a>
+                "dev_name" => '<a href="/project?q=dev_chplay&id='.$record->id.'"> <span>'.$record->dev_name.' - ('.$project.')</span></a>
  <p style="margin: auto"class="text-muted ">'.$record->store_name.'</p>',
                 "gmail_gadev_chinh"=> $gmail.$gmail1.$gmail2,
                 "pass" =>$record->pass,

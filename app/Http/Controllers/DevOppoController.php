@@ -113,7 +113,7 @@ class DevOppoController extends Controller
 
             $data_arr[] = array(
                 "oppo_ga_name" => $ga_name,
-                "oppo_dev_name" => '<a href="javascript:void(0)" onclick="showProject('.$record->id.')"> <span>'.$record->oppo_dev_name.' - ('.$project.')</span></a>',
+                "oppo_dev_name" => '<<a href="/project?q=dev_oppo&id='.$record->id.'"> <span>'.$record->oppo_dev_name.' - ('.$project.')</span></a>',
                 "oppo_store_name" => $record->oppo_store_name,
                 "oppo_email"=>$email->gmail,
                 "oppo_pass"=>$record->oppo_pass,
