@@ -112,7 +112,7 @@ class DevVivoController extends Controller
 
             $data_arr[] = array(
                 "vivo_ga_name" => $ga_name,
-                "vivo_dev_name" => '<a href="javascript:void(0)" onclick="showProject('.$record->id.')"> <span>'.$record->vivo_dev_name.' - ('.$project.')</span></a>',
+                "vivo_dev_name" => '<<a href="/project?q=dev_vivo&id='.$record->id.'"> <span>'.$record->vivo_dev_name.' - ('.$project.')</span></a>',
                 "vivo_store_name" => $record->vivo_store_name,
                 "vivo_email"=>$record->vivo_company.'<p class="text-muted">'.$email->gmail.'</p>',
                 "vivo_pass"=>$record->vivo_pass,
