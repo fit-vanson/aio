@@ -40,9 +40,9 @@
                         <tr>
                             <th>Tên Keystore</th>
                             <th>Pass Keystore</th>
-                            <th>Aliases Keystore</th>
+                            <th>Aliases</th>
+                            <th>Pass Aliases</th>
                             <th>SHA_256 Keystore</th>
-                            <th>Ghi chú</th>
                             <th>Action</th>
                         </tr>
                         </thead>
@@ -99,8 +99,8 @@
                 {data: 'name_keystore'},
                 {data: 'pass_keystore'},
                 {data: 'aliases_keystore'},
+                {data: 'pass_aliases'},
                 {data: 'SHA_256_keystore'},
-                {data: 'note'},
                 {data: 'action',className: "text-center", name: 'action', orderable: false, searchable: false},
             ],
             "columnDefs": [
@@ -201,57 +201,31 @@
                     swal("Đã xóa!", "Your imaginary file has been deleted.", "success");
                 });
         });
-
-        $(document).on('click','.checkDatakeystore', function (data){
-            var id = $(this).data("id");
-            swal({
-                    title: "Bạn có chắc muốn check Data?",
-                    type: "warning",
-                    showCancelButton: true,
-                    confirmButtonClass: "btn-danger",
-                    confirmButtonText: "Xác nhận!",
-                    closeOnConfirm: false
-                },
-                function(){
-                    $.ajax({
-                        type: "get",
-                        url: "{{ asset("project/checkData") }}/" +id,
-                        success: function (data) {
-                            table.draw();
-                        },
-                        error: function (data) {
-                            console.log('Error:', data);
-                        }
-                    });
-                    swal("OK!", '', "success");
-                });
-        });
-
     });
-    function showProject(id){
-        var table = $('.data-table').DataTable({
-            destroy: true,
-            displayLength: 50,
-            searching:false,
-            lengthMenu: [5, 10, 25, 50, 75, 100],
-            serverSide: true,
-            ajax: {
-                url : "{{ route('project.getIndex') }}?keystore="+id,
-                type: "post",
+    {{--function showProject(id){--}}
+    {{--    var table = $('.data-table').DataTable({--}}
+    {{--        destroy: true,--}}
+    {{--        displayLength: 50,--}}
+    {{--        searching:false,--}}
+    {{--        lengthMenu: [5, 10, 25, 50, 75, 100],--}}
+    {{--        serverSide: true,--}}
+    {{--        ajax: {--}}
+    {{--            url : "{{ route('project.getIndex') }}?keystore="+id,--}}
+    {{--            type: "post",--}}
 
-            },
-            columns: [
-                {title: 'Logo',data: 'logo', name: 'logo',orderable: false},
-                {title: 'Tên template',data: 'template', name: 'template'},
-                {title: 'Tên Project',data: 'projectname', name: 'projectname'},
-                {title: 'Package',data: 'package', name: 'package',orderable: false},
-                {title: 'Status',data: 'status', name: 'status',orderable: false},
+    {{--        },--}}
+    {{--        columns: [--}}
+    {{--            {title: 'Logo',data: 'logo', name: 'logo',orderable: false},--}}
+    {{--            {title: 'Tên template',data: 'template', name: 'template'},--}}
+    {{--            {title: 'Tên Project',data: 'projectname', name: 'projectname'},--}}
+    {{--            {title: 'Package',data: 'package', name: 'package',orderable: false},--}}
+    {{--            {title: 'Status',data: 'status', name: 'status',orderable: false},--}}
 
-            ],
-            order: [[1, 'desc' ]],
-        });
+    {{--        ],--}}
+    {{--        order: [[1, 'desc' ]],--}}
+    {{--    });--}}
 
-    }
+    {{--}--}}
 </script>
 
 <script>
@@ -262,6 +236,7 @@
             $('#name_keystore').val(data.name_keystore);
             $('#pass_keystore').val(data.pass_keystore);
             $('#aliases_keystore').val(data.aliases_keystore);
+            $('#pass_aliases').val(data.pass_aliases);
             $('#SHA_256_keystore').val(data.SHA_256_keystore);
             $('#keystore_file').val(data.keystore_file);
             $('#note').val(data.note);

@@ -10,31 +10,33 @@
                 <form id="keystoreForm" name="keystoreForm" class="form-horizontal">
                     <div data-repeater-item="" class="row">
                         <div class="form-group col-lg-6 ">
-{{--                            <label for="name">Tên Keystore</label>--}}
-{{--                            <input type="text" class="form-control" id="name_keystore" name="name_keystore" required>--}}
                             <div class="fallback">
                                 <input name="keystore_file" id="keystore_file" type="file"  multiple="multiple">
                             </div>
                         </div>
+                    </div>
+
+                    <div data-repeater-item="" class="row">
                         <div class="form-group col-lg-6 ">
                             <label for="name">Tên Keystore</label>
                             <input type="hidden" name="keystore_id" id="keystore_id">
                             <input type="text" class="form-control" id="name_keystore" name="name_keystore" required>
                         </div>
-
-                    </div>
-
-                    <div data-repeater-item="" class="row">
                         <div class="form-group col-lg-6 ">
                             <label for="name">Pass Keystore</label>
                             <input type="text" id="pass_keystore" name="pass_keystore" class="form-control" >
                         </div>
+                    </div>
+
+                    <div data-repeater-item="" class="row">
                         <div class="form-group col-lg-6 ">
                             <label for="name">Aliases Keystore</label>
                             <input type="text" id="aliases_keystore" name="aliases_keystore" class="form-control" >
-{{--                            <textarea id="aliases_keystore" name="aliases_keystore" class="form-control" rows="4" ></textarea>--}}
                         </div>
-
+                        <div class="form-group col-lg-6 ">
+                            <label for="name">Pass Alias</label>
+                            <input type="text" id="pass_aliases" name="pass_aliases" class="form-control" >
+                        </div>
                     </div>
                     <div data-repeater-item="" class="row">
                         <div class="form-group col-lg-6">

@@ -42,6 +42,7 @@ class KeystoreController extends Controller
             ->where('name_keystore', 'like', '%' . $searchValue . '%')
             ->orwhere('pass_keystore', 'like', '%' . $searchValue . '%')
             ->orWhere('aliases_keystore', 'like', '%' . $searchValue . '%')
+            ->orWhere('pass_aliases', 'like', '%' . $searchValue . '%')
             ->orWhere('SHA_256_keystore', 'like', '%' . $searchValue . '%')
             ->orWhere('note', 'like', '%' . $searchValue . '%')
             ->count();
@@ -51,6 +52,7 @@ class KeystoreController extends Controller
             ->where('name_keystore', 'like', '%' . $searchValue . '%')
             ->orwhere('pass_keystore', 'like', '%' . $searchValue . '%')
             ->orWhere('aliases_keystore', 'like', '%' . $searchValue . '%')
+            ->orWhere('pass_aliases', 'like', '%' . $searchValue . '%')
             ->orWhere('SHA_256_keystore', 'like', '%' . $searchValue . '%')
             ->orWhere('note', 'like', '%' . $searchValue . '%')
             ->select('*')
@@ -82,6 +84,7 @@ class KeystoreController extends Controller
                 "pass_keystore" => $record->pass_keystore,
                 "aliases_keystore" => $record->aliases_keystore,
                 "SHA_256_keystore" => $record->SHA_256_keystore,
+                "pass_aliases" => $record->pass_aliases,
                 "note"=> $record->note,
                 "action"=> $btn,
             );
@@ -121,6 +124,7 @@ class KeystoreController extends Controller
         $data['name_keystore'] = $request->name_keystore;
         $data['pass_keystore'] = $request->pass_keystore;
         $data['aliases_keystore'] = $request->aliases_keystore;
+        $data['pass_aliases'] = $request->pass_aliases;
         $data['SHA_256_keystore'] = $request->SHA_256_keystore;
         $data['note'] = $request->note;
 
@@ -219,6 +223,7 @@ class KeystoreController extends Controller
         $data->name_keystore = $request->name_keystore;
         $data->pass_keystore = $request->pass_keystore;
         $data->aliases_keystore= $request->aliases_keystore;
+        $data->pass_aliases= $request->pass_aliases;
         $data->SHA_256_keystore = $request->SHA_256_keystore;
         $data->note = $request->note;
         $data->save();
