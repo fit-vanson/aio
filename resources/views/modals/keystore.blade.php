@@ -11,7 +11,7 @@
                     <div data-repeater-item="" class="row">
                         <div class="form-group col-lg-6 ">
                             <div class="fallback">
-                                <input name="keystore_file" id="keystore_file" type="file"  multiple="multiple">
+                                <input name="keystore_file" id="keystore_file" type="file"   multiple="multiple">
                             </div>
                         </div>
                     </div>

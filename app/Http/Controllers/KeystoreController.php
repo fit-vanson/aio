@@ -76,8 +76,7 @@ class KeystoreController extends Controller
                 ->orWhere('ngocphandang_project.Vivo_keystore_profile', $record->name_keystore)
                 ->orWhere('ngocphandang_project.Huawei_keystore_profile', $record->name_keystore)
                 ->count();
-
-
+            $html = '../uploads/keystore/'.$record->name_keystore.'/'.$record->file;
             $data_arr[] = array(
 //                "name_keystore" => $record->name_keystore,
                 "name_keystore" => '<a href="/project?q=key_store&id='.$record->name_keystore.'"> <span>'.$record->name_keystore.' - ('.$project.')</span></a>',
@@ -85,6 +84,7 @@ class KeystoreController extends Controller
                 "aliases_keystore" => $record->aliases_keystore,
                 "SHA_256_keystore" => $record->SHA_256_keystore,
                 "pass_aliases" => $record->pass_aliases,
+                "file" => '<a href="'.$html.'">'.$record->file.'</a>',
                 "note"=> $record->note,
                 "action"=> $btn,
             );

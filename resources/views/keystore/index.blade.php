@@ -43,6 +43,7 @@
                             <th>Aliases</th>
                             <th>Pass Aliases</th>
                             <th>SHA_256 Keystore</th>
+                            <th>File</th>
                             <th>Action</th>
                         </tr>
                         </thead>
@@ -101,6 +102,7 @@
                 {data: 'aliases_keystore'},
                 {data: 'pass_aliases'},
                 {data: 'SHA_256_keystore'},
+                {data: 'file'},
                 {data: 'action',className: "text-center", name: 'action', orderable: false, searchable: false},
             ],
             "columnDefs": [
@@ -202,43 +204,18 @@
                 });
         });
     });
-    {{--function showProject(id){--}}
-    {{--    var table = $('.data-table').DataTable({--}}
-    {{--        destroy: true,--}}
-    {{--        displayLength: 50,--}}
-    {{--        searching:false,--}}
-    {{--        lengthMenu: [5, 10, 25, 50, 75, 100],--}}
-    {{--        serverSide: true,--}}
-    {{--        ajax: {--}}
-    {{--            url : "{{ route('project.getIndex') }}?keystore="+id,--}}
-    {{--            type: "post",--}}
-
-    {{--        },--}}
-    {{--        columns: [--}}
-    {{--            {title: 'Logo',data: 'logo', name: 'logo',orderable: false},--}}
-    {{--            {title: 'Tên template',data: 'template', name: 'template'},--}}
-    {{--            {title: 'Tên Project',data: 'projectname', name: 'projectname'},--}}
-    {{--            {title: 'Package',data: 'package', name: 'package',orderable: false},--}}
-    {{--            {title: 'Status',data: 'status', name: 'status',orderable: false},--}}
-
-    {{--        ],--}}
-    {{--        order: [[1, 'desc' ]],--}}
-    {{--    });--}}
-
-    {{--}--}}
 </script>
 
 <script>
     function editKeytore(id) {
         $.get('{{asset('keystore/edit')}}/'+id,function (data) {
-            console.log(data)
             $('#keystore_id').val(data.id);
             $('#name_keystore').val(data.name_keystore);
             $('#pass_keystore').val(data.pass_keystore);
             $('#aliases_keystore').val(data.aliases_keystore);
             $('#pass_aliases').val(data.pass_aliases);
             $('#SHA_256_keystore').val(data.SHA_256_keystore);
-            $('#keystore_file').val(data.keystore_file);
+            // $('#keystore_file').val(data.file);
             $('#note').val(data.note);
 
             $('#modelHeading').html("Edit");
