@@ -108,11 +108,11 @@ class KeystoreController extends Controller
 
         $rules = [
             'name_keystore' =>'unique:ngocphandang_keystores,name_keystore',
-            'file' => 'mimes:zip,jks'
+            'keystore_file' => 'mimes:zip,jks'
         ];
         $message = [
             'name_keystore.unique'=>'Tên Keystore đã tồn tại',
-            'file.mimes'=>'Định dạng File: *.zip, *.jks',
+            'keystore_file.mimes'=>'Định dạng File: *.zip, *.jks',
         ];
 
         $error = Validator::make($request->all(),$rules, $message );
@@ -194,11 +194,11 @@ class KeystoreController extends Controller
         $id = $request->keystore_id;
         $rules = [
             'name_keystore' =>'unique:ngocphandang_keystores,name_keystore,'.$id.',id',
-            'file' => 'mimes:zip,jks'
+            'keystore_file' => 'mimes:zip,jks'
         ];
         $message = [
             'name_keystore.unique'=>'Tên Keystore đã tồn tại',
-            'file.mimes'=>'Định dạng File: *.zip, *.jks',
+            'keystore_file.mimes'=>'Định dạng File: *.zip, *.jks',
         ];
         $error = Validator::make($request->all(),$rules, $message );
         if($error->fails()){
