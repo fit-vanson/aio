@@ -1453,7 +1453,9 @@ class ProjectController extends Controller
                 ->leftjoin('ngocphandang_template','ngocphandang_template.id','=','ngocphandang_project.template')
                 ->where(function ($a) use ($searchValue) {
                     $a->Where('ngocphandang_project.projectname', 'like', '%' . $searchValue . '%')
-                        ->orWhere('ngocphandang_project.Chplay_package', 'like', '%' . $searchValue . '%');
+                        ->orWhere('ngocphandang_project.Chplay_package', 'like', '%' . $searchValue . '%')
+                        ->orWhere('ngocphandang_project.title_app', 'like', '%' . $searchValue . '%')
+                        ->orWhere('ngocphandang_project.buildinfo_keystore', 'like', '%' . $searchValue . '%');
                 })
                 ->where('ngocphandang_project.Chplay_package','<>',null)
                 ->where('ngocphandang_project.Chplay_status','=',$request->status_app)
@@ -1462,7 +1464,9 @@ class ProjectController extends Controller
             $records = ProjectModel::orderBy($columnName, $columnSortOrder)
                 ->where(function ($a) use ($searchValue) {
                     $a->Where('ngocphandang_project.projectname', 'like', '%' . $searchValue . '%')
-                        ->orWhere('ngocphandang_project.Chplay_package', 'like', '%' . $searchValue . '%');
+                        ->orWhere('ngocphandang_project.Chplay_package', 'like', '%' . $searchValue . '%')
+                        ->orWhere('ngocphandang_project.title_app', 'like', '%' . $searchValue . '%')
+                        ->orWhere('ngocphandang_project.buildinfo_keystore', 'like', '%' . $searchValue . '%');
                 })
                 ->where('ngocphandang_project.Chplay_package','<>',null)
                 ->where('ngocphandang_project.Chplay_status','=',$request->status_app)
@@ -1478,7 +1482,9 @@ class ProjectController extends Controller
         $totalRecordswithFilter = ProjectModel::select('count(*) as allcount')
             ->where(function ($a) use ($searchValue) {
                 $a->Where('ngocphandang_project.projectname', 'like', '%' . $searchValue . '%')
-                    ->orWhere('ngocphandang_project.Chplay_package', 'like', '%' . $searchValue . '%');
+                    ->orWhere('ngocphandang_project.Chplay_package', 'like', '%' . $searchValue . '%')
+                    ->orWhere('ngocphandang_project.title_app', 'like', '%' . $searchValue . '%')
+                    ->orWhere('ngocphandang_project.buildinfo_keystore', 'like', '%' . $searchValue . '%');
             })
             ->where('ngocphandang_project.Chplay_package','<>',null)
             ->count();
@@ -1486,7 +1492,9 @@ class ProjectController extends Controller
         $records = ProjectModel::orderBy($columnName, $columnSortOrder)
             ->where(function ($a) use ($searchValue) {
                 $a->Where('ngocphandang_project.projectname', 'like', '%' . $searchValue . '%')
-                    ->orwhereJsonContains('Chplay_bot->installs', $searchValue);
+                    ->orwhereJsonContains('Chplay_bot->installs', $searchValue)
+                    ->orWhere('ngocphandang_project.title_app', 'like', '%' . $searchValue . '%')
+                    ->orWhere('ngocphandang_project.buildinfo_keystore', 'like', '%' . $searchValue . '%');;
 //                    ->orWhere('ngocphandang_project.Chplay_package', 'like', '%' . $searchValue . '%');
             })
             ->where('ngocphandang_project.Chplay_package','<>',null)
@@ -1592,7 +1600,9 @@ class ProjectController extends Controller
                     "updated_at" => strtotime($record->updated_at),
                     "logo" => $logo,
                     "name_projectname"=>$record->projectname,
-                    "ma_da"=>$data_projectname.$package_chplay,
+                    "title_app"=>$record->title_app,
+                    "buildinfo_keystore"=>$record->buildinfo_keystore,
+                    "ma_da"=>$data_projectname.'<p class="text-muted" style="line-height:0.5">'.$record->title_app.'</p>'.'<p class="text-muted" style="line-height:0.5">'.$record->buildinfo_keystore.'</p>'.$package_chplay,
                     "Chplay_bot->installs" => isset($bot['installs']) ? $bot['installs'] : 0,
                     "Chplay_bot->numberVoters" => isset($bot['numberVoters']) ? $bot['numberVoters'] : 0,
                     "Chplay_bot->numberReviews" => isset($bot['numberReviews']) ? $bot['numberReviews'] :0,
