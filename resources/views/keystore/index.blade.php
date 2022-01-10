@@ -216,6 +216,7 @@
             $('#pass_aliases').val(data.pass_aliases);
             $('#SHA_256_keystore').val(data.SHA_256_keystore);
             // $('#keystore_file').val(data.file);
+            $("#keystore_file").attr("src","img/logo.png");
             $('#note').val(data.note);
 
             $('#modelHeading').html("Edit");
