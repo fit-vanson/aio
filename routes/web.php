@@ -164,12 +164,13 @@ Route::get('/package',[CronProjectController::class,'getPackage'])->name('cronPr
 
 Route::group(['prefix'=>'template','middleware'=>['CheckLogout','2fa']], function (){
     Route::get('/',[TemplateController::class,'index'])->name('template.index')->middleware('can:template-index');
-    Route::post('/getIndex',[TemplateController::class,'getIndex'])->name('template.getIndex')->middleware('can:project-index');
+    Route::post('/getIndex',[TemplateController::class,'getIndex'])->name('template.getIndex')->middleware('can:template-index');
     Route::post('/create',[TemplateController::class,'create'])->name('template.create')->middleware('can:template-add');
     Route::get('/edit/{id}',[TemplateController::class,'edit'])->name('template.edit')->middleware('can:template-edit');
     Route::get('/show/{id}',[TemplateController::class,'edit'])->name('template.show')->middleware('can:template-show');
     Route::post('/update',[TemplateController::class,'update'])->name('template.update')->middleware('can:template-update');
     Route::get('/delete/{id}',[TemplateController::class,'delete'])->name('template.delete')->middleware('can:template-delete');
+    Route::get('/upload',[TemplateController::class,'upload'])->name('template.upload')->middleware('can:template-index');
 });
 Route::group(['prefix'=>'ga_dev','middleware'=>['CheckLogout','2fa']], function (){
     Route::get('/',[Ga_devController::class,'index'])->name('gadev.index')->middleware('can:gadev-index');

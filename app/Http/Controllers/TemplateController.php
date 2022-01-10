@@ -494,4 +494,9 @@ class TemplateController extends Controller
         return parent::callAction($method, array_values($parameters));
     }
 
+    public function upload()
+    {
+        return view('template.upload');
+    }
+
 }
