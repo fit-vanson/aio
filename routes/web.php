@@ -68,6 +68,7 @@ Route::get('routes', function () {
         echo "<td>" . $value->getActionName() . "</td>";
         echo "</tr>";
     }
+    echo count($routeCollection);
     echo "</table>";
 });
 
