@@ -72,6 +72,13 @@ Route::get('routes', function () {
     echo "</table>";
 });
 
+
+Route::get('/updateapp', function()
+{
+    Artisan::call('dump-autoload');
+    echo 'dump-autoload complete';
+});
+
 Route::group(['prefix'=>'login','middleware'=>'CheckUser'], function (){
     Route::get('/',[HomeController::class,'getLogin']);
     Route::post('/',[HomeController::class,'postLogin'])->name('login');
