@@ -3,7 +3,7 @@
     <head>
         <meta charset="utf-8" />
         <title>Đăng nhập</title>
-        <base href="{{asset('public/backend')}}/">
+        <base href="{{asset('/')}}">
         <meta name="csrf-token" content="{{ csrf_token() }}">
         <meta content="Admin Dashboard" name="description" />
         <meta content="Themesbrand" name="author" />

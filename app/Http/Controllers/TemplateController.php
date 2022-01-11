@@ -7,6 +7,7 @@ use App\Models\ProjectModel;
 use App\Models\Template;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Validator;
 use Intervention\Image\Facades\Image;
@@ -496,6 +497,7 @@ class TemplateController extends Controller
 
     public function upload()
     {
+//        dd(Auth::id());
         return view('template.upload');
     }
 

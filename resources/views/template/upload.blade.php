@@ -1,29 +1,42 @@
 @extends('layouts.master')
 
 @section('css')
+
+
+
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.0/css/all.css">
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css">
-    <link rel="stylesheet" href="../vendor/file-manager/css/file-manager.css">
+    <link rel="stylesheet" href="{{ asset('vendor/file-manager/css/file-manager.css') }}">
+
+
+
+
 @endsection
 
+@section('breadcrumb')
+    <div class="col-sm-6">
+        <h4 class="page-title">Quản lý Template</h4>
+    </div>
+@endsection
 @section('content')
-    <!-- users list start -->
-    <section class="app-user-list">
-        <!-- list and filter start -->
-        <div class="card">
-            <div class="card-datatable table-responsive pt-0">
-                <div style="height: 900px;">
-                    <div id="fm"></div>
+
+    <div class="row">
+        <div class="col-12">
+            <div class="card">
+                <div class="card-datatable table-responsive pt-0">
+                    <div style="height: 900px;">
+                        <div id="fm"></div>
+                    </div>
                 </div>
             </div>
-        </div>
-        <!-- list and filter end -->
-    </section>
-    <!-- users list ends -->
+        </div> <!-- end col -->
+    </div> <!-- end row -->
 @endsection
 @section('script')
-    <script src="{{ asset('public/vendor/file-manager/js/file-manager.js') }}"></script>
+    <script src="{{ asset('vendor/file-manager/js/file-manager.js') }}"></script>
+
 @endsection
+
 
 
 

@@ -137,6 +137,18 @@
                                 </ul>
                             </li>
 
+                            <li>
+                                <a href="javascript:void(0);" class="waves-effect"><i class="dripicons-browser-upload"></i> <span>Upload<span class="float-right menu-arrow"><i class="mdi mdi-chevron-right"></i></span> </span> </a>
+                                <ul class="submenu">
+                                    @can('template-index')
+                                        <li><a href="{{route('template.upload')}}">Upload</a></li>
+                                    @endcan
+
+                                </ul>
+                            </li>
+
+
+
 
                             <li>
                                 <a href="javascript:void(0);" class="waves-effect"><i class="ti-archive"></i> <span> Quản trị phân quyền <span class="float-right menu-arrow"><i class="mdi mdi-chevron-right"></i></span> </span> </a>

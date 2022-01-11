@@ -55,10 +55,10 @@ return [
             'visibility' => 'public',
         ],
 
-        'template' => [
+        'templatedata' => [
             'driver' => 'local',
-            'root' => storage_path('app/public/template'),
-            'url' => env('APP_URL').'/storage',
+            'root' => storage_path('app/public/templatdata'),
+            'url' => env('APP_URL').'/storage/templatdata',
             'visibility' => 'public',
         ],
 

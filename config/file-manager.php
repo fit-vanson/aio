@@ -17,7 +17,8 @@ return [
      *
      * Default - ConfigACLRepository (see rules in - aclRules)
      */
-    'aclRepository' => ConfigACLRepository::class,
+    'aclRepository' => \App\Http\UsersACLRepository::class,
+
 
     //********* Default configuration for DefaultConfigRepository **************
 
@@ -25,13 +26,13 @@ return [
      * LFM Route prefix
      * !!! WARNING - if you change it, you should compile frontend with new prefix(baseUrl) !!!
      */
-    'routePrefix' => 'admin/file-manager',
+    'routePrefix' => 'file-manager',
 
     /**
      * List of disk names that you want to use
      * (from config/filesystems)
      */
-    'diskList' => ['template'],
+    'diskList' => ['templatedata'],
 
     /**
      * Default disk for left manager
@@ -90,7 +91,7 @@ return [
      *
      * [] - no restrictions
      */
-    'allowFileTypes' => [],
+    'allowFileTypes' => ['apk','zip'],
 
     /**
      * Show / Hide system files and folders
@@ -103,14 +104,14 @@ return [
      * Add your middleware name to array -> ['web', 'auth', 'admin']
      * !!!! RESTRICT ACCESS FOR NON ADMIN USERS !!!!
      */
-    'middleware' => ['web'],
+    'middleware' => ['web','CheckLogout'],
 
     /***************************************************************************
      * ACL mechanism ON/OFF
      *
      * default - false(OFF)
      */
-    'acl' => false,
+    'acl' => true,
 
     /**
      * Hide files and folders from file-manager if user doesn't have access
@@ -158,7 +159,7 @@ return [
      */
     'aclRules' => [
         null => [
-            //['disk' => 'public', 'path' => '/', 'access' => 2],
+//            ['disk' => 'templatedata', 'path' => '/', 'access' => 2],
         ],
         1 => [
             //['disk' => 'public', 'path' => 'images/arch*.jpg', 'access' => 2],
