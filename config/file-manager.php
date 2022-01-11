@@ -104,7 +104,7 @@ return [
      * Add your middleware name to array -> ['web', 'auth', 'admin']
      * !!!! RESTRICT ACCESS FOR NON ADMIN USERS !!!!
      */
-    'middleware' => ['web','CheckLogout'],
+    'middleware' => ['web'],
 
     /***************************************************************************
      * ACL mechanism ON/OFF
