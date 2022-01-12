@@ -57,9 +57,15 @@ return [
 
         'File Manager' => [
             'driver' => 'local',
-            'root' => public_path('uploads'),
-            'url' => env('APP_URL').'/uploads',
+            'root' => public_path('file-manager'),
+            'url' => env('APP_URL').'/file-manager',
         ],
+        'KeyStore' => [
+            'driver' => 'local',
+            'root' => public_path('uploads/keystore'),
+            'url' => env('APP_URL').'/uploads/keystore',
+        ],
+
 
         's3' => [
             'driver' => 's3',

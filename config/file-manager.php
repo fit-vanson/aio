@@ -32,7 +32,7 @@ return [
      * List of disk names that you want to use
      * (from config/filesystems)
      */
-    'diskList' => ['File Manager'],
+    'diskList' => ['File Manager','KeyStore'],
 
     /**
      * Default disk for left manager
