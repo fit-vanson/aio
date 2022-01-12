@@ -402,18 +402,11 @@ Route::group(['prefix'=>'script','middleware'=>['CheckLogout','2fa']], function 
     Route::get('/delete/{id}',[ScriptController::class,'delete'])->name('script.delete')->middleware('can:script-delete');
 });
 
-
-
-
-
-
 Route::group(["middleware" => ["auth", "2fa"]], function() {
     Route::get('/home',[HomeController::class,'index']);
     Route::group(["prefix" => "two_face_auths"], function() {
         Route::get('/',[TwoFaceAuthsController::class,'index'])->name('2fa_setting');
         Route::post('/enable',[TwoFaceAuthsController::class,'enable'])->name('enable_2fa_setting');
-
-
     });
 });
 
@@ -421,8 +414,6 @@ Route::group(["middleware" => ["auth"], "prefix" => "two_face"], function() {
     Route::get('/',[VerifyTwoFaceController::class,'index'])->name('two_face.index');
     Route::post('/verify',[VerifyTwoFaceController::class,'verify'])->name('two_face.verify');
 });
-
-
 
 Route::group([ "prefix" => "infoIP"], function() {
     Route::get('/',[ipInfoController::class,'index'])->name('inInfo.index');

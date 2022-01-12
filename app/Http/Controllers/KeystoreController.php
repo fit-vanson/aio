@@ -2,16 +2,13 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Dev;
-use App\Models\ProjectModel;
+
 use App\Models\Keystore;
-use Faker\Provider\File;
-use Illuminate\Database\Eloquent\Model;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Validator;
-use Intervention\Image\Facades\Image;
-use Yajra\DataTables\Facades\DataTables;
+use Illuminate\Support\Str;
+
 
 class KeystoreController extends Controller
 {
@@ -76,7 +73,7 @@ class KeystoreController extends Controller
                 ->orWhere('ngocphandang_project.Vivo_keystore_profile', $record->name_keystore)
                 ->orWhere('ngocphandang_project.Huawei_keystore_profile', $record->name_keystore)
                 ->count();
-            $html = '../uploads/keystore/'.$record->name_keystore.'/'.$record->file;
+            $html = '../uploads/keystore/'.$record->file;
             $data_arr[] = array(
 //                "name_keystore" => $record->name_keystore,
                 "name_keystore" => '<a href="/project?q=key_store&id='.$record->name_keystore.'"> <span>'.$record->name_keystore.' - ('.$project.')</span></a>',
@@ -128,13 +125,14 @@ class KeystoreController extends Controller
         $data['SHA_256_keystore'] = $request->SHA_256_keystore;
         $data['note'] = $request->note;
 
-        $destinationPath = public_path('uploads/keystore/'.$request->name_keystore);
+        $destinationPath = public_path('uploads/keystore/');
         if (!file_exists($destinationPath)) {
             mkdir($destinationPath, 0777, true);
         }
         if(isset($request->keystore_file)){
             $file = $request->file('keystore_file');
-            $data['file'] = 'keystore_'.time().'.'.$file->extension();
+            $extension = $file->getClientOriginalExtension();
+            $data['file'] = $request->name_keystore.'_'.time().'.'.$extension;
             $file->move($destinationPath, $data['file']);
         }
 
@@ -191,6 +189,7 @@ class KeystoreController extends Controller
     public function update(Request $request)
     {
 
+
         $id = $request->keystore_id;
         $rules = [
             'name_keystore' =>'unique:ngocphandang_keystores,name_keystore,'.$id.',id',
@@ -206,19 +205,24 @@ class KeystoreController extends Controller
         }
 
         $data = Keystore::find($id);
-        if($data->name_keystore <> $request->name_keystore){
-            $dir = (public_path('uploads/keystore/'));
-            rename($dir.$data->name_keystore, $dir.$request->name_keystore);
-        }
+//        if($data->name_keystore <> $request->name_keystore){
+//            $dir = (public_path('uploads/keystore/'));
+//            rename($dir.$data->file, $dir.$request->name_keystore);
+//        }
         if(isset($request->keystore_file)){
+            $path_Remove =   public_path('uploads/keystore/').$data->file;
+            if(file_exists($path_Remove)){
+                unlink($path_Remove);
+            }
+
             $file = $request->file('keystore_file');
-            $data['file'] = 'keystore_'.time().'.'.$file->extension();
-            $destinationPath = public_path('uploads/keystore/'.$request->name_keystore);
+            $extension = $file->getClientOriginalExtension();
+            $data['file'] = $request->name_keystore.'_'.time().'.'.$extension;
+            $destinationPath = public_path('uploads/keystore/');
             if (!file_exists($destinationPath)) {
                 mkdir($destinationPath, 0777, true);
             }
             $file->move($destinationPath, $data['file']);
-
         }
         $data->name_keystore = $request->name_keystore;
         $data->pass_keystore = $request->pass_keystore;
