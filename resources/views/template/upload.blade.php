@@ -15,7 +15,7 @@
 
 @section('breadcrumb')
     <div class="col-sm-6">
-        <h4 class="page-title">Quản lý Template</h4>
+        <h4 class="page-title">File Manager</h4>
     </div>
 @endsection
 @section('content')

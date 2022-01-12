@@ -138,7 +138,7 @@
                             </li>
 
                             <li>
-                                <a href="javascript:void(0);" class="waves-effect"><i class="dripicons-browser-upload"></i> <span>File<span class="float-right menu-arrow"><i class="mdi mdi-chevron-right"></i></span> </span> </a>
+                                <a href="javascript:void(0);" class="waves-effect"><i class="dripicons-browser-upload"></i> <span>File Manager<span class="float-right menu-arrow"><i class="mdi mdi-chevron-right"></i></span> </span> </a>
                                 <ul class="submenu">
                                     @can('template-index')
                                         <li><a href="{{route('template.upload')}}">File Manager</a></li>
