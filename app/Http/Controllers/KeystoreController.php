@@ -242,7 +242,12 @@ class KeystoreController extends Controller
      */
     public function delete($id)
     {
-        Keystore::find($id)->delete();
+        $keystore = Keystore::find($id);
+        $path    =   public_path('uploads/keystore/').$keystore->file;
+        if(file_exists($path)){
+            unlink($path);
+        }
+        $keystore->delete();
         return response()->json(['success'=>'Xóa thành công.']);
     }
 
