@@ -11,4 +11,10 @@ class Hub extends Model
     public $timestamps = false;
     protected $table= 'ngocphandang_hubinfo';
     protected $guarded = [];
+
+    public function cocsims()
+    {
+        return $this->hasOne(cocsim::class, 'id','cocsim');
+    }
+
 }

@@ -23,15 +23,13 @@
 <div class="col-sm-6">
     <div class="float-right">
         @can('hub-add')
-        <a class="btn btn-success" href="javascript:void(0)" id="createNewHub">Thêm mới</a>
+{{--        <a class="btn btn-success" href="javascript:void(0)" id="createNewHub">Thêm mới</a>--}}
         @endcan
     </div>
 </div>
 @include('modals.hub')
 @endsection
 @section('content')
-
-
 
 
     <div class="row">

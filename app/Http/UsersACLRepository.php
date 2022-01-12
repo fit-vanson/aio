@@ -27,14 +27,8 @@ class UsersACLRepository implements ACLRepository
 
         return [
             ['disk' => 'File Manager', 'path' => '*', 'access' => 2],                                  // main folder - read
-            ['disk' => 'KeyStore', 'path' => '*', 'access' => 1],                                  // main folder - read
-//            ['disk' => 'File Manager', 'path' => 'keystore', 'access' => 1],                                  // main folder - read
-//            ['disk' => 'File Manager', 'path' => 'keystore/*', 'access' => 1],                                  // main folder - read
-//            ['disk' => 'File Manager', 'path' => 'project', 'access' => 0],                                  // main folder - read
-//            ['disk' => 'File Manager', 'path' => 'template', 'access' => 0],                                  // main folder - read
-//            ['disk' => 'File Manager', 'path' => 'templatedata', 'access' => 1],                                  // main folder - read
-//            ['disk' => 'File Manager', 'path' => 'templatedata/*', 'access' => 2],                                  // main folder - read
-//            ['disk' => 'base', 'path' => '*', 'access' => 0],                                  // main folder - read
+            ['disk' => 'KeyStore', 'path' => '*', 'access' => 1],                                // main folder - read
+
         ];
     }
 }

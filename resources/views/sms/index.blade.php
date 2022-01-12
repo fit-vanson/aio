@@ -34,7 +34,7 @@
     <ul class="nav nav-pills nav-justified" role="tablist">
         @foreach($hubs as $hub)
             <li class="nav-item waves-effect waves-light">
-               <button class="btn btn-success waves-effect waves-light" onclick="showHub({{$hub->id}})">{{$hub->hubname}}</button>
+               <button class="btn btn-success waves-effect waves-light" onclick="showHub({{$hub->id}})">{{$hub->hubname}}<br>{{$hub->cocsims ? $hub->cocsims->cocsim : ''}}</button>
 
             </li>
         @endforeach
@@ -51,12 +51,12 @@
                         <thead>
                         <tr>
                             <th>Hub ID</th>
-                            <th>Cọc sim</th>
+{{--                            <th>Cọc sim</th>--}}
                             <th>Phone</th>
                             <th>Code</th>
                             <th>SMS</th>
                             <th>Thời gian nhận code</th>
-                            <th>Action</th>
+{{--                            <th>Action</th>--}}
                         </tr>
                         </thead>
                         <tbody>
@@ -110,12 +110,12 @@
             ajax: "{{ route('sms.index') }}",
             columns: [
                 {data: 'hubid', name: 'hubid'},
-                {data: 'cocsim', name: 'cocsim'},
+                // {data: 'cocsim', name: 'cocsim'},
                 {data: 'phone', name: 'phone'},
                 {data: 'code', name: 'code'},
                 {data: 'sms', name: 'sms'},
                 {data: 'timecode', name: 'timecode'},
-                {data: 'action',className: "text-center", name: 'action', orderable: false, searchable: false},
+                // {data: 'action',className: "text-center", name: 'action', orderable: false, searchable: false},
             ]
         });
 

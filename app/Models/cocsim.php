@@ -11,4 +11,14 @@ class cocsim extends Model
     public $timestamps = false;
     protected $table= 'ngocphandang_cocsim';
     protected $guarded = [];
+
+    public function khosim()
+    {
+        return $this->hasMany(khosim::class, 'cocsim');
+    }
+
+    public function hub()
+    {
+        return $this->hasOne(Hub::class, 'cocsim');
+    }
 }

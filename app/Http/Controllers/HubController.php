@@ -16,7 +16,8 @@ class HubController extends Controller
 {
     public function index(Request $request)
     {
-        $cocsim = cocsim::all();
+
+        $cocsim = cocsim::withCount('khosim')->having('khosim_count', 15)->get();
         $hub = Hub::all();
         if ($request->ajax()) {
             $data = Hub::all();
@@ -64,6 +65,7 @@ class HubController extends Controller
      */
     public function create(Request  $request)
     {
+        dd(1);
         $rules = [
             'hubname' =>'unique:ngocphandang_hubinfo,hubname',
             'cocsim' =>'unique:ngocphandang_hubinfo,cocsim',
@@ -146,6 +148,8 @@ class HubController extends Controller
             ->Join('ngocphandang_cocsim','ngocphandang_cocsim.id','=','ngocphandang_khosim.cocsim')
             ->where('ngocphandang_khosim.cocsim',$request->cocsim)
             ->get();
+//        dd($request->cocsim);
+//        dd($phoneOfcocsim);
         $count = count($phoneOfcocsim);
         if($count==15){
             $sms = DB::table('ngocphandang_sms')

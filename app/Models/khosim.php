@@ -12,4 +12,9 @@ class khosim extends Model
     protected $table= 'ngocphandang_khosim';
     protected $guarded = [];
 
+    public function cocsim()
+    {
+        return $this->belongsTo(cocsim::class);
+    }
+
 }
