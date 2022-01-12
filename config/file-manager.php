@@ -127,7 +127,7 @@ return [
      *
      * whitelist - Deny anything(access - 0 - deny), that not allowed by the ACL rules list
      */
-    'aclStrategy' => 'blacklist',
+    'aclStrategy' => 'whitelist',
 
     /**
      * ACL Rules cache
@@ -158,12 +158,12 @@ return [
      * access: 0 - deny, 1 - read, 2 - read/write
      */
     'aclRules' => [
-        null => [
-//            ['disk' => 'templatedata', 'path' => '/', 'access' => 2],
-        ],
-        1 => [
-            //['disk' => 'public', 'path' => 'images/arch*.jpg', 'access' => 2],
-            //['disk' => 'public', 'path' => 'files/*', 'access' => 1],
-        ],
+//        null => [
+////            ['disk' => 'templatedata', 'path' => '/', 'access' => 2],
+//        ],
+//        1 => [
+//            //['disk' => 'public', 'path' => 'images/arch*.jpg', 'access' => 2],
+//            //['disk' => 'public', 'path' => 'files/*', 'access' => 1],
+//        ],
     ],
 ];
