@@ -210,10 +210,13 @@ class KeystoreController extends Controller
 //            rename($dir.$data->file, $dir.$request->name_keystore);
 //        }
         if(isset($request->keystore_file)){
-            $path_Remove =   public_path('uploads/keystore/').$data->file;
-            if(file_exists($path_Remove)){
-                unlink($path_Remove);
+            if ($data->file){
+                $path_Remove =   public_path('uploads/keystore/').$data->file;
+                if(file_exists($path_Remove)){
+                    unlink($path_Remove);
+                }
             }
+
 
             $file = $request->file('keystore_file');
             $extension = $file->getClientOriginalExtension();
