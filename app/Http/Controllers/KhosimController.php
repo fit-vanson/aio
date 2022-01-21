@@ -41,10 +41,12 @@ class KhosimController extends Controller
         $totalRecordswithFilter = khosim::select('count(*) as allcount')->where('phone', 'like', '%' . $searchValue . '%')->count();
 
         // Get records, also we have included search filter as well
-        $records = khosim::where('ngocphandang_khosim.phone', 'like', '%' . $searchValue . '%')
+        $records = khosim::join('ngocphandang_cocsim','ngocphandang_cocsim.id','ngocphandang_khosim.cocsim')
+            ->where('ngocphandang_khosim.phone', 'like', '%' . $searchValue . '%')
+
             ->orWhere('ngocphandang_khosim.cocsim', 'like', '%' . $searchValue . '%')
             ->orWhere('ngocphandang_khosim.time', 'like', '%' . $searchValue . '%')
-//            ->select('ngocphandang_khosim.*')
+            ->select('ngocphandang_khosim.*','ngocphandang_cocsim.cocsim as cocsim_name')
             ->skip($start)
             ->take($rowperpage)
             ->get();
@@ -55,7 +57,7 @@ class KhosimController extends Controller
 
             $data_arr[] = array(
                 "phone" => $record->phone,
-                "cocsim" => $record->cocsim,
+                "cocsim" => $record->cocsim_name,
                 "stt" => $record->stt,
                 "action" => '<a href="javascript:void(0)" onclick="editKhosim('.$record->id.')" class="btn btn-warning"><i class="ti-pencil-alt"></i></a>' . ' <a href="javascript:void(0)" data-toggle="tooltip"  data-id="'.$record->id.'" data-original-title="Delete" class="btn btn-danger deleteKhosim"><i class="ti-trash"></i></a>' ,
 

@@ -45,6 +45,7 @@ class CocsimController extends Controller
     public function create(Request  $request)
     {
 
+
         $rules = [
             'cocsim' =>'required|unique:ngocphandang_cocsim,cocsim',
 
@@ -65,6 +66,15 @@ class CocsimController extends Controller
         $data['note'] = $request->note;
         $data['time'] = time();
         $data->save();
+        for ($i = 1; $i <=15 ; $i++) {
+            $phone[] = [
+                'phone' => $request->phone[$i-1],
+                'cocsim' => $data->id,
+                'stt' => $i,
+            ];
+        }
+        khosim::insert($phone);
+
         return response()->json(['success'=>'Thêm mới thành công']);
     }
 
