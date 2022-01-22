@@ -212,31 +212,42 @@
 </script>
 
 <script>
-        function editCocsim(id) {
+    function editCocsim(id) {
 
-            $.get('{{asset('cocsim/edit')}}/'+id,function (data) {
-                $('#modelHeading').html("Edit");
-                $('#saveBtn').val("edit-cocsim");
-                $('#ajaxModel').modal('show');
-                $('.modal').on('hidden.bs.modal', function (e) {
-                    $('body').addClass('modal-open');
-                });
-                $('#id').val(data[0].id);
-                $('#cocsim').val(data[0].cocsim);
-                $('#note').val(data[0].note)
-                var phones = data[1];
-                var phone = [];
-                $.each(phones, function(idx2,val2) {
-                    var str =  val2.phone;
-                    phone.push(str);
-                    <?php
-                    for($i=1; $i<=15;$i++) { ?>
-                    $('#phone_<?php echo $i;?>').val(phone[<?php echo $i-1;?>])
-                    <?php }?>
-                });
-            })
-        }
-    </script>
+        $.get('{{asset('cocsim/edit')}}/'+id,function (data) {
+            $('#modelHeading').html("Edit");
+            $('#saveBtn').val("edit-cocsim");
+            $('#ajaxModel').modal('show');
+            $('.modal').on('hidden.bs.modal', function (e) {
+                $('body').addClass('modal-open');
+            });
+
+
+
+
+            $('#id').val(data.id);
+            $('#cocsim').val(data.cocsim);
+            $('#note').val(data.note)
+            var phones = data.khosim;
+            var phone = [];
+            var phone_id = [];
+
+            $.each(phones, function(idx2,val2) {
+
+                var phone_val =  val2.phone;
+
+                var phone_id_val =  val2.id;
+                phone.push(phone_val);
+                phone_id.push(phone_id_val);
+                <?php
+                for($i=1; $i<=15;$i++) { ?>
+                $('#phone_<?php echo $i;?>').val(phone[<?php echo $i-1;?>])
+                $('#phone_id_<?php echo $i;?>').val(phone_id[<?php echo $i-1;?>])
+                <?php }?>
+            });
+        })
+    }
+</script>
 @endsection
 
 
