@@ -15,9 +15,9 @@ class CocsimController extends Controller
 {
     public function index(Request $request)
     {
-        $cocsim= cocsim::latest('id')->get();
+        $cocsim= cocsim::latest('id')->where('id','<>',1)->get();
         if ($request->ajax()) {
-            $data = cocsim::latest('id')->get();
+            $data = cocsim::latest('id')->where('id','<>',1)->get();
             return Datatables::of($data)
                 ->addIndexColumn()
                 ->addColumn('action', function($row){
