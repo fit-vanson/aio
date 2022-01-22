@@ -88,11 +88,11 @@
 <!-- Datatable init js -->
 <script src="assets/pages/datatables.init.js"></script>
 
-<script>
-    $(".select2").select2({
-        placeholder: "Vui lòng chọn",
-    });
-</script>
+{{--<script>--}}
+{{--    $(".select2").select2({--}}
+{{--        placeholder: "Vui lòng chọn",--}}
+{{--    });--}}
+{{--</script>--}}
 
 <script type="text/javascript">
     $(function () {
