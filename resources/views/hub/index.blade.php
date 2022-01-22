@@ -121,94 +121,94 @@
 
 
 
-        $('#createNewHub').click(function () {
-            $('#saveBtn').val("create-hub");
-            $('#id').val('');
-            $('#hubForm').trigger("reset");
-            $('#modelHeading').html("Thêm mới");
-            $('#ajaxModel').modal('show');
-            $("#cocsim").select2({});
-            $("#hubname").prop('disabled', false);
-        });
-        $('#hubForm').on('submit',function (event){
-            event.preventDefault();
-            if($('#saveBtn').val() == 'create-hub'){
-                $.ajax({
-                    data: $('#hubForm').serialize(),
-                    url: "{{ route('hub.create') }}",
-                    type: "POST",
-                    dataType: 'json',
-                    success: function (data) {
-                        if(data.errors){
-                            for( var count=0 ; count <data.errors.length; count++){
-                                $("#hubForm").notify(
-                                    data.errors[count],"error",
-                                    { position:"right" }
-                                );
-                            }
-                        }
-                        if(data.success){
-                            $.notify(data.success, "success");
-                            $('#hubForm').trigger("reset");
-                            $('#ajaxModel').modal('hide');
-                            table.draw();
-                        }
-                    },
-                });
-            }
-            if($('#saveBtn').val() == 'edit-hub'){
-                $.ajax({
-                    data: $('#hubForm').serialize(),
-                    url: "{{ route('hub.update') }}",
-                    type: "post",
-                    dataType: 'json',
-                    success: function (data) {
-                        if(data.errors){
-                            for( var count=0 ; count <data.errors.length; count++){
-                                $("#hubForm").notify(
-                                    data.errors[count],"error",
-                                    { position:"right" }
-                                );
-                            }
-                        }
-                        if(data.success){
-                            $.notify(data.success, "success");
-                            $('#hubForm').trigger("reset");
-                            $('#ajaxModel').modal('hide');
-                            table.draw();
-                        }
-                    },
-                });
+        {{--$('#createNewHub').click(function () {--}}
+        {{--    $('#saveBtn').val("create-hub");--}}
+        {{--    $('#id').val('');--}}
+        {{--    $('#hubForm').trigger("reset");--}}
+        {{--    $('#modelHeading').html("Thêm mới");--}}
+        {{--    $('#ajaxModel').modal('show');--}}
+        {{--    $("#cocsim").select2({});--}}
+        {{--    $("#hubname").prop('disabled', false);--}}
+        {{--});--}}
+        {{--$('#hubForm').on('submit',function (event){--}}
+        {{--    event.preventDefault();--}}
+        {{--    if($('#saveBtn').val() == 'create-hub'){--}}
+        {{--        $.ajax({--}}
+        {{--            data: $('#hubForm').serialize(),--}}
+        {{--            url: "{{ route('hub.create') }}",--}}
+        {{--            type: "POST",--}}
+        {{--            dataType: 'json',--}}
+        {{--            success: function (data) {--}}
+        {{--                if(data.errors){--}}
+        {{--                    for( var count=0 ; count <data.errors.length; count++){--}}
+        {{--                        $("#hubForm").notify(--}}
+        {{--                            data.errors[count],"error",--}}
+        {{--                            { position:"right" }--}}
+        {{--                        );--}}
+        {{--                    }--}}
+        {{--                }--}}
+        {{--                if(data.success){--}}
+        {{--                    $.notify(data.success, "success");--}}
+        {{--                    $('#hubForm').trigger("reset");--}}
+        {{--                    $('#ajaxModel').modal('hide');--}}
+        {{--                    table.draw();--}}
+        {{--                }--}}
+        {{--            },--}}
+        {{--        });--}}
+        {{--    }--}}
+        {{--    if($('#saveBtn').val() == 'edit-hub'){--}}
+        {{--        $.ajax({--}}
+        {{--            data: $('#hubForm').serialize(),--}}
+        {{--            url: "{{ route('hub.update') }}",--}}
+        {{--            type: "post",--}}
+        {{--            dataType: 'json',--}}
+        {{--            success: function (data) {--}}
+        {{--                if(data.errors){--}}
+        {{--                    for( var count=0 ; count <data.errors.length; count++){--}}
+        {{--                        $("#hubForm").notify(--}}
+        {{--                            data.errors[count],"error",--}}
+        {{--                            { position:"right" }--}}
+        {{--                        );--}}
+        {{--                    }--}}
+        {{--                }--}}
+        {{--                if(data.success){--}}
+        {{--                    $.notify(data.success, "success");--}}
+        {{--                    $('#hubForm').trigger("reset");--}}
+        {{--                    $('#ajaxModel').modal('hide');--}}
+        {{--                    table.draw();--}}
+        {{--                }--}}
+        {{--            },--}}
+        {{--        });--}}
 
-            }
+        {{--    }--}}
 
-        });
-        $(document).on('click','.deleteHub', function (data){
-            var id = $(this).data("id");
-            swal({
-                    title: "Bạn có chắc muốn xóa?",
-                    text: "Your will not be able to recover this imaginary file!",
-                    type: "warning",
-                    showCancelButton: true,
-                    confirmButtonClass: "btn-danger",
-                    confirmButtonText: "Xác nhận xóa!",
-                    closeOnConfirm: false
-                },
-                function(){
-                    $.ajax({
-                        type: "get",
-                        url: "{{ asset("hub/delete") }}/" + id,
-                        success: function (data) {
-                            console.log(data)
-                            table.draw();
-                        },
-                        error: function (data) {
-                            console.log('Error:', data);
-                        }
-                    });
-                    swal("Đã xóa!", "Your imaginary file has been deleted.", "success");
-                });
-        });
+        {{--});--}}
+        {{--$(document).on('click','.deleteHub', function (data){--}}
+        {{--    var id = $(this).data("id");--}}
+        {{--    swal({--}}
+        {{--            title: "Bạn có chắc muốn xóa?",--}}
+        {{--            text: "Your will not be able to recover this imaginary file!",--}}
+        {{--            type: "warning",--}}
+        {{--            showCancelButton: true,--}}
+        {{--            confirmButtonClass: "btn-danger",--}}
+        {{--            confirmButtonText: "Xác nhận xóa!",--}}
+        {{--            closeOnConfirm: false--}}
+        {{--        },--}}
+        {{--        function(){--}}
+        {{--            $.ajax({--}}
+        {{--                type: "get",--}}
+        {{--                url: "{{ asset("hub/delete") }}/" + id,--}}
+        {{--                success: function (data) {--}}
+        {{--                    console.log(data)--}}
+        {{--                    table.draw();--}}
+        {{--                },--}}
+        {{--                error: function (data) {--}}
+        {{--                    console.log('Error:', data);--}}
+        {{--                }--}}
+        {{--            });--}}
+        {{--            swal("Đã xóa!", "Your imaginary file has been deleted.", "success");--}}
+        {{--        });--}}
+        {{--});--}}
     });
 
 </script>

@@ -18,8 +18,8 @@
                     <div class="form-group">
                         <label for="name" class="col-sm-5 control-label">Cọc sim</label>
                         <div class="col-sm-12">
-                            <select class="form-control" id="cocsim" name="cocsim">
-                                <option>---Vui lòng chọn---</option>
+                            <select class="form-control" id="cocsim" name="cocsim" required>
+                                <option value="">---Vui lòng chọn---</option>
                                 @foreach($cocsim as $item)
                                     <option value="{{$item->id}}">{{$item->cocsim}}</option>
                                 @endforeach
@@ -30,7 +30,7 @@
                     <div class="form-group">
                         <label class="col-sm-5 control-label">STT trong cọc sim</label>
                         <div class="col-sm-12">
-                            <input type="number" id="stt" class="form-control" name="stt">
+                            <input type="number" id="stt" class="form-control" name="stt" value="0">
                         </div>
                     </div>
 

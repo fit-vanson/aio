@@ -93,7 +93,6 @@
         });
         var table = $('.data-table').DataTable({
             lengthMenu: [[15, 30, 45, -1], [15, 30, 45, "All"]],
-
             processing: true,
             serverSide: true,
             ajax: "{{ route('khosim.getKhosim') }}",
@@ -108,7 +107,8 @@
                 {data: 'stt', name: 'stt'},
                 {data: 'time', name: 'time'},
                 {data: 'action',className: "text-center", name: 'action', orderable: false, searchable: false},
-            ]
+            ],
+            order: [2, 'asc'],
         });
         $('#createNewKhosim').click(function () {
             $('#saveBtn').val("create-khosim");
@@ -130,7 +130,7 @@
                         if(data.errors){
                             for( var count=0 ; count <data.errors.length; count++){
                                 $("#khosimForm").notify(
-                                    data.errors[count],"error",
+                                    data.errors,"error",
                                     { position:"right" }
                                 );
                             }
@@ -154,7 +154,7 @@
                         if(data.errors){
                             for( var count=0 ; count <data.errors.length; count++){
                                 $("#khosimForm").notify(
-                                    data.errors[count],"error",
+                                    data.errors,"error",
                                     { position:"right" }
                                 );
                             }
@@ -202,22 +202,22 @@
 </script>
 
 <script>
-        function editKhosim(id) {
-            $.get('{{asset('khosim/edit')}}/'+id,function (data) {
-                $('#modelHeading').html("Edit");
-                $('#saveBtn').val("edit-khosim");
-                $('#ajaxModel').modal('show');
-                $('.modal').on('hidden.bs.modal', function (e) {
-                    $('body').addClass('modal-open');
-                });
-                $('#id').val(data.id);
-                $('#phone').val(data.phone);
-                $('#cocsim').val(data.cocsim)
-                $('#cocsim').select2();
-                $('#stt').val(data.stt)
-            })
-        }
-    </script>
+    function editKhosim(id) {
+        $.get('{{asset('khosim/edit')}}/'+id,function (data) {
+            $('#modelHeading').html("Edit");
+            $('#saveBtn').val("edit-khosim");
+            $('#ajaxModel').modal('show');
+            $('.modal').on('hidden.bs.modal', function (e) {
+                $('body').addClass('modal-open');
+            });
+            $('#id').val(data.id);
+            $('#phone').val(data.phone);
+            $('#cocsim').val(data.cocsim)
+            $('#cocsim').select2();
+            $('#stt').val(data.stt)
+        })
+    }
+</script>
 @endsection
 
 

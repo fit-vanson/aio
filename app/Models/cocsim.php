@@ -21,4 +21,14 @@ class cocsim extends Model
     {
         return $this->hasOne(Hub::class, 'cocsim');
     }
+
+    public static function booted()
+    {
+        static::deleting(function ($cocsim) {
+            $uncategorized = cocsim::firstOrCreate(['cocsim' => 'default']);
+            khosim::where('cocsim', $cocsim->id)->update(
+                ['cocsim' => $uncategorized->id,'stt'=>0]);
+        });
+    }
+
 }

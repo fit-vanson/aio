@@ -9,6 +9,7 @@ use App\Models\sms;
 
 use Illuminate\Http\Request;
 
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Validator;
 use Yajra\DataTables\Facades\DataTables;
 
@@ -161,5 +162,16 @@ class SmsController extends Controller
     public function callAction($method, $parameters)
     {
         return parent::callAction($method, array_values($parameters));
+    }
+
+    public function resetSMS(){
+        DB::table('ngocphandang_sms')->update([
+            'cocsim'=>null,
+            'phone'=>null,
+            'code'=>null,
+            'sms'=>null,
+            'timecode'=>0,
+        ]);
+
     }
 }

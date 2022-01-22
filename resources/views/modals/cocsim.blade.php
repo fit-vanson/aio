@@ -12,7 +12,7 @@
                     <div class="row form-group">
                         <label for="name" class="col-sm-5 control-label">Tên Cọc sim</label>
                         <div class="col-sm-12">
-                            <input type="text" class="form-control" id="cocsim" name="cocsim" >
+                            <input type="text" class="form-control" id="cocsim" name="cocsim" required >
                         </div>
                     </div>
 
@@ -20,7 +20,8 @@
                         @for($i=1;$i<=15 ; $i++)
                         <div class=" form-group col-lg-4 ">
                             <label for="name" class="col-sm-5 control-label">Phone {{$i}} </label>
-                            <input type="text" class="form-control" id="phone_{{$i}}" name="phone[]"  >
+                            <input type="hidden" name="phone_id[]" id="phone_id_{{$i}}">
+                            <input type="text" class="form-control" id="phone_{{$i}}" name="phone[]" required >
                         </div>
                         @endfor
                     </div>

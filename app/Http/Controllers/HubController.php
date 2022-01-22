@@ -16,7 +16,6 @@ class HubController extends Controller
 {
     public function index(Request $request)
     {
-
         $cocsim = cocsim::withCount('khosim')->having('khosim_count', 15)->get();
         $hub = Hub::all();
         if ($request->ajax()) {
@@ -25,7 +24,7 @@ class HubController extends Controller
                 ->addIndexColumn()
                 ->addColumn('action', function($row){
                     $btn = ' <a href="javascript:void(0)" onclick="editHub('.$row->id.')" class="btn btn-warning"><i class="ti-pencil-alt"></i></a>';
-                    $btn = $btn.' <a href="javascript:void(0)" data-toggle="tooltip"  data-id="'.$row->id.'" data-original-title="Delete" class="btn btn-danger deleteHub"><i class="ti-trash"></i></a>';
+//                    $btn = $btn.' <a href="javascript:void(0)" data-toggle="tooltip"  data-id="'.$row->id.'" data-original-title="Delete" class="btn btn-danger deleteHub"><i class="ti-trash"></i></a>';
                     return $btn;
                 })
                 ->editColumn('cocsim', function($data){
@@ -149,13 +148,14 @@ class HubController extends Controller
             ->where('ngocphandang_khosim.cocsim',$request->cocsim)
             ->get();
 //        dd($request->cocsim);
-//        dd($phoneOfcocsim);
+
         $count = count($phoneOfcocsim);
         if($count==15){
             $sms = DB::table('ngocphandang_sms')
                 ->Join('ngocphandang_hubinfo','ngocphandang_hubinfo.hubname','=','ngocphandang_sms.hubname')
                 ->where('ngocphandang_hubinfo.hubname',$request->hubname)
                 ->get();
+
             $cocsim  = cocsim::where('id',$request->cocsim)->first();
             $cocsim = $cocsim->cocsim;
             foreach ($sms  as $s){
@@ -168,7 +168,7 @@ class HubController extends Controller
                     $s = sms::where('hubid',$s->hubid)->first();
                     $s->cocsim = $cocsim;
                     $s->phone = $phone->phone;
-                    $s->code =$phone->stt;
+                    $s->code ='';
                     $s->sms = '';
                     $s->busyjob = '';
                     $s->timebusyjob = 0;

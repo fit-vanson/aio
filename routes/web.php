@@ -348,6 +348,7 @@ Route::group(['prefix'=>'sms','middleware'=>['CheckLogout','2fa']], function (){
     Route::post('/show',[SmsController::class,'showHub'])->name('sms.showHub');
     Route::post('/update',[SmsController::class,'update'])->name('sms.update')->middleware('can:sms-update');
     Route::get('/delete/{id}',[SmsController::class,'delete'])->name('sms.delete')->middleware('can:sms-delete');
+    Route::get('/reset',[SmsController::class,'resetSMS'])->name('sms.reset')->middleware('can:sms-index');
 });
 
 

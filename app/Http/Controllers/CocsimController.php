@@ -44,16 +44,17 @@ class CocsimController extends Controller
      */
     public function create(Request  $request)
     {
+//        dd($request->all());
 
 
         $rules = [
-            'cocsim' =>'required|unique:ngocphandang_cocsim,cocsim',
+            'cocsim' =>'unique:ngocphandang_cocsim,cocsim',
+            'phone.*' =>'unique:ngocphandang_khosim,phone',
 
         ];
         $message = [
             'cocsim.unique'=>'Tên cọc sim đã tồn tại',
-            'cocsim.required'=>'Tên cọc không để trống',
-
+            'phone.*.unique'=>'Số :input đã tồn tại',
         ];
 
         $error = Validator::make($request->all(),$rules, $message );
@@ -108,12 +109,8 @@ class CocsimController extends Controller
      */
     public function edit($id)
     {
-        $dev = cocsim::find($id);
-        $phoneOfcocsim =  DB::table('ngocphandang_khosim')
-            ->Join('ngocphandang_cocsim','ngocphandang_cocsim.id','=','ngocphandang_khosim.cocsim')
-            ->where('ngocphandang_khosim.cocsim',$id)
-            ->get();
-        return response()->json([$dev,$phoneOfcocsim]);
+        $cocsim = cocsim::with('khosim')->find($id);
+        return response()->json($cocsim);
     }
 
     /**
@@ -125,23 +122,34 @@ class CocsimController extends Controller
      */
     public function update(Request $request)
     {
+//        dd($request->all());
 
 
         $id = $request->id;
+        $phone_id = $request->phone_id;
 
-        $rules1 = [
-            'cocsim' =>'required|unique:ngocphandang_cocsim,cocsim,'.$id.',id',
-            'phone.*' =>'numeric',
+        $rules = [
+            'cocsim' =>'unique:ngocphandang_cocsim,cocsim,'.$id.',id',
+//            'phone.*' =>'unique:ngocphandang_khosim,phone,'.$phone_id.',id',
         ];
+
+        foreach($phone_id as $key => $val)
+        {
+            $rules['phone.'.$key] = 'unique:ngocphandang_khosim,phone,'.$val.',id';
+        }
+
         $message = [
             'cocsim.unique'=>'Tên cọc sim đã tồn tại',
             'cocsim.required'=>'Tên cọc sim không để trống',
-            'phone.*.numeric' => ' :input không phải là số'
+//            'phone.*.numeric' => ' :input không phải là số',
+            'phone.*.unique'=>'Số :input đã tồn tại',
+
         ];
-        $error = Validator::make($request->all(),$rules1, $message );
+        $error = Validator::make($request->all(),$rules, $message );
         if($error->fails()){
             return response()->json(['errors'=> $error->errors()->all()]);
         }
+
 
         $data = cocsim::find($id);
         $data->cocsim = $request->cocsim;
@@ -167,7 +175,9 @@ class CocsimController extends Controller
      */
     public function delete($id)
     {
-        cocsim::find($id)->delete();
+        $cocsim = cocsim::find($id);
+//        $cocsim->khosim()->detach();
+        $cocsim->delete();
         return response()->json(['success'=>'Xóa thành công.']);
     }
 

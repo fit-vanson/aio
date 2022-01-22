@@ -11,8 +11,8 @@
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/sweetalert/1.1.3/sweetalert.min.css">
 <script src="https://cdnjs.cloudflare.com/ajax/libs/sweetalert/1.1.3/sweetalert.min.js"></script>
 
-<!-- Select2 Js  -->
-<link href="plugins/select2/css/select2.min.css" rel="stylesheet" type="text/css" />
+/*<!-- Select2 Js  -->*/
+/*<link href="plugins/select2/css/select2.min.css" rel="stylesheet" type="text/css" />*/
 
 @endsection
 
@@ -88,7 +88,6 @@
 <!-- Datatable init js -->
 <script src="assets/pages/datatables.init.js"></script>
 
-<script src="plugins/select2/js/select2.min.js"></script>
 <script>
     $(".select2").select2({
         placeholder: "Vui lòng chọn",
@@ -116,94 +115,142 @@
                 {data: 'sms', name: 'sms'},
                 {data: 'timecode', name: 'timecode'},
                 // {data: 'action',className: "text-center", name: 'action', orderable: false, searchable: false},
-            ]
-        });
-
-        $('#createNewSms').click(function () {
-            $('#saveBtn').val("create-sms");
-            $('#id').val('');
-            $('#smsForm').trigger("reset");
-            $('#modelHeading').html("Thêm mới");
-            $('#ajaxModel').modal('show');
-            $('#cocsim').select2();
-            $('#phone').select2();
-        });
-        $('#smsForm').on('submit',function (event){
-            event.preventDefault();
-            if($('#saveBtn').val() == 'create-sms'){
-                $.ajax({
-                    data: $('#smsForm').serialize(),
-                    url: "{{ route('sms.create') }}",
-                    type: "POST",
-                    dataType: 'json',
-                    success: function (data) {
-                        if(data.errors){
-                            for( var count=0 ; count <data.errors.length; count++){
-                                $("#smsForm").notify(
-                                    data.errors[count],"error",
-                                    { position:"right" }
-                                );
-                            }
-                        }
-                        if(data.success){
-                            $.notify(data.success, "success");
-                            $('#smsForm').trigger("reset");
-                            $('#ajaxModel').modal('hide');
-                            table.draw();
-                        }
+            ],
+            dom:
+                '<"d-flex justify-content-between align-items-center header-actions mx-2 row mt-75"' +
+                '<"col-sm-12 col-lg-4 d-flex justify-content-center justify-content-lg-start" l>' +
+                '<"col-sm-12 col-lg-8 ps-xl-75 ps-0"<"dt-action-buttons d-flex align-items-center justify-content-center justify-content-lg-end flex-lg-nowrap flex-wrap"<"me-1"f>B>>' +
+                '>t' +
+                '<"d-flex justify-content-between mx-2 row mb-1"' +
+                '<"col-sm-12 col-md-6"i>' +
+                '<"col-sm-12 col-md-6"p>' +
+                '>',
+            buttons: [
+                {
+                    text: 'Reset',
+                    className: 'reset_sms btn-default',
+                    attr: {
+                        'style': 'color:red',
                     },
-                });
-            }
-            if($('#saveBtn').val() == 'edit-sms'){
-                $.ajax({
-                    data: $('#smsForm').serialize(),
-                    url: "{{ route('sms.update') }}",
-                    type: "post",
-                    dataType: 'json',
-                    success: function (data) {
-                        if(data.errors){
-                            for( var count=0 ; count <data.errors.length; count++){
-                                $("#smsForm").notify(
-                                    data.errors[count],"error",
-                                    { position:"right" }
-                                );
-                            }
-                        }
-                        if(data.success){
-                            $.notify(data.success, "success");
-                            $('#smsForm').trigger("reset");
-                            $('#ajaxModel').modal('hide');
-                            table.draw();
-                        }
-                    },
-                });
-
-            }
-
+                    init: function (api, node, config) {
+                        $(node).removeClass('btn-secondary');
+                    }
+                }
+            ],
         });
-        $(document).on('click','.deleteSms', function (data){
-            var id = $(this).data("id");
+
+        // $('#createNewSms').click(function () {
+        //     $('#saveBtn').val("create-sms");
+        //     $('#id').val('');
+        //     $('#smsForm').trigger("reset");
+        //     $('#modelHeading').html("Thêm mới");
+        //     $('#ajaxModel').modal('show');
+        //     $('#cocsim').select2();
+        //     $('#phone').select2();
+        // });
+        {{--$('#smsForm').on('submit',function (event){--}}
+        {{--    event.preventDefault();--}}
+        {{--    if($('#saveBtn').val() == 'create-sms'){--}}
+        {{--        $.ajax({--}}
+        {{--            data: $('#smsForm').serialize(),--}}
+        {{--            url: "{{ route('sms.create') }}",--}}
+        {{--            type: "POST",--}}
+        {{--            dataType: 'json',--}}
+        {{--            success: function (data) {--}}
+        {{--                if(data.errors){--}}
+        {{--                    for( var count=0 ; count <data.errors.length; count++){--}}
+        {{--                        $("#smsForm").notify(--}}
+        {{--                            data.errors[count],"error",--}}
+        {{--                            { position:"right" }--}}
+        {{--                        );--}}
+        {{--                    }--}}
+        {{--                }--}}
+        {{--                if(data.success){--}}
+        {{--                    $.notify(data.success, "success");--}}
+        {{--                    $('#smsForm').trigger("reset");--}}
+        {{--                    $('#ajaxModel').modal('hide');--}}
+        {{--                    table.draw();--}}
+        {{--                }--}}
+        {{--            },--}}
+        {{--        });--}}
+        {{--    }--}}
+        {{--    --}}{{--if($('#saveBtn').val() == 'edit-sms'){--}}
+        {{--    --}}{{--    $.ajax({--}}
+        {{--    --}}{{--        data: $('#smsForm').serialize(),--}}
+        {{--    --}}{{--        url: "{{ route('sms.update') }}",--}}
+        {{--    --}}{{--        type: "post",--}}
+        {{--    --}}{{--        dataType: 'json',--}}
+        {{--    --}}{{--        success: function (data) {--}}
+        {{--    --}}{{--            if(data.errors){--}}
+        {{--    --}}{{--                for( var count=0 ; count <data.errors.length; count++){--}}
+        {{--    --}}{{--                    $("#smsForm").notify(--}}
+        {{--    --}}{{--                        data.errors[count],"error",--}}
+        {{--    --}}{{--                        { position:"right" }--}}
+        {{--    --}}{{--                    );--}}
+        {{--    --}}{{--                }--}}
+        {{--    --}}{{--            }--}}
+        {{--    --}}{{--            if(data.success){--}}
+        {{--    --}}{{--                $.notify(data.success, "success");--}}
+        {{--    --}}{{--                $('#smsForm').trigger("reset");--}}
+        {{--    --}}{{--                $('#ajaxModel').modal('hide');--}}
+        {{--    --}}{{--                table.draw();--}}
+        {{--    --}}{{--            }--}}
+        {{--    --}}{{--        },--}}
+        {{--    --}}{{--    });--}}
+        {{--    --}}
+        {{--    --}}{{--}--}}
+
+        {{--});--}}
+        {{--$(document).on('click','.deleteSms', function (data){--}}
+        {{--    var id = $(this).data("id");--}}
+        {{--    swal({--}}
+        {{--            title: "Bạn có chắc muốn xóa?",--}}
+        {{--            text: "Your will not be able to recover this imaginary file!",--}}
+        {{--            type: "warning",--}}
+        {{--            showCancelButton: true,--}}
+        {{--            confirmButtonClass: "btn-danger",--}}
+        {{--            confirmButtonText: "Xác nhận xóa!",--}}
+        {{--            closeOnConfirm: false--}}
+        {{--        },--}}
+        {{--        function(){--}}
+        {{--            $.ajax({--}}
+        {{--                type: "get",--}}
+        {{--                url: "{{ asset("sms/delete") }}/" + id,--}}
+        {{--                success: function (data) {--}}
+        {{--                    table.draw();--}}
+        {{--                    $.notify('Thành công', "success");--}}
+        {{--                },--}}
+        {{--                error: function (data) {--}}
+        {{--                    console.log('Error:', data);--}}
+        {{--                }--}}
+        {{--            });                   --}}
+        {{--        });--}}
+        {{--});--}}
+
+
+        $(document).on('click','.reset_sms', function (data){
+
             swal({
-                    title: "Bạn có chắc muốn xóa?",
+                    title: "Bạn có chắc muốn reset?",
                     text: "Your will not be able to recover this imaginary file!",
                     type: "warning",
                     showCancelButton: true,
                     confirmButtonClass: "btn-danger",
-                    confirmButtonText: "Xác nhận xóa!",
-                    closeOnConfirm: false
+                    confirmButtonText: "Xác nhận!",
+                    closeOnConfirm: true
                 },
                 function(){
                     $.ajax({
                         type: "get",
-                        url: "{{ asset("sms/delete") }}/" + id,
+                        url: "{{ asset("sms/reset") }}/",
                         success: function (data) {
                             table.draw();
+                            $.notify('Thành công', "success");
                         },
                         error: function (data) {
                             console.log('Error:', data);
                         }
                     });
-                    swal("Đã xóa!", "Your imaginary file has been deleted.", "success");
                 });
         });
     });

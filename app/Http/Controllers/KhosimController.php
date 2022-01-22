@@ -38,13 +38,20 @@ class KhosimController extends Controller
 
         // Total records
         $totalRecords = khosim::select('count(*) as allcount')->count();
-        $totalRecordswithFilter = khosim::select('count(*) as allcount')->where('phone', 'like', '%' . $searchValue . '%')->count();
+        $totalRecordswithFilter = khosim::select('count(*) as allcount')
+            ->join('ngocphandang_cocsim','ngocphandang_cocsim.id','ngocphandang_khosim.cocsim')
+            ->where('ngocphandang_khosim.phone', 'like', '%' . $searchValue . '%')
+            ->orWhere('ngocphandang_khosim.cocsim', 'like', '%' . $searchValue . '%')
+            ->orWhere('ngocphandang_cocsim.cocsim', 'like', '%' . $searchValue . '%')
+            ->orWhere('ngocphandang_khosim.time', 'like', '%' . $searchValue . '%')
+            ->count();
 
         // Get records, also we have included search filter as well
-        $records = khosim::join('ngocphandang_cocsim','ngocphandang_cocsim.id','ngocphandang_khosim.cocsim')
+        $records = khosim::orderBy($columnName, $columnSortOrder)
+            ->join('ngocphandang_cocsim','ngocphandang_cocsim.id','ngocphandang_khosim.cocsim')
             ->where('ngocphandang_khosim.phone', 'like', '%' . $searchValue . '%')
-
             ->orWhere('ngocphandang_khosim.cocsim', 'like', '%' . $searchValue . '%')
+            ->orWhere('ngocphandang_cocsim.cocsim', 'like', '%' . $searchValue . '%')
             ->orWhere('ngocphandang_khosim.time', 'like', '%' . $searchValue . '%')
             ->select('ngocphandang_khosim.*','ngocphandang_cocsim.cocsim as cocsim_name')
             ->skip($start)
@@ -82,33 +89,49 @@ class KhosimController extends Controller
      */
     public function create(Request $request)
     {
+
+
         $rules = [
-            'phone' =>'numeric|unique:ngocphandang_khosim,phone',
-            'stt' =>'numeric|min:1|max:15'
+            'phone' =>'unique:ngocphandang_khosim,phone',
+            'stt' =>'numeric|min:0|max:15'
+//            'stt' =>'numeric|digits_between:0,15',
         ];
         $message = [
             'phone.unique'=>'Phone đã tồn tại',
-            'phone.numeric'=>'Phone là số',
-            'stt.numeric'=>'STT là số',
-            'stt.min'=>'STT tối thiệu là 1',
-            'stt.max'=>'STT tối đa là 15',
-
+            'stt.min'=>'Min: 0',
+            'stt.max'=>'Max: 15',
         ];
-
-
         $error = Validator::make($request->all(),$rules, $message );
 
         if($error->fails()){
             return response()->json(['errors'=> $error->errors()->all()]);
         }
-
-        $data = new khosim();
-        $data['phone'] = $request->phone;
-        $data['cocsim'] = $request->cocsim;
-        $data['stt'] = $request->stt;
-        $data['time'] = 0;
-        $data->save();
-        return response()->json(['success'=>'Thêm mới thành công']);
+        $check = $this->checkSTTCocSim($request->cocsim,$request->stt);
+        if($check){
+            if($request->cocsim == 1){
+                $data = new khosim();
+                $data['phone'] = $request->phone;
+                $data['cocsim'] = $request->cocsim;
+                $data['stt'] = 0;
+                $data['time'] = 0;
+                $data->save();
+                return response()->json(['success'=>'Thêm mới thành công']);
+            }else{
+                return response()->json(['errors'=> 'STT đã sử dụng cho cọc sim' ]);
+            }
+        }else{
+            if($request->stt == 0){
+                return response()->json(['errors'=> 'STT từ 1-15' ]);
+            }else{
+                $data = new khosim();
+                $data['phone'] = $request->phone;
+                $data['cocsim'] = $request->cocsim;
+                $data['stt'] = $request->stt;
+                $data['time'] = 0;
+                $data->save();
+                return response()->json(['success'=>'Thêm mới thành công']);
+            }
+        }
     }
 
     /**
@@ -154,28 +177,55 @@ class KhosimController extends Controller
      */
     public function update(Request $request)
     {
+
         $id = $request->id;
         $rules = [
-            'phone' =>'numeric|unique:ngocphandang_khosim,phone,'.$id.',id',
-            'stt' =>'numeric|min:1|max:15'
+            'phone' =>'unique:ngocphandang_khosim,phone,'.$id.',id',
+            'stt' =>'numeric|min:0|max:15'
         ];
         $message = [
             'phone.unique'=>'Phone đã tồn tại',
-            'phone.numeric'=>'Phone là số',
             'stt.numeric'=>'STT là số',
-            'stt.min'=>'STT tối thiệu là 1',
+            'stt.min'=>'STT tối thiểu là 0',
             'stt.max'=>'STT tối đa là 15',
         ];
         $error = Validator::make($request->all(),$rules, $message );
         if($error->fails()){
             return response()->json(['errors'=> $error->errors()->all()]);
         }
-        $data = khosim::find($id);
-        $data->phone = $request->phone;
-        $data->cocsim = $request->cocsim;
-        $data->stt = $request->stt;
-        $data->save();
-        return response()->json(['success'=>'Cập nhật thành công']);
+
+        $check = $this->checkSTTCocSim($request->cocsim,$request->stt);
+
+        if($check){
+            if($request->cocsim == 1){
+                $data = khosim::find($id);
+                $data->phone = $request->phone;
+                $data->cocsim = $request->cocsim;
+                $data->stt = $request->stt;
+                $data->save();
+                return response()->json(['success'=>'Cập nhật thành công']);
+            }else{
+                return response()->json(['errors'=> 'STT đã sử dụng cho cọc sim' ]);
+            }
+        }else{
+            if($request->stt == 0){
+                return response()->json(['errors'=> 'STT từ 1-15' ]);
+            }else{
+                $data = khosim::find($id);
+                $data->phone = $request->phone;
+                $data->cocsim = $request->cocsim;
+                $data->stt = $request->stt;
+                $data->save();
+                return response()->json(['success'=>'Cập nhật thành công']);
+            }
+        }
+
+//        $data = khosim::find($id);
+//        $data->phone = $request->phone;
+//        $data->cocsim = $request->cocsim;
+//        $data->stt = $request->stt;
+//        $data->save();
+//        return response()->json(['success'=>'Cập nhật thành công']);
     }
 
     /**
@@ -194,5 +244,15 @@ class KhosimController extends Controller
     {
         return parent::callAction($method, array_values($parameters));
     }
+
+    public function checkSTTCocSim($cocsim,$stt){
+        $check = khosim::where('cocsim',$cocsim)->where('stt',$stt)->first();
+        if ($check){
+            return true;
+        }else{
+            return false;
+        }
+    }
+
 
 }
