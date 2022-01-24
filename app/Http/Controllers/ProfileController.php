@@ -96,13 +96,13 @@ class ProfileController extends Controller
 
 
         $data = new Profile();
-        $destinationPath = public_path('uploads/profile');
-        if (!file_exists($destinationPath)) {
-            mkdir($destinationPath, 0777, true);
+        $destinationPath_file = public_path('uploads/profile/');
+        if (!file_exists($destinationPath_file)) {
+            mkdir($destinationPath_file, 0777, true);
         }
         $destinationPath_logo = public_path('uploads/profile/logo/');
-        if (!file_exists($destinationPath)) {
-            mkdir($destinationPath, 0777, true);
+        if (!file_exists($destinationPath_logo)) {
+            mkdir($destinationPath_logo, 0777, true);
         }
 
         $data['profile_name'] = $request->profile_name;
@@ -122,7 +122,7 @@ class ProfileController extends Controller
         $file = $request->profile_file;
         $file_name = $file->getClientOriginalname();
         $data['profile_file'] = $file_name;
-        $file->move($destinationPath, $data['profile_file']);
+        $file->move($destinationPath_file, $data['profile_file']);
 
 
 
