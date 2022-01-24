@@ -6,6 +6,7 @@ use App\Models\Profile;
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
+use Intervention\Image\Facades\Image;
 
 class ProfileController extends Controller
 {
@@ -93,10 +94,13 @@ class ProfileController extends Controller
             return response()->json(['errors'=> $error->errors()->all()]);
         }
 
-        $img_file  = $request->logo;
-        $imgData = base64_encode(file_get_contents($img_file));
+
         $data = new Profile();
-        $destinationPath = public_path('uploads/profile/');
+        $destinationPath = public_path('uploads/profile');
+        if (!file_exists($destinationPath)) {
+            mkdir($destinationPath, 0777, true);
+        }
+        $destinationPath_logo = public_path('uploads/profile/logo/');
         if (!file_exists($destinationPath)) {
             mkdir($destinationPath, 0777, true);
         }
@@ -108,7 +112,13 @@ class ProfileController extends Controller
         $data['profile_anh_cccd'] = $request->profile_anh_cccd ? 1 :0 ;
         $data['profile_anh_bang_lai'] = $request->profile_anh_bang_lai ? 1 :0 ;
         $data['profile_anh_ngan_hang'] = $request->profile_anh_ngan_hang ? 1 :0 ;
-        $data['profile_logo'] = $imgData;
+
+        $img_file  = $request->logo;
+        $img = Image::make($img_file);
+        $imgName = $img_file->getClientOriginalName();
+        $img->save($destinationPath_logo.$imgName);
+        $data['profile_logo'] = $imgName;
+
         $file = $request->profile_file;
         $file_name = $file->getClientOriginalname();
         $data['profile_file'] = $file_name;
@@ -148,9 +158,24 @@ class ProfileController extends Controller
         $data->profile_anh_bang_lai = $request->profile_anh_bang_lai ? 1 :0 ;
         $data->profile_anh_ngan_hang = $request->profile_anh_ngan_hang ? 1 :0 ;
         if($request->logo){
+            $path_Remove =  public_path('uploads/profile/logo/').$data->profile_logo;
+
+            if(file_exists($path_Remove)){
+                unlink($path_Remove);
+            }
+            $destinationPath_logo = public_path('uploads/profile/logo/');
+            if (!file_exists($destinationPath_logo)) {
+                mkdir($destinationPath_logo, 0777, true);
+            }
+
+
             $img_file  = $request->logo;
-            $imgData = base64_encode(file_get_contents($img_file));
-            $data->profile_logo = $imgData;
+            $img = Image::make($img_file);
+            $imgName = $img_file->getClientOriginalName();
+            $img->save($destinationPath_logo.$imgName);
+            $data['profile_logo'] = $imgName;
+
+
         }
         if($request->profile_file){
             $path_Remove =  public_path('uploads/profile/').$data->profile_file;
@@ -164,12 +189,9 @@ class ProfileController extends Controller
             }
             $file = $request->profile_file;
             $file_name = $file->getClientOriginalname();
-            $data['profile_file'] = $file_name;
+            $data->profile_file = $file_name;
             $file->move($destinationPath, $data['profile_file']);
         }
-
-
-
         $data->save();
         return response()->json(['success'=>'Cập nhật thành công']);
     }

@@ -116,7 +116,7 @@
                         orderable: false,
                         responsivePriority: 0,
                         render: function (data, type, full, meta) {
-                            var $output ='<img src="data:image/png;base64,'+data+'" alt="logo" height="100px">';
+                            var $output ='<img src="{{asset('uploads/profile/logo')}}/'+data+'" alt="logo" height="100px">';
                             return $output;
                         }
                     },
@@ -229,7 +229,7 @@
                 $('#profile_name').val(data.profile_name);
                 $('#profile_sdt').val(data.profile_sdt);
                 {{--$('#profile_file').val('{{asset('uploads/profile/')}}/'+data.profile_file);--}}
-                $('#avatar').attr('src','data:image/png;base64,'+data.profile_logo);
+                $('#avatar').attr('src','{{asset('uploads/profile/logo')}}/'+data.profile_logo);
 
                 $('#profile_file').removeAttr('required');
 
@@ -266,60 +266,7 @@
             })
         }
     </script>
-    <script>
-        $("#addGaDevForm").submit(function (e) {
-            e.preventDefault();
-            let data = new FormData(document.getElementById('addGaDevForm'));
-            $.ajax({
-                url:"{{route('gadev.create')}}",
-                type: "post",
-                data:data,
-                processData: false,
-                contentType: false,
-                dataType: 'json',
-                beForeSend : () => {
 
-                },
-                success:function (data) {
-                    if(data.errors){
-                        for( var count=0 ; count <data.errors.length; count++){
-                            $("#addGaDevForm").notify(
-                                data.errors[count],"error",
-                                { position:"right" }
-                            );
-                        }
-                    }
-                    $.notify(data.success, "success");
-                    $('#addGaDevForm').trigger("reset");
-                    $('#addGaDev').modal('hide');
-                    if(typeof data.allGa_dev == 'undefined'){
-                        data.allGa_dev = {};                    }
-                    if(typeof rebuildMailOption == 'function'){
-                        rebuildMailOption(data.allGa_dev)
-                    }
-                }
-            });
-        });
-
-    </script>
-    <script>
-        function rebuildMailOption(mails){
-            var elementSelect = $("#amazon_email");
-
-
-            if(elementSelect.length <= 0){
-                return false;
-            }
-            elementSelect.empty();
-            for(var m of mails){
-                elementSelect.append(
-                    $("<option></option>", {
-                        value : m.id
-                    }).text(m.gmail)
-                );
-            }
-        }
-    </script>
 @endsection
 
 
