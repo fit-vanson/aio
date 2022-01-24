@@ -74,6 +74,9 @@
                                     @can('ga-index')
                                         <li><a href="{{route('ga.index')}}">Quản lý GA</a></li>
                                     @endcan
+                                    @can('ga-index')
+                                        <li><a href="{{route('profile.index')}}">Quản lý Profile</a></li>
+                                    @endcan
                                 </ul>
                             </li>
 

@@ -65,6 +65,11 @@ return [
             'root' => public_path('uploads/keystore'),
             'url' => env('APP_URL').'/uploads/keystore',
         ],
+        'Profile' => [
+            'driver' => 'local',
+            'root' => public_path('uploads/profile'),
+            'url' => env('APP_URL').'/uploads/profile',
+        ],
 
 
         's3' => [

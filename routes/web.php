@@ -24,6 +24,7 @@ use App\Http\Controllers\MailManageController;
 use App\Http\Controllers\MailParentController;
 use App\Http\Controllers\MailRegController;
 use App\Http\Controllers\PermissionController;
+use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\ProjectController;
 use App\Http\Controllers\RoleController;
 use App\Http\Controllers\ScriptController;
@@ -448,6 +449,16 @@ Route::group(['prefix'=>'keystore','middleware'=>['CheckLogout','2fa']], functio
     Route::get('/show/{id}',[KeystoreController::class,'edit'])->name('keystore.show')->middleware('can:keystore-show');
     Route::post('/update',[KeystoreController::class,'update'])->name('keystore.update')->middleware('can:keystore-update');
     Route::get('/delete/{id}',[KeystoreController::class,'delete'])->name('keystore.delete')->middleware('can:keystore-delete');
+});
+
+Route::group(['prefix'=>'profile','middleware'=>['CheckLogout','2fa']], function (){
+    Route::get('/',[ProfileController::class,'index'])->name('profile.index')->middleware('can:dev-index');
+    Route::post('/getIndex',[ProfileController::class,'getIndex'])->name('profile.getIndex')->middleware('can:dev-index');
+    Route::post('/create',[ProfileController::class,'create'])->name('profile.create')->middleware('can:dev-add');
+    Route::get('/edit/{id}',[ProfileController::class,'edit'])->name('profile.edit')->middleware('can:dev-edit');
+    Route::get('/show/{id}',[ProfileController::class,'show'])->name('profile.show')->middleware('can:dev-show');
+    Route::post('/update',[ProfileController::class,'update'])->name('profile.update')->middleware('can:dev-update');
+    Route::get('/delete/{id}',[ProfileController::class,'delete'])->name('profile.delete')->middleware('can:dev-delete');
 });
 
 Route::get('IP2location',[ipInfoController::class,'IP2location'])->name('inInfo.IP2location');

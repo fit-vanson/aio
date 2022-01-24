@@ -113,7 +113,7 @@ class KhosimController extends Controller
                 $data['phone'] = $request->phone;
                 $data['cocsim'] = $request->cocsim;
                 $data['stt'] = 0;
-                $data['time'] = 0;
+                $data['time'] = time();
                 $data->save();
                 return response()->json(['success'=>'Thêm mới thành công']);
             }else{
@@ -127,7 +127,7 @@ class KhosimController extends Controller
                 $data['phone'] = $request->phone;
                 $data['cocsim'] = $request->cocsim;
                 $data['stt'] = $request->stt;
-                $data['time'] = 0;
+                $data['time'] = time();
                 $data->save();
                 return response()->json(['success'=>'Thêm mới thành công']);
             }

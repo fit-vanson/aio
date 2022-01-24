@@ -24,10 +24,10 @@ class UsersACLRepository implements ACLRepository
      */
     public function getRules(): array
     {
-
         return [
             ['disk' => 'File Manager', 'path' => '*', 'access' => 2],                                  // main folder - read
             ['disk' => 'KeyStore', 'path' => '*', 'access' => 1],                                // main folder - read
+            ['disk' => 'Profile', 'path' => '*', 'access' => 1],                                // main folder - read
 
         ];
     }
