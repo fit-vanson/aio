@@ -124,6 +124,8 @@ class ProfileController extends Controller
         $data['profile_file'] = $file_name;
         $file->move($destinationPath, $data['profile_file']);
 
+
+
         $data->save();
         return response()->json([
             'success'=>'Thêm mới thành công',
@@ -190,7 +192,7 @@ class ProfileController extends Controller
             $file = $request->profile_file;
             $file_name = $file->getClientOriginalname();
             $data->profile_file = $file_name;
-            $file->move($destinationPath, $data['profile_file']);
+            $file->move($destinationPath, $data->profile_file);
         }
         $data->save();
         return response()->json(['success'=>'Cập nhật thành công']);
