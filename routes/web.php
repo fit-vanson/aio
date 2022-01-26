@@ -50,6 +50,9 @@ use Illuminate\Support\Facades\Route;
 Route::get('/clear-cache',function (){
     echo  Artisan::call('optimize:clear');
 });
+Route::get('/phpinfo',function (){
+    echo phpinfo();
+});
 
 Route::get('routes', function () {
     $routeCollection = Route::getRoutes();

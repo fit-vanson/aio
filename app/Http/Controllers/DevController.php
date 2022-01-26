@@ -19,7 +19,8 @@ class DevController extends Controller
     {
         $ga_name = Ga::orderBy('ga_name','asc')->get();
         $ga_dev = Ga_dev::orderBy('gmail','asc')->get();
-        return view('dev.index',compact(['ga_name','ga_dev']));
+        $profiles = Ga_dev::orderBy('profile_name','asc')->get();
+        return view('dev.index',compact(['ga_name','ga_dev','profiles']));
     }
     public function getIndex(Request $request)
     {
