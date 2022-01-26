@@ -6,6 +6,7 @@ use App\Models\Dev;
 
 use App\Models\Ga;
 use App\Models\Ga_dev;
+use App\Models\Profile;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Response;
@@ -19,7 +20,7 @@ class DevController extends Controller
     {
         $ga_name = Ga::orderBy('ga_name','asc')->get();
         $ga_dev = Ga_dev::orderBy('gmail','asc')->get();
-        $profiles = Ga_dev::orderBy('profile_name','asc')->get();
+        $profiles = Profile::orderBy('profile_name','asc')->get();
         return view('dev.index',compact(['ga_name','ga_dev','profiles']));
     }
     public function getIndex(Request $request)

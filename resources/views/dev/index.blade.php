@@ -229,6 +229,7 @@
                 $('#pass').val(data.pass);
                 $('#info_andress').val(data.info_andress);
                 $('#profile_info').val(data.profile_info);
+                $('#profile_info').select2();
                 $('#info_url').val(data.info_url);
                 $('#info_logo').val(data.info_logo);
                 $('#info_banner').val(data.info_banner);
