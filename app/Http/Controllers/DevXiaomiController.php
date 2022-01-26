@@ -7,6 +7,7 @@ use App\Models\Dev;
 use App\Models\Dev_Xiaomi;
 use App\Models\Ga;
 use App\Models\Ga_dev;
+use App\Models\Profile;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
@@ -20,7 +21,8 @@ class DevXiaomiController extends Controller
     {
         $ga_name = Ga::latest('id')->get();
         $ga_dev = Ga_dev::latest('id')->get();
-        return view('dev-xiaomi.index',compact(['ga_name','ga_dev']));
+        $profiles = Profile::orderBy('profile_name','asc')->get();
+        return view('dev-xiaomi.index',compact(['ga_name','ga_dev','profiles']));
     }
     public function getIndex(Request $request)
     {

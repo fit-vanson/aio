@@ -62,7 +62,13 @@
                             </div>
                             <div class="form-group col-lg-6">
                                 <label for="name">Profile Info </label>
-                                <input type="text" id="samsung_profile_info" name="samsung_profile_info" class="form-control" >
+{{--                                <input type="text" id="samsung_profile_info" name="samsung_profile_info" class="form-control" >--}}
+                                <select class="form-control select2js" id="samsung_profile_info" name="samsung_profile_info">
+                                    <option value="0">---Vui lòng chọn---</option>
+                                    @foreach($profiles as $item)
+                                        <option value="{{$item->id}}">{{$item->profile_name}}</option>
+                                    @endforeach
+                                </select>
                             </div>
                         </div>
 

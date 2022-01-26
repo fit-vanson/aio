@@ -212,6 +212,7 @@
                 $('#huawei_store_name').val(data.huawei_store_name);
                 $('#huawei_phone').val(data.huawei_phone);
                 $('#huawei_profile_info').val(data.huawei_profile_info);
+                $('#huawei_profile_info').select2();
                 $('#huawei_company').val(data.huawei_company);
                 $('#huawei_dev_name').val(data.huawei_dev_name);
                 $('#modelHeading').html("Edit");

@@ -213,6 +213,7 @@
                 $('#vivo_store_name').val(data.vivo_store_name);
                 $('#vivo_phone').val(data.vivo_phone);
                 $('#vivo_profile_info').val(data.vivo_profile_info);
+                $('#vivo_profile_info').select2();
                 $('#vivo_dev_name').val(data.vivo_dev_name);
                 $('#modelHeading').html("Edit");
                 $('#saveBtn').val("edit");

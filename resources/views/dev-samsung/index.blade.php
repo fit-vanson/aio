@@ -212,6 +212,7 @@
                 $('#samsung_store_name').val(data.samsung_store_name);
                 $('#samsung_phone').val(data.samsung_phone);
                 $('#samsung_profile_info').val(data.samsung_profile_info);
+                $('#samsung_profile_info').select2();
                 $('#samsung_dev_name').val(data.samsung_dev_name);
                 $('#modelHeading').html("Edit");
                 $('#saveBtn').val("edit");
