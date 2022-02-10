@@ -10,11 +10,20 @@
                 <form id="projectForm2" name="projectForm2" class="form-horizontal" enctype="multipart/form-data">
                     <input type="hidden" name="project_id" id="project_id">
                     <input type="hidden" name="buildinfo_console" id="buildinfo_console">
-                    <div class="form-group col-lg-4">
-                        <label>Logo</label>
-                        <input  id="logo" type="file" name="logo" class="form-control" hidden onchange="changeImg(this)">
-                        <img id="avatar" class="thumbnail" width="100px" src="img/logo.png">
+
+
+                    <div data-repeater-item="" class="row">
+                        <div class="form-group col-lg-4">
+                            <label>Logo</label><p></p>
+                            <input  id="logo" type="file" name="logo" class="form-control" hidden onchange="changeImg(this)" accept="image/*">
+                            <img id="avatar" class="thumbnail" width="100px" src="img/logo.png">
+                        </div>
+                        <div class="form-group col-lg-4">
+                            <label for="name">File</label><p></p>
+                            <input type="file" name="project_file" id="project_file" class="filestyle" data-buttonname="btn-secondary" accept=".zip">
+                        </div>
                     </div>
+
                     <div class="row">
                         <div class="col-lg-12">
                             <div class="card">

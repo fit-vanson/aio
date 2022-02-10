@@ -42,6 +42,7 @@
                             <th>Số điện thoại</th>
                             <th>Địa chỉ</th>
                             <th>CCCD/CMND </th>
+                            <th>File </th>
                             <th>Action</th>
                         </tr>
                         </thead>
@@ -78,17 +79,6 @@
     <script type="text/javascript">
         $(function () {
 
-
-            var requiredCheckboxes = $('.required :checkbox[required]');
-            requiredCheckboxes.change(function(){
-                if(requiredCheckboxes.is(':checked')) {
-                    requiredCheckboxes.removeAttr('required');
-                } else {
-                    requiredCheckboxes.attr('required', 'required');
-                }
-            });
-
-
             $.ajaxSetup({
                 headers: {
                     'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
@@ -107,6 +97,7 @@
                     {data: 'profile_sdt'},
                     {data: 'profile_dia_chi'},
                     {data: 'profile_cccd'},
+                    {data: 'profile_file'},
                     {data: 'action', className: "text-center",name: 'action', orderable: false, searchable: false},
                 ],
                 columnDefs: [
@@ -122,17 +113,14 @@
                     },
 
                 ],
-                order:[2,'asc']
+                order:[1,'asc']
             });
             $('#createNewProfile').click(function () {
                 $('#saveBtn').val("create");
                 $('#id').val('');
-                $('#devAmazonProfile').trigger("reset");
+                $('#ProfileForm').trigger("reset");
                 $('#modelHeading').html("Thêm mới");
                 $('#ajaxModelProfile').modal('show');
-                $('#profile_file').attr('required', 'required');
-
-
             });
             $('#ProfileForm').on('submit',function (event){
                 event.preventDefault();
@@ -222,34 +210,32 @@
     <script>
         function editProfile(id) {
             $.get('{{asset('profile/edit')}}/'+id,function (data) {
-                console.log(data)
                 $('#Profile_id').val(data.id);
                 $('#profile_cccd').val(data.profile_cccd);
                 $('#profile_dia_chi').val(data.profile_dia_chi);
                 $('#profile_name').val(data.profile_name);
+                $('#profile_ho_ten').val(data.profile_ho_ten);
+                $('#profile_note').val(data.profile_note);
                 $('#profile_sdt').val(data.profile_sdt);
                 {{--$('#profile_file').val('{{asset('uploads/profile/')}}/'+data.profile_file);--}}
                 $('#avatar').attr('src','{{asset('uploads/profile/logo')}}/'+data.profile_logo);
 
-                $('#profile_file').removeAttr('required');
-
                 if(data.profile_anh_cccd !=0){
                     $("#profile_anh_cccd").prop('checked', true);
-                    $("#profile_anh_cccd").removeAttr('required');
                 }else{
                     $("#profile_anh_cccd").prop('checked', false);
                 }
 
                 if(data.profile_anh_ngan_hang !=0){
                     $("#profile_anh_ngan_hang").prop('checked', true);
-                    $("#profile_anh_ngan_hang").removeAttr('required');
+
                 }else{
                     $("#profile_anh_ngan_hang").prop('checked', false);
                 }
 
                 if(data.profile_anh_bang_lai !=0){
                     $("#profile_anh_bang_lai").prop('checked', true);
-                    $("#profile_anh_bang_lai").removeAttr('required');
+
                 }else{
                     $("#profile_anh_bang_lai").prop('checked', false);
                 }

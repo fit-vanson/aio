@@ -11,8 +11,6 @@
                     <input type="hidden" name="Profile_id" id="Profile_id">
                     <div data-repeater-list="group-a">
                         <div data-repeater-item="" class="row">
-
-
                             <div class="form-group col-lg-4">
                                 <label for="name">Logo</label>
                                 <input  id="logo" type="file" name="logo" class="form-control" hidden onchange="changeImg(this)" accept="image/png, image/jpeg">
@@ -20,17 +18,16 @@
                             </div>
 
                             <div class="form-group col-lg-4">
-                                <input type="file" name="profile_file" id="profile_file" class="filestyle" data-buttonname="btn-secondary" accept=".zip,.rar,.7zip" required>
+                                <input type="file" name="profile_file" id="profile_file" class="filestyle" data-buttonname="btn-secondary" accept=".zip,.rar,.7zip">
                             </div>
                             <div class="form-group col-lg-4">
                                 <label for="name">File đính kèm chứa</label>
                                 <div class="checkbox-group required">
-                                    <input type="checkbox" name="profile_anh_cccd" id="profile_anh_cccd" required> : CCCD<br>
-                                    <input type="checkbox" name="profile_anh_bang_lai" id="profile_anh_bang_lai" required> : Bằng lái xe<br>
-                                    <input type="checkbox" name="profile_anh_ngan_hang" id="profile_anh_ngan_hang" required> :Thẻ Ngân hàng
+                                    <input type="checkbox" name="profile_anh_cccd" id="profile_anh_cccd"> : CCCD<br>
+                                    <input type="checkbox" name="profile_anh_bang_lai" id="profile_anh_bang_lai"> : Bằng lái xe<br>
+                                    <input type="checkbox" name="profile_anh_ngan_hang" id="profile_anh_ngan_hang"> :Thẻ Ngân hàng
                                 </div>
                             </div>
-
                         </div>
                         <div data-repeater-item="" class="row">
 
@@ -38,19 +35,31 @@
                                 <label for="name">Name  <span style="color: red">*</span></label>
                                 <input type="text" id="profile_name" name="profile_name" class="form-control" required>
                             </div>
+
                             <div class="form-group col-lg-6">
-                                <label for="name">CCCD/CMND </label>
-                                <input type="text" id="profile_cccd" name="profile_cccd" class="form-control" required>
+                                <label for="name">Họ tên</label>
+                                <input type="text" id="profile_ho_ten" name="profile_ho_ten" class="form-control">
                             </div>
                         </div>
                         <div data-repeater-item="" class="row">
                             <div class="form-group col-lg-6">
-                                <label for="name">SĐT</label>
-                                <input type="text" id="profile_sdt" name="profile_sdt" class="form-control" required>
+                                <label for="name">CCCD/CMND </label>
+                                <input type="text" id="profile_cccd" name="profile_cccd" class="form-control">
                             </div>
                             <div class="form-group col-lg-6">
+                                <label for="name">SĐT</label>
+                                <input type="text" id="profile_sdt" name="profile_sdt" class="form-control">
+                            </div>
+                        </div>
+                        <div data-repeater-item="" class="row">
+
+                            <div class="form-group col-lg-6">
                                 <label for="name">Địa chỉ</label>
-                                <input type="text" id="profile_dia_chi" name="profile_dia_chi" class="form-control" required>
+                                <textarea id="profile_dia_chi" name="profile_dia_chi" class="form-control" rows="4"></textarea>
+                            </div>
+                            <div class="form-group col-lg-6">
+                                <label for="name">Ghi chú</label>
+                                <textarea id="profile_note" name="profile_note" class="form-control" rows="4"></textarea>
                             </div>
                         </div>
 

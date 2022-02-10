@@ -1032,13 +1032,15 @@ class ProjectController extends Controller
             }
             $abc = '<p class="text-muted" style="line-height:0.5">'.$record->buildinfo_keystore. '   |   '.$record->buildinfo_vernum.'   |   '.$record->buildinfo_verstr.'</p>';
 
+            $project_file  = $record->project_file ?  "    <a href='/file-manager/ProjectData/$record->project_file' target='_blank' <i style='color:green;' class='mdi mdi-check-circle-outline'></i></a>" : '';
+
             $data_arr[] = array(
                 "created_at" => $record->created_at,
                 "logo" => $logo,
                 "log" => $full_mess,
                 "name_projectname"=>$record->projectname,
                 "template"=>$data_template,
-                "projectname"=>$data_projectname.$data_template.$data_ma_da.$data_title_app.$abc.$keystore_profile,
+                "projectname"=>$data_projectname.$project_file.$data_template.$data_ma_da.$data_title_app.$abc.$keystore_profile,
                 "package" => $package_chplay.$package_amazon.$package_samsung.$package_xiaomi.$package_oppo.$package_vivo.$package_Huawei,
                 "status" => $status,
                 'Chplay_buildinfo_store_name_x' => $dev_name_chplay,
@@ -2605,6 +2607,7 @@ class ProjectController extends Controller
             'buildinfo_vernum' =>'required',
             'buildinfo_verstr' =>'required',
             'logo' => 'mimes:jpeg,png,jpg,gif,svg|max:2048',
+            'project_file' => 'mimes:zip',
         ];
         $message = [
             'projectname.unique'=>'Tên Project đã tồn tại',
@@ -2616,6 +2619,7 @@ class ProjectController extends Controller
             'title_app.required'=>'Tiêu đề ứng không để trống',
             'buildinfo_vernum.required'=>'Version Number không để trống',
             'buildinfo_verstr.required'=>'Version String không để trống',
+            'project_file.mimes'=>'*.zip',
             'logo.mimes'=>'Logo không đúng định dạng: jpeg, png, jpg, gif, svg.',
             'logo.max'=>'Logo max: 2M.',
         ];
@@ -2849,6 +2853,18 @@ class ProjectController extends Controller
             $destinationPath = public_path('uploads/project/'.$request->projectname);
             $image->move($destinationPath, $data['logo']);
         }
+
+        if($request->project_file){
+            $destinationPath = public_path('file-manager/ProjectData/');
+            if (!file_exists($destinationPath)) {
+                mkdir($destinationPath, 0777, true);
+            }
+            $file = $request->project_file;
+            $extension = $file->getClientOriginalExtension();
+            $file_name = $request->projectname.'.'.$extension;
+            $data['project_file'] = $file_name;
+            $file->move($destinationPath, $file_name);
+        }
         $data->save();
         return response()->json(['success'=>'Thêm mới thành công']);
     }
@@ -2977,8 +2993,6 @@ class ProjectController extends Controller
     }
     public function update(Request $request)
     {
-
-
         $id = $request->project_id;
         $rules = [
             'projectname' =>'unique:ngocphandang_project,projectname,'.$id.',projectid',
@@ -2988,6 +3002,7 @@ class ProjectController extends Controller
             'buildinfo_vernum' =>'required',
             'buildinfo_verstr' =>'required',
             'logo' => 'mimes:jpeg,png,jpg,gif,svg|max:2048',
+            'project_file' => 'mimes:zip',
         ];
         $message = [
             'projectname.unique'=>'Tên Project đã tồn tại',
@@ -2997,6 +3012,7 @@ class ProjectController extends Controller
             'title_app.required'=>'Tiêu đề ứng không để trống',
             'buildinfo_vernum.required'=>'Version Number không để trống',
             'buildinfo_verstr.required'=>'Version String không để trống',
+            'project_file.mimes'=>'*.zip',
             'logo.mimes'=>'Logo không đúng định dạng: jpeg, png, jpg, gif, svg.',
             'logo.max'=>'Logo max: 2M.',
         ];
@@ -3219,11 +3235,23 @@ class ProjectController extends Controller
         $data->Huawei_keystore_profile = $request->Huawei_keystore_profile;
         if($data->logo){
             if($data->projectname <> $request->projectname){
+//                dd($data->project_file);
                 $dir = (public_path('uploads/project/'));
                 rename($dir.$data->projectname, $dir.$request->projectname);
             }
         }
+
+        if($data->project_file){
+            $dir_file = public_path('file-manager/ProjectData/');
+            rename($dir_file.$data->project_file, $dir_file.$request->projectname.'.zip');
+            $data['project_file'] = $request->projectname.'.zip';
+        }
+
         if($request->logo){
+            if($data->logo){
+                $path_Remove =  public_path('uploads/project/').$data->projectname;
+                $this->deleteDirectory($path_Remove);
+            }
             $image = $request->file('logo');
             $data['logo'] = 'logo_'.time().'.'.$image->extension();
             $destinationPath = public_path('uploads/project/'.$request->projectname.'/thumbnail/');
@@ -3237,8 +3265,41 @@ class ProjectController extends Controller
             $destinationPath = public_path('uploads/project/'.$request->projectname);
             $image->move($destinationPath, $data['logo']);
         }
-        $data->projectname = $request->projectname;
 
+//        if($request->project_file){
+//
+//            $destinationPath = public_path('file-manager/ProjectData/');
+//            if (!file_exists($destinationPath)) {
+//                mkdir($destinationPath, 0777, true);
+//            }
+//
+//            $file = $request->project_file;
+//            $extension = $file->getClientOriginalExtension();
+//            $file_name = $request->projectname.'.'.$extension;
+//            $data['project_file'] = $file_name;
+//            dd(111);
+//            $file->move($destinationPath, $file_name);
+//        }
+
+
+        if($request->project_file){
+            if($data->project_file){
+                $path_Remove =  public_path('file-manager/ProjectData/').$data->project_file;
+                if(file_exists($path_Remove)){
+                    unlink($path_Remove);
+                }
+            }
+            $destinationPath = public_path('file-manager/ProjectData/');
+            if (!file_exists($destinationPath)) {
+                mkdir($destinationPath, 0777, true);
+            }
+            $file = $request->project_file;
+            $extension = $file->getClientOriginalExtension();
+            $file_name = $request->projectname.'.'.$extension;
+            $data->project_file = $file_name;
+            $file->move($destinationPath, $file_name);
+        }
+        $data->projectname = $request->projectname;
         $data->save();
         return response()->json(['success'=>'Cập nhật thành công']);
     }
@@ -3278,9 +3339,44 @@ class ProjectController extends Controller
     }
     public function delete($id)
     {
-        ProjectModel::find($id)->delete();
+        $project = ProjectModel::find($id);
+        if($project->logo){
+            $path_image =   public_path('uploads/project/').$project->projectname;
+            $this->deleteDirectory($path_image);
+        }
+        if($project->project_file){
+            $path_file  =   public_path('file-manager/ProjectData/').$project->project_file;
+            if(file_exists($path_file)){
+                unlink($path_file);
+            }
+        }
+        $project->delete();
         return response()->json(['success'=>'Xóa thành công.']);
     }
+
+    function deleteDirectory($dir) {
+        if (!file_exists($dir)) {
+            return true;
+        }
+
+        if (!is_dir($dir)) {
+            return unlink($dir);
+        }
+
+        foreach (scandir($dir) as $item) {
+            if ($item == '.' || $item == '..') {
+                continue;
+            }
+
+            if (!$this->deleteDirectory($dir . DIRECTORY_SEPARATOR . $item)) {
+                return false;
+            }
+
+        }
+
+        return rmdir($dir);
+    }
+
     public function callAction($method, $parameters)
     {
 //        $this->AuthLogin();
