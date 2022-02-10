@@ -134,6 +134,13 @@
                                         <option value="{{$item->id}}">{{$item->profile_name}} -  ({{$item->profile_ho_ten}} - {{$item->profile_dia_chi}})</option>
                                     @endforeach
                                 </select>
+{{--                                <input type="text" id="profile_info" name="profile_info" class="form-control">--}}
+                                <select class="form-control select2js" id="profile_info" name="profile_info">
+                                    <option value="0">---Vui lòng chọn---</option>
+                                    @foreach($profiles as $item)
+                                        <option value="{{$item->id}}">{{$item->profile_name}}</option>
+                                    @endforeach
+                                </select>
                             </div>
                             <div class="form-group col-lg-4">
                                 <label for="name">Trạng thái </label>

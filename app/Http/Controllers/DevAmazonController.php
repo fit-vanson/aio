@@ -7,7 +7,6 @@ use App\Models\Dev;
 use App\Models\Dev_Amazon;
 use App\Models\Ga;
 use App\Models\Ga_dev;
-use App\Models\Profile;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;

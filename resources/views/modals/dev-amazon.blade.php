@@ -67,7 +67,7 @@
                                 <select class="form-control select2js" id="amazon_profile_info" name="amazon_profile_info">
                                     <option value="0">---Vui lòng chọn---</option>
                                     @foreach($profiles as $item)
-                                        <option value="{{$item->id}}">{{$item->profile_name}} -  ({{$item->profile_ho_ten}} - {{$item->profile_dia_chi}})</option>
+                                        <option value="{{$item->id}}">{{$item->profile_name}}</option>
                                     @endforeach
                                 </select>
                             </div>
