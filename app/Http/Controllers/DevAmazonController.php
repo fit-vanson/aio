@@ -7,6 +7,7 @@ use App\Models\Dev;
 use App\Models\Dev_Amazon;
 use App\Models\Ga;
 use App\Models\Ga_dev;
+use App\Models\Profile;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
@@ -18,6 +19,7 @@ class DevAmazonController extends Controller
 {
     public function index()
     {
+//        dd(1);
         $ga_name = Ga::latest('id')->get();
         $ga_dev = Ga_dev::latest('id')->get();
         $profiles = Profile::orderBy('profile_name','asc')->get();
