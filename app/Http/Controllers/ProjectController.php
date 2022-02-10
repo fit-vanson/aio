@@ -3339,7 +3339,6 @@ class ProjectController extends Controller
     }
     public function delete($id)
     {
-
         $project = ProjectModel::find($id);
         if($project->logo){
             $path_image =   public_path('uploads/project/').$project->projectname;
