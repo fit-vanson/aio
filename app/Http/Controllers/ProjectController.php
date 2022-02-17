@@ -1034,7 +1034,7 @@ class ProjectController extends Controller
 
             $project_file  = $record->project_file ?  "    <a href='/file-manager/ProjectData/$record->project_file' target='_blank' <i style='color:green;' class='mdi mdi-check-circle-outline'></i></a>" : '';
 
-            $des_en = ' <a href="javascript:void(0)" onclick="editProject_Description_EN('.$record->projectid.')" class="badge badge-primary">Description EN</a>';
+            $des_en = ' <a href="javascript:void(0)" onclick="editProject_Description_EN('.$record->projectid.')" class="badge badge-secondary">Description EN</a>';
             $des_vn = ' <a href="javascript:void(0)" onclick="editProject_Description_VN('.$record->projectid.')" class="badge badge-secondary">Description VN</a>';
 
             $data_arr[] = array(

@@ -60,6 +60,13 @@ body {
   color: #5b626b;
   font-size: 14px;
 }
+.mce-label.mce-charactercount {
+    margin: 2px 0 2px 2px;
+    padding: 8px;
+    font-size: 14px;
+    right: 200px;
+    position: absolute;
+}
 
 html {
   overflow-x: hidden;

@@ -1223,7 +1223,6 @@
     }
     function editProject_Description_EN(id) {
         $.get('{{asset('project/editDes_EN')}}/'+id,function (data) {
-            console.log(data)
             $('#project_id_edit_desEN').val(data.projectid);
             if(data.des_en){
                 tinymce.get('des_en').setContent(data.des_en);
