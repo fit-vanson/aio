@@ -1034,13 +1034,18 @@ class ProjectController extends Controller
 
             $project_file  = $record->project_file ?  "    <a href='/file-manager/ProjectData/$record->project_file' target='_blank' <i style='color:green;' class='mdi mdi-check-circle-outline'></i></a>" : '';
 
+            $des_en = ' <a href="javascript:void(0)" onclick="editProject_Description_EN('.$record->projectid.')" class="badge badge-primary">Description EN</a>';
+            $des_vn = ' <a href="javascript:void(0)" onclick="editProject_Description_VN('.$record->projectid.')" class="badge badge-secondary">Description VN</a>';
+
+
+
             $data_arr[] = array(
                 "created_at" => $record->created_at,
                 "logo" => $logo,
                 "log" => $full_mess,
                 "name_projectname"=>$record->projectname,
                 "template"=>$data_template,
-                "projectname"=>$data_projectname.$project_file.$data_template.$data_ma_da.$data_title_app.$abc.$keystore_profile,
+                "projectname"=>$data_projectname.$des_en. $des_vn. $project_file.$data_template.$data_ma_da.$data_title_app.$abc.$keystore_profile,
                 "package" => $package_chplay.$package_amazon.$package_samsung.$package_xiaomi.$package_oppo.$package_vivo.$package_Huawei,
                 "status" => $status,
                 'Chplay_buildinfo_store_name_x' => $dev_name_chplay,
@@ -2991,6 +2996,17 @@ class ProjectController extends Controller
             $keystore,$keystore_chplay,$keystore_amazon,$keystore_samsung,$keystore_xiaomi,$keystore_oppo,$keystore_vivo,$keystore_huawei
         ]);
     }
+
+    public function editDesEN($id)
+    {
+        $project = ProjectModel::select('projectid','des_en')->where('projectid',$id)->first();
+        return response()->json($project);
+    }
+    public function editDesVN($id)
+    {
+        $project = ProjectModel::select('projectid','des_vn')->where('projectid',$id)->first();
+        return response()->json($project);
+    }
     public function update(Request $request)
     {
         $id = $request->project_id;
@@ -3323,6 +3339,30 @@ class ProjectController extends Controller
         return response()->json(['success'=>'Cập nhật thành công']);
 
 
+    }
+    public function updateDesEN(Request $request){
+        $id = $request->project_id;
+        ProjectModel::updateOrCreate(
+            [
+                "projectid" => $id,
+
+            ],
+            [
+                "des_en" => $request->des_en,
+            ]);
+        return response()->json(['success'=>'Cập nhật thành công']);
+    }
+    public function updateDesVN(Request $request){
+        $id = $request->project_id;
+        ProjectModel::updateOrCreate(
+            [
+                "projectid" => $id,
+
+            ],
+            [
+                "des_vn" => $request->des_vn,
+            ]);
+        return response()->json(['success'=>'Cập nhật thành công']);
     }
     public function updateStatus(Request $request){
         $data = ProjectModel::where('projectid',$request->project_id)->first();

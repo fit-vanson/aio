@@ -1634,6 +1634,85 @@
 
 
 
+<div class="modal fade bd-example-modal-xl" id="editDesEN"  role="dialog">
+    <div class="modal-dialog modal-xl">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title" id="modelEditDesEN"></h4>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+            </div>
+            <div class="modal-body">
+                <form id="EditDesEN" name="EditDesEN" class="form-horizontal">
+                    <input type="hidden" name="project_id" id="project_id_edit_desEN">
+
+
+                    <div class="row">
+                        <div class="col-12">
+                            <div class="card">
+                                <div class="card-body">
+                                    <div data-repeater-item="" class="row">
+                                        <div class="form-group col-lg-12">
+                                            <label for="name">Description EN</label>
+                                            <textarea id="des_en" name="des_en"></textarea>
+                                        </div>
+                                    </div>
+
+
+                                </div>
+                            </div>
+                        </div> <!-- end col -->
+                        <div class="col-sm-offset-2 col-sm-10">
+                            <button type="submit" class="btn btn-primary" value="edit-des-en">Save changes</button>
+                            <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="modal fade bd-example-modal-xl" id="editDesVN"  role="dialog">
+    <div class="modal-dialog modal-xl">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title" id="modelEditDesVN"></h4>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+            </div>
+            <div class="modal-body">
+                <form id="EditDesVN" name="EditDesVN" class="form-horizontal">
+                    <input type="hidden" name="project_id" id="project_id_edit_DesVN">
+
+
+                    <div class="row">
+                        <div class="col-12">
+                            <div class="card">
+                                <div class="card-body">
+                                    <div data-repeater-item="" class="row">
+                                        <div class="form-group col-lg-12">
+                                            <label for="name">Description VN</label>
+                                            <textarea id="des_vn" name="des_vn"></textarea>
+                                        </div>
+                                    </div>
+
+
+                                </div>
+                            </div>
+                        </div> <!-- end col -->
+                        <div class="col-sm-offset-2 col-sm-10">
+                            <button type="submit" class="btn btn-primary" value="edit-des-en">Save changes</button>
+                            <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+
 
 
 

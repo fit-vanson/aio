@@ -131,9 +131,18 @@ Route::group(['prefix'=>'project','middleware'=>['CheckLogout','2fa']], function
     Route::post('/getIndexBuild',[ProjectController::class,'getIndexBuild'])->name('project.getIndexBuild')->middleware('can:project-index');
     Route::post('/create',[ProjectController::class,'create'])->name('project.create')->middleware('can:project-add');
     Route::get('/edit/{id}',[ProjectController::class,'edit'])->name('project.edit')->middleware('can:project-edit');
+
+
+    Route::get('/editDes_EN/{id}',[ProjectController::class,'editDesEN'])->name('project.editDesEN')->middleware('can:project-edit');
+    Route::get('/editDes_VN/{id}',[ProjectController::class,'editDesVN'])->name('project.editDesVN')->middleware('can:project-edit');
+
+
     Route::get('/show/{id}',[ProjectController::class,'show'])->name('project.show')->middleware('can:project-show');
     Route::post('/update',[ProjectController::class,'update'])->name('project.update')->middleware('can:project-update');
     Route::post('/updateQuick',[ProjectController::class,'updateQuick'])->name('project.updateQuick')->middleware('can:project-update');
+    Route::post('/updateDesEN',[ProjectController::class,'updateDesEN'])->name('project.updateDesEN')->middleware('can:project-update');
+    Route::post('/updateDesVN',[ProjectController::class,'updateDesVN'])->name('project.updateDesVN')->middleware('can:project-update');
+
     Route::post('/updateStatus',[ProjectController::class,'updateStatus'])->name('project.updateStatus')->middleware('can:project-update');
     Route::get('/delete/{id}',[ProjectController::class,'delete'])->name('project.delete')->middleware('can:project-delete');
     Route::get('/removeProject/{id}',[ProjectController::class,'removeProject'])->name('project.removeProject')->middleware('can:project-edit');

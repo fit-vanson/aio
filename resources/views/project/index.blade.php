@@ -14,6 +14,9 @@
 <link href="plugins/select2/css/select2.min.css" rel="stylesheet" type="text/css" />
 
 
+<link rel="stylesheet" href="plugins/summernote/summernote-bs4.css">
+
+
 @endsection
 
 @section('breadcrumb')
@@ -92,6 +95,13 @@
 <!-- Datatable init js -->
 <script src="assets/pages/datatables.init.js"></script>
 <script src="plugins/select2/js/select2.min.js"></script>
+
+
+
+<script src="plugins/tinymce/tinymce.min.js"></script>
+<!--Summernote js-->
+<script src="plugins/summernote/summernote-bs4.min.js"></script>
+<script src="assets/pages/form-editors.int.js"></script>
 
 <script>
     $("#template").select2({});
@@ -324,6 +334,58 @@
             }
 
         });
+
+        $('#EditDesEN').on('submit',function (event){
+            event.preventDefault();
+                $.ajax({
+                    data: $('#EditDesEN').serialize(),
+                    url: "{{ route('project.updateDesEN') }}",
+                    type: "post",
+                    dataType: 'json',
+                    success: function (data) {
+                        if(data.errors){
+                            for( var count=0 ; count <data.errors.length; count++){
+                                $("#EditDesEN").notify(
+                                    data.errors[count],"error",
+                                    { position:"right" }
+                                );
+                            }
+                        }
+                        if(data.success){
+                            $.notify(data.success, "success");
+                            $('#EditDesEN').trigger("reset");
+                            $('#editDesEN').modal('hide');
+                            table.draw();
+                        }
+                    },
+                });
+        });
+        $('#EditDesVN').on('submit',function (event){
+            event.preventDefault();
+            $.ajax({
+                data: $('#EditDesVN').serialize(),
+                url: "{{ route('project.updateDesVN') }}",
+                type: "post",
+                dataType: 'json',
+                success: function (data) {
+                    if(data.errors){
+                        for( var count=0 ; count <data.errors.length; count++){
+                            $("#EditDesVN").notify(
+                                data.errors[count],"error",
+                                { position:"right" }
+                            );
+                        }
+                    }
+                    if(data.success){
+                        $.notify(data.success, "success");
+                        $('#EditDesVN').trigger("reset");
+                        $('#editDesVN').modal('hide');
+                        table.draw();
+                    }
+                },
+            });
+        });
+
         $(document).on('click','.deleteProject', function (data){
             var project_id = $(this).data("id");
             swal({
@@ -363,7 +425,6 @@
 <script>
     function editProject(id) {
         $.get('{{asset('project/edit')}}/'+id,function (data) {
-            console.log(data)
             var ads = JSON.parse(data[4].ads);
             var Chplay_ads = '';
             var Amazon_ads = '';
@@ -1160,6 +1221,34 @@
             });
         })
     }
+    function editProject_Description_EN(id) {
+        $.get('{{asset('project/editDes_EN')}}/'+id,function (data) {
+            console.log(data)
+            $('#project_id_edit_desEN').val(data.projectid);
+            tinymce.get('des_en').setContent(data.des_en);
+            $('#modelEditDesEN').html("Edit Des EN");
+            $('#saveBtn').val("edit-des-en");
+            $('#editDesEN').modal('show');
+            $('.modal').on('hidden.bs.modal', function (e) {
+                $('body').addClass('modal-open');
+            });
+        })
+    }
+    function editProject_Description_VN(id) {
+        $.get('{{asset('project/editDes_VN')}}/'+id,function (data) {
+            $('#project_id_edit_DesVN').val(data.projectid);
+            tinymce.get('des_vn').setContent(data.des_vn);
+            $('#modelEditDesVN').html("Edit Des VN");
+            $('#saveBtn').val("edit-des-vn");
+            $('#editDesVN').modal('show');
+            $('.modal').on('hidden.bs.modal', function (e) {
+                $('body').addClass('modal-open');
+            });
+        })
+    }
+
+
+
     function quickEditProject(id) {
         $.get('{{asset('project/edit')}}/'+id,function (data) {
             $('#quick_project_id').val(data[0].projectid);
