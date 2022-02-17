@@ -547,7 +547,7 @@ class TemplateController extends Controller
             $file = $request->template_data;
             $extension = $file->getClientOriginalExtension();
             $file_name_data = $request->template.'.'.$extension;
-            $data->template_apk = $file_name_data;
+            $data->template_data = $file_name_data;
             $file->move($destinationPath, $file_name_data);
         }
 
