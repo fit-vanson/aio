@@ -1225,7 +1225,11 @@
         $.get('{{asset('project/editDes_EN')}}/'+id,function (data) {
             console.log(data)
             $('#project_id_edit_desEN').val(data.projectid);
-            tinymce.get('des_en').setContent(data.des_en);
+            if(data.des_en){
+                tinymce.get('des_en').setContent(data.des_en);
+            }else {
+                tinymce.get('des_en').setContent('');
+            }
             $('#modelEditDesEN').html("Edit Des EN");
             $('#saveBtn').val("edit-des-en");
             $('#editDesEN').modal('show');
@@ -1237,7 +1241,11 @@
     function editProject_Description_VN(id) {
         $.get('{{asset('project/editDes_VN')}}/'+id,function (data) {
             $('#project_id_edit_DesVN').val(data.projectid);
-            tinymce.get('des_vn').setContent(data.des_vn);
+            if(data.des_vn){
+                tinymce.get('des_vn').setContent(data.des_vn);
+            }else{
+                tinymce.get('des_vn').setContent('');
+            }
             $('#modelEditDesVN').html("Edit Des VN");
             $('#saveBtn').val("edit-des-vn");
             $('#editDesVN').modal('show');
