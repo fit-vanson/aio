@@ -1034,8 +1034,8 @@ class ProjectController extends Controller
 
             $project_file  = $record->project_file ?  "    <a href='/file-manager/ProjectData/$record->project_file' target='_blank' <i style='color:green;' class='mdi mdi-check-circle-outline'></i></a>" : '';
 
-            $des_en = ' <a href="javascript:void(0)" onclick="editProject_Description_EN('.$record->projectid.')" class="badge badge-secondary">Description EN</a>';
-            $des_vn = ' <a href="javascript:void(0)" onclick="editProject_Description_VN('.$record->projectid.')" class="badge badge-secondary">Description VN</a>';
+            $des_en = ' <a href="javascript:void(0)" onclick="editProject_Description_EN('.$record->projectid.')" class="badge badge-secondary" style="font-size: 12px">Description EN</a>';
+            $des_vn = ' <a href="javascript:void(0)" onclick="editProject_Description_VN('.$record->projectid.')" class="badge badge-secondary" style="font-size: 12px">Description VN</a>';
 
             $data_arr[] = array(
                 "created_at" => $record->created_at,
@@ -1043,7 +1043,7 @@ class ProjectController extends Controller
                 "log" => $full_mess,
                 "name_projectname"=>$record->projectname,
                 "template"=>$data_template,
-                "projectname"=>$data_projectname.$des_en. $des_vn. $project_file.$data_template.$data_ma_da.$data_title_app.$abc.$keystore_profile,
+                "projectname"=>$data_projectname. $project_file.$data_template.$data_ma_da.$data_title_app.$abc.$keystore_profile.$des_en. $des_vn,
                 "package" => $package_chplay.$package_amazon.$package_samsung.$package_xiaomi.$package_oppo.$package_vivo.$package_Huawei,
                 "status" => $status,
                 'Chplay_buildinfo_store_name_x' => $dev_name_chplay,
@@ -3279,21 +3279,6 @@ class ProjectController extends Controller
             $destinationPath = public_path('uploads/project/'.$request->projectname);
             $image->move($destinationPath, $data['logo']);
         }
-
-//        if($request->project_file){
-//
-//            $destinationPath = public_path('file-manager/ProjectData/');
-//            if (!file_exists($destinationPath)) {
-//                mkdir($destinationPath, 0777, true);
-//            }
-//
-//            $file = $request->project_file;
-//            $extension = $file->getClientOriginalExtension();
-//            $file_name = $request->projectname.'.'.$extension;
-//            $data['project_file'] = $file_name;
-//            dd(111);
-//            $file->move($destinationPath, $file_name);
-//        }
 
 
         if($request->project_file){

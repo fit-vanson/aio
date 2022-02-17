@@ -266,24 +266,27 @@ class TemplateController extends Controller
         echo json_encode($response);
     }
 
-
-
     public function create(Request  $request)
     {
-
-
         $rules = [
-            'template' =>'unique:ngocphandang_template,template'
+            'template' =>'unique:ngocphandang_template,template',
+            'template_data' => 'mimes:zip',
+            'template_apk' => 'mimes:zip,apk'
+
         ];
         $message = [
             'template.unique'=>'Tên Template đã tồn tại',
+            'template_data.mimes'=>'Template Data: *.zip',
+            'template_apk.mimes'=>' Template APK: *.apk',
         ];
+
 
         $error = Validator::make($request->all(),$rules, $message );
 
         if($error->fails()){
             return response()->json(['errors'=> $error->errors()->all()]);
         }
+
         $ads = [
             'ads_id' => $request->Check_ads_id,
             'ads_banner' => $request->Check_ads_banner,
@@ -345,6 +348,28 @@ class TemplateController extends Controller
             $image->move($destinationPath, $data['logo']);
         }
 
+        if($request->template_apk){
+            $destinationPath = public_path('file-manager/TemplateApk/');
+            if (!file_exists($destinationPath)) {
+                mkdir($destinationPath, 0777, true);
+            }
+            $file = $request->template_apk;
+            $extension = $file->getClientOriginalExtension();
+            $file_name_apk = $request->template.'.'.$extension;
+            $data['template_apk'] = $file_name_apk;
+            $file->move($destinationPath, $file_name_apk);
+        }
+        if($request->template_data){
+            $destinationPath = public_path('file-manager/TemplateData/');
+            if (!file_exists($destinationPath)) {
+                mkdir($destinationPath, 0777, true);
+            }
+            $file = $request->template_data;
+            $extension = $file->getClientOriginalExtension();
+            $file_name_data = $request->template.'.'.$extension;
+            $data['template_data'] = $file_name_data;
+            $file->move($destinationPath, $file_name_data);
+        }
         $data->save();
         $allTemp  = Template::latest('id')->get();
         return response()->json([
@@ -400,9 +425,13 @@ class TemplateController extends Controller
         $id = $request->template_id;
         $rules = [
             'template' =>'unique:ngocphandang_template,template,'.$id.',id',
+            'template_data' => 'mimes:zip',
+            'template_apk' => 'mimes:zip,apk'
         ];
         $message = [
             'template.unique'=>'Tên template đã tồn tại',
+            'template_data.mimes'=>'Template Data: *.zip',
+            'template_apk.mimes'=>' Template APK: *.apk',
         ];
         $error = Validator::make($request->all(),$rules, $message );
         if($error->fails()){
@@ -471,6 +500,53 @@ class TemplateController extends Controller
             $destinationPath = public_path('uploads/template/'.$request->template);
             $image->move($destinationPath, $data['logo']);
         }
+
+        if($data->template_apk){
+            $dir_file = public_path('file-manager/TemplateApk/');
+            rename($dir_file.$data->template_apk, $dir_file.$request->template.'.apk');
+            $data['template_apk'] = $request->template.'.apk';
+        }
+        if($request->template_apk){
+            if($data->template_apk){
+                $path_Remove =  public_path('file-manager/TemplateApk/').$data->template_apk;
+                if(file_exists($path_Remove)){
+                    unlink($path_Remove);
+                }
+            }
+            $destinationPath = public_path('file-manager/TemplateApk/');
+            if (!file_exists($destinationPath)) {
+                mkdir($destinationPath, 0777, true);
+            }
+            $file = $request->template_apk;
+            $extension = $file->getClientOriginalExtension();
+            $file_name_apk = $request->template.'.'.$extension;
+            $data->template_apk = $file_name_apk;
+            $file->move($destinationPath, $file_name_apk);
+        }
+
+        if($data->template_data){
+            $dir_file = public_path('file-manager/TemplateData/');
+            rename($dir_file.$data->template_data, $dir_file.$request->template.'.zip');
+            $data['template_data'] = $request->template.'.zip';
+        }
+        if($request->template_data){
+            if($data->template_data){
+                $path_Remove =  public_path('file-manager/TemplateData/').$data->template_data;
+                if(file_exists($path_Remove)){
+                    unlink($path_Remove);
+                }
+            }
+            $destinationPath = public_path('file-manager/TemplateData/');
+            if (!file_exists($destinationPath)) {
+                mkdir($destinationPath, 0777, true);
+            }
+            $file = $request->template_data;
+            $extension = $file->getClientOriginalExtension();
+            $file_name_data = $request->template.'.'.$extension;
+            $data->template_apk = $file_name_data;
+            $file->move($destinationPath, $file_name_data);
+        }
+
         $data->template = $request->template;
         $data->template_name = $request->template_name;
 

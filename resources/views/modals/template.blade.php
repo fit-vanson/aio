@@ -13,16 +13,24 @@
 
                     <div data-repeater-list="group-a">
                         <div data-repeater-item="" class="row">
-                            <div class="form-group col-lg-6">
+                            <div class="form-group col-lg-3">
                                 <label>Logo</label>
-                                <input  id="logo" type="file" name="logo" class="form-control" hidden onchange="changeImg(this)">
+                                <input  id="logo" type="file" name="logo" class="form-control" hidden onchange="changeImg(this)" accept="image/*">
                                 <img id="avatar" class="thumbnail" width="100px" src="img/logo.png">
                             </div>
-
-                            <div class="form-group col-lg-6 ">
+                            <div class="form-group col-lg-3">
+                                <label for="name">DATA</label><p></p>
+                                <input type="file" name="template_data" id="template_data" class="filestyle" data-buttonname="btn-secondary" accept=".zip">
+                            </div>
+                            <div class="form-group col-lg-3">
+                                <label for="name">APK</label><p></p>
+                                <input type="file" name="template_apk" id="template_apk" class="filestyle" data-buttonname="btn-secondary" accept=".apk">
+                            </div>
+                            <div class="form-group col-lg-3 ">
                                 <label for="name">Tên Template</label>
                                 <input type="text" id="template_name" name="template_name" class="form-control">
                             </div>
+
                         </div>
                         <div data-repeater-item="" class="row">
                             <div class="form-group col-lg-3">
