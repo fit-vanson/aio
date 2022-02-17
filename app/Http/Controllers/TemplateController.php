@@ -244,8 +244,10 @@ class TemplateController extends Controller
             }
 
 //            $template_apk  = $record->template_apk ?  " <a href='/file-manager/ProjectApk/$record->template_apk' target='_blank' </a>" : '1111';
-            $template_apk  = $record->template_apk ?  '<a href="/file-manager/TemplateApk/'.$record->template_apk.'" class="badge badge-success" style="font-size: 12px">APK</a>' : '<span  class="badge badge-danger" style="font-size: 12px">APK</span>';
-            $template_data  = $record->template_data ?  '<a href="/file-manager/TemplateData/'.$record->template_data.'" class="badge badge-success" style="font-size: 12px">Data</a>' : '<span  class="badge badge-danger" style="font-size: 12px">Data</span>';
+            $template_apk   = $record->template_apk ?  '<a href="/file-manager/download?disk=File%20Manager&path=TemplateApk%2F/'.$record->template_apk.'" class="badge badge-success" style="font-size: 12px">APK</a>' : '<span  class="badge badge-danger" style="font-size: 12px">APK</span>';
+            $template_data  = $record->template_data ? '<a href="/file-manager/TemplateData/'.$record->template_data.'" class="badge badge-success" style="font-size: 12px">Data</a>' : '<span  class="badge badge-danger" style="font-size: 12px">Data</span>';
+
+
 
             $data_arr[] = array(
                 "logo" => $logo,
