@@ -243,9 +243,13 @@ class TemplateController extends Controller
                 $logo = '<img class="rounded mx-auto d-block" width="100px" height="100px" src="assets\images\logo-sm.png">';
             }
 
+//            $template_apk  = $record->template_apk ?  " <a href='/file-manager/ProjectApk/$record->template_apk' target='_blank' </a>" : '1111';
+            $template_apk  = $record->template_apk ?  '<a href="/file-manager/TemplateApk/'.$record->template_apk.'" class="badge badge-success" style="font-size: 12px">APK</a>' : '<span  class="badge badge-danger" style="font-size: 12px">APK</span>';
+            $template_data  = $record->template_data ?  '<a href="/file-manager/TemplateData/'.$record->template_data.'" class="badge badge-success" style="font-size: 12px">Data</a>' : '<span  class="badge badge-danger" style="font-size: 12px">Data</span>';
+
             $data_arr[] = array(
                 "logo" => $logo,
-                "template" => $template. '<br>'.$link,
+                "template" => $template. '<br>'.$link.$template_apk.'  ' .$template_data ,
                 "category"=>$Chplay_category.'<br>'.$Amazon_category.'<br>'.$Samsung_category.'<br>'.$Xiaomi_category.'<br>'.$Oppo_category.'<br>'.$Vivo_category.'<br>'.$Huawei_category,
                 "script" => $script.$ads.$convert_aab.$startus.'<br>Package: '.$record->package,
                 "time_create"=> $time_create,
