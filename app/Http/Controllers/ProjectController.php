@@ -1034,19 +1034,19 @@ class ProjectController extends Controller
 //            $des_vn = $record->des_vn ? ' <a href="javascript:void(0)" onclick="editProject_Description_VN('.$record->projectid.')" class="badge badge-success" style="font-size: 12px">Description VN</a>' : ' <a href="javascript:void(0)" onclick="editProject_Description_VN('.$record->projectid.')" class="badge badge-secondary" style="font-size: 12px">Description VN</a>';
 
             if($record->des_en && $record->summary_en){
-                $des_en = '<a href="javascript:void(0)" onclick="editProject_Description_EN('.$record->projectid.')" class="badge badge-success" style="font-size: 12px"> EN </a> ';
+                $des_en = '<a href="javascript:void(0)" onclick="editProject_Description_EN('.$record->projectid.')" class="badge badge-success" style="font-size: 13px"> <img class="mr-3" src="assets/images/flags/united-states.png" alt="Header Language" height="13">EN &nbsp;&nbsp;&nbsp; </a> ';
             }elseif ($record->des_en || $record->summary_en){
-                $des_en = '<a href="javascript:void(0)" onclick="editProject_Description_EN('.$record->projectid.')" class="badge badge-warning " style="font-size: 12px"> EN </a> ';
+                $des_en = '<a href="javascript:void(0)" onclick="editProject_Description_EN('.$record->projectid.')" class="badge badge-warning " style="font-size: 12px"><img class="mr-3" src="assets/images/flags/united-states.png" alt="Header Language" height="13">EN &nbsp;&nbsp;&nbsp;  </a> ';
             }else{
-                $des_en = '<a href="javascript:void(0)" onclick="editProject_Description_EN('.$record->projectid.')" class="badge badge-secondary" style="font-size: 12px"> EN </a> ';
+                $des_en = '<a href="javascript:void(0)" onclick="editProject_Description_EN('.$record->projectid.')" class="badge badge-secondary" style="font-size: 12px"> <img class="mr-3" src="assets/images/flags/united-states.png" alt="Header Language" height="13">EN &nbsp;&nbsp;&nbsp;  </a> ';
             }
 
             if($record->des_vn && $record->summary_vn){
-                $des_vn = ' <a href="javascript:void(0)" onclick="editProject_Description_VN('.$record->projectid.')" class="badge badge-success" style="font-size: 12px"> VN </a>';
+                $des_vn = ' <a href="javascript:void(0)" onclick="editProject_Description_VN('.$record->projectid.')" class="badge badge-success" style="font-size: 12px"> <img class="mr-3" src="assets/images/flags/vietnam.png" alt="Header Language" height="13">VN &nbsp;&nbsp;&nbsp;  </a>';
             }elseif ($record->des_vn || $record->summary_vn){
-                $des_vn = ' <a href="javascript:void(0)" onclick="editProject_Description_VN('.$record->projectid.')" class="badge badge-warning" style="font-size: 12px"> VN </a>';
+                $des_vn = ' <a href="javascript:void(0)" onclick="editProject_Description_VN('.$record->projectid.')" class="badge badge-warning" style="font-size: 12px"> <img class="mr-3" src="assets/images/flags/vietnam.png" alt="Header Language" height="13">VN &nbsp;&nbsp;&nbsp;  </a>';
             }else{
-                $des_vn = ' <a href="javascript:void(0)" onclick="editProject_Description_VN('.$record->projectid.')" class="badge badge-secondary" style="font-size: 12px"> VN </a>';
+                $des_vn = ' <a href="javascript:void(0)" onclick="editProject_Description_VN('.$record->projectid.')" class="badge badge-secondary" style="font-size: 12px"> <img class="mr-3" src="assets/images/flags/vietnam.png" alt="Header Language" height="13">VN &nbsp;&nbsp;&nbsp;  </a>';
             }
 
             $data_arr[] = array(
