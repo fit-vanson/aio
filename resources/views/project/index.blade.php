@@ -1225,6 +1225,7 @@
         $.get('{{asset('project/editDes_EN')}}/'+id,function (data) {
             $('#project_id_edit_desEN').val(data.projectid);
             $('#summary_en').val(data.summary_en);
+            $('#title_app_en').val(data.title_app);
             if(data.des_en){
                 tinymce.get('des_en').setContent(data.des_en);
             }else {
@@ -1242,6 +1243,7 @@
         $.get('{{asset('project/editDes_VN')}}/'+id,function (data) {
             $('#project_id_edit_DesVN').val(data.projectid);
             $('#summary_vn').val(data.summary_vn);
+            $('#title_app_vn').val(data.title_app);
             if(data.des_vn){
                 tinymce.get('des_vn').setContent(data.des_vn);
             }else{
@@ -2633,6 +2635,11 @@
         textArea.remove();
     }
 
+    function copyTitleEN() {
+        let textarea = document.getElementById("title_app_en");
+        textarea.select();
+        document.execCommand("copy");
+    }
     function copySumEN() {
         let textarea = document.getElementById("summary_en");
         textarea.select();
@@ -2643,6 +2650,11 @@
         tinyMCE.execCommand('copy',true,'des_en');
     }
 
+    function copyTitleVN() {
+        let textarea = document.getElementById("title_app_vn");
+        textarea.select();
+        document.execCommand("copy");
+    }
     function copySumVN() {
         let textarea = document.getElementById("summary_vn");
         textarea.select();

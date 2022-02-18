@@ -3009,12 +3009,12 @@ class ProjectController extends Controller
 
     public function editDesEN($id)
     {
-        $project = ProjectModel::select('projectid','des_en','summary_en')->where('projectid',$id)->first();
+        $project = ProjectModel::select('projectid','des_en','summary_en','title_app')->where('projectid',$id)->first();
         return response()->json($project);
     }
     public function editDesVN($id)
     {
-        $project = ProjectModel::select('projectid','des_vn','summary_vn')->where('projectid',$id)->first();
+        $project = ProjectModel::select('projectid','des_vn','summary_vn','title_app')->where('projectid',$id)->first();
         return response()->json($project);
     }
     public function update(Request $request)
@@ -3345,6 +3345,7 @@ class ProjectController extends Controller
             [
                 "des_en" => $request->des_en,
                 "summary_en" => $request->summary_en,
+                "title_app" => $request->title_app,
             ]);
         return response()->json(['success'=>'Cập nhật thành công']);
     }
@@ -3358,6 +3359,7 @@ class ProjectController extends Controller
             [
                 "des_vn" => $request->des_vn,
                 "summary_vn" => $request->summary_vn,
+                "title_app" => $request->title_app,
             ]);
         return response()->json(['success'=>'Cập nhật thành công']);
     }
