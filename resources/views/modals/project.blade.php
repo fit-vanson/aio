@@ -1644,20 +1644,20 @@
             <div class="modal-body">
                 <form id="EditDesEN" name="EditDesEN" class="form-horizontal">
                     <input type="hidden" name="project_id" id="project_id_edit_desEN">
-
-
                     <div class="row">
                         <div class="col-12">
                             <div class="card">
                                 <div class="card-body">
                                     <div data-repeater-item="" class="row">
                                         <div class="form-group col-lg-12">
-                                            <label for="name">Description EN</label>
+                                            <label for="name">Summary</label> <button type="button" onclick="copySumEN()" class="btn btn-link waves-effect copyboard"><i class="mdi mdi-content-copy"></i></button> </label>
+                                            <input type="text" id="summary_en" name="summary_en" class="form-control">
+                                        </div>
+                                        <div class="form-group col-lg-12">
+                                            <label for="name">Description</label><button type="button" onclick="copyDesEN()" class="btn btn-link waves-effect copyboard"><i class="mdi mdi-content-copy"></i></button> </label>
                                             <textarea id="des_en" name="des_en"></textarea>
                                         </div>
                                     </div>
-
-
                                 </div>
                             </div>
                         </div> <!-- end col -->
@@ -1690,7 +1690,11 @@
                                 <div class="card-body">
                                     <div data-repeater-item="" class="row">
                                         <div class="form-group col-lg-12">
-                                            <label for="name">Description VN</label>
+                                            <label for="name">Mô tả ngắn </label> <button type="button" onclick="copySumVN()" class="btn btn-link waves-effect copyboard"><i class="mdi mdi-content-copy"></i></button> </label>
+                                            <input type="text" id="summary_vn" name="summary_vn" class="form-control">
+                                        </div>
+                                        <div class="form-group col-lg-12">
+                                            <label for="name">Mô tả</label><button type="button" onclick="copyDesVN()" class="btn btn-link waves-effect copyboard"><i class="mdi mdi-content-copy"></i></button> </label>
                                             <textarea id="des_vn" name="des_vn"></textarea>
                                         </div>
                                     </div>

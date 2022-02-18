@@ -1224,12 +1224,13 @@
     function editProject_Description_EN(id) {
         $.get('{{asset('project/editDes_EN')}}/'+id,function (data) {
             $('#project_id_edit_desEN').val(data.projectid);
+            $('#summary_en').val(data.summary_en);
             if(data.des_en){
                 tinymce.get('des_en').setContent(data.des_en);
             }else {
                 tinymce.get('des_en').setContent('');
             }
-            $('#modelEditDesEN').html("Edit Des EN");
+            $('#modelEditDesEN').html("Edit Description");
             $('#saveBtn').val("edit-des-en");
             $('#editDesEN').modal('show');
             $('.modal').on('hidden.bs.modal', function (e) {
@@ -1240,12 +1241,13 @@
     function editProject_Description_VN(id) {
         $.get('{{asset('project/editDes_VN')}}/'+id,function (data) {
             $('#project_id_edit_DesVN').val(data.projectid);
+            $('#summary_vn').val(data.summary_vn);
             if(data.des_vn){
                 tinymce.get('des_vn').setContent(data.des_vn);
             }else{
                 tinymce.get('des_vn').setContent('');
             }
-            $('#modelEditDesVN').html("Edit Des VN");
+            $('#modelEditDesVN').html("Chỉnh sửa mô tả");
             $('#saveBtn').val("edit-des-vn");
             $('#editDesVN').modal('show');
             $('.modal').on('hidden.bs.modal', function (e) {
@@ -2629,6 +2631,27 @@
         textArea.select();
         document.execCommand("Copy");
         textArea.remove();
+    }
+
+    function copySumEN() {
+        let textarea = document.getElementById("summary_en");
+        textarea.select();
+        document.execCommand("copy");
+    }
+    function copyDesEN() {
+        tinyMCE.execCommand('selectAll',true,'des_en');
+        tinyMCE.execCommand('copy',true,'des_en');
+    }
+
+    function copySumVN() {
+        let textarea = document.getElementById("summary_vn");
+        textarea.select();
+        document.execCommand("copy");
+    }
+    function copyDesVN() {
+        let textarea = document.getElementById("des_vn");
+        tinyMCE.execCommand('selectAll',true,textarea);
+        tinyMCE.execCommand('copy',true,textarea);
     }
 
 </script>

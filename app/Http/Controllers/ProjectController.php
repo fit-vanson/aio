@@ -1017,10 +1017,6 @@ class ProjectController extends Controller
                 </div>';
 
 
-
-
-
-
             if(isset($record->logo)){
                 if (isset($record->link_store_vietmmo)){
                     $logo = "<a href='".$record->link_store_vietmmo."' target='_blank'>  <img class='rounded mx-auto d-block'  width='100px'  height='100px'  src='../uploads/project/$record->projectname/thumbnail/$record->logo'></a>";
@@ -1033,9 +1029,25 @@ class ProjectController extends Controller
             $abc = '<p class="text-muted" style="line-height:0.5">'.$record->buildinfo_keystore. '   |   '.$record->buildinfo_vernum.'   |   '.$record->buildinfo_verstr.'</p>';
 
             $project_file  = $record->project_file ?  "    <a href='/file-manager/ProjectData/$record->project_file' target='_blank' <i style='color:green;' class='mdi mdi-check-circle-outline'></i></a>" : '';
+//
+//            $des_en = $record->des_en ? ' <a href="javascript:void(0)" onclick="editProject_Description_EN('.$record->projectid.')" class="badge badge-success" style="font-size: 12px">Description EN</a>' :' <a href="javascript:void(0)" onclick="editProject_Description_EN('.$record->projectid.')" class="badge badge-secondary" style="font-size: 12px">Description EN</a>';
+//            $des_vn = $record->des_vn ? ' <a href="javascript:void(0)" onclick="editProject_Description_VN('.$record->projectid.')" class="badge badge-success" style="font-size: 12px">Description VN</a>' : ' <a href="javascript:void(0)" onclick="editProject_Description_VN('.$record->projectid.')" class="badge badge-secondary" style="font-size: 12px">Description VN</a>';
 
-            $des_en = $record->des_en ? ' <a href="javascript:void(0)" onclick="editProject_Description_EN('.$record->projectid.')" class="badge badge-success" style="font-size: 12px">Description EN</a>' :' <a href="javascript:void(0)" onclick="editProject_Description_EN('.$record->projectid.')" class="badge badge-secondary" style="font-size: 12px">Description EN</a>';
-            $des_vn = $record->des_vn ? ' <a href="javascript:void(0)" onclick="editProject_Description_VN('.$record->projectid.')" class="badge badge-success" style="font-size: 12px">Description VN</a>' : ' <a href="javascript:void(0)" onclick="editProject_Description_VN('.$record->projectid.')" class="badge badge-secondary" style="font-size: 12px">Description VN</a>';
+            if($record->des_en && $record->summary_en){
+                $des_en = '<a href="javascript:void(0)" onclick="editProject_Description_EN('.$record->projectid.')" class="badge badge-success" style="font-size: 12px">Description</a> ';
+            }elseif ($record->des_en || $record->summary_en){
+                $des_en = '<a href="javascript:void(0)" onclick="editProject_Description_EN('.$record->projectid.')" class="badge badge-warning " style="font-size: 12px">Description</a> ';
+            }else{
+                $des_en = '<a href="javascript:void(0)" onclick="editProject_Description_EN('.$record->projectid.')" class="badge badge-secondary" style="font-size: 12px">Description</a> ';
+            }
+
+            if($record->des_vn && $record->summary_vn){
+                $des_vn = ' <a href="javascript:void(0)" onclick="editProject_Description_VN('.$record->projectid.')" class="badge badge-success" style="font-size: 12px">Mô tả</a>';
+            }elseif ($record->des_vn || $record->summary_vn){
+                $des_vn = ' <a href="javascript:void(0)" onclick="editProject_Description_VN('.$record->projectid.')" class="badge badge-warning" style="font-size: 12px">Mô tả</a>';
+            }else{
+                $des_vn = ' <a href="javascript:void(0)" onclick="editProject_Description_VN('.$record->projectid.')" class="badge badge-secondary" style="font-size: 12px">Mô tả</a>';
+            }
 
             $data_arr[] = array(
                 "created_at" => $record->created_at,
@@ -2997,12 +3009,12 @@ class ProjectController extends Controller
 
     public function editDesEN($id)
     {
-        $project = ProjectModel::select('projectid','des_en')->where('projectid',$id)->first();
+        $project = ProjectModel::select('projectid','des_en','summary_en')->where('projectid',$id)->first();
         return response()->json($project);
     }
     public function editDesVN($id)
     {
-        $project = ProjectModel::select('projectid','des_vn')->where('projectid',$id)->first();
+        $project = ProjectModel::select('projectid','des_vn','summary_vn')->where('projectid',$id)->first();
         return response()->json($project);
     }
     public function update(Request $request)
@@ -3332,6 +3344,7 @@ class ProjectController extends Controller
             ],
             [
                 "des_en" => $request->des_en,
+                "summary_en" => $request->summary_en,
             ]);
         return response()->json(['success'=>'Cập nhật thành công']);
     }
@@ -3344,6 +3357,7 @@ class ProjectController extends Controller
             ],
             [
                 "des_vn" => $request->des_vn,
+                "summary_vn" => $request->summary_vn,
             ]);
         return response()->json(['success'=>'Cập nhật thành công']);
     }
