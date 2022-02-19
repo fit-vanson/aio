@@ -1204,7 +1204,6 @@
             }else {
                 $('#vivo_dev_ga').text(data[9].vivo_store_name+ ' | '+ data[15])
             }
-
             if(data[16] == null){
                 $('#huawei_dev_ga').text('Không có '+ ' | '+ data[17])
             }else {
@@ -1259,8 +1258,6 @@
             });
         })
     }
-
-
 
     function quickEditProject(id) {
         $.get('{{asset('project/edit')}}/'+id,function (data) {
