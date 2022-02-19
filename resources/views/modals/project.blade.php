@@ -1650,11 +1650,20 @@
                                 <div class="card-body">
                                     <div data-repeater-item="" class="row">
                                         <div class="form-group col-lg-12">
-                                            <label for="name">Title App </label> <button type="button" onclick="copyTitleEN()" class="btn btn-link waves-effect copyboard"><i class="mdi mdi-content-copy"></i></button> </label>
+                                            <label for="name">Title App   &nbsp; &nbsp; &nbsp;
+                                                <span class="font-13 text-muted" id="count_title_app_en"></span>
+                                                <button type="button" onclick="copyTitleEN()" class="btn btn-link waves-effect copyboard"><i class="mdi mdi-content-copy"></i></button>
+                                            </label>
                                             <input type="text" id="title_app_en" name="title_app" class="form-control">
+
+
+
                                         </div>
                                         <div class="form-group col-lg-12">
-                                            <label for="name">Summary</label> <button type="button" onclick="copySumEN()" class="btn btn-link waves-effect copyboard"><i class="mdi mdi-content-copy"></i></button> </label>
+                                            <label for="name">Summary &nbsp; &nbsp; &nbsp;
+                                                <span class="font-13 text-muted" id="count_summary_en"></span>
+                                                <button type="button" onclick="copySumEN()" class="btn btn-link waves-effect copyboard"><i class="mdi mdi-content-copy"></i></button>
+                                            </label>
                                             <input type="text" id="summary_en" name="summary_en" class="form-control">
                                         </div>
                                         <div class="form-group col-lg-12">
@@ -1694,11 +1703,15 @@
                                 <div class="card-body">
                                     <div data-repeater-item="" class="row">
                                         <div class="form-group col-lg-12">
-                                            <label for="name">Tiêu đề ứng dụng </label> <button type="button" onclick="copyTitleVN()" class="btn btn-link waves-effect copyboard"><i class="mdi mdi-content-copy"></i></button> </label>
+                                            <label for="name">Tiêu đề ứng dụng &nbsp; &nbsp; &nbsp;
+                                                <span class="font-13 text-muted" id="count_title_app_vn"></span>
+                                                <button type="button" onclick="copyTitleVN()" class="btn btn-link waves-effect copyboard"><i class="mdi mdi-content-copy"></i></button> </label>
                                             <input type="text" id="title_app_vn" name="title_app" class="form-control">
                                         </div>
                                         <div class="form-group col-lg-12">
-                                            <label for="name">Mô tả ngắn </label> <button type="button" onclick="copySumVN()" class="btn btn-link waves-effect copyboard"><i class="mdi mdi-content-copy"></i></button> </label>
+                                            <label for="name">Mô tả ngắn &nbsp; &nbsp; &nbsp;
+                                                <span class="font-13 text-muted" id="count_summary_vn"></span>
+                                                <button type="button" onclick="copySumVN()" class="btn btn-link waves-effect copyboard"><i class="mdi mdi-content-copy"></i></button> </label>
                                             <input type="text" id="summary_vn" name="summary_vn" class="form-control">
                                         </div>
                                         <div class="form-group col-lg-12">

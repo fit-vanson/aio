@@ -1226,6 +1226,8 @@
             $('#project_id_edit_desEN').val(data.projectid);
             $('#summary_en').val(data.summary_en);
             $('#title_app_en').val(data.title_app);
+            $('#count_title_app_en').text(data.title_app.length);
+            $('#count_summary_en').text(data.summary_en.length);
             if(data.des_en){
                 tinymce.get('des_en').setContent(data.des_en);
             }else {
@@ -1244,6 +1246,8 @@
             $('#project_id_edit_DesVN').val(data.projectid);
             $('#summary_vn').val(data.summary_vn);
             $('#title_app_vn').val(data.title_app);
+            $('#count_title_app_vn').text(data.title_app.length);
+            $('#count_summary_vn').text(data.summary_vn.length);
             if(data.des_vn){
                 tinymce.get('des_vn').setContent(data.des_vn);
             }else{
@@ -2665,6 +2669,21 @@
         tinyMCE.execCommand('selectAll',true,textarea);
         tinyMCE.execCommand('copy',true,textarea);
     }
+
+    $("#title_app_en").on("input", function() {
+        $("#count_title_app_en").text(this.value.length);
+    });
+    $("#summary_en").on("input", function() {
+        $("#count_summary_en").text(this.value.length);
+    });
+
+    $("#title_app_vn").on("input", function() {
+        $("#count_title_app_vn").text(this.value.length);
+    });
+    $("#summary_vn").on("input", function() {
+        $("#count_summary_vn").text(this.value.length);
+    });
+
 
 </script>
 
