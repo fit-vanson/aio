@@ -1211,8 +1211,6 @@
                 $('#huawei_dev_ga').text(data[16].huawei_store_name+ ' | '+ data[17])
             }
 
-
-
             $('#modelHeading').html("Edit Project");
             $('#saveBtn').val("edit-project");
             $('#ajaxModel').modal('show');
