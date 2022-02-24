@@ -635,17 +635,25 @@ class ProjectController extends Controller
                 || isset(json_decode($record->Chplay_ads,true)['ads_start'])
             ){
                 if($record->Chplay_buildinfo_link_app){
-                    $package_chplay = '<a href="'.$record->Chplay_buildinfo_link_app.'" target="_blank"> <p style="color:green;line-height:0.5">CH Play: '.$record->Chplay_package.'</p></a>';
+                    $package_chplay = '<a href="'.$record->Chplay_buildinfo_link_app.'" target="_blank"> <p style="color:green;line-height:0.5"><img src="img/icon/google.png"> '.$record->Chplay_package.'</p></a>';
                 }else{
-                    $package_chplay = '<p style="color:green;line-height:0.5">CH Play: '.$record->Chplay_package.'</p>';
+                    $package_chplay = '<p style="color:green;line-height:0.5"><img src="img/icon/google.png"> '.$record->Chplay_package.'</p>';
                 }
             }else{
-                if($record->Chplay_buildinfo_link_app){
-                    $package_chplay = '<a href="'.$record->Chplay_buildinfo_link_app.'" target="_blank"> <p style="color:red;line-height:0.5">CH Play: '.$record->Chplay_package.'</p></a>';
+                if($record->Chplay_package){
+                    if($record->Chplay_buildinfo_link_app){
+                        $package_chplay = '<a href="'.$record->Chplay_buildinfo_link_app.'" target="_blank"> <p style="color:red;line-height:0.5"><img src="img/icon/google.png"> '.$record->Chplay_package.'</p></a>';
+                    }else{
+                        $package_chplay = '<p style="color:red;line-height:0.5"><img src="img/icon/google.png"> '.$record->Chplay_package.'</p>';
+                    }
                 }else{
-                    $package_chplay = '<p style="color:red;line-height:0.5">CH Play: '.$record->Chplay_package.'</p>';
+                    $package_chplay = '';
                 }
+
             }
+
+
+
             if(isset(json_decode($record->Amazon_ads,true)['ads_id'])
                 || isset(json_decode($record->Amazon_ads,true)['ads_banner'])
                 || isset(json_decode($record->Amazon_ads,true)['ads_inter'])
@@ -655,17 +663,22 @@ class ProjectController extends Controller
                 || isset(json_decode($record->Amazon_ads,true)['ads_start'])
             ){
                 if($record->Amazon_buildinfo_link_app){
-                    $package_amazon = '<a href="'.$record->Amazon_buildinfo_link_app.'" target="_blank"><p  style="color:green;line-height:0.5">Amazon: '.$record->Amazon_package.'</p></a>';
+                    $package_amazon = '<a href="'.$record->Amazon_buildinfo_link_app.'" target="_blank"><p  style="color:green;line-height:0.5"><img src="img/icon/amazon.png"> '.$record->Amazon_package.'</p></a>';
                 }else{
-                    $package_amazon = '<p style="color:green;line-height:0.5">Amazon: '.$record->Amazon_package.'</p>';
+                    $package_amazon = '<p style="color:green;line-height:0.5"><img src="img/icon/amazon.png"> '.$record->Amazon_package.'</p>';
                 }
 
             }else{
-                if($record->Amazon_buildinfo_link_app){
-                    $package_amazon = '<a href="'.$record->Amazon_buildinfo_link_app.'" target="_blank"><p  style="color:red;line-height:0.5">Amazon: '.$record->Amazon_package.'</p></a>';
+                if($record->Amazon_package){
+                    if($record->Amazon_buildinfo_link_app){
+                        $package_amazon = '<a href="'.$record->Amazon_buildinfo_link_app.'" target="_blank"><p  style="color:red;line-height:0.5"><img src="img/icon/amazon.png">: '.$record->Amazon_package.'</p></a>';
+                    }else{
+                        $package_amazon = '<p style="color:red;line-height:0.5"><img src="img/icon/amazon.png"> '.$record->Amazon_package.'</p>';
+                    }
                 }else{
-                    $package_amazon = '<p style="color:red;line-height:0.5">Amazon: '.$record->Amazon_package.'</p>';
+                    $package_amazon = '';
                 }
+
             }
 
             if(isset(json_decode($record->Samsung_ads,true)['ads_id'])
@@ -677,16 +690,21 @@ class ProjectController extends Controller
                 || isset(json_decode($record->Samsung_ads,true)['ads_start'])
             ){
                 if($record->Samsung_buildinfo_link_app){
-                    $package_samsung = '<a href="'.$record->Samsung_buildinfo_link_app.'" target="_blank"><p  style="color:green;line-height:0.5">SamSung: '.$record->Samsung_package.'</p></a>';
+                    $package_samsung = '<a href="'.$record->Samsung_buildinfo_link_app.'" target="_blank"><p  style="color:green;line-height:0.5"><img src="img/icon/samsung.png"> '.$record->Samsung_package.'</p></a>';
                 }else{
-                    $package_samsung = '<p style="color:green;line-height:0.5">SamSung: '.$record->Samsung_package.'</p>';
+                    $package_samsung = '<p style="color:green;line-height:0.5"><img src="img/icon/samsung.png"> '.$record->Samsung_package.'</p>';
                 }
             }else{
-                if($record->Samsung_buildinfo_link_app){
-                    $package_samsung = '<a href="'.$record->Samsung_buildinfo_link_app.'" target="_blank"><p style="color:red;line-height:0.5">SamSung: '.$record->Samsung_package.'</p></a>';
+                if($record->Samsung_package){
+                    if($record->Samsung_buildinfo_link_app){
+                        $package_samsung = '<a href="'.$record->Samsung_buildinfo_link_app.'" target="_blank"><p style="color:red;line-height:0.5"><img src="img/icon/samsung.png"> '.$record->Samsung_package.'</p></a>';
+                    }else{
+                        $package_samsung = '<p style="color:red;line-height:0.5"><img src="img/icon/samsung.png"> '.$record->Samsung_package.'</p>';
+                    }
                 }else{
-                    $package_samsung = '<p style="color:red;line-height:0.5">SamSung: '.$record->Samsung_package.'</p>';
+                    $package_samsung = '';
                 }
+
             }
 
             if(isset(json_decode($record->Xiaomi_ads,true)['ads_id'])
@@ -698,17 +716,22 @@ class ProjectController extends Controller
                 || isset(json_decode($record->Xiaomi_ads,true)['ads_start'])
             ){
                 if($record->Xiaomi_buildinfo_link_app){
-                    $package_xiaomi = '<a href="'.$record->Xiaomi_buildinfo_link_app.'" target="_blank"><p style="color:green;line-height:0.5">Xiaomi: '.$record->Xiaomi_package.'</p></a>';
+                    $package_xiaomi = '<a href="'.$record->Xiaomi_buildinfo_link_app.'" target="_blank"><p style="color:green;line-height:0.5"><img src="img/icon/xiaomi.png"> '.$record->Xiaomi_package.'</p></a>';
                 }else{
-                    $package_xiaomi = '<p style="color:green;line-height:0.5">Xiaomi: '.$record->Xiaomi_package.'</p>';
+                    $package_xiaomi = '<p style="color:green;line-height:0.5"><img src="img/icon/xiaomi.png"> '.$record->Xiaomi_package.'</p>';
                 }
 
             }else {
-                if ($record->Xiaomi_buildinfo_link_app) {
-                    $package_xiaomi = '<a href="' . $record->Xiaomi_buildinfo_link_app . '" target="_blank"><p style="color:red;line-height:0.5">Xiaomi: ' . $record->Xiaomi_package . '</p></a>';
-                } else {
-                    $package_xiaomi = '<p style="color:red;line-height:0.5">Xiaomi: ' . $record->Xiaomi_package . '</p>';
+                if ($record->Xiaomi_package){
+                    if ($record->Xiaomi_buildinfo_link_app) {
+                        $package_xiaomi = '<a href="' . $record->Xiaomi_buildinfo_link_app . '" target="_blank"><p style="color:red;line-height:0.5"><img src="img/icon/xiaomi.png"> ' . $record->Xiaomi_package . '</p></a>';
+                    } else {
+                        $package_xiaomi = '<p style="color:red;line-height:0.5"><img src="img/icon/xiaomi.png"> ' . $record->Xiaomi_package . '</p>';
+                    }
+                }else{
+                    $package_xiaomi = '';
                 }
+
             }
 
             if(isset(json_decode($record->Oppo_ads,true)['ads_id'])
@@ -720,17 +743,22 @@ class ProjectController extends Controller
                 || isset(json_decode($record->Oppo_ads,true)['ads_start'])
             ){
                 if($record->Oppo_buildinfo_link_app){
-                    $package_oppo = '<a href="'.$record->Oppo_buildinfo_link_app.'" target="_blank"><p style="color:green;line-height:0.5">Oppo: '.$record->Oppo_package.'</p></a>';
+                    $package_oppo = '<a href="'.$record->Oppo_buildinfo_link_app.'" target="_blank"><p style="color:green;line-height:0.5"><img src="img/icon/oppo.png"> '.$record->Oppo_package.'</p></a>';
                 }else{
-                    $package_oppo = '<p style="color:green;line-height:0.5">Oppo: '.$record->Oppo_package.'</p>';
+                    $package_oppo = '<p style="color:green;line-height:0.5"><img src="img/icon/oppo.png"> '.$record->Oppo_package.'</p>';
                 }
 
             }else {
-                if ($record->Oppo_buildinfo_link_app) {
-                    $package_oppo = '<a href="' . $record->Oppo_buildinfo_link_app . '" target="_blank"><p style="color:red;line-height:0.5">Oppo: ' . $record->Oppo_package . '</p></a>';
-                } else {
-                    $package_oppo = '<p style="color:red;line-height:0.5">Oppo: ' . $record->Oppo_package . '</p>';
+                if($record->Oppo_package){
+                    if ($record->Oppo_buildinfo_link_app) {
+                        $package_oppo = '<a href="' . $record->Oppo_buildinfo_link_app . '" target="_blank"><p style="color:red;line-height:0.5"><img src="img/icon/oppo.png"> ' . $record->Oppo_package . '</p></a>';
+                    } else {
+                        $package_oppo = '<p style="color:red;line-height:0.5"><img src="img/icon/oppo.png"> ' . $record->Oppo_package . '</p>';
+                    }
+                }else{
+                    $package_oppo = '';
                 }
+
             }
 
 
@@ -744,17 +772,22 @@ class ProjectController extends Controller
                 || isset(json_decode($record->Vivo_ads,true)['ads_start'])
             ){
                 if($record->Vivo_buildinfo_link_app){
-                    $package_vivo = '<a href="'.$record->Vivo_buildinfo_link_app.'" target="_blank"><p style="color:green;line-height:0.5">Vivo: '.$record->Vivo_package.'</p></a>';
+                    $package_vivo = '<a href="'.$record->Vivo_buildinfo_link_app.'" target="_blank"><p style="color:green;line-height:0.5"><img src="img/icon/vivo.png"> '.$record->Vivo_package.'</p></a>';
                 }else{
-                    $package_vivo = '<p style="color:green;line-height:0.5">Vivo: '.$record->Vivo_package.'</p>';
+                    $package_vivo = '<p style="color:green;line-height:0.5"><img src="img/icon/vivo.png"> '.$record->Vivo_package.'</p>';
                 }
 
             }else{
-                if ($record->Vivo_buildinfo_link_app) {
-                    $package_vivo = '<a href="' . $record->Vivo_buildinfo_link_app . '" target="_blank"><p style="color:red;line-height:0.5">Vivo: ' . $record->Vivo_package . '</p></a>';
-                } else {
-                    $package_vivo = '<p style="color:red;line-height:0.5">Vivo: ' . $record->Vivo_package . '</p>';
+                if($record->Vivo_package){
+                    if ($record->Vivo_buildinfo_link_app) {
+                        $package_vivo = '<a href="' . $record->Vivo_buildinfo_link_app . '" target="_blank"><p style="color:red;line-height:0.5"><img src="img/icon/vivo.png"> ' . $record->Vivo_package . '</p></a>';
+                    } else {
+                        $package_vivo = '<p style="color:red;line-height:0.5"><img src="img/icon/vivo.png"> ' . $record->Vivo_package . '</p>';
+                    }
+                }else{
+                    $package_vivo = '';
                 }
+
             }
 
 
@@ -768,17 +801,22 @@ class ProjectController extends Controller
                 || isset(json_decode($record->Huawei_ads,true)['ads_start'])
             ){
                 if($record->Huawei_buildinfo_link_app){
-                    $package_Huawei = '<a href="'.$record->Huawei_buildinfo_link_app.'" target="_blank"><p style="color:green;line-height:0.5">Huawei: '.$record->Huawei_package.'</p></a>';
+                    $package_Huawei = '<a href="'.$record->Huawei_buildinfo_link_app.'" target="_blank"><p style="color:green;line-height:0.5"><img src="img/icon/huawei.png"> '.$record->Huawei_package.'</p></a>';
                 }else{
-                    $package_Huawei = '<p style="color:green;line-height:0.5">Huawei: '.$record->Huawei_package.'</p>';
+                    $package_Huawei = '<p style="color:green;line-height:0.5"><img src="img/icon/huawei.png"> '.$record->Huawei_package.'</p>';
                 }
 
             }else{
-                if ($record->Huawei_buildinfo_link_app) {
-                    $package_Huawei = '<a href="' . $record->Huawei_buildinfo_link_app . '" target="_blank"><p style="color:red;line-height:0.5">Huawei: ' . $record->Huawei_package . '</p></a>';
-                } else {
-                    $package_Huawei = '<p style="color:red;line-height:0.5">Huawei: ' . $record->Huawei_package . '</p>';
+                if($record->Huawei_package){
+                    if ($record->Huawei_buildinfo_link_app) {
+                        $package_Huawei = '<a href="' . $record->Huawei_buildinfo_link_app . '" target="_blank"><p style="color:red;line-height:0.5"><img src="img/icon/huawei.png"> ' . $record->Huawei_package . '</p></a>';
+                    } else {
+                        $package_Huawei = '<p style="color:red;line-height:0.5"><img src="img/icon/huawei.png"> ' . $record->Huawei_package . '</p>';
+                    }
+                }else{
+                    $package_Huawei = '';
                 }
+
             }
 
             if ($record['Chplay_status']==0  ) {
@@ -1056,7 +1094,7 @@ class ProjectController extends Controller
                 "name_projectname"=>$record->projectname,
                 "template"=>$data_template,
                 "projectname"=>$data_projectname. $project_file.$data_template.$data_ma_da.$data_title_app.$abc.$keystore_profile.$des_en. $des_vn,
-                "package" => $package_chplay.$package_amazon.$package_samsung.$package_xiaomi.$package_oppo.$package_vivo.$package_Huawei,
+                "package" =>$package_chplay.$package_amazon.$package_samsung.$package_xiaomi.$package_oppo.$package_vivo.$package_Huawei,
                 "status" => $status,
                 'Chplay_buildinfo_store_name_x' => $dev_name_chplay,
                 'Amazon_buildinfo_store_name_x' => $dev_name_amazon,
