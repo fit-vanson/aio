@@ -1228,13 +1228,13 @@
 			}else{
 				 $('#count_title_app_en').text(0);
 			}
-			
+
 			if(data.summary_en){
 				$('#count_summary_en').text(data.summary_en.length);
 			}else{
 				 $('#count_summary_en').text(0);
-			}          
-           
+			}
+
             if(data.des_en){
                 tinymce.get('des_en').setContent(data.des_en);
             }else {
@@ -1253,19 +1253,19 @@
             $('#project_id_edit_DesVN').val(data.projectid);
             $('#summary_vn').val(data.summary_vn);
             $('#title_app_vn').val(data.title_app);
-			
+
 			if(data.title_app){
 				 $('#count_title_app_vn').text(data.title_app.length);
 			}else{
 				 $('#count_title_app_vn').text(0);
 			}
-			
+
 			if(data.summary_vn){
 				$('#count_summary_vn').text(data.summary_vn.length);
 			}else{
 				 $('#count_summary_vn').text(0);
-			} 
-		
+			}
+
             if(data.des_vn){
                 tinymce.get('des_vn').setContent(data.des_vn);
             }else{
@@ -2699,6 +2699,17 @@
     $("#summary_vn").on("input", function() {
         $("#count_summary_vn").text(this.value.length);
     });
+
+    function copyPackage(e) {
+        var copyText = $(e).attr('data-text');
+        var textarea = document.createElement("textarea");
+        textarea.textContent = copyText;
+        textarea.style.position = "fixed"; // Prevent scrolling to bottom of page in MS Edge.
+        document.body.appendChild(textarea);
+        textarea.select();
+        document.execCommand("copy");
+        document.body.removeChild(textarea);
+    }
 
 
 </script>

@@ -193,7 +193,8 @@
                                                 </div>
                                             </div>
                                             <span class="card-title-desc" id="p_buildinfo_keystore"></span>
-                                            <button type="button" class="btn btn-link waves-effect" id="button_buildinfo_keystore"><i class="mdi mdi-content-copy"></i></button></td>
+                                            <button type="button" class="btn btn-link waves-effect" id="button_buildinfo_keystore"><i class="mdi mdi-content-copy"></i></button>
+                                            </td>
 
                                             <div class="progress m-b-10" style="height: 3px;">
                                                 <div class="progress-bar"  role="progressbar" style="background-color: #0b0b0b;width: 100%;"></div>
