@@ -814,7 +814,7 @@ class ProjectController extends Controller
             }
 
             if ($record['Chplay_status']==0  ) {
-                $Chplay_status = 'Mặc định';
+                $Chplay_status = '<span class="badge badge-secondary">Mặc định</span>';
             }
             elseif($record['Chplay_status']== 1){
                 $Chplay_status = '<span class="badge badge-success">Publish</span>';
@@ -838,7 +838,7 @@ class ProjectController extends Controller
                 $Chplay_status =  '<span class="badge badge-warning">Pending</span>';
             }
             if ($record['Amazon_status']==0  ) {
-                $Amazon_status = 'Mặc định';
+                $Amazon_status = '<span class="badge badge-secondary">Mặc định</span>';
             }
             elseif($record['Amazon_status']== 1){
                 $Amazon_status = '<span class="badge badge-success">Publish</span>';
@@ -861,7 +861,7 @@ class ProjectController extends Controller
             }
 
             if ($record['Samsung_status']==0  ) {
-                $Samsung_status = 'Mặc định';
+                $Samsung_status = '<span class="badge badge-secondary">Mặc định</span>';
             }
             elseif($record['Samsung_status']== 1){
                 $Samsung_status = '<span class="badge badge-success">Publish</span>';
@@ -884,7 +884,7 @@ class ProjectController extends Controller
             }
 
             if ($record['Xiaomi_status']==0  ) {
-                $Xiaomi_status = 'Mặc định';
+                $Xiaomi_status = '<span class="badge badge-secondary">Mặc định</span>';
             }
             elseif($record['Xiaomi_status']== 1){
                 $Xiaomi_status = '<span class="badge badge-success">Publish</span>';
@@ -908,7 +908,7 @@ class ProjectController extends Controller
 
 
             if ($record['Oppo_status']==0  ) {
-                $Oppo_status = 'Mặc định';
+                $Oppo_status = '<span class="badge badge-secondary">Mặc định</span>';
             }
             elseif($record['Oppo_status']== 1){
                 $Oppo_status = '<span class="badge badge-success">Publish</span>';
@@ -931,7 +931,7 @@ class ProjectController extends Controller
             }
 
             if ($record['Vivo_status']==0  ) {
-                $Vivo_status = 'Mặc định';
+                $Vivo_status = '<span class="badge badge-secondary">Mặc định</span>';
             }
             elseif($record['Vivo_status']== 1){
                 $Vivo_status = '<span class="badge badge-success">Publish</span>';
@@ -954,7 +954,7 @@ class ProjectController extends Controller
             }
 
             if ($record['Huawei_status']==0  ) {
-                $Huawei_status = 'Mặc định';
+                $Huawei_status = '<span class="badge badge-secondary">Mặc định</span>';
             }
             elseif($record['Huawei_status']== 1){
                 $Huawei_status = '<span class="badge badge-success">Publish</span>';
