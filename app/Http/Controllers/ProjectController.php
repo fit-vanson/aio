@@ -1030,13 +1030,14 @@ class ProjectController extends Controller
                 $policy_chplay = $policy_amazon = $policy_xiaomi = $policy_samsung = $policy_oppo = $policy_vivo = $policy_huawei = "";
             }
             $status =
-                $policy_chplay.$Chplay_policy.' CH Play: '.$Chplay_status.'   '. '<span class="badge badge-info">'.$dev_name_chplay.'</span>'.'   '. '<span class="badge badge-warning">'.$ga_name_chplay.'</span>'.
-                '<br>'.$policy_amazon.$Amazon_policy.' Amazon: '.$Amazon_status.'   '. '<span class="badge badge-info">'.$dev_name_amazon.'</span>'.'   '. '<span class="badge badge-warning">'.$ga_name_amazon.'</span>'.
-                '<br>'.$policy_samsung.$Samsung_policy.' SamSung: '.$Samsung_status.'   '. '<span class="badge badge-info">'.$dev_name_samsung.'</span>'.'   '. '<span class="badge badge-warning">'.$ga_name_samsung.'</span>'.
-                '<br>'.$policy_xiaomi.$Xiaomi_policy.' Xiaomi: '.$Xiaomi_status.'   '. '<span class="badge badge-info">'.$dev_name_xiaomi.'</span>'.'   '. '<span class="badge badge-warning">'.$ga_name_xiaomi.'</span>'.
-                '<br>'.$policy_oppo.$Oppo_policy.' Oppo: '.$Oppo_status.'   '. '<span class="badge badge-info">'.$dev_name_oppo.'</span>'.'   '. '<span class="badge badge-warning">'.$ga_name_oppo.'</span>'.
-                '<br>'.$policy_vivo.$Vivo_policy.' Vivo: '.$Vivo_status.'   '. '<span class="badge badge-info">'.$dev_name_vivo.'</span>'.'   '. '<span class="badge badge-warning">'.$ga_name_vivo.'</span>'.
-                '<br>'.$policy_huawei.$Huawei_policy.' Huawei: '.$Huawei_status.'   '. '<span class="badge badge-info">'.$dev_name_huawei.'</span>'.'   '. '<span class="badge badge-warning">'.$ga_name_huawei.'</span>';
+
+                '<span style="line-height:2.5"><img src="img/icon/google.png"> '.$policy_chplay.'   '.$Chplay_policy.'   '.$Chplay_status.'   '. '<span class="badge badge-info">'.$dev_name_chplay.'</span>'.'   '. '<span class="badge badge-warning">'.$ga_name_chplay.'</span></span>'.
+                '<br>'.'<span style="line-height:2.5"><img src="img/icon/amazon.png"> '.$policy_amazon.'   '.$Amazon_policy.'   '.$Amazon_status.'   '. '<span class="badge badge-info">'.$dev_name_amazon.'</span>'.'   '. '<span class="badge badge-warning">'.$ga_name_amazon.'</span></span>'.
+                '<br>'.'<span style="line-height:2.5"><img src="img/icon/samsung.png"> '.$policy_samsung.'   '.$Samsung_policy.'   '.$Samsung_status.'   '. '<span class="badge badge-info">'.$dev_name_samsung.'</span>'.'   '. '<span class="badge badge-warning">'.$ga_name_samsung.'</span></span>'.
+                '<br>'.'<span style="line-height:2.5"><img src="img/icon/xiaomi.png"> '.$policy_xiaomi.'   '.$Xiaomi_policy.'   '.$Xiaomi_status.'   '. '<span class="badge badge-info">'.$dev_name_xiaomi.'</span>'.'   '. '<span class="badge badge-warning">'.$ga_name_xiaomi.'</span></span>'.
+                '<br>'.'<span style="line-height:2.5"><img src="img/icon/oppo.png"> '.$policy_oppo.'   '.$Oppo_policy.'   '.$Oppo_status.'   '. '<span class="badge badge-info">'.$dev_name_oppo.'</span>'.'   '. '<span class="badge badge-warning">'.$ga_name_oppo.'</span></span>'.
+                '<br>'.'<span style="line-height:2.5"><img src="img/icon/vivo.png"> '.$policy_vivo.'   '.$Vivo_policy.'   '.$Vivo_status.'   '. '<span class="badge badge-info">'.$dev_name_vivo.'</span>'.'   '. '<span class="badge badge-warning">'.$ga_name_vivo.'</span></span>'.
+                '<br>'.'<span style="line-height:2.5"><img src="img/icon/huawei.png"> '.$policy_huawei.'   '.$Huawei_policy.'   '.$Huawei_status.'   '. '<span class="badge badge-info">'.$dev_name_huawei.'</span>'.'   '. '<span class="badge badge-warning">'.$ga_name_huawei.'</span></span>';
             $keystore_profile =
                 '<div>
                     <span class="badge badge-primary" style="font-size: 12px">C: '.$record->Chplay_keystore_profile.'</span>
