@@ -1094,6 +1094,7 @@
             $('#Chplay_buildinfo_email_dev_x').val(data[0].Chplay_buildinfo_email_dev_x);
             $('#Chplay_status').val(data[0].Chplay_status);
             $('#Chplay_policy').val(data[0].Chplay_policy);
+            $('#Chplay_sdk').val(data[0].Chplay_sdk);
             $('#Chplay_keystore_profile').val(data[0].Chplay_keystore_profile);
             $('#Chplay_keystore_profile').select2();
             $('#p_buildinfo_keystore_chplay').text(keystore_chplay);
@@ -1105,6 +1106,7 @@
             $('#Amazon_buildinfo_email_dev_x').val(data[0].Amazon_buildinfo_email_dev_x);
             $('#Amazon_status').val(data[0].Amazon_status);
             $('#Amazon_policy').val(data[0].Amazon_policy);
+            $('#Amazon_sdk').val(data[0].Amazon_sdk);
             $('#Amazon_keystore_profile').val(data[0].Amazon_keystore_profile);
             $('#Amazon_keystore_profile').select2();
             $('#p_buildinfo_keystore_amazon').text(keystore_amazon);
@@ -1118,6 +1120,7 @@
             $('#Samsung_buildinfo_email_dev_x').val(data[0].Samsung_buildinfo_email_dev_x);
             $('#Samsung_status').val(data[0].Samsung_status);
             $('#Samsung_policy').val(data[0].Samsung_policy);
+            $('#Samsung_sdk').val(data[0].Samsung_sdk);
             $('#Samsung_keystore_profile').val(data[0].Samsung_keystore_profile);
             $('#Samsung_keystore_profile').select2();
             $('#p_buildinfo_keystore_samsung').text(keystore_samsung);
@@ -1129,6 +1132,7 @@
             $('#Xiaomi_buildinfo_email_dev_x').val(data[0].Xiaomi_buildinfo_email_dev_x);
             $('#Xiaomi_status').val(data[0].Xiaomi_status);
             $('#Xiaomi_policy').val(data[0].Xiaomi_policy);
+            $('#Xiaomi_sdk').val(data[0].Xiaomi_sdk);
             $('#Xiaomi_keystore_profile').val(data[0].Xiaomi_keystore_profile);
             $('#Xiaomi_keystore_profile').select2();
             $('#p_buildinfo_keystore_xiaomi').text(keystore_xiaomi);
@@ -1141,6 +1145,7 @@
             $('#Oppo_buildinfo_email_dev_x').val(data[0].Oppo_buildinfo_email_dev_x);
             $('#Oppo_status').val(data[0].Oppo_status);
             $('#Oppo_policy').val(data[0].Oppo_policy);
+            $('#Oppo_sdk').val(data[0].Oppo_sdk);
             $('#Oppo_keystore_profile').val(data[0].Oppo_keystore_profile);
             $('#Oppo_keystore_profile').select2();
             $('#p_buildinfo_keystore_oppo').text(keystore_oppo);
@@ -1153,6 +1158,7 @@
             $('#Vivo_buildinfo_email_dev_x').val(data[0].Vivo_buildinfo_email_dev_x);
             $('#Vivo_status').val(data[0].Vivo_status);
             $('#Vivo_policy').val(data[0].Vivo_policy);
+            $('#Vivo_sdk').val(data[0].Vivo_sdk);
             $('#Vivo_keystore_profile').val(data[0].Vivo_keystore_profile);
             $('#Vivo_keystore_profile').select2();
             $('#p_buildinfo_keystore_vivo').text(keystore_vivo);
@@ -1165,6 +1171,7 @@
             $('#Huawei_buildinfo_email_dev_x').val(data[0].Huawei_buildinfo_email_dev_x);
             $('#Huawei_status').val(data[0].Huawei_status);
             $('#Huawei_policy').val(data[0].Huawei_policy);
+            $('#Huawei_sdk').val(data[0].Huawei_sdk);
             $('#Huawei_keystore_profile').val(data[0].Huawei_keystore_profile);
             $('#Huawei_keystore_profile').select2();
             $('#p_buildinfo_keystore_huawei').text(keystore_huawei);

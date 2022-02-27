@@ -944,6 +944,10 @@
                                                     </div>
 {{--                                                    <input type="text" id="Chplay_keystore_profile" name="Chplay_keystore_profile" class="form-control" >--}}
                                                 </div>
+                                                <div class="form-group col-lg-6 ">
+                                                    <label for="name">SDK</label>
+                                                    <input type="text" id="Chplay_sdk" name="Chplay_sdk" class="form-control" >
+                                                </div>
                                             </div>
 
                                             <span class="card-title-desc" id="p_buildinfo_keystore_chplay"></span>
@@ -1013,8 +1017,10 @@
                                                             </button>
                                                         </div>
                                                     </div>
-
-{{--                                                    <input type="text" id="Amazon_keystore_profile" name="Amazon_keystore_profile" class="form-control" >--}}
+                                                </div>
+                                                <div class="form-group col-lg-6 ">
+                                                    <label for="name">SDK</label>
+                                                    <input type="text" id="Amazon_sdk" name="Amazon_sdk" class="form-control" >
                                                 </div>
                                             </div>
                                             <span class="card-title-desc" id="p_buildinfo_keystore_amazon"></span>
@@ -1085,6 +1091,10 @@
                                                         </div>
                                                     </div>
                                                 </div>
+                                                <div class="form-group col-lg-6 ">
+                                                    <label for="name">SDK</label>
+                                                    <input type="text" id="Samsung_sdk" name="Samsung_sdk" class="form-control" >
+                                                </div>
                                             </div>
                                             <span class="card-title-desc" id="p_buildinfo_keystore_samsung"></span>
                                             <button type="button" class="btn btn-link waves-effect" id="button_buildinfo_keystore_samsung"><i class="mdi mdi-content-copy"></i></button></td>
@@ -1153,6 +1163,10 @@
                                                         </div>
                                                     </div>
 {{--                                                    <input type="text" id="Xiaomi_keystore_profile" name="Xiaomi_keystore_profile" class="form-control" >--}}
+                                                </div>
+                                                <div class="form-group col-lg-6 ">
+                                                    <label for="name">SDK</label>
+                                                    <input type="text" id="Xiaomi_sdk" name="Xiaomi_sdk" class="form-control" >
                                                 </div>
                                             </div>
                                             <span class="card-title-desc" id="p_buildinfo_keystore_xiaomi"></span>
@@ -1223,6 +1237,10 @@
                                                     </div>
 {{--                                                    <input type="text" id="Oppo_keystore_profile" name="Oppo_keystore_profile" class="form-control" >--}}
                                                 </div>
+                                                <div class="form-group col-lg-6 ">
+                                                    <label for="name">SDK</label>
+                                                    <input type="text" id="Oppo_sdk" name="Oppo_sdk" class="form-control" >
+                                                </div>
                                             </div>
                                             <span class="card-title-desc" id="p_buildinfo_keystore_oppo"></span>
                                             <button type="button" class="btn btn-link waves-effect" id="button_buildinfo_keystore_oppo"><i class="mdi mdi-content-copy"></i></button></td>
@@ -1292,6 +1310,10 @@
                                                     </div>
 {{--                                                    <input type="text" id="Vivo_keystore_profile" name="Vivo_keystore_profile" class="form-control" >--}}
                                                 </div>
+                                                <div class="form-group col-lg-6 ">
+                                                    <label for="name">SDK</label>
+                                                    <input type="text" id="Vivo_sdk" name="Vivo_sdk" class="form-control" >
+                                                </div>
                                             </div>
                                             <span class="card-title-desc" id="p_buildinfo_keystore_vivo"></span>
                                             <button type="button" class="btn btn-link waves-effect" id="button_buildinfo_keystore_vivo"><i class="mdi mdi-content-copy"></i></button></td>
@@ -1334,7 +1356,11 @@
                                                 </div>
                                             </div>
                                             <div data-repeater-item="" class="row">
-                                                <div class="form-group col-lg-6">
+                                                <div class="form-group col-lg-4 ">
+                                                    <label for="name">SDK</label>
+                                                    <input type="text" id="Huawei_sdk" name="Huawei_sdk" class="form-control" >
+                                                </div>
+                                                <div class="form-group col-lg-4">
                                                     <label for="name">Keystore Profile</label>
                                                     <div class="inner row">
                                                         <div class="col-md-10 col-10">
@@ -1352,7 +1378,7 @@
                                                     </div>
 {{--                                                    <input type="text" id="Huawei_keystore_profile" name="Huawei_keystore_profile" class="form-control" >--}}
                                                 </div>
-                                                <div class="form-group col-lg-6 input_status">
+                                                <div class="form-group col-lg-4 input_status">
                                                     <label for="name">Trạng thái Ứng dụng</label>
                                                     <div>
                                                         <select class="form-control" id="Huawei_status" name="Huawei_status">

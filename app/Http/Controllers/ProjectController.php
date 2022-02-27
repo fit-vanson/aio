@@ -2824,6 +2824,7 @@ class ProjectController extends Controller
         $data['Chplay_policy'] = $request->Chplay_policy;
         $data['Chplay_keystore_profile'] = $request->Chplay_keystore_profile;
         $data['Chplay_ads'] = $Chplay_ads;
+        $data['Chplay_sdk'] = $request->Chplay_sdk;
         $data['Chplay_status'] = 0;
 
         $data['Amazon_package'] = $request->Amazon_package;
@@ -2834,6 +2835,7 @@ class ProjectController extends Controller
         $data['Amazon_policy'] = $request->Amazon_policy;
         $data['Amazon_keystore_profile'] = $request->Amazon_keystore_profile;
         $data['Amazon_ads'] = $Amazon_ads;
+        $data['Amazon_sdk'] = $request->Amazon_sdk;
         $data['Amazon_status'] = 0;
 
         $data['Samsung_package'] = $request->Samsung_package;
@@ -2844,6 +2846,7 @@ class ProjectController extends Controller
         $data['Samsung_keystore_profile'] = $request->Samsung_keystore_profile;
         $data['Samsung_policy'] = $request->Samsung_policy;
         $data['Samsung_ads'] = $Samsung_ads;
+        $data['Samsung_sdk'] = $request->Samsung_sdk;
         $data['Samsung_status'] = 0;
 
         $data['Xiaomi_package'] = $request->Xiaomi_package;
@@ -2854,6 +2857,7 @@ class ProjectController extends Controller
         $data['Xiaomi_policy'] = $request->Xiaomi_policy;
         $data['Xiaomi_keystore_profile'] = $request->Xiaomi_keystore_profile;
         $data['Xiaomi_ads'] = $Xiaomi_ads;
+        $data['Xiaomi_sdk'] = $request->Xiaomi_sdk;
         $data['Xiaomi_status'] = 0;
 
         $data['Oppo_package'] = $request->Oppo_package;
@@ -2864,6 +2868,7 @@ class ProjectController extends Controller
         $data['Oppo_policy'] = $request->Oppo_policy;
         $data['Oppo_keystore_profile'] = $request->Oppo_keystore_profile;
         $data['Oppo_ads'] = $Oppo_ads;
+        $data['Oppo_sdk'] = $request->Oppo_sdk;
         $data['Oppo_status'] = 0;
 
         $data['Vivo_package'] = $request->Vivo_package;
@@ -2874,6 +2879,7 @@ class ProjectController extends Controller
         $data['Vivo_policy'] = $request->Vivo_policy;
         $data['Vivo_keystore_profile'] = $request->Vivo_keystore_profile;
         $data['Vivo_ads'] = $Vivo_ads;
+        $data['Vivo_sdk'] = $request->Vivo_sdk;
         $data['Vivo_status'] = 0;
 
         $data['Huawei_package'] = $request->Huawei_package;
@@ -2885,6 +2891,7 @@ class ProjectController extends Controller
         $data['Huawei_policy'] = $request->Huawei_policy;
         $data['Huawei_keystore_profile'] = $request->Huawei_keystore_profile;
         $data['Huawei_ads'] = $Huawei_ads;
+        $data['Huawei_sdk'] = $request->Huawei_sdk;
         $data['Huawei_status'] = 0;
 
         if(isset($request->logo)){
@@ -3230,6 +3237,7 @@ class ProjectController extends Controller
 //        $data->Chplay_bot->log_status = $data->Chplay_bot->log_status.'|'.$data->Chplay_status;
         $data->Chplay_status = $request->Chplay_status;
         $data->Chplay_policy = $request->Chplay_policy;
+        $data->Chplay_sdk = $request->Chplay_sdk;
         $data->Chplay_keystore_profile = $request->Chplay_keystore_profile;
 
         $data->Amazon_package = $request->Amazon_package;
@@ -3240,6 +3248,7 @@ class ProjectController extends Controller
         $data->Amazon_ads = $Amazon_ads;
         $data->Amazon_status = $request->Amazon_status;
         $data->Amazon_policy = $request->Amazon_policy;
+        $data->Amazon_sdk = $request->Amazon_sdk;
         $data->Amazon_keystore_profile = $request->Amazon_keystore_profile;
 
         $data->Samsung_package = $request->Samsung_package;
@@ -3250,6 +3259,7 @@ class ProjectController extends Controller
         $data->Samsung_ads = $Samsung_ads;
         $data->Samsung_status = $request->Samsung_status;
         $data->Samsung_policy = $request->Samsung_policy;
+        $data->Samsung_sdk = $request->Samsung_sdk;
         $data->Samsung_keystore_profile = $request->Samsung_keystore_profile;
 
         $data->Xiaomi_package = $request->Xiaomi_package;
@@ -3260,6 +3270,7 @@ class ProjectController extends Controller
         $data->Xiaomi_ads = $Xiaomi_ads;
         $data->Xiaomi_status = $request->Xiaomi_status;
         $data->Xiaomi_policy = $request->Xiaomi_policy;
+        $data->Xiaomi_sdk = $request->Xiaomi_sdk;
         $data->Xiaomi_keystore_profile = $request->Xiaomi_keystore_profile;
 
         $data->Oppo_package = $request->Oppo_package;
@@ -3270,6 +3281,7 @@ class ProjectController extends Controller
         $data->Oppo_ads = $Oppo_ads;
         $data->Oppo_status = $request->Oppo_status;
         $data->Oppo_policy = $request->Oppo_policy;
+        $data->Oppo_sdk = $request->Oppo_sdk;
         $data->Oppo_keystore_profile = $request->Oppo_keystore_profile;
 
         $data->Vivo_package = $request->Vivo_package;
@@ -3280,6 +3292,7 @@ class ProjectController extends Controller
         $data->Vivo_ads = $Vivo_ads;
         $data->Vivo_status = $request->Vivo_status;
         $data->Vivo_policy = $request->Vivo_policy;
+        $data->Vivo_sdk = $request->Vivo_sdk;
         $data->Vivo_keystore_profile = $request->Vivo_keystore_profile;
 
         $data->Huawei_package = $request->Huawei_package;
@@ -3291,6 +3304,7 @@ class ProjectController extends Controller
         $data->Huawei_ads = $Huawei_ads;
         $data->Huawei_status = $request->Huawei_status;
         $data->Huawei_policy = $request->Huawei_policy;
+        $data->Huawei_sdk = $request->Huawei_sdk;
         $data->Huawei_keystore_profile = $request->Huawei_keystore_profile;
         if($data->logo){
             if($data->projectname <> $request->projectname){
