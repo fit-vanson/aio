@@ -1336,98 +1336,135 @@ class ProjectController extends Controller
 
             $abc = '<p class="text-muted" style="line-height:0.5">'.$record->buildinfo_keystore. '   |   '.$record->buildinfo_vernum.'   |   '.$record->buildinfo_verstr.'</p>';
 
-            if(isset(json_decode($record->Chplay_ads,true)['ads_id'])
-                || isset(json_decode($record->Chplay_ads,true)['ads_banner'])
-                || isset(json_decode($record->Chplay_ads,true)['ads_inter'])
-                || isset(json_decode($record->Chplay_ads,true)['ads_native'])
-                || isset(json_decode($record->Chplay_ads,true)['ads_open'])
-                || isset(json_decode($record->Chplay_ads,true)['ads_reward'])
-                || isset(json_decode($record->Chplay_ads,true)['ads_start'])
-            ){
-                $package_chplay = '<p style="color:green;line-height:0.5">CH Play: '.$record->Chplay_package.'</p>';
-            }else{
-                $package_chplay = '<p style="color:red;line-height:0.5">CH Play: '.$record->Chplay_package.'</p>';
-            }
 
-            if(isset(json_decode($record->Amazon_ads,true)['ads_id'])
-                || isset(json_decode($record->Amazon_ads,true)['ads_banner'])
-                || isset(json_decode($record->Amazon_ads,true)['ads_inter'])
-                || isset(json_decode($record->Amazon_ads,true)['ads_native'])
-                || isset(json_decode($record->Amazon_ads,true)['ads_open'])
-                || isset(json_decode($record->Amazon_ads,true)['ads_reward'])
-                || isset(json_decode($record->Amazon_ads,true)['ads_start'])
-            ){
-                $package_amazon = '<p  style="color:green;line-height:0.5">Amazon: '.$record->Amazon_package.'</p>';
+            if($record->Chplay_package){
+                if(isset(json_decode($record->Chplay_ads,true)['ads_id'])
+                    || isset(json_decode($record->Chplay_ads,true)['ads_banner'])
+                    || isset(json_decode($record->Chplay_ads,true)['ads_inter'])
+                    || isset(json_decode($record->Chplay_ads,true)['ads_native'])
+                    || isset(json_decode($record->Chplay_ads,true)['ads_open'])
+                    || isset(json_decode($record->Chplay_ads,true)['ads_reward'])
+                    || isset(json_decode($record->Chplay_ads,true)['ads_start'])
+                ){
+                    $package_chplay = '<p style="color:green;line-height:0.5"><img src="img/icon/google.png"> '.$record->Chplay_package.'</p>';
+                }else{
+                    $package_chplay = '<p style="color:red;line-height:0.5"><img src="img/icon/google.png"> '.$record->Chplay_package.'</p>';
+                }
             }else{
-                $package_amazon = '<p style="color:red;line-height:0.5">Amazon: '.$record->Amazon_package.'</p>';
-            }
-
-            if(isset(json_decode($record->Samsung_ads,true)['ads_id'])
-                || isset(json_decode($record->Samsung_ads,true)['ads_banner'])
-                || isset(json_decode($record->Samsung_ads,true)['ads_inter'])
-                || isset(json_decode($record->Samsung_ads,true)['ads_native'])
-                || isset(json_decode($record->Samsung_ads,true)['ads_open'])
-                || isset(json_decode($record->Samsung_ads,true)['ads_reward'])
-                || isset(json_decode($record->Samsung_ads,true)['ads_start'])
-            ){
-                $package_samsung = '<p style="color:green;line-height:0.5">SamSung: '.$record->Samsung_package.'</p>';
-            }else{
-                $package_samsung = '<p style="color:red;line-height:0.5">SamSung: '.$record->Samsung_package.'</p>';
-            }
-
-            if(isset(json_decode($record->Xiaomi_ads,true)['ads_id'])
-                || isset(json_decode($record->Xiaomi_ads,true)['ads_banner'])
-                || isset(json_decode($record->Xiaomi_ads,true)['ads_inter'])
-                || isset(json_decode($record->Xiaomi_ads,true)['ads_native'])
-                || isset(json_decode($record->Xiaomi_ads,true)['ads_open'])
-                || isset(json_decode($record->Xiaomi_ads,true)['ads_reward'])
-                || isset(json_decode($record->Xiaomi_ads,true)['ads_start'])
-            ){
-                $package_xiaomi = '<p style="color:green;line-height:0.5">Xiaomi: '.$record->Xiaomi_package.'</p>';
-            }else{
-                $package_xiaomi = '<p style="color:red;line-height:0.5">Xiaomi: '.$record->Xiaomi_package.'</p>';
+                $package_chplay = '';
             }
 
 
-
-            if(isset(json_decode($record->Oppo_ads,true)['ads_id'])
-                || isset(json_decode($record->Oppo_ads,true)['ads_banner'])
-                || isset(json_decode($record->Oppo_ads,true)['ads_inter'])
-                || isset(json_decode($record->Oppo_ads,true)['ads_native'])
-                || isset(json_decode($record->Oppo_ads,true)['ads_open'])
-                || isset(json_decode($record->Oppo_ads,true)['ads_reward'])
-                || isset(json_decode($record->Oppo_ads,true)['ads_start'])
-            ){
-                $package_oppo = '<p style="color:green;line-height:0.5">Oppo: '.$record->Oppo_package.'</p>';
+            if ($record->Amazon_package){
+                if(isset(json_decode($record->Amazon_ads,true)['ads_id'])
+                    || isset(json_decode($record->Amazon_ads,true)['ads_banner'])
+                    || isset(json_decode($record->Amazon_ads,true)['ads_inter'])
+                    || isset(json_decode($record->Amazon_ads,true)['ads_native'])
+                    || isset(json_decode($record->Amazon_ads,true)['ads_open'])
+                    || isset(json_decode($record->Amazon_ads,true)['ads_reward'])
+                    || isset(json_decode($record->Amazon_ads,true)['ads_start'])
+                ){
+                    $package_amazon = '<p  style="color:green;line-height:0.5"><img src="img/icon/amazon.png"> '.$record->Amazon_package.'</p>';
+                }else{
+                    $package_amazon = '<p style="color:red;line-height:0.5"><img src="img/icon/amazon.png"> '.$record->Amazon_package.'</p>';
+                }
             }else{
-                $package_oppo = '<p style="color:red;line-height:0.5">Oppo: '.$record->Oppo_package.'</p>';
+                $package_amazon = '';
             }
 
-            if(isset(json_decode($record->Vivo_ads,true)['ads_id'])
-                || isset(json_decode($record->Vivo_ads,true)['ads_banner'])
-                || isset(json_decode($record->Vivo_ads,true)['ads_inter'])
-                || isset(json_decode($record->Vivo_ads,true)['ads_native'])
-                || isset(json_decode($record->Vivo_ads,true)['ads_open'])
-                || isset(json_decode($record->Vivo_ads,true)['ads_reward'])
-                || isset(json_decode($record->Vivo_ads,true)['ads_start'])
-            ){
-                $package_vivo = '<p style="color:green;line-height:0.5">Vivo: '.$record->Vivo_package.'</p>';
+
+            if ($record->Samsung_package){
+                if(isset(json_decode($record->Samsung_ads,true)['ads_id'])
+                    || isset(json_decode($record->Samsung_ads,true)['ads_banner'])
+                    || isset(json_decode($record->Samsung_ads,true)['ads_inter'])
+                    || isset(json_decode($record->Samsung_ads,true)['ads_native'])
+                    || isset(json_decode($record->Samsung_ads,true)['ads_open'])
+                    || isset(json_decode($record->Samsung_ads,true)['ads_reward'])
+                    || isset(json_decode($record->Samsung_ads,true)['ads_start'])
+                ){
+                    $package_samsung = '<p style="color:green;line-height:0.5"><img src="img/icon/samsung.png"> '.$record->Samsung_package.'</p>';
+                }else{
+                    $package_samsung = '<p style="color:red;line-height:0.5"><img src="img/icon/samsung.png"> '.$record->Samsung_package.'</p>';
+                }
             }else{
-                $package_vivo = '<p style="color:red;line-height:0.5">Vivo: '.$record->Vivo_package.'</p>';
+                $package_samsung ='';
             }
 
-            if(isset(json_decode($record->Huawei_ads,true)['ads_id'])
-                || isset(json_decode($record->Huawei_ads,true)['ads_banner'])
-                || isset(json_decode($record->Huawei_ads,true)['ads_inter'])
-                || isset(json_decode($record->Huawei_ads,true)['ads_native'])
-                || isset(json_decode($record->Huawei_ads,true)['ads_open'])
-                || isset(json_decode($record->Huawei_ads,true)['ads_reward'])
-                || isset(json_decode($record->Huawei_ads,true)['ads_start'])
-            ){
-                $package_Huawei = '<p style="color:green;line-height:0.5">Huawei: '.$record->Huawei_package.'</p>';
+
+            if ($record->Xiaomi_package){
+                if(isset(json_decode($record->Xiaomi_ads,true)['ads_id'])
+                    || isset(json_decode($record->Xiaomi_ads,true)['ads_banner'])
+                    || isset(json_decode($record->Xiaomi_ads,true)['ads_inter'])
+                    || isset(json_decode($record->Xiaomi_ads,true)['ads_native'])
+                    || isset(json_decode($record->Xiaomi_ads,true)['ads_open'])
+                    || isset(json_decode($record->Xiaomi_ads,true)['ads_reward'])
+                    || isset(json_decode($record->Xiaomi_ads,true)['ads_start'])
+                ){
+                    $package_xiaomi = '<p style="color:green;line-height:0.5"><img src="img/icon/xiaomi.png"> '.$record->Xiaomi_package.'</p>';
+                }else{
+                    $package_xiaomi = '<p style="color:red;line-height:0.5"><img src="img/icon/xiaomi.png"> '.$record->Xiaomi_package.'</p>';
+                }
             }else{
-                $package_Huawei = '<p style="color:red;line-height:0.5">Huawei: '.$record->Huawei_package.'</p>';
+                $package_xiaomi = '';
             }
+
+
+
+            if($record->Oppo_package){
+                if(isset(json_decode($record->Oppo_ads,true)['ads_id'])
+                    || isset(json_decode($record->Oppo_ads,true)['ads_banner'])
+                    || isset(json_decode($record->Oppo_ads,true)['ads_inter'])
+                    || isset(json_decode($record->Oppo_ads,true)['ads_native'])
+                    || isset(json_decode($record->Oppo_ads,true)['ads_open'])
+                    || isset(json_decode($record->Oppo_ads,true)['ads_reward'])
+                    || isset(json_decode($record->Oppo_ads,true)['ads_start'])
+                ){
+                    $package_oppo = '<p style="color:green;line-height:0.5"><img src="img/icon/oppo.png"> '.$record->Oppo_package.'</p>';
+                }else{
+                    $package_oppo = '<p style="color:red;line-height:0.5"><img src="img/icon/oppo.png"> '.$record->Oppo_package.'</p>';
+                }
+            }else{
+                $package_oppo ='';
+            }
+
+
+
+            if ($record->Vivo_package){
+                if(isset(json_decode($record->Vivo_ads,true)['ads_id'])
+                    || isset(json_decode($record->Vivo_ads,true)['ads_banner'])
+                    || isset(json_decode($record->Vivo_ads,true)['ads_inter'])
+                    || isset(json_decode($record->Vivo_ads,true)['ads_native'])
+                    || isset(json_decode($record->Vivo_ads,true)['ads_open'])
+                    || isset(json_decode($record->Vivo_ads,true)['ads_reward'])
+                    || isset(json_decode($record->Vivo_ads,true)['ads_start'])
+                ){
+                    $package_vivo = '<p style="color:green;line-height:0.5"><img src="img/icon/vivo.png"> '.$record->Vivo_package.'</p>';
+                }else{
+                    $package_vivo = '<p style="color:red;line-height:0.5"><img src="img/icon/vivo.png"> '.$record->Vivo_package.'</p>';
+                }
+            }else{
+                $package_vivo = '';
+            }
+
+
+            if($record->Huawei_package){
+                if(isset(json_decode($record->Huawei_ads,true)['ads_id'])
+                    || isset(json_decode($record->Huawei_ads,true)['ads_banner'])
+                    || isset(json_decode($record->Huawei_ads,true)['ads_inter'])
+                    || isset(json_decode($record->Huawei_ads,true)['ads_native'])
+                    || isset(json_decode($record->Huawei_ads,true)['ads_open'])
+                    || isset(json_decode($record->Huawei_ads,true)['ads_reward'])
+                    || isset(json_decode($record->Huawei_ads,true)['ads_start'])
+                ){
+                    $package_Huawei = '<p style="color:green;line-height:0.5"><img src="img/icon/huawei.png"> '.$record->Huawei_package.'</p>';
+                }else{
+                    $package_Huawei = '<p style="color:red;line-height:0.5"><img src="img/icon/huawei.png"> '.$record->Huawei_package.'</p>';
+                }
+            }else{
+                $package_Huawei = '';
+            }
+
+
 
 //
             if(isset($record->logo)){
