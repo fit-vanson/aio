@@ -843,11 +843,6 @@ class ProjectController extends Controller
             }else{
                 $policy_chplay = $policy_amazon = $policy_xiaomi = $policy_samsung = $policy_oppo = $policy_vivo = $policy_huawei = "";
             }
-
-
-
-
-
             if($record->Chplay_package){
                 if(isset(json_decode($record->Chplay_ads,true)['ads_id'])
                     || isset(json_decode($record->Chplay_ads,true)['ads_banner'])
@@ -1694,6 +1689,19 @@ class ProjectController extends Controller
                     $logo = $bot['logo'];
                     $logo = '<img class="rounded mx-auto d-block" width="100px" height="100px" src="'.$logo.'">';
                 }
+
+                $version_bot    = isset($bot['appVersion']) ? $bot['appVersion'] : 0;
+                $version_build  = $record->buildinfo_verstr;
+
+
+                if($version_bot == $version_build ){
+                    $version = 'Version: <span class="badge badge-success">'.$version_bot.'</span>';
+                }else{
+                    $version = 'Version Bot:  <span class="badge badge-danger">'.$version_bot.'</span> ' .  ' <br> Version Build:   <span class="badge badge-secondary">'.$version_build.'</span> ';
+                }
+
+
+
                 $data_arr[] = array(
                     "updated_at" => strtotime($record->updated_at),
                     "logo" => $logo,
@@ -1707,7 +1715,7 @@ class ProjectController extends Controller
                     "Chplay_bot->score" => isset($bot['score'])? number_format($bot['score'],2):0,
                     "buildinfo_mess" => $mess_info,
                     "full_mess" => $full_mess,
-                    "status" =>'Console: '.$buildinfo_console.'<br> Ứng dụng: '.$Chplay_status,
+                    "status" =>'Console: '.$buildinfo_console.'<br> Ứng dụng: '.$Chplay_status.'<br>'.$version. '<br> Time check: '.date('H:i:s   d-m-Y',$record->bot_timecheck),
                     "action"=> $btn .'  '. $check,
                 );
             }else{
