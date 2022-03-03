@@ -626,192 +626,6 @@ class ProjectController extends Controller
                 $data_title_app='';
             }
 
-            if($record->Chplay_package){
-                if(isset(json_decode($record->Chplay_ads,true)['ads_id'])
-                    || isset(json_decode($record->Chplay_ads,true)['ads_banner'])
-                    || isset(json_decode($record->Chplay_ads,true)['ads_inter'])
-                    || isset(json_decode($record->Chplay_ads,true)['ads_native'])
-                    || isset(json_decode($record->Chplay_ads,true)['ads_open'])
-                    || isset(json_decode($record->Chplay_ads,true)['ads_reward'])
-                    || isset(json_decode($record->Chplay_ads,true)['ads_start'])
-                ){
-                    if($record->Chplay_buildinfo_link_app){
-                        $package_chplay = '<a href="'.$record->Chplay_buildinfo_link_app.'" target="_blank"> <span id="package_chplay" style="color:green;line-height:0.5"><img src="img/icon/google.png"> '.$record->Chplay_package.'</span></a><button onclick="copyPackage(this)" type="button" data-text="'.$record->Chplay_package.'" class="btn btn-link waves-effect"><i class="mdi mdi-content-copy"></i></button><br>';
-                    }else{
-                        $package_chplay = '<span id="package_chplay" style="color:orange;line-height:0.5"><img src="img/icon/google.png"> '.$record->Chplay_package.'</span><button onclick="copyPackage(this)" type="button" data-text="'.$record->Chplay_package.'" class="btn btn-link waves-effect"><i class="mdi mdi-content-copy"></i></button><br>';
-                    }
-                }else{
-                    if($record->Chplay_buildinfo_link_app){
-                        $package_chplay = '<a href="'.$record->Chplay_buildinfo_link_app.'" target="_blank"> <span style="color:red;line-height:0.5"><img src="img/icon/google.png"> '.$record->Chplay_package.'</span></a> <button onclick="copyPackage(this)" type="button" data-text="'.$record->Chplay_package.'" class="btn btn-link waves-effect"><i class="mdi mdi-content-copy"></i></button><br>';
-                    }else{
-                        $package_chplay = '<span style="color:black;line-height:0.5"><img src="img/icon/google.png"> '.$record->Chplay_package.'</span> <button onclick="copyPackage(this)" type="button" data-text="'.$record->Chplay_package.'" class="btn btn-link waves-effect"><i class="mdi mdi-content-copy"></i></button><br>';
-                    }
-                }
-            }else{
-                $package_chplay = '';
-            }
-
-
-
-            if($record->Amazon_package){
-                if(isset(json_decode($record->Amazon_ads,true)['ads_id'])
-                    || isset(json_decode($record->Amazon_ads,true)['ads_banner'])
-                    || isset(json_decode($record->Amazon_ads,true)['ads_inter'])
-                    || isset(json_decode($record->Amazon_ads,true)['ads_native'])
-                    || isset(json_decode($record->Amazon_ads,true)['ads_open'])
-                    || isset(json_decode($record->Amazon_ads,true)['ads_reward'])
-                    || isset(json_decode($record->Amazon_ads,true)['ads_start'])
-                ){
-                    if($record->Amazon_buildinfo_link_app){
-                        $package_amazon = '<a href="'.$record->Amazon_buildinfo_link_app.'" target="_blank"><span  style="color:green;line-height:0.5"><img src="img/icon/amazon.png"> '.$record->Amazon_package.'</span></a><button onclick="copyPackage(this)" type="button" data-text="'.$record->Amazon_package.'" class="btn btn-link waves-effect"><i class="mdi mdi-content-copy"></i></button><br>';
-                    }else{
-                        $package_amazon = '<span style="color:orange;line-height:0.5"><img src="img/icon/amazon.png"> '.$record->Amazon_package.'</span><button onclick="copyPackage(this)" type="button" data-text="'.$record->Amazon_package.'" class="btn btn-link waves-effect"><i class="mdi mdi-content-copy"></i></button><br>';
-                    }
-
-                }else{
-
-                    if($record->Amazon_buildinfo_link_app){
-                        $package_amazon = '<a href="'.$record->Amazon_buildinfo_link_app.'" target="_blank"><span  style="color:red;line-height:0.5"><img src="img/icon/amazon.png">'.$record->Amazon_package.'</span></a><button onclick="copyPackage(this)" type="button" data-text="'.$record->Amazon_package.'" class="btn btn-link waves-effect"><i class="mdi mdi-content-copy"></i></button><br>';
-                    }else{
-                        $package_amazon = '<span style="color:black;line-height:0.5"><img src="img/icon/amazon.png"> '.$record->Amazon_package.'</span><button onclick="copyPackage(this)" type="button" data-text="'.$record->Amazon_package.'" class="btn btn-link waves-effect"><i class="mdi mdi-content-copy"></i></button><br>';
-                    }
-                }
-            }else{
-                $package_amazon = '';
-            }
-
-
-            if($record->Samsung_package){
-                if(isset(json_decode($record->Samsung_ads,true)['ads_id'])
-                    || isset(json_decode($record->Samsung_ads,true)['ads_banner'])
-                    || isset(json_decode($record->Samsung_ads,true)['ads_inter'])
-                    || isset(json_decode($record->Samsung_ads,true)['ads_native'])
-                    || isset(json_decode($record->Samsung_ads,true)['ads_open'])
-                    || isset(json_decode($record->Samsung_ads,true)['ads_reward'])
-                    || isset(json_decode($record->Samsung_ads,true)['ads_start'])
-                ){
-                    if($record->Samsung_buildinfo_link_app){
-                        $package_samsung = '<a href="'.$record->Samsung_buildinfo_link_app.'" target="_blank"><span  style="color:green;line-height:0.5"><img src="img/icon/samsung.png"> '.$record->Samsung_package.'</span></a><button onclick="copyPackage(this)" type="button" data-text="'.$record->Samsung_package.'" class="btn btn-link waves-effect"><i class="mdi mdi-content-copy"></i></button><br>';
-                    }else{
-                        $package_samsung = '<span style="color:orange;line-height:0.5"><img src="img/icon/samsung.png"> '.$record->Samsung_package.'</span><button onclick="copyPackage(this)" type="button" data-text="'.$record->Samsung_package.'" class="btn btn-link waves-effect"><i class="mdi mdi-content-copy"></i></button><br>';
-                    }
-                }else{
-                    if($record->Samsung_buildinfo_link_app){
-                        $package_samsung = '<a href="'.$record->Samsung_buildinfo_link_app.'" target="_blank"><span style="color:red;line-height:0.5"><img src="img/icon/samsung.png"> '.$record->Samsung_package.'</span></a><button onclick="copyPackage(this)" type="button" data-text="'.$record->Samsung_package.'" class="btn btn-link waves-effect"><i class="mdi mdi-content-copy"></i></button><br>';
-                    }else{
-                        $package_samsung = '<span style="color:black;line-height:0.5"><img src="img/icon/samsung.png"> '.$record->Samsung_package.'</span><button onclick="copyPackage(this)" type="button" data-text="'.$record->Samsung_package.'" class="btn btn-link waves-effect"><i class="mdi mdi-content-copy"></i></button><br>';
-                    }
-                }
-            }else{
-                $package_samsung = '';
-            }
-
-
-            if ($record->Xiaomi_package){
-                if(isset(json_decode($record->Xiaomi_ads,true)['ads_id'])
-                    || isset(json_decode($record->Xiaomi_ads,true)['ads_banner'])
-                    || isset(json_decode($record->Xiaomi_ads,true)['ads_inter'])
-                    || isset(json_decode($record->Xiaomi_ads,true)['ads_native'])
-                    || isset(json_decode($record->Xiaomi_ads,true)['ads_open'])
-                    || isset(json_decode($record->Xiaomi_ads,true)['ads_reward'])
-                    || isset(json_decode($record->Xiaomi_ads,true)['ads_start'])
-                ){
-                    if($record->Xiaomi_buildinfo_link_app){
-                        $package_xiaomi = '<a href="'.$record->Xiaomi_buildinfo_link_app.'" target="_blank"><span style="color:green;line-height:0.5"><img src="img/icon/xiaomi.png"> '.$record->Xiaomi_package.'</span></a><button onclick="copyPackage(this)" type="button" data-text="'.$record->Xiaomi_package.'" class="btn btn-link waves-effect"><i class="mdi mdi-content-copy"></i></button><br>';
-                    }else{
-                        $package_xiaomi = '<span style="color:orange;line-height:0.5"><img src="img/icon/xiaomi.png"> '.$record->Xiaomi_package.'</span><button onclick="copyPackage(this)" type="button" data-text="'.$record->Xiaomi_package.'" class="btn btn-link waves-effect"><i class="mdi mdi-content-copy"></i></button><br>';
-                    }
-                }else {
-                    if ($record->Xiaomi_buildinfo_link_app) {
-                        $package_xiaomi = '<a href="' . $record->Xiaomi_buildinfo_link_app . '" target="_blank"><span style="color:red;line-height:0.5"><img src="img/icon/xiaomi.png"> ' . $record->Xiaomi_package . '</span></a><button onclick="copyPackage(this)" type="button" data-text="'.$record->Xiaomi_package.'" class="btn btn-link waves-effect"><i class="mdi mdi-content-copy"></i></button><br>';
-                    } else {
-                        $package_xiaomi = '<span style="color:black;line-height:0.5"><img src="img/icon/xiaomi.png"> ' . $record->Xiaomi_package . '</span><button onclick="copyPackage(this)" type="button" data-text="'.$record->Xiaomi_package.'" class="btn btn-link waves-effect"><i class="mdi mdi-content-copy"></i></button><br>';
-                    }
-                }
-            }else{
-                $package_xiaomi = '';
-            }
-
-
-            if($record->Oppo_package){
-                if(isset(json_decode($record->Oppo_ads,true)['ads_id'])
-                    || isset(json_decode($record->Oppo_ads,true)['ads_banner'])
-                    || isset(json_decode($record->Oppo_ads,true)['ads_inter'])
-                    || isset(json_decode($record->Oppo_ads,true)['ads_native'])
-                    || isset(json_decode($record->Oppo_ads,true)['ads_open'])
-                    || isset(json_decode($record->Oppo_ads,true)['ads_reward'])
-                    || isset(json_decode($record->Oppo_ads,true)['ads_start'])
-                ){
-                    if($record->Oppo_buildinfo_link_app){
-                        $package_oppo = '<a href="'.$record->Oppo_buildinfo_link_app.'" target="_blank"><span style="color:green;line-height:0.5"><img src="img/icon/oppo.png"> '.$record->Oppo_package.'</span></a><button onclick="copyPackage(this)" type="button" data-text="'.$record->Oppo_package.'" class="btn btn-link waves-effect"><i class="mdi mdi-content-copy"></i></button><br>';
-                    }else{
-                        $package_oppo = '<span style="color:orange;line-height:0.5"><img src="img/icon/oppo.png"> '.$record->Oppo_package.'</span><button onclick="copyPackage(this)" type="button" data-text="'.$record->Oppo_package.'" class="btn btn-link waves-effect"><i class="mdi mdi-content-copy"></i></button><br>';
-                    }
-                }else {
-                    if ($record->Oppo_buildinfo_link_app) {
-                        $package_oppo = '<a href="' . $record->Oppo_buildinfo_link_app . '" target="_blank"><span style="color:red;line-height:0.5"><img src="img/icon/oppo.png"> ' . $record->Oppo_package . '</span></a><button onclick="copyPackage(this)" type="button" data-text="'.$record->Oppo_package.'" class="btn btn-link waves-effect"><i class="mdi mdi-content-copy"></i></button><br>';
-                    } else {
-                        $package_oppo = '<span style="color:black;line-height:0.5"><img src="img/icon/oppo.png"> ' . $record->Oppo_package . '</span><button onclick="copyPackage(this)" type="button" data-text="'.$record->Oppo_package.'" class="btn btn-link waves-effect"><i class="mdi mdi-content-copy"></i></button><br>';
-                    }
-                }
-            }else{
-                $package_oppo = '';
-            }
-
-
-
-            if($record->Vivo_package){
-                if(isset(json_decode($record->Vivo_ads,true)['ads_id'])
-                    || isset(json_decode($record->Vivo_ads,true)['ads_banner'])
-                    || isset(json_decode($record->Vivo_ads,true)['ads_inter'])
-                    || isset(json_decode($record->Vivo_ads,true)['ads_native'])
-                    || isset(json_decode($record->Vivo_ads,true)['ads_open'])
-                    || isset(json_decode($record->Vivo_ads,true)['ads_reward'])
-                    || isset(json_decode($record->Vivo_ads,true)['ads_start'])
-                ){
-                    if($record->Vivo_buildinfo_link_app){
-                        $package_vivo = '<a href="'.$record->Vivo_buildinfo_link_app.'" target="_blank"><span style="color:green;line-height:0.5"><img src="img/icon/vivo.png"> '.$record->Vivo_package.'</span></a><button onclick="copyPackage(this)" type="button" data-text="'.$record->Vivo_package.'" class="btn btn-link waves-effect"><i class="mdi mdi-content-copy"></i></button><br>';
-                    }else{
-                        $package_vivo = '<span style="color:orange;line-height:0.5"><img src="img/icon/vivo.png"> '.$record->Vivo_package.'</span><button onclick="copyPackage(this)" type="button" data-text="'.$record->Vivo_package.'" class="btn btn-link waves-effect"><i class="mdi mdi-content-copy"></i></button><br>';
-                    }
-
-                }else{
-
-                    if ($record->Vivo_buildinfo_link_app) {
-                        $package_vivo = '<a href="' . $record->Vivo_buildinfo_link_app . '" target="_blank"><span style="color:red;line-height:0.5"><img src="img/icon/vivo.png"> ' . $record->Vivo_package . '</span></a><button onclick="copyPackage(this)" type="button" data-text="'.$record->Vivo_package.'" class="btn btn-link waves-effect"><i class="mdi mdi-content-copy"></i></button><br>';
-                    } else {
-                        $package_vivo = '<span style="color:black;line-height:0.5"><img src="img/icon/vivo.png"> ' . $record->Vivo_package . '</span><button onclick="copyPackage(this)" type="button" data-text="'.$record->Vivo_package.'" class="btn btn-link waves-effect"><i class="mdi mdi-content-copy"></i></button><br>';
-                    }
-                }
-            }else{
-                $package_vivo = '';
-            }
-
-            if($record->Huawei_package){
-                if(isset(json_decode($record->Huawei_ads,true)['ads_id'])
-                    || isset(json_decode($record->Huawei_ads,true)['ads_banner'])
-                    || isset(json_decode($record->Huawei_ads,true)['ads_inter'])
-                    || isset(json_decode($record->Huawei_ads,true)['ads_native'])
-                    || isset(json_decode($record->Huawei_ads,true)['ads_open'])
-                    || isset(json_decode($record->Huawei_ads,true)['ads_reward'])
-                    || isset(json_decode($record->Huawei_ads,true)['ads_start'])
-                ){
-                    if($record->Huawei_buildinfo_link_app){
-                        $package_Huawei = '<a href="'.$record->Huawei_buildinfo_link_app.'" target="_blank"><span style="color:green;line-height:0.5"><img src="img/icon/huawei.png"> '.$record->Huawei_package.'</span></a><button onclick="copyPackage(this)" type="button" data-text="'.$record->Huawei_package.'" class="btn btn-link waves-effect"><i class="mdi mdi-content-copy"></i></button><br>';
-                    }else{
-                        $package_Huawei = '<span style="color:orange;line-height:0.5"><img src="img/icon/huawei.png"> ' .$record->Huawei_package.'</span><button onclick="copyPackage(this)" type="button" data-text="'.$record->Huawei_package.'" class="btn btn-link waves-effect"><i class="mdi mdi-content-copy"></i></button><br>';
-                    }
-
-                }else{
-                    if ($record->Huawei_buildinfo_link_app) {
-                        $package_Huawei = '<a href="' . $record->Huawei_buildinfo_link_app . '" target="_blank"><span style="color:red;line-height:0.5"><img src="img/icon/huawei.png"> ' . $record->Huawei_package . '</span></a><button onclick="copyPackage(this)" type="button" data-text="'.$record->Huawei_package.'" class="btn btn-link waves-effect"><i class="mdi mdi-content-copy"></i></button><br>';
-                    } else {
-                        $package_Huawei = '<span style="color:black;line-height:0.5"><img src="img/icon/huawei.png"> ' . $record->Huawei_package . '</span><button onclick="copyPackage(this)" type="button" data-text="'.$record->Huawei_package.'" class="btn btn-link waves-effect"><i class="mdi mdi-content-copy"></i></button><br>';
-                    }
-                }
-            }else{
-                $package_Huawei = '';
-            }
 
             if ($record['Chplay_status']==0  ) {
                 $Chplay_status = '<span class="badge badge-secondary">Mặc định</span>';
@@ -1029,15 +843,212 @@ class ProjectController extends Controller
             }else{
                 $policy_chplay = $policy_amazon = $policy_xiaomi = $policy_samsung = $policy_oppo = $policy_vivo = $policy_huawei = "";
             }
-            $status =
 
-                '<span style="line-height:2.5">'.$Chplay_policy.'&nbsp;<img src="img/icon/google.png"> '.$policy_chplay.' '.$Chplay_status.' '. '<span class="badge badge-info">'.$dev_name_chplay.'</span>'.' '. '<span class="badge badge-warning">'.$ga_name_chplay.'</span></span>'.
-                '<br>'.'<span style="line-height:2.5">'.$Amazon_policy.'&nbsp;<img src="img/icon/amazon.png"> '.$policy_amazon.' '.$Amazon_status.' '. '<span class="badge badge-info">'.$dev_name_amazon.'</span>'.' '. '<span class="badge badge-warning">'.$ga_name_amazon.'</span></span>'.
-                '<br>'.'<span style="line-height:2.5">'.$Samsung_policy.'&nbsp;<img src="img/icon/samsung.png"> '.$policy_samsung.' '.$Samsung_status.' '. '<span class="badge badge-info">'.$dev_name_samsung.'</span>'.' '. '<span class="badge badge-warning">'.$ga_name_samsung.'</span></span>'.
-                '<br>'.'<span style="line-height:2.5">'.$Xiaomi_policy.'&nbsp;<img src="img/icon/xiaomi.png"> '.$policy_xiaomi.' '.$Xiaomi_status.' '. '<span class="badge badge-info">'.$dev_name_xiaomi.'</span>'.' '. '<span class="badge badge-warning">'.$ga_name_xiaomi.'</span></span>'.
-                '<br>'.'<span style="line-height:2.5">'.$Oppo_policy.'&nbsp;<img src="img/icon/oppo.png"> '.$policy_oppo.' '.$Oppo_status.' '. '<span class="badge badge-info">'.$dev_name_oppo.'</span>'.' '. '<span class="badge badge-warning">'.$ga_name_oppo.'</span></span>'.
-                '<br>'.'<span style="line-height:2.5">'.$Vivo_policy.'&nbsp;<img src="img/icon/vivo.png"> '.$policy_vivo.' '.$Vivo_status.' '. '<span class="badge badge-info">'.$dev_name_vivo.'</span>'.' '. '<span class="badge badge-warning">'.$ga_name_vivo.'</span></span>'.
-                '<br>'.'<span style="line-height:2.5">'.$Huawei_policy.'&nbsp;<img src="img/icon/huawei.png"> '.$policy_huawei.' '.$Huawei_status.' '. '<span class="badge badge-info">'.$dev_name_huawei.'</span>'.' '. '<span class="badge badge-warning">'.$ga_name_huawei.'</span></span>';
+
+
+
+
+            if($record->Chplay_package){
+                if(isset(json_decode($record->Chplay_ads,true)['ads_id'])
+                    || isset(json_decode($record->Chplay_ads,true)['ads_banner'])
+                    || isset(json_decode($record->Chplay_ads,true)['ads_inter'])
+                    || isset(json_decode($record->Chplay_ads,true)['ads_native'])
+                    || isset(json_decode($record->Chplay_ads,true)['ads_open'])
+                    || isset(json_decode($record->Chplay_ads,true)['ads_reward'])
+                    || isset(json_decode($record->Chplay_ads,true)['ads_start'])
+                ){
+                    if($record->Chplay_buildinfo_link_app){
+                        $package_chplay = '<a href="'.$record->Chplay_buildinfo_link_app.'" target="_blank"> <span id="package_chplay" style="color:green;line-height:0.5"><img src="img/icon/google.png"> '.$record->Chplay_package.'</span></a><button onclick="copyPackage(this)" type="button" data-text="'.$record->Chplay_package.'" class="btn btn-link waves-effect"><i class="mdi mdi-content-copy"></i></button><br>';
+                    }else{
+                        $package_chplay = '<span id="package_chplay" style="color:orange;line-height:0.5"><img src="img/icon/google.png"> '.$record->Chplay_package.'</span><button onclick="copyPackage(this)" type="button" data-text="'.$record->Chplay_package.'" class="btn btn-link waves-effect"><i class="mdi mdi-content-copy"></i></button><br>';
+                    }
+                }else{
+                    if($record->Chplay_buildinfo_link_app){
+                        $package_chplay = '<a href="'.$record->Chplay_buildinfo_link_app.'" target="_blank"> <span style="color:red;line-height:0.5"><img src="img/icon/google.png"> '.$record->Chplay_package.'</span></a> <button onclick="copyPackage(this)" type="button" data-text="'.$record->Chplay_package.'" class="btn btn-link waves-effect"><i class="mdi mdi-content-copy"></i></button><br>';
+                    }else{
+                        $package_chplay = '<span style="color:black;line-height:0.5"><img src="img/icon/google.png"> '.$record->Chplay_package.'</span> <button onclick="copyPackage(this)" type="button" data-text="'.$record->Chplay_package.'" class="btn btn-link waves-effect"><i class="mdi mdi-content-copy"></i></button><br>';
+                    }
+                }
+
+                $statusChplay  =  '<span style="line-height:2.5">'.$Chplay_policy.'&nbsp;<img src="img/icon/google.png"> '.$policy_chplay.' '.$Chplay_status.' '. '<span class="badge badge-info">'.$dev_name_chplay.'</span>'.' '. '<span class="badge badge-warning">'.$ga_name_chplay.'</span></span>';
+
+            }else{
+                $package_chplay = $statusChplay = '';
+            }
+
+            if($record->Amazon_package){
+                if(isset(json_decode($record->Amazon_ads,true)['ads_id'])
+                    || isset(json_decode($record->Amazon_ads,true)['ads_banner'])
+                    || isset(json_decode($record->Amazon_ads,true)['ads_inter'])
+                    || isset(json_decode($record->Amazon_ads,true)['ads_native'])
+                    || isset(json_decode($record->Amazon_ads,true)['ads_open'])
+                    || isset(json_decode($record->Amazon_ads,true)['ads_reward'])
+                    || isset(json_decode($record->Amazon_ads,true)['ads_start'])
+                ){
+                    if($record->Amazon_buildinfo_link_app){
+                        $package_amazon = '<a href="'.$record->Amazon_buildinfo_link_app.'" target="_blank"><span  style="color:green;line-height:0.5"><img src="img/icon/amazon.png"> '.$record->Amazon_package.'</span></a><button onclick="copyPackage(this)" type="button" data-text="'.$record->Amazon_package.'" class="btn btn-link waves-effect"><i class="mdi mdi-content-copy"></i></button><br>';
+                    }else{
+                        $package_amazon = '<span style="color:orange;line-height:0.5"><img src="img/icon/amazon.png"> '.$record->Amazon_package.'</span><button onclick="copyPackage(this)" type="button" data-text="'.$record->Amazon_package.'" class="btn btn-link waves-effect"><i class="mdi mdi-content-copy"></i></button><br>';
+                    }
+
+                }else{
+
+                    if($record->Amazon_buildinfo_link_app){
+                        $package_amazon = '<a href="'.$record->Amazon_buildinfo_link_app.'" target="_blank"><span  style="color:red;line-height:0.5"><img src="img/icon/amazon.png">'.$record->Amazon_package.'</span></a><button onclick="copyPackage(this)" type="button" data-text="'.$record->Amazon_package.'" class="btn btn-link waves-effect"><i class="mdi mdi-content-copy"></i></button><br>';
+                    }else{
+                        $package_amazon = '<span style="color:black;line-height:0.5"><img src="img/icon/amazon.png"> '.$record->Amazon_package.'</span><button onclick="copyPackage(this)" type="button" data-text="'.$record->Amazon_package.'" class="btn btn-link waves-effect"><i class="mdi mdi-content-copy"></i></button><br>';
+                    }
+                }
+
+                $statusAmazon = '<br>'.'<span style="line-height:2.5">'.$Amazon_policy.'&nbsp;<img src="img/icon/amazon.png"> '.$policy_amazon.' '.$Amazon_status.' '. '<span class="badge badge-info">'.$dev_name_amazon.'</span>'.' '. '<span class="badge badge-warning">'.$ga_name_amazon.'</span></span>';
+            }else{
+                $package_amazon = $statusAmazon= '';
+            }
+
+            if($record->Samsung_package){
+                if(isset(json_decode($record->Samsung_ads,true)['ads_id'])
+                    || isset(json_decode($record->Samsung_ads,true)['ads_banner'])
+                    || isset(json_decode($record->Samsung_ads,true)['ads_inter'])
+                    || isset(json_decode($record->Samsung_ads,true)['ads_native'])
+                    || isset(json_decode($record->Samsung_ads,true)['ads_open'])
+                    || isset(json_decode($record->Samsung_ads,true)['ads_reward'])
+                    || isset(json_decode($record->Samsung_ads,true)['ads_start'])
+                ){
+                    if($record->Samsung_buildinfo_link_app){
+                        $package_samsung = '<a href="'.$record->Samsung_buildinfo_link_app.'" target="_blank"><span  style="color:green;line-height:0.5"><img src="img/icon/samsung.png"> '.$record->Samsung_package.'</span></a><button onclick="copyPackage(this)" type="button" data-text="'.$record->Samsung_package.'" class="btn btn-link waves-effect"><i class="mdi mdi-content-copy"></i></button><br>';
+                    }else{
+                        $package_samsung = '<span style="color:orange;line-height:0.5"><img src="img/icon/samsung.png"> '.$record->Samsung_package.'</span><button onclick="copyPackage(this)" type="button" data-text="'.$record->Samsung_package.'" class="btn btn-link waves-effect"><i class="mdi mdi-content-copy"></i></button><br>';
+                    }
+                }else{
+                    if($record->Samsung_buildinfo_link_app){
+                        $package_samsung = '<a href="'.$record->Samsung_buildinfo_link_app.'" target="_blank"><span style="color:red;line-height:0.5"><img src="img/icon/samsung.png"> '.$record->Samsung_package.'</span></a><button onclick="copyPackage(this)" type="button" data-text="'.$record->Samsung_package.'" class="btn btn-link waves-effect"><i class="mdi mdi-content-copy"></i></button><br>';
+                    }else{
+                        $package_samsung = '<span style="color:black;line-height:0.5"><img src="img/icon/samsung.png"> '.$record->Samsung_package.'</span><button onclick="copyPackage(this)" type="button" data-text="'.$record->Samsung_package.'" class="btn btn-link waves-effect"><i class="mdi mdi-content-copy"></i></button><br>';
+                    }
+                }
+
+                $statusSamsung =  '<br>'.'<span style="line-height:2.5">'.$Samsung_policy.'&nbsp;<img src="img/icon/samsung.png"> '.$policy_samsung.' '.$Samsung_status.' '. '<span class="badge badge-info">'.$dev_name_samsung.'</span>'.' '. '<span class="badge badge-warning">'.$ga_name_samsung.'</span></span>';
+            }else{
+                $package_samsung = $statusSamsung = '';
+            }
+
+            if ($record->Xiaomi_package){
+                if(isset(json_decode($record->Xiaomi_ads,true)['ads_id'])
+                    || isset(json_decode($record->Xiaomi_ads,true)['ads_banner'])
+                    || isset(json_decode($record->Xiaomi_ads,true)['ads_inter'])
+                    || isset(json_decode($record->Xiaomi_ads,true)['ads_native'])
+                    || isset(json_decode($record->Xiaomi_ads,true)['ads_open'])
+                    || isset(json_decode($record->Xiaomi_ads,true)['ads_reward'])
+                    || isset(json_decode($record->Xiaomi_ads,true)['ads_start'])
+                ){
+                    if($record->Xiaomi_buildinfo_link_app){
+                        $package_xiaomi = '<a href="'.$record->Xiaomi_buildinfo_link_app.'" target="_blank"><span style="color:green;line-height:0.5"><img src="img/icon/xiaomi.png"> '.$record->Xiaomi_package.'</span></a><button onclick="copyPackage(this)" type="button" data-text="'.$record->Xiaomi_package.'" class="btn btn-link waves-effect"><i class="mdi mdi-content-copy"></i></button><br>';
+                    }else{
+                        $package_xiaomi = '<span style="color:orange;line-height:0.5"><img src="img/icon/xiaomi.png"> '.$record->Xiaomi_package.'</span><button onclick="copyPackage(this)" type="button" data-text="'.$record->Xiaomi_package.'" class="btn btn-link waves-effect"><i class="mdi mdi-content-copy"></i></button><br>';
+                    }
+                }else {
+                    if ($record->Xiaomi_buildinfo_link_app) {
+                        $package_xiaomi = '<a href="' . $record->Xiaomi_buildinfo_link_app . '" target="_blank"><span style="color:red;line-height:0.5"><img src="img/icon/xiaomi.png"> ' . $record->Xiaomi_package . '</span></a><button onclick="copyPackage(this)" type="button" data-text="'.$record->Xiaomi_package.'" class="btn btn-link waves-effect"><i class="mdi mdi-content-copy"></i></button><br>';
+                    } else {
+                        $package_xiaomi = '<span style="color:black;line-height:0.5"><img src="img/icon/xiaomi.png"> ' . $record->Xiaomi_package . '</span><button onclick="copyPackage(this)" type="button" data-text="'.$record->Xiaomi_package.'" class="btn btn-link waves-effect"><i class="mdi mdi-content-copy"></i></button><br>';
+                    }
+                }
+
+                $statusXiaomi =  '<br>'.'<span style="line-height:2.5">'.$Xiaomi_policy.'&nbsp;<img src="img/icon/xiaomi.png"> '.$policy_xiaomi.' '.$Xiaomi_status.' '. '<span class="badge badge-info">'.$dev_name_xiaomi.'</span>'.' '. '<span class="badge badge-warning">'.$ga_name_xiaomi.'</span></span>';
+            }else{
+                $package_xiaomi = $statusXiaomi = '';
+            }
+
+            if($record->Oppo_package){
+                if(isset(json_decode($record->Oppo_ads,true)['ads_id'])
+                    || isset(json_decode($record->Oppo_ads,true)['ads_banner'])
+                    || isset(json_decode($record->Oppo_ads,true)['ads_inter'])
+                    || isset(json_decode($record->Oppo_ads,true)['ads_native'])
+                    || isset(json_decode($record->Oppo_ads,true)['ads_open'])
+                    || isset(json_decode($record->Oppo_ads,true)['ads_reward'])
+                    || isset(json_decode($record->Oppo_ads,true)['ads_start'])
+                ){
+                    if($record->Oppo_buildinfo_link_app){
+                        $package_oppo = '<a href="'.$record->Oppo_buildinfo_link_app.'" target="_blank"><span style="color:green;line-height:0.5"><img src="img/icon/oppo.png"> '.$record->Oppo_package.'</span></a><button onclick="copyPackage(this)" type="button" data-text="'.$record->Oppo_package.'" class="btn btn-link waves-effect"><i class="mdi mdi-content-copy"></i></button><br>';
+                    }else{
+                        $package_oppo = '<span style="color:orange;line-height:0.5"><img src="img/icon/oppo.png"> '.$record->Oppo_package.'</span><button onclick="copyPackage(this)" type="button" data-text="'.$record->Oppo_package.'" class="btn btn-link waves-effect"><i class="mdi mdi-content-copy"></i></button><br>';
+                    }
+                }else {
+                    if ($record->Oppo_buildinfo_link_app) {
+                        $package_oppo = '<a href="' . $record->Oppo_buildinfo_link_app . '" target="_blank"><span style="color:red;line-height:0.5"><img src="img/icon/oppo.png"> ' . $record->Oppo_package . '</span></a><button onclick="copyPackage(this)" type="button" data-text="'.$record->Oppo_package.'" class="btn btn-link waves-effect"><i class="mdi mdi-content-copy"></i></button><br>';
+                    } else {
+                        $package_oppo = '<span style="color:black;line-height:0.5"><img src="img/icon/oppo.png"> ' . $record->Oppo_package . '</span><button onclick="copyPackage(this)" type="button" data-text="'.$record->Oppo_package.'" class="btn btn-link waves-effect"><i class="mdi mdi-content-copy"></i></button><br>';
+                    }
+                }
+
+                $statusOppo = '<br>'.'<span style="line-height:2.5">'.$Oppo_policy.'&nbsp;<img src="img/icon/oppo.png"> '.$policy_oppo.' '.$Oppo_status.' '. '<span class="badge badge-info">'.$dev_name_oppo.'</span>'.' '. '<span class="badge badge-warning">'.$ga_name_oppo.'</span></span>';
+            }else{
+                $package_oppo = $statusOppo = '';
+            }
+
+            if($record->Vivo_package){
+                if(isset(json_decode($record->Vivo_ads,true)['ads_id'])
+                    || isset(json_decode($record->Vivo_ads,true)['ads_banner'])
+                    || isset(json_decode($record->Vivo_ads,true)['ads_inter'])
+                    || isset(json_decode($record->Vivo_ads,true)['ads_native'])
+                    || isset(json_decode($record->Vivo_ads,true)['ads_open'])
+                    || isset(json_decode($record->Vivo_ads,true)['ads_reward'])
+                    || isset(json_decode($record->Vivo_ads,true)['ads_start'])
+                ){
+                    if($record->Vivo_buildinfo_link_app){
+                        $package_vivo = '<a href="'.$record->Vivo_buildinfo_link_app.'" target="_blank"><span style="color:green;line-height:0.5"><img src="img/icon/vivo.png"> '.$record->Vivo_package.'</span></a><button onclick="copyPackage(this)" type="button" data-text="'.$record->Vivo_package.'" class="btn btn-link waves-effect"><i class="mdi mdi-content-copy"></i></button><br>';
+                    }else{
+                        $package_vivo = '<span style="color:orange;line-height:0.5"><img src="img/icon/vivo.png"> '.$record->Vivo_package.'</span><button onclick="copyPackage(this)" type="button" data-text="'.$record->Vivo_package.'" class="btn btn-link waves-effect"><i class="mdi mdi-content-copy"></i></button><br>';
+                    }
+
+                }else{
+
+                    if ($record->Vivo_buildinfo_link_app) {
+                        $package_vivo = '<a href="' . $record->Vivo_buildinfo_link_app . '" target="_blank"><span style="color:red;line-height:0.5"><img src="img/icon/vivo.png"> ' . $record->Vivo_package . '</span></a><button onclick="copyPackage(this)" type="button" data-text="'.$record->Vivo_package.'" class="btn btn-link waves-effect"><i class="mdi mdi-content-copy"></i></button><br>';
+                    } else {
+                        $package_vivo = '<span style="color:black;line-height:0.5"><img src="img/icon/vivo.png"> ' . $record->Vivo_package . '</span><button onclick="copyPackage(this)" type="button" data-text="'.$record->Vivo_package.'" class="btn btn-link waves-effect"><i class="mdi mdi-content-copy"></i></button><br>';
+                    }
+                }
+
+                $statusVivo =  '<br>'.'<span style="line-height:2.5">'.$Vivo_policy.'&nbsp;<img src="img/icon/vivo.png"> '.$policy_vivo.' '.$Vivo_status.' '. '<span class="badge badge-info">'.$dev_name_vivo.'</span>'.' '. '<span class="badge badge-warning">'.$ga_name_vivo.'</span></span>';
+            }else{
+                $package_vivo =  $statusVivo = '';
+            }
+
+            if($record->Huawei_package){
+                if(isset(json_decode($record->Huawei_ads,true)['ads_id'])
+                    || isset(json_decode($record->Huawei_ads,true)['ads_banner'])
+                    || isset(json_decode($record->Huawei_ads,true)['ads_inter'])
+                    || isset(json_decode($record->Huawei_ads,true)['ads_native'])
+                    || isset(json_decode($record->Huawei_ads,true)['ads_open'])
+                    || isset(json_decode($record->Huawei_ads,true)['ads_reward'])
+                    || isset(json_decode($record->Huawei_ads,true)['ads_start'])
+                ){
+                    if($record->Huawei_buildinfo_link_app){
+                        $package_Huawei = '<a href="'.$record->Huawei_buildinfo_link_app.'" target="_blank"><span style="color:green;line-height:0.5"><img src="img/icon/huawei.png"> '.$record->Huawei_package.'</span></a><button onclick="copyPackage(this)" type="button" data-text="'.$record->Huawei_package.'" class="btn btn-link waves-effect"><i class="mdi mdi-content-copy"></i></button><br>';
+                    }else{
+                        $package_Huawei = '<span style="color:orange;line-height:0.5"><img src="img/icon/huawei.png"> ' .$record->Huawei_package.'</span><button onclick="copyPackage(this)" type="button" data-text="'.$record->Huawei_package.'" class="btn btn-link waves-effect"><i class="mdi mdi-content-copy"></i></button><br>';
+                    }
+
+                }else{
+                    if ($record->Huawei_buildinfo_link_app) {
+                        $package_Huawei = '<a href="' . $record->Huawei_buildinfo_link_app . '" target="_blank"><span style="color:red;line-height:0.5"><img src="img/icon/huawei.png"> ' . $record->Huawei_package . '</span></a><button onclick="copyPackage(this)" type="button" data-text="'.$record->Huawei_package.'" class="btn btn-link waves-effect"><i class="mdi mdi-content-copy"></i></button><br>';
+                    } else {
+                        $package_Huawei = '<span style="color:black;line-height:0.5"><img src="img/icon/huawei.png"> ' . $record->Huawei_package . '</span><button onclick="copyPackage(this)" type="button" data-text="'.$record->Huawei_package.'" class="btn btn-link waves-effect"><i class="mdi mdi-content-copy"></i></button><br>';
+                    }
+                }
+
+                $statusHuawei =  '<br>'.'<span style="line-height:2.5">'.$Huawei_policy.'&nbsp;<img src="img/icon/huawei.png"> '.$policy_huawei.' '.$Huawei_status.' '. '<span class="badge badge-info">'.$dev_name_huawei.'</span>'.' '. '<span class="badge badge-warning">'.$ga_name_huawei.'</span></span>';
+            }else{
+                $package_Huawei = $statusHuawei =  '';
+            }
+
+
+
+            $status = $statusChplay.$statusAmazon.$statusSamsung.$statusXiaomi. $statusOppo.$statusVivo.$statusHuawei;
+
+
+
             $keystore_profile =
                 '<div>
                     <span class="badge badge-primary" style="font-size: 12px">C: '.$record->Chplay_keystore_profile.'</span>
