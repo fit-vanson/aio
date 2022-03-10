@@ -2,7 +2,10 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Profile;
+use App\Models\ProjectModel;
 use Illuminate\Http\Request;
+use Illuminate\Support\Carbon;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Redirect;
 use Illuminate\Support\Facades\Session;
@@ -18,6 +21,7 @@ class HomeController extends Controller
         return view('home');
     }
     public function getHome(){
+
         $googleAuthenticator = new \PHPGangsta_GoogleAuthenticator();
         // Tạo secret code
         $secretCode = $googleAuthenticator->createSecret();
@@ -31,8 +35,26 @@ class HomeController extends Controller
         // Lưu secret code vào session để phục vụ cho việc kiểm tra bên dưới
         // và update vào database trong trường hợp người dùng nhập đúng mã được sinh ra bởi
         // ứng dụng Google Authenticator
+        $project = ProjectModel::all();
+        $projectLastMonth = ProjectModel::select('*')
+            ->whereBetween('created_at',
+                [Carbon::now()->subMonth()->startOfMonth(), Carbon::now()->subMonth()->endOfMonth()]
+            )
+            ->count();
+        $projectInMonth = ProjectModel::select('*')
+            ->whereBetween('created_at',
+                [Carbon::now()->startOfMonth(), Carbon::now()->endOfMonth()]
+            )
+            ->count();
+
+//        dd($projectInMonth);
         session(["secret_code" => $secretCode]);
-        return view("index", compact("qrCodeUrl"));
+        return view("index", compact(
+            "qrCodeUrl",
+            "project",
+            "projectLastMonth",
+            "projectInMonth"
+        ));
 
     }
     public function getLogin(){

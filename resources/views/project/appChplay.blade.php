@@ -267,6 +267,61 @@
     });
 
 
+    function detailChplay(id) {
+        $.get('{{asset('project/edit')}}/'+id,function (data) {
+            $("#projectForm input").prop("disabled", true);
+            if(data[4] == null) { data[4] = {template: "Chưa có template"}}
+            if(data[3] == null) { data[3] = {ma_da: "Chưa có mã dự án"}}
+            if(data[2] == null) { data[2] = {store_name: "Chưa có Store Name"}}
+            var Chplay_ads = '';
+            if(data[0].Chplay_ads) {
+                Chplay_ads = data[0].Chplay_ads;
+                Chplay_ads = JSON.parse(Chplay_ads);
+            }
+            if(data[0].logo) {
+                $("#avatar").attr("src","../uploads/project/"+data[0].projectname+"/thumbnail/"+data[0].logo);
+            }else {
+                $("#avatar").attr("src","img/logo.png");
+            }
+            $('#project_id').val(data[0].projectid);
+            $('#projectname').val(data[0].projectname);
+            $('#template').val(data[4].template);
+            $('#ma_da').val(data[3].ma_da);
+            $('#title_app').val(data[0].title_app);
+            $('#buildinfo_vernum').val(data[0].buildinfo_vernum);
+            $('#buildinfo_verstr').val(data[0].buildinfo_verstr);
+            $('#buildinfo_app_name_x').val(data[0].buildinfo_app_name_x);
+            $('#buildinfo_keystore').val(data[0].buildinfo_keystore);
+            $('#buildinfo_sdk').val(data[0].buildinfo_sdk);
+            $('#buildinfo_link_policy_x').val(data[0].buildinfo_link_policy_x);
+            $('#buildinfo_link_youtube_x').val(data[0].buildinfo_link_youtube_x);
+            $('#buildinfo_link_fanpage').val(data[0].buildinfo_link_fanpage);
+            $('#buildinfo_api_key_x').val(data[0].buildinfo_api_key_x);
+            $('#buildinfo_link_website').val(data[0].buildinfo_link_website);
+
+
+            $('#package').val(data[0].Chplay_package);
+            $('#buildinfo_store_name_x').val(data[2].store_name);
+            $('#ads_id').val(Chplay_ads.ads_id);
+            $('#banner').val(Chplay_ads.ads_banner);
+            $('#ads_inter').val(Chplay_ads.ads_inter);
+            $('#ads_reward').val(Chplay_ads.ads_reward);
+            $('#ads_native').val(Chplay_ads.ads_native);
+            $('#ads_open').val(Chplay_ads.ads_open);
+
+            $('#Chplay_buildinfo_link_store').val(data[0].Chplay_buildinfo_link_store);
+            $('#Chplay_buildinfo_link_app').val(data[0].Chplay_buildinfo_link_app);
+            $('#Chplay_buildinfo_email_dev_x').val(data[0].Chplay_buildinfo_email_dev_x);
+            $('#Chplay_status').val(data[0].Chplay_status);
+            $('#modelHeading').html("Chi tiết");
+            $('#ajaxModel').modal('show');
+            $('.modal').on('hidden.bs.modal', function (e) {
+                $('body').addClass('modal-open');
+            });
+        })
+    }
+
+
 </script>
 
 
