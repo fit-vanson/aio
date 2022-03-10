@@ -507,11 +507,12 @@ class TemplateController extends Controller
             $image->move($destinationPath, $data['logo']);
         }
 
-        if($data->template_apk){
-            $dir_file = public_path('file-manager/TemplateApk/');
-            rename($dir_file.$data->template_apk, $dir_file.$request->template.'.apk');
-            $data['template_apk'] = $request->template.'.apk';
-        }
+//        if($data->template_apk){
+////            dd($data->template_apk.$request->template);
+//            $dir_file = public_path('file-manager/TemplateApk/');
+//            @rename($dir_file.$data->template_apk, $dir_file.$request->template.'.apk');
+//            $data['template_apk'] = $request->template.'.apk';
+//        }
         if($request->template_apk){
             if($data->template_apk){
                 $path_Remove =  public_path('file-manager/TemplateApk/').$data->template_apk;
@@ -530,11 +531,11 @@ class TemplateController extends Controller
             $file->move($destinationPath, $file_name_apk);
         }
 
-        if($data->template_data){
-            $dir_file = public_path('file-manager/TemplateData/');
-            rename($dir_file.$data->template_data, $dir_file.$request->template.'.zip');
-            $data['template_data'] = $request->template.'.zip';
-        }
+//        if($data->template_data){
+//            $dir_file = public_path('file-manager/TemplateData/');
+//            rename($dir_file.$data->template_data, $dir_file.$request->template.'.zip');
+//            $data['template_data'] = $request->template.'.zip';
+//        }
         if($request->template_data){
             if($data->template_data){
                 $path_Remove =  public_path('file-manager/TemplateData/').$data->template_data;
