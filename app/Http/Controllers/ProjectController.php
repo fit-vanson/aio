@@ -342,9 +342,16 @@ class ProjectController extends Controller
 
                 ->count();
             // Get records, also we have included search filter as well
-            $records = ProjectModel::with('log')->orderBy($columnName, $columnSortOrder)
+            $records = ProjectModel::with('log')
+//                ->orderBy($columnName, $columnSortOrder)
                 ->leftjoin('ngocphandang_da','ngocphandang_da.id','=','ngocphandang_project.ma_da')
                 ->leftjoin('ngocphandang_template','ngocphandang_template.id','=','ngocphandang_project.template')
+                ->leftjoin('ngocphandang_dev','ngocphandang_dev.id','=','ngocphandang_project.Chplay_buildinfo_store_name_x')
+                ->leftjoin('ngocphandang_ga','ngocphandang_dev.id_ga','=','ngocphandang_ga.id')
+//                ->leftjoin('ngocphandang_ga','ngocphandang_dev_amazon.amazon_ga_name','=','ngocphandang_ga.id')
+
+
+
                 ->where('ngocphandang_da.ma_da', 'like', '%' . $searchValue . '%')
                 ->orWhere('ngocphandang_project.projectname', 'like', '%' . $searchValue . '%')
                 ->orWhere('ngocphandang_project.title_app', 'like', '%' . $searchValue . '%')
@@ -416,12 +423,14 @@ class ProjectController extends Controller
                 ->orWhere('ngocphandang_project.Huawei_ads->ads_reward', 'like', '%' . $searchValue . '%')
                 ->orWhere('ngocphandang_project.Huawei_ads->ads_native', 'like', '%' . $searchValue . '%')
                 ->orWhere('ngocphandang_project.Huawei_ads->ads_open', 'like', '%' . $searchValue . '%')
-                ->select('ngocphandang_project.*')
+//                ->select('ngocphandang_project.*')
                 ->skip($start)
+                ->latest('ngocphandang_project.created_at')
                 ->take($rowperpage)
                 ->get();
 
         }
+//        dd($records);
 
         // Total records
         $data_arr = array();
@@ -439,178 +448,191 @@ class ProjectController extends Controller
                 $full_mess =  (str_replace('|','<br>',$log));
             }
 
-            $ma_da = DB::table('ngocphandang_project')
-                ->join('ngocphandang_da','ngocphandang_da.id','=','ngocphandang_project.ma_da')
-                ->where('ngocphandang_da.id',$record->ma_da)
-                ->first();
-            $template = DB::table('ngocphandang_project')
-                ->join('ngocphandang_template','ngocphandang_template.id','=','ngocphandang_project.template')
-                ->where('ngocphandang_template.id',$record->template)
-                ->first();
 
-            $dev_name_chplay = DB::table('ngocphandang_project')
-                ->join('ngocphandang_dev','ngocphandang_dev.id','=','ngocphandang_project.Chplay_buildinfo_store_name_x')
-                ->where('ngocphandang_dev.id',$record->Chplay_buildinfo_store_name_x)
-                ->first();
-            $dev_name_amazon = DB::table('ngocphandang_project')
-                ->join('ngocphandang_dev_amazon','ngocphandang_dev_amazon.id','=','ngocphandang_project.Amazon_buildinfo_store_name_x')
-                ->where('ngocphandang_dev_amazon.id',$record->Amazon_buildinfo_store_name_x)
-                ->first();
-            $dev_name_samsung = DB::table('ngocphandang_project')
-                ->join('ngocphandang_dev_samsung','ngocphandang_dev_samsung.id','=','ngocphandang_project.Samsung_buildinfo_store_name_x')
-                ->where('ngocphandang_dev_samsung.id',$record->Samsung_buildinfo_store_name_x)
-                ->first();
 
-            $dev_name_xiaomi = DB::table('ngocphandang_project')
-                ->join('ngocphandang_dev_xiaomi','ngocphandang_dev_xiaomi.id','=','ngocphandang_project.Xiaomi_buildinfo_store_name_x')
-                ->where('ngocphandang_dev_xiaomi.id',$record->Xiaomi_buildinfo_store_name_x)
-                ->first();
+//            $ma_da = DB::table('ngocphandang_project')
+//                ->join('ngocphandang_da','ngocphandang_da.id','=','ngocphandang_project.ma_da')
+//                ->where('ngocphandang_da.id',$record->ma_da)
+//                ->first();
+//            dd($record);
+//            $template = DB::table('ngocphandang_project')
+//                ->join('ngocphandang_template','ngocphandang_template.id','=','ngocphandang_project.template')
+//                ->where('ngocphandang_template.id',$record->template)
+//                ->first();
 
-            $dev_name_oppo = DB::table('ngocphandang_project')
-                ->join('ngocphandang_dev_oppo','ngocphandang_dev_oppo.id','=','ngocphandang_project.Oppo_buildinfo_store_name_x')
-                ->where('ngocphandang_dev_oppo.id',$record->Oppo_buildinfo_store_name_x)
-                ->first();
+//            $dev_name_chplay = DB::table('ngocphandang_project')
+//                ->join('ngocphandang_dev','ngocphandang_dev.id','=','ngocphandang_project.Chplay_buildinfo_store_name_x')
+//                ->where('ngocphandang_dev.id',$record->Chplay_buildinfo_store_name_x)
+//                ->first();
 
-            $dev_name_vivo = DB::table('ngocphandang_project')
-                ->join('ngocphandang_dev_vivo','ngocphandang_dev_vivo.id','=','ngocphandang_project.Vivo_buildinfo_store_name_x')
-                ->where('ngocphandang_dev_vivo.id',$record->Vivo_buildinfo_store_name_x)
-                ->first();
+//            dd($dev_name_chplay);
 
-            $dev_name_huawei = DB::table('ngocphandang_project')
-                ->join('ngocphandang_dev_huawei','ngocphandang_dev_huawei.id','=','ngocphandang_project.Huawei_buildinfo_store_name_x')
-                ->where('ngocphandang_dev_huawei.id',$record->Huawei_buildinfo_store_name_x)
-                ->first();
 
-            if($dev_name_chplay !=null){
-                $ga_name_chplay = DB::table('ngocphandang_dev')
-                    ->join('ngocphandang_ga','ngocphandang_dev.id_ga','=','ngocphandang_ga.id')
-                    ->where('ngocphandang_dev.id_ga',$dev_name_chplay->id_ga)
-                    ->first();
-                if($ga_name_chplay){
-                    $ga_name_chplay = $ga_name_chplay->ga_name;
+//            $dev_name_amazon = DB::table('ngocphandang_project')
+//                ->join('ngocphandang_dev_amazon','ngocphandang_dev_amazon.id','=','ngocphandang_project.Amazon_buildinfo_store_name_x')
+//                ->where('ngocphandang_dev_amazon.id',$record->Amazon_buildinfo_store_name_x)
+//                ->first();
+//            $dev_name_samsung = DB::table('ngocphandang_project')
+//                ->join('ngocphandang_dev_samsung','ngocphandang_dev_samsung.id','=','ngocphandang_project.Samsung_buildinfo_store_name_x')
+//                ->where('ngocphandang_dev_samsung.id',$record->Samsung_buildinfo_store_name_x)
+//                ->first();
+//
+//            $dev_name_xiaomi = DB::table('ngocphandang_project')
+//                ->join('ngocphandang_dev_xiaomi','ngocphandang_dev_xiaomi.id','=','ngocphandang_project.Xiaomi_buildinfo_store_name_x')
+//                ->where('ngocphandang_dev_xiaomi.id',$record->Xiaomi_buildinfo_store_name_x)
+//                ->first();
+//
+//            $dev_name_oppo = DB::table('ngocphandang_project')
+//                ->join('ngocphandang_dev_oppo','ngocphandang_dev_oppo.id','=','ngocphandang_project.Oppo_buildinfo_store_name_x')
+//                ->where('ngocphandang_dev_oppo.id',$record->Oppo_buildinfo_store_name_x)
+//                ->first();
+//
+//            $dev_name_vivo = DB::table('ngocphandang_project')
+//                ->join('ngocphandang_dev_vivo','ngocphandang_dev_vivo.id','=','ngocphandang_project.Vivo_buildinfo_store_name_x')
+//                ->where('ngocphandang_dev_vivo.id',$record->Vivo_buildinfo_store_name_x)
+//                ->first();
+//
+//            $dev_name_huawei = DB::table('ngocphandang_project')
+//                ->join('ngocphandang_dev_huawei','ngocphandang_dev_huawei.id','=','ngocphandang_project.Huawei_buildinfo_store_name_x')
+//                ->where('ngocphandang_dev_huawei.id',$record->Huawei_buildinfo_store_name_x)
+//                ->first();
+
+
+//            dd($record);
+
+            if($record->Chplay_buildinfo_store_name_x !=0){
+//                $ga_name_chplay = DB::table('ngocphandang_dev')
+//                    ->join('ngocphandang_ga','ngocphandang_dev.id_ga','=','ngocphandang_ga.id')
+//                    ->where('ngocphandang_dev.id_ga',$dev_name_chplay->id_ga)
+//                    ->first();
+                if($record->ga_name){
+                    $ga_name_chplay = $record->ga_name;
                 }else{
                     $ga_name_chplay = '';
                 }
-                $dev_name_chplay = $dev_name_chplay->dev_name;
+                $dev_name_chplay = $record->dev_name;
             }else{
                 $dev_name_chplay = '';
                 $ga_name_chplay = '';
             }
 
-            if($dev_name_amazon != null){
-                $ga_name_amazon = DB::table('ngocphandang_dev_amazon')
-                    ->join('ngocphandang_ga','ngocphandang_dev_amazon.amazon_ga_name','=','ngocphandang_ga.id')
-                    ->where('ngocphandang_dev_amazon.amazon_ga_name',$dev_name_amazon->amazon_ga_name)
-                    ->first();
-                if($ga_name_amazon){
-                    $ga_name_amazon = $ga_name_amazon->ga_name;
+
+
+            if($record->Amazon_buildinfo_store_name_x != 0){
+//                $ga_name_amazon = DB::table('ngocphandang_dev_amazon')
+//                    ->join('ngocphandang_ga','ngocphandang_dev_amazon.amazon_ga_name','=','ngocphandang_ga.id')
+//                    ->where('ngocphandang_dev_amazon.amazon_ga_name',$dev_name_amazon->amazon_ga_name)
+//                    ->first();
+                if($record->ga_name){
+                    $ga_name_amazon = $record->ga_name;
                 }else{
                     $ga_name_amazon = '';
                 }
-                $dev_name_amazon = $dev_name_amazon->amazon_dev_name;
+                $dev_name_amazon = $record->amazon_dev_name;
             }else{
                 $dev_name_amazon = '';
                 $ga_name_amazon = '';
             }
-            if($dev_name_samsung){
-                $ga_name_samsung = DB::table('ngocphandang_dev_samsung')
-                    ->join('ngocphandang_ga','ngocphandang_dev_samsung.samsung_ga_name','=','ngocphandang_ga.id')
-                    ->where('ngocphandang_dev_samsung.samsung_ga_name',$dev_name_samsung->samsung_ga_name)
-                    ->first();
-                if($ga_name_samsung){
-                    $ga_name_samsung = $ga_name_samsung->ga_name;
+            if($record->Samsung_buildinfo_store_name_x !=0 ){
+//                $ga_name_samsung = DB::table('ngocphandang_dev_samsung')
+//                    ->join('ngocphandang_ga','ngocphandang_dev_samsung.samsung_ga_name','=','ngocphandang_ga.id')
+//                    ->where('ngocphandang_dev_samsung.samsung_ga_name',$dev_name_samsung->samsung_ga_name)
+//                    ->first();
+                if($record->ga_name){
+                    $ga_name_samsung = $record->ga_name;
                 }else{
                     $ga_name_samsung = '';
                 }
-                $dev_name_samsung = $dev_name_samsung->samsung_dev_name;
+                $dev_name_samsung = $record->samsung_dev_name;
             }else{
                 $dev_name_samsung = '';
                 $ga_name_samsung = '';
             }
 
-            if($dev_name_xiaomi){
-                $ga_name_xiaomi = DB::table('ngocphandang_dev_xiaomi')
-                    ->join('ngocphandang_ga','ngocphandang_dev_xiaomi.xiaomi_ga_name','=','ngocphandang_ga.id')
-                    ->where('ngocphandang_dev_xiaomi.xiaomi_ga_name',$dev_name_xiaomi->xiaomi_ga_name)
-                    ->first();
-                if($ga_name_xiaomi){
-                    $ga_name_xiaomi = $ga_name_xiaomi->ga_name;
+            if($record->Xiaomi_buildinfo_store_name_x !=0){
+//                $ga_name_xiaomi = DB::table('ngocphandang_dev_xiaomi')
+//                    ->join('ngocphandang_ga','ngocphandang_dev_xiaomi.xiaomi_ga_name','=','ngocphandang_ga.id')
+//                    ->where('ngocphandang_dev_xiaomi.xiaomi_ga_name',$dev_name_xiaomi->xiaomi_ga_name)
+//                    ->first();
+                if($record->ga_name){
+                    $ga_name_xiaomi = $record->ga_name;
                 }else{
                     $ga_name_xiaomi = '';
                 }
-                $dev_name_xiaomi = $dev_name_xiaomi->xiaomi_dev_name;
+                $dev_name_xiaomi = $record->xiaomi_dev_name;
             }else{
                 $dev_name_xiaomi = '';
                 $ga_name_xiaomi = '';
             }
 
-            if($dev_name_oppo){
-                $ga_name_oppo = DB::table('ngocphandang_dev_oppo')
-                    ->join('ngocphandang_ga','ngocphandang_dev_oppo.oppo_ga_name','=','ngocphandang_ga.id')
-                    ->where('ngocphandang_dev_oppo.oppo_ga_name',$dev_name_oppo->oppo_ga_name)
-                    ->first();
-                if($ga_name_oppo){
-                    $ga_name_oppo = $ga_name_oppo->ga_name;
+            if($record->Oppo_buildinfo_store_name_x !=0){
+//                $ga_name_oppo = DB::table('ngocphandang_dev_oppo')
+//                    ->join('ngocphandang_ga','ngocphandang_dev_oppo.oppo_ga_name','=','ngocphandang_ga.id')
+//                    ->where('ngocphandang_dev_oppo.oppo_ga_name',$dev_name_oppo->oppo_ga_name)
+//                    ->first();
+                if($record->ga_name){
+                    $ga_name_oppo = $record->ga_name;
                 }else{
                     $ga_name_oppo = '';
                 }
-                $dev_name_oppo = $dev_name_oppo->oppo_dev_name;
+                $dev_name_oppo = $record->oppo_dev_name;
             }else{
                 $dev_name_oppo = '';
                 $ga_name_oppo = '';
             }
 
-            if($dev_name_vivo){
-                $ga_name_vivo = DB::table('ngocphandang_dev_vivo')
-                    ->join('ngocphandang_ga','ngocphandang_dev_vivo.vivo_ga_name','=','ngocphandang_ga.id')
-                    ->where('ngocphandang_dev_vivo.vivo_ga_name',$dev_name_vivo->vivo_ga_name)
-                    ->first();
-                if($ga_name_vivo){
-                    $ga_name_vivo = $ga_name_vivo->ga_name;
+            if($record->Vivo_buildinfo_store_name_x !=0){
+//                $ga_name_vivo = DB::table('ngocphandang_dev_vivo')
+//                    ->join('ngocphandang_ga','ngocphandang_dev_vivo.vivo_ga_name','=','ngocphandang_ga.id')
+//                    ->where('ngocphandang_dev_vivo.vivo_ga_name',$dev_name_vivo->vivo_ga_name)
+//                    ->first();
+                if($record->ga_name){
+                    $ga_name_vivo = $record->ga_name;
                 }else{
                     $ga_name_vivo = '';
                 }
-                $dev_name_vivo = $dev_name_vivo->vivo_dev_name;
+                $dev_name_vivo = $record->vivo_dev_name;
             }else{
                 $dev_name_vivo = '';
                 $ga_name_vivo = '';
             }
 
-            if($dev_name_huawei){
-                $ga_name_huawei = DB::table('ngocphandang_dev_huawei')
-                    ->join('ngocphandang_ga','ngocphandang_dev_huawei.huawei_ga_name','=','ngocphandang_ga.id')
-                    ->where('ngocphandang_dev_huawei.huawei_ga_name',$dev_name_huawei->huawei_ga_name)
-                    ->first();
-                if($ga_name_huawei){
-                    $ga_name_huawei = $ga_name_huawei->ga_name;
+            if($record->Huawei_buildinfo_store_name_x !=0){
+//                $ga_name_huawei = DB::table('ngocphandang_dev_huawei')
+//                    ->join('ngocphandang_ga','ngocphandang_dev_huawei.huawei_ga_name','=','ngocphandang_ga.id')
+//                    ->where('ngocphandang_dev_huawei.huawei_ga_name',$dev_name_huawei->huawei_ga_name)
+//                    ->first();
+                if($record->ga_name){
+                    $ga_name_huawei = $record->ga_name;
                 }else{
                     $ga_name_huawei = '';
                 }
-                $dev_name_huawei = $dev_name_huawei->huawei_dev_name;
+                $dev_name_huawei = $record->huawei_dev_name;
             }else{
                 $dev_name_huawei = '';
                 $ga_name_huawei = '';
             }
 
 
-            if(isset($ma_da)) {
-                if (isset($ma_da->link_store_vietmmo)){
-                    $data_ma_da = '<a href="'.$ma_da->link_store_vietmmo.'" target="_blank" > <p class="text-muted" style="line-height:0.5">Mã Dự án: '.$ma_da->ma_da.'</p></a>';
+//            if(isset($ma_da)) {
+                if (isset($record->link_store_vietmmo)){
+                    $data_ma_da = '<a href="'.$record->link_store_vietmmo.'" target="_blank" > <p class="text-muted" style="line-height:0.5">Mã Dự án: '.$record->ma_da.'</p></a>';
                 }else{
-                    $data_ma_da = '<p class="text-muted" style="line-height:0.5">Mã Dự án: '.$ma_da->ma_da.'</p>';
+                    $data_ma_da = '<p class="text-muted" style="line-height:0.5">Mã Dự án: '.$record->ma_da.'</p>';
                 }
-            }else{
-                $data_ma_da = '';
-            }
-            if(isset($template)) {
-                if (isset($template->link_store_vietmmo)){
-                    $data_template =  '<a href="'.$template->link_store_vietmmo.'" target="_blank" ><p class="text-muted" style="line-height:0.5">Template: '.$template->template.'</p></a>';
+//            }else{
+//                $data_ma_da = '';
+//            }
+//            dd($record);
+//            if(isset($template)) {
+                if (isset($record->link_store_vietmmo)){
+                    $data_template =  '<a href="'.$record->link_store_vietmmo.'" target="_blank" ><p class="text-muted" style="line-height:0.5">Template: '.$record->template.'</p></a>';
                 }else{
-                    $data_template =  '<p class="text-muted" style="line-height:0.5">Template: '.$template->template.'</p>';
+                    $data_template =  '<p class="text-muted" style="line-height:0.5">Template: '.$record->template.'</p>';
                 }
-            }else{
-                $data_template='';
-            }
+//            }else{
+//                $data_template='';
+//            }
 
             if(isset($record->projectname)) {
 
@@ -827,12 +849,14 @@ class ProjectController extends Controller
                 $Huawei_policy = "<i style='color:red;' class='mdi mdi-close-circle-outline'></i>";
             }
 
+//            dd($record);
 
-            $policy = DB::table('ngocphandang_project')
-                ->join('ngocphandang_template','ngocphandang_template.id','=','ngocphandang_project.template')
-                ->where('ngocphandang_template.id',$record->template)
-                ->first();
-            if(isset($policy->policy1) || isset($policy->policy2)){
+
+//            $policy = DB::table('ngocphandang_project')
+//                ->join('ngocphandang_template','ngocphandang_template.id','=','ngocphandang_project.template')
+//                ->where('ngocphandang_template.id',$record->template)
+//                ->first();
+            if(isset($record->policy1) || isset($record->policy2)){
                 $policy_chplay = ' <a href="javascript:void(0)" onclick="showPolicy_Chplay('.$record->projectid.')"><span class="badge badge-primary">Policy</span></a> ';
                 $policy_amazon = ' <a href="javascript:void(0)" onclick="showPolicy_Amazon('.$record->projectid.')"><span class="badge badge-primary">Policy</span></a> ';
                 $policy_xiaomi = ' <a href="javascript:void(0)" onclick="showPolicy_Xiaomi('.$record->projectid.')"><span class="badge badge-primary">Policy</span></a> ';
