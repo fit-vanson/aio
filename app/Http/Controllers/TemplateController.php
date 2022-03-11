@@ -110,11 +110,11 @@ class TemplateController extends Controller
 
             $ads = json_decode($record->ads,true);
 
-           if(isset($ads['ads_id'])){
-               $ads_id = "<span style='color:green;'> Id</span> - ";
-           }else{
-               $ads_id = "<span style='color:red;'> Id</span> - ";
-           }
+            if(isset($ads['ads_id'])){
+                $ads_id = "<span style='color:green;'> Id</span> - ";
+            }else{
+                $ads_id = "<span style='color:red;'> Id</span> - ";
+            }
 
             if(isset($ads['ads_banner'])){
                 $ads_banner = "<span style='color:green;'> Banner</span> - ";
@@ -151,7 +151,7 @@ class TemplateController extends Controller
             }else{
                 $ads_start = "<span style='color:red;'> Start</span>";
             }
-             $ads ='<br>'.$ads_id.$ads_banner.$ads_inter.$ads_reward.$ads_native.$ads_open.$ads_start;
+            $ads ='<br>'.$ads_id.$ads_banner.$ads_inter.$ads_reward.$ads_native.$ads_open.$ads_start;
 
 
             if($record->convert_aab != 0){
@@ -233,11 +233,11 @@ class TemplateController extends Controller
                 $link = null;
             }
 
-            if(isset($record->logo)){
+            if(isset($record->template_logo)){
                 if (isset($record->link_store_vietmmo)){
-                    $logo = "<a href='".$record->link_store_vietmmo."' target='_blank'>  <img class='rounded mx-auto d-block'  width='100px'  height='100px'  src='../uploads/template/$record->template/thumbnail/$record->logo'></a>";
+                    $logo = "<a href='".$record->link_store_vietmmo."' target='_blank'>  <img class='rounded mx-auto d-block'  width='100px'  height='100px'  src='../uploads/template/$record->template/thumbnail/$record->template_logo'></a>";
                 }else{
-                    $logo = "<img class='rounded mx-auto d-block'  width='100px'  height='100px'  src='../uploads/template/$record->template/thumbnail/$record->logo'>";
+                    $logo = "<img class='rounded mx-auto d-block'  width='100px'  height='100px'  src='../uploads/template/$record->template/thumbnail/$record->template_logo'>";
                 }
             }else{
                 $logo = '<img class="rounded mx-auto d-block" width="100px" height="100px" src="assets\images\logo-sm.png">';
@@ -341,7 +341,7 @@ class TemplateController extends Controller
 
         if(isset($request->logo)){
             $image = $request->file('logo');
-            $data['logo'] = 'logo_'.time().'.'.$image->extension();
+            $data['template_logo'] = 'logo_'.time().'.'.$image->extension();
             $destinationPath = public_path('uploads/template/'.$request->template.'/thumbnail/');
             $img = Image::make($image->path());
             if (!file_exists($destinationPath)) {
@@ -349,9 +349,9 @@ class TemplateController extends Controller
             }
             $img->resize(100, 100, function ($constraint) {
                 $constraint->aspectRatio();
-            })->save($destinationPath.$data['logo']);
+            })->save($destinationPath.$data['template_logo']);
             $destinationPath = public_path('uploads/template/'.$request->template);
-            $image->move($destinationPath, $data['logo']);
+            $image->move($destinationPath, $data['template_logo']);
         }
 
         if($request->template_apk){
@@ -486,7 +486,7 @@ class TemplateController extends Controller
         $data->Vivo_category =  $request->Vivo_category;
         $data->Huawei_category =  $request->Huawei_category;
 
-        if($data->logo){
+        if($data->template_logo){
             if($data->template <> $request->template){
                 $dir = (public_path('uploads/template/'));
                 rename($dir.$data->template, $dir.$request->template);
@@ -494,7 +494,7 @@ class TemplateController extends Controller
         }
         if($request->logo){
             $image = $request->file('logo');
-            $data['logo'] = 'logo_'.time().'.'.$image->extension();
+            $data['template_logo'] = 'logo_'.time().'.'.$image->extension();
             $destinationPath = public_path('uploads/template/'.$request->template.'/thumbnail/');
             $img = Image::make($image->path());
             if (!file_exists($destinationPath)) {
@@ -502,9 +502,9 @@ class TemplateController extends Controller
             }
             $img->resize(100, 100, function ($constraint) {
                 $constraint->aspectRatio();
-            })->save($destinationPath.$data['logo']);
+            })->save($destinationPath.$data['template_logo']);
             $destinationPath = public_path('uploads/template/'.$request->template);
-            $image->move($destinationPath, $data['logo']);
+            $image->move($destinationPath, $data['template_logo']);
         }
 
 //        if($data->template_apk){
