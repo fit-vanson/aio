@@ -35,7 +35,7 @@ class HomeController extends Controller
         // Lưu secret code vào session để phục vụ cho việc kiểm tra bên dưới
         // và update vào database trong trường hợp người dùng nhập đúng mã được sinh ra bởi
         // ứng dụng Google Authenticator
-        $project = ProjectModel::all();
+        $project = ProjectModel::count();
         $projectLastMonth = ProjectModel::select('*')
             ->whereBetween('created_at',
                 [Carbon::now()->subMonth()->startOfMonth(), Carbon::now()->subMonth()->endOfMonth()]
@@ -47,7 +47,6 @@ class HomeController extends Controller
             )
             ->count();
 
-//        dd($projectInMonth);
         session(["secret_code" => $secretCode]);
         return view("index", compact(
             "qrCodeUrl",
@@ -85,6 +84,25 @@ class HomeController extends Controller
         session()->flush();
         Auth::logout();
         return \redirect()->intended('login');
+    }
+
+    public static  function statusMarket($markert,$status=null){
+        if($markert == 'Chplay'){
+            $data = $status ? ProjectModel::where('Chplay_status',$status)->where('Chplay_package','<>',NULL)->count() :  ProjectModel::where('Chplay_package','<>',NULL)->count();
+        }elseif ($markert == 'Amazon'){
+            $data = $status ? ProjectModel::where('Amazon_status',$status)->where('Amazon_package','<>',NULL)->count() :  ProjectModel::where('Amazon_package','<>',NULL)->count();
+        }elseif ($markert == 'Samsung') {
+            $data = $status ? ProjectModel::where('Samsung_status', $status)->where('Samsung_package', '<>', NULL)->count() : ProjectModel::where('Samsung_package', '<>', NULL)->count();
+        }elseif ($markert == 'Xiaomi') {
+            $data = $status ? ProjectModel::where('Xiaomi_status', $status)->where('Xiaomi_package', '<>', NULL)->count() : ProjectModel::where('Xiaomi_package', '<>', NULL)->count();
+        }elseif ($markert == 'Oppo') {
+            $data = $status ? ProjectModel::where('Oppo_status', $status)->where('Oppo_package', '<>', NULL)->count() : ProjectModel::where('Oppo_package', '<>', NULL)->count();
+        }elseif ($markert == 'Vivo') {
+            $data = $status ? ProjectModel::where('Vivo_status', $status)->where('Vivo_package', '<>', NULL)->count() : ProjectModel::where('Vivo_package', '<>', NULL)->count();
+        }elseif ($markert == 'Huawei') {
+            $data = $status ? ProjectModel::where('Huawei_status', $status)->where('Huawei_package', '<>', NULL)->count() : ProjectModel::where('Huawei_package', '<>', NULL)->count();
+        }
+        return $data;
     }
 
 }

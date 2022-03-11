@@ -61,7 +61,7 @@
                             <img src="{{ URL::asset('/assets/images/services-icon/01.png') }}" alt="">
                         </div>
                         <h5 class="font-size-16 text-uppercase mt-0 text-white-50">Project</h5>
-                        <h4 class="font-weight-medium font-size-24">{{count($project)}}</h4>
+                        <h4 class="font-weight-medium font-size-24">{{$project}}</h4>
                         <?php
                             $diff = number_format(($projectInMonth - $projectLastMonth)/ $projectLastMonth *100,2);
                             if($diff > 0 ){
@@ -87,73 +87,148 @@
             </div>
         </div>
         <div class="col-xl-3 col-md-6">
-            <div class="card mini-stat bg-primary text-white">
+            <div class="card mini-stat text-white" style="background: #2b2b2b !important;">
                 <div class="card-body">
                     <div class="mb-4">
                         <div class="float-left mini-stat-img mr-4">
-                            <img src="{{ URL::asset('/assets/images/services-icon/02.png') }}" alt="">
+                            <img src="{{ URL::asset('img/icon/google.png') }}" alt="">
                         </div>
-                        <h5 class="font-size-16 text-uppercase mt-0 text-white-50">Revenue</h5>
-                        <h4 class="font-weight-medium font-size-24">52,368 <i
-                                class="mdi mdi-arrow-down text-danger ml-2"></i></h4>
-                        <div class="mini-stat-label bg-danger">
-                            <p class="mb-0">- 28%</p>
-                        </div>
+                        <h5 class="font-size-16 text-uppercase mt-0 text-white-50">CHplay</h5>
+                        <h4 class="font-weight-medium font-size-24">{{\App\Http\Controllers\HomeController::statusMarket('Chplay')}} </h4>
                     </div>
                     <div class="pt-2">
                         <div class="float-right">
-                            <a href="#" class="text-white-50"><i class="mdi mdi-arrow-right h5"></i></a>
+                            <p class="text-white-50 mb-0 mt-1">{{\App\Http\Controllers\HomeController::statusMarket('Chplay',1)}}</p>
+                            <p class="text-white-50 mb-0 mt-1">{{\App\Http\Controllers\HomeController::statusMarket('Chplay',6)}}</p>
                         </div>
-
-                        <p class="text-white-50 mb-0 mt-1">Since last month</p>
+                        <p class="text-white-50 mb-0 mt-1">Public</p>
+                        <p class="text-white-50 mb-0 mt-1">Check</p>
                     </div>
                 </div>
             </div>
         </div>
         <div class="col-xl-3 col-md-6">
-            <div class="card mini-stat bg-primary text-white">
+            <div class="card mini-stat text-white" style="background: #0b7cd6 !important;">
                 <div class="card-body">
                     <div class="mb-4">
                         <div class="float-left mini-stat-img mr-4">
-                            <img src="{{ URL::asset('/assets/images/services-icon/03.png') }}" alt="">
+                            <img src="{{ URL::asset('img/icon/amazon.png') }}" alt="">
                         </div>
-                        <h5 class="font-size-16 text-uppercase mt-0 text-white-50">Average Price</h5>
-                        <h4 class="font-weight-medium font-size-24">15.8 <i
-                                class="mdi mdi-arrow-up text-success ml-2"></i></h4>
-                        <div class="mini-stat-label bg-info">
-                            <p class="mb-0"> 00%</p>
-                        </div>
+                        <h5 class="font-size-16 text-uppercase mt-0 text-white-50">Amazon</h5>
+                        <h4 class="font-weight-medium font-size-24">{{\App\Http\Controllers\HomeController::statusMarket('Amazon')}} </h4>
                     </div>
                     <div class="pt-2">
                         <div class="float-right">
-                            <a href="#" class="text-white-50"><i class="mdi mdi-arrow-right h5"></i></a>
+                            <p class="text-white-50 mb-0 mt-1">{{\App\Http\Controllers\HomeController::statusMarket('Amazon',1)}}</p>
+                            <p class="text-white-50 mb-0 mt-1">{{\App\Http\Controllers\HomeController::statusMarket('Amazon',6)}}</p>
                         </div>
-
-                        <p class="text-white-50 mb-0 mt-1">Since last month</p>
+                        <p class="text-white-50 mb-0 mt-1">Public</p>
+                        <p class="text-white-50 mb-0 mt-1">Check</p>
                     </div>
                 </div>
             </div>
         </div>
         <div class="col-xl-3 col-md-6">
-            <div class="card mini-stat bg-primary text-white">
+            <div class="card mini-stat text-white" style="background: #c903ea !important;">
                 <div class="card-body">
                     <div class="mb-4">
                         <div class="float-left mini-stat-img mr-4">
-                            <img src="{{ URL::asset('/assets/images/services-icon/04.png') }}" alt="">
+                            <img src="{{ URL::asset('img/icon/samsung.png') }}" alt="">
                         </div>
-                        <h5 class="font-size-16 text-uppercase mt-0 text-white-50">Product Sold</h5>
-                        <h4 class="font-weight-medium font-size-24">2436 <i
-                                class="mdi mdi-arrow-up text-success ml-2"></i></h4>
-                        <div class="mini-stat-label bg-warning">
-                            <p class="mb-0">+ 84%</p>
-                        </div>
+                        <h5 class="font-size-16 text-uppercase mt-0 text-white-50">Samsung</h5>
+                        <h4 class="font-weight-medium font-size-24">{{\App\Http\Controllers\HomeController::statusMarket('Samsung')}} </h4>
                     </div>
                     <div class="pt-2">
                         <div class="float-right">
-                            <a href="#" class="text-white-50"><i class="mdi mdi-arrow-right h5"></i></a>
+                            <p class="text-white-50 mb-0 mt-1">{{\App\Http\Controllers\HomeController::statusMarket('Samsung',1)}}</p>
+                            <p class="text-white-50 mb-0 mt-1">{{\App\Http\Controllers\HomeController::statusMarket('Samsung',6)}}</p>
                         </div>
-
-                        <p class="text-white-50 mb-0 mt-1">Since last month</p>
+                        <p class="text-white-50 mb-0 mt-1">Public</p>
+                        <p class="text-white-50 mb-0 mt-1">Check</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-xl-3 col-md-6">
+            <div class="card mini-stat text-white" style="background: #ff6445 !important;">
+                <div class="card-body">
+                    <div class="mb-4">
+                        <div class="float-left mini-stat-img mr-4">
+                            <img src="{{ URL::asset('img/icon/xiaomi.png') }}" alt="">
+                        </div>
+                        <h5 class="font-size-16 text-uppercase mt-0 text-white-50">Xiaomi</h5>
+                        <h4 class="font-weight-medium font-size-24">{{\App\Http\Controllers\HomeController::statusMarket('Xiaomi')}} </h4>
+                    </div>
+                    <div class="pt-2">
+                        <div class="float-right">
+                            <p class="text-white-50 mb-0 mt-1">{{\App\Http\Controllers\HomeController::statusMarket('Xiaomi',1)}}</p>
+                            <p class="text-white-50 mb-0 mt-1">{{\App\Http\Controllers\HomeController::statusMarket('Xiaomi',6)}}</p>
+                        </div>
+                        <p class="text-white-50 mb-0 mt-1">Public</p>
+                        <p class="text-white-50 mb-0 mt-1">Check</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-xl-3 col-md-6">
+            <div class="card mini-stat text-white" style="background: #1acf7d !important;">
+                <div class="card-body">
+                    <div class="mb-4">
+                        <div class="float-left mini-stat-img mr-4">
+                            <img src="{{ URL::asset('img/icon/oppo.png') }}" alt="">
+                        </div>
+                        <h5 class="font-size-16 text-uppercase mt-0 text-white-50">Oppo</h5>
+                        <h4 class="font-weight-medium font-size-24">{{\App\Http\Controllers\HomeController::statusMarket('Oppo')}} </h4>
+                    </div>
+                    <div class="pt-2">
+                        <div class="float-right">
+                            <p class="text-white-50 mb-0 mt-1">{{\App\Http\Controllers\HomeController::statusMarket('Oppo',1)}}</p>
+                            <p class="text-white-50 mb-0 mt-1">{{\App\Http\Controllers\HomeController::statusMarket('Oppo',6)}}</p>
+                        </div>
+                        <p class="text-white-50 mb-0 mt-1">Public</p>
+                        <p class="text-white-50 mb-0 mt-1">Check</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-xl-3 col-md-6">
+            <div class="card mini-stat text-white" style="background: #20b7fe !important;">
+                <div class="card-body">
+                    <div class="mb-4">
+                        <div class="float-left mini-stat-img mr-4">
+                            <img src="{{ URL::asset('img/icon/vivo.png') }}" alt="">
+                        </div>
+                        <h5 class="font-size-16 text-uppercase mt-0 text-white-50">Vivo</h5>
+                        <h4 class="font-weight-medium font-size-24">{{\App\Http\Controllers\HomeController::statusMarket('Vivo')}} </h4>
+                    </div>
+                    <div class="pt-2">
+                        <div class="float-right">
+                            <p class="text-white-50 mb-0 mt-1">{{\App\Http\Controllers\HomeController::statusMarket('Vivo',1)}}</p>
+                            <p class="text-white-50 mb-0 mt-1">{{\App\Http\Controllers\HomeController::statusMarket('Vivo',6)}}</p>
+                        </div>
+                        <p class="text-white-50 mb-0 mt-1">Public</p>
+                        <p class="text-white-50 mb-0 mt-1">Check</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-xl-3 col-md-6">
+            <div class="card mini-stat text-white" style="background: #f65657 !important;">
+                <div class="card-body">
+                    <div class="mb-4">
+                        <div class="float-left mini-stat-img mr-4">
+                            <img src="{{ URL::asset('img/icon/huawei.png') }}" alt="">
+                        </div>
+                        <h5 class="font-size-16 text-uppercase mt-0 text-white-50">Huawei</h5>
+                        <h4 class="font-weight-medium font-size-24">{{\App\Http\Controllers\HomeController::statusMarket('Huawei')}} </h4>
+                    </div>
+                    <div class="pt-2">
+                        <div class="float-right">
+                            <p class="text-white-50 mb-0 mt-1">{{\App\Http\Controllers\HomeController::statusMarket('Huawei',1)}}</p>
+                            <p class="text-white-50 mb-0 mt-1">{{\App\Http\Controllers\HomeController::statusMarket('Huawei',6)}}</p>
+                        </div>
+                        <p class="text-white-50 mb-0 mt-1">Public</p>
+                        <p class="text-white-50 mb-0 mt-1">Check</p>
                     </div>
                 </div>
             </div>
