@@ -87,7 +87,7 @@
             </div>
         </div>
         <div class="col-xl-3 col-md-6">
-            <div class="card mini-stat text-white" style="background: #2b2b2b !important;">
+            <div class="card mini-stat text-white" style="background: #ffc107 !important;">
                 <div class="card-body">
                     <div class="mb-4">
                         <div class="float-left mini-stat-img mr-4">
