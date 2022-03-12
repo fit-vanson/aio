@@ -343,7 +343,7 @@ class ProjectController extends Controller
                 ->count();
             // Get records, also we have included search filter as well
             $records = ProjectModel::with('log')
-//                ->orderBy($columnName, $columnSortOrder)
+                ->orderBy($columnName, $columnSortOrder)
                 ->leftjoin('ngocphandang_da','ngocphandang_da.id','=','ngocphandang_project.ma_da')
                 ->leftjoin('ngocphandang_template','ngocphandang_template.id','=','ngocphandang_project.template')
                 ->leftjoin('ngocphandang_dev','ngocphandang_dev.id','=','ngocphandang_project.Chplay_buildinfo_store_name_x')
@@ -1113,13 +1113,13 @@ class ProjectController extends Controller
             }
 
             $data_arr[] = array(
-                "created_at" => $record->created_at,
+                "ngocphandang_project.created_at" => $record->created_at,
                 "logo" => $logo,
                 "log" => $full_mess,
                 "name_projectname"=>$record->projectname,
                 "template"=>$data_template,
                 "projectname"=>$data_projectname. $project_file.$data_template.$data_ma_da.$data_title_app.$abc.$keystore_profile.$des_en. $des_vn,
-                "package" =>$package_chplay.$package_amazon.$package_samsung.$package_xiaomi.$package_oppo.$package_vivo.$package_Huawei,
+                "Chplay_package" =>$package_chplay.$package_amazon.$package_samsung.$package_xiaomi.$package_oppo.$package_vivo.$package_Huawei,
                 "status" => $status,
                 'Chplay_buildinfo_store_name_x' => $dev_name_chplay,
                 'Amazon_buildinfo_store_name_x' => $dev_name_amazon,

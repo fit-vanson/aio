@@ -120,6 +120,7 @@
         });
         var url = window.location.href;
         var hash = url.substring(url.indexOf('?')+1);
+        $.fn.dataTable.ext.errMode = 'none';
         var table = $('.data-table').DataTable({
             displayLength: 50,
             lengthMenu: [5, 10, 25, 50, 75, 100],
@@ -130,10 +131,10 @@
                 type: "post"
             },
             columns: [
-                {data: 'created_at', name: 'created_at',},
+                {data: 'ngocphandang_project.created_at', name: 'ngocphandang_project.created_at'},
                 {data: 'logo', name: 'logo',orderable: false},
                 {data: 'projectname', name: 'projectname'},
-                {data: 'package', name: 'package',orderable: false},
+                {data: 'Chplay_package', name: 'Chplay_package'},
                 {data: 'status', name: 'status',orderable: false},
                 {data: 'action', name: 'action',className: "text-center", orderable: false, searchable: false},
             ],
