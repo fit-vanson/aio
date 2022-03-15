@@ -1763,6 +1763,61 @@
 </div>
 
 
+<div class="modal fade bd-example-modal-xl" id="buildandcheckModel" runat="server" role="dialog">
+    <div class="modal-dialog modal-xl">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title">Build and Check</h4>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+            </div>
+            <div class="modal-body">
+{{--                <form id="EditDesVN" name="EditDesVN" class="form-horizontal">--}}
+                <div class="row">
+                    <div class="col-lg-12">
+                        <div class="card">
+                            <div class="card-body">
+                                <form class="repeater" id="buildcheckForm" enctype="multipart/form-data">
+                                    <div data-repeater-list="build_check">
+                                        <div data-repeater-item="" class="row">
+                                            <div class="form-group col-lg-3">
+                                                <label for="name">Mã Project</label>
+                                                <input type="hidden" name="build_check_project_id" id="build_check_project_id">
+                                                <input type="text" id="projectname" onchange="getIndex(this)" name="projectname" class="form-control" />
+                                            </div>
+
+                                            <div class="form-group col-lg-3">
+                                                <label for="email">VersionCode</label>
+                                                <input type="text" id="buildinfo_vernum" name="buildinfo_vernum" class="form-control" />
+                                            </div>
+
+                                            <div class="form-group col-lg-3">
+                                                <label for="subject">Versioncode String</label>
+                                                <input type="text" id="buildinfo_verstr" name="buildinfo_verstr" class="form-control" />
+                                            </div>
+
+                                            <div class="col-lg-2 align-self-center">
+                                                <input data-repeater-delete type="button" class="btn btn-primary btn-block"
+                                                       value="Delete" />
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="inner-repeater mb-4">
+                                    <input data-repeater-create type="button" class="btn btn-success mo-mt-2" value="Add" />
+                                    </div>
+                                    <button type="submit" class="btn btn-primary"  value="build" >Build</button>
+                                    <button type="submit" class="btn btn-warning"  value="check" >Check</button>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+{{--                </form>--}}
+            </div>
+        </div>
+    </div>
+</div>
+
+
 
 
 

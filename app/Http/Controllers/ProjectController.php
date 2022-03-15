@@ -3754,6 +3754,33 @@ class ProjectController extends Controller
         $project = ProjectModel::where('projectid',$project_id)->first();
         return response()->json([$buildinfo_keystore,$project]);
     }
+
+    public function check_build(Request $request){
+        $project = ProjectModel::select('projectid','projectname','buildinfo_verstr','buildinfo_vernum')->where('projectname',$request->projectname)->first();
+        return response()->json($project);
+
+    }
+
+    public function updateBuildCheck(Request $request){
+        foreach ($request->build_check as $data){
+            ProjectModel::updateOrCreate(
+                [
+                    "projectid" => $data['build_check_project_id'],
+
+                ],
+                [
+                    "buildinfo_vernum" => $data['buildinfo_vernum'],
+                    'buildinfo_verstr' => $data['buildinfo_verstr'],
+                    'buildinfo_console' => $request->buildinfo_console,
+                    'buildinfo_mess' => 'Chờ xử lý',
+                    'time_mess' => time(),
+                    'buildinfo_time' =>time(),
+
+                ]);
+        }
+        return response()->json(['success'=>'Cập nhật thành công']);
+    }
+
 //    public function select_chplay_buildinfo_keystore(Request $request){
 //            $keystore = $request->buildinfo_keystore;
 //            $buildinfo_keystore = Keystore::where('name_keystore',$keystore)->first();

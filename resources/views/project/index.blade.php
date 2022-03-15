@@ -54,6 +54,11 @@
         <div class="col-12">
             <div class="card">
                 <div class="card-body">
+                    <div class="button-items console_status_button">
+                        <button type="button" class="btn btn-primary waves-effect waves-light" id="buildandcheck">Build and Check</button>
+                    </div>
+                </div>
+                <div class="card-body">
                     <table class="table table-bordered dt-responsive nowrap data-table" style="border-collapse: collapse; border-spacing: 0; width: 100%;">
                         <thead>
                         <tr>
@@ -102,6 +107,14 @@
 <!--Summernote js-->
 <script src="plugins/summernote/summernote-bs4.min.js"></script>
 <script src="assets/pages/form-editors.int.js"></script>
+
+
+
+<!-- form repeater -->
+<script src="assets/libs/jquery-repeater/jquery-repeater.min.js"></script>
+
+<!-- form repeater init js -->
+<script src="assets/js/pages/form-repeater.int.js"></script>
 
 <script>
     $("#template").select2({});
@@ -421,7 +434,82 @@
 
         });
 
+        $('#buildandcheck').on('click', function () {
+            $('#buildandcheckModel').modal('show');
+            $('.modal').on('hidden.bs.modal', function (e) {
+                $('body').addClass('modal-open');
+            });
+        });
+
+        $('#buildcheckForm button').click(function (event){
+            event.preventDefault();
+            if($(this).attr("value") == "build"){
+                $.ajax({
+                    data: $('#buildcheckForm').serialize(),
+                    url: "{{ route('project.updateBuildCheck')}}?buildinfo_console=1",
+                    type: "post",
+                    dataType: 'json',
+                    success: function (data) {
+                        if(data.errors){
+                            for( var count=0 ; count <data.errors.length; count++){
+                                $("#buildcheckForm").notify(
+                                    data.errors[count],"error",
+                                    { position:"right" }
+                                );
+                            }
+                        }
+                        if(data.success){
+                            $.notify(data.success, "success");
+                            $('#buildcheckForm').trigger("reset");
+                            $('#buildandcheckModel').modal('hide');
+                            table.draw();
+                        }
+                    },
+                });
+            }
+            if($(this).attr("value") == "check"){
+                $.ajax({
+                    data: $('#buildcheckForm').serialize(),
+                    url: "{{ route('project.updateBuildCheck')}}?buildinfo_console=4",
+                    type: "post",
+                    dataType: 'json',
+                    success: function (data) {
+                        if(data.errors){
+                            for( var count=0 ; count <data.errors.length; count++){
+                                $("#buildcheckForm").notify(
+                                    data.errors[count],"error",
+                                    { position:"right" }
+                                );
+                            }
+                        }
+                        if(data.success){
+                            $.notify(data.success, "success");
+                            $('#buildcheckForm').trigger("reset");
+                            $('#buildandcheckModel').modal('hide');
+                            table.draw();
+                        }
+                    },
+                });
+
+            }
+
+        });
+
     });
+
+    function getIndex(item){
+        let index = $(item).val();
+        let name = item.name;
+        let result = name.replace("[projectname]", "");
+        $.get('{{asset('project/check_build')}}?projectname='+index,function (data) {
+            $('input[name="'+result+'[build_check_project_id]"]').val(data.projectid);
+            $('input[name="'+result+'[projectname]"]').val(data.projectname);
+            $('input[name="'+result+'[buildinfo_vernum]"]').val(data.buildinfo_vernum);
+            $('input[name="'+result+'[buildinfo_verstr]"]').val(data.buildinfo_verstr);
+        })
+    }
+
+
 </script>
 <script>
     function editProject(id) {
