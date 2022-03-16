@@ -11,6 +11,9 @@ class Dev_Huawei extends Model
 
     protected $table = 'ngocphandang_dev_huawei';
     protected $guarded = [];
+    public function ga(){
+        return $this->belongsTo(Ga::class,'huawei_ga_name');
+    }
 
 }
 

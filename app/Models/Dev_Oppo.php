@@ -11,6 +11,9 @@ class Dev_Oppo extends Model
 
     protected $table = 'ngocphandang_dev_oppo';
     protected $guarded = [];
+    public function ga(){
+        return $this->belongsTo(Ga::class,'oppo_ga_name');
+    }
 
 }
 

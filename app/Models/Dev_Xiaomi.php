@@ -12,5 +12,9 @@ class Dev_Xiaomi extends Model
     protected $table = 'ngocphandang_dev_xiaomi';
     protected $guarded = [];
 
+    public function ga(){
+        return $this->belongsTo(Ga::class,'xiaomi_ga_name');
+    }
+
 }
 

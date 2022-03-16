@@ -12,5 +12,8 @@ class Dev_Vivo extends Model
     protected $table = 'ngocphandang_dev_vivo';
     protected $guarded = [];
 
+    public function ga(){
+        return $this->belongsTo(Ga::class,'vivo_ga_name');
+    }
 }
 

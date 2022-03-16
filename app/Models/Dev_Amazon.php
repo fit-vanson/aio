@@ -11,6 +11,9 @@ class Dev_Amazon extends Model
 
     protected $table = 'ngocphandang_dev_amazon';
     protected $guarded = [];
+    public function ga(){
+        return $this->belongsTo(Ga::class,'amazon_ga_name');
+    }
 
 }
 
