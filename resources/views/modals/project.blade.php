@@ -1777,33 +1777,39 @@
                         <div class="card">
                             <div class="card-body">
                                 <form class="repeater" id="buildcheckForm" enctype="multipart/form-data">
-                                    <div data-repeater-list="build_check">
-                                        <div data-repeater-item="" class="row">
-                                            <div class="form-group col-lg-3">
-                                                <label for="name">Mã Project</label>
-                                                <input type="hidden" name="build_check_project_id" id="build_check_project_id">
-                                                <input type="text" id="projectname" onchange="getIndex(this)" name="projectname" class="form-control" />
+
+
+
+
+{{--                                    <div data-repeater-list="build_check">--}}
+                                        <div class="row">
+                                            <div class="form-group col-lg-4">
+                                                <p for="name">Mã Project</p>
+{{--                                                <input type="hidden" name="build_check_project_id" id="build_check_project_id">--}}
+                                                <textarea id="projectname" name="projectname" onchange="getIndex(this)" rows="20" tyle="width: 100%"></textarea>
+{{--                                                <input type="text" id="projectname" onchange="getIndex(this)" name="projectname" class="form-control" />--}}
                                             </div>
 
-                                            <div class="form-group col-lg-3">
-                                                <label for="email">VersionCode</label>
-                                                <input type="text" id="buildinfo_vernum" name="buildinfo_vernum" class="form-control" />
+                                            <div class="form-group col-lg-8">
+                                                <p for="email">VersionCode</p>
+                                                <textarea  id="buildinfo_vernum" name="buildinfo_vernum" rows="20" style="width: 100%"></textarea>
+{{--                                                <input type="text" id="buildinfo_vernum" name="buildinfo_vernum" class="form-control" />--}}
                                             </div>
 
-                                            <div class="form-group col-lg-3">
-                                                <label for="subject">Versioncode String</label>
-                                                <input type="text" id="buildinfo_verstr" name="buildinfo_verstr" class="form-control" />
-                                            </div>
+{{--                                            <div class="form-group col-lg-3">--}}
+{{--                                                <label for="subject">Versioncode String</label>--}}
+{{--                                                <input type="text" id="buildinfo_verstr" name="buildinfo_verstr" class="form-control" />--}}
+{{--                                            </div>--}}
 
-                                            <div class="col-lg-2 align-self-center">
-                                                <input data-repeater-delete type="button" class="btn btn-primary btn-block"
-                                                       value="Delete" />
-                                            </div>
-                                        </div>
+{{--                                            <div class="col-lg-2 align-self-center">--}}
+{{--                                                <input data-repeater-delete type="button" class="btn btn-primary btn-block"--}}
+{{--                                                       value="Delete" />--}}
+{{--                                            </div>--}}
+{{--                                        </div>--}}
                                     </div>
-                                    <div class="inner-repeater mb-4">
-                                    <input data-repeater-create type="button" class="btn btn-success mo-mt-2" value="Add" />
-                                    </div>
+{{--                                    <div class="inner-repeater mb-4">--}}
+{{--                                    <input data-repeater-create type="button" class="btn btn-success mo-mt-2" value="Add" />--}}
+{{--                                    </div>--}}
                                     <button type="submit" class="btn btn-primary"  value="build" >Build</button>
                                     <button type="submit" class="btn btn-warning"  value="check" >Check</button>
                                 </form>

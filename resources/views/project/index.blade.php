@@ -443,9 +443,11 @@
 
         $('#buildcheckForm button').click(function (event){
             event.preventDefault();
+            var data = $('textarea#buildinfo_vernum').val()
+            var myArray = data.split("\n");
             if($(this).attr("value") == "build"){
                 $.ajax({
-                    data: $('#buildcheckForm').serialize(),
+                    data: {data: myArray},
                     url: "{{ route('project.updateBuildCheck')}}?buildinfo_console=1",
                     type: "post",
                     dataType: 'json',
@@ -462,6 +464,7 @@
                             $.notify(data.success, "success");
                             $('#buildcheckForm').trigger("reset");
                             $('#buildandcheckModel').modal('hide');
+                            $('textarea#buildinfo_vernum').html('')
                             table.draw();
                         }
                     },
@@ -469,7 +472,7 @@
             }
             if($(this).attr("value") == "check"){
                 $.ajax({
-                    data: $('#buildcheckForm').serialize(),
+                    data: {data: myArray},
                     url: "{{ route('project.updateBuildCheck')}}?buildinfo_console=4",
                     type: "post",
                     dataType: 'json',
@@ -486,6 +489,7 @@
                             $.notify(data.success, "success");
                             $('#buildcheckForm').trigger("reset");
                             $('#buildandcheckModel').modal('hide');
+                            $('textarea#buildinfo_vernum').html('')
                             table.draw();
                         }
                     },
@@ -499,14 +503,22 @@
 
     function getIndex(item){
         let index = $(item).val();
-        let name = item.name;
-        let result = name.replace("[projectname]", "");
-        $.get('{{asset('project/check_build')}}?projectname='+index,function (data) {
-            $('input[name="'+result+'[build_check_project_id]"]').val(data.projectid);
-            $('input[name="'+result+'[projectname]"]').val(data.projectname);
-            $('input[name="'+result+'[buildinfo_vernum]"]').val(data.buildinfo_vernum);
-            $('input[name="'+result+'[buildinfo_verstr]"]').val(data.buildinfo_verstr);
-        })
+        let myArray = index.split("\n");
+        let data = {
+            projectname : myArray
+        }
+        let text = "";
+        $.ajax({
+            type: 'get',
+            url: '{{asset('project/check_build')}}',
+            data: data,
+            success: function (data) {
+                data.forEach(element =>{
+                    text += element.projectname + " | " + element.buildinfo_vernum + " | " + element.buildinfo_verstr +"\n";
+                });
+                $("textarea#buildinfo_vernum").html(text)
+            },
+        });
     }
 
 

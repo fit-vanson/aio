@@ -450,7 +450,6 @@ class ProjectController extends Controller
 //            dd($records);
         }
 
-
         // Total records
         $data_arr = array();
         foreach ($records as $record) {
@@ -3748,21 +3747,30 @@ class ProjectController extends Controller
     }
 
     public function check_build(Request $request){
-        $project = ProjectModel::select('projectid','projectname','buildinfo_verstr','buildinfo_vernum')->where('projectname',$request->projectname)->first();
+//        dd($request->all());
+        $project = ProjectModel::select('projectid','projectname','buildinfo_verstr','buildinfo_vernum')->whereIN('projectname',$request->projectname)->get();
+//        dd($project);
+
         return response()->json($project);
 
     }
 
     public function updateBuildCheck(Request $request){
-        foreach ($request->build_check as $data){
+        $data = $request->data;
+        foreach ($data as $item){
+            $arr = explode("|",$item);
+//            dd($arr);
+//            var_dump(intval($arr[1]));
+//            dd();
+
+
             ProjectModel::updateOrCreate(
                 [
-                    "projectid" => $data['build_check_project_id'],
-
+                    "projectname" => $arr[0],
                 ],
                 [
-                    "buildinfo_vernum" => $data['buildinfo_vernum'],
-                    'buildinfo_verstr' => $data['buildinfo_verstr'],
+                    "buildinfo_vernum" => @(int)trim($arr[1]),
+                    'buildinfo_verstr' => @trim($arr[2]),
                     'buildinfo_console' => $request->buildinfo_console,
                     'buildinfo_mess' => 'Chờ xử lý',
                     'time_mess' => time(),
@@ -3770,6 +3778,23 @@ class ProjectController extends Controller
 
                 ]);
         }
+//        dd($request->all());
+//        foreach ($request->build_check as $data){
+//            ProjectModel::updateOrCreate(
+//                [
+//                    "projectid" => $data['build_check_project_id'],
+//
+//                ],
+//                [
+//                    "buildinfo_vernum" => $data['buildinfo_vernum'],
+//                    'buildinfo_verstr' => $data['buildinfo_verstr'],
+//                    'buildinfo_console' => $request->buildinfo_console,
+//                    'buildinfo_mess' => 'Chờ xử lý',
+//                    'time_mess' => time(),
+//                    'buildinfo_time' =>time(),
+//
+//                ]);
+//        }
         return response()->json(['success'=>'Cập nhật thành công']);
     }
 
