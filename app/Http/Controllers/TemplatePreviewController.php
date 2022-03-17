@@ -102,7 +102,6 @@ class TemplatePreviewController extends Controller
 
         $data = new TemplatePreview();
         $data['tp_name'] = $request->tp_name;
-        $data['tp_number'] = $request->tp_number;
         $data['tp_size'] = $request->tp_size;
         $data['tp_start'] = $request->tp_start;
         if($request->tp_sc){
@@ -128,7 +127,9 @@ class TemplatePreviewController extends Controller
                     'temp3.jpg/temp1.png|overlay|0:0|pr_'.$i.'.jpg';
                 fwrite($myfile, $txt);
             }
+            $data['tp_number'] = $filecount;
         }
+
         $data->save();
         return response()->json(['success'=>'Thêm mới thành công']);
     }

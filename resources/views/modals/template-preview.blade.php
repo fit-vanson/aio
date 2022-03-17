@@ -36,10 +36,7 @@
                                 <label for="name">Tên Template <span style="color: red">*</span></label>
                                 <input type="text" id="tp_name" name="tp_name" class="form-control" required>
                             </div>
-                            <div class="form-group col-lg-6 ">
-                                <label for="name">Number SC</label>
-                                <input type="number" id="tp_number" name="tp_number" class="form-control" required>
-                            </div>
+
                         </div>
                         <div data-repeater-item="" class="row">
                             <div class="form-group col-lg-4">
