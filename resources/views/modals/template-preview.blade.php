@@ -44,7 +44,7 @@
                         <div data-repeater-item="" class="row">
                             <div class="form-group col-lg-4">
                                 <label for="name">File SC</label><p></p>
-                                <input type="file" name="tp_sc" id="tp_sc" class="filestyle" data-buttonname="btn-secondary" accept=".zip,.rar" />
+                                <input type="file" name="tp_sc" id="tp_sc" class="filestyle" data-buttonname="btn-secondary" accept=".zip" />
                             </div>
                             <div class="form-group col-lg-4 ">
                                 <label for="name">Size</label>

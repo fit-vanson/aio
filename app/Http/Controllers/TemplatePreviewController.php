@@ -82,22 +82,23 @@ class TemplatePreviewController extends Controller
     public function create(Request  $request)
     {
 //        dd($request->all());
-        $rules = [
-            'tp_name' =>'unique:template_previews,tp_name',
-            'tp_sc' => 'mimes:zip,rar',
+//        $rules = [
+//            'tp_name' =>'unique:template_previews,tp_name',
+//            'tp_sc' => 'mimes:zip,rar',
+//
+//        ];
+//        $message = [
+//            'tp_name.unique'=>'Tên đã tồn tại',
+//            'tp_sc.mimes'=>'Định dạng file: *.zip',
+//        ];
+//
+//
+//
+//        $error = Validator::make($request->all(),$rules, $message );
+//        if($error->fails()){
+//            return response()->json(['errors'=> $error->errors()->all()]);
+//        }
 
-        ];
-        $message = [
-            'tp_name.unique'=>'Tên đã tồn tại',
-            'tp_sc.mimes'=>'Định dạng file: *.zip',
-        ];
-
-
-        $error = Validator::make($request->all(),$rules, $message );
-
-        if($error->fails()){
-            return response()->json(['errors'=> $error->errors()->all()]);
-        }
 
         $data = new TemplatePreview();
         $data['tp_name'] = $request->tp_name;
@@ -115,6 +116,8 @@ class TemplatePreviewController extends Controller
             $extension = $file->getClientOriginalExtension();
             $tp_sc = $request->tp_name.'.'.$extension;
             $data['tp_sc'] = $tp_sc;
+//            $this->extract_file($file,$destinationPath);
+//            $file->move($destinationPath,$tp_sc);
             $this->extract_file($file,$destinationPath);
             rename($destinationPath.$filenameWithEx, $destinationPath.$request->tp_name);
             for($i= 1 ; $i<=$request->tp_number ; $i++){
@@ -330,15 +333,10 @@ class TemplatePreviewController extends Controller
 
     public function extract_file($file_path, $to_path = "./")
     {
-
         $file_type = $file_path->getClientOriginalExtension();
-//        dd($file_path->getClientOriginalName());
-//        $file_type = substr($file_path, strrpos($file_path, '.') - strlen($file_path) + 1);
-//        dd($file_type);
         if ("zip" === $file_type) {
             $xmlZip = new ZipArchive();
-//            dd($xmlZip);
-            if ($xmlZip->open($file_path) === true) {
+            if ($xmlZip->open($file_path)) {
                 $xmlZip->extractTo($to_path);
                 echo "extract success";
             } else {

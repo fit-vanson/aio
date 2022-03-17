@@ -139,7 +139,7 @@
                         }
                         if(data.success){
                             $.notify(data.success, "success");
-                            $('#templateForm').trigger("reset");
+                            $('#templatePreviewForm').trigger("reset");
                             $('#ajaxModel').modal('hide');
                             table.draw();
                         }
