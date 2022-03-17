@@ -37,17 +37,17 @@
                                 <input type="text" id="tp_name" name="tp_name" class="form-control" required>
                             </div>
 
-                        </div>
-                        <div data-repeater-item="" class="row">
-                            <div class="form-group col-lg-4">
+                            <div class="form-group col-lg-6">
                                 <label for="name">File SC</label><p></p>
                                 <input type="file" name="tp_sc" id="tp_sc" class="filestyle" data-buttonname="btn-secondary" accept=".zip" />
                             </div>
-                            <div class="form-group col-lg-4 ">
+                        </div>
+                        <div data-repeater-item="" class="row">
+                            <div class="form-group col-lg-6 ">
                                 <label for="name">Size</label>
                                 <input type="text" id="tp_size" name="tp_size" class="form-control" required>
                             </div>
-                            <div class="form-group col-lg-4 ">
+                            <div class="form-group col-lg-6 ">
                                 <label for="name">Start</label>
                                 <input type="text" id="tp_start" name="tp_start" class="form-control" required>
                             </div>
