@@ -3757,7 +3757,7 @@ class ProjectController extends Controller
 
     public function updateBuildCheck(Request $request){
         $data = $request->data;
-        foreach ($data as $item){
+        foreach (array_filter($data) as $item){
             $arr = explode("|",$item);
 //            dd($arr);
 //            var_dump(intval($arr[1]));
@@ -3769,8 +3769,8 @@ class ProjectController extends Controller
                     "projectname" => $arr[0],
                 ],
                 [
-                    "buildinfo_vernum" => @(int)trim($arr[1]),
-                    'buildinfo_verstr' => @trim($arr[2]),
+                    "buildinfo_vernum" => (int)trim($arr[1]),
+                    'buildinfo_verstr' => trim($arr[2]),
                     'buildinfo_console' => $request->buildinfo_console,
                     'buildinfo_mess' => 'Chờ xử lý',
                     'time_mess' => time(),
