@@ -130,7 +130,6 @@ class TemplatePreviewController extends Controller
             }
         }
         $data->save();
-
         return response()->json(['success'=>'Thêm mới thành công']);
     }
 
