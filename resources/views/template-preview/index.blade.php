@@ -110,12 +110,10 @@
 
         $('#createNewTemplatePreview').click(function () {
             $('#saveBtn').val("create-template-preview");
-            $('#template_id').val('');
-            $('#templateForm').trigger("reset");
-            $('#modelHeading').html("Thêm mới Template");
-            $('#ajaxModel').modal('show');
-            $('.input_buildinfo_console').hide();
-            $('.input_api').hide();
+            $('#tp_id').val('');
+            $('#templatePreviewForm').trigger("reset");
+            $('#modelHeading').html("Template Preview");
+            $('#template_previewModel').modal('show');
         });
         $('#templatePreviewForm').on('submit',function (event){
             event.preventDefault();
@@ -140,7 +138,7 @@
                         if(data.success){
                             $.notify(data.success, "success");
                             $('#templatePreviewForm').trigger("reset");
-                            $('#ajaxModel').modal('hide');
+                            $('#template_previewModel').modal('hide');
                             table.draw();
                         }
                     },

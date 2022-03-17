@@ -116,11 +116,11 @@ class TemplatePreviewController extends Controller
             $extension = $file->getClientOriginalExtension();
             $tp_sc = $request->tp_name.'.'.$extension;
             $data['tp_sc'] = $tp_sc;
-//            $this->extract_file($file,$destinationPath);
-//            $file->move($destinationPath,$tp_sc);
             $this->extract_file($file,$destinationPath);
             rename($destinationPath.$filenameWithEx, $destinationPath.$request->tp_name);
-            for($i= 1 ; $i<=$request->tp_number ; $i++){
+            $files = glob($destinationPath.$request->tp_name.'/*.png');
+            $filecount = count( $files );
+            for($i= 1 ; $i<=$filecount ; $i++){
                 $myfile = fopen($destinationPath.$request->tp_name."/pr".$i.".txt", "w") or die("Unable to open file!");
                 $txt = 'pr'.$i.'.png|resize|1080:1920|temp1.png'."\n".
                     'sc_'.$i.'.jpg|resize|'.$request->tp_size.'|temp2.jpg'."\n".
@@ -130,11 +130,8 @@ class TemplatePreviewController extends Controller
             }
         }
         $data->save();
-        $allTemp  = Template::latest('id')->get();
-        return response()->json([
-            'success'=>'Thêm mới thành công',
-            'temp' => $allTemp
-        ]);
+
+        return response()->json(['success'=>'Thêm mới thành công']);
     }
 
     /**
@@ -338,7 +335,7 @@ class TemplatePreviewController extends Controller
             $xmlZip = new ZipArchive();
             if ($xmlZip->open($file_path)) {
                 $xmlZip->extractTo($to_path);
-                echo "extract success";
+                return true;
             } else {
                 echo "extract fail";
                 return false;
@@ -352,6 +349,7 @@ class TemplatePreviewController extends Controller
                     $entry->extract($to_path);
                 }
                 $archive->close();
+                return true;
             }else{
                 echo "extract fail";
                 return false;

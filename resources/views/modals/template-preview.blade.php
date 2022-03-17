@@ -1,5 +1,5 @@
 
-<div class="modal fade bd-example-modal-xl" id="ajaxModel" aria-hidden="true">
+<div class="modal fade bd-example-modal-xl" id="template_previewModel" aria-hidden="true">
     <div class="modal-dialog modal-xl">
         <div class="modal-content">
             <div class="modal-header">
