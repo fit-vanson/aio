@@ -11,46 +11,25 @@
                     <input type="hidden" name="tp_id" id="tp_id">
 
                     <div>
-{{--                        <div data-repeater-item="" class="row">--}}
-{{--                            <div class="form-group col-lg-3">--}}
-{{--                                <label>Logo</label>--}}
-{{--                                <input  id="logo" type="file" name="logo" class="form-control" hidden onchange="changeImg(this)" accept="image/*">--}}
-{{--                                <img id="avatar" class="thumbnail" width="100px" src="img/logo.png">--}}
-{{--                            </div>--}}
-{{--                            <div class="form-group col-lg-3">--}}
-{{--                                <label for="name">DATA</label><p></p>--}}
-{{--                                <input type="file" name="template_data" id="template_data" class="filestyle" data-buttonname="btn-secondary" accept=".zip">--}}
-{{--                            </div>--}}
-{{--                            <div class="form-group col-lg-3">--}}
-{{--                                <label for="name">APK</label><p></p>--}}
-{{--                                <input type="file" name="template_apk" id="template_apk" class="filestyle" data-buttonname="btn-secondary" accept=".apk">--}}
-{{--                            </div>--}}
-{{--                            <div class="form-group col-lg-3 ">--}}
-{{--                                <label for="name">Tên Template</label>--}}
-{{--                                <input type="text" id="template_name" name="template_name" class="form-control">--}}
-{{--                            </div>--}}
-
-{{--                        </div>--}}
                         <div class="row">
                             <div class="form-group col-lg-6">
                                 <label for="name">Tên Template <span style="color: red">*</span></label>
                                 <input type="text" id="tp_name" name="tp_name" class="form-control" required>
                             </div>
-
                             <div class="form-group col-lg-6">
                                 <label for="name">File SC</label><p></p>
                                 <input type="file" name="tp_sc" id="tp_sc" class="filestyle" data-buttonname="btn-secondary" accept=".zip" />
                             </div>
                         </div>
                         <div data-repeater-item="" class="row">
-                            <div class="form-group col-lg-6 ">
-                                <label for="name">Size</label>
-                                <input type="text" id="tp_size" name="tp_size" class="form-control" required>
-                            </div>
-                            <div class="form-group col-lg-6 ">
-                                <label for="name">Start</label>
-                                <input type="text" id="tp_start" name="tp_start" class="form-control" required>
-                            </div>
+                            <?php
+                            for ($i = 1; $i<=8 ;$i++){
+                            ?>
+                                <div class="form-group col-lg-6 ">
+                                    <label for="name">SCRIPT {{$i}} </label>
+                                    <textarea id="tp_script_{{$i}}" name="tp_script_{{$i}}" class="form-control" rows="4" ></textarea>
+                                </div>
+                            <?php }?>
                         </div>
 
                     </div>

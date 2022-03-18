@@ -2,19 +2,19 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Template;
-use App\Models\TemplatePreview;
-use Illuminate\Http\Request;
-use Illuminate\Support\Facades\DB;
-use Illuminate\Support\Facades\Validator;
-use Intervention\Image\Facades\Image;
-use RarArchive;
-use ZipArchive;
 
-class TemplatePreviewController extends Controller
+use App\Models\TemplatePreview;
+use App\Models\TemplateTextPr;
+use Illuminate\Http\Request;
+
+use Illuminate\Support\Facades\Validator;
+
+
+
+class TemplateTextPrController extends Controller
 {
     public function index(){
-        return view('template-preview.index');
+        return view('template-text-preview.index');
     }
 
     public function getIndex(Request $request)
@@ -36,17 +36,17 @@ class TemplatePreviewController extends Controller
 
 
         // Total records
-        $totalRecords = TemplatePreview::select('count(*) as allcount')->count();
-        $totalRecordswithFilter = TemplatePreview::select('count(*) as allcount')
-            ->where('tp_name', 'like', '%' . $searchValue . '%')
-            ->orWhere('tp_sc', 'like', '%' . $searchValue . '%')
+        $totalRecords = TemplateTextPr::select('count(*) as allcount')->count();
+        $totalRecordswithFilter = TemplateTextPr::select('count(*) as allcount')
+            ->where('tt_name', 'like', '%' . $searchValue . '%')
+            ->orWhere('tt_file', 'like', '%' . $searchValue . '%')
             ->count();
 
 
         // Get records, also we have included search filter as well
-        $records = TemplatePreview::orderBy($columnName, $columnSortOrder)
-            ->where('tp_name', 'like', '%' . $searchValue . '%')
-            ->orWhere('tp_sc', 'like', '%' . $searchValue . '%')
+        $records = TemplateTextPr::orderBy($columnName, $columnSortOrder)
+            ->where('tt_name', 'like', '%' . $searchValue . '%')
+            ->orWhere('tt_file', 'like', '%' . $searchValue . '%')
             ->select('*')
             ->skip($start)
             ->take($rowperpage)
@@ -54,12 +54,12 @@ class TemplatePreviewController extends Controller
 
         $data_arr = array();
         foreach ($records as $record) {
-            $btn = ' <a href="javascript:void(0)" onclick="editTemplatePreview('.$record->id.')" class="btn btn-warning"><i class="ti-pencil-alt"></i></a>';
-            $btn = $btn.' <a href="javascript:void(0)" data-toggle="tooltip"  data-id="'.$record->id.'" data-original-title="Delete" class="btn btn-danger deleteTemplatePreview"><i class="ti-trash"></i></a>';
+            $btn = ' <a href="javascript:void(0)" onclick="editTemplateTextPreview('.$record->id.')" class="btn btn-warning"><i class="ti-pencil-alt"></i></a>';
+            $btn = $btn.' <a href="javascript:void(0)" data-toggle="tooltip"  data-id="'.$record->id.'" data-original-title="Delete" class="btn btn-danger deleteTemplateTextPreview"><i class="ti-trash"></i></a>';
 
             $data_arr[] = array(
-                "tp_name" => $record->tp_name,
-                "tp_sc" => $record->tp_sc,
+                "tt_name" => $record->tt_name,
+                "tt_file" => $record->tt_file,
                 "action"=> $btn,
             );
         }
@@ -79,15 +79,16 @@ class TemplatePreviewController extends Controller
     {
 
         $rules = [
-            'tp_name' =>'unique:template_previews,tp_name',
-            'tp_sc' => 'required|mimes:zip,rar',
+            'tt_name' =>'unique:template_text_prs,tt_name',
+            'tt_file' => 'required|mimes:zip,rar',
 
         ];
         $message = [
-            'tp_name.unique'=>'Tên đã tồn tại',
-            'tp_sc.mimes'=>'Định dạng file: *.zip',
-            'tp_sc.required'=>'Trường không để trống',
+            'tt_name.unique'=>'Tên đã tồn tại',
+            'tt_file.mimes'=>'Định dạng file: *.zip',
+            'tt_file.required'=>'Trường không để trống',
         ];
+
 
 
 
@@ -96,27 +97,19 @@ class TemplatePreviewController extends Controller
             return response()->json(['errors'=> $error->errors()->all()]);
         }
 
-        $data = new TemplatePreview();
-        $data['tp_name'] = $request->tp_name;
-        $data['tp_script_1'] = $request->tp_script_1 ? $request->tp_script_1 : '';
-        $data['tp_script_2'] = $request->tp_script_2 ? $request->tp_script_2 : '';
-        $data['tp_script_3'] = $request->tp_script_3 ? $request->tp_script_3 : '';
-        $data['tp_script_4'] = $request->tp_script_4 ? $request->tp_script_4 : '';
-        $data['tp_script_5'] = $request->tp_script_5 ? $request->tp_script_5 : '';
-        $data['tp_script_6'] = $request->tp_script_6 ? $request->tp_script_6 : '';
-        $data['tp_script_7'] = $request->tp_script_7 ? $request->tp_script_7 : '';
-        $data['tp_script_8'] = $request->tp_script_8 ? $request->tp_script_8 : '';
+        $data = new TemplateTextPr();
+        $data['tt_name'] = $request->tt_name;
 
-        if($request->tp_sc){
-            $destinationPath = public_path('file-manager/TemplatePreview/');
+        if($request->tt_file){
+            $destinationPath = public_path('file-manager/TemplateTextPreview/');
             if (!file_exists($destinationPath)) {
                 mkdir($destinationPath, 0777, true);
             }
-            $file = $request->tp_sc;
+            $file = $request->tt_file;
             $extension = $file->getClientOriginalExtension();
-            $tp_sc = $request->tp_name.'.'.$extension;
-            $data['tp_sc'] = $tp_sc;
-            $file->move($destinationPath, $tp_sc);
+            $tt_file = $request->tt_name.'.'.$extension;
+            $data['tt_file'] = $tt_file;
+            $file->move($destinationPath, $tt_file);
         }
         $data->save();
         return response()->json(['success'=>'Thêm mới thành công']);
@@ -152,7 +145,7 @@ class TemplatePreviewController extends Controller
      */
     public function edit($id)
     {
-        $temp = TemplatePreview::find($id);
+        $temp = TemplateTextPr::find($id);
         return response()->json($temp);
     }
 
@@ -166,17 +159,17 @@ class TemplatePreviewController extends Controller
     public function update(Request $request)
     {
 
-        $id = $request->tp_id;
+
+        $id = $request->tt_id;
 
         $rules = [
-            'tp_name' =>'unique:template_previews,tp_name,'.$id.',id',
-            'tp_sc' => 'mimes:zip,rar',
+            'tt_name' =>'unique:template_text_prs,tt_name,'.$id.',id',
+            'tt_file' => 'mimes:zip,rar',
 
         ];
         $message = [
-            'tp_name.unique'=>'Tên đã tồn tại',
-            'tp_sc.mimes'=>'Định dạng file: *.zip',
-            'tp_sc.required'=>'Trường không để trống',
+            'tt_name.unique'=>'Tên đã tồn tại',
+            'tt_file.mimes'=>'Định dạng file: *.zip',
         ];
 
 
@@ -185,39 +178,31 @@ class TemplatePreviewController extends Controller
             return response()->json(['errors'=> $error->errors()->all()]);
         }
 
-        $data = TemplatePreview::find($id);
+        $data = TemplateTextPr::find($id);
 
 //        dd($data);
 
-        $data->tp_script_1 = $request->tp_script_1 ? $request->tp_script_1 : '';
-        $data->tp_script_2 = $request->tp_script_2 ? $request->tp_script_2 : '';
-        $data->tp_script_3 = $request->tp_script_3 ? $request->tp_script_3 : '';
-        $data->tp_script_4 = $request->tp_script_4 ? $request->tp_script_4 : '';
-        $data->tp_script_5 = $request->tp_script_5 ? $request->tp_script_5 : '';
-        $data->tp_script_6 = $request->tp_script_6 ? $request->tp_script_6 : '';
-        $data->tp_script_7 = $request->tp_script_7 ? $request->tp_script_7 : '';
-        $data->tp_script_8 = $request->tp_script_8 ? $request->tp_script_8 : '';
-        $destinationPath = public_path('file-manager/TemplatePreview/');
+        $destinationPath = public_path('file-manager/TemplateTextPreview/');
         if (!file_exists($destinationPath)) {
             mkdir($destinationPath, 0777, true);
         }
-        if($request->tp_sc ){
-            $path_Remove = public_path('file-manager/TemplatePreview/') . $data->tp_sc;
+        if($request->tt_file ){
+            $path_Remove = public_path('file-manager/TemplatePreview/') . $data->tt_file;
             if (file_exists($path_Remove)) {
                 unlink($path_Remove);
             }
-            $file = $request->tp_sc;
+            $file = $request->tt_file;
             $extension = $file->getClientOriginalExtension();
-            $tp_sc = $request->tp_name.'.'.$extension;
-            $data['tp_sc'] = $tp_sc;
-            $file->move($destinationPath, $tp_sc);
+            $tt_file = $request->tp_name.'.'.$extension;
+            $data['tt_file'] = $tt_file;
+            $file->move($destinationPath, $tt_file);
         }
-        if($data->tp_name != $request->tp_name){
-            $file= pathinfo($destinationPath.$data->tp_sc);
-            rename($destinationPath.$data->tp_sc, $destinationPath.$request->tp_name.'.'.$file['extension']);
-            $data['tp_sc'] = $request->tp_name.'.'.$file['extension'];
+        if($data->tt_name != $request->tt_name){
+            $file= pathinfo($destinationPath.$data->tt_file);
+            rename($destinationPath.$data->tt_file, $destinationPath.$request->tt_name.'.'.$file['extension']);
+            $data['tt_file'] = $request->tt_name.'.'.$file['extension'];
         }
-        $data->tp_name = $request->tp_name;
+        $data->tt_name = $request->tt_name;
         $data->save();
         return response()->json(['success'=>'Cập nhật thành công']);
     }
@@ -230,8 +215,8 @@ class TemplatePreviewController extends Controller
      */
     public function delete($id)
     {
-        $data = TemplatePreview::find($id);
-        $path_Remove = public_path('file-manager/TemplatePreview/') . $data->tp_sc;
+        $data = TemplateTextPr::find($id);
+        $path_Remove = public_path('file-manager/TemplateTextPreview/') . $data->tt_file;
         if (file_exists($path_Remove)) {
             unlink($path_Remove);
         }

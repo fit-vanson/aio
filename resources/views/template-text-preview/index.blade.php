@@ -20,14 +20,14 @@
 
 @section('breadcrumb')
 <div class="col-sm-6">
-    <h4 class="page-title">Template Preview</h4>
+    <h4 class="page-title">Template Text Preview</h4>
 </div>
 <div class="col-sm-6">
     <div class="float-right">
-        <a class="btn btn-success" href="javascript:void(0)" id="createNewTemplatePreview"> Create New</a>
+        <a class="btn btn-success" href="javascript:void(0)" id="createNewTemplateTextPreview"> Create New</a>
     </div>
 </div>
-@include('modals.template-preview')
+@include('modals.template-text-preview')
 @endsection
 @section('content')
 
@@ -39,8 +39,8 @@
                      <table class="table table-bordered dt-responsive nowrap data-table" style="border-collapse: collapse; border-spacing: 0; width: 100%;">
                         <thead>
                         <tr>
-                            <th>Template Preview</th>
-                            <th>SC</th>
+                            <th>Template Text Preview</th>
+                            <th>File </th>
                             <th>Action</th>
                         </tr>
                         </thead>
@@ -87,32 +87,32 @@
             serverSide: true,
             displayLength: 50,
             ajax: {
-                url: "{{ route('template-preview.getIndex') }}",
+                url: "{{ route('template-text-preview.getIndex') }}",
                 type: "post"
             },
             columns: [
-                {data: 'tp_name'},
-                {data: 'tp_sc'},
+                {data: 'tt_name'},
+                {data: 'tt_file'},
                 {data: 'action',className: "text-center", name: 'action', orderable: false, searchable: false},
             ],
             order:[1,'asc']
 
         });
 
-        $('#createNewTemplatePreview').click(function () {
-            $('#saveBtn').val("create-template-preview");
-            $('#tp_id').val('');
-            $('#templatePreviewForm').trigger("reset");
-            $('#modelHeading').html("Template Preview");
-            $('#template_previewModel').modal('show');
+        $('#createNewTemplateTextPreview').click(function () {
+            $('#saveBtn').val("create-template-text-preview");
+            $('#tt_id').val('');
+            $('#templateTextPreviewForm').trigger("reset");
+            $('#modelHeading').html("Template Text Preview");
+            $('#template_text_previewModel').modal('show');
         });
-        $('#templatePreviewForm').on('submit',function (event){
+        $('#templateTextPreviewForm').on('submit',function (event){
             event.preventDefault();
-            var formData = new FormData($("#templatePreviewForm")[0]);
-            if($('#saveBtn').val() == 'create-template-preview'){
+            var formData = new FormData($("#templateTextPreviewForm")[0]);
+            if($('#saveBtn').val() == 'create-template-text-preview'){
                 $.ajax({
                     data: formData,
-                    url: "{{ route('template-preview.create') }}",
+                    url: "{{ route('template-text-preview.create') }}",
                     type: "POST",
                     dataType: 'json',
                     processData: false,
@@ -120,7 +120,7 @@
                     success: function (data) {
                         if(data.errors){
                             for( var count=0 ; count <data.errors.length; count++){
-                                $("#templatePreviewForm").notify(
+                                $("#templateTextPreviewForm").notify(
                                     data.errors[count],"error",
                                     { position:"right" }
                                 );
@@ -128,17 +128,17 @@
                         }
                         if(data.success){
                             $.notify(data.success, "success");
-                            $('#templatePreviewForm').trigger("reset");
-                            $('#template_previewModel').modal('hide');
+                            $('#templateTextPreviewForm').trigger("reset");
+                            $('#template_text_previewModel').modal('hide');
                             table.draw();
                         }
                     },
                 });
             }
-            if($('#saveBtn').val() == 'edit-template-preview'){
+            if($('#saveBtn').val() == 'edit-template-text-preview'){
                 $.ajax({
                     data: formData,
-                    url: "{{ route('template-preview.update') }}",
+                    url: "{{ route('template-text-preview.update') }}",
                     type: "post",
                     dataType: 'json',
                     processData: false,
@@ -146,7 +146,7 @@
                     success: function (data) {
                         if(data.errors){
                             for( var count=0 ; count <data.errors.length; count++){
-                                $("#templatePreviewForm").notify(
+                                $("#templateTextPreviewForm").notify(
                                     data.errors[count],"error",
                                     { position:"right" }
                                 );
@@ -154,15 +154,15 @@
                         }
                         if(data.success){
                             $.notify(data.success, "success");
-                            $('#templatePreviewForm').trigger("reset");
-                            $('#template_previewModel').modal('hide');
+                            $('#templateTextPreviewForm').trigger("reset");
+                            $('#template_text_previewModel').modal('hide');
                             table.draw();
                         }
                     },
                 });
             }
         });
-        $(document).on('click','.deleteTemplatePreview', function (data){
+        $(document).on('click','.deleteTemplateTextPreview', function (data){
             var template_id = $(this).data("id");
             swal({
                     title: "Bạn có chắc muốn xóa?",
@@ -176,7 +176,7 @@
                 function(){
                     $.ajax({
                         type: "get",
-                        url: "{{ asset("template-preview/delete") }}/" + template_id,
+                        url: "{{ asset("template-text-preview/delete") }}/" + template_id,
                         success: function (data) {
                             table.draw();
                         },
@@ -191,25 +191,16 @@
 </script>
 
 <script>
-    function editTemplatePreview(id) {
-        $.get('{{asset('template-preview/edit')}}/'+id,function (data) {
-            console.log(data)
+    function editTemplateTextPreview(id) {
+        $.get('{{asset('template-text-preview/edit')}}/'+id,function (data) {
 
 
-            $('#tp_id').val(data.id);
-            $('#tp_name').val(data.tp_name);
-            $('#tp_script_1').val(data.tp_script_1);
-            $('#tp_script_2').val(data.tp_script_2);
-            $('#tp_script_3').val(data.tp_script_3);
-            $('#tp_script_4').val(data.tp_script_4);
-            $('#tp_script_5').val(data.tp_script_5);
-            $('#tp_script_6').val(data.tp_script_6);
-            $('#tp_script_7').val(data.tp_script_7);
-            $('#tp_script_8').val(data.tp_script_8);
 
+            $('#tt_id').val(data.id);
+            $('#tt_name').val(data.tt_name);
             $('#modelHeading').html("Edit");
-            $('#saveBtn').val("edit-template-preview");
-            $('#template_previewModel').modal('show');
+            $('#saveBtn').val("edit-template-text-preview");
+            $('#template_text_previewModel').modal('show');
             $('.modal').on('hidden.bs.modal', function (e) {
                 $('body').addClass('modal-open');
             });

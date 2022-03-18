@@ -31,6 +31,7 @@ use App\Http\Controllers\ScriptController;
 use App\Http\Controllers\SmsController;
 use App\Http\Controllers\TemplateController;
 use App\Http\Controllers\TemplatePreviewController;
+use App\Http\Controllers\TemplateTextPrController;
 use App\Http\Controllers\TwoFaceAuthsController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\VerifyTwoFaceController;
@@ -229,6 +230,18 @@ Route::group(['prefix'=>'template-preview','middleware'=>['CheckLogout','2fa']],
     Route::get('/delete/{id}',[TemplatePreviewController::class,'delete'])->name('template-preview.delete')->middleware('can:template-delete');
     Route::get('/upload',[TemplatePreviewController::class,'upload'])->name('template-preview.upload')->middleware('can:template-index');
 });
+
+Route::group(['prefix'=>'template-text-preview','middleware'=>['CheckLogout','2fa']], function (){
+    Route::get('/',[TemplateTextPrController::class,'index'])->name('template-text-preview.index')->middleware('can:template-index');
+    Route::post('/getIndex',[TemplateTextPrController::class,'getIndex'])->name('template-text-preview.getIndex')->middleware('can:template-index');
+    Route::post('/create',[TemplateTextPrController::class,'create'])->name('template-text-preview.create')->middleware('can:template-add');
+    Route::get('/edit/{id}',[TemplateTextPrController::class,'edit'])->name('template-text-preview.edit')->middleware('can:template-edit');
+    Route::get('/show/{id}',[TemplateTextPrController::class,'edit'])->name('template-text-preview.show')->middleware('can:template-show');
+    Route::post('/update',[TemplateTextPrController::class,'update'])->name('template-text-preview.update')->middleware('can:template-update');
+    Route::get('/delete/{id}',[TemplateTextPrController::class,'delete'])->name('template-text-preview.delete')->middleware('can:template-delete');
+    Route::get('/upload',[TemplateTextPrController::class,'upload'])->name('template-text-preview.upload')->middleware('can:template-index');
+});
+
 
 Route::group(['prefix'=>'ga_dev','middleware'=>['CheckLogout','2fa']], function (){
     Route::get('/',[Ga_devController::class,'index'])->name('gadev.index')->middleware('can:gadev-index');
