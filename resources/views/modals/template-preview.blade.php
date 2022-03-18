@@ -47,6 +47,13 @@
                                     <label class="custom-control-label" for="tp_pink"> Pink</label>
                                 </div>
                             </div>
+
+                            <div class="form-group col-lg-2">
+                                <div class="custom-control custom-checkbox">
+                                    <input type="checkbox" class="custom-control-input" id="tp_yellow" name="tp_yellow" >
+                                    <label class="custom-control-label" for="tp_yellow"> Yellow</label>
+                                </div>
+                            </div>
                         </div>
                         <div class="row">
                             <?php
