@@ -232,6 +232,12 @@
                 $("#tp_pink").prop('checked', false);
             }
 
+            if(data.tp_yellow !=0){
+                $("#tp_yellow").prop('checked', true);
+            }else{
+                $("#tp_yellow").prop('checked', false);
+            }
+
             $('#modelHeading').html("Edit");
             $('#saveBtn').val("edit-template-preview");
             $('#template_previewModel').modal('show');
