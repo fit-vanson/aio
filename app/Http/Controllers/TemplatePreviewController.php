@@ -109,6 +109,7 @@ class TemplatePreviewController extends Controller
         $data['tp_blue'] = $request->tp_blue ? 1 : 0;
         $data['tp_while'] = $request->tp_while ? 1 : 0;
         $data['tp_pink'] = $request->tp_pink ? 1 : 0;
+        $data['tp_yellow'] = $request->tp_yellow ? 1 : 0;
 
         if($request->tp_sc){
             $destinationPath = public_path('file-manager/TemplatePreview/');
@@ -204,6 +205,7 @@ class TemplatePreviewController extends Controller
         $data->tp_blue= $request->tp_blue ? 1 : 0;
         $data->tp_while = $request->tp_while ? 1 : 0;
         $data->tp_pink = $request->tp_pink ? 1 : 0;
+        $data->tp_yellow = $request->tp_yellow ? 1 : 0;
 
 
 
