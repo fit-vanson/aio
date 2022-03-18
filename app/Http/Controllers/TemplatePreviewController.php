@@ -77,7 +77,6 @@ class TemplatePreviewController extends Controller
 
     public function create(Request  $request)
     {
-
         $rules = [
             'tp_name' =>'unique:template_previews,tp_name',
             'tp_sc' => 'required|mimes:zip,rar',
@@ -106,6 +105,10 @@ class TemplatePreviewController extends Controller
         $data['tp_script_6'] = $request->tp_script_6 ? $request->tp_script_6 : '';
         $data['tp_script_7'] = $request->tp_script_7 ? $request->tp_script_7 : '';
         $data['tp_script_8'] = $request->tp_script_8 ? $request->tp_script_8 : '';
+        $data['tp_black'] = $request->tp_black ? 1 : 0;
+        $data['tp_blue'] = $request->tp_blue ? 1 : 0;
+        $data['tp_while'] = $request->tp_while ? 1 : 0;
+        $data['tp_pink'] = $request->tp_pink ? 1 : 0;
 
         if($request->tp_sc){
             $destinationPath = public_path('file-manager/TemplatePreview/');
@@ -197,6 +200,13 @@ class TemplatePreviewController extends Controller
         $data->tp_script_6 = $request->tp_script_6 ? $request->tp_script_6 : '';
         $data->tp_script_7 = $request->tp_script_7 ? $request->tp_script_7 : '';
         $data->tp_script_8 = $request->tp_script_8 ? $request->tp_script_8 : '';
+        $data->tp_black = $request->tp_black ? 1 : 0;
+        $data->tp_blue= $request->tp_blue ? 1 : 0;
+        $data->tp_while = $request->tp_while ? 1 : 0;
+        $data->tp_pink = $request->tp_pink ? 1 : 0;
+
+
+
         $destinationPath = public_path('file-manager/TemplatePreview/');
         if (!file_exists($destinationPath)) {
             mkdir($destinationPath, 0777, true);

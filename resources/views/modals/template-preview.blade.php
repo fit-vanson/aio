@@ -21,7 +21,34 @@
                                 <input type="file" name="tp_sc" id="tp_sc" class="filestyle" data-buttonname="btn-secondary" accept=".zip" />
                             </div>
                         </div>
-                        <div data-repeater-item="" class="row">
+
+                        <div class="row">
+                            <div class="form-group col-lg-2">
+                                <div class="custom-control custom-checkbox">
+                                    <input type="checkbox" class="custom-control-input" id="tp_black" name="tp_black"  >
+                                    <label class="custom-control-label" for="tp_black"> Black</label>
+                                </div>
+                            </div>
+                            <div class="form-group col-lg-2">
+                                <div class="custom-control custom-checkbox">
+                                    <input type="checkbox" class="custom-control-input" id="tp_blue" name="tp_blue">
+                                    <label class="custom-control-label" for="tp_blue"> Blue</label>
+                                </div>
+                            </div>
+                            <div class="form-group col-lg-2">
+                                <div class="custom-control custom-checkbox">
+                                    <input type="checkbox" class="custom-control-input" id="tp_while" name="tp_while" >
+                                    <label class="custom-control-label" for="tp_while"> While</label>
+                                </div>
+                            </div>
+                            <div class="form-group col-lg-2">
+                                <div class="custom-control custom-checkbox">
+                                    <input type="checkbox" class="custom-control-input" id="tp_pink" name="tp_pink" >
+                                    <label class="custom-control-label" for="tp_pink"> Pink</label>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
                             <?php
                             for ($i = 1; $i<=8 ;$i++){
                             ?>

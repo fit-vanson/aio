@@ -207,6 +207,31 @@
             $('#tp_script_7').val(data.tp_script_7);
             $('#tp_script_8').val(data.tp_script_8);
 
+
+            if(data.tp_black !=0){
+                $("#tp_black").prop('checked', true);
+            }else{
+                $("#tp_black").prop('checked', false);
+            }
+
+            if(data.tp_blue !=0){
+                $("#tp_blue").prop('checked', true);
+            }else{
+                $("#tp_blue").prop('checked', false);
+            }
+
+            if(data.tp_while !=0){
+                $("#tp_while").prop('checked', true);
+            }else{
+                $("#tp_while").prop('checked', false);
+            }
+
+            if(data.tp_pink !=0){
+                $("#tp_pink").prop('checked', true);
+            }else{
+                $("#tp_pink").prop('checked', false);
+            }
+
             $('#modelHeading').html("Edit");
             $('#saveBtn').val("edit-template-preview");
             $('#template_previewModel').modal('show');
