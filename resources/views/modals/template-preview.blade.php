@@ -55,6 +55,7 @@
                                 </div>
                             </div>
                         </div>
+
                         <div class="row">
                             <?php
                             for ($i = 1; $i<=8 ;$i++){
