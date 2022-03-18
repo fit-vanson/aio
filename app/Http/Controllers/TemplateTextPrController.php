@@ -204,6 +204,7 @@ class TemplateTextPrController extends Controller
         }
         $data->tt_name = $request->tt_name;
         $data->save();
+
         return response()->json(['success'=>'Cập nhật thành công']);
     }
 
