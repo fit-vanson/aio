@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 
+use App\Models\CategoryTemplate;
 use App\Models\TemplatePreview;
 use App\Models\TemplateTextPr;
 use Illuminate\Http\Request;
@@ -14,7 +15,9 @@ use Illuminate\Support\Facades\Validator;
 class TemplateTextPrController extends Controller
 {
     public function index(){
-        return view('template-text-preview.index');
+        $categoyTemplate =  CategoryTemplate::latest('id')->where('category_template_parent',0)->get();
+        return view('template-text-preview.index',compact([
+            'categoyTemplate']));
     }
 
     public function getIndex(Request $request)

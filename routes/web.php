@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\CategoryTemplateController;
 use App\Http\Controllers\CocsimController;
 use App\Http\Controllers\CronProjectController;
 use App\Http\Controllers\DaController;
@@ -240,6 +241,18 @@ Route::group(['prefix'=>'template-text-preview','middleware'=>['CheckLogout','2f
     Route::post('/update',[TemplateTextPrController::class,'update'])->name('template-text-preview.update')->middleware('can:template-update');
     Route::get('/delete/{id}',[TemplateTextPrController::class,'delete'])->name('template-text-preview.delete')->middleware('can:template-delete');
     Route::get('/upload',[TemplateTextPrController::class,'upload'])->name('template-text-preview.upload')->middleware('can:template-index');
+});
+
+Route::group(['prefix'=>'category_template','middleware'=>['CheckLogout','2fa']], function (){
+    Route::get('/',[CategoryTemplateController::class,'index'])->name('category_template.index')->middleware('can:template-index');
+    Route::post('/getIndex',[CategoryTemplateController::class,'getIndex'])->name('category_template.getIndex')->middleware('can:template-index');
+    Route::post('/create',[CategoryTemplateController::class,'create'])->name('category_template.create')->middleware('can:template-add');
+    Route::get('/edit/{id}',[CategoryTemplateController::class,'edit'])->name('category_template.edit')->middleware('can:template-edit');
+    Route::get('/show/{id}',[CategoryTemplateController::class,'edit'])->name('category_template.show')->middleware('can:template-show');
+    Route::post('/update',[CategoryTemplateController::class,'update'])->name('category_template.update')->middleware('can:template-update');
+    Route::get('/delete/{id}',[CategoryTemplateController::class,'delete'])->name('category_template.delete')->middleware('can:template-delete');
+    Route::get('/upload',[CategoryTemplateController::class,'upload'])->name('category_template.upload')->middleware('can:template-index');
+    Route::get('/get-cate-temp-parent/{id}',[CategoryTemplateController::class,'getCateTempParent'])->name('category_template.getCateTempParent')->middleware('can:template-index');
 });
 
 

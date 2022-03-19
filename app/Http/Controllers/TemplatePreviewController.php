@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\CategoryTemplate;
 use App\Models\Template;
 use App\Models\TemplatePreview;
 use Illuminate\Http\Request;
@@ -14,7 +15,9 @@ use ZipArchive;
 class TemplatePreviewController extends Controller
 {
     public function index(){
-        return view('template-preview.index');
+        $categoyTemplate =  CategoryTemplate::latest('id')->where('category_template_parent',0)->get();
+        return view('template-preview.index',compact([
+            'categoyTemplate']));
     }
 
     public function getIndex(Request $request)
@@ -45,21 +48,34 @@ class TemplatePreviewController extends Controller
 
         // Get records, also we have included search filter as well
         $records = TemplatePreview::orderBy($columnName, $columnSortOrder)
+
+
+            ->select('*',DB::raw("sum( IF(tp_script_1 = '',0,1)  + IF(tp_script_2 = '',0,1)  + IF(tp_script_3 = '',0,1)  + IF(tp_script_4 = '',0,1)  + IF(tp_script_5 = '',0,1)  + IF(tp_script_6 = '',0,1)  + IF(tp_script_7 = '',0,1)  + IF(tp_script_8 = '',0,1)  ) AS sum_script") )
+
             ->where('tp_name', 'like', '%' . $searchValue . '%')
             ->orWhere('tp_sc', 'like', '%' . $searchValue . '%')
-            ->select('*')
+//            ->orWhere('sum_script', 'like', '%' . $searchValue . '%')
+            ->groupBy('tp_name')
             ->skip($start)
             ->take($rowperpage)
             ->get();
+
+
 
         $data_arr = array();
         foreach ($records as $record) {
             $btn = ' <a href="javascript:void(0)" onclick="editTemplatePreview('.$record->id.')" class="btn btn-warning"><i class="ti-pencil-alt"></i></a>';
             $btn = $btn.' <a href="javascript:void(0)" data-toggle="tooltip"  data-id="'.$record->id.'" data-original-title="Delete" class="btn btn-danger deleteTemplatePreview"><i class="ti-trash"></i></a>';
 
+            $logo = "<img class='rounded mx-auto d-block'  width='200px' src='/file-manager/TemplatePreview/logo/$record->tp_logo'>";
+
+
             $data_arr[] = array(
+                "tp_logo" => $logo,
                 "tp_name" => $record->tp_name,
-                "tp_sc" => $record->tp_sc,
+                "sum_script" => $record->sum_script,
+                "tp_sc" => "<a href='/file-manager/TemplatePreview/".$record->tp_sc."' target='_blank'>$record->tp_sc</a>",
+
                 "action"=> $btn,
             );
         }
@@ -77,16 +93,20 @@ class TemplatePreviewController extends Controller
 
     public function create(Request  $request)
     {
+
         $rules = [
             'tp_name' =>'unique:template_previews,tp_name',
             'tp_sc' => 'required|mimes:zip,rar',
+            'logo' => 'required',
 
         ];
         $message = [
             'tp_name.unique'=>'Tên đã tồn tại',
             'tp_sc.mimes'=>'Định dạng file: *.zip',
-            'tp_sc.required'=>'Trường không để trống',
+            'tp_sc.required'=>'File không để trống',
+            'logo.required'=>'Logo không để trống',
         ];
+
 
 
 
@@ -110,6 +130,8 @@ class TemplatePreviewController extends Controller
         $data['tp_while'] = $request->tp_while ? 1 : 0;
         $data['tp_pink'] = $request->tp_pink ? 1 : 0;
         $data['tp_yellow'] = $request->tp_yellow ? 1 : 0;
+        $data['tp_category'] = $request->tp_category;
+
 
         if($request->tp_sc){
             $destinationPath = public_path('file-manager/TemplatePreview/');
@@ -121,6 +143,18 @@ class TemplatePreviewController extends Controller
             $tp_sc = $request->tp_name.'.'.$extension;
             $data['tp_sc'] = $tp_sc;
             $file->move($destinationPath, $tp_sc);
+        }
+
+        if($request->logo){
+            $destinationPath = public_path('file-manager/TemplatePreview/logo/');
+            if (!file_exists($destinationPath)) {
+                mkdir($destinationPath, 0777, true);
+            }
+            $file = $request->logo;
+            $extension = $file->getClientOriginalExtension();
+            $tp_logo = $request->tp_name.'.'.$extension;
+            $data['tp_logo'] = $tp_logo;
+            $file->move($destinationPath, $tp_logo);
         }
         $data->save();
         return response()->json(['success'=>'Thêm mới thành công']);
@@ -206,12 +240,17 @@ class TemplatePreviewController extends Controller
         $data->tp_while = $request->tp_while ? 1 : 0;
         $data->tp_pink = $request->tp_pink ? 1 : 0;
         $data->tp_yellow = $request->tp_yellow ? 1 : 0;
+        $data->tp_category = $request->tp_category;
 
 
 
         $destinationPath = public_path('file-manager/TemplatePreview/');
+        $destinationPathLogo = public_path('file-manager/TemplatePreview/logo/');
         if (!file_exists($destinationPath)) {
             mkdir($destinationPath, 0777, true);
+        }
+        if (!file_exists($destinationPathLogo)) {
+            mkdir($destinationPathLogo, 0777, true);
         }
         if($request->tp_sc ){
             $path_Remove = public_path('file-manager/TemplatePreview/') . $data->tp_sc;
@@ -224,10 +263,26 @@ class TemplatePreviewController extends Controller
             $data['tp_sc'] = $tp_sc;
             $file->move($destinationPath, $tp_sc);
         }
+
+        if($request->logo ){
+            $path_Remove_logo = public_path('file-manager/TemplatePreview/logo/') . $data->tp_sc;
+            if (file_exists($path_Remove_logo)) {
+                unlink($path_Remove_logo);
+            }
+            $file = $request->logo;
+            $extension = $file->getClientOriginalExtension();
+            $logo = $request->tp_name.'.'.$extension;
+            $data['tp_logo'] = $logo;
+            $file->move($destinationPathLogo, $logo);
+        }
+
         if($data->tp_name != $request->tp_name){
             $file= pathinfo($destinationPath.$data->tp_sc);
+            $logo= pathinfo($destinationPathLogo.$data->tp_sc);
             rename($destinationPath.$data->tp_sc, $destinationPath.$request->tp_name.'.'.$file['extension']);
+            rename($destinationPathLogo.$data->tp_logo, $destinationPathLogo.$request->tp_name.'.'.$logo['extension']);
             $data['tp_sc'] = $request->tp_name.'.'.$file['extension'];
+            $data['tp_logo'] = $request->tp_name.'.'.$file['extension'];
         }
         $data->tp_name = $request->tp_name;
         $data->save();

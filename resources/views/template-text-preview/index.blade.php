@@ -7,6 +7,7 @@
 <!-- Responsive datatable examples -->
 <link href="plugins/datatables/responsive.bootstrap4.min.css" rel="stylesheet" type="text/css" />
 
+<link href="plugins/select2/css/select2.min.css" rel="stylesheet" type="text/css" />
 
 
 <!-- Sweet-Alert  -->
@@ -71,6 +72,7 @@
 
 <!-- Datatable init js -->
 <script src="assets/pages/datatables.init.js"></script>
+<script src="plugins/select2/js/select2.min.js"></script>
 <!-- Moment.js: -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.24.0/moment.min.js"></script>
 <script type="text/javascript" charset="utf8" src="https://cdn.datatables.net/plug-ins/1.10.20/sorting/datetime-moment.js"></script>
@@ -102,6 +104,10 @@
         $('#createNewTemplateTextPreview').click(function () {
             $('#saveBtn').val("create-template-text-preview");
             $('#tt_id').val('');
+            $("#category_template_parent").val('');
+            $("#category_template_parent").select2({});
+            $("#category_template_child").val('');
+            $("#category_template_child").select2({});
             $('#templateTextPreviewForm').trigger("reset");
             $('#modelHeading').html("Template Text Preview");
             $('#template_text_previewModel').modal('show');
@@ -206,6 +212,106 @@
             });
         })
     }
+
+    $("#CategoryTemplateForm").submit(function (e) {
+        e.preventDefault();
+        let data = new FormData(document.getElementById('CategoryTemplateForm'));
+        $.ajax({
+            url:"{{route('category_template.create')}}",
+            type: "post",
+            data:data,
+            processData: false,
+            contentType: false,
+            dataType: 'json',
+            beForeSend : () => {
+            },
+            success:function (data) {
+                console.log(data)
+                if(data.errors){
+                    for( var count=0 ; count <data.errors.length; count++){
+                        $("#CategoryTemplateForm").notify(
+                            data.errors[count],"error",
+                            { position:"right" }
+                        );
+                    }
+                }
+                $.notify(data.success, "success");
+                $('#CategoryTemplateForm').trigger("reset");
+                $('#categoryTemplate').modal('hide');
+
+                if(typeof data.cate_temp == 'undefined'){
+                    data.cate_temp = {};
+                }
+                if(typeof rebuildCateTempOption == 'function'){
+                    rebuildCateTempOption(data.cate_temp)
+                }
+            }
+        });
+
+    });
+    function rebuildCateTempOption(cate_temp){
+        var elementSelect = $("#category_template_parent");
+        var elementSelect1 = $("#category_template_parent_child");
+        if(elementSelect.length <= 0 || elementSelect1.length <= 0 ){
+            return false;
+        }
+        elementSelect.empty();
+        elementSelect1.empty();
+        for(var item of cate_temp){
+            elementSelect.append(
+                $("<option></option>", {
+                    value : item.id
+                }).text(item.category_template_name)
+            );
+            elementSelect1.append(
+                $("<option></option>", {
+                    value : item.id
+                }).text(item.category_template_name)
+            );
+        }
+    }
+
+    $('#category_template_parent').on('change',function(e){
+        // alert(1)
+        var id=$(this).val();
+        $.ajax({
+            type:'get',
+            url:'{{asset('category_template/get-cate-temp-parent')}}/'+id,
+            // data:id,
+        }).done(function(res){
+            console.log(res)
+            var elementSelect = $('#category_template_child');
+
+            if(elementSelect.length <= 0){
+                return false;
+            }
+            elementSelect.empty();
+            for(var item of res.cateParent){
+                elementSelect.append(
+                    $("<option></option>", {
+                        value : item.id
+                    }).text(item.category_template_name)
+                );
+            }
+        });
+    });
+
+
+
+    $('select[name="category_template_parent_child"]').on('change', function(){
+        $("#category_template_child_child").val($('select[name=category_template_parent_child]').find(':selected').text()+ ' - ');
+    });
+
+    $('#categoryTemplateChild').click(function () {
+        $("#category_template_parent_child").val($('#category_template_parent').val());
+        $("#category_template_parent_child").select2({});
+        $("#category_template_child_child").val($('select[name=category_template_parent_child]').find(':selected').text()+ ' - ');
+        $('#modelHeading').html("Template Text Preview");
+        $('#categoryTemplateChildModel').modal('show');
+    });
+
+
+
 </script>
 @endsection
 

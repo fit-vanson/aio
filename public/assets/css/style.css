@@ -3876,6 +3876,13 @@ Invoice
     background: rgba(0, 0, 0, 0.7);
 }
 
+#categoryTemplate {
+    background: rgba(0, 0, 0, 0.7);
+}
+#categoryTemplateChildModel {
+    background: rgba(0, 0, 0, 0.7);
+}
+
 form .form-control::-webkit-input-placeholder {
     color: #DEDDDDFF;
 }

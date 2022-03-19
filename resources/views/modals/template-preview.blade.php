@@ -12,6 +12,34 @@
 
                     <div>
                         <div class="row">
+                            <div class="form-group col-lg-12">
+                                <label>Logo</label><p></p>
+                                <input  id="logo" type="file" name="logo" class="form-control" hidden onchange="changeImg(this)" accept="image/*">
+                                <img id="avatar" class="thumbnail" width="100%">
+                            </div>
+                        </div>
+
+                        <div  class="row">
+                            <div class="form-group col-lg-6">
+                                <label for="name">Category<span style="color: red">*</span></label>
+                                <div class="inner row">
+                                    <div class="col-md-10 col-10">
+                                        <select class="form-control select2" id="category_template" name="category_template" required>
+                                            <option value="">---Vui lòng chọn---</option>
+                                            @foreach($categoyTemplate as $item)
+                                                <option value="{{$item->id}}">{{$item->category_template_name}}</option>
+                                            @endforeach
+                                        </select>
+                                    </div>
+                                    <div class="col-md-2 col-4">
+                                        <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#categoryTemplate" style="border-radius: 0 3px 3px 0; box-shadow: none;">...
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="row">
                             <div class="form-group col-lg-6">
                                 <label for="name">Tên Template <span style="color: red">*</span></label>
                                 <input type="text" id="tp_name" name="tp_name" class="form-control" required>
@@ -78,6 +106,8 @@
         </div>
     </div>
 </div>
+
+@include('modals.categoryTemplate')
 
 
 

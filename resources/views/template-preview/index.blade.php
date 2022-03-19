@@ -9,11 +9,12 @@
 
 
 
+
 <!-- Sweet-Alert  -->
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/sweetalert/1.1.3/sweetalert.min.css">
 <script src="https://cdnjs.cloudflare.com/ajax/libs/sweetalert/1.1.3/sweetalert.min.js"></script>
 
-
+<link href="plugins/select2/css/select2.min.css" rel="stylesheet" type="text/css" />
 
 
 @endsection
@@ -39,8 +40,10 @@
                      <table class="table table-bordered dt-responsive nowrap data-table" style="border-collapse: collapse; border-spacing: 0; width: 100%;">
                         <thead>
                         <tr>
+                            <th style="width: 250px">Logo</th>
                             <th>Template Preview</th>
-                            <th>SC</th>
+                            <th>File</th>
+                            <th>Number</th>
                             <th>Action</th>
                         </tr>
                         </thead>
@@ -74,8 +77,9 @@
 <!-- Moment.js: -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.24.0/moment.min.js"></script>
 <script type="text/javascript" charset="utf8" src="https://cdn.datatables.net/plug-ins/1.10.20/sorting/datetime-moment.js"></script>
-
+<script src="plugins/select2/js/select2.min.js"></script>
 <script type="text/javascript">
+
     $(function () {
         $.ajaxSetup({
             headers: {
@@ -91,8 +95,10 @@
                 type: "post"
             },
             columns: [
+                {data: 'tp_logo'},
                 {data: 'tp_name'},
                 {data: 'tp_sc'},
+                {data: 'sum_script'},
                 {data: 'action',className: "text-center", name: 'action', orderable: false, searchable: false},
             ],
             order:[1,'asc']
@@ -102,6 +108,9 @@
         $('#createNewTemplatePreview').click(function () {
             $('#saveBtn').val("create-template-preview");
             $('#tp_id').val('');
+            $("#category_template").val('');
+            $("#category_template").select2({});
+            $("#avatar").attr("src","img/demo_bn.png");
             $('#templatePreviewForm').trigger("reset");
             $('#modelHeading').html("Template Preview");
             $('#template_previewModel').modal('show');
@@ -193,10 +202,8 @@
 <script>
     function editTemplatePreview(id) {
         $.get('{{asset('template-preview/edit')}}/'+id,function (data) {
-            console.log(data)
-
-
             $('#tp_id').val(data.id);
+            $("#avatar").attr("src",'file-manager/TemplatePreview/logo/'+data.tp_logo);
             $('#tp_name').val(data.tp_name);
             $('#tp_script_1').val(data.tp_script_1);
             $('#tp_script_2').val(data.tp_script_2);
@@ -206,6 +213,8 @@
             $('#tp_script_6').val(data.tp_script_6);
             $('#tp_script_7').val(data.tp_script_7);
             $('#tp_script_8').val(data.tp_script_8);
+            $('#category_template').val(data.tp_category);
+            $("#category_template").select2({});
 
 
             if(data.tp_black !=0){
@@ -245,6 +254,58 @@
                 $('body').addClass('modal-open');
             });
         })
+    }
+
+    $("#CategoryTemplateForm").submit(function (e) {
+        e.preventDefault();
+        let data = new FormData(document.getElementById('CategoryTemplateForm'));
+        $.ajax({
+            url:"{{route('category_template.create')}}",
+            type: "post",
+            data:data,
+            processData: false,
+            contentType: false,
+            dataType: 'json',
+            beForeSend : () => {
+            },
+            success:function (data) {
+                console.log(data)
+                if(data.errors){
+                    for( var count=0 ; count <data.errors.length; count++){
+                        $("#CategoryTemplateForm").notify(
+                            data.errors[count],"error",
+                            { position:"right" }
+                        );
+                    }
+                }
+                $.notify(data.success, "success");
+                $('#CategoryTemplateForm').trigger("reset");
+                $('#categoryTemplate').modal('hide');
+
+                if(typeof data.cate_temp == 'undefined'){
+                    data.cate_temp = {};
+                }
+                if(typeof rebuildCateTempOption == 'function'){
+                    rebuildCateTempOption(data.cate_temp)
+                }
+            }
+        });
+
+    });
+    function rebuildCateTempOption(cate_temp){
+        var elementSelect = $("#category_template");
+
+        if(elementSelect.length <= 0){
+            return false;
+        }
+        elementSelect.empty();
+        for(var item of cate_temp){
+            elementSelect.append(
+                $("<option></option>", {
+                    value : item.id
+                }).text(item.category_template_name)
+            );
+        }
     }
 </script>
 @endsection

@@ -11,6 +11,43 @@
                     <input type="hidden" name="tt_id" id="tt_id">
 
                     <div>
+                        <div  class="row">
+                            <div class="form-group col-lg-6">
+                                <label for="name">Category Parent<span style="color: red">*</span></label>
+                                <div class="inner row">
+                                    <div class="col-md-10 col-10">
+                                        <select class="form-control select2" id="category_template_parent" name="category_template_parent" required>
+                                            <option value="">---Vui lòng chọn---</option>
+                                            @foreach($categoyTemplate as $item)
+                                                <option value="{{$item->id}}">{{$item->category_template_name}}</option>
+                                            @endforeach
+                                        </select>
+                                    </div>
+                                    <div class="col-md-2 col-4">
+                                        <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#categoryTemplate" style="border-radius: 0 3px 3px 0; box-shadow: none;">...
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="form-group col-lg-6">
+                                <label for="name">Category Child<span style="color: red">*</span></label>
+                                <div class="inner row">
+                                    <div class="col-md-10 col-10">
+                                        <select class="form-control select2" id="category_template_child" name="category_template_child" required>
+                                            <option value="">---Vui lòng chọn---</option>
+{{--                                            @foreach($categoyTemplate as $item)--}}
+{{--                                                <option value="{{$item->id}}">{{$item->category_template_name}}</option>--}}
+{{--                                            @endforeach--}}
+                                        </select>
+                                    </div>
+                                    <div class="col-md-2 col-4">
+                                        <a class="btn btn-success" href="javascript:void(0)" id="categoryTemplateChild"> ...</a>
+{{--                                        <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#categoryTemplateChild" style="border-radius: 0 3px 3px 0; box-shadow: none;">...--}}
+{{--                                        </button>--}}
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
                         <div class="row">
                             <div class="form-group col-lg-6">
                                 <label for="name">Tên Template Text <span style="color: red">*</span></label>
@@ -33,6 +70,7 @@
         </div>
     </div>
 </div>
+@include('modals.categoryTemplate')
 
 
 
