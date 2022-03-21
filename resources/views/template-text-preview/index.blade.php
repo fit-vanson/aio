@@ -23,11 +23,13 @@
 <div class="col-sm-6">
     <h4 class="page-title">Template Text Preview</h4>
 </div>
+@can('template-preview-index')
 <div class="col-sm-6">
     <div class="float-right">
         <a class="btn btn-success" href="javascript:void(0)" id="createNewTemplateTextPreview"> Create New</a>
     </div>
 </div>
+@endcan
 @include('modals.template-text-preview')
 @endsection
 @section('content')
