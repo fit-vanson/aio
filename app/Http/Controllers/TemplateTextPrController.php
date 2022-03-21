@@ -76,7 +76,7 @@ class TemplateTextPrController extends Controller
 
             $data_arr[] = array(
                 "tt_name" => $record->tt_name,
-                "tt_file" => $record->tt_file,
+                "tt_file" =>  "<a href='/file-manager/TemplateTextPreview/".$record->tt_file."' target='_blank'>$record->tt_file</a>",
                 "tt_category" => $record->CategoryTemplate->category_template_name,
                 "action"=> $btn,
             );

@@ -60,7 +60,6 @@ class TemplatePreviewController extends Controller
             ->take($rowperpage)
             ->get();
 
-//        dd($records);
 
         $data_arr = array();
         foreach ($records as $record) {
