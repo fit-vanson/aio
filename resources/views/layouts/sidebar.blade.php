@@ -25,7 +25,8 @@
                                     @endcan
                                     @can('template-index')
                                     <li><a href="{{route('template.index')}}">Quản lý Template</a></li>
-
+                                    @endcan
+                                    @can('template-preview-index')
                                     <li><a href="{{route('template-preview.index')}}">Template Frame Preview</a></li>
                                     <li><a href="{{route('template-text-preview.index')}}">Template Text Preview</a></li>
                                     @endcan

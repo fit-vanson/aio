@@ -221,38 +221,38 @@ Route::group(['prefix'=>'template','middleware'=>['CheckLogout','2fa']], functio
     Route::get('/upload',[TemplateController::class,'upload'])->name('template.upload')->middleware('can:template-index');
 });
 
-Route::group(['prefix'=>'template-preview','middleware'=>['CheckLogout','2fa']], function (){
-    Route::get('/',[TemplatePreviewController::class,'index'])->name('template-preview.index')->middleware('can:template-index');
-    Route::post('/getIndex',[TemplatePreviewController::class,'getIndex'])->name('template-preview.getIndex')->middleware('can:template-index');
-    Route::post('/create',[TemplatePreviewController::class,'create'])->name('template-preview.create')->middleware('can:template-add');
-    Route::get('/edit/{id}',[TemplatePreviewController::class,'edit'])->name('template-preview.edit')->middleware('can:template-edit');
-    Route::get('/show/{id}',[TemplatePreviewController::class,'edit'])->name('template-preview.show')->middleware('can:template-show');
-    Route::post('/update',[TemplatePreviewController::class,'update'])->name('template-preview.update')->middleware('can:template-update');
-    Route::get('/delete/{id}',[TemplatePreviewController::class,'delete'])->name('template-preview.delete')->middleware('can:template-delete');
-    Route::get('/upload',[TemplatePreviewController::class,'upload'])->name('template-preview.upload')->middleware('can:template-index');
+Route::group(['prefix'=>'template-preview'], function (){
+    Route::get('/',[TemplatePreviewController::class,'index'])->name('template-preview.index');
+    Route::post('/getIndex',[TemplatePreviewController::class,'getIndex'])->name('template-preview.getIndex');
+    Route::post('/create',[TemplatePreviewController::class,'create'])->name('template-preview.create')->middleware('can:template-preview-add');
+    Route::get('/edit/{id}',[TemplatePreviewController::class,'edit'])->name('template-preview.edit')->middleware('can:template-preview-edit');
+    Route::get('/show/{id}',[TemplatePreviewController::class,'edit'])->name('template-preview.show')->middleware('can:template-preview-show');
+    Route::post('/update',[TemplatePreviewController::class,'update'])->name('template-preview.update')->middleware('can:template-preview-update');
+    Route::get('/delete/{id}',[TemplatePreviewController::class,'delete'])->name('template-preview.delete')->middleware('can:template-preview-delete');
+    Route::get('/upload',[TemplatePreviewController::class,'upload'])->name('template-preview.upload')->middleware('can:template-preview-index');
 });
 
-Route::group(['prefix'=>'template-text-preview','middleware'=>['CheckLogout','2fa']], function (){
-    Route::get('/',[TemplateTextPrController::class,'index'])->name('template-text-preview.index')->middleware('can:template-index');
-    Route::post('/getIndex',[TemplateTextPrController::class,'getIndex'])->name('template-text-preview.getIndex')->middleware('can:template-index');
-    Route::post('/create',[TemplateTextPrController::class,'create'])->name('template-text-preview.create')->middleware('can:template-add');
-    Route::get('/edit/{id}',[TemplateTextPrController::class,'edit'])->name('template-text-preview.edit')->middleware('can:template-edit');
-    Route::get('/show/{id}',[TemplateTextPrController::class,'edit'])->name('template-text-preview.show')->middleware('can:template-show');
-    Route::post('/update',[TemplateTextPrController::class,'update'])->name('template-text-preview.update')->middleware('can:template-update');
-    Route::get('/delete/{id}',[TemplateTextPrController::class,'delete'])->name('template-text-preview.delete')->middleware('can:template-delete');
-    Route::get('/upload',[TemplateTextPrController::class,'upload'])->name('template-text-preview.upload')->middleware('can:template-index');
+Route::group(['prefix'=>'template-text-preview'], function (){
+    Route::get('/',[TemplateTextPrController::class,'index'])->name('template-text-preview.index');
+    Route::post('/getIndex',[TemplateTextPrController::class,'getIndex'])->name('template-text-preview.getIndex');
+    Route::post('/create',[TemplateTextPrController::class,'create'])->name('template-text-preview.create')->middleware('can:template-preview-add');
+    Route::get('/edit/{id}',[TemplateTextPrController::class,'edit'])->name('template-text-preview.edit')->middleware('can:template-preview-edit');
+    Route::get('/show/{id}',[TemplateTextPrController::class,'edit'])->name('template-text-preview.show')->middleware('can:template-preview-show');
+    Route::post('/update',[TemplateTextPrController::class,'update'])->name('template-text-preview.update')->middleware('can:template-preview-update');
+    Route::get('/delete/{id}',[TemplateTextPrController::class,'delete'])->name('template-text-preview.delete')->middleware('can:template-preview-delete');
+    Route::get('/upload',[TemplateTextPrController::class,'upload'])->name('template-text-preview.upload')->middleware('can:template-preview-index');
 });
 
 Route::group(['prefix'=>'category_template','middleware'=>['CheckLogout','2fa']], function (){
-    Route::get('/',[CategoryTemplateController::class,'index'])->name('category_template.index')->middleware('can:template-index');
-    Route::post('/getIndex',[CategoryTemplateController::class,'getIndex'])->name('category_template.getIndex')->middleware('can:template-index');
-    Route::post('/create',[CategoryTemplateController::class,'create'])->name('category_template.create')->middleware('can:template-add');
-    Route::get('/edit/{id}',[CategoryTemplateController::class,'edit'])->name('category_template.edit')->middleware('can:template-edit');
-    Route::get('/show/{id}',[CategoryTemplateController::class,'edit'])->name('category_template.show')->middleware('can:template-show');
-    Route::post('/update',[CategoryTemplateController::class,'update'])->name('category_template.update')->middleware('can:template-update');
-    Route::get('/delete/{id}',[CategoryTemplateController::class,'delete'])->name('category_template.delete')->middleware('can:template-delete');
-    Route::get('/upload',[CategoryTemplateController::class,'upload'])->name('category_template.upload')->middleware('can:template-index');
-    Route::get('/get-cate-temp-parent/{id}',[CategoryTemplateController::class,'getCateTempParent'])->name('category_template.getCateTempParent')->middleware('can:template-index');
+    Route::get('/',[CategoryTemplateController::class,'index'])->name('category_template.index')->middleware('can:template-preview-index');
+    Route::post('/getIndex',[CategoryTemplateController::class,'getIndex'])->name('category_template.getIndex')->middleware('can:template-preview-index');
+    Route::post('/create',[CategoryTemplateController::class,'create'])->name('category_template.create')->middleware('can:template-preview-add');
+    Route::get('/edit/{id}',[CategoryTemplateController::class,'edit'])->name('category_template.edit')->middleware('can:template-preview-edit');
+    Route::get('/show/{id}',[CategoryTemplateController::class,'edit'])->name('category_template.show')->middleware('can:template-preview-show');
+    Route::post('/update',[CategoryTemplateController::class,'update'])->name('category_template.update')->middleware('can:template-preview-update');
+    Route::get('/delete/{id}',[CategoryTemplateController::class,'delete'])->name('category_template.delete')->middleware('can:template-preview-delete');
+    Route::get('/upload',[CategoryTemplateController::class,'upload'])->name('category_template.upload')->middleware('can:template-preview-index');
+    Route::get('/get-cate-temp-parent/{id}',[CategoryTemplateController::class,'getCateTempParent'])->name('category_template.getCateTempParent')->middleware('can:template-preview-index');
 });
 
 

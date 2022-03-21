@@ -26,6 +26,7 @@ use App\Policies\RolePolicy;
 use App\Policies\ScriptPolicy;
 use App\Policies\SmsPolicy;
 use App\Policies\TemplatePolicy;
+use App\Policies\TemplatePreviewPolicy;
 use App\Policies\UserPolicy;
 use App\Policies\KhosimPolicy;
 use Illuminate\Foundation\Support\Providers\AuthServiceProvider as ServiceProvider;
@@ -55,6 +56,7 @@ class AuthServiceProvider extends ServiceProvider
        $this->defineProject();
        $this->defineDu_an();
        $this->defineTemplate();
+       $this->defineTemplatePreview();
        $this->defineKeystore();
        $this->defineGadev();
        $this->defineGa();
@@ -104,6 +106,15 @@ class AuthServiceProvider extends ServiceProvider
         Gate::define('template-edit', [TemplatePolicy::class, 'edit']);
         Gate::define('template-update', [TemplatePolicy::class, 'update']);
         Gate::define('template-delete', [TemplatePolicy::class, 'delete']);
+    }
+
+    public function defineTemplatePreview(){
+        Gate::define('template-preview-index', [TemplatePreviewPolicy::class, 'index']);
+        Gate::define('template-preview-show', [TemplatePreviewPolicy::class, 'show']);
+        Gate::define('template-preview-add', [TemplatePreviewPolicy::class, 'add']);
+        Gate::define('template-preview-edit', [TemplatePreviewPolicy::class, 'edit']);
+        Gate::define('template-preview-update', [TemplatePreviewPolicy::class, 'update']);
+        Gate::define('template-preview-delete', [TemplatePreviewPolicy::class, 'delete']);
     }
 
     public function defineKeystore(){

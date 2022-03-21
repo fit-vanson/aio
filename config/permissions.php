@@ -15,6 +15,13 @@ return [
         'template-update'  =>'edit_template',
         'template-delete'  =>'delete_template',
 
+        'template-preview-index'  =>'index_template_preview',
+        'template-preview-show'  =>'show_template_preview',
+        'template-preview-add'  =>'add_template_preview',
+        'template-preview-edit'  =>'edit_template_preview',
+        'template-preview-update'  =>'edit_template_preview',
+        'template-preview-delete'  =>'delete_template_preview',
+
         'project-index'  =>'index_project',
         'project-show'  =>'show_project',
         'project-add'  =>'add_project',
@@ -183,7 +190,8 @@ return [
         'Dự án','Template','Project','Gadev','Dev','Dev Amazon','Dev SamSung','Dev Xiaomi','Dev Oppo','Dev Vivo','Dev Huawei','Ga',
         'User','Vai trò', 'Phân quyền',
         'khosim','cocsim','sms','hub','Mail Manage', 'Mail Parent','Mail Reg',
-        'Device','Script', 'Keystore'
+        'Device','Script', 'Keystore',
+        'Template Preview'
     ],
     'module-child' =>[
         'Index','Show','Add','Edit','Delete'
