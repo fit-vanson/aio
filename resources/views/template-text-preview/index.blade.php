@@ -113,6 +113,9 @@
             $('#templateTextPreviewForm').trigger("reset");
             $('#modelHeading').html("Template Text Preview");
             $('#template_text_previewModel').modal('show');
+            $('.modal').on('hidden.bs.modal', function (e) {
+                $('body').addClass('modal-open');
+            });
         });
         $('#templateTextPreviewForm').on('submit',function (event){
             event.preventDefault();

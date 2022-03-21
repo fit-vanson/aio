@@ -116,6 +116,9 @@
             $('#templatePreviewForm').trigger("reset");
             $('#modelHeading').html("Template Preview");
             $('#template_previewModel').modal('show');
+            $('.modal').on('hidden.bs.modal', function (e) {
+                $('body').addClass('modal-open');
+            });
         });
         $('#templatePreviewForm').on('submit',function (event){
             event.preventDefault();
