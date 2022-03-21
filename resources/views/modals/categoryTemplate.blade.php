@@ -33,7 +33,7 @@
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header">
-                <h4 class="modal-title">Thêm mới Category Template Child</h4>
+                <h4 class="modal-title" id="childModalLabel">Thêm mới Category Template Child</h4>
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
             </div>
             <div class="modal-body">
@@ -43,9 +43,11 @@
                         <label for="name">Category Parent</label>
                         <select class="form-control select2" id="category_template_parent_child" name="category_template_parent" required>
                             <option value="">---Vui lòng chọn---</option>
-                            @foreach($categoyTemplate as $item)
-                                <option value="{{$item->id}}">{{$item->category_template_name}}</option>
-                            @endforeach
+                            @if(isset($categoyTemplate))
+                                @foreach($categoyTemplate as $item)
+                                    <option value="{{$item->id}}">{{$item->category_template_name}}</option>
+                                @endforeach
+                            @endif
                         </select>
                     </div>
 

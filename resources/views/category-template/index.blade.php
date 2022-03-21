@@ -21,16 +21,16 @@
 
 @section('breadcrumb')
 <div class="col-sm-6">
-    <h4 class="page-title">Template Preview</h4>
+    <h4 class="page-title">Category Template</h4>
 </div>
 @can('template-preview-index')
 <div class="col-sm-6">
     <div class="float-right">
-        <a class="btn btn-success" href="javascript:void(0)" id="createNewTemplatePreview"> Create New</a>
+        <a class="btn btn-success" href="javascript:void(0)" id="createNewCategotyTemp"> Create New</a>
     </div>
 </div>
 @endcan
-@include('modals.template-preview')
+@include('modals.categoryTemplate')
 @endsection
 @section('content')
 
@@ -42,11 +42,8 @@
                      <table class="table table-bordered dt-responsive nowrap data-table" style="border-collapse: collapse; border-spacing: 0; width: 100%;">
                         <thead>
                         <tr>
-                            <th>Logo</th>
                             <th style="width: 15%">Template Preview</th>
-                            <th style="width: 15%">File</th>
-                            <th>Category Template</th>
-                            <th style="width: 5%">Number</th>
+                            <th style="width: 15%">Parent</th>
                             <th style="width: 10%">Action</th>
                         </tr>
                         </thead>
@@ -89,23 +86,36 @@
                 'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
             }
         });
+        var groupColumn = 1;
         var table = $('.data-table').DataTable({
             processing: true,
             serverSide: true,
             displayLength: 50,
+
             ajax: {
-                url: "{{ route('template-preview.getIndex') }}",
+                url: "{{ route('category_template.getIndex') }}",
                 type: "post"
             },
             columns: [
-                {data: 'tp_logo'},
-                {data: 'tp_name'},
-                {data: 'tp_sc'},
-                {data: 'tp_category'},
-                {data: 'sum_script'},
+
+                {data: 'category_template_name'},
+                {data: 'category_template_parent'},
                 {data: 'action',className: "text-center", name: 'action', orderable: false, searchable: false},
             ],
-            order:[1,'asc']
+            "drawCallback": function ( settings ) {
+                var api = this.api();
+                var rows = api.rows( {page:'current'} ).nodes();
+                var last=null;
+
+                api.column(groupColumn, {page:'current'} ).data().each( function ( group, i ) {
+                    if ( last !== group ) {
+                        $(rows).eq( i ).before(
+                            '<tr class="group"><td colspan="5">'+group+'</td></tr>'
+                        );
+                        last = group;
+                    }
+                } );
+            }
 
         });
 
@@ -207,61 +217,58 @@
 </script>
 
 <script>
-    function editTemplatePreview(id) {
-        $.get('{{asset('template-preview/edit')}}/'+id,function (data) {
-            $('#tp_id').val(data.id);
-            $("#avatar").attr("src",'file-manager/TemplatePreview/logo/'+data.tp_logo);
-            $('#tp_name').val(data.tp_name);
-            $('#tp_script_1').val(data.tp_script_1);
-            $('#tp_script_2').val(data.tp_script_2);
-            $('#tp_script_3').val(data.tp_script_3);
-            $('#tp_script_4').val(data.tp_script_4);
-            $('#tp_script_5').val(data.tp_script_5);
-            $('#tp_script_6').val(data.tp_script_6);
-            $('#tp_script_7').val(data.tp_script_7);
-            $('#tp_script_8').val(data.tp_script_8);
-            $('#category_template').val(data.tp_category);
-            $("#category_template").select2({});
+    function editCategoryTemplate(id) {
+        $.get('{{asset('category_template/edit')}}/'+id,function (data) {
+            console.log(data)
+
+            if (data[0].category_template_parent == 0){
+
+                $('#category_template_id').val(data[0].id);
+                $('#category_template_name').val(data[0].category_template_name);
+
+                $('#exampleModalLabel').html("Edit");
+                $('#categoryTemplate').modal('show');
+                $('.modal').on('hidden.bs.modal', function (e) {
+                    $('body').addClass('modal-open');
+                });
+            }else {
+                var parentSelect = $('#category_template_parent_child');
+                if(parentSelect.length <= 0){
+                    return false;
+                }
+                parentSelect.empty();
+                for(var item of data[1]){
+                    parentSelect.append(
+                        $("<option></option>", {
+                            value : item.id
+                        }).text(item.category_template_name)
+                    );
+                }
+                $("#category_template_parent_child").select2({});
+                $("#category_template_child_child").val(data[0].category_template_name);
 
 
-            if(data.tp_black !=0){
-                $("#tp_black").prop('checked', true);
-            }else{
-                $("#tp_black").prop('checked', false);
+                $('#childModalLabel').html("Edit Child");
+                $('#categoryTemplateChildModel').modal('show');
+                $('.modal').on('hidden.bs.modal', function (e) {
+                    $('body').addClass('modal-open');
+                });
             }
 
-            if(data.tp_blue !=0){
-                $("#tp_blue").prop('checked', true);
-            }else{
-                $("#tp_blue").prop('checked', false);
-            }
-
-            if(data.tp_while !=0){
-                $("#tp_while").prop('checked', true);
-            }else{
-                $("#tp_while").prop('checked', false);
-            }
-
-            if(data.tp_pink !=0){
-                $("#tp_pink").prop('checked', true);
-            }else{
-                $("#tp_pink").prop('checked', false);
-            }
-
-            if(data.tp_yellow !=0){
-                $("#tp_yellow").prop('checked', true);
-            }else{
-                $("#tp_yellow").prop('checked', false);
-            }
-
-            $('#modelHeading').html("Edit");
-            $('#saveBtn').val("edit-template-preview");
-            $('#template_previewModel').modal('show');
-            $('.modal').on('hidden.bs.modal', function (e) {
-                $('body').addClass('modal-open');
-            });
         })
     }
+
+    $('select[id="category_template_parent_child"]').on('change', function(){
+
+        var text = $('select[id=category_template_parent_child]').find(':selected').text();
+        var replate = $('select[id=category_template_parent_child]').find(':selected').text()
+        // var replate = $('select[id=category_template_parent_child]').find(':selected').text()
+        console.log(text,replate)
+        // text.replace('dog', 'monkey'));
+
+
+        $("#category_template_child_child").val($('select[id=category_template_parent_child]').find(':selected').text()+ ' - ');
+    });
 
     $("#CategoryTemplateForm").submit(function (e) {
         e.preventDefault();

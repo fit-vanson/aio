@@ -3963,5 +3963,9 @@ form .form-control:placeholder {
     border-top-width: 0;
     border-color: #ebe9f1; }
 
+tr.group,
+tr.group:hover {
+    background-color: #ddd !important;
+}
 
 /*# sourceMappingURL=style.css.map */
