@@ -16,8 +16,9 @@ class TemplateTextPrController extends Controller
 {
     public function index(){
         $categoyTemplate =  CategoryTemplate::latest('id')->where('category_template_parent',0)->get();
+        $categoyTemplateChild =  CategoryTemplate::latest('id')->where('category_template_parent','<>',0)->get();
         return view('template-text-preview.index',compact([
-            'categoyTemplate']));
+            'categoyTemplate','categoyTemplateChild']));
     }
 
     public function getIndex(Request $request)
@@ -48,12 +49,25 @@ class TemplateTextPrController extends Controller
 
         // Get records, also we have included search filter as well
         $records = TemplateTextPr::orderBy($columnName, $columnSortOrder)
+            ->with('CategoryTemplate')
             ->where('tt_name', 'like', '%' . $searchValue . '%')
             ->orWhere('tt_file', 'like', '%' . $searchValue . '%')
+            ->orWhere('tt_text_1', 'like', '%' . $searchValue . '%')
+            ->orWhere('tt_text_2', 'like', '%' . $searchValue . '%')
+            ->orWhere('tt_text_3', 'like', '%' . $searchValue . '%')
+            ->orWhere('tt_text_4', 'like', '%' . $searchValue . '%')
+            ->orWhere('tt_text_5', 'like', '%' . $searchValue . '%')
+            ->orWhere('tt_text_6', 'like', '%' . $searchValue . '%')
+            ->orWhere('tt_text_7', 'like', '%' . $searchValue . '%')
+            ->orWhere('tt_text_8', 'like', '%' . $searchValue . '%')
+            ->orwhereHas('CategoryTemplate', function ($q) use ($searchValue) {
+                $q->where('category_template_name', 'like', '%' . $searchValue . '%');
+            })
             ->select('*')
             ->skip($start)
             ->take($rowperpage)
             ->get();
+
 
         $data_arr = array();
         foreach ($records as $record) {
@@ -63,6 +77,7 @@ class TemplateTextPrController extends Controller
             $data_arr[] = array(
                 "tt_name" => $record->tt_name,
                 "tt_file" => $record->tt_file,
+                "tt_category" => $record->CategoryTemplate->category_template_name,
                 "action"=> $btn,
             );
         }
@@ -102,6 +117,15 @@ class TemplateTextPrController extends Controller
 
         $data = new TemplateTextPr();
         $data['tt_name'] = $request->tt_name;
+        $data['tt_category'] = $request->category_template_child;
+        $data['tt_text_1'] = $request->tt_text_1 ? $request->tt_text_1 : '';
+        $data['tt_text_2'] = $request->tt_text_2 ? $request->tt_text_2 : '';
+        $data['tt_text_3'] = $request->tt_text_3 ? $request->tt_text_3 : '';
+        $data['tt_text_4'] = $request->tt_text_4 ? $request->tt_text_4 : '';
+        $data['tt_text_5'] = $request->tt_text_5 ? $request->tt_text_5 : '';
+        $data['tt_text_6'] = $request->tt_text_6 ? $request->tt_text_6 : '';
+        $data['tt_text_7'] = $request->tt_text_7 ? $request->tt_text_7 : '';
+        $data['tt_text_8'] = $request->tt_text_8 ? $request->tt_text_8 : '';
 
         if($request->tt_file){
             $destinationPath = public_path('file-manager/TemplateTextPreview/');
@@ -148,7 +172,7 @@ class TemplateTextPrController extends Controller
      */
     public function edit($id)
     {
-        $temp = TemplateTextPr::find($id);
+        $temp = TemplateTextPr::with('CategoryTemplate')->find($id);
         return response()->json($temp);
     }
 
@@ -205,7 +229,17 @@ class TemplateTextPrController extends Controller
             rename($destinationPath.$data->tt_file, $destinationPath.$request->tt_name.'.'.$file['extension']);
             $data['tt_file'] = $request->tt_name.'.'.$file['extension'];
         }
+
         $data->tt_name = $request->tt_name;
+        $data->tt_category = $request->category_template_child;
+        $data->tt_text_1 = $request->tt_text_1 ? $request->tt_text_1 : '';
+        $data->tt_text_2 = $request->tt_text_2 ? $request->tt_text_2 : '';
+        $data->tt_text_3 = $request->tt_text_3 ? $request->tt_text_3 : '';
+        $data->tt_text_4 = $request->tt_text_4 ? $request->tt_text_4 : '';
+        $data->tt_text_5 = $request->tt_text_5 ? $request->tt_text_5 : '';
+        $data->tt_text_6 = $request->tt_text_6 ? $request->tt_text_6 : '';
+        $data->tt_text_7 = $request->tt_text_7 ? $request->tt_text_7 : '';
+        $data->tt_text_8 = $request->tt_text_8 ? $request->tt_text_8 : '';
         $data->save();
         return response()->json(['success'=>'Cập nhật thành công']);
     }

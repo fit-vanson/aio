@@ -14,4 +14,8 @@ class TemplatePreview extends Model
         dd(TemplatePreview::select('count(*) as allcount')->count());
 
     }
+
+    public function CategoryTemplate(){
+        return $this->belongsTo(CategoryTemplate::class,'tp_category');
+    }
 }

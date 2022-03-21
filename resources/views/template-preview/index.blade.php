@@ -43,6 +43,7 @@
                             <th style="width: 250px">Logo</th>
                             <th>Template Preview</th>
                             <th>File</th>
+                            <th>Category Template</th>
                             <th>Number</th>
                             <th>Action</th>
                         </tr>
@@ -98,6 +99,7 @@
                 {data: 'tp_logo'},
                 {data: 'tp_name'},
                 {data: 'tp_sc'},
+                {data: 'tp_category'},
                 {data: 'sum_script'},
                 {data: 'action',className: "text-center", name: 'action', orderable: false, searchable: false},
             ],

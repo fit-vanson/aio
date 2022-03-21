@@ -8,4 +8,7 @@ use Illuminate\Database\Eloquent\Model;
 class TemplateTextPr extends Model
 {
     use HasFactory;
+    public function CategoryTemplate(){
+        return $this->belongsTo(CategoryTemplate::class,'tt_category');
+    }
 }

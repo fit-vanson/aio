@@ -35,15 +35,10 @@
                                     <div class="col-md-10 col-10">
                                         <select class="form-control select2" id="category_template_child" name="category_template_child" required>
                                             <option value="">---Vui lòng chọn---</option>
-{{--                                            @foreach($categoyTemplate as $item)--}}
-{{--                                                <option value="{{$item->id}}">{{$item->category_template_name}}</option>--}}
-{{--                                            @endforeach--}}
                                         </select>
                                     </div>
                                     <div class="col-md-2 col-4">
-                                        <a class="btn btn-success" href="javascript:void(0)" id="categoryTemplateChild"> ...</a>
-{{--                                        <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#categoryTemplateChild" style="border-radius: 0 3px 3px 0; box-shadow: none;">...--}}
-{{--                                        </button>--}}
+                                        <a class="btn btn-primary" href="javascript:void(0)" id="categoryTemplateChild"> ...</a>
                                     </div>
                                 </div>
                             </div>
@@ -57,6 +52,16 @@
                                 <label for="name">File SC</label><p></p>
                                 <input type="file" name="tt_file" id="tt_file" class="filestyle" data-buttonname="btn-secondary" accept=".zip" />
                             </div>
+                        </div>
+                        <div class="row">
+                            <?php
+                                for($i=1; $i<=8 ; $i++){
+                            ?>
+                            <div class="form-group col-lg-6">
+                                <label for="name">Text {{$i}} </label>
+                                <input type="text" id="tt_text_{{$i}}" name="tt_text_{{$i}}" class="form-control">
+                            </div>
+                            <?php }?>
                         </div>
 
                     </div>

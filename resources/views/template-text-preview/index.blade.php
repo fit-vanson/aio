@@ -42,6 +42,7 @@
                         <tr>
                             <th>Template Text Preview</th>
                             <th>File </th>
+                            <th>Category </th>
                             <th>Action</th>
                         </tr>
                         </thead>
@@ -95,6 +96,7 @@
             columns: [
                 {data: 'tt_name'},
                 {data: 'tt_file'},
+                {data: 'tt_category'},
                 {data: 'action',className: "text-center", name: 'action', orderable: false, searchable: false},
             ],
             order:[1,'asc']
@@ -199,11 +201,39 @@
 <script>
     function editTemplateTextPreview(id) {
         $.get('{{asset('template-text-preview/edit')}}/'+id,function (data) {
-
-
-
             $('#tt_id').val(data.id);
             $('#tt_name').val(data.tt_name);
+            $('#category_template_parent').val(data.category_template.category_template_parent);
+            $("#category_template_parent").select2({});
+            $.ajax({
+                type:'get',
+                url:'{{asset('category_template/get-cate-temp-parent')}}/'+data.category_template.category_template_parent,
+            }).done(function(res){
+                var elementSelect = $('#category_template_child');
+                if(elementSelect.length <= 0){
+                    return false;
+                }
+                elementSelect.empty();
+                for(var item of res.cateParent){
+                    elementSelect.append(
+                        $("<option></option>", {
+                            value : item.id
+                        }).text(item.category_template_name)
+                    );
+                }
+            });
+            $('#category_template_child').val(data.tt_category);
+            $("#category_template_child").select2({});
+
+            $('#tt_text_1').val(data.tt_text_1);
+            $('#tt_text_2').val(data.tt_text_2);
+            $('#tt_text_3').val(data.tt_text_3);
+            $('#tt_text_4').val(data.tt_text_4);
+            $('#tt_text_5').val(data.tt_text_5);
+            $('#tt_text_6').val(data.tt_text_6);
+            $('#tt_text_7').val(data.tt_text_7);
+            $('#tt_text_8').val(data.tt_text_8);
+
             $('#modelHeading').html("Edit");
             $('#saveBtn').val("edit-template-text-preview");
             $('#template_text_previewModel').modal('show');
@@ -249,7 +279,46 @@
         });
 
     });
+
+    $("#CategoryTemplateChildForm").submit(function (e) {
+        e.preventDefault();
+        let data = new FormData(document.getElementById('CategoryTemplateChildForm'));
+        $.ajax({
+            url:"{{route('category_template.create')}}",
+            type: "post",
+            data:data,
+            processData: false,
+            contentType: false,
+            dataType: 'json',
+            beForeSend : () => {
+            },
+            success:function (data) {
+                console.log(data)
+                if(data.errors){
+                    for( var count=0 ; count <data.errors.length; count++){
+                        $("#CategoryTemplateForm").notify(
+                            data.errors[count],"error",
+                            { position:"right" }
+                        );
+                    }
+                }
+                $.notify(data.success, "success");
+                $('#CategoryTemplateChildForm').trigger("reset");
+                $('#categoryTemplateChildModel').modal('hide');
+
+                if(typeof data.allCateTempChild == 'undefined'){
+                    data.allCateTempChild = {};
+                }
+                if(typeof rebuildCateTempOption == 'function'){
+                    rebuildCateTempChildOption(data.allCateTempChild)
+                }
+            }
+        });
+
+    });
+
     function rebuildCateTempOption(cate_temp){
+        console.log(cate_temp)
         var elementSelect = $("#category_template_parent");
         var elementSelect1 = $("#category_template_parent_child");
         if(elementSelect.length <= 0 || elementSelect1.length <= 0 ){
@@ -257,6 +326,7 @@
         }
         elementSelect.empty();
         elementSelect1.empty();
+
         for(var item of cate_temp){
             elementSelect.append(
                 $("<option></option>", {
@@ -270,18 +340,29 @@
             );
         }
     }
+    function rebuildCateTempChildOption(cate_temp){
+        var elementSelect1 = $("#category_template_child");
+        if( elementSelect1.length <= 0 ){
+            return false;
+        }
+        elementSelect1.empty();
+        for(var item of cate_temp){
+            elementSelect1.append(
+                $("<option></option>", {
+                    value : item.id
+                }).text(item.category_template_name)
+            );
+        }
+    }
 
     $('#category_template_parent').on('change',function(e){
-        // alert(1)
         var id=$(this).val();
         $.ajax({
             type:'get',
             url:'{{asset('category_template/get-cate-temp-parent')}}/'+id,
             // data:id,
         }).done(function(res){
-            console.log(res)
             var elementSelect = $('#category_template_child');
-
             if(elementSelect.length <= 0){
                 return false;
             }
@@ -296,16 +377,14 @@
         });
     });
 
-
-
-    $('select[name="category_template_parent_child"]').on('change', function(){
-        $("#category_template_child_child").val($('select[name=category_template_parent_child]').find(':selected').text()+ ' - ');
+    $('select[id="category_template_parent_child"]').on('change', function(){
+        $("#category_template_child_child").val($('select[id=category_template_parent_child]').find(':selected').text()+ ' - ');
     });
 
     $('#categoryTemplateChild').click(function () {
         $("#category_template_parent_child").val($('#category_template_parent').val());
         $("#category_template_parent_child").select2({});
-        $("#category_template_child_child").val($('select[name=category_template_parent_child]').find(':selected').text()+ ' - ');
+        $("#category_template_child_child").val($('select[id=category_template_parent_child]').find(':selected').text()+ ' - ');
         $('#modelHeading').html("Template Text Preview");
         $('#categoryTemplateChildModel').modal('show');
     });

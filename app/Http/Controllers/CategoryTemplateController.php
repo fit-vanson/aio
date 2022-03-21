@@ -26,13 +26,15 @@ class CategoryTemplateController extends Controller
         }
         $data = new CategoryTemplate();
         $data['category_template_name'] = $request->category_template_name;
-        $data['category_template_name'] = $request->category_template_name ? $request->category_template_name : 0;
+        $data['category_template_parent'] = $request->category_template_parent ? $request->category_template_parent : 0;
         $data->save();
         $allCateTemp  = CategoryTemplate::latest()->where('category_template_parent',0)->get();
+        $allCateTempChild  = CategoryTemplate::latest()->where('category_template_parent','<>',0)->get();
 
         return response()->json([
             'success'=>'Thêm mới thành công',
-            'cate_temp' => $allCateTemp
+            'cate_temp' => $allCateTemp,
+            'allCateTempChild' => $allCateTempChild,
         ]);
 
     }
