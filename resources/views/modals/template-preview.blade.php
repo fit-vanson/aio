@@ -37,6 +37,11 @@
                                     </div>
                                 </div>
                             </div>
+                            <div class="form-group col-lg-6">
+                                <label for="name">File SC</label><p></p>
+                                <input type="file" name="tp_sc" id="tp_sc" class="filestyle" data-buttonname="btn-secondary" accept=".zip,.rar" />
+                            </div>
+
                         </div>
 
                         <div class="row">
@@ -45,9 +50,10 @@
                                 <input type="text" id="tp_name" name="tp_name" class="form-control" required>
                             </div>
                             <div class="form-group col-lg-6">
-                                <label for="name">File SC</label><p></p>
-                                <input type="file" name="tp_sc" id="tp_sc" class="filestyle" data-buttonname="btn-secondary" accept=".zip" />
+                                <label for="name">File Data mẫu</label><p></p>
+                                <input type="file" name="tp_data" id="tp_data" class="filestyle" data-buttonname="btn-secondary" accept=".zip,.rar" />
                             </div>
+
                         </div>
 
                         <div class="row">
