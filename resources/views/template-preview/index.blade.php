@@ -113,6 +113,8 @@
             $('#saveBtn').val("create-template-preview");
             $('#tp_id').val('');
             $("#category_template").val('');
+            $("#tp_sc").val('');
+            $("#tp_data").val('');
             $("#category_template").select2({});
             $("#avatar").attr("src","img/demo_bn.png");
             // $('#templatePreviewForm').trigger("reset");
