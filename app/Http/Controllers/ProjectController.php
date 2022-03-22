@@ -347,28 +347,6 @@ class ProjectController extends Controller
                 ->leftjoin('ngocphandang_da','ngocphandang_da.id','=','ngocphandang_project.ma_da')
                 ->leftjoin('ngocphandang_template','ngocphandang_template.id','=','ngocphandang_project.template')
 
-//                ->hasWith('dev_xiaomi', function ($q) {
-////                    $q->leftJoin('tbl_category_has_site', 'tbl_category_has_site.category_id', '=', 'tbl_category_manages.id')
-////                        ->leftJoin('tbl_site_manages', 'tbl_site_manages.id', '=', 'tbl_category_has_site.site_id')
-////
-////                        ->where('checked_ip','=', 1);
-//                })
-
-//                ->leftjoin('ngocphandang_dev','ngocphandang_dev.id','=','ngocphandang_project.Chplay_buildinfo_store_name_x')
-//                ->leftjoin('ngocphandang_dev_amazon','ngocphandang_dev_amazon.id','=','ngocphandang_project.Amazon_buildinfo_store_name_x')
-//                ->leftjoin('ngocphandang_dev_samsung','ngocphandang_dev_samsung.id','=','ngocphandang_project.Samsung_buildinfo_store_name_x')
-//                ->leftjoin('ngocphandang_dev_xiaomi','ngocphandang_dev_xiaomi.id','=','ngocphandang_project.Xiaomi_buildinfo_store_name_x')
-//                ->leftjoin('ngocphandang_dev_oppo','ngocphandang_dev_oppo.id','=','ngocphandang_project.Oppo_buildinfo_store_name_x')
-//                ->leftjoin('ngocphandang_dev_vivo','ngocphandang_dev_vivo.id','=','ngocphandang_project.Vivo_buildinfo_store_name_x')
-//                ->leftjoin('ngocphandang_dev_huawei','ngocphandang_dev_huawei.id','=','ngocphandang_project.Huawei_buildinfo_store_name_x')
-
-//                ->leftjoin('ngocphandang_ga','ngocphandang_dev.id_ga','=','ngocphandang_ga.id')
-
-//                ->join('ngocphandang_dev_amazon','ngocphandang_dev_amazon.amazon_ga_name','=','ngocphandang_ga.id')
-//                ->leftjoin('ngocphandang_ga','ngocphandang_dev_amazon.amazon_ga_name','=','ngocphandang_ga.id')
-
-
-
                 ->where('ngocphandang_da.ma_da', 'like', '%' . $searchValue . '%')
                 ->orWhere('ngocphandang_project.projectname', 'like', '%' . $searchValue . '%')
                 ->orWhere('ngocphandang_project.title_app', 'like', '%' . $searchValue . '%')
@@ -605,25 +583,18 @@ class ProjectController extends Controller
             }
 
 
-//            if(isset($ma_da)) {
                 if (isset($record->link_store_vietmmo)){
                     $data_ma_da = '<a href="'.$record->link_store_vietmmo.'" target="_blank" > <p class="text-muted" style="line-height:0.5">Mã Dự án: '.$record->ma_da.'</p></a>';
                 }else{
                     $data_ma_da = '<p class="text-muted" style="line-height:0.5">Mã Dự án: '.$record->ma_da.'</p>';
                 }
-//            }else{
-//                $data_ma_da = '';
-//            }
-//            dd($record);
-//            if(isset($template)) {
+
                 if (isset($record->link_store_vietmmo)){
                     $data_template =  '<a href="'.$record->link_store_vietmmo.'" target="_blank" ><p class="text-muted" style="line-height:0.5">Template: '.$record->template.'</p></a>';
                 }else{
                     $data_template =  '<p class="text-muted" style="line-height:0.5">Template: '.$record->template.'</p>';
                 }
-//            }else{
-//                $data_template='';
-//            }
+
 
             if(isset($record->projectname)) {
 
@@ -1282,16 +1253,48 @@ class ProjectController extends Controller
 
 
             // Get records, also we have included search filter as well
-            $records = ProjectModel::orderBy($columnName, $columnSortOrder)
-                ->leftjoin('ngocphandang_da','ngocphandang_da.id','=','ngocphandang_project.ma_da')
-                ->leftjoin('ngocphandang_template','ngocphandang_template.id','=','ngocphandang_project.template')
+//            $records = ProjectModel::orderBy($columnName, $columnSortOrder)
+//                ->leftjoin('ngocphandang_da','ngocphandang_da.id','=','ngocphandang_project.ma_da')
+//                ->leftjoin('ngocphandang_template','ngocphandang_template.id','=','ngocphandang_project.template')
+//
+//                ->where(function ($a) use ($searchValue) {
+//                    $a
+//                        ->where('ngocphandang_da.ma_da', 'like', '%' . $searchValue . '%')
+//                        ->orWhere('ngocphandang_project.projectname', 'like', '%' . $searchValue . '%')
+//                        ->orWhere('ngocphandang_project.title_app', 'like', '%' . $searchValue . '%')
+//                        ->orWhere('ngocphandang_template.template', 'like', '%' . $searchValue . '%')
+//                        ->orWhere('ngocphandang_project.Chplay_package', 'like', '%' . $searchValue . '%')
+//                        ->orWhere('ngocphandang_project.Amazon_package', 'like', '%' . $searchValue . '%')
+//                        ->orWhere('ngocphandang_project.Samsung_package', 'like', '%' . $searchValue . '%')
+//                        ->orWhere('ngocphandang_project.Xiaomi_package', 'like', '%' . $searchValue . '%')
+//                        ->orWhere('ngocphandang_project.Oppo_package', 'like', '%' . $searchValue . '%')
+//                        ->orWhere('ngocphandang_project.Vivo_package', 'like', '%' . $searchValue . '%')
+//                        ->orWhere('ngocphandang_project.Huawei_package', 'like', '%' . $searchValue . '%')
+//                        ->orWhere('ngocphandang_project.buildinfo_console', 'like', '%' . $searchValue . '%');
+//
+//                })
+//                ->where(function ($q){
+//                    $q->where('ngocphandang_project.buildinfo_console','<>',0);
+//                })
+//                ->select('ngocphandang_project.*')
+//                ->skip($start)
+//                ->take($rowperpage)
+//                ->get();
+//            dd($records);
+
+
+
+            $records = ProjectModel::with('da','matemplate','log','dev_chplay.ga','dev_amazon.ga','dev_samsung.ga','dev_xiaomi.ga','dev_oppo.ga','dev_vivo.ga','dev_huawei.ga')
+                ->orderBy($columnName, $columnSortOrder)
+//                ->leftjoin('ngocphandang_da','ngocphandang_da.id','=','ngocphandang_project.ma_da')
+//                ->leftjoin('ngocphandang_template','ngocphandang_template.id','=','ngocphandang_project.template')
 
                 ->where(function ($a) use ($searchValue) {
                     $a
-                        ->where('ngocphandang_da.ma_da', 'like', '%' . $searchValue . '%')
+                        ->where('ngocphandang_project.ma_da', 'like', '%' . $searchValue . '%')
                         ->orWhere('ngocphandang_project.projectname', 'like', '%' . $searchValue . '%')
                         ->orWhere('ngocphandang_project.title_app', 'like', '%' . $searchValue . '%')
-                        ->orWhere('ngocphandang_template.template', 'like', '%' . $searchValue . '%')
+                        ->orWhere('ngocphandang_project.template', 'like', '%' . $searchValue . '%')
                         ->orWhere('ngocphandang_project.Chplay_package', 'like', '%' . $searchValue . '%')
                         ->orWhere('ngocphandang_project.Amazon_package', 'like', '%' . $searchValue . '%')
                         ->orWhere('ngocphandang_project.Samsung_package', 'like', '%' . $searchValue . '%')
@@ -1305,42 +1308,40 @@ class ProjectController extends Controller
                 ->where(function ($q){
                     $q->where('ngocphandang_project.buildinfo_console','<>',0);
                 })
-                ->select('ngocphandang_project.*')
                 ->skip($start)
+                ->latest('ngocphandang_project.created_at')
                 ->take($rowperpage)
                 ->get();
+
+
+
         }
         $data_arr = array();
         foreach ($records as $record) {
             $btn = ' <a href="javascript:void(0)" data-toggle="tooltip"  data-id="'.$record->projectid.'" data-original-title="Delete" class="btn btn-warning removeProject"><i class="mdi mdi-file-move"></i></a>';
 
-            $ma_da = DB::table('ngocphandang_project')
-                ->join('ngocphandang_da','ngocphandang_da.id','=','ngocphandang_project.ma_da')
-                ->where('ngocphandang_da.id',$record->ma_da)
-                ->first();
-            $template = DB::table('ngocphandang_project')
-                ->join('ngocphandang_template','ngocphandang_template.id','=','ngocphandang_project.template')
-                ->where('ngocphandang_template.id',$record->template)
-                ->first();
+//            $ma_da = DB::table('ngocphandang_project')
+//                ->join('ngocphandang_da','ngocphandang_da.id','=','ngocphandang_project.ma_da')
+//                ->where('ngocphandang_da.id',$record->ma_da)
+//                ->first();
+//            $template = DB::table('ngocphandang_project')
+//                ->join('ngocphandang_template','ngocphandang_template.id','=','ngocphandang_project.template')
+//                ->where('ngocphandang_template.id',$record->template)
+//                ->first();
 
-            if(isset($ma_da)) {
-                if (isset($ma_da->link_store_vietmmo)){
-                    $data_ma_da = '<a href="'.$ma_da->link_store_vietmmo.'" target="_blank" > <p class="text-muted" style="line-height:0.5">Mã Dự án: '.$ma_da->ma_da.'</p></a>';
-                }else{
-                    $data_ma_da = '<p class="text-muted" style="line-height:0.5">Mã Dự án: '.$ma_da->ma_da.'</p>';
-                }
+            if (isset($record->link_store_vietmmo)){
+                $data_ma_da = '<a href="'.$record->link_store_vietmmo.'" target="_blank" > <p class="text-muted" style="line-height:0.5">Mã Dự án: '.$record->ma_da.'</p></a>';
             }else{
-                $data_ma_da = '';
+                $data_ma_da = '<p class="text-muted" style="line-height:0.5">Mã Dự án: '.$record->ma_da.'</p>';
             }
-            if(isset($template)) {
-                if (isset($template->link_store_vietmmo)){
-                    $data_template =  '<a href="'.$template->link_store_vietmmo.'" target="_blank" ><p class="text-muted" style="line-height:0.5">Template: '.$template->template.'</p></a>';
-                }else{
-                    $data_template =  '<p class="text-muted" style="line-height:0.5">Template: '.$template->template.'</p>';
-                }
+
+            if (isset($record->link_store_vietmmo)){
+                $data_template =  '<a href="'.$record->link_store_vietmmo.'" target="_blank" ><p class="text-muted" style="line-height:0.5">Template: '.$record->template.'</p></a>';
             }else{
-                $data_template='';
+                $data_template =  '<p class="text-muted" style="line-height:0.5">Template: '.$record->template.'</p>';
             }
+
+
 
             if(isset($record->projectname)) {
                 $data_projectname =   '<span style="line-height:3"> Mã Project: ' . $record->projectname . '</span>';
@@ -1431,6 +1432,7 @@ class ProjectController extends Controller
 
 
 
+
             if($record->Oppo_package){
                 if(isset(json_decode($record->Oppo_ads,true)['ads_id'])
                     || isset(json_decode($record->Oppo_ads,true)['ads_banner'])
@@ -1510,6 +1512,7 @@ class ProjectController extends Controller
                     }
                 }
             }
+
             $data_arr[] = array(
                 "created_at" => $record->created_at,
                 "logo" => $logo,
