@@ -31,12 +31,18 @@
 </div>
 @endcan
 @include('modals.template-preview')
+@include('modals.buildpreview')
 @endsection
 @section('content')
 
     <div class="row">
         <div class="col-12">
             <div class="card">
+                <div class="card-body">
+                    <div class="button-items status_app_button">
+                        <button type="button" class="btn btn-primary waves-effect waves-light" id="build_preview">Build Preview</button>
+                    </div>
+                </div>
                 <div class="card-body">
 {{--                    <table class="table table-bordered data-table">--}}
                      <table class="table table-bordered dt-responsive nowrap data-table" style="border-collapse: collapse; border-spacing: 0; width: 100%;">
@@ -205,6 +211,89 @@
                     });
                     swal("Đã xóa!", "Your imaginary file has been deleted.", "success");
                 });
+        });
+
+
+        $('#build_preview').click(function () {
+
+
+            $("#category_template_frame").val('');
+            $("#category_template_text").val('');
+            $("#template_frame_preview").val('');
+            $("#preview").attr('src','');
+            $("#category_template_frame").select2({});
+            $("#category_template_text").select2({});
+            $("#template_frame_preview").select2({});
+            $("#template_text_preview").select2({});
+            $('#saveBtn').val("create-preview");
+            $('#buildpreviewModalLabel').html("Template Preview");
+            $('#buildpreviewModal').modal('show');
+            $('.modal').on('hidden.bs.modal', function (e) {
+                $('body').addClass('modal-open');
+            });
+        });
+    });
+
+    $('#category_template_frame').on('change',function(e){
+        var id=$(this).val();
+        $.ajax({
+            type:'get',
+            url:'{{asset('category_template_frame/get-temp-preview')}}/'+id,
+            // data:id,
+        }).done(function(res){
+            console.log(res)
+            var elementSelect = $('#template_frame_preview');
+            if(elementSelect.length <= 0){
+                return false;
+            }
+            elementSelect.empty();
+            elementSelect.append(
+                $("<option value='0'></option>").text('---Random---')
+            );
+            for(var item of res.tempPreview){
+                elementSelect.append(
+                    $("<option></option>", {
+                        value : item.id
+                    }).text(item.tp_name)
+                );
+            }
+        });
+    });
+    $('#template_frame_preview').on('change',function(e){
+        var id=$(this).val();
+        $.ajax({
+            type:'get',
+            url:'{{asset('category_template_frame/get-temp-preview')}}/'+id,
+            // data:id,
+        }).done(function(res){
+            console.log(res)
+            $('#preview').attr('src',('file-manager/TemplatePreview/logo/')+res.frame.tp_logo)
+        });
+    });
+
+    $('#category_template_text').on('change',function(e){
+        var id=$(this).val();
+        console.log(id)
+        $.ajax({
+            type:'get',
+            url:'{{asset('category_template/get-cate-temp-parent')}}/'+id,
+            // data:id,
+        }).done(function(res){
+            var elementSelect = $('#template_text_preview');
+            if(elementSelect.length <= 0){
+                return false;
+            }
+            elementSelect.empty();
+            elementSelect.append(
+                $("<option value='0'></option>").text('---Random---')
+            );
+            for(var item of res.cateParent){
+                elementSelect.append(
+                    $("<option></option>", {
+                        value : item.id
+                    }).text(item.category_template_name)
+                );
+            }
         });
     });
 </script>

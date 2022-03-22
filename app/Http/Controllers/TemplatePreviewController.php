@@ -17,8 +17,11 @@ class TemplatePreviewController extends Controller
 {
     public function index(){
         $categoyTemplateFrame =  CategoryTemplateFrame::latest('id')->get();
+        $categoyTemplateText =  CategoryTemplate::latest('id')->where('category_template_parent',0)->get();
         return view('template-preview.index',compact([
-            'categoyTemplateFrame']));
+            'categoyTemplateFrame',
+            'categoyTemplateText'
+        ]));
     }
 
     public function getIndex(Request $request)

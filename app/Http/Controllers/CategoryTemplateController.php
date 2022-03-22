@@ -154,4 +154,16 @@ class CategoryTemplateController extends Controller
         ]);
 
     }
+    public function getTempText($id){
+        $cateParent = CategoryTemplate::where('category_template_parent',$id)->get();
+        $frame = TemplatePreview::find($id);
+        return response()->json([
+            'success'=>'Thêm mới thành công',
+            'tempPreview' => $tempPreview,
+            'frame' => $frame
+        ]);
+
+    }
+
+
 }

@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\CategoryTemplate;
 use App\Models\CategoryTemplateFrame;
+use App\Models\TemplatePreview;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
 
@@ -126,6 +127,16 @@ class CategoryTemplateFrameController extends Controller
 
         $data->delete();
         return response()->json(['success'=>'Xóa thành công.']);
+
+    }
+    public function getTemp($id){
+        $tempPreview = TemplatePreview::where('tp_category',$id)->get();
+        $frame = TemplatePreview::find($id);
+        return response()->json([
+            'success'=>'Thêm mới thành công',
+            'tempPreview' => $tempPreview,
+            'frame' => $frame
+        ]);
 
     }
 }
