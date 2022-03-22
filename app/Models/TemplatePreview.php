@@ -16,6 +16,6 @@ class TemplatePreview extends Model
     }
 
     public function CategoryTemplate(){
-        return $this->belongsTo(CategoryTemplate::class,'tp_category');
+        return $this->belongsTo(CategoryTemplateFrame::class,'tp_category');
     }
 }

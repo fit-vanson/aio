@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 
 use App\Models\CategoryTemplate;
+use App\Models\TemplatePreview;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Validator;
@@ -13,8 +14,8 @@ use Illuminate\Support\Str;
 class CategoryTemplateController extends Controller
 {
     public function index(){
-//        $categoyTemplate =  CategoryTemplate::latest('id')->where('category_template_parent',0)->get();
-        return view('category-template.index');
+        $categoyTemplate =  CategoryTemplate::latest('id')->where('category_template_parent',0)->get();
+        return view('category-template.index',compact('categoyTemplate'));
     }
 
     public function getIndex(Request $request)
@@ -46,25 +47,19 @@ class CategoryTemplateController extends Controller
             ->with('parent')
 //            ->select('*',DB::raw("sum( IF(tp_script_1 = '',0,1)  + IF(tp_script_2 = '',0,1)  + IF(tp_script_3 = '',0,1)  + IF(tp_script_4 = '',0,1)  + IF(tp_script_5 = '',0,1)  + IF(tp_script_6 = '',0,1)  + IF(tp_script_7 = '',0,1)  + IF(tp_script_8 = '',0,1)  ) AS sum_script") )
             ->where('category_template_name', 'like', '%' . $searchValue . '%')
-
             ->skip($start)
             ->take($rowperpage)
             ->get();
-
-
-
         $data_arr = array();
         foreach ($records as $record) {
             $btn = ' <a href="javascript:void(0)" onclick="editCategoryTemplate('.$record->id.')" class="btn btn-warning"><i class="ti-pencil-alt"></i></a>';
             $btn = $btn.' <a href="javascript:void(0)" data-toggle="tooltip"  data-id="'.$record->id.'" data-original-title="Delete" class="btn btn-danger deleteCategoryTemplate"><i class="ti-trash"></i></a>';
-            $logo = "<img class='rounded mx-auto d-block'  height='150px' src='/file-manager/TemplatePreview/logo/$record->tp_logo'>";
 
             if($record->parent){
                 $parent = $record->parent->category_template_name;
             }else{
                 $parent = $record->category_template_name;
             }
-
             $data_arr[] = array(
                 "id " => $parent ,
                 "category_template_name" => $record->category_template_name,
@@ -83,6 +78,7 @@ class CategoryTemplateController extends Controller
 
     public function create(Request  $request)
     {
+
         $rules = [
             'category_template_name' =>'unique:category_templates,category_template_name',
         ];
@@ -112,6 +108,41 @@ class CategoryTemplateController extends Controller
         $temp = CategoryTemplate::find($id);
         $cateParent =  CategoryTemplate::latest()->where('category_template_parent',0)->get();
         return response()->json([$temp,$cateParent] );
+    }
+    public function update(Request $request){
+        $id = $request->category_template_id;
+        $rules = [
+            'category_template_name' =>'unique:category_templates,category_template_name,'.$id.',id',
+
+        ];
+        $message = [
+            'category_template_name.unique'=>'Tên đã tồn tại',
+        ];
+        $error = Validator::make($request->all(),$rules, $message );
+        if($error->fails()){
+            return response()->json(['errors'=> $error->errors()->all()]);
+        }
+        $data = CategoryTemplate::find($id);
+        $data->category_template_name = $request->category_template_name;
+        $data->category_template_parent = $request->category_template_parent ? $request->category_template_parent : 0;
+        $data->save();
+        return response()->json(['success'=>'Cập nhật thành công']);
+    }
+    public function delete($id){
+        $data = CategoryTemplate::find($id);
+        if($data->category_template_parent == 0 ){
+            $cateParent = CategoryTemplate::where('category_template_parent',$id)->count();
+            if($cateParent ==0){
+                $data->delete();
+                return response()->json(['success'=>'Xóa thành công.']);
+            }else{
+                return response()->json(['errors'=>'Đang tồn tại cate child, không thể xoá.']);
+            }
+
+        }else{
+            $data->delete();
+            return response()->json(['success'=>'Xóa thành công.']);
+        }
     }
     public function getCateTempParent($id){
         $cateParent = CategoryTemplate::where('category_template_parent',$id)->get();

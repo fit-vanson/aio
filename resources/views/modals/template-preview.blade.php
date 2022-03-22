@@ -26,13 +26,13 @@
                                     <div class="col-md-10 col-10">
                                         <select class="form-control select2" id="category_template" name="category_template" required>
                                             <option value="">---Vui lòng chọn---</option>
-                                            @foreach($categoyTemplate as $item)
-                                                <option value="{{$item->id}}">{{$item->category_template_name}}</option>
+                                            @foreach($categoyTemplateFrame as $item)
+                                                <option value="{{$item->id}}">{{$item->category_template_frames_name}}</option>
                                             @endforeach
                                         </select>
                                     </div>
                                     <div class="col-md-2 col-4">
-                                        <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#categoryTemplate" style="border-radius: 0 3px 3px 0; box-shadow: none;">...
+                                        <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#categoryTemplateFrame" style="border-radius: 0 3px 3px 0; box-shadow: none;">...
                                         </button>
                                     </div>
                                 </div>
@@ -107,7 +107,7 @@
     </div>
 </div>
 
-@include('modals.categoryTemplate')
+@include('modals.categoryTemplateFrame')
 
 
 

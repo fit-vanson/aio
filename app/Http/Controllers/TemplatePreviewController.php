@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\CategoryTemplate;
+use App\Models\CategoryTemplateFrame;
 use App\Models\Template;
 use App\Models\TemplatePreview;
 use Illuminate\Http\Request;
@@ -15,9 +16,9 @@ use ZipArchive;
 class TemplatePreviewController extends Controller
 {
     public function index(){
-        $categoyTemplate =  CategoryTemplate::latest('id')->where('category_template_parent',0)->get();
+        $categoyTemplateFrame =  CategoryTemplateFrame::latest('id')->get();
         return view('template-preview.index',compact([
-            'categoyTemplate']));
+            'categoyTemplateFrame']));
     }
 
     public function getIndex(Request $request)
@@ -53,7 +54,7 @@ class TemplatePreviewController extends Controller
             ->where('tp_name', 'like', '%' . $searchValue . '%')
             ->orWhere('tp_sc', 'like', '%' . $searchValue . '%')
             ->orwhereHas('CategoryTemplate', function ($q) use ($searchValue) {
-                $q->where('category_template_name', 'like', '%' . $searchValue . '%');
+                $q->where('category_template_frames_name', 'like', '%' . $searchValue . '%');
                     })
             ->groupBy('tp_name')
             ->skip($start)
@@ -70,7 +71,7 @@ class TemplatePreviewController extends Controller
                 "tp_logo" => $logo,
                 "tp_name" => $record->tp_name,
                 "sum_script" => $record->sum_script,
-                "tp_category" => $record->CategoryTemplate? $record->CategoryTemplate->category_template_name :"",
+                "tp_category" => $record->CategoryTemplate? $record->CategoryTemplate->category_template_frames_name :"",
                 "tp_sc" => "<a href='/file-manager/TemplatePreview/".$record->tp_sc."' target='_blank'>$record->tp_sc</a>",
                 "action"=> $btn,
             );

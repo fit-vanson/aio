@@ -323,7 +323,6 @@
     });
 
     function rebuildCateTempOption(cate_temp){
-        console.log(cate_temp)
         var elementSelect = $("#category_template_parent");
         var elementSelect1 = $("#category_template_parent_child");
         if(elementSelect.length <= 0 || elementSelect1.length <= 0 ){

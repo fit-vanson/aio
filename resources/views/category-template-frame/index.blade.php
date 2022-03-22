@@ -21,16 +21,16 @@
 
 @section('breadcrumb')
 <div class="col-sm-6">
-    <h4 class="page-title">Category Template</h4>
+    <h4 class="page-title">Category Template Frame</h4>
 </div>
 @can('template-preview-index')
 <div class="col-sm-6">
     <div class="float-right">
-        <a class="btn btn-success" href="javascript:void(0)" id="createNewCategotyTemp"> Create New</a>
+        <a class="btn btn-success" href="javascript:void(0)" id="createNewCategotyTempFrame"> Create New</a>
     </div>
 </div>
 @endcan
-@include('modals.categoryTemplate')
+@include('modals.categoryTemplateFrame')
 @endsection
 @section('content')
 
@@ -43,7 +43,6 @@
                         <thead>
                         <tr>
                             <th style="width: 15%">Template Preview</th>
-                            <th style="width: 15%">Parent</th>
                             <th style="width: 10%">Action</th>
                         </tr>
                         </thead>
@@ -86,59 +85,38 @@
                 'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
             }
         });
-        var groupColumn = 1;
         var table = $('.data-table').DataTable({
             processing: true,
             serverSide: true,
             displayLength: 50,
-
             ajax: {
-                url: "{{ route('category_template.getIndex') }}",
+                url: "{{ route('category_template_frame.getIndex') }}",
                 type: "post"
             },
             columns: [
-
-                {data: 'category_template_name'},
-                {data: 'category_template_parent'},
+                {data: 'category_template_frames_name'},
                 {data: 'action',className: "text-center", name: 'action', orderable: false, searchable: false},
             ],
-            "drawCallback": function ( settings ) {
-                var api = this.api();
-                var rows = api.rows( {page:'current'} ).nodes();
-                var last=null;
-
-                api.column(groupColumn, {page:'current'} ).data().each( function ( group, i ) {
-                    if ( last !== group ) {
-                        $(rows).eq( i ).before(
-                            '<tr class="group"><td colspan="5">'+group+'</td></tr>'
-                        );
-                        last = group;
-                    }
-                } );
-            }
 
         });
 
-        $('#createNewCategotyTemp').click(function () {
-            $('#saveBtn').val("create-category-template");
-            $('#category_template_child_id').val('');
-            $("#category_template_parent_child").val('');
-            $("#category_template_parent_child").select2({});
-            $('#saveBtnChild').val("add-category-template");
-            $('#CategoryTemplateChildForm').trigger("reset");
-            $('#childModalLabel').html("Thêm mới Category");
-            $('#categoryTemplateChildModel').modal('show');
+        $('#createNewCategotyTempFrame').click(function () {
+            $('#category_template_id').val('');
+            $('#saveBtn').val("add-category-template");
+            $('#exampleModalLabel').html("Add");
+            $('#CategoryTemplateFrameForm').trigger("reset");
+            $('#categoryTemplateFrame').modal('show');
             $('.modal').on('hidden.bs.modal', function (e) {
                 $('body').addClass('modal-open');
             });
         });
-        $('#CategoryTemplateForm').on('submit',function (event){
+        $('#CategoryTemplateFrameForm').on('submit',function (event){
             event.preventDefault();
-            var formData = new FormData($("#CategoryTemplateForm")[0]);
-            if($('#saveBtn').val() == 'create-template-preview'){
+            var formData = new FormData($("#CategoryTemplateFrameForm")[0]);
+            if($('#saveBtn').val() == 'add-category-template'){
                 $.ajax({
                     data: formData,
-                    url: "{{ route('template-preview.create') }}",
+                    url: "{{ route('category_template_frame.create') }}",
                     type: "POST",
                     dataType: 'json',
                     processData: false,
@@ -146,7 +124,7 @@
                     success: function (data) {
                         if(data.errors){
                             for( var count=0 ; count <data.errors.length; count++){
-                                $("#templatePreviewForm").notify(
+                                $("#CategoryTemplateFrameForm").notify(
                                     data.errors[count],"error",
                                     { position:"right" }
                                 );
@@ -154,8 +132,8 @@
                         }
                         if(data.success){
                             $.notify(data.success, "success");
-                            $('#templatePreviewForm').trigger("reset");
-                            $('#template_previewModel').modal('hide');
+                            $('#CategoryTemplateFrameForm').trigger("reset");
+                            $('#categoryTemplateFrame').modal('hide');
                             table.draw();
                         }
                     },
@@ -164,7 +142,7 @@
             if($('#saveBtn').val() == 'edit-category-template'){
                 $.ajax({
                     data: formData,
-                    url: "{{ route('category_template.update') }}",
+                    url: "{{ route('category_template_frame.update') }}",
                     type: "post",
                     dataType: 'json',
                     processData: false,
@@ -172,7 +150,7 @@
                     success: function (data) {
                         if(data.errors){
                             for( var count=0 ; count <data.errors.length; count++){
-                                $("#CategoryTemplateForm").notify(
+                                $("#CategoryTemplateFrameForm").notify(
                                     data.errors[count],"error",
                                     { position:"right" }
                                 );
@@ -180,9 +158,8 @@
                         }
                         if(data.success){
                             $.notify(data.success, "success");
-                            $('#CategoryTemplateForm').trigger("reset");
-                            $('#categoryTemplate').modal('hide');
-                            $('#categoryTemplateChildModel').modal('hide');
+                            $('#CategoryTemplateFrameForm').trigger("reset");
+                            $('#categoryTemplateFrame').modal('hide');
                             table.draw();
                         }
                     },
@@ -191,70 +168,7 @@
         });
 
 
-        $('#CategoryTemplateChildForm').on('submit',function (event){
-            event.preventDefault();
-            var formData = new FormData($("#CategoryTemplateChildForm")[0]);
-            if($('#saveBtnChild').val() == 'add-category-template'){
-                $.ajax({
-                    data: formData,
-                    url: "{{ route('category_template.create') }}",
-                    type: "POST",
-                    dataType: 'json',
-                    processData: false,
-                    contentType: false,
-                    success: function (data) {
-                        if(data.errors){
-                            for( var count=0 ; count <data.errors.length; count++){
-                                $("#CategoryTemplateChildForm").notify(
-                                    data.errors[count],"error",
-                                    { position:"right" }
-                                );
-                            }
-                        }
-                        if(data.success){
-                            $.notify(data.success, "success");
-                            $('#CategoryTemplateChildForm').trigger("reset");
-                            $('#categoryTemplateChildModel').modal('hide');
-                            table.draw();
-
-                            if(typeof data.cate_temp == 'undefined'){
-                                data.cate_temp = {};
-                            }
-                            if(typeof rebuildCateTempOption == 'function'){
-                                rebuildCateTempOption(data.cate_temp)
-                            }
-                        }
-                    },
-                });
-            }
-            if($('#saveBtnChild').val() == 'edit-category-template'){
-                $.ajax({
-                    data: formData,
-                    url: "{{ route('category_template.update') }}",
-                    type: "post",
-                    dataType: 'json',
-                    processData: false,
-                    contentType: false,
-                    success: function (data) {
-                        if(data.errors){
-                            for( var count=0 ; count <data.errors.length; count++){
-                                $("#CategoryTemplateChildForm").notify(
-                                    data.errors[count],"error",
-                                    { position:"right" }
-                                );
-                            }
-                        }
-                        if(data.success){
-                            $.notify(data.success, "success");
-                            $('#CategoryTemplateChildForm').trigger("reset");
-                            $('#categoryTemplateChildModel').modal('hide');
-                            table.draw();
-                        }
-                    },
-                });
-            }
-        });
-        $(document).on('click','.deleteCategoryTemplate', function (data){
+        $(document).on('click','.deleteCategoryTemplateFrame', function (data){
             var template_id = $(this).data("id");
             swal({
                     title: "Bạn có chắc muốn xóa?",
@@ -268,7 +182,7 @@
                 function(){
                     $.ajax({
                         type: "get",
-                        url: "{{ asset("category_template/delete") }}/" + template_id,
+                        url: "{{ asset("category_template_frame/delete") }}/" + template_id,
                         success: function (data) {
                             if(data.errors){
                                 swal({
@@ -298,44 +212,20 @@
     });
 </script>
 <script>
-    function editCategoryTemplate(id) {
-        $.get('{{asset('category_template/edit')}}/'+id,function (data) {
+    function editCategoryTemplateFrame(id) {
+        $.get('{{asset('category_template_frame/edit')}}/'+id,function (data) {
+            console.log(data)
 
-            if (data[0].category_template_parent == 0){
-
-                $('#category_template_id').val(data[0].id);
-                $('#category_template_name').val(data[0].category_template_name);
+                $('#category_template_id').val(data.id);
+                $('#category_template_name').val(data.category_template_frames_name);
 
                 $('#saveBtn').val("edit-category-template");
                 $('#exampleModalLabel').html("Edit");
-                $('#categoryTemplate').modal('show');
+                $('#categoryTemplateFrame').modal('show');
                 $('.modal').on('hidden.bs.modal', function (e) {
                     $('body').addClass('modal-open');
                 });
-            }else {
-                var parentSelect = $('#category_template_parent_child');
-                if(parentSelect.length <= 0){
-                    return false;
-                }
-                parentSelect.empty();
-                for(var item of data[1]){
-                    parentSelect.append(
-                        $("<option></option>", {
-                            value : item.id
-                        }).text(item.category_template_name)
-                    );
-                }
-                $("#category_template_parent_child").select2({});
-                $("#category_template_child_id").val(data[0].id);
-                $("#category_template_child_child").val(data[0].category_template_name);
 
-                $('#saveBtnChild').val("edit-category-template");
-                $('#childModalLabel').html("Edit Child");
-                $('#categoryTemplateChildModel').modal('show');
-                $('.modal').on('hidden.bs.modal', function (e) {
-                    $('body').addClass('modal-open');
-                });
-            }
 
         })
     }

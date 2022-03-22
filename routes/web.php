@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\CategoryTemplateController;
+use App\Http\Controllers\CategoryTemplateFrameController;
 use App\Http\Controllers\CocsimController;
 use App\Http\Controllers\CronProjectController;
 use App\Http\Controllers\DaController;
@@ -253,6 +254,15 @@ Route::group(['prefix'=>'category_template','middleware'=>['CheckLogout','2fa']]
     Route::get('/delete/{id}',[CategoryTemplateController::class,'delete'])->name('category_template.delete')->middleware('can:template-preview-delete');
     Route::get('/upload',[CategoryTemplateController::class,'upload'])->name('category_template.upload')->middleware('can:template-preview-index');
     Route::get('/get-cate-temp-parent/{id}',[CategoryTemplateController::class,'getCateTempParent'])->name('category_template.getCateTempParent')->middleware('can:template-preview-index');
+});
+
+Route::group(['prefix'=>'category_template_frame','middleware'=>['CheckLogout','2fa']], function (){
+    Route::get('/',[CategoryTemplateFrameController::class,'index'])->name('category_template_frame.index')->middleware('can:template-preview-index');
+    Route::post('/getIndex',[CategoryTemplateFrameController::class,'getIndex'])->name('category_template_frame.getIndex')->middleware('can:template-preview-index');
+    Route::post('/create',[CategoryTemplateFrameController::class,'create'])->name('category_template_frame.create')->middleware('can:template-preview-add');
+    Route::get('/edit/{id}',[CategoryTemplateFrameController::class,'edit'])->name('category_template_frame.edit')->middleware('can:template-preview-edit');
+    Route::post('/update',[CategoryTemplateFrameController::class,'update'])->name('category_template_frame.update')->middleware('can:template-preview-update');
+    Route::get('/delete/{id}',[CategoryTemplateFrameController::class,'delete'])->name('category_template_frame.delete')->middleware('can:template-preview-delete');
 });
 
 
