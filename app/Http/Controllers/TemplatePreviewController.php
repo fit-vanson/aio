@@ -90,7 +90,7 @@ class TemplatePreviewController extends Controller
         $rules = [
             'tp_name' =>'unique:template_previews,tp_name',
             'tp_sc' => 'required|mimes:zip,rar',
-            'tp_data' => 'required|mimes:zip,rar',
+            'tp_data' => 'mimes:zip,rar',
             'logo' => 'required',
 
         ];

@@ -115,7 +115,7 @@
             $("#category_template").val('');
             $("#category_template").select2({});
             $("#avatar").attr("src","img/demo_bn.png");
-            $('#templatePreviewForm').trigger("reset");
+            // $('#templatePreviewForm').trigger("reset");
             $('#modelHeading').html("Template Preview");
             $('#template_previewModel').modal('show');
             $('.modal').on('hidden.bs.modal', function (e) {
