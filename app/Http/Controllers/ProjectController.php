@@ -1330,15 +1330,15 @@ class ProjectController extends Controller
 //                ->first();
 
             if (isset($record->link_store_vietmmo)){
-                $data_ma_da = '<a href="'.$record->link_store_vietmmo.'" target="_blank" > <p class="text-muted" style="line-height:0.5">Mã Dự án: '.$record->ma_da.'</p></a>';
+                $data_ma_da = '<a href="'.$record->link_store_vietmmo.'" target="_blank" > <p class="text-muted" style="line-height:0.5">Mã Dự án: '.$record->da->ma_da.'</p></a>';
             }else{
-                $data_ma_da = '<p class="text-muted" style="line-height:0.5">Mã Dự án: '.$record->ma_da.'</p>';
+                $data_ma_da = '<p class="text-muted" style="line-height:0.5">Mã Dự án: '.$record->da->ma_da.'</p>';
             }
 
             if (isset($record->link_store_vietmmo)){
-                $data_template =  '<a href="'.$record->link_store_vietmmo.'" target="_blank" ><p class="text-muted" style="line-height:0.5">Template: '.$record->template.'</p></a>';
+                $data_template =  '<a href="'.$record->link_store_vietmmo.'" target="_blank" ><p class="text-muted" style="line-height:0.5">Template: '.$record->matemplate->template.'</p></a>';
             }else{
-                $data_template =  '<p class="text-muted" style="line-height:0.5">Template: '.$record->template.'</p>';
+                $data_template =  '<p class="text-muted" style="line-height:0.5">Template: '.$record->matemplate->template.'</p>';
             }
 
 

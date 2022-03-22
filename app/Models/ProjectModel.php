@@ -16,7 +16,7 @@ class ProjectModel extends Model
     }
 
     public function da(){
-        return $this->belongsTo(Da::class,'ma_da','ma_da');
+        return $this->belongsTo(Da::class,'ma_da');
     }
     public function matemplate(){
         return $this->belongsTo(Template::class,'template');
