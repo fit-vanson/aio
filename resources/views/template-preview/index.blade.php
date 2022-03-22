@@ -160,6 +160,7 @@
                     processData: false,
                     contentType: false,
                     success: function (data) {
+                        console.log(data)
                         if(data.errors){
                             for( var count=0 ; count <data.errors.length; count++){
                                 $("#templatePreviewForm").notify(

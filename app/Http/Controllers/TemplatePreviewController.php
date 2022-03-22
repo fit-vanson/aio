@@ -141,7 +141,7 @@ class TemplatePreviewController extends Controller
             }
             $file = $request->logo;
             $extension = $file->getClientOriginalExtension();
-            $tp_logo = $request->tp_name.'.'.$extension;
+            $tp_logo = $request->tp_name.time().'.'.$extension;
             $data['tp_logo'] = $tp_logo;
             $file->move($destinationPath, $tp_logo);
         }
@@ -192,9 +192,7 @@ class TemplatePreviewController extends Controller
      */
     public function update(Request $request)
     {
-
         $id = $request->tp_id;
-
         $rules = [
             'tp_name' =>'unique:template_previews,tp_name,'.$id.',id',
             'tp_sc' => 'mimes:zip,rar',
@@ -205,17 +203,11 @@ class TemplatePreviewController extends Controller
             'tp_sc.mimes'=>'Định dạng file: *.zip',
             'tp_sc.required'=>'Trường không để trống',
         ];
-
-
         $error = Validator::make($request->all(),$rules, $message );
         if($error->fails()){
             return response()->json(['errors'=> $error->errors()->all()]);
         }
-
         $data = TemplatePreview::find($id);
-
-//        dd($data);
-
         $data->tp_script_1 = $request->tp_script_1 ? $request->tp_script_1 : '';
         $data->tp_script_2 = $request->tp_script_2 ? $request->tp_script_2 : '';
         $data->tp_script_3 = $request->tp_script_3 ? $request->tp_script_3 : '';
@@ -230,8 +222,6 @@ class TemplatePreviewController extends Controller
         $data->tp_pink = $request->tp_pink ? 1 : 0;
         $data->tp_yellow = $request->tp_yellow ? 1 : 0;
         $data->tp_category = $request->category_template;
-
-
 
         $destinationPath = public_path('file-manager/TemplatePreview/');
         $destinationPathLogo = public_path('file-manager/TemplatePreview/logo/');
@@ -254,24 +244,24 @@ class TemplatePreviewController extends Controller
         }
 
         if($request->logo ){
-            $path_Remove_logo = public_path('file-manager/TemplatePreview/logo/') . $data->tp_sc;
+            $path_Remove_logo = public_path('file-manager/TemplatePreview/logo/') . $data->tp_logo;
             if (file_exists($path_Remove_logo)) {
                 unlink($path_Remove_logo);
             }
             $file = $request->logo;
             $extension = $file->getClientOriginalExtension();
-            $logo = $request->tp_name.'.'.$extension;
+            $logo = $request->tp_name.time().'.'.$extension;
             $data['tp_logo'] = $logo;
             $file->move($destinationPathLogo, $logo);
         }
 
         if($data->tp_name != $request->tp_name){
             $file= pathinfo($destinationPath.$data->tp_sc);
-            $logo= pathinfo($destinationPathLogo.$data->tp_sc);
+            $logo= pathinfo($destinationPathLogo.$data->tp_logo);
+            rename($destinationPathLogo.$data->tp_logo, $destinationPathLogo.$request->tp_name.time().'.'.$logo['extension']);
             rename($destinationPath.$data->tp_sc, $destinationPath.$request->tp_name.'.'.$file['extension']);
-            rename($destinationPathLogo.$data->tp_logo, $destinationPathLogo.$request->tp_name.'.'.$logo['extension']);
             $data['tp_sc'] = $request->tp_name.'.'.$file['extension'];
-            $data['tp_logo'] = $request->tp_name.'.'.$file['extension'];
+            $data['tp_logo'] = $request->tp_name.time().'.'.$logo['extension'];
         }
         $data->tp_name = $request->tp_name;
         $data->save();
@@ -290,6 +280,10 @@ class TemplatePreviewController extends Controller
         $path_Remove = public_path('file-manager/TemplatePreview/') . $data->tp_sc;
         if (file_exists($path_Remove)) {
             unlink($path_Remove);
+        }
+        $path_Remove_logo = public_path('file-manager/TemplatePreview/logo/') . $data->tp_logo;
+        if (file_exists($path_Remove_logo)) {
+            unlink($path_Remove_logo);
         }
         $data->delete();
         return response()->json(['success'=>'Xóa thành công.']);
