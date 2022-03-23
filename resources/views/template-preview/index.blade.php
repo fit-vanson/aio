@@ -223,6 +223,7 @@
             $("#category_template_text").select2({});
             $("#template_frame_preview").select2({});
             $("#template_text_preview").select2({});
+            $("#category_child_template_text").select2({});
             $('#saveBtn').val("create-preview");
             $('#buildpreviewModalLabel').html("Template Preview");
             $('#buildpreviewModal').modal('show');
@@ -239,7 +240,6 @@
             url:'{{asset('category_template_frame/get-temp-preview')}}/'+id,
             // data:id,
         }).done(function(res){
-            console.log(res)
             var elementSelect = $('#template_frame_preview');
             if(elementSelect.length <= 0){
                 return false;
@@ -259,25 +259,61 @@
     });
     $('#template_frame_preview').on('change',function(e){
         var id=$(this).val();
+        var html = '<div class="row"><div class="col-lg-2"><input class="form-check-input" type="radio" name="color_text" id="all" checked value="random">'+
+                     '<label class="form-check-label" for="tp_black">Random</label></div>';
         $.ajax({
             type:'get',
             url:'{{asset('category_template_frame/get-temp-preview')}}/'+id,
             // data:id,
         }).done(function(res){
             console.log(res)
-            $('#preview').attr('src',('file-manager/TemplatePreview/logo/')+res.frame.tp_logo)
+            if(res.frame.tp_blue){
+                html += '<div class="col-lg-2"><input class="form-check-input" type="radio" name="color_text" id="tp_blue" value="blue">'+
+                    '<label class="form-check-label" for="tp_blue"  >Blue</label></div>'
+            }else {
+                html += '';
+            }
+            if(res.frame.tp_black){
+                html += '<div class="col-lg-2"><input class="form-check-input" type="radio" name="color_text" id="tp_black" value="black">'+
+                    '<label class="form-check-label" for="tp_black">Black</label></div>'
+            }else {
+                html += '';
+            }
+            if(res.frame.tp_while){
+                html += '<div class="col-lg-2"><input class="form-check-input" type="radio" name="color_text" id="tp_while" value="while">'+
+                    '<label class="form-check-label" for="tp_while">While</label></div>'
+            }else {
+                html += '';
+            }
+            if(res.frame.tp_yellow){
+                html += '<div class="col-lg-2"><input class="form-check-input" type="radio" name="color_text" id="tp_yellow" value="yellow">'+
+                    '<label class="form-check-label" for="tp_yellow">Yellow</label></div>'
+            }else {
+                html += '';
+            }
+            if(res.frame.tp_pink){
+                html += '<div class="col-lg-2"><input class="form-check-input" type="radio" name="color_text" id="tp_pink" value="pink">'+
+                    '<label class="form-check-label" for="tp_pink">Pink</label></div>'
+            }else {
+                html += '';
+            }
+            html += "</div>"
+            console.log(html)
+
+            $('#color_frame').html(html)
+
+            $('#preview_frame').attr('src',('file-manager/TemplatePreview/logo/')+res.frame.tp_logo)
         });
     });
 
     $('#category_template_text').on('change',function(e){
         var id=$(this).val();
-        console.log(id)
         $.ajax({
             type:'get',
             url:'{{asset('category_template/get-cate-temp-parent')}}/'+id,
-            // data:id,
+
         }).done(function(res){
-            var elementSelect = $('#template_text_preview');
+            var elementSelect = $('#category_child_template_text');
             if(elementSelect.length <= 0){
                 return false;
             }
@@ -294,6 +330,76 @@
             }
         });
     });
+
+    $('#category_child_template_text').on('change',function(e){
+        var id=$(this).val();
+        $.ajax({
+            type:'get',
+            url:'{{asset('category_template/get-cate-temp-parent')}}/'+id,
+
+        }).done(function(res){
+            console.log(res)
+            var elementSelect = $('#template_text_preview');
+            if(elementSelect.length <= 0){
+                return false;
+            }
+            elementSelect.empty();
+            elementSelect.append(
+                $("<option value='0'></option>").text('---Random---')
+            );
+            for(var item of res.textPreview){
+                elementSelect.append(
+                    $("<option></option>", {
+                        value : item.id
+                    }).text(item.tt_name)
+                );
+            }
+        });
+    });
+
+    $('#template_text_preview').on('change',function(e){
+        var id=$(this).val();
+        $.ajax({
+            type:'get',
+            url:'{{asset('category_template/get-cate-temp-parent')}}/'+id,
+
+        }).done(function(res){
+            $('#preview_text').attr('src',('file-manager/TemplateTextPreview/logo/')+res.text.tt_logo)
+        });
+    });
+
+    $('#buildpreviewForm').on('submit',function (event){
+        event.preventDefault();
+        var formData = new FormData($("#buildpreviewForm")[0]);
+
+        $.ajax({
+            data: formData,
+            url: "{{ route('build_preview.create') }}",
+            type: "POST",
+            dataType: 'json',
+            processData: false,
+            contentType: false,
+            success: function (data) {
+                if(data.errors){
+                    for( var count=0 ; count <data.errors.length; count++){
+                        $("#buildpreviewForm").notify(
+                            data.errors[count],"error",
+                            { position:"right" }
+                        );
+                    }
+                }
+                if(data.success){
+                    console.log(data)
+                    $.notify(data.success, "success");
+                    $('#preview_out').attr('src','file-manager/BuildTemplate/test/output.png')
+                }
+            },
+        });
+
+    });
+
+
+
 </script>
 
 <script>

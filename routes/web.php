@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\BuildPreviewController;
 use App\Http\Controllers\CategoryTemplateController;
 use App\Http\Controllers\CategoryTemplateFrameController;
 use App\Http\Controllers\CocsimController;
@@ -265,6 +266,16 @@ Route::group(['prefix'=>'category_template_frame','middleware'=>['CheckLogout','
     Route::post('/update',[CategoryTemplateFrameController::class,'update'])->name('category_template_frame.update')->middleware('can:template-preview-update');
     Route::get('/delete/{id}',[CategoryTemplateFrameController::class,'delete'])->name('category_template_frame.delete')->middleware('can:template-preview-delete');
     Route::get('/get-temp-preview/{id}',[CategoryTemplateFrameController::class,'getTemp'])->name('category_template.getTemp')->middleware('can:template-preview-index');
+});
+
+Route::group(['prefix'=>'build-preview','middleware'=>['CheckLogout','2fa']], function (){
+    Route::get('/',[BuildPreviewController::class,'index'])->name('build_preview.index')->middleware('can:template-preview-index');
+    Route::post('/getIndex',[BuildPreviewController::class,'getIndex'])->name('build_preview.getIndex')->middleware('can:template-preview-index');
+    Route::post('/create',[BuildPreviewController::class,'create'])->name('build_preview.create')->middleware('can:template-preview-add');
+    Route::get('/edit/{id}',[BuildPreviewController::class,'edit'])->name('build_preview.edit')->middleware('can:template-preview-edit');
+    Route::post('/update',[BuildPreviewController::class,'update'])->name('build_preview.update')->middleware('can:template-preview-update');
+    Route::get('/delete/{id}',[BuildPreviewController::class,'delete'])->name('build_preview.delete')->middleware('can:template-preview-delete');
+    Route::get('/get-temp-preview/{id}',[BuildPreviewController::class,'getTemp'])->name('build_preview.getTemp')->middleware('can:template-preview-index');
 });
 
 

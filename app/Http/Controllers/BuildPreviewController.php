@@ -2,17 +2,14 @@
 
 namespace App\Http\Controllers;
 
-
 use App\Models\CategoryTemplate;
 use App\Models\TemplatePreview;
 use App\Models\TemplateTextPr;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Validator;
-use Illuminate\Support\Str;
+use ZipArchive;
 
-
-class CategoryTemplateController extends Controller
+class BuildPreviewController extends Controller
 {
     public function index(){
         $categoyTemplate =  CategoryTemplate::latest('id')->where('category_template_parent',0)->get();
@@ -79,28 +76,54 @@ class CategoryTemplateController extends Controller
 
     public function create(Request  $request)
     {
-
         $rules = [
-            'category_template_name' =>'unique:category_templates,category_template_name',
+            'file_data' => 'mimes:zip,rar',
         ];
         $message = [
-            'category_template_name.unique'=>'Tên đã tồn tại',
+            'file_data.mimes'=>'File *.zip',
         ];
         $error = Validator::make($request->all(),$rules, $message );
         if($error->fails()){
             return response()->json(['errors'=> $error->errors()->all()]);
         }
-        $data = new CategoryTemplate();
-        $data['category_template_name'] = $request->category_template_name;
-        $data['category_template_parent'] = $request->category_template_parent ? $request->category_template_parent : 0;
-        $data->save();
-        $allCateTemp  = CategoryTemplate::latest()->where('category_template_parent',0)->get();
-        $allCateTempChild  = CategoryTemplate::latest()->where('category_template_parent','<>',0)->get();
+
+        if($request->template_frame_preview != 0){
+            $frame = TemplatePreview::find($request->template_frame_preview);
+        }else{
+            $frame = TemplatePreview::where('tp_category',$request->category_template_frame)->inRandomOrder()->first();
+        }
+        if($request->template_text_preview != 0){
+            $text = TemplateTextPr::find($request->template_text_preview);
+        }else{
+            $text = TemplateTextPr::where('tt_category',$request->category_child_template_text)->inRandomOrder()->first();
+        }
+
+        $srcDataPr = public_path('file-manager/TemplatePreview/'.$frame->tp_sc);
+        $srcDataText = public_path('file-manager/TemplateTextPreview/'.$text->tt_file);
+        $outData = public_path('file-manager/BuildTemplate/test');
+        $dataPR = $this->extract_file($srcDataPr, $outData.'/zzz');
+        $dataText = $this->extract_file($srcDataText, $outData.'/xxx');
+        $dataSC =  $this->extract_file($request->file_data,$outData);
+
+        $dataFile = scandir('file-manager/BuildTemplate/test');
+//        dd($dataFile);
+//        $tempFrame = json_decode(json_encode($frame), true);
+//        dd($outData);
+
+        for ($i = 1; $i<=6; $i++ ){
+            $output1 = shell_exec('ffmpeg -i '.$outData.'/zzz/pr'.$i.'.png -vf scale=1080:1920 '.$outData.'/temp'.$i.'1.png');
+            $output2 = shell_exec('ffmpeg -i '.$outData.'/'.$dataFile[2].'/sc_'.$i.'.jpg -vf scale=624:1365 '.$outData.'/temp'.$i.'2.png');
+            $output3 = shell_exec('ffmpeg -i '.$outData.'/temp'.$i.'1.png -i '.$outData.'/temp'.$i.'2.png -filter_complex "overlay=226:470" -qscale:v 1 '.$outData.'/temp'.$i.'3.png -y');
+            $output4 = shell_exec('ffmpeg -i '.$outData.'/temp'.$i.'3.png -i '.$outData.'/temp'.$i.'1.png -filter_complex "overlay=0:0" -qscale:v 1 '.$outData.'/temp'.$i.'4.png -y');
+            $output4 = shell_exec('ffmpeg -i '.$outData.'/temp'.$i.'4.png -i '.$outData.'/xxx/Pink/text_'.$i.'.png -filter_complex "overlay=0:40" -qscale:v 1 '.$outData.'/pr_'.$i.'.png -y');
+
+        }
+        $out = shell_exec('ffmpeg -i '.$outData.'/pr_1.png -i '.$outData.'/pr_2.png -i '.$outData.'/pr_3.png -i '.$outData.'/pr_4.png -i '.$outData.'/pr_5.png -i '.$outData.'/pr_6.png -filter_complex "[0][1][2][3][4][5]hstack=inputs=6" '.$outData.'/output.png');
+
 
         return response()->json([
             'success'=>'Thêm mới thành công',
-            'cate_temp' => $allCateTemp,
-            'allCateTempChild' => $allCateTempChild,
+            'out' => '/output.png',
         ]);
 
     }
@@ -159,16 +182,37 @@ class CategoryTemplateController extends Controller
         ]);
 
     }
-//    public function getTemp($id){
-//        $tempPreview = TemplateTextPr::where('tt_category',$id)->get();
-//        $frame = TemplatePreview::find($id);
-//        return response()->json([
-//            'success'=>'Thêm mới thành công',
-//            'tempPreview' => $tempPreview,
-//            'frame' => $frame
-//        ]);
+
+
+    public function extract_file($file_path, $to_path = "./")
+    {
+//        dd($file_path);
+//        $file_type = $file_path->getClientOriginalExtension();
+//        if ("zip" === $file_type) {
+            $xmlZip = new ZipArchive();
+            if ($xmlZip->open($file_path)) {
+                $xmlZip->extractTo($to_path);
+                return true;
+            } else {
+                echo "extract fail";
+                return false;
+            }
+//        } elseif ("rar" == $file_type) {
 //
-//    }
+//            $archive = RarArchive::open($file_path);
+//            $entries = $archive->getEntries();
+//            if ($entries) {
+//                foreach ($entries as $entry) {
+//                    $entry->extract($to_path);
+//                }
+//                $archive->close();
+//                return true;
+//            }else{
+//                echo "extract fail";
+//                return false;
+//            }
+//        }
 
 
+    }
 }

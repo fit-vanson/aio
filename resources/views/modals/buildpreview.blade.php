@@ -1,5 +1,5 @@
 <div class="modal fade" id="buildpreviewModal" tabindex="-1" role="dialog">
-    <div class="modal-dialog modal-xl">
+    <div class="modal-dialog mw-100 w-75">
         <div class="modal-content">
             <div class="modal-header">
                 <h5 class="modal-title" id="buildpreviewModalLabel"></h5>
@@ -9,9 +9,9 @@
 
                 <form id="buildpreviewForm" name="buildpreviewForm" class="form-horizontal">
                     <div class="row">
-                        <div class="form-group col-lg-4">
+                        <div class="form-group col-lg-3">
                             <label for="name">Category Frame</label>
-                            <select class="form-control select2" id="category_template_frame" name="category_template_frame">
+                            <select class="form-control select2" id="category_template_frame" name="category_template_frame" required>
 {{--                                <option value="">--Vui lòng chọn--</option>--}}
                                 @if(isset($categoyTemplateFrame))
                                     @foreach($categoyTemplateFrame as $item)
@@ -20,23 +20,26 @@
                                 @endif
                             </select>
                         </div>
-                        <div class="form-group col-lg-4">
+                        <div class="form-group col-lg-3">
                             <label for="name">Template Frame Preview</label>
                             <select class="form-control select2" id="template_frame_preview" name="template_frame_preview">
                             </select>
                         </div>
-                        <div class="form-group col-lg-4">
+                        <div class="form-group col-lg-3 " >
+                            <label for="name"> Color</label>
+                            <div class="form-check" id="color_frame">
+                            </div>
+                        </div>
+                        <div class="form-group col-lg-3">
                             <p for="name"> Preview</p>
-                            <img id="preview" class="thumbnail" width="200px">
+                            <img id="preview_frame" class="thumbnail" width="200px">
                         </div>
                     </div>
 
-
                     <div class="row">
-                        <div class="form-group col-lg-4">
+                        <div class="form-group col-lg-3">
                             <label for="name">Category Text</label>
-                            <select class="form-control select2" id="category_template_text" name="category_template_text">
-                                {{--                                <option value="">--Vui lòng chọn--</option>--}}
+                            <select class="form-control select2" id="category_template_text" name="category_template_text" required>
                                 @if(isset($categoyTemplateText))
                                     @foreach($categoyTemplateText as $item)
                                         <option value="{{$item->id}}">{{$item->category_template_name}}</option>
@@ -44,15 +47,32 @@
                                 @endif
                             </select>
                         </div>
-                        <div class="form-group col-lg-4">
+                        <div class="form-group col-lg-3">
+                            <label for="name">Category Text Child</label>
+                            <select class="form-control select2" id="category_child_template_text" name="category_child_template_text" required>
+                            </select>
+                        </div>
+                        <div class="form-group col-lg-3">
                             <label for="name">Template Text Preview</label>
                             <select class="form-control select2" id="template_text_preview" name="template_text_preview">
                             </select>
                         </div>
-                        <div class="form-group col-lg-4">
+                        <div class="form-group col-lg-3">
                             <p for="name"> Preview</p>
-                            <img id="preview" class="thumbnail" width="200px">
+                            <img id="preview_text" class="thumbnail" width="200px">
                         </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="form-group col-lg-6">
+                            <label for="name">File Data mẫu</label><p></p>
+                            <input type="file" name="file_data" id="file_data" class="filestyle" data-buttonname="btn-secondary" accept=".zip" required />
+                        </div>
+                        <div class="form-group col-lg-3">
+                            <p for="name"> Preview Out</p>
+                            <img id="preview_out" class="thumbnail" width="1000px">
+                        </div>
+
                     </div>
 
                     <div class="col-sm-offset-2 col-sm-10">
