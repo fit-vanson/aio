@@ -94,7 +94,7 @@ class TemplatePreviewController extends Controller
             'tp_name' =>'unique:template_previews,tp_name',
             'tp_sc' => 'required|mimes:zip,rar',
             'tp_data' => 'mimes:zip,rar',
-            'logo' => 'required',
+//            'logo' => 'required',
 
         ];
         $message = [
@@ -102,7 +102,7 @@ class TemplatePreviewController extends Controller
             'tp_sc.mimes'=>'Định dạng file: *.zip',
             'tp_data.mimes'=>'Định dạng file: *.zip',
             'tp_sc.required'=>'File không để trống',
-            'logo.required'=>'Logo không để trống',
+//            'logo.required'=>'Logo không để trống',
         ];
 
         $error = Validator::make($request->all(),$rules, $message );
@@ -150,17 +150,20 @@ class TemplatePreviewController extends Controller
             $data['tp_data'] = $tp_data;
             $filedata->move($destinationPathData, $tp_data);
         }
-
+        $destinationPathLogo = public_path('file-manager/TemplatePreview/logo/');
+        if (!file_exists($destinationPathLogo)) {
+            mkdir($destinationPathLogo, 0777, true);
+        }
         if($request->logo){
-            $destinationPath = public_path('file-manager/TemplatePreview/logo/');
-            if (!file_exists($destinationPath)) {
-                mkdir($destinationPath, 0777, true);
-            }
             $file = $request->logo;
             $extension = $file->getClientOriginalExtension();
             $tp_logo = $request->tp_name.time().'.'.$extension;
             $data['tp_logo'] = $tp_logo;
-            $file->move($destinationPath, $tp_logo);
+            $file->move($destinationPathLogo, $tp_logo);
+        }else{
+            $srcfile = public_path('img/frame_demo.png');
+            copy($srcfile, $destinationPathLogo.$request->tp_name.time().'.png');
+            $data['tp_logo'] = $request->tp_name.time().'.png';
         }
         $data->save();
         return response()->json(['success'=>'Thêm mới thành công']);

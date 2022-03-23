@@ -42,6 +42,7 @@
                      <table class="table table-bordered dt-responsive nowrap data-table" style="border-collapse: collapse; border-spacing: 0; width: 100%;">
                         <thead>
                         <tr>
+                            <th>Logo</th>
                             <th>Template Text Preview</th>
                             <th>File </th>
                             <th>Category </th>
@@ -96,18 +97,20 @@
                 type: "post"
             },
             columns: [
+                {data: 'tt_logo'},
                 {data: 'tt_name'},
                 {data: 'tt_file'},
                 {data: 'tt_category'},
                 {data: 'action',className: "text-center", name: 'action', orderable: false, searchable: false},
             ],
             order:[1,'asc']
-
         });
 
         $('#createNewTemplateTextPreview').click(function () {
             $('#saveBtn').val("create-template-text-preview");
             $('#tt_id').val('');
+            $("#avatar").attr("src","img/text_demo.png");
+
             $("#category_template_parent").val('');
             $("#category_template_parent").select2({});
             $("#category_template_child").val('');
@@ -208,6 +211,7 @@
         $.get('{{asset('template-text-preview/edit')}}/'+id,function (data) {
             $('#tt_id').val(data.id);
             $('#tt_name').val(data.tt_name);
+            $("#avatar").attr("src",'file-manager/TemplateTextPreview/logo/'+data.tt_logo);
             $('#category_template_parent').val(data.category_template.category_template_parent);
             $("#category_template_parent").select2({});
             $.ajax({

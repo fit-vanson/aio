@@ -73,8 +73,10 @@ class TemplateTextPrController extends Controller
         foreach ($records as $record) {
             $btn = ' <a href="javascript:void(0)" onclick="editTemplateTextPreview('.$record->id.')" class="btn btn-warning"><i class="ti-pencil-alt"></i></a>';
             $btn = $btn.' <a href="javascript:void(0)" data-toggle="tooltip"  data-id="'.$record->id.'" data-original-title="Delete" class="btn btn-danger deleteTemplateTextPreview"><i class="ti-trash"></i></a>';
+            $logo = "<img class='rounded mx-auto d-block'  height='150px' src='/file-manager/TemplateTextPreview/logo/$record->tt_logo'>";
 
             $data_arr[] = array(
+                "tt_logo" => $logo,
                 "tt_name" => $record->tt_name,
                 "tt_file" =>  "<a href='/file-manager/TemplateTextPreview/".$record->tt_file."' target='_blank'>$record->tt_file</a>",
                 "tt_category" => $record->CategoryTemplate->category_template_name,
@@ -98,23 +100,20 @@ class TemplateTextPrController extends Controller
 
         $rules = [
             'tt_name' =>'unique:template_text_prs,tt_name',
-            'tt_file' => 'required|mimes:zip,rar',
+//            'tt_file' => 'required|mimes:zip,rar',
+//            'logo' => 'required',
 
         ];
         $message = [
             'tt_name.unique'=>'Tên đã tồn tại',
             'tt_file.mimes'=>'Định dạng file: *.zip',
-            'tt_file.required'=>'Trường không để trống',
+//            'tt_file.required'=>'File không để trống',
+//            'logo.required'=>'Logo không để trống',
         ];
-
-
-
-
         $error = Validator::make($request->all(),$rules, $message );
         if($error->fails()){
             return response()->json(['errors'=> $error->errors()->all()]);
         }
-
         $data = new TemplateTextPr();
         $data['tt_name'] = $request->tt_name;
         $data['tt_category'] = $request->category_template_child;
@@ -137,6 +136,25 @@ class TemplateTextPrController extends Controller
             $tt_file = $request->tt_name.'.'.$extension;
             $data['tt_file'] = $tt_file;
             $file->move($destinationPath, $tt_file);
+        }else{
+            $data['tt_file'] = 'null';
+        }
+
+        $destinationPathLogo = public_path('file-manager/TemplateTextPreview/logo/');
+        if (!file_exists($destinationPathLogo)) {
+            mkdir($destinationPathLogo, 0777, true);
+        }
+        if($request->logo){
+
+            $file = $request->logo;
+            $extension = $file->getClientOriginalExtension();
+            $tt_logo = $request->tt_name.time().'.'.$extension;
+            $data['tt_logo'] = $tt_logo;
+            $file->move($destinationPathLogo, $tt_logo);
+        }else{
+            $srcfile = public_path('img/text_demo.png');
+            copy($srcfile, $destinationPathLogo.$request->tt_name.time().'.png');
+            $data['tt_logo'] = $request->tt_name.time().'.png';
         }
         $data->save();
         return response()->json(['success'=>'Thêm mới thành công']);
@@ -185,49 +203,58 @@ class TemplateTextPrController extends Controller
      */
     public function update(Request $request)
     {
-
-
         $id = $request->tt_id;
-
         $rules = [
             'tt_name' =>'unique:template_text_prs,tt_name,'.$id.',id',
             'tt_file' => 'mimes:zip,rar',
-
         ];
         $message = [
             'tt_name.unique'=>'Tên đã tồn tại',
             'tt_file.mimes'=>'Định dạng file: *.zip',
         ];
 
-
         $error = Validator::make($request->all(),$rules, $message );
         if($error->fails()){
             return response()->json(['errors'=> $error->errors()->all()]);
         }
-
         $data = TemplateTextPr::find($id);
-
-//        dd($data);
-
         $destinationPath = public_path('file-manager/TemplateTextPreview/');
         if (!file_exists($destinationPath)) {
             mkdir($destinationPath, 0777, true);
         }
+        $destinationPathLogo = public_path('file-manager/TemplateTextPreview/logo/');
+        if (!file_exists($destinationPathLogo)) {
+            mkdir($destinationPathLogo, 0777, true);
+        }
         if($request->tt_file ){
-            $path_Remove = public_path('file-manager/TemplatePreview/') . $data->tt_file;
+            $path_Remove = public_path('file-manager/TemplateTextPreview/') . $data->tt_file;
             if (file_exists($path_Remove)) {
                 unlink($path_Remove);
             }
             $file = $request->tt_file;
             $extension = $file->getClientOriginalExtension();
-            $tt_file = $request->tp_name.'.'.$extension;
+            $tt_file = $request->tt_name.'.'.$extension;
             $data['tt_file'] = $tt_file;
             $file->move($destinationPath, $tt_file);
         }
+        if($request->logo ){
+            $path_Remove = public_path('file-manager/TemplateTextPreview/logo/') . $data->tt_logo;
+            if (file_exists($path_Remove)) {
+                unlink($path_Remove);
+            }
+            $logo = $request->logo;
+            $extension = $logo->getClientOriginalExtension();
+            $tt_logo = $request->tt_name.time().'.'.$extension;
+            $data['tt_logo'] = $tt_logo;
+            $logo->move($destinationPathLogo, $tt_logo);
+        }
         if($data->tt_name != $request->tt_name){
-            $file= pathinfo($destinationPath.$data->tt_file);
+            $file = pathinfo($destinationPath.$data->tt_file);
+            $logo =  pathinfo($destinationPathLogo.$data->tt_logo);
             rename($destinationPath.$data->tt_file, $destinationPath.$request->tt_name.'.'.$file['extension']);
+            rename($destinationPathLogo.$data->tt_logo, $destinationPathLogo.$request->tt_name.time().'.'.$logo['extension']);
             $data['tt_file'] = $request->tt_name.'.'.$file['extension'];
+            $data['tt_logo'] = $request->tt_name.time().'.'.$logo['extension'];
         }
 
         $data->tt_name = $request->tt_name;
@@ -256,6 +283,10 @@ class TemplateTextPrController extends Controller
         $path_Remove = public_path('file-manager/TemplateTextPreview/') . $data->tt_file;
         if (file_exists($path_Remove)) {
             unlink($path_Remove);
+        }
+        $path_Remove_logo = public_path('file-manager/TemplateTextPreview/logo/') . $data->tt_logo;
+        if (file_exists($path_Remove_logo)) {
+            unlink($path_Remove_logo);
         }
         $data->delete();
         return response()->json(['success'=>'Xóa thành công.']);

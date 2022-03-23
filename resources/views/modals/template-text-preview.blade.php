@@ -11,6 +11,13 @@
                     <input type="hidden" name="tt_id" id="tt_id">
 
                     <div>
+                        <div class="row">
+                            <div class="form-group col-lg-12">
+                                <label>Logo</label><p></p>
+                                <input  id="logo" type="file" name="logo" class="form-control" hidden onchange="changeImg(this)" accept="image/*">
+                                <img id="avatar" class="thumbnail" width="100%">
+                            </div>
+                        </div>
                         <div  class="row">
                             <div class="form-group col-lg-6">
                                 <label for="name">Category Parent<span style="color: red">*</span></label>
@@ -59,7 +66,7 @@
                             ?>
                             <div class="form-group col-lg-6">
                                 <label for="name">Text {{$i}} </label>
-                                <input type="text" id="tt_text_{{$i}}" name="tt_text_{{$i}}" class="form-control">
+                                <textarea id="tt_text_{{$i}}" name="tt_text_{{$i}}" class="form-control" rows="4" ></textarea>
                             </div>
                             <?php }?>
                         </div>

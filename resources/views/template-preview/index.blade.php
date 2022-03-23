@@ -122,7 +122,7 @@
             $("#tp_sc").val('');
             $("#tp_data").val('');
             $("#category_template").select2({});
-            $("#avatar").attr("src","img/demo_bn.png");
+            $("#avatar").attr("src","img/frame_demo.png");
             // $('#templatePreviewForm').trigger("reset");
             $('#modelHeading').html("Template Preview");
             $('#template_previewModel').modal('show');
@@ -215,8 +215,6 @@
 
 
         $('#build_preview').click(function () {
-
-
             $("#category_template_frame").val('');
             $("#category_template_text").val('');
             $("#template_frame_preview").val('');
