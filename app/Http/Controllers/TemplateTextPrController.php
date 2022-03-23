@@ -79,7 +79,7 @@ class TemplateTextPrController extends Controller
                 "tt_logo" => $logo,
                 "tt_name" => $record->tt_name,
                 "tt_file" =>  "<a href='/file-manager/TemplateTextPreview/".$record->tt_file."' target='_blank'>$record->tt_file</a>",
-                "tt_category" => $record->CategoryTemplate->category_template_name,
+                "tt_category" => $record->CategoryTemplate ? $record->CategoryTemplate->category_template_name : 'null',
                 "action"=> $btn,
             );
         }
