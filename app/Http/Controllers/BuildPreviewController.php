@@ -136,7 +136,7 @@ class BuildPreviewController extends Controller
             ->insert($outData.'/pr_4.jpg', 'top-left', 1080*3, 0)
             ->insert($outData.'/pr_5.jpg', 'top-left', 1080*4, 0)
             ->insert($outData.'/pr_6.jpg', 'top-left', 1080*5, 0)
-            ->save($outData.'/out.jpg');
+            ->save($outData.'/output.png');
         return response()->json([
             'success'=>'Thêm mới thành công',
             'out' => '/output.png',
