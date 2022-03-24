@@ -218,13 +218,16 @@
             $("#category_template_frame").val('');
             $("#category_template_text").val('');
             $("#template_frame_preview").val('');
-            $("#preview").attr('src','');
+            $("#preview_frame").attr('src','');
+            $("#preview_text").attr('src','');
+            $("#preview_out").attr('src','');
             $("#category_template_frame").select2({});
             $("#category_template_text").select2({});
             $("#template_frame_preview").select2({});
             $("#template_text_preview").select2({});
             $("#category_child_template_text").select2({});
             $('#saveBtn').val("create-preview");
+            $('#buildpreviewForm').trigger("reset");
             $('#buildpreviewModalLabel').html("Template Preview");
             $('#buildpreviewModal').modal('show');
             $('.modal').on('hidden.bs.modal', function (e) {
