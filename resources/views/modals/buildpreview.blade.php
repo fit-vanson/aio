@@ -82,12 +82,12 @@
                                 </select>
                             </div>
                             <div class="form-group col-lg-4">
-                                <label for="name">Text to</label>
-                                <input type="text" class="form-control" id="text_to_{{$i}}" name="text_to[]" required>
+                                <label for="name">Text to SC {{$i}}</label>
+                                <input type="text" class="form-control" id="text_to_{{$i}}" name="text_to[]" value="Text demo {{$i}}" >
                             </div>
                             <div class="form-group col-lg-4">
-                                <label for="name">Text nhỏ</label>
-                                <input type="text" class="form-control" id="text_nho_{{$i}}" name="text_nho[]" required>
+                                <label for="name">Text nhỏ SC {{$i}}</label>
+                                <input type="text" class="form-control" id="text_nho_{{$i}}" name="text_nho[]"  value="small size {{$i}}" >
                             </div>
 
                         </div>
