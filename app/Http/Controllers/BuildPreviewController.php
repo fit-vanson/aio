@@ -130,12 +130,12 @@ class BuildPreviewController extends Controller
             ->resize(1080*6, 1920)
             ->save($outData.'/temp30.png');
         $out1 = Image::make($outData.'/temp30.png')
-            ->insert($outData.'/pr_1.jpg', 'top-right', 1080*0, 0)
-            ->insert($outData.'/pr_2.jpg', 'top-right', 1080*1, 0)
-            ->insert($outData.'/pr_3.jpg', 'top-right', 1080*2, 0)
-            ->insert($outData.'/pr_4.jpg', 'top-right', 1080*3, 0)
-            ->insert($outData.'/pr_5.jpg', 'top-right', 1080*4, 0)
-            ->insert($outData.'/pr_6.jpg', 'top-right', 1080*5, 0)
+            ->insert($outData.'/pr_1.jpg', 'top-left', 1080*0, 0)
+            ->insert($outData.'/pr_2.jpg', 'top-left', 1080*1, 0)
+            ->insert($outData.'/pr_3.jpg', 'top-left', 1080*2, 0)
+            ->insert($outData.'/pr_4.jpg', 'top-left', 1080*3, 0)
+            ->insert($outData.'/pr_5.jpg', 'top-left', 1080*4, 0)
+            ->insert($outData.'/pr_6.jpg', 'top-left', 1080*5, 0)
             ->save($outData.'/out.jpg');
         return response()->json([
             'success'=>'Thêm mới thành công',
