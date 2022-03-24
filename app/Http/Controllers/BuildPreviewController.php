@@ -114,9 +114,7 @@ class BuildPreviewController extends Controller
 //        $tempFrame = json_decode(json_encode($frame), true);
 //        dd($outData);
 
-        $out = Image::make($outData.'/out.jpg')
-            ->resize(1080*6, 1920)
-            ->save($outData.'/temp30.png');
+
         for ($i = 1; $i<=6; $i++ ){
             $img2 = Image::make($outData.'/'.$dataFile[2].'/sc_'.$i.'.jpg')->resize(624, 1365);
 
@@ -128,6 +126,9 @@ class BuildPreviewController extends Controller
                 ->insert($outData.'/xxx/Pink/text_'.$i.'.png', 'top-left-right', 0, 40)
                 ->save($outData.'/pr_'.$i.'.jpg');
         }
+        $out = Image::make($outData.'/pr_1.jpg')
+            ->resize(1080*6, 1920)
+            ->save($outData.'/temp30.png');
         $out1 = Image::make($outData.'/temp30.png')
             ->insert($outData.'/pr_1.jpg', 'top-right', 1080*0, 0)
             ->insert($outData.'/pr_2.jpg', 'top-right', 1080*1, 0)
