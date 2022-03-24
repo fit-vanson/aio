@@ -5,9 +5,13 @@ namespace App\Http\Controllers;
 use App\Models\CategoryTemplate;
 use App\Models\TemplatePreview;
 use App\Models\TemplateTextPr;
+use FFMpeg\Filters\Frame\FrameFilters;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
+use Intervention\Image\Facades\Image;
+use ProtoneMedia\LaravelFFMpeg\Support\FFMpeg;
 use ZipArchive;
+
 
 class BuildPreviewController extends Controller
 {
@@ -110,17 +114,28 @@ class BuildPreviewController extends Controller
 //        $tempFrame = json_decode(json_encode($frame), true);
 //        dd($outData);
 
+        $out = Image::make($outData.'/out.jpg')
+            ->resize(1080*6, 1920)
+            ->save($outData.'/temp30.png');
         for ($i = 1; $i<=6; $i++ ){
-            $output1 = shell_exec('ffmpeg -i '.$outData.'/zzz/pr'.$i.'.png -vf scale=1080:1920 '.$outData.'/temp'.$i.'1.png');
-            $output2 = shell_exec('ffmpeg -i '.$outData.'/'.$dataFile[2].'/sc_'.$i.'.jpg -vf scale=624:1365 '.$outData.'/temp'.$i.'2.png');
-            $output3 = shell_exec('ffmpeg -i '.$outData.'/temp'.$i.'1.png -i '.$outData.'/temp'.$i.'2.png -filter_complex "overlay=226:470" -qscale:v 1 '.$outData.'/temp'.$i.'3.png -y');
-            $output4 = shell_exec('ffmpeg -i '.$outData.'/temp'.$i.'3.png -i '.$outData.'/temp'.$i.'1.png -filter_complex "overlay=0:0" -qscale:v 1 '.$outData.'/temp'.$i.'4.png -y');
-            $output4 = shell_exec('ffmpeg -i '.$outData.'/temp'.$i.'4.png -i '.$outData.'/xxx/Pink/text_'.$i.'.png -filter_complex "overlay=0:40" -qscale:v 1 '.$outData.'/pr_'.$i.'.png -y');
+            $img2 = Image::make($outData.'/'.$dataFile[2].'/sc_'.$i.'.jpg')->resize(624, 1365);
 
+            $img1 = Image::make($outData.'/zzz/pr'.$i.'.png')
+                ->resize(1080, 1920)->save($outData.'/temp'.$i.'.png');
+            $img3 = Image::make($img1)
+                ->insert($img2, 'top-left', 226, 470)
+                ->insert($outData.'/temp'.$i.'.png','top-left', 0, 0)
+                ->insert($outData.'/xxx/Pink/text_'.$i.'.png', 'top-left-right', 0, 40)
+                ->save($outData.'/pr_'.$i.'.jpg');
         }
-        $out = shell_exec('ffmpeg -i '.$outData.'/pr_1.png -i '.$outData.'/pr_2.png -i '.$outData.'/pr_3.png -i '.$outData.'/pr_4.png -i '.$outData.'/pr_5.png -i '.$outData.'/pr_6.png -filter_complex "[0][1][2][3][4][5]hstack=inputs=6" '.$outData.'/output.png');
-
-
+        $out1 = Image::make($outData.'/temp30.png')
+            ->insert($outData.'/pr_1.jpg', 'top-right', 1080*0, 0)
+            ->insert($outData.'/pr_2.jpg', 'top-right', 1080*1, 0)
+            ->insert($outData.'/pr_3.jpg', 'top-right', 1080*2, 0)
+            ->insert($outData.'/pr_4.jpg', 'top-right', 1080*3, 0)
+            ->insert($outData.'/pr_5.jpg', 'top-right', 1080*4, 0)
+            ->insert($outData.'/pr_6.jpg', 'top-right', 1080*5, 0)
+            ->save($outData.'/out.jpg');
         return response()->json([
             'success'=>'Thêm mới thành công',
             'out' => '/output.png',
