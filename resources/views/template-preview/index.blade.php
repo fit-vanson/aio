@@ -262,8 +262,7 @@
     });
     $('#template_frame_preview').on('change',function(e){
         var id=$(this).val();
-        var html = '<div class="row"><div class="col-lg-2"><input class="form-check-input" type="radio" name="color_text" id="all" checked value="random">'+
-                     '<label class="form-check-label" for="tp_black">Random</label></div>';
+        var html = '<div class="row">';
         $.ajax({
             type:'get',
             url:'{{asset('category_template_frame/get-temp-preview')}}/'+id,
@@ -271,31 +270,31 @@
         }).done(function(res){
             console.log(res)
             if(res.frame.tp_blue){
-                html += '<div class="col-lg-2"><input class="form-check-input" type="radio" name="color_text" id="tp_blue" value="blue">'+
+                html += '<div class="col-lg-2"><input class="form-check-input" type="radio" name="color_text" id="tp_blue" value="#1005fb">'+
                     '<label class="form-check-label" for="tp_blue"  >Blue</label></div>'
             }else {
                 html += '';
             }
             if(res.frame.tp_black){
-                html += '<div class="col-lg-2"><input class="form-check-input" type="radio" name="color_text" id="tp_black" value="black">'+
+                html += '<div class="col-lg-2"><input class="form-check-input" type="radio" name="color_text" id="tp_black" value="#161616">'+
                     '<label class="form-check-label" for="tp_black">Black</label></div>'
             }else {
                 html += '';
             }
             if(res.frame.tp_while){
-                html += '<div class="col-lg-2"><input class="form-check-input" type="radio" name="color_text" id="tp_while" value="while">'+
+                html += '<div class="col-lg-2"><input class="form-check-input" type="radio" name="color_text" id="tp_while" value="#ffffff">'+
                     '<label class="form-check-label" for="tp_while">While</label></div>'
             }else {
                 html += '';
             }
             if(res.frame.tp_yellow){
-                html += '<div class="col-lg-2"><input class="form-check-input" type="radio" name="color_text" id="tp_yellow" value="yellow">'+
+                html += '<div class="col-lg-2"><input class="form-check-input" type="radio" name="color_text" id="tp_yellow" value="#f2fb05">'+
                     '<label class="form-check-label" for="tp_yellow">Yellow</label></div>'
             }else {
                 html += '';
             }
             if(res.frame.tp_pink){
-                html += '<div class="col-lg-2"><input class="form-check-input" type="radio" name="color_text" id="tp_pink" value="pink">'+
+                html += '<div class="col-lg-2"><input class="form-check-input" type="radio" name="color_text" id="tp_pink" value="#fe0cfb">'+
                     '<label class="form-check-label" for="tp_pink">Pink</label></div>'
             }else {
                 html += '';

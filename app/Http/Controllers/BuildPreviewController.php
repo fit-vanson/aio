@@ -15,6 +15,28 @@ use ZipArchive;
 
 class BuildPreviewController extends Controller
 {
+
+    const COORDINATES = [
+        'logoCenterX' => 0,
+        'logoCenterY' => 5,
+        'logoLeftX' => 5,
+        'logoLeftY' => 0,
+        'textCenterX' => 61,
+        'textCenterY' => 37,
+        'textLeftX' => 77,
+        'textLeftY' => 21,
+        'textOnlyX' => 0,
+        'textOnlyY' => 0,
+    ];
+
+    //Định nghĩa size logo sẽ thực hiện resize
+    const RESIZE_LOGO_SIZE = [
+        'widthLeft' => 27,
+        'heightLeft' => 27,
+        'widthCenter' => 37,
+        'heightCenter' => 15,
+    ];
+
     public function index(){
         $categoyTemplate =  CategoryTemplate::latest('id')->where('category_template_parent',0)->get();
         return view('category-template.index',compact('categoyTemplate'));
@@ -80,6 +102,7 @@ class BuildPreviewController extends Controller
 
     public function create(Request  $request)
     {
+
         $rules = [
             'file_data' => 'mimes:zip,rar',
         ];
@@ -96,18 +119,18 @@ class BuildPreviewController extends Controller
         }else{
             $frame = TemplatePreview::where('tp_category',$request->category_template_frame)->inRandomOrder()->first();
         }
-        if($request->template_text_preview != 0){
-            $text = TemplateTextPr::find($request->template_text_preview);
-        }else{
-            $text = TemplateTextPr::where('tt_category',$request->category_child_template_text)->inRandomOrder()->first();
-        }
+//        if($request->template_text_preview != 0){
+//            $text = TemplateTextPr::find($request->template_text_preview);
+//        }else{
+//            $text = TemplateTextPr::where('tt_category',$request->category_child_template_text)->inRandomOrder()->first();
+//        }
 
         $folder = time();
         $srcDataPr = public_path('file-manager/TemplatePreview/'.$frame->tp_sc);
-        $srcDataText = public_path('file-manager/TemplateTextPreview/'.$text->tt_file);
+//        $srcDataText = public_path('file-manager/TemplateTextPreview/'.$text->tt_file);
         $outData = public_path('file-manager/BuildTemplate/'.$folder.'/');
         $dataPR = $this->extract_file($srcDataPr, $outData);
-        $dataText = $this->extract_file($srcDataText, $outData);
+//        $dataText = $this->extract_file($srcDataText, $outData);
         $dataSC =  $this->extract_file($request->file_data,$outData);
 
 
@@ -121,8 +144,36 @@ class BuildPreviewController extends Controller
                     if($tempScript[1] == 'resize'){
                         $temp = Image::make($outData.$tempScript[0])->resize($width,$height)->save($outData.'/'.$tempScript[3]);
                     }elseif ($tempScript[1] == 'overlay'){
+
+//                        dd($request->text_nho[$i]);
+
+                        $uploadClientName = $request->text_to[$i-1];
+                        $uploadClientName1 = $request->text_nho[$i-1];
+//                        $lengthText = mb_strlen($uploadClientName, "UTF-8");
+                        $size = 120;
+//                        $lengthText1 = mb_strlen($uploadClientName1, "UTF-8");
+                        $size1 = 80;
+
+
+
                         [$tp1 ,$tp2 ]= explode('/',$tempScript[0]);
                         $temp = Image::make($outData.$tp1)->insert($outData.$tp2, 'top-left', $width,$height)->save($outData.'/'.$tempScript[3]);
+                        $onlyText  = $temp->text($uploadClientName, 540,120, function($font) use($request, $size){
+                            $font->file(public_path('fonts/Oswald-VariableFont_wght.ttf'));
+                            $font->size($size);
+                            $font->color($request->color_text);
+                            $font->align('center');
+                            $font->valign('middle');
+
+                        })->text($uploadClientName1, 540,250, function($font) use($request, $size1){
+                                $font->file(public_path('fonts/Oswald-VariableFont_wght.ttf'));
+                                $font->size($size1);
+                                $font->color($request->color_text);
+                                $font->align('center');
+                                $font->valign('middle');
+
+                            });
+                        $imageData = $onlyText->save($outData.'/'.$tempScript[3]);
                     }
                 }
             }

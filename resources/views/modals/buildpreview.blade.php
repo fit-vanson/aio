@@ -36,32 +36,62 @@
                         </div>
                     </div>
 
-                    <div class="row">
-                        <div class="form-group col-lg-3">
-                            <label for="name">Category Text</label>
-                            <select class="form-control select2" id="category_template_text" name="category_template_text" required>
-                                @if(isset($categoyTemplateText))
-                                    @foreach($categoyTemplateText as $item)
-                                        <option value="{{$item->id}}">{{$item->category_template_name}}</option>
-                                    @endforeach
-                                @endif
-                            </select>
+{{--                    <div class="row">--}}
+{{--                        <div class="form-group col-lg-3">--}}
+{{--                            <label for="name">Category Text</label>--}}
+{{--                            <select class="form-control select2" id="category_template_text" name="category_template_text" required>--}}
+{{--                                @if(isset($categoyTemplateText))--}}
+{{--                                    @foreach($categoyTemplateText as $item)--}}
+{{--                                        <option value="{{$item->id}}">{{$item->category_template_name}}</option>--}}
+{{--                                    @endforeach--}}
+{{--                                @endif--}}
+{{--                            </select>--}}
+{{--                        </div>--}}
+{{--                        <div class="form-group col-lg-3">--}}
+{{--                            <label for="name">Category Text Child</label>--}}
+{{--                            <select class="form-control select2" id="category_child_template_text" name="category_child_template_text" required>--}}
+{{--                            </select>--}}
+{{--                        </div>--}}
+{{--                        <div class="form-group col-lg-3">--}}
+{{--                            <label for="name">Template Text Preview</label>--}}
+{{--                            <select class="form-control select2" id="template_text_preview" name="template_text_preview">--}}
+{{--                            </select>--}}
+{{--                        </div>--}}
+{{--                        <div class="form-group col-lg-3">--}}
+{{--                            <p for="name"> Preview</p>--}}
+{{--                            <img id="preview_text" class="thumbnail" width="200px">--}}
+{{--                        </div>--}}
+{{--                    </div>--}}
+
+                    <?php
+                    for ($i= 1 ; $i<=6; $i++)
+                        {
+
+                    ?>
+
+
+                        <div class="row">
+                            <div class="form-group col-lg-4">
+                                <label for="name">Font Chữ</label>
+                                <select class="form-control select2" id="fon_chu" name="fon_chu" required>
+    {{--                                @if(isset($categoyTemplateText))--}}
+    {{--                                    @foreach($categoyTemplateText as $item)--}}
+                                            <option value="Oswald-VariableFont_wght.ttf">Oswald</option>
+    {{--                                    @endforeach--}}
+    {{--                                @endif--}}
+                                </select>
+                            </div>
+                            <div class="form-group col-lg-4">
+                                <label for="name">Text to</label>
+                                <input type="text" class="form-control" id="text_to_{{$i}}" name="text_to[]" required>
+                            </div>
+                            <div class="form-group col-lg-4">
+                                <label for="name">Text nhỏ</label>
+                                <input type="text" class="form-control" id="text_nho_{{$i}}" name="text_nho[]" required>
+                            </div>
+
                         </div>
-                        <div class="form-group col-lg-3">
-                            <label for="name">Category Text Child</label>
-                            <select class="form-control select2" id="category_child_template_text" name="category_child_template_text" required>
-                            </select>
-                        </div>
-                        <div class="form-group col-lg-3">
-                            <label for="name">Template Text Preview</label>
-                            <select class="form-control select2" id="template_text_preview" name="template_text_preview">
-                            </select>
-                        </div>
-                        <div class="form-group col-lg-3">
-                            <p for="name"> Preview</p>
-                            <img id="preview_text" class="thumbnail" width="200px">
-                        </div>
-                    </div>
+                    <?php } ?>
 
                     <div class="row">
                         <div class="form-group col-lg-6">
