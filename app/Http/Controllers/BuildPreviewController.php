@@ -134,9 +134,11 @@ class BuildPreviewController extends Controller
         $dataSC =  $this->extract_file($request->file_data,$outData);
 
 
-
+        $out = Image::make($outData.'/pr1.png')
+            ->resize(1080*6, 1920)
+            ->save($outData.'/output.png');
         $tempFrame = json_decode(json_encode($frame), true);
-        for ($i = 1; $i<=8; $i++ ){
+        for ($i = 1; $i<=6; $i++ ){
             foreach(preg_split("/((\r?\n)|(\r\n?))/", $tempFrame['tp_script_'.$i]) as $line){
                 $tempScript= explode('|',$line);
                 if(count($tempScript) >1){
@@ -144,51 +146,34 @@ class BuildPreviewController extends Controller
                     if($tempScript[1] == 'resize'){
                         $temp = Image::make($outData.$tempScript[0])->resize($width,$height)->save($outData.'/'.$tempScript[3]);
                     }elseif ($tempScript[1] == 'overlay'){
-
-//                        dd($request->text_nho[$i]);
-
                         $uploadClientName = $request->text_to[$i-1];
                         $uploadClientName1 = $request->text_nho[$i-1];
-//                        $lengthText = mb_strlen($uploadClientName, "UTF-8");
                         $size = 120;
-//                        $lengthText1 = mb_strlen($uploadClientName1, "UTF-8");
                         $size1 = 80;
-
-
-
                         [$tp1 ,$tp2 ]= explode('/',$tempScript[0]);
-                        $temp = Image::make($outData.$tp1)->insert($outData.$tp2, 'top-left', $width,$height)->save($outData.'/'.$tempScript[3]);
-                        $onlyText  = $temp->text($uploadClientName, 540,120, function($font) use($request, $size){
-                            $font->file(public_path('fonts/Oswald-VariableFont_wght.ttf'));
-                            $font->size($size);
-                            $font->color($request->color_text);
-                            $font->align('center');
-                            $font->valign('middle');
-
-                        })->text($uploadClientName1, 540,250, function($font) use($request, $size1){
+                        $temp = Image::make($outData.$tp1)->insert($outData.$tp2, 'top-left', $width,$height)
+                            ->text($uploadClientName, 540,120, function($font) use($request, $size){
                                 $font->file(public_path('fonts/Oswald-VariableFont_wght.ttf'));
-                                $font->size($size1);
+                                $font->size($size);
                                 $font->color($request->color_text);
                                 $font->align('center');
                                 $font->valign('middle');
-
-                            });
-                        $imageData = $onlyText->save($outData.'/'.$tempScript[3]);
+                            })->text($uploadClientName1, 540,250, function($font) use($request, $size1){
+                                    $font->file(public_path('fonts/Oswald-VariableFont_wght.ttf'));
+                                    $font->size($size1);
+                                    $font->color($request->color_text);
+                                    $font->align('center');
+                                    $font->valign('middle');
+                            })->save($outData.'/'.$tempScript[3]);
                     }
                 }
             }
+            $out1 = Image::make($outData.'/output.png')
+                ->insert($outData.'/pr_'.$i.'.jpg', 'top-left', 1080*($i-1), 0)
+                ->save($outData.'/output.png');
+
         }
-        $out = Image::make($outData.'/pr_1.jpg')
-            ->resize(1080*6, 1920)
-            ->save($outData.'/temp30.png');
-        $out1 = Image::make($outData.'/temp30.png')
-            ->insert($outData.'/pr_1.jpg', 'top-left', 1080*0, 0)
-            ->insert($outData.'/pr_2.jpg', 'top-left', 1080*1, 0)
-            ->insert($outData.'/pr_3.jpg', 'top-left', 1080*2, 0)
-            ->insert($outData.'/pr_4.jpg', 'top-left', 1080*3, 0)
-            ->insert($outData.'/pr_5.jpg', 'top-left', 1080*4, 0)
-            ->insert($outData.'/pr_6.jpg', 'top-left', 1080*5, 0)
-            ->save($outData.'/output.png');
+
         return response()->json([
             'success'=>'Thêm mới thành công',
             'out' => $folder.'/output.png',
