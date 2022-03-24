@@ -270,31 +270,31 @@
         }).done(function(res){
             console.log(res)
             if(res.frame.tp_blue){
-                html += '<div class="col-lg-2"><input class="form-check-input" type="radio" name="color_text" id="tp_blue" value="#1005fb">'+
+                html += '<div class="col-lg-2"><input class="form-check-input" type="radio" name="color_text" id="tp_blue" value="#1005fb" required>'+
                     '<label class="form-check-label" for="tp_blue"  >Blue</label></div>'
             }else {
                 html += '';
             }
             if(res.frame.tp_black){
-                html += '<div class="col-lg-2"><input class="form-check-input" type="radio" name="color_text" id="tp_black" value="#161616">'+
+                html += '<div class="col-lg-2"><input class="form-check-input" type="radio" name="color_text" id="tp_black" value="#161616" required>'+
                     '<label class="form-check-label" for="tp_black">Black</label></div>'
             }else {
                 html += '';
             }
             if(res.frame.tp_while){
-                html += '<div class="col-lg-2"><input class="form-check-input" type="radio" name="color_text" id="tp_while" value="#ffffff">'+
+                html += '<div class="col-lg-2"><input class="form-check-input" type="radio" name="color_text" id="tp_while" value="#ffffff" required>'+
                     '<label class="form-check-label" for="tp_while">While</label></div>'
             }else {
                 html += '';
             }
             if(res.frame.tp_yellow){
-                html += '<div class="col-lg-2"><input class="form-check-input" type="radio" name="color_text" id="tp_yellow" value="#f2fb05">'+
+                html += '<div class="col-lg-2"><input class="form-check-input" type="radio" name="color_text" id="tp_yellow" value="#f2fb05" required>'+
                     '<label class="form-check-label" for="tp_yellow">Yellow</label></div>'
             }else {
                 html += '';
             }
             if(res.frame.tp_pink){
-                html += '<div class="col-lg-2"><input class="form-check-input" type="radio" name="color_text" id="tp_pink" value="#fe0cfb">'+
+                html += '<div class="col-lg-2"><input class="form-check-input" type="radio" name="color_text" id="tp_pink" value="#fe0cfb" required>'+
                     '<label class="form-check-label" for="tp_pink">Pink</label></div>'
             }else {
                 html += '';
