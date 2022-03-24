@@ -102,29 +102,30 @@ class BuildPreviewController extends Controller
             $text = TemplateTextPr::where('tt_category',$request->category_child_template_text)->inRandomOrder()->first();
         }
 
+        $folder = time();
         $srcDataPr = public_path('file-manager/TemplatePreview/'.$frame->tp_sc);
         $srcDataText = public_path('file-manager/TemplateTextPreview/'.$text->tt_file);
-        $outData = public_path('file-manager/BuildTemplate/test');
-        $dataPR = $this->extract_file($srcDataPr, $outData.'/zzz');
-        $dataText = $this->extract_file($srcDataText, $outData.'/xxx');
+        $outData = public_path('file-manager/BuildTemplate/'.$folder.'/');
+        $dataPR = $this->extract_file($srcDataPr, $outData);
+        $dataText = $this->extract_file($srcDataText, $outData);
         $dataSC =  $this->extract_file($request->file_data,$outData);
 
-        $dataFile = scandir('file-manager/BuildTemplate/test');
-//        dd($dataFile);
-//        $tempFrame = json_decode(json_encode($frame), true);
-//        dd($outData);
 
 
-        for ($i = 1; $i<=6; $i++ ){
-            $img2 = Image::make($outData.'/'.$dataFile[2].'/sc_'.$i.'.jpg')->resize(624, 1365);
-
-            $img1 = Image::make($outData.'/zzz/pr'.$i.'.png')
-                ->resize(1080, 1920)->save($outData.'/temp'.$i.'.png');
-            $img3 = Image::make($img1)
-                ->insert($img2, 'top-left', 226, 470)
-                ->insert($outData.'/temp'.$i.'.png','top-left', 0, 0)
-                ->insert($outData.'/xxx/Pink/text_'.$i.'.png', 'top-left-right', 0, 40)
-                ->save($outData.'/pr_'.$i.'.jpg');
+        $tempFrame = json_decode(json_encode($frame), true);
+        for ($i = 1; $i<=8; $i++ ){
+            foreach(preg_split("/((\r?\n)|(\r\n?))/", $tempFrame['tp_script_'.$i]) as $line){
+                $tempScript= explode('|',$line);
+                if(count($tempScript) >1){
+                    [$width ,$height ]= explode(':',$tempScript[2]);
+                    if($tempScript[1] == 'resize'){
+                        $temp = Image::make($outData.$tempScript[0])->resize($width,$height)->save($outData.'/'.$tempScript[3]);
+                    }elseif ($tempScript[1] == 'overlay'){
+                        [$tp1 ,$tp2 ]= explode('/',$tempScript[0]);
+                        $temp = Image::make($outData.$tp1)->insert($outData.$tp2, 'top-left', $width,$height)->save($outData.'/'.$tempScript[3]);
+                    }
+                }
+            }
         }
         $out = Image::make($outData.'/pr_1.jpg')
             ->resize(1080*6, 1920)
@@ -139,7 +140,7 @@ class BuildPreviewController extends Controller
             ->save($outData.'/output.png');
         return response()->json([
             'success'=>'Thêm mới thành công',
-            'out' => '/output.png',
+            'out' => $folder.'/output.png',
         ]);
 
     }

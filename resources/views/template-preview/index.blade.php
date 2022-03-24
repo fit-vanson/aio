@@ -391,7 +391,7 @@
                 if(data.success){
                     console.log(data)
                     $.notify(data.success, "success");
-                    $('#preview_out').attr('src','file-manager/BuildTemplate/test/output.png')
+                    $('#preview_out').attr('src','file-manager/BuildTemplate/'+data.out)
                 }
             },
         });
