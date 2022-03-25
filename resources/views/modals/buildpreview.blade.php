@@ -76,20 +76,16 @@
                     </div>
 
                     <div class="row template_custom">
+                        <div class="form-group col-lg-12">
+                            <label for="name">Font Chữ</label>
+                            <input id="font1" name="font_name" type="text" />
+
+                        </div>
                         <?php
                         for ($i= 1 ; $i<=6; $i++)
                         {
                         ?>
-                        <div class="form-group col-lg-4">
-                            <label for="name">Font Chữ</label>
-                            <select class="form-control select2" id="fon_chu" name="fon_chu" required>
-                                @if(isset($categoyTemplateText))
-                                    @foreach($categoyTemplateText as $item)
-                                        <option value="Oswald-VariableFont_wght.ttf">Oswald</option>
-                                    @endforeach
-                                @endif
-                            </select>
-                        </div>
+
                         <div class="form-group col-lg-4">
                             <label for="name">Text to SC {{$i}}</label>
                             <input type="text" class="form-control" id="text_to_{{$i}}" name="text_to[]" value="Text demo {{$i}}" >
