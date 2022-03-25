@@ -16,6 +16,11 @@
 
 <link href="plugins/select2/css/select2.min.css" rel="stylesheet" type="text/css" />
 
+<link rel="stylesheet" href="data/fonts/jquery.fontselect.css"/>
+
+
+
+
 
 @endsection
 
@@ -87,7 +92,12 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.24.0/moment.min.js"></script>
 <script type="text/javascript" charset="utf8" src="https://cdn.datatables.net/plug-ins/1.10.20/sorting/datetime-moment.js"></script>
 <script src="plugins/select2/js/select2.min.js"></script>
+
+
+<script src="data/fonts/jquery.slim.min.js"></script>
+<script src="data/fonts/jquery.fontselect.js"></script>
 <script type="text/javascript">
+
 
     $(function () {
         $.ajaxSetup({
@@ -434,6 +444,13 @@
 
 
 
+
+
+</script>
+<script>
+    $(function(){
+        $('#font1').fontselect();
+    });
 </script>
 
 <script>
