@@ -119,26 +119,25 @@ class BuildPreviewController extends Controller
         }else{
             $frame = TemplatePreview::where('tp_category',$request->category_template_frame)->inRandomOrder()->first();
         }
-//        if($request->template_text_preview != 0){
-//            $text = TemplateTextPr::find($request->template_text_preview);
-//        }else{
-//            $text = TemplateTextPr::where('tt_category',$request->category_child_template_text)->inRandomOrder()->first();
-//        }
+        if($request->template_text_preview != 0){
+            $text = TemplateTextPr::find($request->template_text_preview);
+        }else{
+            $text = TemplateTextPr::where('tt_category',$request->category_child_template_text)->inRandomOrder()->first();
+        }
 
         $folder = time();
         $srcDataPr = public_path('file-manager/TemplatePreview/'.$frame->tp_sc);
-//        $srcDataText = public_path('file-manager/TemplateTextPreview/'.$text->tt_file);
+        $srcDataText = public_path('file-manager/TemplateTextPreview/'.$text->tt_file);
         $outData = public_path('file-manager/BuildTemplate/'.$folder.'/');
         $dataPR = $this->extract_file($srcDataPr, $outData);
-//        $dataText = $this->extract_file($srcDataText, $outData);
+        $dataText = $this->extract_file($srcDataText, $outData);
         $dataSC =  $this->extract_file($request->file_data,$outData);
-
-
         $out = Image::make($outData.'/pr1.png')
             ->resize(1080*6, 1920)
             ->save($outData.'/output.png');
         $tempFrame = json_decode(json_encode($frame), true);
         for ($i = 1; $i<=6; $i++ ){
+            copy($outData.$request->color_text.'/text_'.$i.'.png', $outData.'/text_'.$i.'.png');
             foreach(preg_split("/((\r?\n)|(\r\n?))/", $tempFrame['tp_script_'.$i]) as $line){
                 $tempScript= explode('|',$line);
                 if(count($tempScript) >1){
@@ -146,25 +145,26 @@ class BuildPreviewController extends Controller
                     if($tempScript[1] == 'resize'){
                         $temp = Image::make($outData.$tempScript[0])->resize($width,$height)->save($outData.'/'.$tempScript[3]);
                     }elseif ($tempScript[1] == 'overlay'){
-                        $uploadClientName = $request->text_to[$i-1];
-                        $uploadClientName1 = $request->text_nho[$i-1];
-                        $size = 120;
-                        $size1 = 80;
+//                        $uploadClientName = $request->text_to[$i-1];
+//                        $uploadClientName1 = $request->text_nho[$i-1];
+//                        $size = 120;
+//                        $size1 = 80;
                         [$tp1 ,$tp2 ]= explode('/',$tempScript[0]);
                         $temp = Image::make($outData.$tp1)->insert($outData.$tp2, 'top-left', $width,$height)
-                            ->text($uploadClientName, 540,120, function($font) use($request, $size){
-                                $font->file(public_path('fonts/Oswald-VariableFont_wght.ttf'));
-                                $font->size($size);
-                                $font->color($request->color_text);
-                                $font->align('center');
-                                $font->valign('middle');
-                            })->text($uploadClientName1, 540,250, function($font) use($request, $size1){
-                                    $font->file(public_path('fonts/Oswald-VariableFont_wght.ttf'));
-                                    $font->size($size1);
-                                    $font->color($request->color_text);
-                                    $font->align('center');
-                                    $font->valign('middle');
-                            })->save($outData.'/'.$tempScript[3]);
+//                            ->text($uploadClientName, 540,120, function($font) use($request, $size){
+//                                $font->file(public_path('fonts/Oswald-VariableFont_wght.ttf'));
+//                                $font->size($size);
+//                                $font->color($request->color_text);
+//                                $font->align('center');
+//                                $font->valign('middle');
+//                            })->text($uploadClientName1, 540,250, function($font) use($request, $size1){
+//                                    $font->file(public_path('fonts/Oswald-VariableFont_wght.ttf'));
+//                                    $font->size($size1);
+//                                    $font->color($request->color_text);
+//                                    $font->align('center');
+//                                    $font->valign('middle');
+//                            })
+                    ->save($outData.'/'.$tempScript[3]);
                     }
                 }
             }
