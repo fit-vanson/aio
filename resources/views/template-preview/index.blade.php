@@ -212,28 +212,41 @@
                     swal("Đã xóa!", "Your imaginary file has been deleted.", "success");
                 });
         });
+    });
+    $('#build_preview').click(function () {
+        $("#category_template_frame").val('');
+        $("#category_template_text").val('');
+        $("#template_frame_preview").val('');
+        $("#preview_frame").attr('src','');
+        $("#preview_text").attr('src','');
+        $("#preview_out").attr('src','');
 
+        $('.template_availavble').show();
+        $('.template_custom').hide();
 
-        $('#build_preview').click(function () {
-            $("#category_template_frame").val('');
-            $("#category_template_text").val('');
-            $("#template_frame_preview").val('');
-            $("#preview_frame").attr('src','');
-            $("#preview_text").attr('src','');
-            $("#preview_out").attr('src','');
-            $("#category_template_frame").select2({});
-            $("#category_template_text").select2({});
-            $("#template_frame_preview").select2({});
-            $("#template_text_preview").select2({});
-            $("#category_child_template_text").select2({});
-            $('#saveBtn').val("create-preview");
-            $('#buildpreviewForm').trigger("reset");
-            $('#buildpreviewModalLabel').html("Template Preview");
-            $('#buildpreviewModal').modal('show');
-            $('.modal').on('hidden.bs.modal', function (e) {
-                $('body').addClass('modal-open');
-            });
+        $("#category_template_frame").select2({});
+        $("#category_template_text").select2({});
+        $("#template_frame_preview").select2({});
+        $("#template_text_preview").select2({});
+        $("#category_child_template_text").select2({});
+        $('#saveBtn').val("create-preview");
+        $('#buildpreviewForm').trigger("reset");
+        $('#buildpreviewModalLabel').html("Template Preview");
+        $('#buildpreviewModal').modal('show');
+        $('.modal').on('hidden.bs.modal', function (e) {
+            $('body').addClass('modal-open');
         });
+    });
+
+    $('input[type=radio][name=template123]').change(function() {
+        if (this.value == 'template_availavble') {
+            $('.template_availavble').show();
+            $('.template_custom').hide();
+        }
+        else if (this.value == 'template_custom') {
+            $('.template_availavble').hide();
+            $('.template_custom').show();
+        }
     });
 
     $('#category_template_frame').on('change',function(e){
@@ -321,7 +334,7 @@
             }
             elementSelect.empty();
             elementSelect.append(
-                $("<option value='0'></option>").text('---Random---')
+                $("<option value='0'></option>").text('---Vui lòng chọn---')
             );
             for(var item of res.cateParent){
                 elementSelect.append(

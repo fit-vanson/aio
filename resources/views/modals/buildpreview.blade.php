@@ -12,7 +12,7 @@
                         <div class="form-group col-lg-3">
                             <label for="name">Category Frame</label>
                             <select class="form-control select2" id="category_template_frame" name="category_template_frame" required>
-{{--                                <option value="">--Vui lòng chọn--</option>--}}
+                                <option value="">--Vui lòng chọn--</option>
                                 @if(isset($categoyTemplateFrame))
                                     @foreach($categoyTemplateFrame as $item)
                                         <option value="{{$item->id}}">{{$item->category_template_frames_name}}</option>
@@ -36,10 +36,22 @@
                         </div>
                     </div>
 
-                    <div class="row">
+                    <div class="form-group">
+                        <div class="custom-control custom-radio custom-control-inline">
+                            <input type="radio" id="template_availavble" name="template123" class="custom-control-input" value="template_availavble" checked>
+                            <label class="custom-control-label" for="template_availavble">Template Available</label>
+                        </div>
+                        <div class="custom-control custom-radio custom-control-inline">
+                            <input type="radio" id="template_custom" name="template123" class="custom-control-input" value="template_custom">
+                            <label class="custom-control-label" for="template_custom">Template Custom</label>
+                        </div>
+                    </div>
+
+                    <div class="row template_availavble" >
                         <div class="form-group col-lg-3">
                             <label for="name">Category Text</label>
-                            <select class="form-control select2" id="category_template_text" name="category_template_text" required>
+                            <select class="form-control select2" id="category_template_text" name="category_template_text">
+                                <option value="">--Vui lòng chọn--</option>
                                 @if(isset($categoyTemplateText))
                                     @foreach($categoyTemplateText as $item)
                                         <option value="{{$item->id}}">{{$item->category_template_name}}</option>
@@ -49,7 +61,7 @@
                         </div>
                         <div class="form-group col-lg-3">
                             <label for="name">Category Text Child</label>
-                            <select class="form-control select2" id="category_child_template_text" name="category_child_template_text" required>
+                            <select class="form-control select2" id="category_child_template_text" name="category_child_template_text">
                             </select>
                         </div>
                         <div class="form-group col-lg-3">
@@ -63,35 +75,33 @@
                         </div>
                     </div>
 
-{{--                    <?php--}}
-{{--                    for ($i= 1 ; $i<=6; $i++)--}}
-{{--                        {--}}
+                    <div class="row template_custom">
+                        <?php
+                        for ($i= 1 ; $i<=6; $i++)
+                        {
+                        ?>
+                        <div class="form-group col-lg-4">
+                            <label for="name">Font Chữ</label>
+                            <select class="form-control select2" id="fon_chu" name="fon_chu" required>
+                                @if(isset($categoyTemplateText))
+                                    @foreach($categoyTemplateText as $item)
+                                        <option value="Oswald-VariableFont_wght.ttf">Oswald</option>
+                                    @endforeach
+                                @endif
+                            </select>
+                        </div>
+                        <div class="form-group col-lg-4">
+                            <label for="name">Text to SC {{$i}}</label>
+                            <input type="text" class="form-control" id="text_to_{{$i}}" name="text_to[]" value="Text demo {{$i}}" >
+                        </div>
+                        <div class="form-group col-lg-4">
+                            <label for="name">Text nhỏ SC {{$i}}</label>
+                            <input type="text" class="form-control" id="text_nho_{{$i}}" name="text_nho[]"  value="small size {{$i}}" >
+                        </div>
+                        <?php } ?>
 
-{{--                    ?>--}}
+                    </div>
 
-
-{{--                        <div class="row">--}}
-{{--                            <div class="form-group col-lg-4">--}}
-{{--                                <label for="name">Font Chữ</label>--}}
-{{--                                <select class="form-control select2" id="fon_chu" name="fon_chu" required>--}}
-{{--    --}}{{--                                @if(isset($categoyTemplateText))--}}
-{{--    --}}{{--                                    @foreach($categoyTemplateText as $item)--}}
-{{--                                            <option value="Oswald-VariableFont_wght.ttf">Oswald</option>--}}
-{{--    --}}{{--                                    @endforeach--}}
-{{--    --}}{{--                                @endif--}}
-{{--                                </select>--}}
-{{--                            </div>--}}
-{{--                            <div class="form-group col-lg-4">--}}
-{{--                                <label for="name">Text to SC {{$i}}</label>--}}
-{{--                                <input type="text" class="form-control" id="text_to_{{$i}}" name="text_to[]" value="Text demo {{$i}}" >--}}
-{{--                            </div>--}}
-{{--                            <div class="form-group col-lg-4">--}}
-{{--                                <label for="name">Text nhỏ SC {{$i}}</label>--}}
-{{--                                <input type="text" class="form-control" id="text_nho_{{$i}}" name="text_nho[]"  value="small size {{$i}}" >--}}
-{{--                            </div>--}}
-
-{{--                        </div>--}}
-{{--                    <?php } ?>--}}
 
                     <div class="row">
                         <div class="form-group col-lg-6">
@@ -106,7 +116,7 @@
                     </div>
 
                     <div class="col-sm-offset-2 col-sm-10">
-                        <button type="submit" class="btn btn-primary" id="saveBtn">Save</button>
+                        <button type="submit" class="btn btn-primary" id="saveBtn">Create</button>
                         <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
                     </div>
                 </form>

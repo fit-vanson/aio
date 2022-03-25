@@ -7,6 +7,7 @@ use App\Models\TemplatePreview;
 use App\Models\TemplateTextPr;
 use FFMpeg\Filters\Frame\FrameFilters;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\File;
 use Illuminate\Support\Facades\Validator;
 use Intervention\Image\Facades\Image;
 use ProtoneMedia\LaravelFFMpeg\Support\FFMpeg;
@@ -102,9 +103,8 @@ class BuildPreviewController extends Controller
 
     public function create(Request  $request)
     {
-
         $rules = [
-            'file_data' => 'mimes:zip,rar',
+            'file_data' => 'mimes:zip',
         ];
         $message = [
             'file_data.mimes'=>'File *.zip',
@@ -113,66 +113,80 @@ class BuildPreviewController extends Controller
         if($error->fails()){
             return response()->json(['errors'=> $error->errors()->all()]);
         }
+        $folder = time();
+        $outData = public_path('file-manager/BuildTemplate/'.$folder.'/');
 
         if($request->template_frame_preview != 0){
             $frame = TemplatePreview::find($request->template_frame_preview);
         }else{
             $frame = TemplatePreview::where('tp_category',$request->category_template_frame)->inRandomOrder()->first();
         }
-        if($request->template_text_preview != 0){
-            $text = TemplateTextPr::find($request->template_text_preview);
-        }else{
-            $text = TemplateTextPr::where('tt_category',$request->category_child_template_text)->inRandomOrder()->first();
+
+        if ($request->template123 == 'template_availavble'){
+            if($request->template_text_preview != 0){
+                $text = TemplateTextPr::find($request->template_text_preview);
+            }else{
+                $text = TemplateTextPr::where('tt_category',$request->category_child_template_text)->inRandomOrder()->first();
+            }
+            $srcDataText = public_path('file-manager/TemplateTextPreview/'.$text->tt_file);
+            $this->extract_file($srcDataText, $outData);
         }
 
-        $folder = time();
         $srcDataPr = public_path('file-manager/TemplatePreview/'.$frame->tp_sc);
-        $srcDataText = public_path('file-manager/TemplateTextPreview/'.$text->tt_file);
-        $outData = public_path('file-manager/BuildTemplate/'.$folder.'/');
-        $dataPR = $this->extract_file($srcDataPr, $outData);
-        $dataText = $this->extract_file($srcDataText, $outData);
-        $dataSC =  $this->extract_file($request->file_data,$outData);
-        $out = Image::make($outData.'/pr1.png')
-            ->resize(1080*6, 1920)
-            ->save($outData.'/output.png');
+        $this->extract_file($srcDataPr, $outData);
+        $this->extract_file($request->file_data,$outData);
+        copy('data/output.png', $outData.'/output.png');
         $tempFrame = json_decode(json_encode($frame), true);
+
         for ($i = 1; $i<=6; $i++ ){
-            copy($outData.$request->color_text.'/text_'.$i.'.png', $outData.'/text_'.$i.'.png');
+            if($request->template123 == 'template_custom' ){
+                copy('data/text.png', $outData.'/text_'.$i.'.png');
+            }elseif ($request->template123 == 'template_availavble'){
+                copy($outData.$request->color_text.'/text_'.$i.'.png', $outData.'/text_'.$i.'.png');
+            }
             foreach(preg_split("/((\r?\n)|(\r\n?))/", $tempFrame['tp_script_'.$i]) as $line){
                 $tempScript= explode('|',$line);
-                if(count($tempScript) >1){
+
                     [$width ,$height ]= explode(':',$tempScript[2]);
                     if($tempScript[1] == 'resize'){
-                        $temp = Image::make($outData.$tempScript[0])->resize($width,$height)->save($outData.'/'.$tempScript[3]);
+                        Image::make($outData.$tempScript[0])->resize($width,$height)->save($outData.'/'.$tempScript[3]);
                     }elseif ($tempScript[1] == 'overlay'){
-//                        $uploadClientName = $request->text_to[$i-1];
-//                        $uploadClientName1 = $request->text_nho[$i-1];
-//                        $size = 120;
-//                        $size1 = 80;
                         [$tp1 ,$tp2 ]= explode('/',$tempScript[0]);
-                        $temp = Image::make($outData.$tp1)->insert($outData.$tp2, 'top-left', $width,$height)
-//                            ->text($uploadClientName, 540,120, function($font) use($request, $size){
-//                                $font->file(public_path('fonts/Oswald-VariableFont_wght.ttf'));
-//                                $font->size($size);
-//                                $font->color($request->color_text);
-//                                $font->align('center');
-//                                $font->valign('middle');
-//                            })->text($uploadClientName1, 540,250, function($font) use($request, $size1){
-//                                    $font->file(public_path('fonts/Oswald-VariableFont_wght.ttf'));
-//                                    $font->size($size1);
-//                                    $font->color($request->color_text);
-//                                    $font->align('center');
-//                                    $font->valign('middle');
-//                            })
-                    ->save($outData.'/'.$tempScript[3]);
+                        if($request->template123 == 'template_custom' ){
+                            $uploadClientName = $request->text_to[$i-1];
+                            $uploadClientName1 = $request->text_nho[$i-1];
+                            $size = 120;
+                            $size1 = 80;
+                            Image::make($outData.$tp1)->insert($outData.$tp2, 'top-left', $width,$height)
+                            ->text($uploadClientName, 540,120, function($font) use($request, $size){
+                                $font->file(public_path('fonts/Oswald-VariableFont_wght.ttf'));
+                                $font->size($size);
+                                $font->color($request->color_text);
+                                $font->align('center');
+                                $font->valign('middle');
+                            })->text($uploadClientName1, 540,250, function($font) use($request, $size1){
+                                    $font->file(public_path('fonts/Oswald-VariableFont_wght.ttf'));
+                                    $font->size($size1);
+                                    $font->color($request->color_text);
+                                    $font->align('center');
+                                    $font->valign('middle');
+                            })
+                                ->save($outData.'/'.$tempScript[3]);
+                        }elseif ($request->template123 == 'template_availavble'){
+                            Image::make($outData.$tp1)->insert($outData.$tp2, 'top-left', $width,$height)
+                                ->save($outData.'/'.$tempScript[3]);
+                        }
                     }
-                }
+
             }
-            $out1 = Image::make($outData.'/output.png')
+            Image::make($outData.'/output.png')
                 ->insert($outData.'/pr_'.$i.'.jpg', 'top-left', 1080*($i-1), 0)
                 ->save($outData.'/output.png');
-
         }
+
+//        File::deleteDirectory($outData);
+
+
 
         return response()->json([
             'success'=>'Thêm mới thành công',
@@ -242,14 +256,14 @@ class BuildPreviewController extends Controller
 //        dd($file_path);
 //        $file_type = $file_path->getClientOriginalExtension();
 //        if ("zip" === $file_type) {
-            $xmlZip = new ZipArchive();
-            if ($xmlZip->open($file_path)) {
-                $xmlZip->extractTo($to_path);
-                return true;
-            } else {
-                echo "extract fail";
-                return false;
-            }
+        $xmlZip = new ZipArchive();
+        if ($xmlZip->open($file_path)) {
+            $xmlZip->extractTo($to_path);
+            return true;
+        } else {
+            echo "extract fail";
+            return false;
+        }
 //        } elseif ("rar" == $file_type) {
 //
 //            $archive = RarArchive::open($file_path);
@@ -265,7 +279,5 @@ class BuildPreviewController extends Controller
 //                return false;
 //            }
 //        }
-
-
     }
 }
