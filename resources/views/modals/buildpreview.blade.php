@@ -27,8 +27,8 @@
                         </div>
                         <div class="form-group col-lg-3 " >
                             <label for="name"> Color</label>
-                            <div class="form-check" id="color_frame">
-                            </div>
+                            <div class="form-check" id="color_frame"></div>
+                            <input type="color" id="colorpicker" name="colorpicker">
                         </div>
                         <div class="form-group col-lg-3">
                             <p for="name"> Preview</p>
@@ -50,7 +50,7 @@
                     <div class="row template_availavble" >
                         <div class="form-group col-lg-3">
                             <label for="name">Category Text</label>
-                            <select class="form-control select2" id="category_template_text" name="category_template_text">
+                            <select class="form-control select2" id="category_template_text" name="category_template_text" required>
                                 <option value="">--Vui lòng chọn--</option>
                                 @if(isset($categoyTemplateText))
                                     @foreach($categoyTemplateText as $item)
@@ -61,7 +61,7 @@
                         </div>
                         <div class="form-group col-lg-3">
                             <label for="name">Category Text Child</label>
-                            <select class="form-control select2" id="category_child_template_text" name="category_child_template_text">
+                            <select class="form-control select2" id="category_child_template_text" name="category_child_template_text" required>
                             </select>
                         </div>
                         <div class="form-group col-lg-3">

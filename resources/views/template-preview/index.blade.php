@@ -222,7 +222,11 @@
         $("#preview_out").attr('src','');
 
         $('.template_availavble').show();
+        //
         $('.template_custom').hide();
+        $('#colorpicker').hide();
+        $('.template_custom :input').removeClass("disabled").prop("disabled", true);
+        $('#colorpicker :input').removeClass("disabled").prop("disabled", true);
 
         $("#category_template_frame").select2({});
         $("#category_template_text").select2({});
@@ -241,11 +245,25 @@
     $('input[type=radio][name=template123]').change(function() {
         if (this.value == 'template_availavble') {
             $('.template_availavble').show();
+            $('#color_frame').show();
             $('.template_custom').hide();
+            $('#colorpicker').hide();
+            $('.template_custom :input').removeClass("disabled").prop("disabled", true);
+            $('#colorpicker :input').removeClass("disabled").prop("disabled", true);
+            $('.template_availavble :input').removeClass("disabled").prop("disabled", false);
+            $('#color_frame :input').removeClass("disabled").prop("disabled", false);
+
         }
         else if (this.value == 'template_custom') {
-            $('.template_availavble').hide();
             $('.template_custom').show();
+            $('#colorpicker').show();
+            $('.template_availavble').hide();
+            $('#color_frame').hide();
+            $('.template_availavble :input').removeClass("disabled").prop("disabled", true);
+            $('#color_frame :input').removeClass("disabled").prop("disabled", true);
+            $('.template_custom :input').removeClass("disabled").prop("disabled", false);
+            $('#colorpicker :input').removeClass("disabled").prop("disabled", false);
+
         }
     });
 
@@ -274,6 +292,7 @@
         });
     });
     $('#template_frame_preview').on('change',function(e){
+        $('#color_frame').show();
         var id=$(this).val();
         var html = '<div class="row">';
         $.ajax({
@@ -283,25 +302,25 @@
         }).done(function(res){
             console.log(res)
             if(res.frame.tp_blue){
-                html += '<div class="col-lg-2"><input class="form-check-input" type="radio" name="color_text" id="tp_blue" value="Blue" required>'+
+                html += '<div class="col-lg-2"><input class="form-check-input" type="radio" name="color_text" id="tp_blue" value="Blue" required> '+
                     '<label class="form-check-label" for="tp_blue"  >Blue</label></div>'
             }else {
                 html += '';
             }
             if(res.frame.tp_black){
-                html += '<div class="col-lg-2"><input class="form-check-input" type="radio" name="color_text" id="tp_black" value="Black" required>'+
+                html += '<div class="col-lg-2"><input class="form-check-input" type="radio" name="color_text" id="tp_black" value="Black" required> '+
                     '<label class="form-check-label" for="tp_black">Black</label></div>'
             }else {
                 html += '';
             }
             if(res.frame.tp_while){
-                html += '<div class="col-lg-2"><input class="form-check-input" type="radio" name="color_text" id="tp_while" value="While" required>'+
+                html += '<div class="col-lg-2"><input class="form-check-input" type="radio" name="color_text" id="tp_while" value="While" required> '+
                     '<label class="form-check-label" for="tp_while">While</label></div>'
             }else {
                 html += '';
             }
             if(res.frame.tp_yellow){
-                html += '<div class="col-lg-2"><input class="form-check-input" type="radio" name="color_text" id="tp_yellow" value="Yellow" required>'+
+                html += '<div class="col-lg-2"><input class="form-check-input" type="radio" name="color_text" id="tp_yellow" value="Yellow" required >'+
                     '<label class="form-check-label" for="tp_yellow">Yellow</label></div>'
             }else {
                 html += '';
@@ -333,9 +352,6 @@
                 return false;
             }
             elementSelect.empty();
-            elementSelect.append(
-                $("<option value='0'></option>").text('---Vui lòng chọn---')
-            );
             for(var item of res.cateParent){
                 elementSelect.append(
                     $("<option></option>", {

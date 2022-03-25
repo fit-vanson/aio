@@ -161,13 +161,13 @@ class BuildPreviewController extends Controller
                             ->text($uploadClientName, 540,120, function($font) use($request, $size){
                                 $font->file(public_path('fonts/Oswald-VariableFont_wght.ttf'));
                                 $font->size($size);
-                                $font->color($request->color_text);
+                                $font->color($request->colorpicker);
                                 $font->align('center');
                                 $font->valign('middle');
                             })->text($uploadClientName1, 540,250, function($font) use($request, $size1){
                                     $font->file(public_path('fonts/Oswald-VariableFont_wght.ttf'));
                                     $font->size($size1);
-                                    $font->color($request->color_text);
+                                    $font->color($request->colorpicker);
                                     $font->align('center');
                                     $font->valign('middle');
                             })
