@@ -352,6 +352,9 @@
                 return false;
             }
             elementSelect.empty();
+            elementSelect.append(
+                $("<option ></option>").text('---Vui lòng chọn---')
+            );
             for(var item of res.cateParent){
                 elementSelect.append(
                     $("<option></option>", {

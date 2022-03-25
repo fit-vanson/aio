@@ -66,7 +66,7 @@
                         </div>
                         <div class="form-group col-lg-3">
                             <label for="name">Template Text Preview</label>
-                            <select class="form-control select2" id="template_text_preview" name="template_text_preview">
+                            <select class="form-control select2" id="template_text_preview" name="template_text_preview" required>
                             </select>
                         </div>
                         <div class="form-group col-lg-3">

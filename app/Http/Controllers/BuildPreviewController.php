@@ -115,6 +115,7 @@ class BuildPreviewController extends Controller
         }
         $folder = time();
         $outData = public_path('file-manager/BuildTemplate/'.$folder.'/');
+        $color_text = $request->color_text ? $request->color_text : 'Blue';
 
         if($request->template_frame_preview != 0){
             $frame = TemplatePreview::find($request->template_frame_preview);
@@ -142,7 +143,7 @@ class BuildPreviewController extends Controller
             if($request->template123 == 'template_custom' ){
                 copy('data/text.png', $outData.'/text_'.$i.'.png');
             }elseif ($request->template123 == 'template_availavble'){
-                copy($outData.$request->color_text.'/text_'.$i.'.png', $outData.'/text_'.$i.'.png');
+                copy($outData.$color_text .'/text_'.$i.'.png', $outData.'/text_'.$i.'.png');
             }
             foreach(preg_split("/((\r?\n)|(\r\n?))/", $tempFrame['tp_script_'.$i]) as $line){
                 $tempScript= explode('|',$line);
