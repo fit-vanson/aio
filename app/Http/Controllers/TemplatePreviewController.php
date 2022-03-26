@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\CategoryTemplate;
 use App\Models\CategoryTemplateFrame;
+use App\Models\DataProfile;
 use App\Models\Template;
 use App\Models\TemplatePreview;
 use Illuminate\Http\Request;
@@ -18,9 +19,11 @@ class TemplatePreviewController extends Controller
     public function index(){
         $categoyTemplateFrame =  CategoryTemplateFrame::latest('id')->get();
         $categoyTemplateText =  CategoryTemplate::latest('id')->where('category_template_parent',0)->get();
+        $dataFiles =  DataProfile::latest('id')->get();
         return view('template-preview.index',compact([
             'categoyTemplateFrame',
-            'categoyTemplateText'
+            'categoyTemplateText',
+            'dataFiles'
         ]));
     }
 
@@ -93,14 +96,11 @@ class TemplatePreviewController extends Controller
         $rules = [
             'tp_name' =>'unique:template_previews,tp_name',
             'tp_sc' => 'required|mimes:zip,rar',
-            'tp_data' => 'mimes:zip,rar',
-//            'logo' => 'required',
 
         ];
         $message = [
             'tp_name.unique'=>'Tên đã tồn tại',
             'tp_sc.mimes'=>'Định dạng file: *.zip',
-            'tp_data.mimes'=>'Định dạng file: *.zip',
             'tp_sc.required'=>'File không để trống',
 //            'logo.required'=>'Logo không để trống',
         ];
@@ -126,6 +126,7 @@ class TemplatePreviewController extends Controller
         $data['tp_pink'] = $request->tp_pink ? 1 : 0;
         $data['tp_yellow'] = $request->tp_yellow ? 1 : 0;
         $data['tp_category'] = $request->category_template;
+        $data['tp_data'] = $request->tp_data;
 
 
         if($request->tp_sc){
@@ -138,17 +139,6 @@ class TemplatePreviewController extends Controller
             $tp_sc = $request->tp_name.'.'.$extension;
             $data['tp_sc'] = $tp_sc;
             $file->move($destinationPath, $tp_sc);
-        }
-        if($request->tp_data){
-            $destinationPathData = public_path('file-manager/TemplatePreview/data/');
-            if (!file_exists($destinationPathData)) {
-                mkdir($destinationPathData, 0777, true);
-            }
-            $filedata = $request->tp_data;
-            $extension = $filedata->getClientOriginalExtension();
-            $tp_data = $request->tp_name.'.'.$extension;
-            $data['tp_data'] = $tp_data;
-            $filedata->move($destinationPathData, $tp_data);
         }
         $destinationPathLogo = public_path('file-manager/TemplatePreview/logo/');
         if (!file_exists($destinationPathLogo)) {
@@ -216,14 +206,13 @@ class TemplatePreviewController extends Controller
         $id = $request->tp_id;
         $rules = [
             'tp_name' =>'unique:template_previews,tp_name,'.$id.',id',
-            'tp_sc' => 'mimes:zip,rar',
-            'tp_data' => 'mimes:zip,rar',
+            'tp_sc' => 'mimes:zip',
+
 
         ];
         $message = [
             'tp_name.unique'=>'Tên đã tồn tại',
             'tp_sc.mimes'=>'Định dạng file: *.zip',
-            'tp_data.mimes'=>'Định dạng file: *.zip',
             'tp_sc.required'=>'Trường không để trống',
         ];
         $error = Validator::make($request->all(),$rules, $message );
@@ -245,6 +234,7 @@ class TemplatePreviewController extends Controller
         $data->tp_pink = $request->tp_pink ? 1 : 0;
         $data->tp_yellow = $request->tp_yellow ? 1 : 0;
         $data->tp_category = $request->category_template;
+        $data->tp_data = $request->tp_data;
 
         $destinationPath = public_path('file-manager/TemplatePreview/');
         $destinationPathLogo = public_path('file-manager/TemplatePreview/logo/');
@@ -255,9 +245,7 @@ class TemplatePreviewController extends Controller
         if (!file_exists($destinationPathLogo)) {
             mkdir($destinationPathLogo, 0777, true);
         }
-        if (!file_exists($destinationPathData)) {
-            mkdir($destinationPathData, 0777, true);
-        }
+
         if($request->tp_sc ){
             $path_Remove = public_path('file-manager/TemplatePreview/') . $data->tp_sc;
             if (file_exists($path_Remove)) {
@@ -269,17 +257,7 @@ class TemplatePreviewController extends Controller
             $data['tp_sc'] = $tp_sc;
             $file->move($destinationPath, $tp_sc);
         }
-        if($request->tp_data ){
-            $path_Remove = public_path('file-manager/TemplatePreview/data/') . $data->tp_data;
-            if (file_exists($path_Remove)) {
-                unlink($path_Remove);
-            }
-            $filedata = $request->tp_data;
-            $extension = $filedata->getClientOriginalExtension();
-            $tp_data = $request->tp_name.'.'.$extension;
-            $data['tp_data'] = $tp_data;
-            $filedata->move($destinationPathData, $tp_data);
-        }
+
 
         if($request->logo ){
             $path_Remove_logo = public_path('file-manager/TemplatePreview/logo/') . $data->tp_logo;
@@ -296,13 +274,11 @@ class TemplatePreviewController extends Controller
         if($data->tp_name != $request->tp_name){
             $file= pathinfo($destinationPath.$data->tp_sc);
             $logo= pathinfo($destinationPathLogo.$data->tp_logo);
-            $filedata= pathinfo($destinationPathData.$data->tp_data);
             rename($destinationPathLogo.$data->tp_logo, $destinationPathLogo.$request->tp_name.time().'.'.$logo['extension']);
             rename($destinationPath.$data->tp_sc, $destinationPath.$request->tp_name.'.'.$file['extension']);
-            rename($destinationPathData.$data->tp_data, $destinationPathData.$request->tp_name.'.'.$filedata['extension']);
             $data['tp_sc'] = $request->tp_name.'.'.$file['extension'];
             $data['tp_logo'] = $request->tp_name.time().'.'.$logo['extension'];
-            $data['tp_data'] = $request->tp_name.'.'.$filedata['extension'];
+
         }
         $data->tp_name = $request->tp_name;
         $data->save();
@@ -325,10 +301,6 @@ class TemplatePreviewController extends Controller
         $path_Remove_logo = public_path('file-manager/TemplatePreview/logo/') . $data->tp_logo;
         if (file_exists($path_Remove_logo)) {
             unlink($path_Remove_logo);
-        }
-        $path_Remove_data = public_path('file-manager/TemplatePreview/data/') . $data->tp_data;
-        if (file_exists($path_Remove_data)) {
-            unlink($path_Remove_data);
         }
         $data->delete();
         return response()->json(['success'=>'Xóa thành công.']);

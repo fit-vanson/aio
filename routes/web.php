@@ -6,6 +6,7 @@ use App\Http\Controllers\CategoryTemplateFrameController;
 use App\Http\Controllers\CocsimController;
 use App\Http\Controllers\CronProjectController;
 use App\Http\Controllers\DaController;
+use App\Http\Controllers\DataProfileController;
 use App\Http\Controllers\DevAmazonController;
 use App\Http\Controllers\DevController;
 
@@ -243,6 +244,16 @@ Route::group(['prefix'=>'template-text-preview'], function (){
     Route::post('/update',[TemplateTextPrController::class,'update'])->name('template-text-preview.update')->middleware('can:template-preview-update');
     Route::get('/delete/{id}',[TemplateTextPrController::class,'delete'])->name('template-text-preview.delete')->middleware('can:template-preview-delete');
     Route::get('/upload',[TemplateTextPrController::class,'upload'])->name('template-text-preview.upload')->middleware('can:template-preview-index');
+});
+Route::group(['prefix'=>'data-profile'], function (){
+    Route::get('/',[DataProfileController::class,'index'])->name('data_profile.index');
+    Route::post('/getIndex',[DataProfileController::class,'getIndex'])->name('data_profile.getIndex');
+    Route::post('/create',[DataProfileController::class,'create'])->name('data_profile.create')->middleware('can:template-preview-add');
+    Route::get('/edit/{id}',[DataProfileController::class,'edit'])->name('data_profile.edit')->middleware('can:template-preview-edit');
+    Route::get('/show/{id}',[DataProfileController::class,'edit'])->name('data_profile.show')->middleware('can:template-preview-show');
+    Route::post('/update',[DataProfileController::class,'update'])->name('data_profile.update')->middleware('can:template-preview-update');
+    Route::get('/delete/{id}',[DataProfileController::class,'delete'])->name('data_profile.delete')->middleware('can:template-preview-delete');
+    Route::get('/upload',[DataProfileController::class,'upload'])->name('data_profile.upload')->middleware('can:template-preview-index');
 });
 
 Route::group(['prefix'=>'category_template','middleware'=>['CheckLogout','2fa']], function (){

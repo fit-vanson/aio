@@ -38,22 +38,25 @@
                                 </div>
                             </div>
                             <div class="form-group col-lg-6">
-                                <label for="name">File SC</label><p></p>
-                                <input type="file" name="tp_sc" id="tp_sc" class="filestyle" data-buttonname="btn-secondary" accept=".zip,.rar" />
+                                <label for="name">Tên Template <span style="color: red">*</span></label>
+                                <input type="text" id="tp_name" name="tp_name" class="form-control" required>
                             </div>
-
                         </div>
 
                         <div class="row">
                             <div class="form-group col-lg-6">
-                                <label for="name">Tên Template <span style="color: red">*</span></label>
-                                <input type="text" id="tp_name" name="tp_name" class="form-control" required>
+                                <label for="name">Data mẫu</label><p></p>
+                                <select class="form-control select2" id="tp_data" name="tp_data" required>
+                                    <option value="">---Vui lòng chọn---</option>
+                                    @foreach($dataFiles as $item)
+                                        <option value="{{$item->id}}">{{$item->data_name}}</option>
+                                    @endforeach
+                                </select>
                             </div>
                             <div class="form-group col-lg-6">
-                                <label for="name">File Data mẫu</label><p></p>
-                                <input type="file" name="tp_data" id="tp_data" class="filestyle" data-buttonname="btn-secondary" accept=".zip,.rar" />
+                                <label for="name">File Preview</label><p></p>
+                                <input type="file" name="tp_sc" id="tp_sc" class="filestyle" data-buttonname="btn-secondary" accept=".zip" />
                             </div>
-
                         </div>
 
                         <div class="row">

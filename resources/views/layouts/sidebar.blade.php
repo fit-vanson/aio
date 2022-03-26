@@ -49,6 +49,7 @@
                                         <li><a href="{{route('template-text-preview.index')}}">Template Text Preview</a></li>
                                         <li><a href="{{route('category_template_frame.index')}}">Category Template Frame</a></li>
                                         <li><a href="{{route('category_template.index')}}">Category Template</a></li>
+                                        <li><a href="{{route('data_profile.index')}}">Data Mẫu</a></li>
                                     @endcan
 
                                 </ul>
