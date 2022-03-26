@@ -39,11 +39,11 @@
                     <div class="form-group">
                         <div class="custom-control custom-radio custom-control-inline">
                             <input type="radio" id="template_availavble" name="template123" class="custom-control-input" value="template_availavble" checked>
-                            <label class="custom-control-label" for="template_availavble">Template Available</label>
+                            <label class="custom-control-label" for="template_availavble">Template mẫu có sẵn</label>
                         </div>
                         <div class="custom-control custom-radio custom-control-inline">
                             <input type="radio" id="template_custom" name="template123" class="custom-control-input" value="template_custom">
-                            <label class="custom-control-label" for="template_custom">Template Custom</label>
+                            <label class="custom-control-label" for="template_custom">Template tuỳ chỉnh</label>
                         </div>
                     </div>
 
@@ -98,17 +98,29 @@
 
                     </div>
 
+                    <div class="form-group">
+                        <div class="custom-control custom-radio custom-control-inline">
+                            <input type="radio" id="data_availavble" name="data123" class="custom-control-input" value="data_availavble" checked>
+                            <label class="custom-control-label" for="data_availavble">Data mẫu có sẵn</label>
+                        </div>
+                        <div class="custom-control custom-radio custom-control-inline">
+                            <input type="radio" id="data_custom" name="data123" class="custom-control-input" value="data_custom">
+                            <label class="custom-control-label" for="data_custom">Data mẫu tuỳ chỉnh</label>
+                        </div>
+                    </div>
 
-                    <div class="row">
+
+                    <div class="row data_custom">
                         <div class="form-group col-lg-6">
                             <label for="name">File Data mẫu</label><p></p>
                             <input type="file" name="file_data" id="file_data" class="filestyle" data-buttonname="btn-secondary" accept=".zip" required />
                         </div>
-                        <div class="form-group col-lg-3">
+                    </div>
+                    <div class="row">
+                        <div class="form-group col-lg-12">
                             <p for="name"> Preview Out</p>
-                            <img id="preview_out" class="thumbnail" width="1000px">
+                            <center><img id="preview_out" class="thumbnail" width="1000px"></center>
                         </div>
-
                     </div>
 
                     <div class="col-sm-offset-2 col-sm-10">

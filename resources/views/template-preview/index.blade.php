@@ -238,6 +238,9 @@
         $('.template_custom :input').removeClass("disabled").prop("disabled", true);
         $('#colorpicker :input').removeClass("disabled").prop("disabled", true);
 
+        $('.data_custom').hide();
+        $('.data_custom :input').removeClass("disabled").prop("disabled", true);
+
         $("#category_template_frame").select2({});
         $("#category_template_text").select2({});
         $("#template_frame_preview").select2({});
@@ -273,6 +276,19 @@
             $('#color_frame :input').removeClass("disabled").prop("disabled", true);
             $('.template_custom :input').removeClass("disabled").prop("disabled", false);
             $('#colorpicker :input').removeClass("disabled").prop("disabled", false);
+
+        }
+    });
+
+    $('input[type=radio][name=data123]').change(function() {
+        if (this.value == 'data_availavble') {
+            $('.data_custom').hide();
+            $('.data_custom :input').removeClass("disabled").prop("disabled", true);
+
+        }
+        else if (this.value == 'data_custom') {
+            $('.data_custom').show();
+            $('.data_custom :input').removeClass("disabled").prop("disabled", false);
 
         }
     });

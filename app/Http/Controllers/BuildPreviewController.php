@@ -103,6 +103,7 @@ class BuildPreviewController extends Controller
 
     public function create(Request  $request)
     {
+//        dd($request->all());
         $rules = [
             'file_data' => 'mimes:zip',
         ];
@@ -133,9 +134,16 @@ class BuildPreviewController extends Controller
             $this->extract_file($srcDataText, $outData);
         }
 
+        if ($request->data123 == 'data_custom'){
+            $this->extract_file($request->file_data,$outData);
+        }
+        if ($request->data123 == 'data_availavble'){
+            $srcData = public_path('file-manager/TemplatePreview/data/'.$frame->tp_data);
+            $this->extract_file($srcData, $outData);
+        }
         $srcDataPr = public_path('file-manager/TemplatePreview/'.$frame->tp_sc);
         $this->extract_file($srcDataPr, $outData);
-        $this->extract_file($request->file_data,$outData);
+
         copy('data/output.png', $outData.'/output.png');
         $tempFrame = json_decode(json_encode($frame), true);
 
@@ -160,7 +168,7 @@ class BuildPreviewController extends Controller
                             $size1 = 80;
                             Image::make($outData.$tp1)->insert($outData.$tp2, 'top-left', $width,$height)
                             ->text($uploadClientName, 540,120, function($font) use($request, $size){
-                                $font->file(public_path('fonts/Oswald-VariableFont_wght.ttf'));
+                                $font->file(public_path('fonts/AkayaTelivigala-Regular.ttf'));
                                 $font->size($size);
                                 $font->color($request->colorpicker);
                                 $font->align('center');
