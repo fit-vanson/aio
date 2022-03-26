@@ -1,4 +1,4 @@
-<div class="modal fade" id="buildpreviewModal" tabindex="-1" role="dialog">
+<div class="modal fade" id="buildpreviewModal" role="dialog">
     <div class="modal-dialog mw-100 w-75">
         <div class="modal-content">
             <div class="modal-header">
