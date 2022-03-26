@@ -130,6 +130,7 @@ class TemplatePreviewController extends Controller
 
         $data = new TemplatePreview();
         $data['tp_name'] = $request->tp_name;
+        $data['tp_script'] = $request->tp_script ? $request->tp_script : '';
         $data['tp_script_1'] = $request->tp_script_1 ? $request->tp_script_1 : '';
         $data['tp_script_2'] = $request->tp_script_2 ? $request->tp_script_2 : '';
         $data['tp_script_3'] = $request->tp_script_3 ? $request->tp_script_3 : '';
@@ -238,6 +239,7 @@ class TemplatePreviewController extends Controller
             return response()->json(['errors'=> $error->errors()->all()]);
         }
         $data = TemplatePreview::find($id);
+        $data->tp_script = $request->tp_script ? $request->tp_script : '';
         $data->tp_script_1 = $request->tp_script_1 ? $request->tp_script_1 : '';
         $data->tp_script_2 = $request->tp_script_2 ? $request->tp_script_2 : '';
         $data->tp_script_3 = $request->tp_script_3 ? $request->tp_script_3 : '';

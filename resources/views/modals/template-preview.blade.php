@@ -94,6 +94,10 @@
                         </div>
 
                         <div class="row">
+                            <div class="form-group col-lg-12 ">
+                                <label for="name">SCRIPT </label>
+                                <textarea id="tp_script" name="tp_script" class="form-control" rows="6" ></textarea>
+                            </div>
                             <?php
                             for ($i = 1; $i<=8 ;$i++){
                             ?>

@@ -458,6 +458,7 @@
             $('#tp_id').val(data.id);
             $("#avatar").attr("src",'file-manager/TemplatePreview/logo/'+data.tp_logo);
             $('#tp_name').val(data.tp_name);
+            $('#tp_script').val(data.tp_script);
             $('#tp_script_1').val(data.tp_script_1);
             $('#tp_script_2').val(data.tp_script_2);
             $('#tp_script_3').val(data.tp_script_3);
