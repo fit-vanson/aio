@@ -56,7 +56,8 @@ class DataProfileController extends Controller
             $data_arr[] = array(
                 "id " => $record->id ,
                 "data_name" => $record->data_name,
-                "data_file" => $record->data_file,
+
+                "data_file" =>  "<a href='/file-manager/dataFile/".$record->data_file."' target='_blank'>$record->data_file</a>",
                 "data_note" => $record->data_note,
                 "action"=> $btn,
             );
