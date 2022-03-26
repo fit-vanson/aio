@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\CategoryTemplate;
+use App\Models\tbl_font;
 use App\Models\TemplatePreview;
 use App\Models\TemplateTextPr;
 use FFMpeg\Filters\Frame\FrameFilters;
@@ -162,21 +163,23 @@ class BuildPreviewController extends Controller
                     }elseif ($tempScript[1] == 'overlay'){
                         [$tp1 ,$tp2 ]= explode('/',$tempScript[0]);
                         if($request->template123 == 'template_custom' ){
+                            $fileFont = tbl_font::find($request->font_name);
+                            $fileFontSmall = tbl_font::find($request->font_name_small);
                             $uploadClientName = $request->text_to[$i-1];
                             $uploadClientName1 = $request->text_nho[$i-1];
-                            $size = 120;
-                            $size1 = 80;
+                            $size = $request->font_size;
+                            $size1 = $request->font_size_small;
                             Image::make($outData.$tp1)->insert($outData.$tp2, 'top-left', $width,$height)
-                            ->text($uploadClientName, 540,120, function($font) use($request, $size){
-                                $font->file(public_path('fonts/AkayaTelivigala-Regular.ttf'));
+                            ->text($uploadClientName, 540,120, function($font) use($fileFont, $request, $size){
+                                $font->file(public_path("data/fonts/$fileFont->file"));
                                 $font->size($size);
                                 $font->color($request->colorpicker);
                                 $font->align('center');
                                 $font->valign('middle');
-                            })->text($uploadClientName1, 540,250, function($font) use($request, $size1){
-                                    $font->file(public_path('fonts/Oswald-VariableFont_wght.ttf'));
+                            })->text($uploadClientName1, 540,250, function($font) use($fileFontSmall, $request, $size1){
+                                    $font->file(public_path("data/fonts/$fileFontSmall->file"));
                                     $font->size($size1);
-                                    $font->color($request->colorpicker);
+                                    $font->color($request->colorpicker_small);
                                     $font->align('center');
                                     $font->valign('middle');
                             })

@@ -25,11 +25,7 @@
                             <select class="form-control select2" id="template_frame_preview" name="template_frame_preview">
                             </select>
                         </div>
-                        <div class="form-group col-lg-3 " >
-                            <label for="name"> Color</label>
-                            <div class="form-check" id="color_frame"></div>
-                            <input type="color" id="colorpicker" name="colorpicker">
-                        </div>
+
                         <div class="form-group col-lg-3">
                             <p for="name"> Preview</p>
                             <img id="preview_frame" class="thumbnail" width="200px">
@@ -48,6 +44,10 @@
                     </div>
 
                     <div class="row template_availavble" >
+                        <div class="form-group col-lg-12 " >
+                            <label for="name"> Color</label>
+                            <div class="form-check" id="color_frame"></div>
+                        </div>
                         <div class="form-group col-lg-3">
                             <label for="name">Category Text</label>
                             <select class="form-control select2" id="category_template_text" name="category_template_text" required>
@@ -76,11 +76,58 @@
                     </div>
 
                     <div class="row template_custom">
-                        <div class="form-group col-lg-12">
-                            <label for="name">Font Chữ</label>
-                            <input id="font1" name="font_name" type="text" />
+{{--                        <div class="form-group row col-lg-6">--}}
+                            <div class="col-lg-3">
+                                <label for="name">Font Chữ to</label>
+                                <select class="form-control select2" id="font_name" name="font_name" required>
+                                    <option value="">--Vui lòng chọn--</option>
+                                    @if(isset($fonts))
+                                        @foreach($fonts as $item)
+                                            <option value="{{$item->id}}" style=" font-family: '{{$item->name}}';font-weight: 400;">{{$item->name}}</option>
+                                        @endforeach
+                                    @endif
+                                </select>
+                            </div>
+                            <div class="col-lg-2">
+                                <label for="name">Size</label>
+                                <select class="form-control select2" id="font_size" name="font_size" required>
+                                    <option value="">--Vui lòng chọn--</option>
+                                    @for( $i = 80; $i <= 120; $i++)
+                                        <option value="{{$i}}">{{$i}}</option>
+                                    @endfor
+                                </select>
+                            </div>
+                            <div class="col-lg-1 " >
+                                <label for="name"> Color</label><br>
+                                <input type="color" id="colorpicker" name="colorpicker">
+                            </div>
 
-                        </div>
+                            <div class=" col-lg-3">
+                                <label for="name">Font Chữ nhỏ</label>
+                                <select class="form-control select2" id="font_name" name="font_name_small" required>
+                                    @if(isset($fonts))
+                                        @foreach($fonts as $item)
+                                            <option value="{{$item->id}}" style=" font-family: '{{$item->name}}';font-weight: 400;">{{$item->name}}</option>
+                                        @endforeach
+                                    @endif
+                                </select>
+                            </div>
+                            <div class="form-group col-lg-2">
+                                <label for="name">Size</label>
+                                <select class="form-control select2" id="font_size_small" name="font_size_small" required>
+
+                                    @for( $i = 80; $i <= 120; $i++)
+                                        <option value="{{$i}}">{{$i}}</option>
+                                    @endfor
+                                </select>
+                            </div>
+                            <div class="form-group col-lg-1" >
+                                <label for="name"> Color</label><br>
+                                <input type="color" id="colorpicker" name="colorpicker_small">
+                            </div>
+{{--                        </div>--}}
+
+
                         <?php
                         for ($i= 1 ; $i<=6; $i++)
                         {

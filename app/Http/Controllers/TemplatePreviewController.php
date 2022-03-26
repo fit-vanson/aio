@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\CategoryTemplate;
 use App\Models\CategoryTemplateFrame;
 use App\Models\DataProfile;
+use App\Models\tbl_font;
 use App\Models\Template;
 use App\Models\TemplatePreview;
 use Illuminate\Http\Request;
@@ -17,13 +18,30 @@ use ZipArchive;
 class TemplatePreviewController extends Controller
 {
     public function index(){
+//        $fonts = scandir('data/fonts');
+//        array_shift($fonts);
+//        array_shift($fonts);
+//        $dataArr = array();
+//        foreach ($fonts as $font){
+//            [$name, $ex ] = explode('.',$font);
+//            $dataArr[] = array(
+//                'name' => $name,
+//                'file' => $font
+//            );
+//        }
+//        tbl_font::insert($dataArr);
+//
+//        dd($dataArr);
+
+        $fonts = tbl_font::all();
         $categoyTemplateFrame =  CategoryTemplateFrame::latest('id')->get();
         $categoyTemplateText =  CategoryTemplate::latest('id')->where('category_template_parent',0)->get();
         $dataFiles =  DataProfile::latest('id')->get();
         return view('template-preview.index',compact([
             'categoyTemplateFrame',
             'categoyTemplateText',
-            'dataFiles'
+            'dataFiles',
+            'fonts'
         ]));
     }
 

@@ -105,6 +105,7 @@
         });
 
         $('#createNewDataProfile').click(function () {
+
             $("#data_file").attr("required", "true");
             $('#saveBtn').val("create-data-profile");
             $('#dataProfileForm').trigger("reset");

@@ -16,10 +16,6 @@
 
 <link href="plugins/select2/css/select2.min.css" rel="stylesheet" type="text/css" />
 
-<link rel="stylesheet" href="data/fonts/jquery.fontselect.css"/>
-
-
-
 
 
 @endsection
@@ -94,8 +90,7 @@
 <script src="plugins/select2/js/select2.min.js"></script>
 
 
-<script src="data/fonts/jquery.slim.min.js"></script>
-<script src="data/fonts/jquery.fontselect.js"></script>
+
 <script type="text/javascript">
 
 
@@ -235,9 +230,7 @@
         $('.template_availavble').show();
         //
         $('.template_custom').hide();
-        $('#colorpicker').hide();
         $('.template_custom :input').removeClass("disabled").prop("disabled", true);
-        $('#colorpicker :input').removeClass("disabled").prop("disabled", true);
 
         $('.data_custom').hide();
         $('.data_custom :input').removeClass("disabled").prop("disabled", true);
@@ -247,6 +240,10 @@
         $("#template_frame_preview").select2({});
         $("#template_text_preview").select2({});
 
+
+
+        $("#font_size").select2({});
+        $("#font_size_small").select2({});
         $("#category_child_template_text").select2({});
         $('#saveBtn').val("create-preview");
         $('#buildpreviewForm').trigger("reset");
@@ -260,24 +257,18 @@
     $('input[type=radio][name=template123]').change(function() {
         if (this.value == 'template_availavble') {
             $('.template_availavble').show();
-            $('#color_frame').show();
             $('.template_custom').hide();
-            $('#colorpicker').hide();
             $('.template_custom :input').removeClass("disabled").prop("disabled", true);
-            $('#colorpicker :input').removeClass("disabled").prop("disabled", true);
             $('.template_availavble :input').removeClass("disabled").prop("disabled", false);
-            $('#color_frame :input').removeClass("disabled").prop("disabled", false);
+
 
         }
         else if (this.value == 'template_custom') {
             $('.template_custom').show();
-            $('#colorpicker').show();
             $('.template_availavble').hide();
-            $('#color_frame').hide();
             $('.template_availavble :input').removeClass("disabled").prop("disabled", true);
-            $('#color_frame :input').removeClass("disabled").prop("disabled", true);
             $('.template_custom :input').removeClass("disabled").prop("disabled", false);
-            $('#colorpicker :input').removeClass("disabled").prop("disabled", false);
+
 
         }
     });
@@ -459,21 +450,11 @@
 
     });
 
-
-
-
-
 </script>
-<script>
-    $(function(){
-        $('#font1').fontselect();
-    });
-</script>
-
 <script>
     function editTemplatePreview(id) {
         $.get('{{asset('template-preview/edit')}}/'+id,function (data) {
-            console.log(data)
+
             $('#tp_id').val(data.id);
             $("#avatar").attr("src",'file-manager/TemplatePreview/logo/'+data.tp_logo);
             $('#tp_name').val(data.tp_name);
