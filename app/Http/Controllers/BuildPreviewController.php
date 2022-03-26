@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\CategoryTemplate;
+use App\Models\DataProfile;
 use App\Models\tbl_font;
 use App\Models\TemplatePreview;
 use App\Models\TemplateTextPr;
@@ -139,7 +140,8 @@ class BuildPreviewController extends Controller
             $this->extract_file($request->file_data,$outData);
         }
         if ($request->data123 == 'data_availavble'){
-            $srcData = public_path('file-manager/TemplatePreview/data/'.$frame->tp_data);
+            $dataFile = DataProfile::find($frame->tp_data);
+            $srcData = public_path('file-manager/dataFile/'.$dataFile->data_file);
             $this->extract_file($srcData, $outData);
         }
         $srcDataPr = public_path('file-manager/TemplatePreview/'.$frame->tp_sc);
