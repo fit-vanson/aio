@@ -172,13 +172,13 @@ class BuildPreviewController extends Controller
                             $size = $request->font_size;
                             $size1 = $request->font_size_small;
                             Image::make($outData.$tp1)->insert($outData.$tp2, 'top-left', $width,$height)
-                            ->text($uploadClientName, 540,120, function($font) use($fileFont, $request, $size){
+                            ->text($uploadClientName, 540,150, function($font) use($fileFont, $request, $size){
                                 $font->file(public_path("data/fonts/$fileFont->file"));
                                 $font->size($size);
                                 $font->color($request->colorpicker);
                                 $font->align('center');
                                 $font->valign('middle');
-                            })->text($uploadClientName1, 540,250, function($font) use($fileFontSmall, $request, $size1){
+                            })->text($uploadClientName1, 540,$size+150, function($font) use($fileFontSmall, $request, $size1){
                                     $font->file(public_path("data/fonts/$fileFontSmall->file"));
                                     $font->size($size1);
                                     $font->color($request->colorpicker_small);

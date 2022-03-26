@@ -80,7 +80,6 @@
                             <div class="col-lg-3">
                                 <label for="name">Font Chữ to</label>
                                 <select class="form-control select2" id="font_name" name="font_name" required>
-                                    <option value="">--Vui lòng chọn--</option>
                                     @if(isset($fonts))
                                         @foreach($fonts as $item)
                                             <option value="{{$item->id}}" style=" font-family: '{{$item->name}}';font-weight: 400;">{{$item->name}}</option>
@@ -91,7 +90,6 @@
                             <div class="col-lg-2">
                                 <label for="name">Size</label>
                                 <select class="form-control select2" id="font_size" name="font_size" required>
-                                    <option value="">--Vui lòng chọn--</option>
                                     @for( $i = 80; $i <= 120; $i++)
                                         <option value="{{$i}}">{{$i}}</option>
                                     @endfor
