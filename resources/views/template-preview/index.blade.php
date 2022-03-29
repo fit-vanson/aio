@@ -220,6 +220,8 @@
         });
     });
     $('#build_preview').click(function () {
+        $('#template_frame').val('');
+
         $("#category_template_frame").val('');
         $("#category_template_text").val('');
         $("#template_frame_preview").val('');
@@ -228,9 +230,15 @@
         $("#preview_out").attr('src','');
 
         $('.template_availavble').show();
-        //
+
+        $('.buildPreviewTemplateFrame').show();
+        $('.buildPreviewTemplateFrame :input').removeClass("disabled").prop("disabled", false);
+
         $('.template_custom').hide();
         $('.template_custom :input').removeClass("disabled").prop("disabled", true);
+
+        $('.template_availavble').show();
+        $('.template_availavble :input').removeClass("disabled").prop("disabled", false);
 
         $('.data_custom').hide();
         $('.data_custom :input').removeClass("disabled").prop("disabled", true);
@@ -239,8 +247,6 @@
         $("#category_template_text").select2({});
         $("#template_frame_preview").select2({});
         $("#template_text_preview").select2({});
-
-
 
         $("#font_size").select2({});
         $("#font_size_small").select2({});
@@ -318,7 +324,6 @@
             url:'{{asset('category_template_frame/get-temp-preview')}}/'+id,
             // data:id,
         }).done(function(res){
-            console.log(res)
             if(res.frame.tp_blue){
                 html += '<div class="col-lg-2"><input class="form-check-input" type="radio" name="color_text" id="tp_blue" value="Blue" required> '+
                     '<label class="form-check-label" for="tp_blue"  >Blue</label></div>'
@@ -350,7 +355,7 @@
                 html += '';
             }
             html += "</div>"
-            console.log(html)
+
 
             $('#color_frame').html(html)
 
@@ -508,6 +513,70 @@
             $('#modelHeading').html("Edit");
             $('#saveBtn').val("edit-template-preview");
             $('#template_previewModel').modal('show');
+            $('.modal').on('hidden.bs.modal', function (e) {
+                $('body').addClass('modal-open');
+            });
+        })
+    }
+
+    function buildTemplatePreview(id) {
+        $.get('{{asset('template-preview/edit')}}/'+id,function (data) {
+            var html = '<div class="row">';
+            $('.buildPreviewTemplateFrame').hide();
+            $('.buildPreviewTemplateFrame :input').removeClass("disabled").prop("disabled", true);
+            $('.template_custom').hide();
+            $('.template_custom :input').removeClass("disabled").prop("disabled", true);
+
+            $('.data_custom').hide();
+            $('.data_custom :input').removeClass("disabled").prop("disabled", true);
+
+            $('.template_availavble').show();
+            $('.template_availavble :input').removeClass("disabled").prop("disabled", false);
+
+
+            if(data.tp_blue){
+                html += '<div class="col-lg-2"><input class="form-check-input" type="radio" name="color_text" id="tp_blue" value="Blue" required> '+
+                    '<label class="form-check-label" for="tp_blue"  >Blue</label></div>'
+            }else {
+                html += '';
+            }
+            if(data.tp_black){
+                html += '<div class="col-lg-2"><input class="form-check-input" type="radio" name="color_text" id="tp_black" value="Black" required> '+
+                    '<label class="form-check-label" for="tp_black">Black</label></div>'
+            }else {
+                html += '';
+            }
+            if(data.tp_while){
+                html += '<div class="col-lg-2"><input class="form-check-input" type="radio" name="color_text" id="tp_while" value="While" required> '+
+                    '<label class="form-check-label" for="tp_while">While</label></div>'
+            }else {
+                html += '';
+            }
+            if(data.tp_yellow){
+                html += '<div class="col-lg-2"><input class="form-check-input" type="radio" name="color_text" id="tp_yellow" value="Yellow" required >'+
+                    '<label class="form-check-label" for="tp_yellow">Yellow</label></div>'
+            }else {
+                html += '';
+            }
+            if(data.tp_pink){
+                html += '<div class="col-lg-2"><input class="form-check-input" type="radio" name="color_text" id="tp_pink" value="Pink" required>'+
+                    '<label class="form-check-label" for="tp_pink">Pink</label></div>'
+            }else {
+                html += '';
+            }
+            html += "</div>"
+            $('#color_frame').html(html)
+            console.log(data)
+
+            $('#template_frame').val(data.id);
+
+            $("#category_template_text").select2({});
+            $("#category_child_template_text").select2({});
+            $("#template_text_preview").select2({});
+
+            $('#modelHeading').html("Edit");
+            $('#saveBtn').val("edit-template-preview");
+            $('#buildpreviewModal').modal('show');
             $('.modal').on('hidden.bs.modal', function (e) {
                 $('body').addClass('modal-open');
             });

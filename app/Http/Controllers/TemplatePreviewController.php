@@ -90,6 +90,8 @@ class TemplatePreviewController extends Controller
         foreach ($records as $record) {
             $btn = ' <a href="javascript:void(0)" onclick="editTemplatePreview('.$record->id.')" class="btn btn-warning"><i class="ti-pencil-alt"></i></a>';
             $btn = $btn.' <a href="javascript:void(0)" data-toggle="tooltip"  data-id="'.$record->id.'" data-original-title="Delete" class="btn btn-danger deleteTemplatePreview"><i class="ti-trash"></i></a>';
+            $btn = $btn.' <a href="javascript:void(0)" onclick="buildTemplatePreview('.$record->id.')" class="btn btn-secondary"><i class="ti-settings"></i></a>';
+//            $btn = $btn.' <a href="javascript:void(0)" data-toggle="tooltip"  data-id="'.$record->id.'" data-original-title="Delete" class="btn btn-secondary buildTemplatePreview"><i class="ti-settings"></i></a>';
             $logo = "<img class='rounded mx-auto d-block'  height='150px' src='/file-manager/TemplatePreview/logo/$record->tp_logo'>";
             $data_arr[] = array(
                 "tp_logo" => $logo,

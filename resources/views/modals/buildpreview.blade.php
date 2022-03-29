@@ -8,7 +8,8 @@
             <div class="modal-body">
 
                 <form id="buildpreviewForm" name="buildpreviewForm" class="form-horizontal">
-                    <div class="row">
+                    <input type="hidden" name="template_frame" id="template_frame">
+                    <div class="row buildPreviewTemplateFrame">
                         <div class="form-group col-lg-3">
                             <label for="name">Category Frame</label>
                             <select class="form-control select2" id="category_template_frame" name="category_template_frame" required>

@@ -105,7 +105,7 @@ class BuildPreviewController extends Controller
 
     public function create(Request  $request)
     {
-//        dd($request->all());
+//dd($request->all());
         $rules = [
             'file_data' => 'mimes:zip',
         ];
@@ -120,10 +120,14 @@ class BuildPreviewController extends Controller
         $outData = public_path('file-manager/BuildTemplate/'.$folder.'/');
         $color_text = $request->color_text ? $request->color_text : 'Blue';
 
-        if($request->template_frame_preview != 0){
-            $frame = TemplatePreview::find($request->template_frame_preview);
+        if($request->template_frame){
+            $frame = TemplatePreview::find($request->template_frame);
         }else{
-            $frame = TemplatePreview::where('tp_category',$request->category_template_frame)->inRandomOrder()->first();
+            if($request->template_frame_preview != 0){
+                $frame = TemplatePreview::find($request->template_frame_preview);
+            }else{
+                $frame = TemplatePreview::where('tp_category',$request->category_template_frame)->inRandomOrder()->first();
+            }
         }
 
         if ($request->template123 == 'template_availavble'){
