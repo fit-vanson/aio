@@ -124,6 +124,10 @@ class BuildPreviewController extends Controller
         $outData = public_path('file-manager/BuildTemplate/'.$folder.'/');
         $color_text = $request->color_text ? $request->color_text : 'Blue';
 
+
+        $job =  (new  DeleteFileBuild($outData))->delay(Carbon::now()->addHours(2));
+        dispatch($job);
+
         if($request->template_frame){
             $frame = TemplatePreview::find($request->template_frame);
         }else{
@@ -206,8 +210,6 @@ class BuildPreviewController extends Controller
                 ->save($outData.'/output.png');
         }
 
-        $job =  (new  DeleteFileBuild($outData))->delay(Carbon::now()->addHours(2));
-        dispatch($job);
 
         return response()->json([
             'success'=>'Thêm mới thành công',
