@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Jobs\DeleteFileBuild;
 use App\Models\CategoryTemplate;
 use App\Models\DataProfile;
 use App\Models\tbl_font;
@@ -9,8 +10,11 @@ use App\Models\TemplatePreview;
 use App\Models\TemplateTextPr;
 use FFMpeg\Filters\Frame\FrameFilters;
 use Illuminate\Http\Request;
+
+use Carbon\Carbon;
 use Illuminate\Support\Facades\File;
 use Illuminate\Support\Facades\Validator;
+use Illuminate\Support\Str;
 use Intervention\Image\Facades\Image;
 use ProtoneMedia\LaravelFFMpeg\Support\FFMpeg;
 use ZipArchive;
@@ -116,7 +120,7 @@ class BuildPreviewController extends Controller
         if($error->fails()){
             return response()->json(['errors'=> $error->errors()->all()]);
         }
-        $folder = time();
+        $folder = Str::orderedUuid();
         $outData = public_path('file-manager/BuildTemplate/'.$folder.'/');
         $color_text = $request->color_text ? $request->color_text : 'Blue';
 
@@ -202,9 +206,8 @@ class BuildPreviewController extends Controller
                 ->save($outData.'/output.png');
         }
 
-//        File::deleteDirectory($outData);
-
-
+        $job =  (new  DeleteFileBuild($outData))->delay(Carbon::now()->addHours(2));
+        dispatch($job);
 
         return response()->json([
             'success'=>'Thêm mới thành công',
