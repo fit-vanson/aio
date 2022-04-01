@@ -146,6 +146,7 @@ Route::group(['prefix'=>'project','middleware'=>['CheckLogout','2fa']], function
     Route::get('/show/{id}',[ProjectController::class,'show'])->name('project.show')->middleware('can:project-show');
     Route::post('/update',[ProjectController::class,'update'])->name('project.update')->middleware('can:project-update');
     Route::post('/updateQuick',[ProjectController::class,'updateQuick'])->name('project.updateQuick')->middleware('can:project-update');
+    Route::post('/updatePart',[ProjectController::class,'updatePart'])->name('project.updatePart')->middleware('can:project-update');
     Route::post('/updateDesEN',[ProjectController::class,'updateDesEN'])->name('project.updateDesEN')->middleware('can:project-update');
     Route::post('/updateDesVN',[ProjectController::class,'updateDesVN'])->name('project.updateDesVN')->middleware('can:project-update');
 

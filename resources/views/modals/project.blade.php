@@ -1414,6 +1414,140 @@
 </div>
 
 
+
+<div class="modal fade bd-example-modal-xl" id="ajaxPartTimeModel" aria-hidden="true">
+    <div class="modal-dialog modal-xl">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title" id="modelPartTimeHeading"></h4>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+            </div>
+            <div class="modal-body">
+                <form id="parttimeprojectForm" name="parttimeprojectForm" class="form-horizontal">
+                    <input type="hidden" name="project_id" id="part_time_project_id">
+
+{{--                    <div class="row">--}}
+{{--                        <div class="form-group col-lg-6">--}}
+{{--                            <label for="name">Mã Project <span style="color: red">*</span></label>--}}
+{{--                            <input type="text" id="projectname1" name="projectname" class="form-control" required>--}}
+{{--                        </div>--}}
+{{--                        <div class="form-group col-lg-6">--}}
+{{--                            <label for="name">Tiêu đề ứng dụng  <span style="color: red">*</span></label>--}}
+{{--                            <input type="text" id="title_app1" name="title_app" class="form-control" required >--}}
+{{--                        </div>--}}
+{{--                    </div>--}}
+
+                    <div class="row">
+                        <div class="form-group col-lg-6 Chplay_status">
+                            <label for="name">Trạng thái Ứng dụng (CHPlay)</label>
+                            <div>
+                                <select class="form-control" id="Chplay_status1" name="Chplay_status">
+                                    <option value="0">Mặc định</option>
+                                    <option value="1">Publish</option>
+{{--                                    <option value="2">Suppend</option>--}}
+{{--                                    <option value="3">UnPublish</option>--}}
+{{--                                    <option value="4">Remove</option>--}}
+{{--                                    <option value="5">Reject</option>--}}
+                                    <option value="6">Check</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="form-group col-lg-6 Amazon_status">
+                            <label for="name">Trạng thái Ứng dụng (Amazon) </label>
+                            <div>
+                                <select class="form-control" id="Amazon_status1" name="Amazon_status">
+                                    <option value="0">Mặc định</option>
+                                    <option value="1">Publish</option>
+{{--                                    <option value="2">Suppend</option>--}}
+{{--                                    <option value="3">UnPublish</option>--}}
+{{--                                    <option value="4">Remove</option>--}}
+{{--                                    <option value="5">Reject</option>--}}
+                                    <option value="6">Check</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="form-group col-lg-6 Samsung_status">
+                            <label for="name">Trạng thái Ứng dụng (Samsung)</label>
+                            <div>
+                                <select class="form-control" id="Samsung_status1" name="Samsung_status">
+                                    <option value="0">Mặc định</option>
+                                    <option value="1">Publish</option>
+{{--                                    <option value="2">Suppend</option>--}}
+{{--                                    <option value="3">UnPublish</option>--}}
+{{--                                    <option value="4">Remove</option>--}}
+{{--                                    <option value="5">Reject</option>--}}
+                                    <option value="6">Check</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="form-group col-lg-6 Xiaomi_status">
+                            <label for="name">Trạng thái Ứng dụng (Xiaomi)</label>
+                            <div>
+                                <select class="form-control" id="Xiaomi_status1" name="Xiaomi_status">
+                                    <option value="0">Mặc định</option>
+                                    <option value="1">Publish</option>
+{{--                                    <option value="2">Suppend</option>--}}
+{{--                                    <option value="3">UnPublish</option>--}}
+{{--                                    <option value="4">Remove</option>--}}
+{{--                                    <option value="5">Reject</option>--}}
+                                    <option value="6">Check</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="form-group col-lg-6 Oppo_status">
+                            <label for="name">Trạng thái Ứng dụng (Oppo)</label>
+                            <div>
+                                <select class="form-control" id="Oppo_status1" name="Oppo_status">
+                                    <option value="0">Mặc định</option>
+                                    <option value="1">Publish</option>
+{{--                                    <option value="2">Suppend</option>--}}
+{{--                                    <option value="3">UnPublish</option>--}}
+{{--                                    <option value="4">Remove</option>--}}
+{{--                                    <option value="5">Reject</option>--}}
+                                    <option value="6">Check</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="form-group col-lg-6 Vivo_status">
+                            <label for="name">Trạng thái Ứng dụng (Vivo)</label>
+                            <div>
+                                <select class="form-control" id="Vivo_status1" name="Vivo_status">
+                                    <option value="0">Mặc định</option>
+                                    <option value="1">Publish</option>
+{{--                                    <option value="2">Suppend</option>--}}
+{{--                                    <option value="3">UnPublish</option>--}}
+{{--                                    <option value="4">Remove</option>--}}
+{{--                                    <option value="5">Reject</option>--}}
+                                    <option value="6">Check</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="form-group col-lg-6 Huawei_status ">
+                            <label for="name">Trạng thái Ứng dụng (Huawei)</label>
+                            <div>
+                                <select class="form-control" id="Huawei_status1" name="Huawei_status">
+                                    <option value="0">Mặc định</option>
+                                    <option value="1">Publish</option>
+{{--                                    <option value="2">Suppend</option>--}}
+{{--                                    <option value="3">UnPublish</option>--}}
+{{--                                    <option value="4">Remove</option>--}}
+{{--                                    <option value="5">Reject</option>--}}
+                                    <option value="6">Check</option>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-sm-offset-2 col-sm-10">
+                        <button type="submit" class="btn btn-primary">Save changes</button>
+                        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+
 <div class="modal fade bd-example-modal-xl" id="ajaxQuickModel" aria-hidden="true">
     <div class="modal-dialog">
         <div class="modal-content">

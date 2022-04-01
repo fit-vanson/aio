@@ -171,39 +171,38 @@ class BuildPreviewController extends Controller
             foreach(preg_split("/((\r?\n)|(\r\n?))/", $tempFrame['tp_script_'.$i]) as $line){
                 $tempScript= explode('|',$line);
 
-                    [$width ,$height ]= explode(':',$tempScript[2]);
-                    if($tempScript[1] == 'resize'){
-                        Image::make($outData.$tempScript[0])->resize($width,$height)->save($outData.'/'.$tempScript[3]);
-                    }elseif ($tempScript[1] == 'overlay'){
-                        [$tp1 ,$tp2 ]= explode('/',$tempScript[0]);
-                        if($request->template123 == 'template_custom' ){
-                            $fileFont = tbl_font::find($request->font_name);
-                            $fileFontSmall = tbl_font::find($request->font_name_small);
-                            $uploadClientName = $request->text_to[$i-1];
-                            $uploadClientName1 = $request->text_nho[$i-1];
-                            $size = $request->font_size;
-                            $size1 = $request->font_size_small;
-                            Image::make($outData.$tp1)->insert($outData.$tp2, 'top-left', $width,$height)
-                            ->text($uploadClientName, 540,150, function($font) use($fileFont, $request, $size){
-                                $font->file(public_path("data/fonts/$fileFont->file"));
-                                $font->size($size);
-                                $font->color($request->colorpicker);
+                [$width ,$height ]= explode(':',$tempScript[2]);
+                if($tempScript[1] == 'resize'){
+                    Image::make($outData.$tempScript[0])->resize($width,$height)->save($outData.'/'.$tempScript[3]);
+                }elseif ($tempScript[1] == 'overlay'){
+                    [$tp1 ,$tp2 ]= explode('/',$tempScript[0]);
+                    if($request->template123 == 'template_custom' ){
+                        $fileFont = tbl_font::find($request->font_name);
+                        $fileFontSmall = tbl_font::find($request->font_name_small);
+                        $uploadClientName = $request->text_to[$i-1];
+                        $uploadClientName1 = $request->text_nho[$i-1];
+                        $size = $request->font_size;
+                        $size1 = $request->font_size_small;
+                        Image::make($outData.$tp1)->insert($outData.$tp2, 'top-left', $width,$height)
+                        ->text($uploadClientName, 540,150, function($font) use($fileFont, $request, $size){
+                            $font->file(public_path("data/fonts/$fileFont->file"));
+                            $font->size($size);
+                            $font->color($request->colorpicker);
+                            $font->align('center');
+                            $font->valign('middle');
+                        })->text($uploadClientName1, 540,$size+150, function($font) use($fileFontSmall, $request, $size1){
+                                $font->file(public_path("data/fonts/$fileFontSmall->file"));
+                                $font->size($size1);
+                                $font->color($request->colorpicker_small);
                                 $font->align('center');
                                 $font->valign('middle');
-                            })->text($uploadClientName1, 540,$size+150, function($font) use($fileFontSmall, $request, $size1){
-                                    $font->file(public_path("data/fonts/$fileFontSmall->file"));
-                                    $font->size($size1);
-                                    $font->color($request->colorpicker_small);
-                                    $font->align('center');
-                                    $font->valign('middle');
-                            })
-                                ->save($outData.'/'.$tempScript[3]);
-                        }elseif ($request->template123 == 'template_availavble'){
-                            Image::make($outData.$tp1)->insert($outData.$tp2, 'top-left', $width,$height)
-                                ->save($outData.'/'.$tempScript[3]);
-                        }
+                        })
+                            ->save($outData.'/'.$tempScript[3]);
+                    }elseif ($request->template123 == 'template_availavble'){
+                        Image::make($outData.$tp1)->insert($outData.$tp2, 'top-left', $width,$height)
+                            ->save($outData.'/'.$tempScript[3]);
                     }
-
+                }
             }
             Image::make($outData.'/output.png')
                 ->insert($outData.'/pr_'.$i.'.jpg', 'top-left', 1080*($i-1), 0)

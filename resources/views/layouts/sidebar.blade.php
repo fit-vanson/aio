@@ -5,6 +5,7 @@
                     <!--- Sidemenu -->
                     <div id="sidebar-menu">
                         <!-- Left Menu Start -->
+                        @if(\Illuminate\Support\Facades\Auth::user()->part_time != 1)
                         <ul class="metismenu" id="side-menu">
                             <li class="menu-title">Main</li>
                             <li>
@@ -12,7 +13,6 @@
                                     <i class="ti-home"></i><span> Trang chủ </span>
                                 </a>
                             </li>
-
                             <li class="menu-title">VietMMO</li>
                             <li>
                                 <a href="javascript:void(0);" class="waves-effect"><i class="ti-package"></i> <span> App And Project <span class="float-right menu-arrow"><i class="mdi mdi-chevron-right"></i></span> </span> </a>
@@ -92,7 +92,6 @@
                                     @endcan
                                 </ul>
                             </li>
-
                             <li>
                                 <a href="javascript:void(0);" class="waves-effect"><i class="mdi mdi-sim"></i> <span> Quản lý Sim <span class="float-right menu-arrow"><i class="mdi mdi-chevron-right"></i></span> </span> </a>
                                 <ul class="submenu">
@@ -152,7 +151,6 @@
 
                                 </ul>
                             </li>
-
                             <li>
                                 <a href="javascript:void(0);" class="waves-effect"><i class="dripicons-browser-upload"></i> <span>File Manager<span class="float-right menu-arrow"><i class="mdi mdi-chevron-right"></i></span> </span> </a>
                                 <ul class="submenu">
@@ -162,10 +160,6 @@
 
                                 </ul>
                             </li>
-
-
-
-
                             <li>
                                 <a href="javascript:void(0);" class="waves-effect"><i class="ti-archive"></i> <span> Quản trị phân quyền <span class="float-right menu-arrow"><i class="mdi mdi-chevron-right"></i></span> </span> </a>
                                 <ul class="submenu">
@@ -181,6 +175,20 @@
                                 </ul>
                             </li>
                         </ul>
+                        @else
+                            <ul class="metismenu" id="side-menu">
+                                <li class="menu-title">VietMMO</li>
+                                <li>
+                                    <a href="javascript:void(0);" class="waves-effect"><i class="ti-package"></i> <span> App And Project <span class="float-right menu-arrow"><i class="mdi mdi-chevron-right"></i></span> </span> </a>
+                                    <ul class="submenu">
+                                        @can('project-index')
+                                            <li><a href="{{route('project.index')}}">Quản lý Project</a></li>
+                                        @endcan
+                                    </ul>
+                                </li>
+                            </ul>
+                        @endif
+
                     </div>
                     <!-- Sidebar -->
                     <div class="clearfix"></div>

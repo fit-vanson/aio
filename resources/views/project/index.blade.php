@@ -23,11 +23,13 @@
 <div class="col-sm-6">
     <h4 class="page-title">Quản lý Project</h4>
 </div>
+@can('project-add')
 <div class="col-sm-6">
     <div class="float-right">
         <a class="btn btn-success" href="javascript:void(0)" id="createNewProject"> Create New Project</a>
     </div>
 </div>
+@endcan
 <div class="modal fade bd-example-modal-xl" id="showMess" aria-hidden="true">
     <div class="modal-dialog modal-xl modal-dialog-scrollable">
         <div class="modal-content">
@@ -53,11 +55,13 @@
     <div class="row">
         <div class="col-12">
             <div class="card">
+                @can('project-add')
                 <div class="card-body">
                     <div class="button-items console_status_button">
                         <button type="button" class="btn btn-primary waves-effect waves-light" id="buildandcheck">Build and Check</button>
                     </div>
                 </div>
+                @endcan
                 <div class="card-body">
                     <table class="table table-bordered dt-responsive nowrap data-table" style="border-collapse: collapse; border-spacing: 0; width: 100%;">
                         <thead>
@@ -261,6 +265,7 @@
             $('.a_vivo').hide();
             $('.a_huawei').hide();
         });
+
         $('#projectForm2').on('submit',function (event){
             event.preventDefault();
             var formData = new FormData($("#projectForm2")[0]);
@@ -319,6 +324,36 @@
                 });
             }
         });
+
+        $('#parttimeprojectForm').on('submit',function (event){
+            event.preventDefault();
+            var formData = new FormData($("#parttimeprojectForm")[0]);
+            $.ajax({
+                data: formData,
+                url: "{{ route('project.updatePart') }}",
+                type: "POST",
+                dataType: 'json',
+                processData: false,
+                contentType: false,
+                success: function (data) {
+                    if(data.errors){
+                        for( var count=0 ; count <data.errors.length; count++){
+                            $("#parttimeprojectForm").notify(
+                                data.errors[count],"error",
+                                { position:"right" }
+                            );
+                        }
+                    }
+                    if(data.success){
+                        $.notify(data.success, "success");
+                        $('#parttimeprojectForm').trigger("reset");
+                        $('#ajaxPartTimeModel').modal('hide');
+                        table.draw();
+                    }
+                },
+            });
+        });
+
         $('#projectQuickForm').on('submit',function (event){
             event.preventDefault();
             if($('#saveQBtn').val() == 'quick-edit-project'){
@@ -1326,6 +1361,66 @@
             });
         })
     }
+
+    function editProject_partTime(id) {
+        $.get('{{asset('project/edit')}}/'+id,function (data) {
+            if(data[0].Chplay_package != null){
+                $('.Chplay_status').show();
+                $('#Chplay_status1').val(data[0].Chplay_status);
+
+            } else {
+                $('.Chplay_status').hide()
+            }
+            if(data[0].Amazon_package != null){
+                $('.Amazon_status').show();
+                $('#Amazon_status1').val(data[0].Amazon_status);
+            } else {
+                $('.Amazon_status').hide()
+            }
+            if(data[0].Samsung_package != null){
+                $('.Samsung_status').show();
+                $('#Samsung_status1').val(data[0].Samsung_status);
+            } else {
+                $('.Samsung_status').hide()
+            }
+            if(data[0].Xiaomi_package != null){
+                $('.Xiaomi_status').show();
+                $('#Xiaomi_status1').val(data[0].Xiaomi_status);
+            } else {
+                $('.Xiaomi_status').hide()
+            }
+            if(data[0].Oppo_package != null){
+                $('.Oppo_status').show();
+                $('#Oppo_status1').val(data[0].Oppo_status);
+            } else {
+                $('.Oppo_status').hide()
+            }
+            if(data[0].Vivo_package != null){
+                $('.Vivo_status').show();
+                $('#Vivo_status1').val(data[0].Vivo_status);
+            } else {
+                $('.Vivo_status').hide()
+            }
+            if(data[0].Huawei_package != null){
+                $('.Huawei_status').show();
+                $('#Huawei_status1').val(data[0].Huawei_status);
+            } else {
+                $('.Huawei_status').hide()
+            }
+
+            $('#part_time_project_id').val(data[0].projectid);
+            $('#projectname1').val(data[0].projectname);
+            $('#title_app1').val(data[0].title_app);
+
+            $('#modelPartTimeHeading').html("Edit Project");
+            $('#saveBtn').val("edit-project");
+            $('#ajaxPartTimeModel').modal('show');
+            $('.modal').on('hidden.bs.modal', function (e) {
+                $('body').addClass('modal-open');
+            });
+        })
+    }
+
     function editProject_Description_EN(id) {
         $.get('{{asset('project/editDes_EN')}}/'+id,function (data) {
             $('#project_id_edit_desEN').val(data.projectid);
