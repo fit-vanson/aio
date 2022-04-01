@@ -30,7 +30,6 @@
                                 <label for="">
                                     <input name="module_child[]" type="checkbox" checked="checked" value="{{$item}}"> {{$item}}
                                 </label>
-
                             </div>
                             @endforeach
 

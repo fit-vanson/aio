@@ -202,10 +202,16 @@
             $('.modal').on('hidden.bs.modal', function (e) {
                 $('body').addClass('modal-open');
             });
+            console.log(data)
 
             $('#user_id').val(data[0].id);
             $('#name').val(data[0].name);
             $('#email').val(data[0].email)
+            if(data[0].part_time == 1){
+                $("#part_time").prop('checked', true);
+            }else {
+                $("#part_time").prop('checked', false);
+            }
             var roles = data[1];
             var role = [];
             $.each(roles, function(idx2,val2) {

@@ -39,7 +39,13 @@
                                 @endforeach
                         </select>
                         </div>
-
+                    </div>
+                    <div class="form-group">
+                        <div class="custom-control custom-checkbox">
+                            <label class="col-sm-5 control-label">
+                                <input id="part_time" name="part_time" type="checkbox" checked="checked"> Part Time
+                            </label>
+                        </div>
                     </div>
                     <div class="col-sm-offset-2 col-sm-10">
                         <button type="submit" class="btn btn-primary" id="saveBtn" value="create">Save changes

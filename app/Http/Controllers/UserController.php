@@ -95,6 +95,7 @@ class UserController extends Controller
             $user = $this->user->create([
             'name' => $request->name,
             'email'=> $request->email,
+            'part_time'=> $request->part_time ? 1:0,
             'password' =>bcrypt($request->password),
 
         ]);
@@ -154,6 +155,7 @@ class UserController extends Controller
      */
     public function update(Request $request)
     {
+
         $id = $request->user_id;
         $rules = [
             'name' =>'unique:users,name,'.$id.',id',
@@ -174,12 +176,14 @@ class UserController extends Controller
                 $this->user->find($id)->update([
                     'name' => $request->name,
                     'email'=> $request->email,
+                    'part_time'=> $request->part_time ? 1:0,
                     'password' =>bcrypt($request->password),
                 ]);
             }
             $this->user->find($id)->update([
                 'name' => $request->name,
                 'email'=> $request->email,
+                'part_time'=> $request->part_time ? 1:0,
             ]);
             $roleIds = $request->role_id;
             $user = $this->user->find($id);
