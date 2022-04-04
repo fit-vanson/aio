@@ -160,6 +160,8 @@ class DevHuaweiController extends Controller
         $data['huawei_pass'] = $request->huawei_pass;
         $data['huawei_status'] = $request->huawei_status;
         $data['huawei_note'] = $request->huawei_note;
+        $data['huawei_dev_client_id'] = $request->huawei_dev_client_id;
+        $data['huawei_dev_client_secret'] = $request->huawei_dev_client_secret;
         $data->save();
         return response()->json([
             'success'=>'Thêm mới thành công',
@@ -172,7 +174,6 @@ class DevHuaweiController extends Controller
     }
     public function update(Request $request)
     {
-
         $id = $request->id;
         $rules = [
             'huawei_store_name' =>'unique:ngocphandang_dev_huawei,huawei_store_name,'.$id.',id',
@@ -201,6 +202,8 @@ class DevHuaweiController extends Controller
         $data->huawei_pass = $request->huawei_pass;
         $data->huawei_status = $request->huawei_status;
         $data->huawei_note = $request->huawei_note;
+        $data->huawei_dev_client_id = $request->huawei_dev_client_id;
+        $data->huawei_dev_client_secret = $request->huawei_dev_client_secret;
         $data->save();
         return response()->json(['success'=>'Cập nhật thành công']);
     }

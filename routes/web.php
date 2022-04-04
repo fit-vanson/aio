@@ -211,6 +211,7 @@ Route::group(['prefix'=>'project','middleware'=>['CheckLogout','2fa']], function
 Route::group(['prefix'=>'cronProject'], function (){
     Route::get('/',[CronProjectController::class,'index'])->name('cronProject.index');
     Route::get('/ch-play',[CronProjectController::class,'Chplay'])->name('cronProject.Chplay');
+    Route::get('/huawei',[CronProjectController::class,'Huawei'])->name('cronProject.Huawei');
 });
 Route::get('/package',[CronProjectController::class,'getPackage'])->name('cronProject.getPackage');
 

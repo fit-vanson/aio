@@ -53,6 +53,18 @@
                                 <input type="text" id="huawei_store_name" name="huawei_store_name" class="form-control" required>
                             </div>
                         </div>
+
+                        <div data-repeater-item="" class="row">
+                            <div class="form-group col-lg-6">
+                                <label for="name">Client ID </label>
+                                <input type="text" id="huawei_dev_client_id" name="huawei_dev_client_id" class="form-control">
+                            </div>
+                            <div class="form-group col-lg-6">
+                                <label for="name">Client Secret</label>
+                                <input type="text" id="huawei_dev_client_secret" name="huawei_dev_client_secret" class="form-control">
+                            </div>
+                        </div>
+
                         <div data-repeater-item="" class="row">
                             <div class="form-group col-lg-6">
                                 <label for="name">Số điện thoại </label>

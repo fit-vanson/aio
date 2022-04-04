@@ -195,8 +195,6 @@
 
         });
     </script>
-
-
     <script>
         function editDevhuawei(id) {
             $.get('{{asset('dev-huawei/edit')}}/'+id,function (data) {
@@ -215,6 +213,8 @@
                 $('#huawei_profile_info').select2();
                 $('#huawei_company').val(data.huawei_company);
                 $('#huawei_dev_name').val(data.huawei_dev_name);
+                $('#huawei_dev_client_secret').val(data.huawei_dev_client_secret);
+                $('#huawei_dev_client_id').val(data.huawei_dev_client_id);
                 $('#modelHeading').html("Edit");
                 $('#saveBtn').val("edit");
                 $('#ajaxModelDev').modal('show');

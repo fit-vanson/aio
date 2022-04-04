@@ -14,6 +14,9 @@ class Dev_Huawei extends Model
     public function ga(){
         return $this->belongsTo(Ga::class,'huawei_ga_name');
     }
+    public function project(){
+        return $this->hasMany(ProjectModel::class,'Huawei_buildinfo_store_name_x');
+    }
 
 }
 
