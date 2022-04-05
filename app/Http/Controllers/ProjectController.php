@@ -697,38 +697,41 @@ class ProjectController extends Controller
                 if ($record['Huawei_status']==100  ) {
                     $Huawei_status = '<span class="badge badge-secondary">Mặc định</span>';
                 }
+                elseif($record['Huawei_status']== 0){
+                    $Huawei_status = '<span class="badge badge-success">Released</span>';
+                }
                 elseif($record['Huawei_status']== 1){
-                    $Huawei_status = '<span class="badge badge-success">Publish</span>';
+                    $Huawei_status = '<span class="badge badge-danger">Release Rejected</span>';
                 }
                 elseif($record['Huawei_status']==2){
-                    $Huawei_status =  '<span class="badge badge-warning">Suppend</span>';
+                    $Huawei_status =  '<span class="badge badge-warning">Removed (including forcible removal)</span>';
                 }
                 elseif($record['Huawei_status']==3){
-                    $Huawei_status =  '<span class="badge badge-info">UnPublish</span>';
+                    $Huawei_status =  '<span class="badge badge-success">Releasing</span>';
                 }
                 elseif($record['Huawei_status']==4){
-                    $Huawei_status =  '<span class="badge badge-primary">Remove</span>';
+                    $Huawei_status =  '<span class="badge badge-warning">Reviewing</span>';
                 }
                 elseif($record['Huawei_status']==5){
-                    $Huawei_status =  '<span class="badge badge-dark">Reject</span>';
+                    $Huawei_status =  '<span class="badge badge-warning">Updating</span>';
                 }
                 elseif($record['Huawei_status']==6){
-                    $Huawei_status =  '<span class="badge badge-danger">Check</span>';
+                    $Huawei_status =  '<span class="badge badge-warning">Removal requested</span>';
                 }
                 elseif($record['Huawei_status']==7){
-                    $Huawei_status =  '<span class="badge badge-danger">Check</span>';
+                    $Huawei_status =  '<span class="badge badge-warning">Draft</span>';
                 }
                 elseif($record['Huawei_status']==8){
-                    $Huawei_status =  '<span class="badge badge-danger">Check</span>';
+                    $Huawei_status =  '<span class="badge badge-warning">Update rejected</span>';
                 }
                 elseif($record['Huawei_status']==9){
-                    $Huawei_status =  '<span class="badge badge-danger">Check</span>';
+                    $Huawei_status =  '<span class="badge badge-warning">Removal requested</span>';
                 }
                 elseif($record['Huawei_status']==10){
-                    $Huawei_status =  '<span class="badge badge-danger">Check</span>';
+                    $Huawei_status =  '<span class="badge badge-danger">Removed by developer</span>';
                 }
                 elseif($record['Huawei_status']==11){
-                    $Huawei_status =  '<span class="badge badge-danger">Check</span>';
+                    $Huawei_status =  '<span class="badge badge-danger">Release canceled</span>';
                 }
 
 
@@ -1342,38 +1345,41 @@ class ProjectController extends Controller
             if ($record['Huawei_status']==100  ) {
                 $Huawei_status = '<span class="badge badge-secondary">Mặc định</span>';
             }
+            elseif($record['Huawei_status']== 0){
+                $Huawei_status = '<span class="badge badge-success">Released</span>';
+            }
             elseif($record['Huawei_status']== 1){
-                $Huawei_status = '<span class="badge badge-success">Publish</span>';
+                $Huawei_status = '<span class="badge badge-danger">Release Rejected</span>';
             }
             elseif($record['Huawei_status']==2){
-                $Huawei_status =  '<span class="badge badge-warning">Suppend</span>';
+                $Huawei_status =  '<span class="badge badge-warning">Removed (including forcible removal)</span>';
             }
             elseif($record['Huawei_status']==3){
-                $Huawei_status =  '<span class="badge badge-info">UnPublish</span>';
+                $Huawei_status =  '<span class="badge badge-success">Releasing</span>';
             }
             elseif($record['Huawei_status']==4){
-                $Huawei_status =  '<span class="badge badge-primary">Remove</span>';
+                $Huawei_status =  '<span class="badge badge-warning">Reviewing</span>';
             }
             elseif($record['Huawei_status']==5){
-                $Huawei_status =  '<span class="badge badge-dark">Reject</span>';
+                $Huawei_status =  '<span class="badge badge-warning">Updating</span>';
             }
             elseif($record['Huawei_status']==6){
-                $Huawei_status =  '<span class="badge badge-danger">Check</span>';
+                $Huawei_status =  '<span class="badge badge-warning">Removal requested</span>';
             }
             elseif($record['Huawei_status']==7){
-                $Huawei_status =  '<span class="badge badge-danger">Check</span>';
+                $Huawei_status =  '<span class="badge badge-warning">Draft</span>';
             }
             elseif($record['Huawei_status']==8){
-                $Huawei_status =  '<span class="badge badge-danger">Check</span>';
+                $Huawei_status =  '<span class="badge badge-warning">Update rejected</span>';
             }
             elseif($record['Huawei_status']==9){
-                $Huawei_status =  '<span class="badge badge-danger">Check</span>';
+                $Huawei_status =  '<span class="badge badge-warning">Removal requested</span>';
             }
             elseif($record['Huawei_status']==10){
-                $Huawei_status =  '<span class="badge badge-danger">Check</span>';
+                $Huawei_status =  '<span class="badge badge-danger">Removed by developer</span>';
             }
             elseif($record['Huawei_status']==11){
-                $Huawei_status =  '<span class="badge badge-danger">Check</span>';
+                $Huawei_status =  '<span class="badge badge-danger">Release canceled</span>';
             }
 
             if(isset($record->Chplay_policy)){
