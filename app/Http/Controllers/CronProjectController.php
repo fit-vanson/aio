@@ -6,6 +6,7 @@ use App\Models\Dev_Huawei;
 use App\Models\ProjectModel;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Artisan;
 use Illuminate\Support\Facades\Http;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\URL;
@@ -19,11 +20,18 @@ class CronProjectController extends Controller
         dd(1);
     }
     public function Chplay(){
-       $appsChplay = ProjectModel::where('Chplay_status','<>',3)->get();
-
-       foreach ($appsChplay as $appChplay){
-           $package = $appChplay->Chplay_package;
-           if(isset($package)){
+        ini_set('max_execution_time', 600);
+        Artisan::call('optimize:clear');
+        $timeCron = Carbon::now()->subHours(10)->setTimezone('Asia/Ho_Chi_Minh')->timestamp;
+        $appsChplay = ProjectModel::where('Chplay_status','<>',3)
+           ->where('bot_timecheck','<=',$timeCron)
+           ->where('Chplay_package','<>','null')
+           ->limit(10)
+           ->get();
+       if($appsChplay){
+           foreach ($appsChplay as $appChplay){
+               $package = $appChplay->Chplay_package;
+               echo '<br/>'.'Dang chay:  '.  '-'. $appChplay->projectname .' - '. Carbon::now('Asia/Ho_Chi_Minh');
                $log_status =$appChplay->Chplay_status;
                if($appChplay->Chplay_bot != ''){
                    $log_status = json_decode($appChplay->Chplay_bot,true)['log_status'];
@@ -75,11 +83,15 @@ class CronProjectController extends Controller
                        "Chplay_status" => $status,
                        "Chplay_bot" => $data,
                        'bot_timecheck' => time(),
-                   ]);
-               echo '<br/>'.'Dang chay:  ' . $appChplay->Chplay_package .' - '. Carbon::now('Asia/Ho_Chi_Minh');
+                   ]
+               );
 
            }
        }
+       if(count($appsChplay)==0){
+            echo 'Chưa đến time cron'.PHP_EOL .'<br>';
+        }
+
     }
 
     public function getPackage(Request $request)
@@ -154,6 +166,7 @@ class CronProjectController extends Controller
 
     public function Huawei(){
         ini_set('max_execution_time', 600);
+        Artisan::call('optimize:clear');
         $timeCron = Carbon::now()->subHours(12)->setTimezone('Asia/Ho_Chi_Minh');
 //        $timeCron->setTimezone('Asia/Ho_Chi_Minh');
 //        $timeCron = time();
