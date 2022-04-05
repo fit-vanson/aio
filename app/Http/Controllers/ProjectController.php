@@ -694,12 +694,11 @@ class ProjectController extends Controller
                     $Vivo_status =  '<span class="badge badge-danger">Check</span>';
                 }
 
-                if ($record['Huawei_status']==0  ) {
+                if ($record['Huawei_status']==100  ) {
                     $Huawei_status = '<span class="badge badge-secondary">Mặc định</span>';
                 }
                 elseif($record['Huawei_status']== 1){
                     $Huawei_status = '<span class="badge badge-success">Publish</span>';
-
                 }
                 elseif($record['Huawei_status']==2){
                     $Huawei_status =  '<span class="badge badge-warning">Suppend</span>';
@@ -716,6 +715,22 @@ class ProjectController extends Controller
                 elseif($record['Huawei_status']==6){
                     $Huawei_status =  '<span class="badge badge-danger">Check</span>';
                 }
+                elseif($record['Huawei_status']==7){
+                    $Huawei_status =  '<span class="badge badge-danger">Check</span>';
+                }
+                elseif($record['Huawei_status']==8){
+                    $Huawei_status =  '<span class="badge badge-danger">Check</span>';
+                }
+                elseif($record['Huawei_status']==9){
+                    $Huawei_status =  '<span class="badge badge-danger">Check</span>';
+                }
+                elseif($record['Huawei_status']==10){
+                    $Huawei_status =  '<span class="badge badge-danger">Check</span>';
+                }
+                elseif($record['Huawei_status']==11){
+                    $Huawei_status =  '<span class="badge badge-danger">Check</span>';
+                }
+
 
                 if(isset($record->Chplay_policy)){
                     $Chplay_policy = "<a href='$record->Chplay_policy' target='_blank' <i style='color:green;' class='mdi mdi-check-circle-outline'></i></a>";
@@ -1324,12 +1339,11 @@ class ProjectController extends Controller
                 $Vivo_status =  '<span class="badge badge-danger">Check</span>';
             }
 
-            if ($record['Huawei_status']==0  ) {
+            if ($record['Huawei_status']==100  ) {
                 $Huawei_status = '<span class="badge badge-secondary">Mặc định</span>';
             }
             elseif($record['Huawei_status']== 1){
                 $Huawei_status = '<span class="badge badge-success">Publish</span>';
-
             }
             elseif($record['Huawei_status']==2){
                 $Huawei_status =  '<span class="badge badge-warning">Suppend</span>';
@@ -1344,6 +1358,21 @@ class ProjectController extends Controller
                 $Huawei_status =  '<span class="badge badge-dark">Reject</span>';
             }
             elseif($record['Huawei_status']==6){
+                $Huawei_status =  '<span class="badge badge-danger">Check</span>';
+            }
+            elseif($record['Huawei_status']==7){
+                $Huawei_status =  '<span class="badge badge-danger">Check</span>';
+            }
+            elseif($record['Huawei_status']==8){
+                $Huawei_status =  '<span class="badge badge-danger">Check</span>';
+            }
+            elseif($record['Huawei_status']==9){
+                $Huawei_status =  '<span class="badge badge-danger">Check</span>';
+            }
+            elseif($record['Huawei_status']==10){
+                $Huawei_status =  '<span class="badge badge-danger">Check</span>';
+            }
+            elseif($record['Huawei_status']==11){
                 $Huawei_status =  '<span class="badge badge-danger">Check</span>';
             }
 

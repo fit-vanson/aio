@@ -1382,13 +1382,19 @@
                                                     <label for="name">Trạng thái Ứng dụng</label>
                                                     <div>
                                                         <select class="form-control" id="Huawei_status" name="Huawei_status">
-                                                            <option value="0">Mặc định</option>
-                                                            <option value="1">Publish</option>
-                                                            <option value="2">Suppend</option>
-                                                            <option value="3">UnPublish</option>
-                                                            <option value="4">Remove</option>
-                                                            <option value="5">Reject</option>
-                                                            <option value="6">Check</option>
+                                                            <option value="100">Mặc định</option>
+                                                            <option value="0">Released</option>
+                                                            <option value="1">Release Rejected</option>
+                                                            <option value="2">Removed (including forcible removal)</option>
+                                                            <option value="3">Releasing</option>
+                                                            <option value="4">Reviewing</option>
+                                                            <option value="5">Updating</option>
+                                                            <option value="6">Removal requested</option>
+                                                            <option value="7">Draft</option>
+                                                            <option value="8">Update rejected</option>
+                                                            <option value="9">Removal requested</option>
+                                                            <option value="10">Removed by developer</option>
+                                                            <option value="11">Release canceled</option>
                                                         </select>
                                                     </div>
                                                 </div>
