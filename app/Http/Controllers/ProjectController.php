@@ -3504,7 +3504,8 @@ class ProjectController extends Controller
         $data['Huawei_keystore_profile'] = $request->Huawei_keystore_profile;
         $data['Huawei_ads'] = $Huawei_ads;
         $data['Huawei_sdk'] = $request->Huawei_sdk;
-        $data['Huawei_status'] = 0;
+        $data['Huawei_status'] = 100;
+        $data['Huawei_bot'] = json_encode(['time_bot'=>Carbon::now()->setTimezone('Asia/Ho_Chi_Minh')->toDateTimeString()]);
 
         if(isset($request->logo)){
             $image = $request->file('logo');
@@ -3820,10 +3821,7 @@ class ProjectController extends Controller
             'ads_roll_huawei' => $request->Huawei_ads_roll_huawei,
         ];
         $Huawei_ads =  json_encode($Huawei_ads);
-
-
         $data = ProjectModel::find($id);
-
         $data->template = $request->template;
         $data->ma_da = $request->ma_da;
         $data->title_app = $request->title_app;
@@ -3918,6 +3916,7 @@ class ProjectController extends Controller
         $data->Huawei_policy = $request->Huawei_policy;
         $data->Huawei_sdk = $request->Huawei_sdk;
         $data->Huawei_keystore_profile = $request->Huawei_keystore_profile;
+        $data->Huawei_bot = $data->Huawei_bot ? : json_encode(['time_bot'=>Carbon::now()->setTimezone('Asia/Ho_Chi_Minh')->toDateTimeString()]);
         if($data->logo){
             if($data->projectname <> $request->projectname){
 //                dd($data->project_file);
