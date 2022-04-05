@@ -85,13 +85,11 @@ class CronProjectController extends Controller
                        'bot_timecheck' => time(),
                    ]
                );
-
            }
        }
        if(count($appsChplay)==0){
             echo 'Chưa đến time cron'.PHP_EOL .'<br>';
         }
-
     }
 
     public function getPackage(Request $request)
@@ -168,9 +166,6 @@ class CronProjectController extends Controller
         ini_set('max_execution_time', 600);
         Artisan::call('optimize:clear');
         $timeCron = Carbon::now()->subHours(12)->setTimezone('Asia/Ho_Chi_Minh');
-//        $timeCron->setTimezone('Asia/Ho_Chi_Minh');
-//        $timeCron = time();
-//        dd($timeCron);
         $dev_huawei = Dev_Huawei::where('huawei_dev_client_id','<>',null)
             ->where('huawei_dev_client_secret','<>',null)
             ->get();
@@ -184,17 +179,6 @@ class CronProjectController extends Controller
                 ]
             );
         }
-//        $appsHuawei = Dev_Huawei::with('project')
-//            ->whereHas('project', function ($q)  {
-//                $q
-////                    ->where('Huawei_bot->time_bot','<=',$timeCron)
-//                    ->where('projectname','DA001-01')
-//                    ->select('projectname')
-//                ->get();
-//                ;
-//            })
-//            ->paginate(12);
-
         $appsHuawei = ProjectModel::with('dev_huawei')
             ->whereHas('dev_huawei', function ($q)  {
                 $q->where('huawei_dev_client_id','<>',null);
@@ -206,58 +190,51 @@ class CronProjectController extends Controller
 //        dd($appsHuawei);
         if($appsHuawei){
             foreach ($appsHuawei as $appHuawei){
-                    echo '<br/>'.'Dang chay:  '.  '-'. $appHuawei->Huawei_appId .' - '. Carbon::now('Asia/Ho_Chi_Minh');
-                    $Huawei_appId = $appHuawei->Huawei_appId;
-                    $appInfo = $this->AppInfoHuawei($this->domain,$appHuawei->dev_huawei->token,$appHuawei->dev_huawei->huawei_dev_client_id,$Huawei_appId);
-                    $reportApp = $this->reportAppHuawei($this->domain,$appHuawei->dev_huawei->token,$appHuawei->dev_huawei->huawei_dev_client_id,$Huawei_appId);
-                    $file = $this->readCSV($reportApp['fileURL'],array('delimiter' => ','));
-                    $monthCron = Carbon::now()->format('Ym');
-                    $dataArr =[
-                        'Month' => $monthCron,
-                        'Impressions' => $file ? $file['Impressions'] : 0,
-                        'Details_page_views' => $file ? $file['Details page views'] : 0,
-                        'Total_downloads' => $file ? $file['Total downloads'] : 0 ,
-                        'Uninstalls' => $file ? $file['Uninstalls (installed from AppGallery)'] : 0,
-                        'updateTime' =>  $appInfo['appInfo']['updateTime'],
-                    ];
+                echo '<br/>'.'Dang chay:  '.  '-'. $appHuawei->Huawei_appId .' - '. Carbon::now('Asia/Ho_Chi_Minh');
+                $Huawei_appId = $appHuawei->Huawei_appId;
+                $appInfo = $this->AppInfoHuawei($this->domain,$appHuawei->dev_huawei->token,$appHuawei->dev_huawei->huawei_dev_client_id,$Huawei_appId);
+                $reportApp = $this->reportAppHuawei($this->domain,$appHuawei->dev_huawei->token,$appHuawei->dev_huawei->huawei_dev_client_id,$Huawei_appId);
+                $file = $this->readCSV($reportApp['fileURL'],array('delimiter' => ','));
+                $monthCron = Carbon::now()->format('Ym');
+                $dataArr =[
+                    'Month' => $monthCron,
+                    'Impressions' => $file ? $file['Impressions'] : 0,
+                    'Details_page_views' => $file ? $file['Details page views'] : 0,
+                    'Total_downloads' => $file ? $file['Total downloads'] : 0 ,
+                    'Uninstalls' => $file ? $file['Uninstalls (installed from AppGallery)'] : 0,
+                    'updateTime' =>  $appInfo['appInfo']['updateTime'],
+                ];
 
-//                    if($appHuawei->Huawei_bot == null){
-//                        $data = array_merge([$dataArr]);
-//                    }else{
-                        $dataBot = json_decode($appHuawei->Huawei_bot,true);
-//                        dd($dataBot);
-                        $checkMonth =$this->searchForMonth($monthCron,$dataBot);
-                        if($checkMonth !== false){
-                            unset($dataBot[$checkMonth]);
-                            $data =  array_merge($dataBot,[$dataArr]);
-                        }else{
-                            $data =  array_merge($dataBot,[$dataArr]);
-                        }
-                        array_multisort($data);
-
-
-                    $data['time_bot'] = Carbon::now()->setTimezone('Asia/Ho_Chi_Minh')->toDateTimeString();
-                    ProjectModel::updateOrCreate(
-                        [
-                            'projectid'=> $appHuawei->projectid
-                        ],
-                        [
-                            'Huawei_status' => $appInfo['appInfo']['releaseState'],
-                            'Huawei_bot' => json_encode($data)
-                        ]
-                    );
+    //                    if($appHuawei->Huawei_bot == null){
+    //                        $data = array_merge([$dataArr]);
+    //                    }else{
+                    $dataBot = json_decode($appHuawei->Huawei_bot,true);
+    //                        dd($dataBot);
+                    $checkMonth =$this->searchForMonth($monthCron,$dataBot);
+                    if($checkMonth !== false){
+                        unset($dataBot[$checkMonth]);
+                        $data =  array_merge($dataBot,[$dataArr]);
+                    }else{
+                        $data =  array_merge($dataBot,[$dataArr]);
+                    }
+                    array_multisort($data);
 
 
+                $data['time_bot'] = Carbon::now()->setTimezone('Asia/Ho_Chi_Minh')->toDateTimeString();
+                ProjectModel::updateOrCreate(
+                    [
+                        'projectid'=> $appHuawei->projectid
+                    ],
+                    [
+                        'Huawei_status' => $appInfo['appInfo']['releaseState'],
+                        'Huawei_bot' => json_encode($data)
+                    ]
+                );
             }
         }if(count($appsHuawei)==0){
             echo 'Chưa đến time cron'.PHP_EOL .'<br>';
         }
-
-//        $appsHuawei = ProjectModel::select('Huawei_bot->time_bot')->where('Huawei_buildinfo_store_name_x',1)->get();
-
-
     }
-
 
     public function getTokenHuawei($domain,$clientID,$clientSecret){
         $token = '';
