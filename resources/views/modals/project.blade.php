@@ -1488,7 +1488,7 @@
                         </div>
                     </div>
                     <div class="divider Samsung_status">
-                        <div class="divider-text"><img src="img/icon/samsubg.png"></div>
+                        <div class="divider-text"><img src="img/icon/samsung.png"></div>
                     </div>
                     <div class="row Samsung_status">
                         <div class="form-group col-lg-6 ">
