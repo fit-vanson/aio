@@ -3893,7 +3893,7 @@ form .form-control::-moz-placeholder {
 form .form-control:-ms-input-placeholder {
     color: #DEDDDDFF;
 }
-form .form-control:placeholder {
+form .form-control::placeholder {
     color: #DEDDDDFF;
 }
 
@@ -3923,7 +3923,7 @@ form .form-control:placeholder {
     position: absolute;
     top: 50%;
     width: 9999px;
-    border-top: 3px solid #fa6363; }
+    border-top: 3px solid #afa5a5; }
 
 .divider .divider-text:before {
     right: 100%; }
@@ -3967,5 +3967,9 @@ tr.group,
 tr.group:hover {
     background-color: #ddd !important;
 }
+
+
+
+
 
 /*# sourceMappingURL=style.css.map */

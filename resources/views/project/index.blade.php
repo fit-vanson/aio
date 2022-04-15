@@ -1366,6 +1366,7 @@
         $.get('{{asset('project/edit')}}/'+id,function (data) {
             if(data[0].Chplay_package != null){
                 $('.Chplay_status').show();
+                $('#Chplay_buildinfo_store_name_x1').val(data[0].Chplay_buildinfo_store_name_x);
                 $('#Chplay_status1').val(data[0].Chplay_status);
 
             } else {
@@ -1373,36 +1374,42 @@
             }
             if(data[0].Amazon_package != null){
                 $('.Amazon_status').show();
+                $('#Amazon_buildinfo_store_name_x1').val(data[0].Amazon_buildinfo_store_name_x);
                 $('#Amazon_status1').val(data[0].Amazon_status);
             } else {
                 $('.Amazon_status').hide()
             }
             if(data[0].Samsung_package != null){
                 $('.Samsung_status').show();
+                $('#Samsung_buildinfo_store_name_x1').val(data[0].Samsung_buildinfo_store_name_x);
                 $('#Samsung_status1').val(data[0].Samsung_status);
             } else {
                 $('.Samsung_status').hide()
             }
             if(data[0].Xiaomi_package != null){
                 $('.Xiaomi_status').show();
+                $('#Xiaomi_buildinfo_store_name_x1').val(data[0].Xiaomi_buildinfo_store_name_x);
                 $('#Xiaomi_status1').val(data[0].Xiaomi_status);
             } else {
                 $('.Xiaomi_status').hide()
             }
             if(data[0].Oppo_package != null){
                 $('.Oppo_status').show();
+                $('#Oppo_buildinfo_store_name_x1').val(data[0].Oppo_buildinfo_store_name_x);
                 $('#Oppo_status1').val(data[0].Oppo_status);
             } else {
                 $('.Oppo_status').hide()
             }
             if(data[0].Vivo_package != null){
                 $('.Vivo_status').show();
+                $('#Vivo_buildinfo_store_name_x1').val(data[0].Vivo_buildinfo_store_name_x);
                 $('#Vivo_status1').val(data[0].Vivo_status);
             } else {
                 $('.Vivo_status').hide()
             }
             if(data[0].Huawei_package != null){
                 $('.Huawei_status').show();
+                $('#Huawei_buildinfo_store_name_x1').val(data[0].Huawei_buildinfo_store_name_x);
                 $('#Huawei_status1').val(data[0].Huawei_status);
             } else {
                 $('.Huawei_status').hide()

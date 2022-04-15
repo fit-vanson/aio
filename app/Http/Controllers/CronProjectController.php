@@ -286,6 +286,7 @@ class CronProjectController extends Controller
         $data = '';
         $startTime  =  Carbon::now()->startOfMonth()->format('Ymd');
         $endTime    =  Carbon::now()->format('Ymd');
+        $endTime    =  Carbon::now()->subMinutes(2);
         $lang='en-US';
         $endpoint = '/api/report/distribution-operation-quality/v1/appDownloadExport/'.$appID.'?language='.$lang.'&startTime='.$startTime.'&endTime='.$endTime.'&groupBy=businessType';
         $dataArr = [
