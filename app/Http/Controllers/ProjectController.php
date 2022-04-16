@@ -3135,7 +3135,6 @@ class ProjectController extends Controller
     }
     public function getHuawei(Request $request)
     {
-
         $draw = $request->get('draw');
         $start = $request->get("start");
         $rowperpage = $request->get("length"); // total number of rows per page
@@ -3150,64 +3149,110 @@ class ProjectController extends Controller
         $columnSortOrder = $order_arr[0]['dir']; // asc or desc
         $searchValue = $search_arr['value']; // Search value
 
+
+
+        if (isset($request->status_app)){
+            $status_app = explode(',',$request->status_app);
+
+            // aTotal records
+            $totalRecords = ProjectModel::select('count(*) as allcount')
+                ->where('ngocphandang_project.Huawei_package','<>','null')
+                ->count();
+            $totalRecordswithFilter = ProjectModel::select('count(*) as allcount')
+                ->leftjoin('ngocphandang_da','ngocphandang_da.id','=','ngocphandang_project.ma_da')
+                ->leftjoin('ngocphandang_template','ngocphandang_template.id','=','ngocphandang_project.template')
+                ->where(function ($a) use ($searchValue) {
+                    $a->where('ngocphandang_da.ma_da', 'like', '%' . $searchValue . '%')
+                        ->orWhere('ngocphandang_project.projectname', 'like', '%' . $searchValue . '%')
+                        ->orWhere('ngocphandang_project.title_app', 'like', '%' . $searchValue . '%')
+                        ->orWhere('ngocphandang_template.template', 'like', '%' . $searchValue . '%')
+                        ->orWhere('ngocphandang_project.Huawei_package', 'like', '%' . $searchValue . '%');
+                })
+                ->where('ngocphandang_project.Huawei_package','<>','null')
+                ->where('ngocphandang_project.Huawei_appId','<>',null)
+                ->whereIn('ngocphandang_project.Huawei_status',$status_app)
+                ->count();
+            // Get records, also we have included search filter as well
+            $records = ProjectModel::orderBy($columnName, $columnSortOrder)
+                ->with('da','matemplate')
+                ->whereHas('da', function ($q) use ($searchValue) {
+                    $q->where('ngocphandang_da.ma_da', 'like', '%' . $searchValue . '%')
+                        ->orWhere('ngocphandang_project.projectname', 'like', '%' . $searchValue . '%')
+                        ->orWhere('ngocphandang_project.title_app', 'like', '%' . $searchValue . '%')
+                        ->orWhere('ngocphandang_project.Huawei_package', 'like', '%' . $searchValue . '%');
+                })
+                ->whereHas('matemplate', function ($q) use ($searchValue) {
+                    $q->orWhere('ngocphandang_template.template', 'like', '%' . $searchValue . '%');
+                })
+                ->where('ngocphandang_project.Huawei_package','<>',null)
+                ->where('ngocphandang_project.Huawei_appId','<>',null)
+                ->whereIn('ngocphandang_project.Huawei_status',$status_app)
+                ->select('ngocphandang_project.*')
+                ->skip($start)
+                ->take($rowperpage)
+                ->get();
+        }else{
+            $totalRecords = ProjectModel::select('count(*) as allcount')
+                ->where('ngocphandang_project.Huawei_package','<>','null')
+                ->count();
+            $totalRecordswithFilter = ProjectModel::select('count(*) as allcount')
+                ->leftjoin('ngocphandang_da','ngocphandang_da.id','=','ngocphandang_project.ma_da')
+                ->leftjoin('ngocphandang_template','ngocphandang_template.id','=','ngocphandang_project.template')
+                ->where(function ($a) use ($searchValue) {
+                    $a->where('ngocphandang_da.ma_da', 'like', '%' . $searchValue . '%')
+                        ->orWhere('ngocphandang_project.projectname', 'like', '%' . $searchValue . '%')
+                        ->orWhere('ngocphandang_project.title_app', 'like', '%' . $searchValue . '%')
+                        ->orWhere('ngocphandang_template.template', 'like', '%' . $searchValue . '%')
+                        ->orWhere('ngocphandang_project.Huawei_package', 'like', '%' . $searchValue . '%');
+                })
+                ->where('ngocphandang_project.Huawei_package','<>','null')
+                ->where('ngocphandang_project.Huawei_appId','<>',null)
+                ->count();
+            // Get records, also we have included search filter as well
+            $records = ProjectModel::orderBy($columnName, $columnSortOrder)
+                ->with('da','matemplate')
+                ->whereHas('da', function ($q) use ($searchValue) {
+                    $q->where('ngocphandang_da.ma_da', 'like', '%' . $searchValue . '%')
+                        ->orWhere('ngocphandang_project.projectname', 'like', '%' . $searchValue . '%')
+                        ->orWhere('ngocphandang_project.title_app', 'like', '%' . $searchValue . '%')
+                        ->orWhere('ngocphandang_project.Huawei_package', 'like', '%' . $searchValue . '%');
+                })
+                ->whereHas('matemplate', function ($q) use ($searchValue) {
+                    $q->orWhere('ngocphandang_template.template', 'like', '%' . $searchValue . '%');
+                })
+                ->where('ngocphandang_project.Huawei_package','<>',null)
+                ->where('ngocphandang_project.Huawei_appId','<>',null)
+                ->select('ngocphandang_project.*')
+                ->skip($start)
+                ->take($rowperpage)
+                ->get();
+        }
+
         // Total records
-        $totalRecords = ProjectModel::select('count(*) as allcount')
-            ->where('ngocphandang_project.Huawei_package','<>','null')
-            ->count();
-        $totalRecordswithFilter = ProjectModel::select('count(*) as allcount')
-            ->leftjoin('ngocphandang_da','ngocphandang_da.id','=','ngocphandang_project.ma_da')
-            ->leftjoin('ngocphandang_template','ngocphandang_template.id','=','ngocphandang_project.template')
-            ->where(function ($a) use ($searchValue) {
-                $a->where('ngocphandang_da.ma_da', 'like', '%' . $searchValue . '%')
-                    ->orWhere('ngocphandang_project.projectname', 'like', '%' . $searchValue . '%')
-                    ->orWhere('ngocphandang_project.title_app', 'like', '%' . $searchValue . '%')
-                    ->orWhere('ngocphandang_template.template', 'like', '%' . $searchValue . '%')
-                    ->orWhere('ngocphandang_project.Huawei_package', 'like', '%' . $searchValue . '%');
-            })
-            ->where('ngocphandang_project.Huawei_package','<>','null')
-            ->count();
 
-
-        // Get records, also we have included search filter as well
-        $records = ProjectModel::orderBy($columnName, $columnSortOrder)
-            ->leftjoin('ngocphandang_da','ngocphandang_da.id','=','ngocphandang_project.ma_da')
-            ->leftjoin('ngocphandang_template','ngocphandang_template.id','=','ngocphandang_project.template')
-
-            ->where(function ($a) use ($searchValue) {
-                $a->where('ngocphandang_da.ma_da', 'like', '%' . $searchValue . '%')
-                    ->orWhere('ngocphandang_project.projectname', 'like', '%' . $searchValue . '%')
-                    ->orWhere('ngocphandang_project.title_app', 'like', '%' . $searchValue . '%')
-                    ->orWhere('ngocphandang_template.template', 'like', '%' . $searchValue . '%')
-                    ->orWhere('ngocphandang_project.Huawei_package', 'like', '%' . $searchValue . '%');
-
-            })
-            ->where('ngocphandang_project.Huawei_package','<>',null)
-            ->select('ngocphandang_project.*')
-            ->skip($start)
-            ->take($rowperpage)
-            ->get();
 
 
         $data_arr = array();
         foreach ($records as $record) {
-            $btn = ' <a href="javascript:void(0)" onclick="detailHuawei('.$record->projectid.')" class="btn btn-outline-warning"><i class="mdi mdi-clipboard-text"></i></a>';
-            $ma_da = DB::table('ngocphandang_project')
-                ->join('ngocphandang_da','ngocphandang_da.id','=','ngocphandang_project.ma_da')
-                ->where('ngocphandang_da.id',$record->ma_da)
-                ->first();
-            $template = DB::table('ngocphandang_project')
-                ->join('ngocphandang_template','ngocphandang_template.id','=','ngocphandang_project.template')
-                ->where('ngocphandang_template.id',$record->template)
-                ->first();
 
-            if(isset($ma_da)) {
+            $btn = ' <a href="javascript:void(0)" onclick="detailHuawei('.$record->projectid.')" class="btn btn-outline-warning"><i class="mdi mdi-clipboard-text"></i></a>';
+//            $ma_da = DB::table('ngocphandang_project')
+//                ->join('ngocphandang_da','ngocphandang_da.id','=','ngocphandang_project.ma_da')
+//                ->where('ngocphandang_da.id',$record->ma_da)
+//                ->first();
+//            $template = DB::table('ngocphandang_project')
+//                ->join('ngocphandang_template','ngocphandang_template.id','=','ngocphandang_project.template')
+//                ->where('ngocphandang_template.id',$record->template)
+//                ->first();
+
+            if(isset($record->da)) {
                 $data_ma_da =
-                    '<span style="line-height:3"> Mã Dự án: ' . $ma_da->ma_da . '</span>';
+                    '<span style="line-height:3"> Mã Dự án: ' . $record->da->ma_da . '</span>';
             }else{
                 $data_ma_da = '';
             }
-            if(isset($template)) {
-                $data_template =  '<p class="text-muted" style="line-height:0.5">Template: '.$template->template.'</p>';
+            if(isset($record->matemplate)) {
+                $data_template =  '<p class="text-muted" style="line-height:0.5">Template: '.$record->matemplate->template.'</p>';
             }else{
                 $data_template='';
             }
@@ -3230,7 +3275,48 @@ class ProjectController extends Controller
             $ads_native = '<p class="text-muted" style="line-height:0.5">ads_native: '.$ads['ads_native'].'</p>';
             $ads_open = '<p class="text-muted" style="line-height:0.5">ads_open: '.$ads['ads_open'].'</p>';
             $ads_reward = '<p class="text-muted" style="line-height:0.5">ads_reward: '.$ads['ads_reward'].'</p>';
-//
+
+
+            if ($record['Huawei_status']==100  ) {
+                $Huawei_status = '<span class="badge badge-secondary">Mặc định</span>';
+            }
+            elseif($record['Huawei_status']== 0){
+                $Huawei_status = '<span class="badge badge-success">Released</span>';
+            }
+            elseif($record['Huawei_status']== 1){
+                $Huawei_status = '<span class="badge badge-danger">Release Rejected</span>';
+            }
+            elseif($record['Huawei_status']==2){
+                $Huawei_status =  '<span class="badge badge-warning">Removed (including forcible removal)</span>';
+            }
+            elseif($record['Huawei_status']==3){
+                $Huawei_status =  '<span class="badge badge-success">Releasing</span>';
+            }
+            elseif($record['Huawei_status']==4){
+                $Huawei_status =  '<span class="badge badge-warning">Reviewing</span>';
+            }
+            elseif($record['Huawei_status']==5){
+                $Huawei_status =  '<span class="badge badge-warning">Updating</span>';
+            }
+            elseif($record['Huawei_status']==6){
+                $Huawei_status =  '<span class="badge badge-warning">Removal requested</span>';
+            }
+            elseif($record['Huawei_status']==7){
+                $Huawei_status =  '<span class="badge badge-warning">Draft</span>';
+            }
+            elseif($record['Huawei_status']==8){
+                $Huawei_status =  '<span class="badge badge-warning">Update rejected</span>';
+            }
+            elseif($record['Huawei_status']==9){
+                $Huawei_status =  '<span class="badge badge-warning">Removal requested</span>';
+            }
+            elseif($record['Huawei_status']==10){
+                $Huawei_status =  '<span class="badge badge-danger">Removed by developer</span>';
+            }
+            elseif($record['Huawei_status']==11){
+                $Huawei_status =  '<span class="badge badge-danger">Release canceled</span>';
+            }
+
 
 
             if ($record['buildinfo_console']==0  ) {
@@ -3273,15 +3359,51 @@ class ProjectController extends Controller
                 }
 
             }
-            $data_arr[] = array(
-                "updated_at" => $record->updated_at,
-                "logo" => $logo,
-                "ma_da"=>$data_ma_da.$data_template.$data_projectname.$data_title_app,
-                "package" => $package_Huawei.$ads_banner.$ads_inter.$ads_native.$ads_open.$ads_reward,
-//                "buildinfo_mess" => $mess_info,
-                "buildinfo_console" =>$buildinfo_console,
-                "action"=> $btn,
-            );
+
+            if(isset($record->Huawei_bot)){
+                $bot = json_decode($record->Huawei_bot,true);
+//                dd($bot);
+
+                $version_bot    = isset($bot['versionNumber']) ? $bot['versionNumber'] : 0;
+                $version_build  = $record->buildinfo_verstr;
+                if($version_bot == $version_build ){
+                    $version = 'Version: <span class="badge badge-success">'.$version_bot.'</span>';
+                }else{
+                    $version = 'Version Bot:  <span class="badge badge-danger">'.$version_bot.'</span> ' .  ' <br> Version Build:   <span class="badge badge-secondary">'.$version_build.'</span> ';
+                }
+
+                $sum_download = 0;
+
+                foreach($bot as $num => $values) {
+                    if(is_numeric($num)){
+                        $sum_download += $values[ 'Total_downloads' ];
+                    }
+                }
+
+                $data_arr[] = array(
+                    "updated_at" => $record->updated_at,
+                    "logo" => $logo,
+                    "install" => $sum_download,
+                    "ma_da"=>$data_ma_da.$data_template.$data_projectname.$data_title_app,
+                    "package" => $package_Huawei.$ads_banner.$ads_inter.$ads_native.$ads_open.$ads_reward,
+                    "buildinfo_console" =>'Console: '.$buildinfo_console.'<br> Ứng dụng: '.$Huawei_status.'<br>'.$version. '<br> Time check: '.$bot['time_bot'],
+                    "action"=> $btn,
+                );
+            }else{
+                $data_arr[] = array(
+                    "updated_at" => $record->updated_at,
+                    "logo" => $logo,
+                    "install" => 0,
+                    "ma_da"=>$data_ma_da.$data_template.$data_projectname.$data_title_app,
+                    "package" => $package_Huawei.$ads_banner.$ads_inter.$ads_native.$ads_open.$ads_reward,
+                    "buildinfo_console" =>'Console: '.$buildinfo_console.'<br> Ứng dụng: '.$Huawei_status,
+                    "action"=> $btn,
+                );
+            }
+
+
+
+
         }
         $response = array(
             "draw" => intval($draw),

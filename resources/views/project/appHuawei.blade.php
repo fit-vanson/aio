@@ -28,12 +28,21 @@
         <div class="col-12">
             <div class="card">
                 <div class="card-body">
+                    <div class="button-items status_app_button">
+                        <button type="button" class="btn btn-primary waves-effect waves-light" id="All">All</button>
+                        <button type="button" class="btn btn-success waves-effect" id="Public" >Public</button>
+                        <button type="button" class="btn btn-warning waves-effect"id="Pending">Pending</button>
+                        <button type="button" class="btn btn-danger waves-effect waves-light" id="Check">Check</button>
+                    </div>
+                </div>
+                <div class="card-body">
                     <table class="table table-bordered dt-responsive nowrap data-table" style="border-collapse: collapse; border-spacing: 0; width: 100%;">
                         <thead>
                         <tr>
                             <th >ID</th>
                             <th width="10%">Logo</th>
                             <th width="20%">Mã dự án</th>
+                            <th width="20%">Installs</th>
                             <th width="30%">Package</th>
                             <th width="30%">Trạng thái Console</th>
                             <th width="10%">Action</th>
@@ -91,12 +100,18 @@
             serverSide: true,
             ajax: {
                 url: "{{ route('project.getHuawei') }}",
-                type: "post"
+                type: "post",
+                data: function (d){
+                    return $.extend({},d,{
+                        "status_app": $('.status_app_button').val(),
+                    })
+                }
             },
             columns: [
                 {data: 'updated_at', name: 'updated_at',},
                 {data: 'logo', name: 'logo',orderable: false},
                 {data: 'ma_da', name: 'ma_da'},
+                {data: 'install', name: 'install',orderable: false},
                 {data: 'package', name: 'package',orderable: false},
                 // {data: 'buildinfo_mess', name: 'buildinfo_mess',orderable: false},
                 {data: 'buildinfo_console', name: 'buildinfo_console',orderable: false},
@@ -109,7 +124,63 @@
                     "searchable": false
                 }
             ],
+            fnRowCallback: function (nRow, aData, iDisplayIndex, iDisplayIndexFull) {
+                console.log(aData.buildinfo_console)
+                if (aData.buildinfo_console.includes('Released')) {
+                    $('td', nRow).css('background-color', 'rgb(255 255 255)');
+                }
+                if (aData.buildinfo_console.includes('Release Rejected')) {
+                    $('td', nRow).css('background-color', 'rgb(250 68 68 / 30%)');
+                }
+                if (aData.buildinfo_console.includes('Removed (including forcible removal)')) {
+                    $('td', nRow).css('background-color', 'rgb(255 255 255)');
+                }
+                if (aData.buildinfo_console.includes('Releasing')) {
+                    $('td', nRow).css('background-color', 'rgb(255 0 0 / 45%)');
+                }
+                if (aData.buildinfo_console.includes('Reviewing')) {
+                    $('td', nRow).css('background-color', 'rgb(56 164 248 / 69%)');
+                }
+                if (aData.buildinfo_console.includes('Updating')) {
+                    $('td', nRow).css('background-color', 'rgb(255 0 0 / 45%)');
+                }
+                if (aData.buildinfo_console.includes('Removal requested')) {
+                    $('td', nRow).css('background-color', 'rgb(227 211 66 / 36%)');
+                }
+                if (aData.buildinfo_console.includes('Draft')) {
+                    $('td', nRow).css('background-color', 'rgb(255 0 0 / 72%)');
+                }
+                if (aData.buildinfo_console.includes('Update rejected')) {
+                    $('td', nRow).css('background-color', 'rgb(227 211 66 / 36%)');
+                }
+                if (aData.buildinfo_console.includes('Removal requested')) {
+                    $('td', nRow).css('background-color', 'rgb(227 211 66 / 36%)');
+                }
+                if (aData.buildinfo_console.includes('Removed by developer')) {
+                    $('td', nRow).css('background-color', 'rgb(255 0 0 / 72%)');
+                }
+                if (aData.buildinfo_console.includes('Release canceled')) {
+                    $('td', nRow).css('background-color', 'rgb(255 0 0 / 72%)');
+                }
+            },
             order: [[ 0, 'desc' ]]
+        });
+
+        $('#All').on('click', function () {
+            $('.status_app_button').val(null);
+            table.draw();
+        });
+        $('#Public').on('click', function () {
+            $('.status_app_button').val('0,100,3');
+            table.draw();
+        });
+        $('#Pending').on('click', function () {
+            $('.status_app_button').val('2,4,5,6,8');
+            table.draw();
+        });
+        $('#Check').on('click', function () {
+            $('.status_app_button').val('1,7,9,10,11');
+            table.draw();
         });
     });
     function detailHuawei(id) {

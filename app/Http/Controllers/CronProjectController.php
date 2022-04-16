@@ -221,6 +221,7 @@ class CronProjectController extends Controller
 
 
                 $data['time_bot'] = Carbon::now()->setTimezone('Asia/Ho_Chi_Minh')->toDateTimeString();
+                $data['versionNumber'] = $appInfo['appInfo']['versionNumber'];
                 ProjectModel::updateOrCreate(
                     [
                         'projectid'=> $appHuawei->projectid
@@ -285,8 +286,9 @@ class CronProjectController extends Controller
     public function reportAppHuawei($domain,$token,$clientID,$appID){
         $data = '';
         $startTime  =  Carbon::now()->startOfMonth()->format('Ymd');
+//        $startTime  =  '20220301';
         $endTime    =  Carbon::now()->format('Ymd');
-        $endTime    =  Carbon::now()->subMinutes(2);
+//        $endTime    =  '20220331';
         $lang='en-US';
         $endpoint = '/api/report/distribution-operation-quality/v1/appDownloadExport/'.$appID.'?language='.$lang.'&startTime='.$startTime.'&endTime='.$endTime.'&groupBy=businessType';
         $dataArr = [
