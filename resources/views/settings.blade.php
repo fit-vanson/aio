@@ -21,7 +21,10 @@
                     <form id="settingsForm" name="settingsForm">
                         <div class="form-group">
                             <label>Time Cron </label>
-                            <p class="card-title-desc" style="color:#afa5a5;">Minute</p>
+                            <p class="card-title-desc"style="color:#afa5a5;">
+                                <span class="convertedHour" id="convertedHour">0</span> Hours
+                                <span class="convertedMin" id="convertedMin">0</span> Minutes
+                            </p>
                             <div>
                                 <input type="number" class="form-control" id="time_cron" name="time_cron" value="{{$data['time_cron']}}"/>
                             </div>
@@ -46,15 +49,21 @@
 @section('script')
     <script>
         $(function () {
+            const time = document.getElementById('time_cron');
+            const convertedHour = document.getElementById('convertedHour');
+            const convertedMin = document.getElementById('convertedMin');
+            time.addEventListener('change', updateValue);
+
+
             $.ajaxSetup({
                 headers: {
                     'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
                 }
             });
-            $('#settingsForm').on('submit',function (event){
-                event.preventDefault();
+            function updateValue(e) {
+                convertedHour.textContent = Math.floor(e.target.value / 60);
+                convertedMin.textContent = e.target.value % 60;
                 var formData = new FormData($("#settingsForm")[0]);
-
                 $.ajax({
                     data: formData,
                     url: "{{ route('settings.update') }}",
@@ -78,8 +87,7 @@
                         }
                     },
                 });
-
-            });
+            }
 
 
         });
