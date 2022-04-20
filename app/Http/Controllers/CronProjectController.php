@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Dev_Huawei;
 use App\Models\ProjectModel;
+use App\Models\Setting;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Artisan;
@@ -22,7 +23,8 @@ class CronProjectController extends Controller
     public function Chplay(){
         ini_set('max_execution_time', 600);
         Artisan::call('optimize:clear');
-        $timeCron = Carbon::now()->subHours(10)->setTimezone('Asia/Ho_Chi_Minh')->timestamp;
+        $time =  Setting::first();
+        $timeCron = Carbon::now()->subMinutes($time->time_cron)->setTimezone('Asia/Ho_Chi_Minh')->timestamp;
         $appsChplay = ProjectModel::where('Chplay_status','<>',3)
            ->where('bot_timecheck','<=',$timeCron)
            ->where('Chplay_package','<>','null')
@@ -165,7 +167,8 @@ class CronProjectController extends Controller
     public function Huawei(){
         ini_set('max_execution_time', 600);
         Artisan::call('optimize:clear');
-        $timeCron = Carbon::now()->subHours(12)->setTimezone('Asia/Ho_Chi_Minh');
+        $time =  Setting::first();
+        $timeCron = Carbon::now()->subMinutes($time->time_cron)->setTimezone('Asia/Ho_Chi_Minh');
         $dev_huawei = Dev_Huawei::where('huawei_dev_client_id','<>',null)
             ->where('huawei_dev_client_secret','<>',null)
             ->get();

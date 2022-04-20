@@ -32,6 +32,7 @@ use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\ProjectController;
 use App\Http\Controllers\RoleController;
 use App\Http\Controllers\ScriptController;
+use App\Http\Controllers\SettingController;
 use App\Http\Controllers\SmsController;
 use App\Http\Controllers\TemplateController;
 use App\Http\Controllers\TemplatePreviewController;
@@ -100,6 +101,12 @@ Route::group(['prefix'=>'admin','middleware'=>['CheckLogout','2fa']], function (
 });
 
 Route::get('/',[HomeController::class,'getHome'])->middleware(['CheckLogout','2fa'])->name('index');
+
+Route::group(['prefix'=>'settings','middleware'=>['CheckLogout','2fa']], function (){
+    Route::get('/',[SettingController::class,'index'])->name('settings.index');
+    Route::post('/update',[SettingController::class,'update'])->name('settings.update');
+
+});
 
 Route::group(['prefix'=>'user','middleware'=>['CheckLogout','2fa']], function (){
     Route::get('/',[UserController::class,'index'])->name('user.index');

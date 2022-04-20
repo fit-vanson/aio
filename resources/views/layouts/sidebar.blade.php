@@ -165,6 +165,7 @@
                                 <ul class="submenu">
                                     @can('user-index')
                                     <li><a href="{{route('user.index')}}">User</a></li>
+                                    <li><a href="{{route('settings.index')}}">Settings</a></li>
                                     @endcan
                                     @can('vai_tro-index')
                                     <li><a href="{{route('role.index')}}">Vai trò</a></li>

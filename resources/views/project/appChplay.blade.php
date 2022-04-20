@@ -64,7 +64,7 @@
                     <table class="table table-bordered dt-responsive nowrap data-table" style="border-collapse: collapse; border-spacing: 0; width: 100%;">
                         <thead>
                         <tr>
-                            <th >ID</th>
+                            <th>ID</th>
                             <th>Logo</th>
                             <th>Mã dự án</th>
                             <th>Install</th>
