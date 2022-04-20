@@ -29,14 +29,6 @@
                                 <input type="number" class="form-control" id="time_cron" name="time_cron" value="{{$data['time_cron']}}"/>
                             </div>
                         </div>
-
-                        <div class="form-group mb-0">
-                            <div>
-                                <button type="submit" class="btn btn-primary" id="saveBtn" value="create">Save changes
-                                </button>
-                                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-                            </div>
-                        </div>
                     </form>
 
                 </div>
