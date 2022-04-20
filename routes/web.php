@@ -105,6 +105,7 @@ Route::get('/',[HomeController::class,'getHome'])->middleware(['CheckLogout','2f
 Route::group(['prefix'=>'settings','middleware'=>['CheckLogout','2fa']], function (){
     Route::get('/',[SettingController::class,'index'])->name('settings.index');
     Route::post('/update',[SettingController::class,'update'])->name('settings.update');
+    Route::post('/clear-log',[SettingController::class,'clear_logs'])->name('settings.clear_logs');
 
 });
 

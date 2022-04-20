@@ -29,6 +29,15 @@
                                 <input type="number" class="form-control" id="time_cron" name="time_cron" value="{{$data['time_cron']}}"/>
                             </div>
                         </div>
+                        <div class="form-group">
+                            <label>Clear Log </label>
+                            <p class="card-title-desc"style="color:#afa5a5;">
+                               Clear logs 14 days
+                            </p>
+                            <div>
+                                <button type="submit" class="btn btn-danger" id="saveBtn" value="clear_log">Clear Logs</button>
+                            </div>
+                        </div>
                     </form>
 
                 </div>
@@ -45,8 +54,6 @@
             const convertedHour = document.getElementById('convertedHour');
             const convertedMin = document.getElementById('convertedMin');
             time.addEventListener('change', updateValue);
-
-
             $.ajaxSetup({
                 headers: {
                     'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
@@ -75,13 +82,33 @@
                         if(data.success){
                             $.notify(data.success, "success");
                             $('#time_cron').val(data.data.time_cron);
-
                         }
                     },
                 });
             }
 
-
+            $('#settingsForm').on('submit',function (event){
+                event.preventDefault();
+                var formData = new FormData($("#settingsForm")[0]);
+                if($('#saveBtn').val() == 'clear_log'){
+                    $.ajax({
+                        data: formData,
+                        url: "{{ route('settings.clear_logs') }}",
+                        type: "POST",
+                        dataType: 'json',
+                        processData: false,
+                        contentType: false,
+                        success: function (data) {
+                            if(data.errors){
+                                $.notify(data.errors, "error");
+                            }
+                            if(data.success){
+                                $.notify(data.success, "success");
+                            }
+                        },
+                    });
+                }
+            });
         });
     </script>
 
