@@ -22,8 +22,8 @@
                         <div class="form-group">
                             <label>Time Cron </label>
                             <p class="card-title-desc"style="color:#afa5a5;">
-                                <span class="convertedHour" id="convertedHour">0</span> Hours
-                                <span class="convertedMin" id="convertedMin">0</span> Minutes
+                                <span class="convertedHour" id="convertedHour">{{round($data['time_cron']/60,0)}}</span> Hours
+                                <span class="convertedMin" id="convertedMin">{{$data['time_cron']%60}}</span> Minutes
                             </p>
                             <div>
                                 <input type="number" class="form-control" id="time_cron" name="time_cron" value="{{$data['time_cron']}}"/>
