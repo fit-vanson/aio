@@ -57,6 +57,10 @@ use Illuminate\Support\Facades\Route;
 Route::get('/clear-cache',function (){
     echo  Artisan::call('optimize:clear');
 });
+Route::get('/job',function (){
+    return  Artisan::call('queue:work  --tries=3 --timeout=60');
+});
+
 Route::get('/phpinfo',function (){
     echo phpinfo();
 });
@@ -110,12 +114,12 @@ Route::group(['prefix'=>'settings','middleware'=>['CheckLogout','2fa']], functio
 });
 
 Route::group(['prefix'=>'user','middleware'=>['CheckLogout','2fa']], function (){
-    Route::get('/',[UserController::class,'index'])->name('user.index');
-    Route::post('/create',[UserController::class,'create'])->name('user.create');
-    Route::get('/edit/{id}',[UserController::class,'edit'])->name('user.edit');
-    Route::get('/show/{id}',[UserController::class,'show'])->name('user.show');
-    Route::post('/update',[UserController::class,'update'])->name('user.update');
-    Route::get('/delete/{id}',[UserController::class,'delete'])->name('user.delete');
+    Route::get('/',[UserController::class,'index'])->name('user.index')->middleware('can:user-index');
+    Route::post('/create',[UserController::class,'create'])->name('user.create')->middleware('can:user-add');
+    Route::get('/edit/{id}',[UserController::class,'edit'])->name('user.edit')->middleware('can:user-edit');
+    Route::get('/show/{id}',[UserController::class,'show'])->name('user.show')->middleware('can:user-show');
+    Route::post('/update',[UserController::class,'update'])->name('user.update')->middleware('can:user-update');
+    Route::get('/delete/{id}',[UserController::class,'delete'])->name('user.delete')->middleware('can:user-delete');
 });
 Route::group(['prefix'=>'role','middleware'=>['CheckLogout','2fa']], function (){
     Route::get('/',[RoleController::class,'index'])->name('role.index');
