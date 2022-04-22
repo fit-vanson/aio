@@ -55,6 +55,7 @@ class TemplateController extends Controller
         // Get records, also we have included search filter as well
         $records = Template::orderBy($columnName, $columnSortOrder)
             ->where('template', 'like', '%' . $searchValue . '%')
+//            ->where('template', 'TA002')
             ->orwhere('template_name', 'like', '%' . $searchValue . '%')
             ->orWhere('ver_build', 'like', '%' . $searchValue . '%')
             ->orWhere('Chplay_category', 'like', '%' . $searchValue . '%')
@@ -67,7 +68,9 @@ class TemplateController extends Controller
             ->select('*')
             ->skip($start)
             ->take($rowperpage)
+            ->withCount('project')
             ->get();
+
 
         $data_arr = array();
         foreach ($records as $record) {
@@ -76,13 +79,8 @@ class TemplateController extends Controller
             $btn = $btn.' <a href="javascript:void(0)" data-toggle="tooltip"  data-id="'.$record->id.'" data-original-title="Delete" class="btn btn-danger deleteTemplate"><i class="ti-trash"></i></a>';
 
 
-            $project = DB::table('ngocphandang_template')
-                ->join('ngocphandang_project','ngocphandang_template.id','=','ngocphandang_project.template')
-                ->where('ngocphandang_project.template',$record->id)
-                ->count();
-
             $template = '<p style="margin: 0"><b>'.$record->template_name.'</b></p>
-                            <a href="/project?q=template&id='.$record->id.'"> <span>'.$record->template.' - ('.$project.')</span></a>
+                            <a href="/project?q=template&id='.$record->id.'"> <span>'.$record->template.' - ('.$record->project_count.')</span></a>
                             <p class="text-muted" style="margin: 0">'.$record->ver_build.'</p>';
 
 

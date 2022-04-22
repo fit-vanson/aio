@@ -15,4 +15,8 @@ class Template extends Model
         'ver_build', 'script_img','script_svg2xml',
         'time_create', 'time_update','time_get','note','link_chplay','category'
     ];
+
+    public function project(){
+        return $this->hasMany(ProjectModel::class,'template');
+    }
 }
