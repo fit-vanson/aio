@@ -2,15 +2,14 @@
 
 namespace App\Models;
 
-//use Awobaz\Compoships\Compoships;
+
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Support\Facades\DB;
+
 
 class Keystore extends Model
 {
-//    use HasFactory;
-    use \Awobaz\Compoships\Compoships;
+    use HasFactory;
     protected $table= 'ngocphandang_keystores';
     protected $guarded = [];
     /**

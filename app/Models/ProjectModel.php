@@ -49,5 +49,4 @@ class ProjectModel extends Model
         return $this->belongsToMany(Ga::class,'ngocphandang_dev_xiaomi','id','xiaomi_ga_name');
     }
 
-
 }
