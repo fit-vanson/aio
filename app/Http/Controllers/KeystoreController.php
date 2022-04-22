@@ -63,13 +63,12 @@ class KeystoreController extends Controller
                 'project_oppo',
                 'project_vivo',
                 'project_huawei'
-//                'getBsAttribute'
             )
-//            ->withCount('getBsAttribute')
             ->get()->toArray();
         $data_arr = array();
         foreach ($records as $record) {
             $data = array_merge(
+                $record['project'],
                 $record['project_chplay'],
                 $record['project_amazon'],
                 $record['project_samsung'],
@@ -78,22 +77,9 @@ class KeystoreController extends Controller
                 $record['project_vivo'],
                 $record['project_huawei']
             );
-//            dd(count($this->unique_multidim_array($data,'projectid')));
-
             $btn = ' <a href="javascript:void(0)" onclick="editKeytore('.$record['id'].')" class="btn btn-warning"><i class="ti-pencil-alt"></i></a>';
             $btn = $btn.' <a href="javascript:void(0)" data-toggle="tooltip"  data-id="'.$record['id'].'" data-original-title="Delete" class="btn btn-danger deleteKeystore"><i class="ti-trash"></i></a>';
 
-
-//            $project = DB::table('ngocphandang_project')
-//                ->where('ngocphandang_project.buildinfo_keystore',$record->name_keystore)
-//                ->orWhere('ngocphandang_project.Chplay_keystore_profile', $record->name_keystore)
-//                ->orWhere('ngocphandang_project.Amazon_keystore_profile', $record->name_keystore)
-//                ->orWhere('ngocphandang_project.Samsung_keystore_profile', $record->name_keystore)
-//                ->orWhere('ngocphandang_project.Xiaomi_keystore_profile', $record->name_keystore)
-//                ->orWhere('ngocphandang_project.Oppo_keystore_profile', $record->name_keystore)
-//                ->orWhere('ngocphandang_project.Vivo_keystore_profile', $record->name_keystore)
-//                ->orWhere('ngocphandang_project.Huawei_keystore_profile', $record->name_keystore)
-//                ->count();
             $html = '../uploads/keystore/'.$record['file'];
             $data_arr[] = array(
 //                "name_keystore" => $record->name_keystore,
@@ -108,8 +94,6 @@ class KeystoreController extends Controller
                 "action"=> $btn,
             );
         }
-
-
         $response = array(
             "draw" => intval($draw),
             "iTotalRecords" => $totalRecords,
