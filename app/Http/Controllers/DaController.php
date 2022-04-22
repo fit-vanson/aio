@@ -14,7 +14,7 @@ class DaController extends Controller
     {
         $da =  Da::latest('id')->get();
         if ($request->ajax()) {
-            $data = Da::latest('id')->get();
+            $data = Da::withCount('project')->latest('id')->get();
             return Datatables::of($data)
                 ->addIndexColumn()
                 ->addColumn('action', function($row){
@@ -28,14 +28,7 @@ class DaController extends Controller
                     }
                 })
                 ->editColumn('ma_da',function ($row){
-                    $project = DB::table('ngocphandang_da')
-                        ->join('ngocphandang_project','ngocphandang_da.id','=','ngocphandang_project.ma_da')
-                        ->where('ngocphandang_project.ma_da',$row->id)
-                        ->count();
-//                    return '<a href="javascript:void(0)" onclick="showProject('.$row->id.')">'.$row->ma_da.'  - ('.$project.')</a>';
-                    return '<a href="/project?q=ma_da&id='.$row->id.'" >'.$row->ma_da.'  - ('.$project.')</a>';
-//                    http://localhost/aio1/project
-
+                    return '<a href="/project?q=ma_da&id='.$row->id.'" >'.$row->ma_da.'  - ('.$row->project_count.')</a>';
                 })
                 ->rawColumns(['action','link_store_vietmmo','ma_da'])
                 ->make(true);
