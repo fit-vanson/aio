@@ -68,7 +68,7 @@ class TemplateController extends Controller
             ->select('*')
             ->skip($start)
             ->take($rowperpage)
-            ->withCount('project')
+            ->with('project')
             ->get();
 
 
@@ -80,7 +80,7 @@ class TemplateController extends Controller
 
 
             $template = '<p style="margin: 0"><b>'.$record->template_name.'</b></p>
-                            <a href="/project?q=template&id='.$record->id.'"> <span>'.$record->template.' - ('.$record->project_count.')</span></a>
+                            <a href="/project?q=template&id='.$record->id.'"> <span>'.$record->template.' - ('.count($record->project).')</span></a>
                             <p class="text-muted" style="margin: 0">'.$record->ver_build.'</p>';
 
 

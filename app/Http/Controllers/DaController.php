@@ -12,9 +12,9 @@ class DaController extends Controller
 {
     public function index(Request $request)
     {
-        $da =  Da::latest('id')->get();
+        $da =  Da::with('project')->latest('id')->get();
         if ($request->ajax()) {
-            $data = Da::withCount('project')->latest('id')->get();
+            $data = Da::with('project')->latest('id')->get();
             return Datatables::of($data)
                 ->addIndexColumn()
                 ->addColumn('action', function($row){
@@ -28,7 +28,7 @@ class DaController extends Controller
                     }
                 })
                 ->editColumn('ma_da',function ($row){
-                    return '<a href="/project?q=ma_da&id='.$row->id.'" >'.$row->ma_da.'  - ('.$row->project_count.')</a>';
+                    return '<a href="/project?q=ma_da&id='.$row->id.'" >'.$row->ma_da.'  - ('.count($row->project).')</a>';
                 })
                 ->rawColumns(['action','link_store_vietmmo','ma_da'])
                 ->make(true);
