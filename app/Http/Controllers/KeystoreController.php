@@ -55,34 +55,56 @@ class KeystoreController extends Controller
             ->select('*')
             ->skip($start)
             ->take($rowperpage)
-            ->get();
-
+            ->with('project',
+                'project_chplay',
+                'project_amazon',
+                'project_samsung',
+                'project_xiaomi',
+                'project_oppo',
+                'project_vivo',
+                'project_huawei'
+//                'getBsAttribute'
+            )
+//            ->withCount('getBsAttribute')
+            ->get()->toArray();
         $data_arr = array();
         foreach ($records as $record) {
-            $btn = ' <a href="javascript:void(0)" onclick="editKeytore('.$record->id.')" class="btn btn-warning"><i class="ti-pencil-alt"></i></a>';
-            $btn = $btn.' <a href="javascript:void(0)" data-toggle="tooltip"  data-id="'.$record->id.'" data-original-title="Delete" class="btn btn-danger deleteKeystore"><i class="ti-trash"></i></a>';
+            $data = array_merge(
+                $record['project_chplay'],
+                $record['project_amazon'],
+                $record['project_samsung'],
+                $record['project_xiaomi'],
+                $record['project_oppo'],
+                $record['project_vivo'],
+                $record['project_huawei']
+            );
+//            dd(count($this->unique_multidim_array($data,'projectid')));
+
+            $btn = ' <a href="javascript:void(0)" onclick="editKeytore('.$record['id'].')" class="btn btn-warning"><i class="ti-pencil-alt"></i></a>';
+            $btn = $btn.' <a href="javascript:void(0)" data-toggle="tooltip"  data-id="'.$record['id'].'" data-original-title="Delete" class="btn btn-danger deleteKeystore"><i class="ti-trash"></i></a>';
 
 
-            $project = DB::table('ngocphandang_project')
-                ->where('ngocphandang_project.buildinfo_keystore',$record->name_keystore)
-                ->orWhere('ngocphandang_project.Chplay_keystore_profile', $record->name_keystore)
-                ->orWhere('ngocphandang_project.Amazon_keystore_profile', $record->name_keystore)
-                ->orWhere('ngocphandang_project.Samsung_keystore_profile', $record->name_keystore)
-                ->orWhere('ngocphandang_project.Xiaomi_keystore_profile', $record->name_keystore)
-                ->orWhere('ngocphandang_project.Oppo_keystore_profile', $record->name_keystore)
-                ->orWhere('ngocphandang_project.Vivo_keystore_profile', $record->name_keystore)
-                ->orWhere('ngocphandang_project.Huawei_keystore_profile', $record->name_keystore)
-                ->count();
-            $html = '../uploads/keystore/'.$record->file;
+//            $project = DB::table('ngocphandang_project')
+//                ->where('ngocphandang_project.buildinfo_keystore',$record->name_keystore)
+//                ->orWhere('ngocphandang_project.Chplay_keystore_profile', $record->name_keystore)
+//                ->orWhere('ngocphandang_project.Amazon_keystore_profile', $record->name_keystore)
+//                ->orWhere('ngocphandang_project.Samsung_keystore_profile', $record->name_keystore)
+//                ->orWhere('ngocphandang_project.Xiaomi_keystore_profile', $record->name_keystore)
+//                ->orWhere('ngocphandang_project.Oppo_keystore_profile', $record->name_keystore)
+//                ->orWhere('ngocphandang_project.Vivo_keystore_profile', $record->name_keystore)
+//                ->orWhere('ngocphandang_project.Huawei_keystore_profile', $record->name_keystore)
+//                ->count();
+            $html = '../uploads/keystore/'.$record['file'];
             $data_arr[] = array(
 //                "name_keystore" => $record->name_keystore,
-                "name_keystore" => '<a href="/project?q=key_store&id='.$record->name_keystore.'"> <span>'.$record->name_keystore.' - ('.$project.')</span></a>',
-                "pass_keystore" => $record->pass_keystore,
-                "aliases_keystore" => $record->aliases_keystore,
-                "SHA_256_keystore" => $record->SHA_256_keystore,
-                "pass_aliases" => $record->pass_aliases,
-                "file" => '<a href="'.$html.'">'.$record->file.'</a>',
-                "note"=> $record->note,
+//                "name_keystore" => '<a href="/project?q=key_store&id='.$record->name_keystore.'"> <span>'.$record->name_keystore.' - ('.$project.')</span></a>',
+                "name_keystore" => '<a href="/project?q=key_store&id='.$record['name_keystore'].'"> <span>'.$record['name_keystore'].' - ('.count($this->unique_multidim_array($data,'projectid')).')</span></a>',
+                "pass_keystore" => $record['pass_keystore'],
+                "aliases_keystore" => $record['aliases_keystore'],
+                "SHA_256_keystore" => $record['SHA_256_keystore'],
+                "pass_aliases" => $record['pass_aliases'],
+                "file" => '<a href="'.$html.'">'.$record['file'].'</a>',
+                "note"=> $record['note'],
                 "action"=> $btn,
             );
         }
@@ -257,6 +279,21 @@ class KeystoreController extends Controller
     public function callAction($method, $parameters)
     {
         return parent::callAction($method, array_values($parameters));
+    }
+
+    function unique_multidim_array($array, $key) {
+        $temp_array = array();
+        $i = 0;
+        $key_array = array();
+
+        foreach($array as $val) {
+            if (!in_array($val[$key], $key_array)) {
+                $key_array[$i] = $val[$key];
+                $temp_array[$i] = $val;
+            }
+            $i++;
+        }
+        return $temp_array;
     }
 
 }
