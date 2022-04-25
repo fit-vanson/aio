@@ -125,7 +125,6 @@
                 }
             ],
             fnRowCallback: function (nRow, aData, iDisplayIndex, iDisplayIndexFull) {
-                console.log(aData.buildinfo_console)
                 if (aData.buildinfo_console.includes('Released')) {
                     $('td', nRow).css('background-color', 'rgb(255 255 255)');
                 }
