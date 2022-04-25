@@ -129,7 +129,7 @@
                     $('td', nRow).css('background-color', 'rgb(184 249 166 / 69%)');
                 }
                 if (aData.buildinfo_console.includes('Unpublished')) {
-                    $('td', nRow).css('background-color', 'rgb(250 68 68 / 30%)');
+                    $('td', nRow).css('background-color', 'rgb(255 230 180 / 69%)');
                 }
                 if (aData.buildinfo_console.includes('Removed')) {
                     $('td', nRow).css('background-color', 'rgb(255 62 62 / 17%)');
