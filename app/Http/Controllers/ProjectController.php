@@ -675,7 +675,7 @@ class ProjectController extends Controller
                     $Vivo_status = '<span class="badge badge-secondary">Mặc định</span>';
                 }
                 elseif($record['Vivo_status']== 0){
-                    $Vivo_status = '<span class="badge badge-badge-warning">UnPublished</span>';
+                    $Vivo_status = '<span class="badge badge-warning">UnPublished</span>';
                 }
                 elseif($record['Vivo_status']==1){
                     $Vivo_status =  '<span class="badge badge-success">Published</span>';
@@ -3095,7 +3095,7 @@ class ProjectController extends Controller
                 $Vivo_status = '<span class="badge badge-secondary">Mặc định</span>';
             }
             elseif($record['Vivo_status']== 0){
-                $Vivo_status = '<span class="badge badge-badge-warning">UnPublished</span>';
+                $Vivo_status = '<span class="badge badge-warning">UnPublished</span>';
             }
             elseif($record['Vivo_status']==1){
                 $Vivo_status =  '<span class="badge badge-success">Published</span>';

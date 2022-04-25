@@ -399,7 +399,6 @@ class CronProjectController extends Controller
             foreach ($dev_vivo as $dev){
                 echo '<br/>'.'Dang chay:  '.  '-'. $dev->projectname .' - '. Carbon::now('Asia/Ho_Chi_Minh');
                 $data = $this->get_Vivo($dev->dev_vivo->vivo_dev_access_key,$dev->dev_vivo->vivo_dev_client_secret,$dev->Vivo_package);
-                dd($data);
                 $dataArr =[
                     'time_bot' => time(),
                     'versionName' => $data ? $data->versionName : 0 ,
