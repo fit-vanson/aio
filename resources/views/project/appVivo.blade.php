@@ -128,7 +128,7 @@
                 if (aData.buildinfo_console.includes('Published')) {
                     $('td', nRow).css('background-color', 'rgb(184 249 166 / 69%)');
                 }
-                if (aData.buildinfo_console.includes('Unpublished')) {
+                if (aData.buildinfo_console.includes('UnPublished')) {
                     $('td', nRow).css('background-color', 'rgb(255 230 180 / 69%)');
                 }
                 if (aData.buildinfo_console.includes('Removed')) {
