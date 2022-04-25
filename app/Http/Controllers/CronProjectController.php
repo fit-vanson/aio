@@ -381,7 +381,6 @@ class CronProjectController extends Controller
 //        $timeCron = Carbon::now()->subMinutes($time->time_cron)->setTimezone('Asia/Ho_Chi_Minh')->timestamp;
         $timeCron = Carbon::now()->subMinutes(1)->setTimezone('Asia/Ho_Chi_Minh')->timestamp;
         $dev_vivo = ProjectModel::with(['dev_vivo'])
-//            ->where('Vivo_package', 'com.huaweiltnblink.blackpinklyricswallpaper')
             ->whereHas('dev_vivo',function ($q){
                 $q->where('vivo_dev_access_key', '<>', null)
                     ->where('vivo_dev_client_secret', '<>', null);

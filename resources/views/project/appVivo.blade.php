@@ -28,6 +28,15 @@
         <div class="col-12">
             <div class="card">
                 <div class="card-body">
+                    <div class="button-items status_app_button">
+                        <button type="button" class="btn btn-primary waves-effect waves-light" id="All">All</button>
+                        <button type="button" class="btn btn-success waves-effect" id="Public" >Public</button>
+                        <button type="button" class="btn btn-warning waves-effect"id="Unpublished">Unpublished</button>
+                        <button type="button" class="btn btn-danger waves-effect"id="Removed">Removed</button>
+                        <button type="button" class="btn btn-info waves-effect waves-light" id="To_be_published">To be published</button>
+                    </div>
+                </div>
+                <div class="card-body">
                     <table class="table table-bordered dt-responsive nowrap data-table" style="border-collapse: collapse; border-spacing: 0; width: 100%;">
                         <thead>
                         <tr>
@@ -91,7 +100,12 @@
             serverSide: true,
             ajax: {
                 url: "{{ route('project.getVivo') }}",
-                type: "post"
+                type: "post",
+                data: function (d){
+                    return $.extend({},d,{
+                        "status_app": $('.status_app_button').val(),
+                    })
+                }
             },
             columns: [
                 {data: 'updated_at', name: 'updated_at',},
@@ -109,7 +123,43 @@
                     "searchable": false
                 }
             ],
+            fnRowCallback: function (nRow, aData, iDisplayIndex, iDisplayIndexFull) {
+                console.log(aData.buildinfo_console)
+                if (aData.buildinfo_console.includes('Published')) {
+                    $('td', nRow).css('background-color', 'rgb(184 249 166 / 69%)');
+                }
+                if (aData.buildinfo_console.includes('Unpublished')) {
+                    $('td', nRow).css('background-color', 'rgb(250 68 68 / 30%)');
+                }
+                if (aData.buildinfo_console.includes('Removed')) {
+                    $('td', nRow).css('background-color', 'rgb(255 62 62 / 17%)');
+                }
+                if (aData.buildinfo_console.includes('To be published')) {
+                    $('td', nRow).css('background-color', 'rgb(237 237 237 / 69%)');
+                }
+            },
             order: [[ 0, 'desc' ]]
+        });
+
+        $('#All').on('click', function () {
+            $('.status_app_button').val(null);
+            table.draw();
+        });
+        $('#Public').on('click', function () {
+            $('.status_app_button').val('1');
+            table.draw();
+        });
+        $('#Unpublished').on('click', function () {
+            $('.status_app_button').val('0');
+            table.draw();
+        });
+        $('#Removed').on('click', function () {
+            $('.status_app_button').val('2');
+            table.draw();
+        });
+        $('#To_be_published').on('click', function () {
+            $('.status_app_button').val('3');
+            table.draw();
         });
     });
     function detailVivo(id) {

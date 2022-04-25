@@ -2982,9 +2982,6 @@ class ProjectController extends Controller
 
         if (isset($request->status_app)){
             $status_app = explode(',',$request->status_app);
-
-
-
             // aTotal records
             $totalRecords = ProjectModel::select('count(*) as allcount')
                 ->where('ngocphandang_project.Vivo_package','<>','null')
