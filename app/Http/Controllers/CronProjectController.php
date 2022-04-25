@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Dev_Huawei;
+use App\Models\Dev_Vivo;
 use App\Models\ProjectModel;
 use App\Models\Setting;
 use Carbon\Carbon;
@@ -17,6 +18,13 @@ class CronProjectController extends Controller
 
 {
     private  $domain = 'https://connect-api.cloud.huawei.com';
+
+    // Vivo
+    private $SIGN_METHOD_HMAC = "hmac-sha256";
+    private $domainVivo = 'https://developer-api.vivo.com/router/rest';
+    private $access_key =  '0987226aea07435e9b8a0fabcd38e7cd';
+    private $accessSecret = '1bcc877c4e6a41a18a4ecc1419d07cbc';
+
     public function index(){
         dd(1);
     }
@@ -190,7 +198,11 @@ class CronProjectController extends Controller
             ->where('Huawei_appId','<>','null')
             ->limit(10)
             ->get();
-//        dd($appsHuawei);
+
+        echo '<br/><b>'.'Yêu cầu:';
+        echo '<br/>&emsp;'.'- Project có AppID trong tab Huawei.';
+        echo '<br/>&emsp;'.'- Dev Huawei có Client ID và Client Secret'.'</b><br/><br/>';
+
         if($appsHuawei){
             foreach ($appsHuawei as $appHuawei){
                 echo '<br/>'.'Dang chay:  '.  '-'. $appHuawei->Huawei_appId .' - '. Carbon::now('Asia/Ho_Chi_Minh');
@@ -359,4 +371,126 @@ class CronProjectController extends Controller
         }
         return false;
     }
+
+
+
+    public function Vivo(){
+        ini_set('max_execution_time', 600);
+        Artisan::call('optimize:clear');
+        $time =  Setting::first();
+//        $timeCron = Carbon::now()->subMinutes($time->time_cron)->setTimezone('Asia/Ho_Chi_Minh')->timestamp;
+        $timeCron = Carbon::now()->subMinutes(1)->setTimezone('Asia/Ho_Chi_Minh')->timestamp;
+        $dev_vivo = ProjectModel::with(['dev_vivo'])
+//            ->where('Vivo_package', 'com.huaweiltnblink.blackpinklyricswallpaper')
+            ->whereHas('dev_vivo',function ($q){
+                $q->where('vivo_dev_access_key', '<>', null)
+                    ->where('vivo_dev_client_secret', '<>', null);
+            })
+            ->where('Vivo_package','<>', null)
+            ->where('Vivo_bot->time_bot','<=',$timeCron)
+            ->limit(10)
+            ->get();
+
+        echo '<br/><b>'.'Yêu cầu:';
+        echo '<br/>&emsp;'.'- Project có Package của Vivo.';
+        echo '<br/>&emsp;'.'- Dev Vivo có Client ID và Client Secret'.'</b><br/><br/>';
+
+        if($dev_vivo){
+            foreach ($dev_vivo as $dev){
+                echo '<br/>'.'Dang chay:  '.  '-'. $dev->projectname .' - '. Carbon::now('Asia/Ho_Chi_Minh');
+                $data = $this->get_Vivo($dev->dev_vivo->vivo_dev_access_key,$dev->dev_vivo->vivo_dev_client_secret,$dev->Vivo_package);
+                dd($data);
+                $dataArr =[
+                    'time_bot' => time(),
+                    'versionName' => $data ? $data->versionName : 0 ,
+                ];
+                ProjectModel::updateOrCreate(
+                    [
+                        'projectid'=> $dev->projectid
+                    ],
+                    [
+                        'Vivo_status' => $data ? $data->onlineStatus : 100,
+                        'Vivo_bot' => json_encode($dataArr)
+                    ]
+                );
+            }
+        }if(count($dev_vivo)==0){
+            echo 'Chưa đến time cron'.PHP_EOL .'<br>';
+        }
+    }
+
+
+
+    public function get_Vivo($access_key,$accessSecret,$packageName){
+        $param = array(
+            'target_app_key' => 'developer',
+            'method' => 'app.detail',
+            'access_key' => $access_key,
+            'format' => 'json',
+            'sign_method' => 'hmac-sha256',
+            'packageName' =>$packageName,
+            'timestamp' => Carbon::now()->timestamp,
+            'v' => '1.0',
+        );
+        $param['sign'] = $this->sign_Vivo($param,$accessSecret,$this->SIGN_METHOD_HMAC);
+        $data = $this->getUrlParamsFromMap_Vivo($param);
+        $curl = curl_init($this->domainVivo);
+        curl_setopt($curl, CURLOPT_CUSTOMREQUEST, "POST");
+        curl_setopt($curl, CURLOPT_POSTFIELDS, $data);
+        curl_setopt($curl, CURLOPT_RETURNTRANSFER, true);
+        curl_setopt($curl, CURLOPT_HTTPHEADER, array(
+            'Content-Type: application/x-www-form-urlencoded;charset=utf-8',
+            'Accept: application/json'
+        ));
+
+        $result = curl_exec($curl);
+        $result = (json_decode($result));
+
+        if($result->code == 0){
+            return $result->data;
+        }
+        return false;
+
+
+
+
+//
+//        try {
+//            $response = Http::withHeaders([
+//                'Content-Type: application/x-www-form-urlencoded;charset=utf-8',
+//                'Accept: application/json',
+//            ])->post($domainVivo,$data);
+//            dd($response->json());
+//
+//            if ($response->successful()){
+//                $result = $response->json();
+//                $token = $result['access_token'];
+//            }
+//        }catch (\Exception $exception) {
+//            Log::error('Message:' . $exception->getMessage() . '--- Token: ' . $exception->getLine());
+//        }
+//        return $token;
+    }
+    public function sign_Vivo($paramsMap,$accessSecret,$signMethod){
+        $params = $this->getUrlParamsFromMap_Vivo($paramsMap);
+        if ($this->SIGN_METHOD_HMAC == $signMethod) {
+            return $this->hmacSHA256_Vivo($params, $accessSecret);
+        }
+        return null;
+
+    }
+    public function getUrlParamsFromMap_Vivo($paramsMap){
+        ksort($paramsMap);
+        $paramsMap = implode('&', array_map(
+            function ($v, $k) { return sprintf("%s=%s", $k, $v); },
+            $paramsMap,
+            array_keys($paramsMap)));
+        return $paramsMap;
+    }
+    public function hmacSHA256_Vivo($data, $key){
+        $hash = hash_hmac('SHA256', $data, $key);
+        return $hash;
+    }
+
+
 }

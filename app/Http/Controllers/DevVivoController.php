@@ -43,47 +43,44 @@ class DevVivoController extends Controller
         // Total records
         $totalRecords = Dev_Vivo::select('count(*) as allcount')->count();
         $totalRecordswithFilter = Dev_Vivo::select('count(*) as allcount')
-            ->leftjoin('ngocphandang_ga','ngocphandang_ga.id','=','ngocphandang_dev_vivo.vivo_ga_name')
-            ->leftjoin('ngocphandang_gadev','ngocphandang_gadev.id','=','ngocphandang_dev_vivo.vivo_email')
-            ->orwhere('ngocphandang_ga.ga_name', 'like', '%' . $searchValue . '%')
+            ->whereHas('ga', function ($q) use ($searchValue) {
+                $q->where('ga_name','like', '%' . $searchValue . '%');
+            })
+            ->whereHas('ga_dev', function ($q) use ($searchValue) {
+                $q->where('gmail','like', '%' . $searchValue . '%');
+            })
             ->orWhere('ngocphandang_dev_vivo.vivo_store_name', 'like', '%' . $searchValue . '%')
             ->orWhere('ngocphandang_dev_vivo.vivo_dev_name', 'like', '%' . $searchValue . '%')
-            ->orWhere('ngocphandang_gadev.gmail', 'like', '%' . $searchValue . '%')
             ->orWhere('ngocphandang_dev_vivo.vivo_phone', 'like', '%' . $searchValue . '%')
             ->orWhere('ngocphandang_dev_vivo.vivo_note', 'like', '%' . $searchValue . '%')
             ->count();
 
         // Get records, also we have included search filter as well
         $records = Dev_Vivo::orderBy($columnName, $columnSortOrder)
-            ->leftjoin('ngocphandang_ga','ngocphandang_ga.id','=','ngocphandang_dev_vivo.vivo_ga_name')
-            ->leftjoin('ngocphandang_gadev','ngocphandang_gadev.id','=','ngocphandang_dev_vivo.vivo_email')
-            ->orwhere('ngocphandang_ga.ga_name', 'like', '%' . $searchValue . '%')
+            ->with('ga','ga_dev')
+//            ->leftjoin('ngocphandang_ga','ngocphandang_ga.id','=','ngocphandang_dev_vivo.vivo_ga_name')
+//            ->leftjoin('ngocphandang_gadev','ngocphandang_gadev.id','=','ngocphandang_dev_vivo.vivo_email')
+
+            ->whereHas('ga', function ($q) use ($searchValue) {
+                $q->where('ga_name','like', '%' . $searchValue . '%');
+            })
+            ->whereHas('ga_dev', function ($q) use ($searchValue) {
+                $q->where('gmail','like', '%' . $searchValue . '%');
+            })
             ->orWhere('ngocphandang_dev_vivo.vivo_store_name', 'like', '%' . $searchValue . '%')
             ->orWhere('ngocphandang_dev_vivo.vivo_dev_name', 'like', '%' . $searchValue . '%')
-            ->orWhere('ngocphandang_gadev.gmail', 'like', '%' . $searchValue . '%')
             ->orWhere('ngocphandang_dev_vivo.vivo_phone', 'like', '%' . $searchValue . '%')
             ->orWhere('ngocphandang_dev_vivo.vivo_note', 'like', '%' . $searchValue . '%')
             ->select('ngocphandang_dev_vivo.*')
             ->skip($start)
             ->take($rowperpage)
+            ->withCount('project')
             ->get();
-
-
 
         $data_arr = array();
         foreach ($records as $record) {
             $btn = ' <a href="javascript:void(0)" onclick="editDevvivo('.$record->id.')" class="btn btn-warning"><i class="ti-pencil-alt"></i></a>';
             $btn = $btn.' <a href="javascript:void(0)" data-toggle="tooltip"  data-id="'.$record->id.'" data-original-title="Delete" class="btn btn-danger deleteDevvivo"><i class="ti-trash"></i></a>';
-
-            $ga_name = DB::table('ngocphandang_dev_vivo')
-                ->join('ngocphandang_ga','ngocphandang_ga.id','=','ngocphandang_dev_vivo.vivo_ga_name')
-                ->where('ngocphandang_ga.id',$record->vivo_ga_name)
-                ->first();
-            $email = DB::table('ngocphandang_dev_vivo')
-                ->join('ngocphandang_gadev','ngocphandang_gadev.id','=','ngocphandang_dev_vivo.vivo_email')
-                ->where('ngocphandang_gadev.id',$record->vivo_email)
-                ->first();
-
 
             if($record->vivo_status == 0){
                 $status =  '<span class="badge badge-dark">Chưa xử dụng</span>';
@@ -97,34 +94,27 @@ class DevVivoController extends Controller
             if($record->vivo_status == 3){
                 $status = '<span class="badge badge-danger">Suspend</span>';
             }
-            if($record->vivo_ga_name == 0 ){
+            if(!isset($record->ga)){
                 $ga_name =  '<span class="badge badge-dark">Chưa có</span>';
             }else{
-                $ga_name = DB::table('ngocphandang_dev_vivo')
-                    ->join('ngocphandang_ga','ngocphandang_ga.id','=','ngocphandang_dev_vivo.vivo_ga_name')
-                    ->where('ngocphandang_ga.id',$record->vivo_ga_name)
-                    ->first();
-                $ga_name = $ga_name->ga_name;
+                $ga_name = $record->ga->ga_name;
             }
-
-            $project = DB::table('ngocphandang_dev_vivo')
-                ->join('ngocphandang_project','ngocphandang_project.Vivo_buildinfo_store_name_x','=','ngocphandang_dev_vivo.id')
-                ->where('ngocphandang_project.Vivo_buildinfo_store_name_x',$record->id)
-                ->count();
-
+            if(!isset($record->ga_dev)){
+                $email =  '';
+            }else{
+                $email = $record->ga_dev->gmail;
+            }
             $data_arr[] = array(
                 "vivo_ga_name" => $ga_name,
-                "vivo_dev_name" => '<a href="/project?q=dev_vivo&id='.$record->id.'"> <span>'.$record->vivo_dev_name.' - ('.$project.')</span></a>',
+                "vivo_dev_name" => '<a href="/project?q=dev_vivo&id='.$record->id.'"> <span>'.$record->vivo_dev_name.' - ('.$record->project_count.')</span></a>',
                 "vivo_store_name" => $record->vivo_store_name,
-                "vivo_email"=>$record->vivo_company.'<p class="text-muted">'.$email->gmail.'</p>',
+                "vivo_email"=>$record->vivo_company.'<p class="text-muted">'.$email.'</p>',
                 "vivo_pass"=>$record->vivo_pass,
                 "vivo_status"=>$status,
                 "vivo_note"=>$record->vivo_note,
                 "action"=> $btn,
             );
         }
-
-
         $response = array(
             "draw" => intval($draw),
             "iTotalRecords" => $totalRecords,
@@ -137,12 +127,9 @@ class DevVivoController extends Controller
     public function create(Request  $request)
     {
 
-//        dd($request->all());
-
         $rules = [
             'vivo_store_name' =>'unique:ngocphandang_dev_vivo,vivo_store_name',
             'vivo_dev_name' =>'unique:ngocphandang_dev_vivo,vivo_dev_name',
-
             'vivo_email' =>'required|not_in:0',
         ];
         $message = [
@@ -160,6 +147,8 @@ class DevVivoController extends Controller
         $data['vivo_dev_name'] = $request->vivo_dev_name;
         $data['vivo_store_name'] = $request->vivo_store_name;
         $data['vivo_company'] = $request->vivo_company;
+        $data['vivo_dev_client_secret'] = $request->vivo_dev_client_secret;
+        $data['vivo_dev_access_key'] = $request->vivo_dev_access_key;
         $data['vivo_profile_info'] = $request->vivo_profile_info;
         $data['vivo_phone'] = $request->vivo_phone;
         $data['vivo_pass'] = $request->vivo_pass;
@@ -177,7 +166,6 @@ class DevVivoController extends Controller
     }
     public function update(Request $request)
     {
-
         $id = $request->id;
         $rules = [
             'vivo_store_name' =>'unique:ngocphandang_dev_vivo,vivo_store_name,'.$id.',id',
@@ -199,6 +187,8 @@ class DevVivoController extends Controller
         $data->vivo_ga_name = $request->vivo_ga_name;
         $data->vivo_email = $request->vivo_email;
         $data->vivo_dev_name = $request->vivo_dev_name;
+        $data->vivo_dev_client_secret = $request->vivo_dev_client_secret;
+        $data->vivo_dev_access_key = $request->vivo_dev_access_key;
         $data->vivo_store_name = $request->vivo_store_name;
         $data->vivo_phone = $request->vivo_phone;
         $data->vivo_profile_info = $request->vivo_profile_info;

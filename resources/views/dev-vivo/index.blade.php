@@ -210,6 +210,8 @@
                 $('#vivo_company').val(data.vivo_company);
                 $('#vivo_pass').val(data.vivo_pass);
                 $('#vivo_status').val(data.vivo_status);
+                $('#vivo_dev_client_secret').val(data.vivo_dev_client_secret);
+                $('#vivo_dev_access_key').val(data.vivo_dev_access_key);
                 $('#vivo_store_name').val(data.vivo_store_name);
                 $('#vivo_phone').val(data.vivo_phone);
                 $('#vivo_profile_info').val(data.vivo_profile_info);

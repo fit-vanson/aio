@@ -671,28 +671,22 @@ class ProjectController extends Controller
                     $Oppo_status =  '<span class="badge badge-danger">Check</span>';
                 }
 
-                if ($record['Vivo_status']==0  ) {
+                if ($record['Vivo_status']==100  ) {
                     $Vivo_status = '<span class="badge badge-secondary">Mặc định</span>';
                 }
-                elseif($record['Vivo_status']== 1){
-                    $Vivo_status = '<span class="badge badge-success">Publish</span>';
-
+                elseif($record['Vivo_status']== 0){
+                    $Vivo_status = '<span class="badge badge-badge-warning">UnPublished</span>';
+                }
+                elseif($record['Vivo_status']==1){
+                    $Vivo_status =  '<span class="badge badge-success">Published</span>';
                 }
                 elseif($record['Vivo_status']==2){
-                    $Vivo_status =  '<span class="badge badge-warning">Suppend</span>';
+                    $Vivo_status =  '<span class="badge badge-danger">Removed</span>';
                 }
                 elseif($record['Vivo_status']==3){
-                    $Vivo_status =  '<span class="badge badge-info">UnPublish</span>';
+                    $Vivo_status =  '<span class="badge badge-primary">To be published</span>';
                 }
-                elseif($record['Vivo_status']==4){
-                    $Vivo_status =  '<span class="badge badge-primary">Remove</span>';
-                }
-                elseif($record['Vivo_status']==5){
-                    $Vivo_status =  '<span class="badge badge-dark">Reject</span>';
-                }
-                elseif($record['Vivo_status']==6){
-                    $Vivo_status =  '<span class="badge badge-danger">Check</span>';
-                }
+
 
                 if ($record['Huawei_status']==100  ) {
                     $Huawei_status = '<span class="badge badge-secondary">Mặc định</span>';
@@ -3096,6 +3090,22 @@ class ProjectController extends Controller
             elseif($record['buildinfo_console']==6){
                 $buildinfo_console =  '<span class="badge badge-danger">Kết thúc Check</span>';
             }
+
+            if ($record['Vivo_status']==100  ) {
+                $Vivo_status = '<span class="badge badge-secondary">Mặc định</span>';
+            }
+            elseif($record['Vivo_status']== 0){
+                $Vivo_status = '<span class="badge badge-badge-warning">UnPublished</span>';
+            }
+            elseif($record['Vivo_status']==1){
+                $Vivo_status =  '<span class="badge badge-success">Published</span>';
+            }
+            elseif($record['Vivo_status']==2){
+                $Vivo_status =  '<span class="badge badge-danger">Removed</span>';
+            }
+            elseif($record['Vivo_status']==3){
+                $Vivo_status =  '<span class="badge badge-primary">To be published</span>';
+            }
 //
             if(isset($record->logo)){
                 $logo = "<img class='rounded mx-auto d-block'  width='100px'  height='100px'  src='../uploads/project/$record->projectname/thumbnail/$record->logo'>";
@@ -3120,7 +3130,7 @@ class ProjectController extends Controller
                 "ma_da"=>$data_ma_da.$data_template.$data_projectname.$data_title_app,
                 "package" => $package_Vivo.$ads_banner.$ads_inter.$ads_native.$ads_open.$ads_reward,
 //                "buildinfo_mess" => $mess_info,
-                "buildinfo_console" =>$buildinfo_console,
+                "buildinfo_console" => $buildinfo_console . '</br>Ứng dụng: '.$Vivo_status,
                 "action"=> $btn,
             );
         }

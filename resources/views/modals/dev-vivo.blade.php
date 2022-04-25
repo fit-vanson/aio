@@ -55,6 +55,17 @@
                         </div>
                         <div data-repeater-item="" class="row">
                             <div class="form-group col-lg-6">
+                                <label for="name">Access Key </label>
+                                <input type="text" id="vivo_dev_access_key" name="vivo_dev_access_key" class="form-control">
+                            </div>
+                            <div class="form-group col-lg-6">
+                                <label for="name">Access Secret</label>
+                                <input type="text" id="vivo_dev_client_secret" name="vivo_dev_client_secret" class="form-control">
+                            </div>
+                        </div>
+
+                        <div data-repeater-item="" class="row">
+                            <div class="form-group col-lg-6">
                                 <label for="name">Số điện thoại </label>
                                 <input type="text" id="vivo_phone" name="vivo_phone" class="form-control" >
                             </div>
