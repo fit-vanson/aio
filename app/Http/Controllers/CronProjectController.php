@@ -379,7 +379,7 @@ class CronProjectController extends Controller
         Artisan::call('optimize:clear');
         $time =  Setting::first();
         $timeCron = Carbon::now()->subMinutes($time->time_cron)->setTimezone('Asia/Ho_Chi_Minh')->timestamp;
-        $timeCron = Carbon::now()->subMinutes(10)->setTimezone('Asia/Ho_Chi_Minh')->timestamp;
+//        $timeCron = Carbon::now()->subMinutes(10)->setTimezone('Asia/Ho_Chi_Minh')->timestamp;
         $dev_vivo = ProjectModel::with(['dev_vivo'])
             ->whereHas('dev_vivo',function ($q){
                 $q->where('vivo_dev_access_key', '<>', null)
