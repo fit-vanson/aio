@@ -6,6 +6,7 @@ use App\Models\log;
 use App\Models\Setting;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Validator;
 
 class SettingController extends Controller
 {
@@ -16,8 +17,22 @@ class SettingController extends Controller
 
     public function update(Request $request)
     {
+        $rules = [
+            'limit_cron' =>'numeric|max:20|min:1',
+        ];
+        $message = [
+            'limit_cron.max'=>'Max 20',
+            'limit_cron.min'=>'Min 1',
+
+        ];
+        $error = Validator::make($request->all(),$rules,$message );
+        if($error->fails()){
+            return response()->json(['errors'=> $error->errors()->all()]);
+        }
+
         $data = Setting::first();
         $data->time_cron = $request->time_cron;
+        $data->limit_cron = $request->limit_cron;
         $data->save();
         return response()->json([
             'success'=>'Cập nhật thành công',

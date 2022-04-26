@@ -26,7 +26,14 @@ class CronProjectController extends Controller
     private $accessSecret = '1bcc877c4e6a41a18a4ecc1419d07cbc';
 
     public function index(){
-        dd(1);
+        ini_set('max_execution_time', 600);
+        Artisan::call('optimize:clear');
+        $chplay = $this->Chplay();
+        $huawei = $this->Huawei();
+        $vivo   = $this->Vivo();
+        if($chplay !== false  || $vivo  !== false  || $huawei !== false  ){
+            echo '<META http-equiv="refresh" content="5;URL=' . url("cronProject") . '">';
+        }
     }
     public function Chplay(){
         ini_set('max_execution_time', 600);
@@ -36,8 +43,13 @@ class CronProjectController extends Controller
         $appsChplay = ProjectModel::where('Chplay_status','<>',3)
            ->where('bot_timecheck','<=',$timeCron)
            ->where('Chplay_package','<>','null')
-           ->limit(10)
+           ->limit($time->limit_cron)
            ->get();
+
+        echo '<br/>' .'=========== Chplay ==============' ;
+        echo '<br/><b>'.'Yêu cầu:';
+        echo '<br/>&emsp;'.'- Project có package Chplay'.'</b><br/><br/>';
+
        if($appsChplay){
            foreach ($appsChplay as $appChplay){
                $package = $appChplay->Chplay_package;
@@ -99,6 +111,7 @@ class CronProjectController extends Controller
        }
        if(count($appsChplay)==0){
             echo 'Chưa đến time cron'.PHP_EOL .'<br>';
+            return false;
         }
     }
 
@@ -196,43 +209,44 @@ class CronProjectController extends Controller
             })
             ->where('Huawei_bot->time_bot','<=',$timeCron)
             ->where('Huawei_appId','<>','null')
-            ->limit(10)
+            ->limit($time->limit_cron)
             ->get();
 
+        echo '<br/><br/><br/><br/>';
+        echo '<br/>' .'=========== Huawei ==============' ;
         echo '<br/><b>'.'Yêu cầu:';
         echo '<br/>&emsp;'.'- Project có AppID trong tab Huawei.';
         echo '<br/>&emsp;'.'- Dev Huawei có Client ID và Client Secret'.'</b><br/><br/>';
 
         if($appsHuawei){
             foreach ($appsHuawei as $appHuawei){
-                echo '<br/>'.'Dang chay:  '.  '-'. $appHuawei->Huawei_appId .' - '. Carbon::now('Asia/Ho_Chi_Minh');
+                echo '<br/>'.'Dang chay:  '.  '-'. $appHuawei->projectname .' - '. Carbon::now('Asia/Ho_Chi_Minh');
                 $Huawei_appId = $appHuawei->Huawei_appId;
-                $appInfo = $this->AppInfoHuawei($this->domain,$appHuawei->dev_huawei->token,$appHuawei->dev_huawei->huawei_dev_client_id,$Huawei_appId);
-                $reportApp = $this->reportAppHuawei($this->domain,$appHuawei->dev_huawei->token,$appHuawei->dev_huawei->huawei_dev_client_id,$Huawei_appId);
-                $file = $this->readCSV($reportApp['fileURL'],array('delimiter' => ','));
-                $monthCron = Carbon::now()->format('Ym');
-                $dataArr =[
-                    'Month' => $monthCron,
-                    'Impressions' => $file ? $file['Impressions'] : 0,
-                    'Details_page_views' => $file ? $file['Details page views'] : 0,
-                    'Total_downloads' => $file ? $file['Total downloads'] : 0 ,
-                    'Uninstalls' => $file ? $file['Uninstalls (installed from AppGallery)'] : 0,
-                    'updateTime' =>  $appInfo['appInfo']['updateTime'],
-                ];
-
-    //                    if($appHuawei->Huawei_bot == null){
-    //                        $data = array_merge([$dataArr]);
-    //                    }else{
-                    $dataBot = json_decode($appHuawei->Huawei_bot,true);
-    //                        dd($dataBot);
-                    $checkMonth =$this->searchForMonth($monthCron,$dataBot);
-                    if($checkMonth !== false){
-                        unset($dataBot[$checkMonth]);
-                        $data =  array_merge($dataBot,[$dataArr]);
-                    }else{
-                        $data =  array_merge($dataBot,[$dataArr]);
-                    }
-                    array_multisort($data);
+                try{
+                    $appInfo = $this->AppInfoHuawei($this->domain,$appHuawei->dev_huawei->token,$appHuawei->dev_huawei->huawei_dev_client_id,$Huawei_appId);
+                    $reportApp = $this->reportAppHuawei($this->domain,$appHuawei->dev_huawei->token,$appHuawei->dev_huawei->huawei_dev_client_id,$Huawei_appId);
+                    $file = $this->readCSV($reportApp['fileURL'],array('delimiter' => ','));
+                    $monthCron = Carbon::now()->format('Ym');
+                    $dataArr =[
+                        'Month' => $monthCron,
+                        'Impressions' => $file ? $file['Impressions'] : 0,
+                        'Details_page_views' => $file ? $file['Details page views'] : 0,
+                        'Total_downloads' => $file ? $file['Total downloads'] : 0 ,
+                        'Uninstalls' => $file ? $file['Uninstalls (installed from AppGallery)'] : 0,
+                        'updateTime' =>  $appInfo['appInfo'] ? $appInfo['appInfo']['updateTime'] : 0,
+                    ];
+                }catch (\Exception $exception) {
+                    Log::error('Message:' . $exception->getMessage() . '--- appsHuawei: ' . $exception->getLine());
+                }
+                $dataBot = json_decode($appHuawei->Huawei_bot,true);
+                $checkMonth =$this->searchForMonth($monthCron,$dataBot);
+                if($checkMonth !== false){
+                    unset($dataBot[$checkMonth]);
+                    $data =  array_merge($dataBot,[$dataArr]);
+                }else{
+                    $data =  array_merge($dataBot,[$dataArr]);
+                }
+                array_multisort($data);
 
 
                 $data['time_bot'] = Carbon::now()->setTimezone('Asia/Ho_Chi_Minh')->toDateTimeString();
@@ -249,6 +263,7 @@ class CronProjectController extends Controller
             }
         }if(count($appsHuawei)==0){
             echo 'Chưa đến time cron'.PHP_EOL .'<br>';
+            return false;
         }
     }
 
@@ -301,9 +316,7 @@ class CronProjectController extends Controller
     public function reportAppHuawei($domain,$token,$clientID,$appID){
         $data = '';
         $startTime  =  Carbon::now()->startOfMonth()->format('Ymd');
-//        $startTime  =  '20220301';
         $endTime    =  Carbon::now()->format('Ymd');
-//        $endTime    =  '20220331';
         $lang='en-US';
         $endpoint = '/api/report/distribution-operation-quality/v1/appDownloadExport/'.$appID.'?language='.$lang.'&startTime='.$startTime.'&endTime='.$endTime.'&groupBy=businessType';
         $dataArr = [
@@ -379,7 +392,6 @@ class CronProjectController extends Controller
         Artisan::call('optimize:clear');
         $time =  Setting::first();
         $timeCron = Carbon::now()->subMinutes($time->time_cron)->setTimezone('Asia/Ho_Chi_Minh')->timestamp;
-//        $timeCron = Carbon::now()->subMinutes(10)->setTimezone('Asia/Ho_Chi_Minh')->timestamp;
         $dev_vivo = ProjectModel::with(['dev_vivo'])
             ->whereHas('dev_vivo',function ($q){
                 $q->where('vivo_dev_access_key', '<>', null)
@@ -387,9 +399,11 @@ class CronProjectController extends Controller
             })
             ->where('Vivo_package','<>', null)
             ->where('Vivo_bot->time_bot','<=',$timeCron)
-            ->limit(10)
+            ->limit($time->limit_cron)
             ->get();
 
+        echo '<br/><br/><br/><br/>';
+        echo '<br/>' .'=========== Vivo ==============' ;
         echo '<br/><b>'.'Yêu cầu:';
         echo '<br/>&emsp;'.'- Project có Package của Vivo.';
         echo '<br/>&emsp;'.'- Dev Vivo có Client ID và Client Secret'.'</b><br/><br/>';
@@ -397,27 +411,32 @@ class CronProjectController extends Controller
         if($dev_vivo){
             foreach ($dev_vivo as $dev){
                 echo '<br/>'.'Dang chay:  '.  '-'. $dev->projectname .' - '. Carbon::now('Asia/Ho_Chi_Minh');
-                $data = $this->get_Vivo($dev->dev_vivo->vivo_dev_access_key,$dev->dev_vivo->vivo_dev_client_secret,$dev->Vivo_package);
-                $dataArr =[
-                    'time_bot' => time(),
-                    'versionName' => $data ? $data->versionName : 0 ,
-                ];
-                ProjectModel::updateOrCreate(
-                    [
-                        'projectid'=> $dev->projectid
-                    ],
-                    [
-                        'Vivo_status' => $data ? $data->onlineStatus : 100,
-                        'Vivo_bot' => json_encode($dataArr)
-                    ]
-                );
+
+                try{
+                    $data = $this->get_Vivo($dev->dev_vivo->vivo_dev_access_key,$dev->dev_vivo->vivo_dev_client_secret,$dev->Vivo_package);
+                    $dataArr =[
+                        'time_bot' => time(),
+                        'versionName' => $data ? $data->versionName : 0 ,
+                    ];
+                    ProjectModel::updateOrCreate(
+                        [
+                            'projectid'=> $dev->projectid
+                        ],
+                        [
+                            'Vivo_status' => $data ? $data->onlineStatus : 100,
+                            'Vivo_bot' => json_encode($dataArr)
+                        ]
+                    );
+                }catch (\Exception $exception) {
+                    Log::error('Message:' . $exception->getMessage() . '--- appsVivo: ' . $exception->getLine());
+                }
+
             }
         }if(count($dev_vivo)==0){
             echo 'Chưa đến time cron'.PHP_EOL .'<br>';
+            return false;
         }
     }
-
-
 
     public function get_Vivo($access_key,$accessSecret,$packageName){
         $param = array(
@@ -449,25 +468,6 @@ class CronProjectController extends Controller
         }
         return false;
 
-
-
-
-//
-//        try {
-//            $response = Http::withHeaders([
-//                'Content-Type: application/x-www-form-urlencoded;charset=utf-8',
-//                'Accept: application/json',
-//            ])->post($domainVivo,$data);
-//            dd($response->json());
-//
-//            if ($response->successful()){
-//                $result = $response->json();
-//                $token = $result['access_token'];
-//            }
-//        }catch (\Exception $exception) {
-//            Log::error('Message:' . $exception->getMessage() . '--- Token: ' . $exception->getLine());
-//        }
-//        return $token;
     }
     public function sign_Vivo($paramsMap,$accessSecret,$signMethod){
         $params = $this->getUrlParamsFromMap_Vivo($paramsMap);
