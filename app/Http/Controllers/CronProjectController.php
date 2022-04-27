@@ -28,9 +28,15 @@ class CronProjectController extends Controller
     public function index(){
         ini_set('max_execution_time', 600);
         Artisan::call('optimize:clear');
-        $chplay = $this->Chplay();
-        $huawei = $this->Huawei();
-        $vivo   = $this->Vivo();
+        $chplay = $huawei = $vivo = '';
+        try {
+            $chplay = $this->Chplay();
+            $huawei = $this->Huawei();
+            $vivo   = $this->Vivo();
+        }catch (\Exception $exception) {
+            Log::error('Message:' . $exception->getMessage() . '--- Cron Project : ' . $exception->getLine());
+        }
+
         if($chplay !== false  || $vivo  !== false  || $huawei !== false  ){
             echo '<META http-equiv="refresh" content="5;URL=' . url("cronProject") . '">';
         }

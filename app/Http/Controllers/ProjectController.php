@@ -2987,106 +2987,88 @@ class ProjectController extends Controller
                 ->where('ngocphandang_project.Vivo_package','<>','null')
                 ->count();
             $totalRecordswithFilter = ProjectModel::select('count(*) as allcount')
-                ->leftjoin('ngocphandang_da','ngocphandang_da.id','=','ngocphandang_project.ma_da')
-                ->leftjoin('ngocphandang_template','ngocphandang_template.id','=','ngocphandang_project.template')
-                ->where(function ($a) use ($searchValue) {
-                    $a->where('ngocphandang_da.ma_da', 'like', '%' . $searchValue . '%')
-                        ->orWhere('ngocphandang_project.projectname', 'like', '%' . $searchValue . '%')
-                        ->orWhere('ngocphandang_project.title_app', 'like', '%' . $searchValue . '%')
-                        ->orWhere('ngocphandang_template.template', 'like', '%' . $searchValue . '%')
-                        ->orWhere('ngocphandang_project.Vivo_package', 'like', '%' . $searchValue . '%');
+                ->with('da','matemplate')
+                ->where('ngocphandang_project.Vivo_package', '<>', null)
+                ->where('ngocphandang_project.projectname', 'like', '%' . $searchValue . '%')
+//                ->orWhere('ngocphandang_project.title_app', 'like', '%' . $searchValue . '%')
+//                ->orWhere('ngocphandang_project.Vivo_package', 'like', '%' . $searchValue . '%')
+                ->whereHas('da', function ($q) use ($searchValue) {
+                    $q->orWhere('ma_da', 'like', '%' . $searchValue . '%');
                 })
-                ->where('ngocphandang_project.Vivo_package', '<>', 'null')
-                ->whereIn('ngocphandang_project.Vivo_status',$status_app)
+                ->whereHas('matemplate', function ($q) use ($searchValue) {
+                    $q->orWhere('template', 'like', '%' . $searchValue . '%');
+                })
+                ->whereIn('Vivo_status',$status_app)
                 ->count();
             // Get records, also we have included search filter as well
             $records = ProjectModel::orderBy($columnName, $columnSortOrder)
                 ->with('da','matemplate')
+                ->where('ngocphandang_project.Vivo_package', '<>', null)
+                ->where('ngocphandang_project.projectname', 'like', '%' . $searchValue . '%')
+//                ->orWhere('ngocphandang_project.title_app', 'like', '%' . $searchValue . '%')
+//                ->orWhere('ngocphandang_project.Vivo_package', 'like', '%' . $searchValue . '%')
                 ->whereHas('da', function ($q) use ($searchValue) {
-                    $q->where('ngocphandang_da.ma_da', 'like', '%' . $searchValue . '%')
-                        ->orWhere('ngocphandang_project.projectname', 'like', '%' . $searchValue . '%')
-                        ->orWhere('ngocphandang_project.title_app', 'like', '%' . $searchValue . '%')
-                        ->orWhere('ngocphandang_project.Vivo_package', 'like', '%' . $searchValue . '%');
+                    $q->orWhere('ma_da', 'like', '%' . $searchValue . '%');
                 })
                 ->whereHas('matemplate', function ($q) use ($searchValue) {
-                    $q->orWhere('ngocphandang_template.template', 'like', '%' . $searchValue . '%');
+                    $q->orWhere('template', 'like', '%' . $searchValue . '%');
                 })
-//
-//
-//                ->where(function ($a) use ($searchValue) {
-//                    $a->where('ngocphandang_da.ma_da', 'like', '%' . $searchValue . '%')
-//                        ->orWhere('ngocphandang_project.projectname', 'like', '%' . $searchValue . '%')
-//                        ->orWhere('ngocphandang_project.title_app', 'like', '%' . $searchValue . '%')
-//                        ->orWhere('ngocphandang_template.template', 'like', '%' . $searchValue . '%')
-//                        ->orWhere('ngocphandang_project.Vivo_package', 'like', '%' . $searchValue . '%');
-//                })
-                ->where('ngocphandang_project.Vivo_package', '<>', 'null')
-                ->whereIn('ngocphandang_project.Vivo_status',$status_app)
-
-                ->select('ngocphandang_project.*')
+                ->whereIn('Vivo_status',$status_app)
+                ->select('*')
                 ->skip($start)
                 ->take($rowperpage)
                 ->get();
         }else {
-
             // Total records
             $totalRecords = ProjectModel::select('count(*) as allcount')
-                ->where('ngocphandang_project.Vivo_package', '<>', 'null')
+                ->with('da','matemplate')
+                ->where('Vivo_package', '<>', null)
                 ->count();
             $totalRecordswithFilter = ProjectModel::select('count(*) as allcount')
-                ->leftjoin('ngocphandang_da', 'ngocphandang_da.id', '=', 'ngocphandang_project.ma_da')
-                ->leftjoin('ngocphandang_template', 'ngocphandang_template.id', '=', 'ngocphandang_project.template')
-                ->where(function ($a) use ($searchValue) {
-                    $a->where('ngocphandang_da.ma_da', 'like', '%' . $searchValue . '%')
-                        ->orWhere('ngocphandang_project.projectname', 'like', '%' . $searchValue . '%')
-                        ->orWhere('ngocphandang_project.title_app', 'like', '%' . $searchValue . '%')
-                        ->orWhere('ngocphandang_template.template', 'like', '%' . $searchValue . '%')
-                        ->orWhere('ngocphandang_project.Vivo_package', 'like', '%' . $searchValue . '%');
+                ->with('da','matemplate')
+                ->where('Vivo_package', '<>', null)
+                ->where('projectname', 'like', '%' . $searchValue . '%')
+                ->orWhere('title_app', 'like', '%' . $searchValue . '%')
+                ->orWhere('Vivo_package', 'like', '%' . $searchValue . '%')
+                ->orwhereHas('da', function ($q) use ($searchValue) {
+                    $q->Where('ma_da', 'like', '%' . $searchValue . '%');
                 })
-                ->where('ngocphandang_project.Vivo_package', '<>', 'null')
+                ->orWhereHas('matemplate', function ($q) use ($searchValue) {
+                    $q->Where('template', 'like', '%' . $searchValue . '%');
+                })
                 ->count();
 
 
             // Get records, also we have included search filter as well
             $records = ProjectModel::orderBy($columnName, $columnSortOrder)
-                ->leftjoin('ngocphandang_da', 'ngocphandang_da.id', '=', 'ngocphandang_project.ma_da')
-                ->leftjoin('ngocphandang_template', 'ngocphandang_template.id', '=', 'ngocphandang_project.template')
-                ->where(function ($a) use ($searchValue) {
-                    $a->where('ngocphandang_da.ma_da', 'like', '%' . $searchValue . '%')
-                        ->orWhere('ngocphandang_project.projectname', 'like', '%' . $searchValue . '%')
-                        ->orWhere('ngocphandang_project.title_app', 'like', '%' . $searchValue . '%')
-                        ->orWhere('ngocphandang_template.template', 'like', '%' . $searchValue . '%')
-                        ->orWhere('ngocphandang_project.Vivo_package', 'like', '%' . $searchValue . '%');
-
+                ->with('da','matemplate')
+                ->where('Vivo_package', '<>', null)
+                ->where('projectname', 'like', '%' . $searchValue . '%')
+                ->orWhere('title_app', 'like', '%' . $searchValue . '%')
+                ->orWhere('Vivo_package', 'like', '%' . $searchValue . '%')
+                ->orwhereHas('da', function ($q) use ($searchValue) {
+                    $q->Where('ma_da', 'like', '%' . $searchValue . '%');
                 })
-                ->where('ngocphandang_project.Vivo_package', '<>', null)
-                ->select('ngocphandang_project.*')
+                ->orWhereHas('matemplate', function ($q) use ($searchValue) {
+                    $q->Where('template', 'like', '%' . $searchValue . '%');
+                })
+                ->select('*')
                 ->skip($start)
                 ->take($rowperpage)
                 ->get();
         }
-
-
         $data_arr = array();
         foreach ($records as $record) {
+//            dd($record);
             $btn = ' <a href="javascript:void(0)" onclick="detailVivo('.$record->projectid.')" class="btn btn-outline-warning"><i class="mdi mdi-clipboard-text"></i></a>';
-            $ma_da = DB::table('ngocphandang_project')
-                ->join('ngocphandang_da','ngocphandang_da.id','=','ngocphandang_project.ma_da')
-                ->where('ngocphandang_da.id',$record->ma_da)
-                ->first();
-            $template = DB::table('ngocphandang_project')
-                ->join('ngocphandang_template','ngocphandang_template.id','=','ngocphandang_project.template')
-                ->where('ngocphandang_template.id',$record->template)
-                ->first();
-
-            if(isset($ma_da)) {
+            if(isset($record->da)) {
                 $data_ma_da =
-                    '<span style="line-height:3"> Mã Dự án: ' . $ma_da->ma_da . '</span>';
+                    '<span style="line-height:3"> Mã Dự án: ' . $record->da->ma_da . '</span>';
             }else{
                 $data_ma_da = '';
             }
-            if(isset($template)) {
-                $data_template =  '<p class="text-muted" style="line-height:0.5">Template: '.$template->template.'</p>';
+            if(isset($record->matemplate)) {
+                $data_template =  '<p class="text-muted" style="line-height:0.5">Template: '.$record->matemplate->template.'</p>';
             }else{
                 $data_template='';
             }
@@ -3454,10 +3436,6 @@ class ProjectController extends Controller
                     "action"=> $btn,
                 );
             }
-
-
-
-
         }
         $response = array(
             "draw" => intval($draw),
