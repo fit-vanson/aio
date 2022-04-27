@@ -46,12 +46,10 @@ class CronProjectController extends Controller
         Artisan::call('optimize:clear');
         $time =  Setting::first();
         $timeCron = Carbon::now()->subMinutes($time->time_cron)->setTimezone('Asia/Ho_Chi_Minh')->timestamp;
-        $appsChplay = ProjectModel::where('Chplay_status','<>',3)
+        $appsChplay = ProjectModel::where('Chplay_package','<>',null)
            ->where('bot_timecheck','<=',$timeCron)
-           ->where('Chplay_package','<>','null')
            ->limit($time->limit_cron)
            ->get();
-
         echo '<br/>' .'=========== Chplay ==============' ;
         echo '<br/><b>'.'Yêu cầu:';
         echo '<br/>&emsp;'.'- Project có package Chplay'.'</b><br/><br/>';
