@@ -154,6 +154,7 @@ class DevVivoController extends Controller
         $data['vivo_pass'] = $request->vivo_pass;
         $data['vivo_status'] = $request->vivo_status;
         $data['vivo_note'] = $request->vivo_note;
+        $data['vivo_attribute'] = $request->attribute;
         $data->save();
         return response()->json([
             'success'=>'Thêm mới thành công',
@@ -196,6 +197,7 @@ class DevVivoController extends Controller
         $data->vivo_pass = $request->vivo_pass;
         $data->vivo_status = $request->vivo_status;
         $data->vivo_note = $request->vivo_note;
+        $data->vivo_attribute = $request->attribute;
         $data->save();
         return response()->json(['success'=>'Cập nhật thành công']);
     }

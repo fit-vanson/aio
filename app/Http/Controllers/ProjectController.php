@@ -3681,7 +3681,7 @@ class ProjectController extends Controller
         $data['Vivo_keystore_profile'] = $request->Vivo_keystore_profile;
         $data['Vivo_ads'] = $Vivo_ads;
         $data['Vivo_sdk'] = $request->Vivo_sdk;
-        $data['Vivo_status'] = 0;
+        $data['Vivo_status'] = 100;
 
         $data['Huawei_package'] = $request->Huawei_package;
         $data['Huawei_appId'] = $request->Huawei_appId;

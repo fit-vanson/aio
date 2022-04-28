@@ -200,8 +200,14 @@
     <script>
         function editDevvivo(id) {
             $.get('{{asset('dev-vivo/edit')}}/'+id,function (data) {
-                console.log(data)
+
                 $('#id').val(data.id);
+
+                if(data.vivo_attribute != 0){
+                    $("#individual").prop('checked', true);
+                }else{
+                    $("#company").prop('checked', true);
+                }
                 $('#vivo_email').val(data.vivo_email);
                 $('#vivo_email').select2();
                 $('#vivo_ga_name').val(data.vivo_ga_name);

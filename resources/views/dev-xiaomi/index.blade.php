@@ -200,8 +200,14 @@
     <script>
         function editDevxiaomi(id) {
             $.get('{{asset('dev-xiaomi/edit')}}/'+id,function (data) {
-                console.log(data)
+
                 $('#id').val(data.id);
+                if(data.xiaomi_attribute != 0){
+                    $("#individual").prop('checked', true);
+                }else{
+                    $("#company").prop('checked', true);
+                }
+
                 $('#xiaomi_email').val(data.xiaomi_email);
                 $('#xiaomi_email').select2();
                 $('#xiaomi_ga_name').val(data.xiaomi_ga_name);

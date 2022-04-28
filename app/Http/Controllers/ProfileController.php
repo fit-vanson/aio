@@ -107,6 +107,7 @@ class ProfileController extends Controller
         $data['profile_dia_chi'] = $request->profile_dia_chi;
         $data['profile_cccd'] = $request->profile_cccd;
         $data['profile_note'] = $request->profile_note;
+        $data['profile_attribute'] = $request->attribute;
         $data['profile_anh_cccd'] = $request->profile_anh_cccd ? 1 :0 ;
         $data['profile_anh_bang_lai'] = $request->profile_anh_bang_lai ? 1 :0 ;
         $data['profile_anh_ngan_hang'] = $request->profile_anh_ngan_hang ? 1 :0 ;
@@ -164,6 +165,7 @@ class ProfileController extends Controller
         $data->profile_dia_chi = $request->profile_dia_chi;
         $data->profile_cccd = $request->profile_cccd;
         $data->profile_note = $request->profile_note;
+        $data->profile_attribute = $request->attribute;
         $data->profile_anh_cccd = $request->profile_anh_cccd ? 1 :0 ;
         $data->profile_anh_bang_lai = $request->profile_anh_bang_lai ? 1 :0 ;
         $data->profile_anh_ngan_hang = $request->profile_anh_ngan_hang ? 1 :0 ;

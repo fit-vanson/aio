@@ -161,6 +161,7 @@ class DevXiaomiController extends Controller
         $data['xiaomi_pass'] = $request->xiaomi_pass;
         $data['xiaomi_status'] = $request->xiaomi_status;
         $data['xiaomi_note'] = $request->xiaomi_note;
+        $data['xiaomi_attribute'] = $request->attribute;
         $data->save();
         return response()->json([
             'success'=>'Thêm mới thành công',
@@ -202,6 +203,7 @@ class DevXiaomiController extends Controller
         $data->xiaomi_pass = $request->xiaomi_pass;
         $data->xiaomi_status = $request->xiaomi_status;
         $data->xiaomi_note = $request->xiaomi_note;
+        $data->xiaomi_attribute = $request->attribute;
         $data->save();
         return response()->json(['success'=>'Cập nhật thành công']);
     }

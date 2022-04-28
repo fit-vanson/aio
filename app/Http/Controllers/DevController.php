@@ -214,6 +214,7 @@ class DevController extends Controller
         $data['info_policydev'] = $request->info_policydev;
         $data['info_fanpage'] = $request->info_fanpage;
         $data['info_web'] = $request->info_web;
+        $data['thuoc_tinh'] = $request->thuoc_tinh;
         $data['status'] = 0;
         $data->save();
         return response()->json([
@@ -227,7 +228,6 @@ class DevController extends Controller
     }
     public function update(Request $request)
     {
-
         $id = $request->dev_id;
         $rules = [
             'store_name' =>'unique:ngocphandang_dev,store_name,'.$id.',id',
@@ -260,6 +260,7 @@ class DevController extends Controller
         $data->profile_info = $request->profile_info;
         $data->info_andress= $request->info_andress;
         $data->note= $request->note;
+        $data->thuoc_tinh= $request->thuoc_tinh;
         $data->info_url = $request->info_url;
         $data->info_logo = $request->info_logo;
         $data->info_banner = $request->info_banner;

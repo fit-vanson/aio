@@ -62,6 +62,19 @@
                                 <textarea id="profile_note" name="profile_note" class="form-control" rows="4"></textarea>
                             </div>
                         </div>
+                        <div class="row">
+                            <div class="form-group col-lg-4">
+                                <label class="d-block mb-3">Thuộc tính :</label>
+                                <div class="custom-control custom-radio custom-control-inline">
+                                    <input type="radio" id="company" name="attribute" class="custom-control-input" value="0">
+                                    <label class="custom-control-label" for="company">Công ty</label>
+                                </div>
+                                <div class="custom-control custom-radio custom-control-inline">
+                                    <input type="radio" id="individual" name="attribute" class="custom-control-input" value="1" checked>
+                                    <label class="custom-control-label" for="individual">Cá nhân</label>
+                                </div>
+                            </div>
+                        </div>
 
 
                     </div>

@@ -200,8 +200,14 @@
     <script>
         function editDevoppo(id) {
             $.get('{{asset('dev-oppo/edit')}}/'+id,function (data) {
-                console.log(data)
+
                 $('#id').val(data.id);
+                if(data.oppo_attribute != 0){
+                    $("#individual").prop('checked', true);
+                }else{
+                    $("#company").prop('checked', true);
+                }
+
                 $('#oppo_email').val(data.oppo_email);
                 $('#oppo_email').select2();
                 $('#oppo_ga_name').val(data.oppo_ga_name);

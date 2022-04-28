@@ -206,7 +206,6 @@
     <script>
         function editDev(id) {
             $.get('{{asset('dev/edit')}}/'+id,function (data) {
-                console.log(data)
                 $('#dev_id').val(data.id);
                 $('#store_name').val(data.store_name);
                 $('#dev_name').val(data.dev_name);
@@ -238,6 +237,12 @@
                 $('#info_web').val(data.info_web);
                 $('#status').val(data.status);
                 $('#note').val(data.note);
+
+                if(data.thuoc_tinh != 0){
+                    $("#individual").prop('checked', true);
+                }else{
+                    $("#company").prop('checked', true);
+                }
 
                 $('#modelHeading').html("Edit");
                 $('#saveBtn').val("edit-dev");

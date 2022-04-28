@@ -152,6 +152,7 @@ class DevSamsungController extends Controller
         $data['samsung_pass'] = $request->samsung_pass;
         $data['samsung_status'] = $request->samsung_status;
         $data['samsung_note'] = $request->samsung_note;
+        $data['samsung_attribute'] = $request->attribute;
         $data->save();
         return response()->json([
             'success'=>'Thêm mới thành công',
@@ -194,6 +195,7 @@ class DevSamsungController extends Controller
         $data->samsung_pass = $request->samsung_pass;
         $data->samsung_status = $request->samsung_status;
         $data->samsung_note = $request->samsung_note;
+        $data->samsung_attribute = $request->attribute;
         $data->save();
         return response()->json(['success'=>'Cập nhật thành công']);
     }

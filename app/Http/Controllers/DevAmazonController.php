@@ -152,6 +152,7 @@ class DevAmazonController extends Controller
         $data['amazon_pass'] = $request->amazon_pass;
         $data['amazon_status'] = $request->amazon_status;
         $data['amazon_note'] = $request->amazon_note;
+        $data['amazon_attribute'] = $request->attribute;
         $data->save();
         return response()->json([
             'success'=>'Thêm mới thành công',
@@ -190,6 +191,7 @@ class DevAmazonController extends Controller
         $data->amazon_pass = $request->amazon_pass;
         $data->amazon_status = $request->amazon_status;
         $data->amazon_note = $request->amazon_note;
+        $data->amazon_attribute = $request->attribute;
         $data->save();
         return response()->json(['success'=>'Cập nhật thành công']);
     }

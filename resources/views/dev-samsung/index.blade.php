@@ -200,8 +200,14 @@
     <script>
         function editDevSamsung(id) {
             $.get('{{asset('dev-samsung/edit')}}/'+id,function (data) {
-                console.log(data)
+
                 $('#id').val(data.id);
+
+                if(data.samsung_attribute != 0){
+                    $("#individual").prop('checked', true);
+                }else{
+                    $("#company").prop('checked', true);
+                }
                 $('#samsung_email').val(data.samsung_email);
                 $('#samsung_email').select2();
                 $('#samsung_ga_name').val(data.samsung_ga_name);

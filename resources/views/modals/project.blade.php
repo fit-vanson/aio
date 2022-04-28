@@ -1270,13 +1270,11 @@
                                                     <label for="name">Trạng thái Ứng dụng</label>
                                                     <div>
                                                         <select class="form-control" id="Vivo_status" name="Vivo_status">
-                                                            <option value="0">Mặc định</option>
-                                                            <option value="1">Publish</option>
-                                                            <option value="2">Suppend</option>
-                                                            <option value="3">UnPublish</option>
-                                                            <option value="4">Remove</option>
-                                                            <option value="5">Reject</option>
-                                                            <option value="6">Check</option>
+                                                            <option value="100">Mặc định</option>
+                                                            <option value="0">UnPublished</option>
+                                                            <option value="1">Published</option>
+                                                            <option value="2">Removed</option>
+                                                            <option value="3">To be published</option>
                                                         </select>
                                                     </div>
                                                 </div>

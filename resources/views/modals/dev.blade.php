@@ -153,6 +153,20 @@
 
 
                         <div data-repeater-item="" class="row">
+                            <div class="form-group col-lg-4">
+                                <label class="d-block mb-3">Thuộc tính :</label>
+                                <div class="custom-control custom-radio custom-control-inline">
+                                    <input type="radio" id="company" name="thuoc_tinh" class="custom-control-input" value="0">
+                                    <label class="custom-control-label" for="company">Công ty</label>
+                                </div>
+                                <div class="custom-control custom-radio custom-control-inline">
+                                    <input type="radio" id="individual" name="thuoc_tinh" class="custom-control-input" value="1" checked>
+                                    <label class="custom-control-label" for="individual">Cá nhân</label>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div data-repeater-item="" class="row">
                             <div class="form-group col-lg-6 ">
                                 <label for="name">Địa chỉ</label>
                                 <textarea id="info_andress" name="info_andress" class="form-control" rows="4" ></textarea>

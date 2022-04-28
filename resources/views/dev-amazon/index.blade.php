@@ -200,6 +200,12 @@
             $.get('{{asset('dev-amazon/edit')}}/'+id,function (data) {
                 console.log(data)
                 $('#id').val(data.id);
+
+                if(data.amazon_attribute != 0){
+                    $("#individual").prop('checked', true);
+                }else{
+                    $("#company").prop('checked', true);
+                }
                 $('#amazon_email').val(data.amazon_email);
                 $('#amazon_email').select2();
                 $('#amazon_ga_name').val(data.amazon_ga_name);

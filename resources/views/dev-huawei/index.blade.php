@@ -198,8 +198,14 @@
     <script>
         function editDevhuawei(id) {
             $.get('{{asset('dev-huawei/edit')}}/'+id,function (data) {
-                console.log(data)
                 $('#id').val(data.id);
+
+                if(data.huawei_attribute != 0){
+                    $("#individual").prop('checked', true);
+                }else{
+                    $("#company").prop('checked', true);
+                }
+
                 $('#huawei_email').val(data.huawei_email);
                 $('#huawei_email').select2();
                 $('#huawei_ga_name').val(data.huawei_ga_name);

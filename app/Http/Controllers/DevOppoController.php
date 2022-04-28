@@ -166,6 +166,7 @@ class DevOppoController extends Controller
         $data['oppo_pass'] = $request->oppo_pass;
         $data['oppo_status'] = $request->oppo_status;
         $data['oppo_note'] = $request->oppo_note;
+        $data['oppo_attribute'] = $request->attribute;
         $data->save();
         return response()->json([
             'success'=>'Thêm mới thành công',
@@ -208,6 +209,7 @@ class DevOppoController extends Controller
         $data->oppo_pass = $request->oppo_pass;
         $data->oppo_status = $request->oppo_status;
         $data->oppo_note = $request->oppo_note;
+        $data->oppo_attribute = $request->attribute;
         $data->save();
         return response()->json(['success'=>'Cập nhật thành công']);
     }
