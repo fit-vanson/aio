@@ -1448,10 +1448,6 @@
                                 <select class="form-control" id="Chplay_status1" name="Chplay_status">
                                     <option value="0">Mặc định</option>
                                     <option value="1">Publish</option>
-                                    {{--                                    <option value="2">Suppend</option>--}}
-                                    {{--                                    <option value="3">UnPublish</option>--}}
-                                    {{--                                    <option value="4">Remove</option>--}}
-                                    {{--                                    <option value="5">Reject</option>--}}
                                     <option value="6">Check</option>
                                 </select>
                             </div>
@@ -1476,10 +1472,6 @@
                                 <select class="form-control" id="Amazon_status1" name="Amazon_status">
                                     <option value="0">Mặc định</option>
                                     <option value="1">Publish</option>
-                                    {{--                                    <option value="2">Suppend</option>--}}
-                                    {{--                                    <option value="3">UnPublish</option>--}}
-                                    {{--                                    <option value="4">Remove</option>--}}
-                                    {{--                                    <option value="5">Reject</option>--}}
                                     <option value="6">Check</option>
                                 </select>
                             </div>
@@ -1504,10 +1496,6 @@
                                 <select class="form-control" id="Samsung_status1" name="Samsung_status">
                                     <option value="0">Mặc định</option>
                                     <option value="1">Publish</option>
-                                    {{--                                    <option value="2">Suppend</option>--}}
-                                    {{--                                    <option value="3">UnPublish</option>--}}
-                                    {{--                                    <option value="4">Remove</option>--}}
-                                    {{--                                    <option value="5">Reject</option>--}}
                                     <option value="6">Check</option>
                                 </select>
                             </div>
@@ -1532,10 +1520,6 @@
                                 <select class="form-control" id="Xiaomi_status1" name="Xiaomi_status">
                                     <option value="0">Mặc định</option>
                                     <option value="1">Publish</option>
-                                    {{--                                    <option value="2">Suppend</option>--}}
-                                    {{--                                    <option value="3">UnPublish</option>--}}
-                                    {{--                                    <option value="4">Remove</option>--}}
-                                    {{--                                    <option value="5">Reject</option>--}}
                                     <option value="6">Check</option>
                                 </select>
                             </div>
@@ -1560,10 +1544,6 @@
                                 <select class="form-control" id="Oppo_status1" name="Oppo_status">
                                     <option value="0">Mặc định</option>
                                     <option value="1">Publish</option>
-                                    {{--                                    <option value="2">Suppend</option>--}}
-                                    {{--                                    <option value="3">UnPublish</option>--}}
-                                    {{--                                    <option value="4">Remove</option>--}}
-                                    {{--                                    <option value="5">Reject</option>--}}
                                     <option value="6">Check</option>
                                 </select>
                             </div>
@@ -1586,13 +1566,11 @@
                             <label for="name">Trạng thái Ứng dụng (Vivo)</label>
                             <div>
                                 <select class="form-control" id="Vivo_status1" name="Vivo_status">
-                                    <option value="0">Mặc định</option>
-                                    <option value="1">Publish</option>
-                                    {{--                                    <option value="2">Suppend</option>--}}
-                                    {{--                                    <option value="3">UnPublish</option>--}}
-                                    {{--                                    <option value="4">Remove</option>--}}
-                                    {{--                                    <option value="5">Reject</option>--}}
-                                    <option value="6">Check</option>
+                                    <option value="100">Mặc định</option>
+                                    <option value="0">UnPublished</option>
+                                    <option value="1">Published</option>
+                                    <option value="2">Removed</option>
+                                    <option value="3">To be published</option>
                                 </select>
                             </div>
                         </div>
@@ -1628,13 +1606,6 @@
                                     <option value="10">Removed by developer</option>
                                     <option value="11">Release canceled</option>
 
-                                    {{--                                    <option value="0">Mặc định</option>--}}
-                                    {{--                                    <option value="1">Publish</option>--}}
-                                    {{--                                    <option value="2">Suppend</option>--}}
-                                    {{--                                    <option value="3">UnPublish</option>--}}
-                                    {{--                                    <option value="4">Remove</option>--}}
-                                    {{--                                    <option value="5">Reject</option>--}}
-                                    {{--                                    <option value="6">Check</option>--}}
                                 </select>
                             </div>
                         </div>

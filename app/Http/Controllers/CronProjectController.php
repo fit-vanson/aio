@@ -216,7 +216,6 @@ class CronProjectController extends Controller
                 $q->where('huawei_dev_client_id','<>',null);
             })
             ->where('Huawei_bot->time_bot','<=',$timeCron)
-//            ->where('projectname','DA127-38')
             ->where('Huawei_package','<>',null)
             ->limit($time->limit_cron)
             ->get();
