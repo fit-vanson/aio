@@ -278,7 +278,7 @@ class CronProjectController extends Controller
                     if($status !== 0 ){
                         $text = " <pre>Project Error (Huawei)</pre> \n"
                             . "<b>Project name: </b>\n"
-                            . "$huawei->projectname\n"
+                            . "<code>$huawei->projectname</code>\n"
                             . "<b>Data Version: </b>\n"
                             . "<pre>". $data['versionNumber']."</pre>\n"
                             . "<b>Message: </b>\n"
