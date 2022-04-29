@@ -278,7 +278,7 @@ class CronProjectController extends Controller
                             . "<b>Project name: </b>\n"
                             . "$huawei->projectname\n"
                             . "<b>Data Version: </b>\n"
-                            . $data['versionNumber']. "\n"
+                            . "<pre>". $data['versionNumber']."</pre>\n"
                             . "<b>Message: </b>\n"
                             . $data['message']. "\n"
                         ;
