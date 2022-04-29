@@ -114,7 +114,7 @@
                 {data: 'install', name: 'install',orderable: false},
                 {data: 'package', name: 'package',orderable: false},
                 // {data: 'buildinfo_mess', name: 'buildinfo_mess',orderable: false},
-                {data: 'buildinfo_console', name: 'buildinfo_console',orderable: false},
+                {data: 'Huawei_bot->time_bot', name: 'Huawei_bot->time_bot'},
                 {data: 'action',className: "text-center", name: 'action', orderable: false, searchable: false},
             ],
             columnDefs: [
@@ -125,40 +125,40 @@
                 }
             ],
             fnRowCallback: function (nRow, aData, iDisplayIndex, iDisplayIndexFull) {
-                if (aData.buildinfo_console.includes('Released')) {
+                if (aData['Huawei_bot->time_bot'].includes('Released')) {
                     $('td', nRow).css('background-color', 'rgb(255 255 255)');
                 }
-                if (aData.buildinfo_console.includes('Release Rejected')) {
+                if (aData['Huawei_bot->time_bot'].includes('Release Rejected')) {
                     $('td', nRow).css('background-color', 'rgb(250 68 68 / 30%)');
                 }
-                if (aData.buildinfo_console.includes('Removed (including forcible removal)')) {
+                if (aData['Huawei_bot->time_bot'].includes('Removed (including forcible removal)')) {
                     $('td', nRow).css('background-color', 'rgb(255 255 255)');
                 }
-                if (aData.buildinfo_console.includes('Releasing')) {
+                if (aData['Huawei_bot->time_bot'].includes('Releasing')) {
                     $('td', nRow).css('background-color', 'rgb(255 0 0 / 45%)');
                 }
-                if (aData.buildinfo_console.includes('Reviewing')) {
+                if (aData['Huawei_bot->time_bot'].includes('Reviewing')) {
                     $('td', nRow).css('background-color', 'rgb(56 164 248 / 69%)');
                 }
-                if (aData.buildinfo_console.includes('Updating')) {
+                if (aData['Huawei_bot->time_bot'].includes('Updating')) {
                     $('td', nRow).css('background-color', 'rgb(255 0 0 / 45%)');
                 }
-                if (aData.buildinfo_console.includes('Removal requested')) {
+                if (aData['Huawei_bot->time_bot'].includes('Removal requested')) {
                     $('td', nRow).css('background-color', 'rgb(227 211 66 / 36%)');
                 }
-                if (aData.buildinfo_console.includes('Draft')) {
+                if (aData['Huawei_bot->time_bot'].includes('Draft')) {
                     $('td', nRow).css('background-color', 'rgb(255 0 0 / 72%)');
                 }
-                if (aData.buildinfo_console.includes('Update rejected')) {
+                if (aData['Huawei_bot->time_bot'].includes('Update rejected')) {
                     $('td', nRow).css('background-color', 'rgb(227 211 66 / 36%)');
                 }
-                if (aData.buildinfo_console.includes('Removal requested')) {
+                if (aData['Huawei_bot->time_bot'].includes('Removal requested')) {
                     $('td', nRow).css('background-color', 'rgb(227 211 66 / 36%)');
                 }
-                if (aData.buildinfo_console.includes('Removed by developer')) {
+                if (aData['Huawei_bot->time_bot'].includes('Removed by developer')) {
                     $('td', nRow).css('background-color', 'rgb(255 0 0 / 72%)');
                 }
-                if (aData.buildinfo_console.includes('Release canceled')) {
+                if (aData['Huawei_bot->time_bot'].includes('Release canceled')) {
                     $('td', nRow).css('background-color', 'rgb(255 0 0 / 72%)');
                 }
             },

@@ -13,6 +13,7 @@ use Illuminate\Support\Facades\Http;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\URL;
 use Nelexa\GPlay\GPlayApps;
+use Telegram\Bot\Laravel\Facades\Telegram;
 
 class CronProjectController extends Controller
 
@@ -213,7 +214,7 @@ class CronProjectController extends Controller
                 $q->where('huawei_dev_client_id','<>',null);
             })
             ->where('Huawei_bot->time_bot','<=',$timeCron)
-//            ->where('projectname','DA136-99')
+//            ->where('projectname','DA127-38')
             ->where('Huawei_package','<>',null)
             ->limit($time->limit_cron)
             ->get();
@@ -244,8 +245,8 @@ class CronProjectController extends Controller
                             'Total_downloads' => $file ? $file['Total downloads'] : 0 ,
                             'Uninstalls' => $file ? $file['Uninstalls (installed from AppGallery)'] : 0,
                             'updateTime' =>  $appInfo ? $appInfo['appInfo']['updateTime'] : 0,
-                            'message' =>   $appInfo ? $appInfo['auditInfo']['auditOpinion']: 'Error',
                         ];
+
                     }catch (\Exception $exception) {
                         Log::error('Message:' . $exception->getMessage() . '--- appsHuawei: '.$appHuawei->projectname.'---' . $exception->getLine());
                     }
@@ -259,17 +260,34 @@ class CronProjectController extends Controller
                     }
                     array_multisort($data);
                     $data['time_bot'] = Carbon::now()->setTimezone('Asia/Ho_Chi_Minh')->toDateTimeString();
-                    $data['versionNumber'] = $appInfo ? $appInfo['appInfo']['versionNumber'] : 0;
-                    ProjectModel::updateOrCreate(
-                        [
-                            'projectid'=> $appHuawei->projectid
-                        ],
-                        [
-                            'Huawei_status' => $appInfo ? $appInfo['appInfo']['releaseState']: 100,
-                            'Huawei_appId' => !$appIDs ? null : $appIDs[0]->value,
-                            'Huawei_bot' => json_encode(array_filter($data)),
-                        ]
-                    );
+                    $data['versionNumber'] = $appInfo ? $appInfo['appInfo']['versionNumber'] : 'N/A';
+                    $data['message'] = $appInfo ? $appInfo['auditInfo']['auditOpinion']: 'Error';
+                    $status = $appInfo ? $appInfo['appInfo']['releaseState']: 100;
+                    $huawei = ProjectModel::updateOrCreate(
+                            [
+                                'projectid'=> $appHuawei->projectid
+                            ],
+                            [
+                                'Huawei_status' => $status,
+                                'Huawei_appId' => !$appIDs ? null : $appIDs[0]->value,
+                                'Huawei_bot' => json_encode(array_filter($data)),
+                            ]
+                        );
+                    if($status !== 0 ){
+                        $text = " <pre>Project Error (Huawei)</pre> \n"
+                            . "<b>Project name: </b>\n"
+                            . "$huawei->projectname\n"
+                            . "<b>Data Version: </b>\n"
+                            . $data['versionNumber']. "\n"
+                            . "<b>Message: </b>\n"
+                            . $data['message']. "\n"
+                        ;
+                        Telegram::sendMessage([
+                            'chat_id' => env('TELEGRAM_CHANNEL_ID', ''),
+                            'parse_mode' => 'HTML',
+                            'text' => $text
+                        ]);
+                    }
                 }catch (\Exception $exception) {
                     Log::error('Message:' . $exception->getMessage() . '--- cronHuawei: '.$appHuawei->projectname.'---' . $exception->getLine());
                 }

@@ -79,13 +79,6 @@
 <script src="assets/pages/datatables.init.js"></script>
 <script src="plugins/select2/js/select2.min.js"></script>
 
-{{--<script>--}}
-{{--    $("#template").select2({});--}}
-{{--    $("#ma_da").select2({});--}}
-{{--    $("#buildinfo_store_name_x").select2({});--}}
-{{--</script>--}}
-
-
 <script type="text/javascript">
     $(function () {
         $.ajaxSetup({
@@ -113,7 +106,7 @@
                 {data: 'ma_da', name: 'ma_da'},
                 {data: 'package', name: 'package',orderable: false},
                 // {data: 'buildinfo_mess', name: 'buildinfo_mess',orderable: false},
-                {data: 'buildinfo_console', name: 'buildinfo_console',orderable: false},
+                {data: 'Vivo_bot->time_bot', name: 'Vivo_bottime_bot'},
                 {data: 'action',className: "text-center", name: 'action', orderable: false, searchable: false},
             ],
             columnDefs: [
@@ -124,16 +117,16 @@
                 }
             ],
             fnRowCallback: function (nRow, aData, iDisplayIndex, iDisplayIndexFull) {
-                if (aData.buildinfo_console.includes('Published')) {
+                if (aData['Vivo_bot->time_bot'].includes('Published')) {
                     $('td', nRow).css('background-color', 'rgb(184 249 166 / 69%)');
                 }
-                if (aData.buildinfo_console.includes('UnPublished')) {
+                if (aData['Vivo_bot->time_bot'].includes('UnPublished')) {
                     $('td', nRow).css('background-color', 'rgb(255 230 180 / 69%)');
                 }
-                if (aData.buildinfo_console.includes('Removed')) {
+                if (aData['Vivo_bot->time_bot'].includes('Removed')) {
                     $('td', nRow).css('background-color', 'rgb(255 62 62 / 17%)');
                 }
-                if (aData.buildinfo_console.includes('To be published')) {
+                if (aData['Vivo_bot->time_bot'].includes('To be published')) {
                     $('td', nRow).css('background-color', 'rgb(237 237 237 / 69%)');
                 }
             },

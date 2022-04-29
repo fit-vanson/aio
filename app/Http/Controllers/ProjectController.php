@@ -3084,13 +3084,19 @@ class ProjectController extends Controller
             }else{
                 $data_title_app='';
             }
-            $ads = json_decode($record->Vivo_ads,true);
-            $package_Vivo = '<p style="line-height:0.5">'.$record->Vivo_package.'</p>';
-            $ads_banner = '<p class="text-muted" style="line-height:0.5">ads_banner: '.$ads['ads_banner'].'</p>';
-            $ads_inter = '<p class="text-muted" style="line-height:0.5">ads_inter: '.$ads['ads_inter'].'</p>';
-            $ads_native = '<p class="text-muted" style="line-height:0.5">ads_native: '.$ads['ads_native'].'</p>';
-            $ads_open = '<p class="text-muted" style="line-height:0.5">ads_open: '.$ads['ads_open'].'</p>';
-            $ads_reward = '<p class="text-muted" style="line-height:0.5">ads_reward: '.$ads['ads_reward'].'</p>';
+            try{
+                $ads = json_decode($record->Vivo_ads,true);
+                $package_Vivo = '<p style="line-height:0.5">'.$record->Vivo_package.'</p>';
+                $ads_banner = '<p class="text-muted" style="line-height:0.5">ads_banner: '.$ads['ads_banner'].'</p>';
+                $ads_inter = '<p class="text-muted" style="line-height:0.5">ads_inter: '.$ads['ads_inter'].'</p>';
+                $ads_native = '<p class="text-muted" style="line-height:0.5">ads_native: '.$ads['ads_native'].'</p>';
+                $ads_open = '<p class="text-muted" style="line-height:0.5">ads_open: '.$ads['ads_open'].'</p>';
+                $ads_reward = '<p class="text-muted" style="line-height:0.5">ads_reward: '.$ads['ads_reward'].'</p>';
+            }catch (\Exception $exception) {
+                \Illuminate\Support\Facades\Log::error('Message:' . $exception->getMessage() . '--- ads: '. $record->projectname .'----'. $exception->getLine());
+            }
+
+
 //
 
 
@@ -3150,13 +3156,23 @@ class ProjectController extends Controller
                 }
 
             }
+
+//            dd($record);
+            $bot = json_decode($record->Vivo_bot,true);
+            $version_bot    = isset($bot['versionNumber']) ? $bot['versionNumber'] : 0;
+            $version_build  = $record->buildinfo_verstr;
+            if($version_bot == $version_build ){
+                $version = 'Version: <span class="badge badge-success">'.$version_bot.'</span>';
+            }else{
+                $version = 'Version Bot:  <span class="badge badge-danger">'.$version_bot.'</span> ' .  ' <br> Version Build:   <span class="badge badge-secondary">'.$version_build.'</span> ';
+            }
+
             $data_arr[] = array(
                 "updated_at" => $record->updated_at,
                 "logo" => $logo,
                 "ma_da"=>$data_ma_da.$data_template.$data_projectname.$data_title_app,
                 "package" => $package_Vivo.$ads_banner.$ads_inter.$ads_native.$ads_open.$ads_reward,
-//                "buildinfo_mess" => $mess_info,
-                "buildinfo_console" => $buildinfo_console . '</br>Ứng dụng: '.$Vivo_status,
+                "Vivo_bot->time_bot" => $buildinfo_console . '</br>Ứng dụng: '.$Vivo_status. '</br> Version: '. $version. '</br> Time check:' . date('Y-m-d H:i:s',$bot['time_bot']),
                 "action"=> $btn,
             );
         }
@@ -3189,27 +3205,53 @@ class ProjectController extends Controller
 
         if (isset($request->status_app)){
             $status_app = explode(',',$request->status_app);
-
             // aTotal records
             $totalRecords = ProjectModel::select('count(*) as allcount')
-                ->where('ngocphandang_project.Huawei_package','<>','null')
+                ->where('Huawei_package','<>',null)
+                ->where('Huawei_appId','<>',null)
                 ->count();
             $totalRecordswithFilter = ProjectModel::select('count(*) as allcount')
-                ->leftjoin('ngocphandang_da','ngocphandang_da.id','=','ngocphandang_project.ma_da')
-                ->leftjoin('ngocphandang_template','ngocphandang_template.id','=','ngocphandang_project.template')
-                ->where(function ($a) use ($searchValue) {
-                    $a->where('ngocphandang_da.ma_da', 'like', '%' . $searchValue . '%')
-                        ->orWhere('ngocphandang_project.projectname', 'like', '%' . $searchValue . '%')
-                        ->orWhere('ngocphandang_project.title_app', 'like', '%' . $searchValue . '%')
-                        ->orWhere('ngocphandang_template.template', 'like', '%' . $searchValue . '%')
-                        ->orWhere('ngocphandang_project.Huawei_package', 'like', '%' . $searchValue . '%');
+                ->with('da','matemplate')
+                ->where('projectname', 'like', '%' . $searchValue . '%')
+//                ->orWhere('title_app', 'like', '%' . $searchValue . '%')
+//                ->orWhere('Huawei_package', 'like', '%' . $searchValue . '%')
+                ->whereHas('da', function ($q) use ($searchValue) {
+                    $q->orWhere('ma_da', 'like', '%' . $searchValue . '%');
                 })
-                ->where('ngocphandang_project.Huawei_package','<>','null')
-                ->where('ngocphandang_project.Huawei_appId','<>',null)
-                ->whereIn('ngocphandang_project.Huawei_status',$status_app)
+                ->whereHas('matemplate', function ($q) use ($searchValue) {
+                    $q->orWhere('template', 'like', '%' . $searchValue . '%');
+                })
+                ->where('Huawei_package','<>',null)
+                ->where('Huawei_appId','<>',null)
+                ->whereIn('Huawei_status',$status_app)
                 ->count();
             // Get records, also we have included search filter as well
             $records = ProjectModel::orderBy($columnName, $columnSortOrder)
+                ->with('da','matemplate')
+                ->where('projectname', 'like', '%' . $searchValue . '%')
+                ->whereHas('da', function ($q) use ($searchValue) {
+                    $q->Where('ma_da', 'like', '%' . $searchValue . '%');
+                })
+                ->whereHas('matemplate', function ($q) use ($searchValue) {
+                    $q->Where('template', 'like', '%' . $searchValue . '%');
+                })
+
+                ->where('Huawei_package','<>',null)
+                ->where('Huawei_appId','<>',null)
+                ->whereIn('Huawei_status',$status_app)
+//                ->orWhere('title_app', 'like', '%' . $searchValue . '%')
+//                ->orWhere('Huawei_package', 'like', '%' . $searchValue . '%')
+                ->select('*')
+                ->skip($start)
+                ->take($rowperpage)
+                ->get();
+
+        }else{
+            $totalRecords = ProjectModel::select('count(*) as allcount')
+                ->where('ngocphandang_project.Huawei_package','<>',null)
+                ->where('ngocphandang_project.Huawei_appId','<>',null)
+                ->count();
+            $totalRecordswithFilter = ProjectModel::select('count(*) as allcount')
                 ->with('da','matemplate')
                 ->whereHas('da', function ($q) use ($searchValue) {
                     $q->where('ngocphandang_da.ma_da', 'like', '%' . $searchValue . '%')
@@ -3221,27 +3263,6 @@ class ProjectController extends Controller
                     $q->orWhere('ngocphandang_template.template', 'like', '%' . $searchValue . '%');
                 })
                 ->where('ngocphandang_project.Huawei_package','<>',null)
-                ->where('ngocphandang_project.Huawei_appId','<>',null)
-                ->whereIn('ngocphandang_project.Huawei_status',$status_app)
-                ->select('ngocphandang_project.*')
-                ->skip($start)
-                ->take($rowperpage)
-                ->get();
-        }else{
-            $totalRecords = ProjectModel::select('count(*) as allcount')
-                ->where('ngocphandang_project.Huawei_package','<>','null')
-                ->count();
-            $totalRecordswithFilter = ProjectModel::select('count(*) as allcount')
-                ->leftjoin('ngocphandang_da','ngocphandang_da.id','=','ngocphandang_project.ma_da')
-                ->leftjoin('ngocphandang_template','ngocphandang_template.id','=','ngocphandang_project.template')
-                ->where(function ($a) use ($searchValue) {
-                    $a->where('ngocphandang_da.ma_da', 'like', '%' . $searchValue . '%')
-                        ->orWhere('ngocphandang_project.projectname', 'like', '%' . $searchValue . '%')
-                        ->orWhere('ngocphandang_project.title_app', 'like', '%' . $searchValue . '%')
-                        ->orWhere('ngocphandang_template.template', 'like', '%' . $searchValue . '%')
-                        ->orWhere('ngocphandang_project.Huawei_package', 'like', '%' . $searchValue . '%');
-                })
-                ->where('ngocphandang_project.Huawei_package','<>','null')
                 ->where('ngocphandang_project.Huawei_appId','<>',null)
                 ->count();
             // Get records, also we have included search filter as well
@@ -3265,22 +3286,10 @@ class ProjectController extends Controller
         }
 
         // Total records
-
-
-
         $data_arr = array();
         foreach ($records as $record) {
 
             $btn = ' <a href="javascript:void(0)" onclick="detailHuawei('.$record->projectid.')" class="btn btn-outline-warning"><i class="mdi mdi-clipboard-text"></i></a>';
-//            $ma_da = DB::table('ngocphandang_project')
-//                ->join('ngocphandang_da','ngocphandang_da.id','=','ngocphandang_project.ma_da')
-//                ->where('ngocphandang_da.id',$record->ma_da)
-//                ->first();
-//            $template = DB::table('ngocphandang_project')
-//                ->join('ngocphandang_template','ngocphandang_template.id','=','ngocphandang_project.template')
-//                ->where('ngocphandang_template.id',$record->template)
-//                ->first();
-
             if(isset($record->da)) {
                 $data_ma_da =
                     '<span style="line-height:3"> Mã Dự án: ' . $record->da->ma_da . '</span>';
@@ -3398,8 +3407,6 @@ class ProjectController extends Controller
 
             if(isset($record->Huawei_bot)){
                 $bot = json_decode($record->Huawei_bot,true);
-//                dd($bot);
-
                 $version_bot    = isset($bot['versionNumber']) ? $bot['versionNumber'] : 0;
                 $version_build  = $record->buildinfo_verstr;
                 if($version_bot == $version_build ){
@@ -3422,7 +3429,7 @@ class ProjectController extends Controller
                     "install" => $sum_download,
                     "ma_da"=>$data_ma_da.$data_template.$data_projectname.$data_title_app,
                     "package" => $package_Huawei.$ads_banner.$ads_inter.$ads_native.$ads_open.$ads_reward,
-                    "buildinfo_console" =>'Console: '.$buildinfo_console.'<br> Ứng dụng: '.$Huawei_status.'<br>'.$version. '<br> Time check: '.$bot['time_bot'],
+                    "Huawei_bot->time_bot" =>'Console: '.$buildinfo_console.'<br> Ứng dụng: '.$Huawei_status.'<br>'.$version. '<br> Time check: '.$bot['time_bot'],
                     "action"=> $btn,
                 );
             }else{
@@ -3432,7 +3439,7 @@ class ProjectController extends Controller
                     "install" => 0,
                     "ma_da"=>$data_ma_da.$data_template.$data_projectname.$data_title_app,
                     "package" => $package_Huawei.$ads_banner.$ads_inter.$ads_native.$ads_open.$ads_reward,
-                    "buildinfo_console" =>'Console: '.$buildinfo_console.'<br> Ứng dụng: '.$Huawei_status,
+                    "Huawei_bot->time_bot" =>'Console: '.$buildinfo_console.'<br> Ứng dụng: '.$Huawei_status,
                     "action"=> $btn,
                 );
             }
