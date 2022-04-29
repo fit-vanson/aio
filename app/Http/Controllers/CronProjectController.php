@@ -33,6 +33,8 @@ class CronProjectController extends Controller
     }
 
     public function index(){
+        ini_set('max_execution_time', 600);
+        Artisan::call('optimize:clear');
         $chplay = $huawei = $vivo = '';
         try {
             $chplay = $this->Chplay();
