@@ -47,12 +47,33 @@ class HomeController extends Controller
             )
             ->count();
 
+        $data = ProjectModel::select(
+            'Chplay_status','Amazon_status','Samsung_status','Xiaomi_status','Oppo_status','Vivo_status','Huawei_status',
+            'Chplay_package','Amazon_package','Samsung_package','Xiaomi_package','Oppo_package','Vivo_package','Huawei_package'
+        )
+            ->get()
+            ->toArray();
+        $Chplay_status = array_count_values(array_filter(array_column($data, 'Chplay_status')));
+        $Amazon_status = array_count_values(array_filter(array_column($data, 'Amazon_status')));
+        $Samsung_status = array_count_values(array_filter(array_column($data, 'Samsung_status')));
+        $Xiaomi_status = array_count_values(array_filter(array_column($data, 'Xiaomi_status')));
+        $Oppo_status = array_count_values(array_filter(array_column($data, 'Oppo_status')));
+        $Vivo_status = array_count_values(array_filter(array_column($data, 'Vivo_status')));
+        $Huawei_status = array_count_values(array_filter(array_column($data, 'Huawei_status')));
+
         session(["secret_code" => $secretCode]);
         return view("index", compact(
             "qrCodeUrl",
             "project",
             "projectLastMonth",
-            "projectInMonth"
+            "projectInMonth",
+            "Chplay_status",
+            "Amazon_status",
+            "Samsung_status",
+            "Xiaomi_status",
+            "Oppo_status",
+            "Vivo_status",
+            "Huawei_status"
         ));
 
     }
@@ -86,23 +107,117 @@ class HomeController extends Controller
         return \redirect()->intended('login');
     }
 
-    public static  function statusMarket($markert,$status=null){
-        if($markert == 'Chplay'){
-            $data = $status ? ProjectModel::where('Chplay_status',$status)->where('Chplay_package','<>',NULL)->count() :  ProjectModel::where('Chplay_package','<>',NULL)->count();
-        }elseif ($markert == 'Amazon'){
-            $data = $status ? ProjectModel::where('Amazon_status',$status)->where('Amazon_package','<>',NULL)->count() :  ProjectModel::where('Amazon_package','<>',NULL)->count();
-        }elseif ($markert == 'Samsung') {
-            $data = $status ? ProjectModel::where('Samsung_status', $status)->where('Samsung_package', '<>', NULL)->count() : ProjectModel::where('Samsung_package', '<>', NULL)->count();
-        }elseif ($markert == 'Xiaomi') {
-            $data = $status ? ProjectModel::where('Xiaomi_status', $status)->where('Xiaomi_package', '<>', NULL)->count() : ProjectModel::where('Xiaomi_package', '<>', NULL)->count();
-        }elseif ($markert == 'Oppo') {
-            $data = $status ? ProjectModel::where('Oppo_status', $status)->where('Oppo_package', '<>', NULL)->count() : ProjectModel::where('Oppo_package', '<>', NULL)->count();
-        }elseif ($markert == 'Vivo') {
-            $data = $status ? ProjectModel::where('Vivo_status', $status)->where('Vivo_package', '<>', NULL)->count() : ProjectModel::where('Vivo_package', '<>', NULL)->count();
-        }elseif ($markert == 'Huawei') {
-            $data = $status ? ProjectModel::where('Huawei_status', $status)->where('Huawei_package', '<>', NULL)->count() : ProjectModel::where('Huawei_package', '<>', NULL)->count();
-        }
-        return $data;
-    }
+//    public static  function Market($market){
+//        $data_arr = array();
+//
+//        $data = ProjectModel::select(
+//            'Chplay_status','Amazon_status','Samsung_status','Xiaomi_status','Oppo_status','Vivo_status','Huawei_status',
+//            'Chplay_package','Amazon_package','Samsung_package','Xiaomi_package','Oppo_package','Vivo_package','Huawei_package'
+//        )
+//            ->get()
+//            ->toArray();
+//
+//
+//         $status = array_count_values(array_filter(array_column($data, 'Chplay_status')));
+//         dd(array_sum($status));
+//
+//        $counts = array_count_values($a);
+//         dd($counts);
+//        foreach ($data as $item){
+//            $data_arr [] = [
+//                'status' => $item->Chplay_status
+//            ];
+//        }
+////        dd($data);
+//
+//
+//        if($markert == 'Chplay'){
+//            $data = ProjectModel::select('Chplay_status')->where('Chplay_package','<>',NULL)->where('Chplay_status','<>',NULL)->get();
+//            foreach ($data as $item){
+//                $data_arr [] = [
+//                    'status' => $item->Chplay_status
+//                ];
+//            }
+//        }elseif ($markert == 'Amazon'){
+//            $data = ProjectModel::select('Amazon_status')->where('Amazon_package','<>',NULL)->where('Amazon_status','<>',NULL)->get();
+//            foreach ($data as $item){
+//                $data_arr [] = [
+//                    'status' => $item->Amazon_status
+//                ];
+//            }
+////            $data = $status ? ProjectModel::where('Amazon_status',$status)->where('Amazon_package','<>',NULL)->count() :  ProjectModel::where('Amazon_package','<>',NULL)->count();
+//        }elseif ($markert == 'Samsung') {
+//            $data = ProjectModel::select('Samsung_status')->where('Samsung_package','<>',NULL)->where('Samsung_status','<>',NULL)->get();
+//            foreach ($data as $item){
+//                $data_arr [] = [
+//                    'status' => $item->Amazon_status
+//                ];
+//            }
+////            $data = $status ? ProjectModel::where('Samsung_status', $status)->where('Samsung_package', '<>', NULL)->count() : ProjectModel::where('Samsung_package', '<>', NULL)->count();
+//        }elseif ($markert == 'Xiaomi') {
+//            $data = ProjectModel::select('Xiaomi_status')->where('Xiaomi_package','<>',NULL)->where('Xiaomi_status','<>',NULL)->get();
+//            foreach ($data as $item){
+//                $data_arr [] = [
+//                    'status' => $item->Xiaomi_status
+//                ];
+//            }
+////            $data = $status ? ProjectModel::where('Xiaomi_status', $status)->where('Xiaomi_package', '<>', NULL)->count() : ProjectModel::where('Xiaomi_package', '<>', NULL)->count();
+//        }elseif ($markert == 'Oppo') {
+//            $data = ProjectModel::select('Oppo_status')->where('Oppo_package','<>',NULL)->where('Oppo_status','<>',NULL)->get();
+//            foreach ($data as $item){
+//                $data_arr [] = [
+//                    'status' => $item->Oppo_status
+//                ];
+//            }
+////            $data = $status ? ProjectModel::where('Oppo_status', $status)->where('Oppo_package', '<>', NULL)->count() : ProjectModel::where('Oppo_package', '<>', NULL)->count();
+//        }elseif ($markert == 'Vivo') {
+//            $data = ProjectModel::select('Vivo_status')->where('Vivo_package','<>',NULL)->where('Vivo_status','<>',NULL)->get();
+//            foreach ($data as $item){
+//                $data_arr [] = [
+//                    'status' => $item->Vivo_status
+//                ];
+//            }
+////            $data = $status ? ProjectModel::where('Vivo_status', $status)->where('Vivo_package', '<>', NULL)->count() : ProjectModel::where('Vivo_package', '<>', NULL)->count();
+//        }elseif ($markert == 'Huawei') {
+//            $data = ProjectModel::select('Huawei_status')->where('Huawei_package','<>',NULL)->where('Huawei_status','<>',NULL)->get();
+//            foreach ($data as $item){
+//                $data_arr [] = [
+//                    'status' => $item->Huawei_status
+//                ];
+//            }
+////            $data = $status ? ProjectModel::where('Huawei_status', $status)->where('Huawei_package', '<>', NULL)->count() : ProjectModel::where('Huawei_package', '<>', NULL)->count();
+//        }
+//
+//
+////        if($status){
+////            if (in_array($status, array_column($data_arr, 'status'))) {
+////                $counts = array_count_values(array_column($data_arr, 'status'))[$status];
+////            }else{
+////                $counts = 0;
+////            }
+////        }else {
+////            $counts = count($data_arr);
+////        }
+//        return $data_arr;
+//    }
+//    public static function statusMarket($market,$status= Null){
+//        $data_arr = self::Market($market);
+//        dd($data_arr);
+////        if($status){
+////            if (in_array($status, array_column($data_arr, 'status'))) {
+////                $counts = array_count_values(array_column($data_arr, 'status'))[$status];
+////            }else{
+////                $counts = 0;
+////            }
+////        }else {
+////            $counts = count($data_arr);
+////        }
+//        $data = (array_count_values(array_column($data_arr, 'status')));
+//
+//        return view("index", compact(
+//            "data"
+//        ));
+////        return array_count_values(array_column($data_arr, 'status'));
+//    }
 
 }
