@@ -97,12 +97,12 @@
                             <img src="{{ URL::asset('img/icon/google.png') }}" alt="">
                         </div>
                         <h5 class="font-size-16 text-uppercase mt-0 text-white-50">CHplay</h5>
-                        <h4 class="font-weight-medium font-size-24">{{\App\Http\Controllers\HomeController::statusMarket('Chplay')}} </h4>
+                        <h4 class="font-weight-medium font-size-24">{{array_sum($Chplay_status)}} </h4>
                     </div>
                     <div class="pt-2">
                         <div class="float-right">
-                            <p class="text-white-50 mb-0 mt-1">{{\App\Http\Controllers\HomeController::statusMarket('Chplay',1)}}</p>
-                            <p class="text-white-50 mb-0 mt-1">{{\App\Http\Controllers\HomeController::statusMarket('Chplay',6)}}</p>
+                            <p class="text-white-50 mb-0 mt-1">{{$Chplay_status[1]}}</p>
+                            <p class="text-white-50 mb-0 mt-1">{{$Chplay_status[6]}}</p>
                         </div>
                         <p class="text-white-50 mb-0 mt-1">Public</p>
                         <p class="text-white-50 mb-0 mt-1">Check</p>
@@ -122,8 +122,8 @@
                     </div>
                     <div class="pt-2">
                         <div class="float-right">
-                            <p class="text-white-50 mb-0 mt-1">{{\App\Http\Controllers\HomeController::statusMarket('Amazon',1)}}</p>
-                            <p class="text-white-50 mb-0 mt-1">{{\App\Http\Controllers\HomeController::statusMarket('Amazon',6)}}</p>
+                            <p class="text-white-50 mb-0 mt-1">{{@$Amazon_status[1]}}</p>
+                            <p class="text-white-50 mb-0 mt-1">{{@$Amazon_status[6]}}</p>
                         </div>
                         <p class="text-white-50 mb-0 mt-1">Public</p>
                         <p class="text-white-50 mb-0 mt-1">Check</p>
@@ -139,12 +139,12 @@
                             <img src="{{ URL::asset('img/icon/samsung.png') }}" alt="">
                         </div>
                         <h5 class="font-size-16 text-uppercase mt-0 text-white-50">Samsung</h5>
-                        <h4 class="font-weight-medium font-size-24">{{\App\Http\Controllers\HomeController::statusMarket('Samsung')}} </h4>
+                        <h4 class="font-weight-medium font-size-24">{{array_sum($Samsung_status)}} </h4>
                     </div>
                     <div class="pt-2">
                         <div class="float-right">
-                            <p class="text-white-50 mb-0 mt-1">{{\App\Http\Controllers\HomeController::statusMarket('Samsung',1)}}</p>
-                            <p class="text-white-50 mb-0 mt-1">{{\App\Http\Controllers\HomeController::statusMarket('Samsung',6)}}</p>
+                            <p class="text-white-50 mb-0 mt-1">{{@$Samsung_status[1]}}</p>
+                            <p class="text-white-50 mb-0 mt-1">{{@$Samsung_status[6]}}</p>
                         </div>
                         <p class="text-white-50 mb-0 mt-1">Public</p>
                         <p class="text-white-50 mb-0 mt-1">Check</p>
@@ -160,12 +160,12 @@
                             <img src="{{ URL::asset('img/icon/xiaomi.png') }}" alt="">
                         </div>
                         <h5 class="font-size-16 text-uppercase mt-0 text-white-50">Xiaomi</h5>
-                        <h4 class="font-weight-medium font-size-24">{{\App\Http\Controllers\HomeController::statusMarket('Xiaomi')}} </h4>
+                        <h4 class="font-weight-medium font-size-24">{{array_sum($Xiaomi_status)}} </h4>
                     </div>
                     <div class="pt-2">
                         <div class="float-right">
-                            <p class="text-white-50 mb-0 mt-1">{{\App\Http\Controllers\HomeController::statusMarket('Xiaomi',1)}}</p>
-                            <p class="text-white-50 mb-0 mt-1">{{\App\Http\Controllers\HomeController::statusMarket('Xiaomi',6)}}</p>
+                            <p class="text-white-50 mb-0 mt-1">{{@$Xiaomi_status[1]}}</p>
+                            <p class="text-white-50 mb-0 mt-1">{{@$Xiaomi_status[6]}}</p>
                         </div>
                         <p class="text-white-50 mb-0 mt-1">Public</p>
                         <p class="text-white-50 mb-0 mt-1">Check</p>
@@ -181,12 +181,12 @@
                             <img src="{{ URL::asset('img/icon/oppo.png') }}" alt="">
                         </div>
                         <h5 class="font-size-16 text-uppercase mt-0 text-white-50">Oppo</h5>
-                        <h4 class="font-weight-medium font-size-24">{{\App\Http\Controllers\HomeController::statusMarket('Oppo')}} </h4>
+                        <h4 class="font-weight-medium font-size-24">{{array_sum($Oppo_status)}} </h4>
                     </div>
                     <div class="pt-2">
                         <div class="float-right">
-                            <p class="text-white-50 mb-0 mt-1">{{\App\Http\Controllers\HomeController::statusMarket('Oppo',1)}}</p>
-                            <p class="text-white-50 mb-0 mt-1">{{\App\Http\Controllers\HomeController::statusMarket('Oppo',6)}}</p>
+                            <p class="text-white-50 mb-0 mt-1">{{@$Oppo_status[1]}}</p>
+                            <p class="text-white-50 mb-0 mt-1">{{@$Oppo_status[6]}}</p>
                         </div>
                         <p class="text-white-50 mb-0 mt-1">Public</p>
                         <p class="text-white-50 mb-0 mt-1">Check</p>
@@ -202,12 +202,12 @@
                             <img src="{{ URL::asset('img/icon/vivo.png') }}" alt="">
                         </div>
                         <h5 class="font-size-16 text-uppercase mt-0 text-white-50">Vivo</h5>
-                        <h4 class="font-weight-medium font-size-24">{{\App\Http\Controllers\HomeController::statusMarket('Vivo')}} </h4>
+                        <h4 class="font-weight-medium font-size-24">{{array_sum($Vivo_status)}} </h4>
                     </div>
                     <div class="pt-2">
                         <div class="float-right">
-                            <p class="text-white-50 mb-0 mt-1">{{\App\Http\Controllers\HomeController::statusMarket('Vivo',1)}}</p>
-                            <p class="text-white-50 mb-0 mt-1">{{\App\Http\Controllers\HomeController::statusMarket('Vivo',6)}}</p>
+                            <p class="text-white-50 mb-0 mt-1">{{@$Vivo_status[1]}}</p>
+                            <p class="text-white-50 mb-0 mt-1">{{@$Vivo_status[6]}}</p>
                         </div>
                         <p class="text-white-50 mb-0 mt-1">Public</p>
                         <p class="text-white-50 mb-0 mt-1">Check</p>
@@ -223,12 +223,12 @@
                             <img src="{{ URL::asset('img/icon/huawei.png') }}" alt="">
                         </div>
                         <h5 class="font-size-16 text-uppercase mt-0 text-white-50">Huawei</h5>
-                        <h4 class="font-weight-medium font-size-24">{{\App\Http\Controllers\HomeController::statusMarket('Huawei')}} </h4>
+                        <h4 class="font-weight-medium font-size-24">{{array_sum($Huawei_status)}} </h4>
                     </div>
                     <div class="pt-2">
                         <div class="float-right">
-                            <p class="text-white-50 mb-0 mt-1">{{\App\Http\Controllers\HomeController::statusMarket('Huawei',1)}}</p>
-                            <p class="text-white-50 mb-0 mt-1">{{\App\Http\Controllers\HomeController::statusMarket('Huawei',6)}}</p>
+                            <p class="text-white-50 mb-0 mt-1">{{@$Huawei_status[1]}}</p>
+                            <p class="text-white-50 mb-0 mt-1">{{@$Huawei_status[6]}}</p>
                         </div>
                         <p class="text-white-50 mb-0 mt-1">Public</p>
                         <p class="text-white-50 mb-0 mt-1">Check</p>
