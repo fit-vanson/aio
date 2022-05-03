@@ -547,4 +547,48 @@ class CronProjectController extends Controller
     }
 
 
+    public function updatedActivity()
+    {
+        $activity = Telegram::getUpdates();
+//        dd($activity);
+
+
+//        Telegram::sendMessage([
+////            'chat_id' => env('TELEGRAM_CHANNEL_ID', ''),
+////            -692917665
+//            'chat_id' => '-692917665',
+//            'parse_mode' => 'HTML',
+//            'text' => 'gjdfkgjdlf'
+//        ]);
+
+//        dd($activity);
+        $getParams =  end($activity);
+        $textRequest = $getParams['message']['text'];
+
+        if (strpos($textRequest, '/getInfo') !== false) {
+            [$key, $projectname] = explode(' ',$textRequest);
+            $project = ProjectModel::with('da','matemplate')->where('projectname',$projectname)->first();
+//            echo 'true';
+//            dd($project);
+
+            $text = "<b>Project name: </b>\n"
+                . "<code>$project->projectname</code>\n"
+                . "<b>Template: </b>\n"
+                . "<pre>". $project->matemplate->template."</pre>\n"
+                . "<b>DA: </b>\n"
+                . "<pre>". $project->da->ma_da."</pre>\n"
+                . "<b>Title: </b>\n"
+                . "<pre>". $project->title_app."</pre>\n"
+            ;
+
+//            dd($text);
+            Telegram::sendMessage([
+                'chat_id' => env('TELEGRAM_GROUP_ID', ''),
+                'parse_mode' => 'HTML',
+                'text' => $text
+            ]);
+        }
+    }
+
+
 }

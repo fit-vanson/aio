@@ -225,6 +225,7 @@ Route::group(['prefix'=>'cronProject'], function (){
     Route::get('/ch-play',[CronProjectController::class,'Chplay'])->name('cronProject.Chplay');
     Route::get('/huawei',[CronProjectController::class,'Huawei'])->name('cronProject.Huawei');
     Route::get('/vivo',[CronProjectController::class,'Vivo'])->name('cronProject.Vivo');
+    Route::get('/telegram',[CronProjectController::class,'updatedActivity'])->name('cronProject.Vivo');
 });
 Route::get('/package',[CronProjectController::class,'getPackage'])->name('cronProject.getPackage');
 

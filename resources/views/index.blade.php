@@ -63,6 +63,7 @@
                         <h5 class="font-size-16 text-uppercase mt-0 text-white-50">Project</h5>
                         <h4 class="font-weight-medium font-size-24">{{$project}}</h4>
                         <?php
+                        if($projectLastMonth != 0){
                             $diff = number_format(($projectInMonth - $projectLastMonth)/ $projectLastMonth *100,2);
                             if($diff > 0 ){
                         ?>
@@ -73,7 +74,9 @@
                         <div class="mini-stat-label bg-danger">
                             <p class="mb-0">{{$diff}}%</p>
                         </div>
-                        <?php } ?>
+                        <?php }
+                            }
+                            ?>
                     </div>
                     <div class="pt-2">
                         <div class="float-right">
@@ -115,7 +118,7 @@
                             <img src="{{ URL::asset('img/icon/amazon.png') }}" alt="">
                         </div>
                         <h5 class="font-size-16 text-uppercase mt-0 text-white-50">Amazon</h5>
-                        <h4 class="font-weight-medium font-size-24">{{\App\Http\Controllers\HomeController::statusMarket('Amazon')}} </h4>
+                        <h4 class="font-weight-medium font-size-24">{{array_sum($Amazon_status)}} </h4>
                     </div>
                     <div class="pt-2">
                         <div class="float-right">
