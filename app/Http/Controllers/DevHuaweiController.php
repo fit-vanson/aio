@@ -43,24 +43,25 @@ class DevHuaweiController extends Controller
         // Total records
         $totalRecords = Dev_Huawei::select('count(*) as allcount')->count();
         $totalRecordswithFilter = Dev_Huawei::select('count(*) as allcount')
-            ->leftjoin('ngocphandang_ga','ngocphandang_ga.id','=','ngocphandang_dev_huawei.huawei_ga_name')
-            ->leftjoin('ngocphandang_gadev','ngocphandang_gadev.id','=','ngocphandang_dev_huawei.huawei_email')
-            ->orwhere('ngocphandang_ga.ga_name', 'like', '%' . $searchValue . '%')
+//            ->leftjoin('ngocphandang_ga','ngocphandang_ga.id','=','ngocphandang_dev_huawei.huawei_ga_name')
+//            ->leftjoin('ngocphandang_gadev','ngocphandang_gadev.id','=','ngocphandang_dev_huawei.huawei_email')
+//            ->orwhere('ngocphandang_ga.ga_name', 'like', '%' . $searchValue . '%')
             ->orWhere('ngocphandang_dev_huawei.huawei_store_name', 'like', '%' . $searchValue . '%')
             ->orWhere('ngocphandang_dev_huawei.huawei_dev_name', 'like', '%' . $searchValue . '%')
-            ->orWhere('ngocphandang_gadev.gmail', 'like', '%' . $searchValue . '%')
+//            ->orWhere('ngocphandang_gadev.gmail', 'like', '%' . $searchValue . '%')
             ->orWhere('ngocphandang_dev_huawei.huawei_phone', 'like', '%' . $searchValue . '%')
             ->orWhere('ngocphandang_dev_huawei.huawei_note', 'like', '%' . $searchValue . '%')
             ->count();
 
         // Get records, also we have included search filter as well
         $records = Dev_Huawei::orderBy($columnName, $columnSortOrder)
-            ->leftjoin('ngocphandang_ga','ngocphandang_ga.id','=','ngocphandang_dev_huawei.huawei_ga_name')
-            ->leftjoin('ngocphandang_gadev','ngocphandang_gadev.id','=','ngocphandang_dev_huawei.huawei_email')
-            ->orwhere('ngocphandang_ga.ga_name', 'like', '%' . $searchValue . '%')
+            ->with('ga','gadev','project')
+//            ->leftjoin('ngocphandang_ga','ngocphandang_ga.id','=','ngocphandang_dev_huawei.huawei_ga_name')
+//            ->leftjoin('ngocphandang_gadev','ngocphandang_gadev.id','=','ngocphandang_dev_huawei.huawei_email')
+//            ->orwhere('ngocphandang_ga.ga_name', 'like', '%' . $searchValue . '%')
             ->orWhere('ngocphandang_dev_huawei.huawei_store_name', 'like', '%' . $searchValue . '%')
             ->orWhere('ngocphandang_dev_huawei.huawei_dev_name', 'like', '%' . $searchValue . '%')
-            ->orWhere('ngocphandang_gadev.gmail', 'like', '%' . $searchValue . '%')
+//            ->orWhere('ngocphandang_gadev.gmail', 'like', '%' . $searchValue . '%')
             ->orWhere('ngocphandang_dev_huawei.huawei_phone', 'like', '%' . $searchValue . '%')
             ->orWhere('ngocphandang_dev_huawei.huawei_note', 'like', '%' . $searchValue . '%')
             ->select('ngocphandang_dev_huawei.*')
@@ -70,16 +71,28 @@ class DevHuaweiController extends Controller
 
 
 
+
         $data_arr = array();
         foreach ($records as $record) {
             $btn = ' <a href="javascript:void(0)" onclick="editDevhuawei('.$record->id.')" class="btn btn-warning"><i class="ti-pencil-alt"></i></a>';
             $btn = $btn.' <a href="javascript:void(0)" data-toggle="tooltip"  data-id="'.$record->id.'" data-original-title="Delete" class="btn btn-danger deleteDevhuawei"><i class="ti-trash"></i></a>';
 
 
+//            dd($record);
+
             $email = DB::table('ngocphandang_dev_huawei')
                 ->join('ngocphandang_gadev','ngocphandang_gadev.id','=','ngocphandang_dev_huawei.huawei_email')
                 ->where('ngocphandang_gadev.id',$record->huawei_email)
-                ->first();
+                    ->first();
+//            dd($email);
+            $email =$record->gadev->gmail;
+
+//            if(!isset($record->gadev)){
+//                $email =  '';
+//            }else{
+//                $email = $record->gadev->gmail;
+//            }
+
 
 
             if($record->huawei_status == 0){
@@ -95,28 +108,31 @@ class DevHuaweiController extends Controller
                 $status = '<span class="badge badge-danger">Suspend</span>';
             }
 
-            $project = DB::table('ngocphandang_dev_huawei')
-                ->join('ngocphandang_project','ngocphandang_project.huawei_buildinfo_store_name_x','=','ngocphandang_dev_huawei.id')
-                ->where('ngocphandang_project.huawei_buildinfo_store_name_x',$record->id)
-                ->count();
+
 
             if($record->huawei_ga_name == 0 ){
                 $ga_name =  '<span class="badge badge-dark">Chưa có</span>';
             }else{
-                $ga_name = DB::table('ngocphandang_dev_huawei')
-                    ->join('ngocphandang_ga','ngocphandang_ga.id','=','ngocphandang_dev_huawei.huawei_ga_name')
-                    ->where('ngocphandang_ga.id',$record->huawei_ga_name)
-                    ->first();
-                $ga_name = $ga_name->ga_name;
+                $ga_name = $record->ga->ga_name;
             }
 
+            if($record->huawei_attribute !=0){
+                $thuoc_tinh = '<img height="70px" src="img/icon/profile.png">';
+            }else{
+                $thuoc_tinh = '<img height="70px" src="img/icon/office-building.png">';
+            }
+            $release = $check = 0;
+            foreach ($record->project as $ch){
+                $ch->Huawei_status == 0 ? $release ++ : $check++;
+            }
 
             $data_arr[] = array(
+                "huawei_attribute" => $thuoc_tinh,
                 "huawei_ga_name" => $ga_name,
-                "huawei_dev_name" => '<a href="/project?q=dev_huawei&id='.$record->id.'"> <span>'.$record->huawei_dev_name.' - ('.$project.')</span></a>',
+                "huawei_dev_name" => '<a href="/project?q=dev_huawei&id='.$record->id.'"> <span>'.$record->huawei_dev_name.'</span></a>',
                 "huawei_store_name" => $record->huawei_store_name,
-                "huawei_email"=>$email->gmail,
-                "huawei_pass"=>$record->huawei_pass,
+                "huawei_email"=>$email.'</p>'.'<p class="text-muted">Pass: '.$record->huawei_pass.'</p>',
+                "project"=> ' <span class="badge badge-secondary">'.count($record->project).'</span> ' .' <span class="badge badge-success"> '.$release.' </span>'. ' <span class="badge badge-danger"> '.$check.' </span>' ,
                 "huawei_status"=>$status,
                 "huawei_note"=>$record->huawei_note,
                 "action"=> $btn,

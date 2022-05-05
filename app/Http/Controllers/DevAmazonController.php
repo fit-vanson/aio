@@ -54,7 +54,9 @@ class DevAmazonController extends Controller
 
         // Get records, also we have included search filter as well
         $records = Dev_Amazon::orderBy($columnName, $columnSortOrder)
+            ->with('ga','gadev','project')
             ->where('amazon_ga_name', 'like', '%' . $searchValue . '%')
+//            ->where('amazon_dev_name', 'DEV A 10')
             ->orWhere('amazon_dev_name', 'like', '%' . $searchValue . '%')
             ->orWhere('amazon_store_name', 'like', '%' . $searchValue . '%')
             ->orWhere('amazon_email', 'like', '%' . $searchValue . '%')
@@ -64,16 +66,14 @@ class DevAmazonController extends Controller
             ->skip($start)
             ->take($rowperpage)
             ->get();
+
+
+
         $data_arr = array();
         foreach ($records as $record) {
             $btn = ' <a href="javascript:void(0)" onclick="editDevAmazon('.$record->id.')" class="btn btn-warning"><i class="ti-pencil-alt"></i></a>';
             $btn = $btn.' <a href="javascript:void(0)" data-toggle="tooltip"  data-id="'.$record->id.'" data-original-title="Delete" class="btn btn-danger deleteDevAmazon"><i class="ti-trash"></i></a>';
 
-
-            $email = DB::table('ngocphandang_dev_amazon')
-                ->join('ngocphandang_gadev','ngocphandang_gadev.id','=','ngocphandang_dev_amazon.amazon_email')
-                ->where('ngocphandang_gadev.id',$record->amazon_email)
-                ->first();
             if($record->amazon_status == 0){
                 $status =  '<span class="badge badge-dark">Chưa xử dụng</span>';
             }
@@ -86,33 +86,32 @@ class DevAmazonController extends Controller
             if($record->amazon_status == 3){
                 $status = '<span class="badge badge-danger">Suspend</span>';
             }
-
-            $project = DB::table('ngocphandang_dev_amazon')
-                ->join('ngocphandang_project','ngocphandang_project.Amazon_buildinfo_store_name_x','=','ngocphandang_dev_amazon.id')
-                ->where('ngocphandang_project.Amazon_buildinfo_store_name_x',$record->id)
-                ->count();
-
+            $release = $check = 0;
+            foreach ($record->project as $ch){
+                $ch->Amazon_status == 1 ? $release ++ : $check++;
+            }
             if($record->amazon_ga_name == 0 ){
                 $ga_name =  '<span class="badge badge-dark">Chưa có</span>';
             }else{
-                $ga_name = DB::table('ngocphandang_dev_amazon')
-                    ->join('ngocphandang_ga','ngocphandang_ga.id','=','ngocphandang_dev_amazon.amazon_ga_name')
-                    ->where('ngocphandang_ga.id',$record->amazon_ga_name)
-                    ->first();
-                $ga_name = $ga_name->ga_name;
+                $ga_name = $record->ga->ga_name;
+            }
+            if($record->amazon_attribute !=0){
+                $thuoc_tinh = '<img height="70px" src="img/icon/profile.png">';
+            }else{
+                $thuoc_tinh = '<img height="70px" src="img/icon/office-building.png">';
             }
             $data_arr[] = array(
+                'amazon_attribute' => $thuoc_tinh,
                 "amazon_ga_name" => $ga_name,
-                "amazon_dev_name" => '<a href="/project?q=dev_amazon&id='.$record->id.'"> <span>'.$record->amazon_dev_name.' - ('.$project.')</span></a>',
+                "amazon_dev_name" => '<a href="/project?q=dev_amazon&id='.$record->id.'"> <span>'.$record->amazon_dev_name.'</span></a>',
+                "project" => ' <span class="badge badge-secondary">'.count($record->project).'</span> ' .' <span class="badge badge-success"> '.$release.' </span>'. ' <span class="badge badge-danger"> '.$check.' </span>' ,
                 "amazon_store_name" => $record->amazon_store_name,
-                "amazon_email"=>$email->gmail,
-                "amazon_pass"=>$record->amazon_pass,
+                "amazon_email"=>$record->gadev->gmail . '<p style="margin: auto" class="text-muted ">'.$record->amazon_pass .'</p>',
                 "amazon_status"=>$status,
                 "amazon_note"=>$record->amazon_note,
                 "action"=> $btn,
             );
         }
-
 
         $response = array(
             "draw" => intval($draw),

@@ -37,12 +37,13 @@
                     <table class="table table-bordered dt-responsive nowrap data-table" style="border-collapse: collapse; border-spacing: 0; width: 100%;">
                         <thead>
                         <tr>
-                            <th>IMG</th>
+{{--                            <th>IMG</th>--}}
                             <th>Ga name</th>
                             <th>Dev name</th>
                             <th>Gmail </th>
-                            <th>Mật khẩu</th>
-                            <th>Điện thoại</th>
+                            <th style="width: 10%">Tổng App | App Release | App Check </th>
+                            <th>Thuộc tính</th>
+{{--                            <th>Thuộc tính</th>--}}
                             <th>Link | Web | Fanpage |Policy</th>
                             <th>Trạng thái</th>
                             <th>Action</th>
@@ -99,17 +100,18 @@
                     type: "post"
                 },
                 columns: [
-                    {data: 'info_logo'},
-                    {data: 'ga_name'},
+                    // {data: 'info_logo'},
+                    {data: 'id_ga'},
                     {data: 'dev_name'},
                     {data: 'gmail_gadev_chinh'},
-                    {data: 'pass'},
-                    {data: 'info_phone'},
+                    {data: 'project_count',searchable: false,className: "text-center"},
+                    {data: 'thuoc_tinh',className: "text-center"},
+                    // {data: 'info_phone'},
                     {data: 'info_url'},
                     {data: 'status'},
                     {data: 'action', className: "text-center",name: 'action', orderable: false, searchable: false},
                 ],
-                order:[2,'asc']
+                order:[1,'asc']
             });
             $('#createNewDev').click(function () {
                 $('#saveBtn').val("create");

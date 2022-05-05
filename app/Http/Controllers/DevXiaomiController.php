@@ -43,24 +43,25 @@ class DevXiaomiController extends Controller
         // Total records
         $totalRecords = Dev_Xiaomi::select('count(*) as allcount')->count();
         $totalRecordswithFilter = Dev_Xiaomi::select('count(*) as allcount')
-            ->leftjoin('ngocphandang_ga','ngocphandang_ga.id','=','ngocphandang_dev_xiaomi.xiaomi_ga_name')
-            ->leftjoin('ngocphandang_gadev','ngocphandang_gadev.id','=','ngocphandang_dev_xiaomi.xiaomi_email')
-            ->orwhere('ngocphandang_ga.ga_name', 'like', '%' . $searchValue . '%')
+//            ->leftjoin('ngocphandang_ga','ngocphandang_ga.id','=','ngocphandang_dev_xiaomi.xiaomi_ga_name')
+//            ->leftjoin('ngocphandang_gadev','ngocphandang_gadev.id','=','ngocphandang_dev_xiaomi.xiaomi_email')
+//            ->orwhere('ngocphandang_ga.ga_name', 'like', '%' . $searchValue . '%')
             ->orWhere('ngocphandang_dev_xiaomi.xiaomi_store_name', 'like', '%' . $searchValue . '%')
             ->orWhere('ngocphandang_dev_xiaomi.xiaomi_dev_name', 'like', '%' . $searchValue . '%')
-            ->orWhere('ngocphandang_gadev.gmail', 'like', '%' . $searchValue . '%')
+//            ->orWhere('ngocphandang_gadev.gmail', 'like', '%' . $searchValue . '%')
             ->orWhere('ngocphandang_dev_xiaomi.xiaomi_phone', 'like', '%' . $searchValue . '%')
             ->orWhere('ngocphandang_dev_xiaomi.xiaomi_note', 'like', '%' . $searchValue . '%')
             ->count();
 
         // Get records, also we have included search filter as well
         $records = Dev_Xiaomi::orderBy($columnName, $columnSortOrder)
-            ->leftjoin('ngocphandang_ga','ngocphandang_ga.id','=','ngocphandang_dev_xiaomi.xiaomi_ga_name')
-            ->leftjoin('ngocphandang_gadev','ngocphandang_gadev.id','=','ngocphandang_dev_xiaomi.xiaomi_email')
-            ->orwhere('ngocphandang_ga.ga_name', 'like', '%' . $searchValue . '%')
+            ->with('ga','gadev','project')
+//            ->leftjoin('ngocphandang_ga','ngocphandang_ga.id','=','ngocphandang_dev_xiaomi.xiaomi_ga_name')
+//            ->leftjoin('ngocphandang_gadev','ngocphandang_gadev.id','=','ngocphandang_dev_xiaomi.xiaomi_email')
+//            ->orwhere('ngocphandang_ga.ga_name', 'like', '%' . $searchValue . '%')
             ->orWhere('ngocphandang_dev_xiaomi.xiaomi_store_name', 'like', '%' . $searchValue . '%')
             ->orWhere('ngocphandang_dev_xiaomi.xiaomi_dev_name', 'like', '%' . $searchValue . '%')
-            ->orWhere('ngocphandang_gadev.gmail', 'like', '%' . $searchValue . '%')
+//            ->orWhere('ngocphandang_gadev.gmail', 'like', '%' . $searchValue . '%')
             ->orWhere('ngocphandang_dev_xiaomi.xiaomi_phone', 'like', '%' . $searchValue . '%')
             ->orWhere('ngocphandang_dev_xiaomi.xiaomi_note', 'like', '%' . $searchValue . '%')
             ->select('ngocphandang_dev_xiaomi.*')
@@ -72,16 +73,10 @@ class DevXiaomiController extends Controller
 
         $data_arr = array();
         foreach ($records as $record) {
+
             $btn = ' <a href="javascript:void(0)" onclick="editDevxiaomi('.$record->id.')" class="btn btn-warning"><i class="ti-pencil-alt"></i></a>';
             $btn = $btn.' <a href="javascript:void(0)" data-toggle="tooltip"  data-id="'.$record->id.'" data-original-title="Delete" class="btn btn-danger deleteDevxiaomi"><i class="ti-trash"></i></a>';
-
-
-            $email = DB::table('ngocphandang_dev_xiaomi')
-                ->join('ngocphandang_gadev','ngocphandang_gadev.id','=','ngocphandang_dev_xiaomi.xiaomi_email')
-                ->where('ngocphandang_gadev.id',$record->xiaomi_email)
-                ->first();
-
-
+            $email =$record->gadev->gmail;
             if($record->xiaomi_status == 0){
                 $status =  '<span class="badge badge-dark">Chưa xử dụng</span>';
             }
@@ -95,28 +90,31 @@ class DevXiaomiController extends Controller
                 $status = '<span class="badge badge-danger">Suspend</span>';
             }
 
-            $project = DB::table('ngocphandang_dev_xiaomi')
-                ->join('ngocphandang_project','ngocphandang_project.Xiaomi_buildinfo_store_name_x','=','ngocphandang_dev_xiaomi.id')
-                ->where('ngocphandang_project.Xiaomi_buildinfo_store_name_x',$record->id)
-                ->count();
 
             if($record->xiaomi_ga_name == 0 ){
                 $ga_name =  '<span class="badge badge-dark">Chưa có</span>';
             }else{
-                $ga_name = DB::table('ngocphandang_dev_xiaomi')
-                    ->join('ngocphandang_ga','ngocphandang_ga.id','=','ngocphandang_dev_xiaomi.xiaomi_ga_name')
-                    ->where('ngocphandang_ga.id',$record->xiaomi_ga_name)
-                    ->first();
-                $ga_name = $ga_name->ga_name;
+                $ga_name = $record->ga->ga_name;
+            }
+
+            if($record->xiaomi_attribute !=0){
+                $thuoc_tinh = '<img height="70px" src="img/icon/profile.png">';
+            }else{
+                $thuoc_tinh = '<img height="70px" src="img/icon/office-building.png">';
+            }
+            $release = $check = 0;
+            foreach ($record->project as $ch){
+                $ch->Xiaomi_status == 1 ? $release ++ : $check++;
             }
 
 
             $data_arr[] = array(
+                'xiaomi_attribute' => $thuoc_tinh,
                 "xiaomi_ga_name" => $ga_name,
-                "xiaomi_dev_name" => '<a href="/project?q=dev_xiaomi&id='.$record->id.'"> <span>'.$record->xiaomi_dev_name.' - ('.$project.')</span></a>',
+                "xiaomi_dev_name" => '<a href="/project?q=dev_xiaomi&id='.$record->id.'"> <span>'.$record->xiaomi_dev_name.'</span></a>',
                 "xiaomi_store_name" => $record->xiaomi_store_name,
-                "xiaomi_email"=>$email->gmail,
-                "xiaomi_pass"=>$record->xiaomi_pass,
+                "xiaomi_email"=>$email.'<p style="margin: auto" class="text-muted ">'.$record->xiaomi_pass .'</p>',
+                "project" => ' <span class="badge badge-secondary">'.count($record->project).'</span> ' .' <span class="badge badge-success"> '.$release.' </span>'. ' <span class="badge badge-danger"> '.$check.' </span>' ,
                 "xiaomi_status"=>$status,
                 "xiaomi_note"=>$record->xiaomi_note,
                 "action"=> $btn,

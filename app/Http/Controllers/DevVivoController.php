@@ -57,7 +57,7 @@ class DevVivoController extends Controller
 
         // Get records, also we have included search filter as well
         $records = Dev_Vivo::orderBy($columnName, $columnSortOrder)
-            ->with('ga','ga_dev')
+            ->with('ga','ga_dev','project')
 //            ->leftjoin('ngocphandang_ga','ngocphandang_ga.id','=','ngocphandang_dev_vivo.vivo_ga_name')
 //            ->leftjoin('ngocphandang_gadev','ngocphandang_gadev.id','=','ngocphandang_dev_vivo.vivo_email')
 
@@ -104,12 +104,24 @@ class DevVivoController extends Controller
             }else{
                 $email = $record->ga_dev->gmail;
             }
+
+            if($record->vivo_attribute !=0){
+                $thuoc_tinh = '<img height="70px" src="img/icon/profile.png">';
+            }else{
+                $thuoc_tinh = '<img height="70px" src="img/icon/office-building.png">';
+            }
+            $release = $check = 0;
+            foreach ($record->project as $ch){
+                $ch->Vivo_status == 1 ? $release ++ : $check++;
+            }
+
             $data_arr[] = array(
+                "vivo_attribute" => $thuoc_tinh,
                 "vivo_ga_name" => $ga_name,
-                "vivo_dev_name" => '<a href="/project?q=dev_vivo&id='.$record->id.'"> <span>'.$record->vivo_dev_name.' - ('.$record->project_count.')</span></a>',
+                "vivo_dev_name" => '<a href="/project?q=dev_vivo&id='.$record->id.'"> <span>'.$record->vivo_dev_name.'</span></a>',
                 "vivo_store_name" => $record->vivo_store_name,
-                "vivo_email"=>$record->vivo_company.'<p class="text-muted">'.$email.'</p>',
-                "vivo_pass"=>$record->vivo_pass,
+                "vivo_email"=>$record->vivo_company.'<p class="text-muted">'.$email.'</p>'.'<p class="text-muted">Pass: '.$record->vivo_pass.'</p>',
+                "project"=> ' <span class="badge badge-secondary">'.count($record->project).'</span> ' .' <span class="badge badge-success"> '.$release.' </span>'. ' <span class="badge badge-danger"> '.$check.' </span>' ,
                 "vivo_status"=>$status,
                 "vivo_note"=>$record->vivo_note,
                 "action"=> $btn,

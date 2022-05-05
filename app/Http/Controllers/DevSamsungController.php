@@ -53,6 +53,7 @@ class DevSamsungController extends Controller
 
         // Get records, also we have included search filter as well
         $records = Dev_Samsung::orderBy($columnName, $columnSortOrder)
+            ->with('gadev','ga','project')
             ->where('samsung_ga_name', 'like', '%' . $searchValue . '%')
             ->orWhere('samsung_dev_name', 'like', '%' . $searchValue . '%')
             ->orWhere('samsung_store_name', 'like', '%' . $searchValue . '%')
@@ -69,11 +70,6 @@ class DevSamsungController extends Controller
             $btn = $btn.' <a href="javascript:void(0)" data-toggle="tooltip"  data-id="'.$record->id.'" data-original-title="Delete" class="btn btn-danger deleteDevSamsung"><i class="ti-trash"></i></a>';
 
 
-            $email = DB::table('ngocphandang_dev_samsung')
-                ->join('ngocphandang_gadev','ngocphandang_gadev.id','=','ngocphandang_dev_samsung.samsung_email')
-                ->where('ngocphandang_gadev.id',$record->samsung_email)
-                ->first();
-
 
             if($record->samsung_status == 0){
                 $status =  '<span class="badge badge-dark">Chưa xử dụng</span>';
@@ -87,29 +83,30 @@ class DevSamsungController extends Controller
             if($record->samsung_status == 3){
                 $status = '<span class="badge badge-danger">Suspend</span>';
             }
-            $project = DB::table('ngocphandang_dev_samsung')
-                ->join('ngocphandang_project','ngocphandang_project.Samsung_buildinfo_store_name_x','=','ngocphandang_dev_samsung.id')
-                ->where('ngocphandang_project.Samsung_buildinfo_store_name_x',$record->id)
-                ->count();
+
 
             if($record->samsung_ga_name == 0 ){
                 $ga_name =  '<span class="badge badge-dark">Chưa có</span>';
             }else{
-                $ga_name = DB::table('ngocphandang_dev_samsung')
-                    ->join('ngocphandang_ga','ngocphandang_ga.id','=','ngocphandang_dev_samsung.samsung_ga_name')
-                    ->where('ngocphandang_ga.id',$record->samsung_ga_name)
-                    ->first();
-                $ga_name = $ga_name->ga_name;
+                $ga_name = $record->ga->ga_name;
             }
 
-
-
+            if($record->samsung_attribute !=0){
+                $thuoc_tinh = '<img height="70px" src="img/icon/profile.png">';
+            }else{
+                $thuoc_tinh = '<img height="70px" src="img/icon/office-building.png">';
+            }
+            $release = $check = 0;
+            foreach ($record->project as $ch){
+                $ch->Samsung_status == 1 ? $release ++ : $check++;
+            }
             $data_arr[] = array(
+                'samsung_attribute' => $thuoc_tinh,
                 "samsung_ga_name" => $ga_name,
-                "samsung_dev_name" => '<a href="/project?q=dev_samsung&id='.$record->id.'"> <span>'.$record->samsung_dev_name.' - ('.$project.')</span></a>',
+                "samsung_dev_name" => '<a href="/project?q=dev_samsung&id='.$record->id.'"> <span>'.$record->samsung_dev_name.'</span></a>',
                 "samsung_store_name" => $record->samsung_store_name,
-                "samsung_email"=>$email->gmail,
-                "samsung_pass"=>$record->samsung_pass,
+                "samsung_email"=>$record->gadev->gmail.'<p style="margin: auto" class="text-muted ">'.$record->samsung_pass .'</p>',
+                "project" => ' <span class="badge badge-secondary">'.count($record->project).'</span> ' .' <span class="badge badge-success"> '.$release.' </span>'. ' <span class="badge badge-danger"> '.$check.' </span>' ,
                 "samsung_status"=>$status,
                 "samsung_note"=>$record->samsung_note,
                 "action"=> $btn,

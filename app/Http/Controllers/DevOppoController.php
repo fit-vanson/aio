@@ -43,24 +43,25 @@ class DevOppoController extends Controller
         // Total records
         $totalRecords = Dev_Oppo::select('count(*) as allcount')->count();
         $totalRecordswithFilter = Dev_Oppo::select('count(*) as allcount')
-            ->leftjoin('ngocphandang_ga','ngocphandang_ga.id','=','ngocphandang_dev_oppo.oppo_ga_name')
-            ->leftjoin('ngocphandang_gadev','ngocphandang_gadev.id','=','ngocphandang_dev_oppo.oppo_email')
-            ->orwhere('ngocphandang_ga.ga_name', 'like', '%' . $searchValue . '%')
+//            ->leftjoin('ngocphandang_ga','ngocphandang_ga.id','=','ngocphandang_dev_oppo.oppo_ga_name')
+//            ->leftjoin('ngocphandang_gadev','ngocphandang_gadev.id','=','ngocphandang_dev_oppo.oppo_email')
+//            ->orwhere('ngocphandang_ga.ga_name', 'like', '%' . $searchValue . '%')
             ->orWhere('ngocphandang_dev_oppo.oppo_store_name', 'like', '%' . $searchValue . '%')
             ->orWhere('ngocphandang_dev_oppo.oppo_dev_name', 'like', '%' . $searchValue . '%')
-            ->orWhere('ngocphandang_gadev.gmail', 'like', '%' . $searchValue . '%')
+//            ->orWhere('ngocphandang_gadev.gmail', 'like', '%' . $searchValue . '%')
             ->orWhere('ngocphandang_dev_oppo.oppo_phone', 'like', '%' . $searchValue . '%')
             ->orWhere('ngocphandang_dev_oppo.oppo_note', 'like', '%' . $searchValue . '%')
             ->count();
 
         // Get records, also we have included search filter as well
         $records = Dev_Oppo::orderBy($columnName, $columnSortOrder)
-            ->leftjoin('ngocphandang_ga','ngocphandang_ga.id','=','ngocphandang_dev_oppo.oppo_ga_name')
-            ->leftjoin('ngocphandang_gadev','ngocphandang_gadev.id','=','ngocphandang_dev_oppo.oppo_email')
-            ->orwhere('ngocphandang_ga.ga_name', 'like', '%' . $searchValue . '%')
+            ->with('ga','gadev','project')
+//            ->leftjoin('ngocphandang_ga','ngocphandang_ga.id','=','ngocphandang_dev_oppo.oppo_ga_name')
+//            ->leftjoin('ngocphandang_gadev','ngocphandang_gadev.id','=','ngocphandang_dev_oppo.oppo_email')
+//            ->orwhere('ngocphandang_ga.ga_name', 'like', '%' . $searchValue . '%')
             ->orWhere('ngocphandang_dev_oppo.oppo_store_name', 'like', '%' . $searchValue . '%')
             ->orWhere('ngocphandang_dev_oppo.oppo_dev_name', 'like', '%' . $searchValue . '%')
-            ->orWhere('ngocphandang_gadev.gmail', 'like', '%' . $searchValue . '%')
+//            ->orWhere('ngocphandang_gadev.gmail', 'like', '%' . $searchValue . '%')
             ->orWhere('ngocphandang_dev_oppo.oppo_phone', 'like', '%' . $searchValue . '%')
             ->orWhere('ngocphandang_dev_oppo.oppo_note', 'like', '%' . $searchValue . '%')
             ->select('ngocphandang_dev_oppo.*')
@@ -78,10 +79,7 @@ class DevOppoController extends Controller
             $btn = $btn.' <a href="javascript:void(0)" data-toggle="tooltip"  data-id="'.$record->id.'" data-original-title="Delete" class="btn btn-danger deleteDevoppo"><i class="ti-trash"></i></a>';
 
 
-            $email = DB::table('ngocphandang_dev_oppo')
-                ->join('ngocphandang_gadev','ngocphandang_gadev.id','=','ngocphandang_dev_oppo.oppo_email')
-                ->where('ngocphandang_gadev.id',$record->oppo_email)
-                ->first();
+            $email = $record->gadev->gmail;
 
 
             if($record->oppo_status == 0){
@@ -99,26 +97,27 @@ class DevOppoController extends Controller
             if($record->oppo_ga_name == 0 ){
                 $ga_name =  '<span class="badge badge-dark">Chưa có</span>';
             }else{
-                $ga_name = DB::table('ngocphandang_dev_oppo')
-                    ->join('ngocphandang_ga','ngocphandang_ga.id','=','ngocphandang_dev_oppo.oppo_ga_name')
-                    ->where('ngocphandang_ga.id',$record->oppo_ga_name)
-                    ->first();
-                $ga_name = $ga_name->ga_name;
+                $ga_name = $record->ga->ga_name;
             }
 
-            $project = DB::table('ngocphandang_dev_oppo')
-                ->join('ngocphandang_project','ngocphandang_project.Oppo_buildinfo_store_name_x','=','ngocphandang_dev_oppo.id')
-                ->where('ngocphandang_project.Oppo_buildinfo_store_name_x',$record->id)
-                ->count();
 
-
+            if($record->oppo_attribute !=0){
+                $thuoc_tinh = '<img height="70px" src="img/icon/profile.png">';
+            }else{
+                $thuoc_tinh = '<img height="70px" src="img/icon/office-building.png">';
+            }
+            $release = $check = 0;
+            foreach ($record->project as $ch){
+                $ch->Oppo_status == 1 ? $release ++ : $check++;
+            }
 
             $data_arr[] = array(
+                "oppo_attribute" => $thuoc_tinh,
                 "oppo_ga_name" => $ga_name,
-                "oppo_dev_name" => '<a href="/project?q=dev_oppo&id='.$record->id.'"> <span>'.$record->oppo_dev_name.' - ('.$project.')</span></a>',
+                "oppo_dev_name" => '<a href="/project?q=dev_oppo&id='.$record->id.'"> <span>'.$record->oppo_dev_name.' </span></a>',
                 "oppo_store_name" => $record->oppo_store_name,
-                "oppo_email"=>$email->gmail,
-                "oppo_pass"=>$record->oppo_pass,
+                "oppo_email"=>$email.'<p style="margin: auto" class="text-muted ">'.$record->xiaomi_pass .'</p>',
+                "project"=> ' <span class="badge badge-secondary">'.count($record->project).'</span> ' .' <span class="badge badge-success"> '.$release.' </span>'. ' <span class="badge badge-danger"> '.$check.' </span>' ,
                 "oppo_status"=>$status,
                 "oppo_note"=>$record->oppo_note,
                 "action"=> $btn,

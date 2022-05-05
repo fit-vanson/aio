@@ -15,5 +15,12 @@ class Dev_Samsung extends Model
         return $this->belongsTo(Ga::class,'samsung_ga_name');
     }
 
+    public function gadev(){
+        return $this->belongsTo(Ga_dev::class,'samsung_email');
+    }
+    public function project(){
+        return $this->hasMany(ProjectModel::class,'Chplay_buildinfo_store_name_x');
+    }
+
 }
 

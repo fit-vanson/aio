@@ -14,6 +14,12 @@ class Dev_Oppo extends Model
     public function ga(){
         return $this->belongsTo(Ga::class,'oppo_ga_name');
     }
+    public function gadev(){
+        return $this->belongsTo(Ga_dev::class,'oppo_email');
+    }
+    public function project(){
+        return $this->hasMany(ProjectModel::class,'Oppo_buildinfo_store_name_x');
+    }
 
 }
 

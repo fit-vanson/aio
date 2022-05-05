@@ -37,6 +37,7 @@
                     <table class="table table-bordered dt-responsive nowrap data-table" style="border-collapse: collapse; border-spacing: 0; width: 100%;">
                         <thead>
                         <tr>
+                            <th>Thuoc tính</th>
                             <th>Ga name</th>
                             <th>Dev name</th>
                             <th>Store name</th>
@@ -94,15 +95,17 @@
                     type: "post"
                 },
                 columns: [
+                    {data: 'huawei_attribute'},
                     {data: 'huawei_ga_name'},
                     {data: 'huawei_dev_name'},
                     {data: 'huawei_store_name'},
                     {data: 'huawei_email'},
-                    {data: 'huawei_pass'},
+                    {data: 'project'},
                     {data: 'huawei_status'},
                     {data: 'huawei_note'},
                     {data: 'action', className: "text-center",name: 'action', orderable: false, searchable: false},
                 ],
+                order:[1,'asc']
             });
             $('#createNewDev').click(function () {
                 $('#saveBtn').val("create");

@@ -37,11 +37,12 @@
                     <table class="table table-bordered dt-responsive nowrap data-table" style="border-collapse: collapse; border-spacing: 0; width: 100%;">
                         <thead>
                         <tr>
+                            <th>Thuộc tính</th>
                             <th>Ga name</th>
                             <th>Dev name</th>
                             <th>Store name</th>
                             <th>Gmail </th>
-                            <th>Pass </th>
+                            <th>Tổng App | App Release | App Check </th>
                             <th>Trạng thái</th>
                             <th>Ghi chú</th>
                             <th>Action</th>
@@ -94,15 +95,16 @@
                     type: "post"
                 },
                 columns: [
+                    {data: 'xiaomi_attribute'},
                     {data: 'xiaomi_ga_name'},
                     {data: 'xiaomi_dev_name'},
                     {data: 'xiaomi_store_name'},
                     {data: 'xiaomi_email'},
-                    {data: 'xiaomi_pass'},
+                    {data: 'project'},
                     {data: 'xiaomi_status'},
                     {data: 'xiaomi_note'},
                     {data: 'action', className: "text-center",name: 'action', orderable: false, searchable: false},
-                ],
+                ],       order:[1,'asc']
             });
             $('#createNewDev').click(function () {
                 $('#saveBtn').val("create");

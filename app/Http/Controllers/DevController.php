@@ -42,43 +42,39 @@ class DevController extends Controller
         // Total records
         $totalRecords = Dev::select('count(*) as allcount')->count();
         $totalRecordswithFilter = Dev::select('count(*) as allcount')
-            ->leftjoin('ngocphandang_ga','ngocphandang_ga.id','=','ngocphandang_dev.id_ga')
-            ->leftjoin('ngocphandang_gadev','ngocphandang_gadev.id','=','ngocphandang_dev.gmail_gadev_chinh')
+            ->with('ga','gadev')
             ->where('id_ga', 'like', '%' . $searchValue . '%')
-            ->orwhere('ga_name', 'like', '%' . $searchValue . '%')
             ->orWhere('store_name', 'like', '%' . $searchValue . '%')
             ->orWhere('dev_name', 'like', '%' . $searchValue . '%')
-            ->orWhere('ngocphandang_gadev.gmail', 'like', '%' . $searchValue . '%')
-            ->orWhere('ngocphandang_dev.info_phone', 'like', '%' . $searchValue . '%')
-            ->orWhere('ngocphandang_dev.status', 'like', '%' . $searchValue . '%')
             ->count();
+
+        //310
+
 
         // Get records, also we have included search filter as well
         $records = Dev::orderBy($columnName, $columnSortOrder)
-            ->leftjoin('ngocphandang_ga','ngocphandang_ga.id','=','ngocphandang_dev.id_ga')
-            ->leftjoin('ngocphandang_gadev','ngocphandang_gadev.id','=','ngocphandang_dev.gmail_gadev_chinh')
-            ->orwhere('ngocphandang_ga.ga_name', 'like', '%' . $searchValue . '%')
+            ->with('ga','gadev','gadev1','gadev2','project')
             ->orWhere('ngocphandang_dev.store_name', 'like', '%' . $searchValue . '%')
             ->orWhere('ngocphandang_dev.dev_name', 'like', '%' . $searchValue . '%')
-            ->orWhere('ngocphandang_gadev.gmail', 'like', '%' . $searchValue . '%')
+//            ->orWhere('ngocphandang_gadev.gmail', 'like', '%' . $searchValue . '%')
             ->orWhere('ngocphandang_dev.info_phone', 'like', '%' . $searchValue . '%')
             ->orWhere('ngocphandang_dev.status', 'like', '%' . $searchValue . '%')
+            ->orwhereHas('ga', function ($q) use ($searchValue) {
+                $q->where('ga_name','like', '%' . $searchValue . '%');
+            })
+            ->orwhereHas('gadev', function ($q) use ($searchValue) {
+                $q->where('gmail','like', '%' . $searchValue . '%');
+            })
             ->select('ngocphandang_dev.*')
+//            ->withCount('project')
             ->skip($start)
             ->take($rowperpage)
             ->get();
-
-
-
         $data_arr = array();
         foreach ($records as $record) {
             $btn = ' <a href="javascript:void(0)" onclick="editDev('.$record->id.')" class="btn btn-warning"><i class="ti-pencil-alt"></i></a>';
             $btn = $btn.' <a href="javascript:void(0)" data-toggle="tooltip"  data-id="'.$record->id.'" data-original-title="Delete" class="btn btn-danger deleteDevice"><i class="ti-trash"></i></a>';
 
-            $project = DB::table('ngocphandang_dev')
-                ->join('ngocphandang_project','ngocphandang_project.Chplay_buildinfo_store_name_x','=','ngocphandang_dev.id')
-                ->where('ngocphandang_project.Chplay_buildinfo_store_name_x',$record->id)
-                ->count();
             if($record->info_logo == null ){
                 $logo =  '<img width="60px" height="60px" src="assets\images\logo-member.jpg">';
             }else{
@@ -90,36 +86,19 @@ class DevController extends Controller
             } else{
                 $info_phone = '<span style="color: green">'.$record->info_phone.'</span>';
             }
-
-            $gmail = DB::table('ngocphandang_dev')
-                ->join('ngocphandang_gadev','ngocphandang_gadev.id','=','ngocphandang_dev.gmail_gadev_chinh')
-                ->where('ngocphandang_gadev.id',$record->gmail_gadev_chinh)
-                ->first();
-            $gmail1 = DB::table('ngocphandang_dev')
-                ->join('ngocphandang_gadev','ngocphandang_gadev.id','=','ngocphandang_dev.gmail_gadev_phu_1')
-                ->where('ngocphandang_gadev.id',$record->gmail_gadev_phu_1)
-                ->first();
-            $gmail2 = DB::table('ngocphandang_dev')
-                ->join('ngocphandang_gadev','ngocphandang_gadev.id','=','ngocphandang_dev.gmail_gadev_phu_2')
-                ->where('ngocphandang_gadev.id',$record->gmail_gadev_phu_2)
-                ->first();
-            if($gmail != null){
-                $gmail = '<span>'.$gmail->gmail.' - <span style="font-style: italic"> '.$gmail->vpn_iplogin.'</span></span>';
+            if($record->gadev){
+                $gmail = '<span>'.$record->gadev->gmail.' - <span style="font-style: italic"> '.$record->gadev->vpn_iplogin.'</span></span>';
             }
-            if($gmail1 != null){
-                $gmail1 = '<p style="margin: auto" class="text-muted ">'.$gmail1->gmail.' - <span style="font-style: italic"> '.$gmail1->vpn_iplogin.'</span></p>';
+            if($record->gadev1){
+                $gmail1 = '<p style="margin: auto" class="text-muted ">'.$record->gadev->gmail.' - <span style="font-style: italic"> '.$record->gadev->vpn_iplogin.'</span></p>';
             }
-            if($gmail2 != null){
-                $gmail2 = '<p style="margin: auto"class="text-muted ">'.$gmail2->gmail.' - <span style="font-style: italic"> '.$gmail2->vpn_iplogin.'</span></p>';
+            if($record->gadev2){
+                $gmail2 = '<p style="margin: auto"class="text-muted ">'.$record->gadev->gmail.' - <span style="font-style: italic"> '.$record->gadev->vpn_iplogin.'</span></p>';
             }
             if($record->id_ga == null ){
                 $ga_name =  '<span class="badge badge-dark">Chưa có</span>';
             }else{
-                $ga_name = DB::table('ngocphandang_dev')
-                    ->join('ngocphandang_ga','ngocphandang_ga.id','=','ngocphandang_dev.id_ga')
-                    ->where('ngocphandang_dev.id_ga',$record->id_ga)
-                    ->first();
-                $ga_name = $ga_name->ga_name;
+                $ga_name =$record->ga->ga_name;
             }
             if($record->status == 0){
                 $status =  '<span class="badge badge-dark">Chưa xử dụng</span>';
@@ -155,15 +134,23 @@ class DevController extends Controller
                 $info_policydev = "<i style='color:red;' class='ti-close h5'></i>";
             }
 
-
+            if($record->thuoc_tinh !=0){
+                $thuoc_tinh = '<img height="70px" src="img/icon/profile.png">';
+            }else{
+                $thuoc_tinh = '<img height="70px" src="img/icon/office-building.png">';
+            }
+            $release = $check = 0;
+            foreach ($record->project as $ch){
+                $ch->Chplay_status == 1 ? $release ++ : $check++;
+            }
             $data_arr[] = array(
-                "info_logo" => $logo,
-                "ga_name" => $ga_name,
-                "dev_name" => '<a href="/project?q=dev_chplay&id='.$record->id.'"> <span>'.$record->dev_name.' - ('.$project.')</span></a>
- <p style="margin: auto"class="text-muted ">'.$record->store_name.'</p>',
-                "gmail_gadev_chinh"=> $gmail.$gmail1.$gmail2,
-                "pass" =>$record->pass,
-                "info_phone"=> $info_phone,
+//                "info_logo" => $logo,
+                "id_ga" => $logo.'<br>'.$ga_name,
+                "dev_name" => '<a href="/project?q=dev_chplay&id='.$record->id.'"> <span>'.$record->dev_name.'</span></a>
+                                 <p style="margin: auto"class="text-muted ">'.$record->store_name.'</p>',
+                "gmail_gadev_chinh"=> @$gmail.@$gmail1.@$gmail2,
+                "project_count" => ' <span class="badge badge-secondary">'.count($record->project).'</span> ' .' <span class="badge badge-success"> '.$release.' </span>'. ' <span class="badge badge-danger"> '.$check.' </span>' ,
+                "thuoc_tinh" => $thuoc_tinh.'<br>'.$record->pass .'<br>'.$info_phone,
                 "info_url"=> $info_url .' '. $info_web.' '. $info_fanpage.' '. $info_policydev,
                 "status"=> $status,
                 "action"=> $btn,
@@ -279,6 +266,11 @@ class DevController extends Controller
     public function callAction($method, $parameters)
     {
         return parent::callAction($method, array_values($parameters));
+    }
+
+
+    public function checkProject(){
+
     }
 
 }

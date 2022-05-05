@@ -15,5 +15,12 @@ class Dev_Amazon extends Model
         return $this->belongsTo(Ga::class,'amazon_ga_name');
     }
 
+    public function gadev(){
+        return $this->belongsTo(Ga_dev::class,'amazon_email');
+    }
+    public function project(){
+        return $this->hasMany(ProjectModel::class,'Amazon_buildinfo_store_name_x');
+    }
+
 }
 

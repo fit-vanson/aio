@@ -37,6 +37,7 @@
                     <table class="table table-bordered dt-responsive nowrap data-table" style="border-collapse: collapse; border-spacing: 0; width: 100%;">
                         <thead>
                         <tr>
+                            <th>Thuộc tính</th>
                             <th>Ga name</th>
                             <th>Dev name</th>
                             <th>Store name</th>
@@ -94,15 +95,17 @@
                     type: "post"
                 },
                 columns: [
+                    {data: 'vivo_attribute'},
                     {data: 'vivo_ga_name'},
                     {data: 'vivo_dev_name'},
                     {data: 'vivo_store_name'},
                     {data: 'vivo_email'},
-                    {data: 'vivo_pass'},
+                    {data: 'project'},
                     {data: 'vivo_status'},
                     {data: 'vivo_note'},
                     {data: 'action', className: "text-center",name: 'action', orderable: false, searchable: false},
                 ],
+                order:[1,'asc']
             });
             $('#createNewDev').click(function () {
                 $('#saveBtn').val("create");
