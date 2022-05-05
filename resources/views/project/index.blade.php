@@ -59,6 +59,8 @@
                 <div class="card-body">
                     <div class="button-items console_status_button">
                         <button type="button" class="btn btn-primary waves-effect waves-light" id="buildandcheck">Build and Check</button>
+
+                        <button type="button" class="btn btn-secondary waves-effect waves-light" id="dev_status">Update Dev and Status</button>
                     </div>
                 </div>
                 @endcan
@@ -476,6 +478,22 @@
             });
         });
 
+        $('#dev_status').on('click', function () {
+
+            $('#Chplay_buildinfo_store_name_x2').select2();
+            $('#Amazon_buildinfo_store_name_x2').select2();
+            $('#Samsung_buildinfo_store_name_x2').select2();
+            $('#Xiaomi_buildinfo_store_name_x2').select2();
+            $('#Oppo_buildinfo_store_name_x2').select2();
+            $('#Vivo_buildinfo_store_name_x2').select2();
+            $('#Huawei_buildinfo_store_name_x2').select2();
+
+            $('#dev_statusModel').modal('show');
+            $('.modal').on('hidden.bs.modal', function (e) {
+                $('body').addClass('modal-open');
+            });
+        });
+
         $('#buildcheckForm button').click(function (event){
             event.preventDefault();
             var data = $('textarea#buildinfo_vernum').val()
@@ -531,6 +549,31 @@
                 });
 
             }
+
+        });
+
+        $('#dev_statusForm button').click(function (event){
+            event.preventDefault();
+                $.ajax({
+                    data: $('#dev_statusForm').serialize(),
+                    url: "{{ route('project.updateDev_status')}}",
+                    type: "post",
+                    dataType: 'json',
+                    success: function (data) {
+                        console.log(data)
+                        if(data.errors){
+                            $.notify(data.errors, "error");
+                        }
+                        if(data.success){
+                            $.notify(data.success, "success");
+                            $('#dev_statusForm').trigger("reset");
+                            $('#dev_statusModel').modal('hide');
+                            table.draw();
+                        }
+                    },
+                });
+
+
 
         });
 

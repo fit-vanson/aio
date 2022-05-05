@@ -213,6 +213,7 @@ Route::group(['prefix'=>'project','middleware'=>['CheckLogout','2fa']], function
     Route::get('/showlog/{id}',[ProjectController::class,'showlog'])->name('project.showlog')->middleware('can:project-index');
     Route::get('/check_build',[ProjectController::class,'check_build'])->name('project.check_build')->middleware('can:project-index');
     Route::post('/updateBuildCheck',[ProjectController::class,'updateBuildCheck'])->name('project.updateBuildCheck')->middleware('can:project-update');
+    Route::post('/updateDev_status',[ProjectController::class,'updateDevStatus'])->name('project.updateDev_status')->middleware('can:project-update');
 
 
 
