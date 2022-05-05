@@ -4533,34 +4533,29 @@ class ProjectController extends Controller
 
     public function updateDevStatus(Request $request){
         $data = explode("\r\n",$request->project_data);
-        foreach (array_filter($data) as $item){
-            $project = ProjectModel::where('projectname',$item)->get()->toArray();
-            if(!empty($project)){
-                ProjectModel::updateOrCreate(
-                    [
-                        "projectname" => $item,
-                    ],
-                    [
-                        "Chplay_buildinfo_store_name_x" => $request->Chplay_buildinfo_store_name_x,
-                        "Amazon_buildinfo_store_name_x" => $request->Amazon_buildinfo_store_name_x,
-                        "Samsung_buildinfo_store_name_x" => $request->Samsung_buildinfo_store_name_x,
-                        "Xiaomi_buildinfo_store_name_x" => $request->Xiaomi_buildinfo_store_name_x,
-                        "Oppo_buildinfo_store_name_x" => $request->Oppo_buildinfo_store_name_x,
-                        "Vivo_buildinfo_store_name_x" => $request->Vivo_buildinfo_store_name_x,
-                        "Huawei_buildinfo_store_name_x" => $request->Huawei_buildinfo_store_name_x,
-                        "Chplay_status" => $request->Chplay_status,
-                        "Amazon_status" => $request->Amazon_status,
-                        "Samsung_status" => $request->Samsung_status,
-                        "Xiaomi_status" => $request->Xiaomi_status,
-                        "Oppo_status" => $request->Oppo_status,
-                        "Vivo_status" => $request->Vivo_status,
-                        "Huawei_status" => $request->Huawei_status,
-                    ]);
-
-            }else{
-                return  response()->json(['errors'=>'Project không tồn tại '.$item]);
+        $project = ProjectModel::whereIN('projectname',$data)->get();
+        foreach ($project as $item){
+            ProjectModel::updateOrCreate(
+                [
+                    "projectname" => $item->projectname,
+                ],
+                [
+                    "Chplay_buildinfo_store_name_x" => $request->Chplay_buildinfo_store_name_x,
+                    "Amazon_buildinfo_store_name_x" => $request->Amazon_buildinfo_store_name_x,
+                    "Samsung_buildinfo_store_name_x" => $request->Samsung_buildinfo_store_name_x,
+                    "Xiaomi_buildinfo_store_name_x" => $request->Xiaomi_buildinfo_store_name_x,
+                    "Oppo_buildinfo_store_name_x" => $request->Oppo_buildinfo_store_name_x,
+                    "Vivo_buildinfo_store_name_x" => $request->Vivo_buildinfo_store_name_x,
+                    "Huawei_buildinfo_store_name_x" => $request->Huawei_buildinfo_store_name_x,
+                    "Chplay_status" => $request->Chplay_status,
+                    "Amazon_status" => $request->Amazon_status,
+                    "Samsung_status" => $request->Samsung_status,
+                    "Xiaomi_status" => $request->Xiaomi_status,
+                    "Oppo_status" => $request->Oppo_status,
+                    "Vivo_status" => $request->Vivo_status,
+                    "Huawei_status" => $request->Huawei_status,
+                ]);
             }
-        }
         return response()->json(['success'=>'Cập nhật thành công ']);
 
     }
