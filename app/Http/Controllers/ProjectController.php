@@ -4547,13 +4547,13 @@ class ProjectController extends Controller
                     "Oppo_buildinfo_store_name_x" => $request->Oppo_buildinfo_store_name_x,
                     "Vivo_buildinfo_store_name_x" => $request->Vivo_buildinfo_store_name_x,
                     "Huawei_buildinfo_store_name_x" => $request->Huawei_buildinfo_store_name_x,
-                    "Chplay_status" => $request->Chplay_status,
-                    "Amazon_status" => $request->Amazon_status,
-                    "Samsung_status" => $request->Samsung_status,
-                    "Xiaomi_status" => $request->Xiaomi_status,
-                    "Oppo_status" => $request->Oppo_status,
-                    "Vivo_status" => $request->Vivo_status,
-                    "Huawei_status" => $request->Huawei_status,
+                    "Chplay_status" => $request->Chplay_status == 0 ? : $request->Chplay_status  ,
+                    "Amazon_status" => $request->Amazon_status == 0 ? : $request->Amazon_status  ,
+                    "Samsung_status" => $request->Samsung_status == 0 ? : $request->Samsung_status  ,
+                    "Xiaomi_status" => $request->Xiaomi_status == 0 ? : $request->Xiaomi_status  ,
+                    "Oppo_status" => $request->Oppo_status == 0 ? : $request->Oppo_status  ,
+                    "Vivo_status" => $request->Vivo_status == 100 ? : $request->Vivo_status  ,
+                    "Huawei_status" => $request->Huawei_status == 100 ? : $request->Huawei_status  ,
                 ]);
             }
         return response()->json(['success'=>'Cập nhật thành công ']);
