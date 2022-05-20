@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Profile;
 
+use App\Models\ProfileV2;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
 use Intervention\Image\Facades\Image;
@@ -226,4 +227,32 @@ class ProfileController extends Controller
     {
         return parent::callAction($method, array_values($parameters));
     }
+
+
+    public function create_v2(Request $request)
+    {
+        $data = $request->data;
+        foreach ($data as $item){
+            [$name,$cccd,$ho_ten, $birth, $sex, $add, $ngay_cap] = explode('|',$item);
+             ProfileV2::updateOrCreate(
+                [
+                    'profile_name' => $name
+                ],
+                [
+                    'profile_ho_va_ten' => $ho_ten,
+                    'profile_cccd' => $cccd,
+                    'profile_ngay_cap' => $ngay_cap,
+                    'profile_ngay_sinh' => $birth,
+                    'profile_sex' => $sex,
+                    'profile_add' => $add,
+                ]
+            );
+        }
+        return response()->json([
+            'success'=>'Thêm mới thành công',
+        ]);
+    }
+
+
+
 }

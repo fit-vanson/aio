@@ -24,6 +24,7 @@
     <div class="col-sm-6">
         <div class="float-right">
             <a class="btn btn-success" href="javascript:void(0)" id="createNewProfile"> Create New</a>
+            <a class="btn btn-secondary" href="javascript:void(0)" id="createNewProfileMultiple"> Create Multiple</a>
         </div>
     </div>
     @include('modals.profile')
@@ -122,6 +123,16 @@
                 $('#modelHeading').html("Thêm mới");
                 $('#ajaxModelProfile').modal('show');
             });
+
+            $('#createNewProfileMultiple').click(function () {
+                $('#saveBtn').val("create");
+                $('#id').val('');
+                $('#ProfileMultipleForm').trigger("reset");
+                $('#modelHeadingMultiple').html("Thêm mới nhiều");
+                $('#ajaxModelProfileMultiple').modal('show');
+            });
+
+
             $('#ProfileForm').on('submit',function (event){
                 event.preventDefault();
                 var formData = new FormData($("#ProfileForm")[0]);
@@ -179,6 +190,37 @@
                 }
 
             });
+
+
+            $('#ProfileMultipleForm').on('submit',function (event){
+                event.preventDefault();
+                var data = $('textarea#profile_multiple').val()
+                var myArray = data.split("\n");
+                $.ajax({
+                    data:  {data: myArray},
+                    url: "{{ route('profile.create_v2') }}",
+                    type: "POST",
+                    dataType: 'json',
+                    success: function (data) {
+                        if(data.errors){
+                            for( var count=0 ; count <data.errors.length; count++){
+                                $("#ProfileMultipleForm").notify(
+                                    data.errors[count],"error",
+                                    { position:"right" }
+                                );
+                            }
+                        }
+                        if(data.success){
+                            $.notify(data.success, "success");
+                            $('#ProfileMultipleForm').trigger("reset");
+                            $('#ajaxModelProfileMultiple').modal('hide');
+                            table.draw();
+                        }
+                    },
+                });
+
+            });
+
             $(document).on('click','.deleteProfile', function (data){
                 var id = $(this).data("id");
 
