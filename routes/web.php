@@ -561,7 +561,7 @@ Route::group(['prefix'=>'profile','middleware'=>['CheckLogout','2fa']], function
     Route::post('/create',[ProfileController::class,'create'])->name('profile.create')->middleware('can:dev-add');
     Route::post('/create-v2',[ProfileController::class,'create_v2'])->name('profile.create_v2')->middleware('can:dev-add');
     Route::get('/edit/{id}',[ProfileController::class,'edit'])->name('profile.edit')->middleware('can:dev-edit');
-    Route::get('/show/{id}',[ProfileController::class,'show'])->name('profile.show')->middleware('can:dev-show');
+    Route::get('/show',[ProfileController::class,'show'])->name('profile.show')->middleware('can:dev-show');
     Route::post('/update',[ProfileController::class,'update'])->name('profile.update')->middleware('can:dev-update');
     Route::get('/delete/{id}',[ProfileController::class,'delete'])->name('profile.delete')->middleware('can:dev-delete');
 });

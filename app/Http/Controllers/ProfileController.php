@@ -67,7 +67,8 @@ class ProfileController extends Controller
         $data_arr = array();
         foreach ($records as $record) {
             try {
-                $btn = ' <a href="javascript:void(0)" onclick="editProfile('.$record->id.')" class="btn btn-warning"><i class="ti-pencil-alt"></i></a>';
+                $btn = '';
+//                $btn = ' <a href="javascript:void(0)" onclick="editProfile('.$record->id.')" class="btn btn-warning"><i class="ti-pencil-alt"></i></a>';
                 $btn = $btn.' <a href="javascript:void(0)" data-toggle="tooltip"  data-id="'.$record->id.'" data-original-title="Delete" class="btn btn-danger deleteProfile"><i class="ti-trash"></i></a>';
                 $data_arr[] = array(
                     "ma_profile" => $record->profile->profile_name.' - '.$record->profile->profile_ho_va_ten. ' - '.$record->profile->profile_cccd. ' - '.$record->profile->profile_sex. ' - '.$record->profile->profile_add ,
@@ -300,6 +301,22 @@ class ProfileController extends Controller
         return response()->json([
             'success'=>'Thêm mới thành công',
         ]);
+    }
+
+    public function show(Request $request)
+    {
+        if (isset($request->profileID)){
+            $profile = ProfileV2::with('company')->where('profile_name',$request->profileID)->first();
+            if(isset($profile)){
+                return view('profile.show', compact('profile',$profile));
+            }else{
+                echo 'sai mã';
+            }
+        }else{
+            echo url('/profile/show?profileID=123');
+        }
+
+
     }
 
 
