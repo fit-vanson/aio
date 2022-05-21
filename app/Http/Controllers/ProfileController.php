@@ -4,8 +4,10 @@ namespace App\Http\Controllers;
 
 use App\Models\Profile;
 
+use App\Models\ProfileCompany;
 use App\Models\ProfileV2;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Validator;
 use Intervention\Image\Facades\Image;
 
@@ -34,37 +36,44 @@ class ProfileController extends Controller
         $searchValue = $search_arr['value']; // Search value
 
         // Total records
-        $totalRecords = Profile::select('count(*) as allcount')->count();
-        $totalRecordswithFilter = Profile::select('count(*) as allcount')
-            ->where('profile_name', 'like', '%' . $searchValue . '%')
-            ->orwhere('profile_sdt', 'like', '%' . $searchValue . '%')
-            ->orWhere('profile_dia_chi', 'like', '%' . $searchValue . '%')
-            ->orWhere('profile_cccd', 'like', '%' . $searchValue . '%')
+        $totalRecords = ProfileCompany::select('count(*) as allcount')->count();
+        $totalRecordswithFilter = ProfileCompany::with('profile')
+            ->where('name_en', 'like', '%' . $searchValue . '%')
+            ->orwhere('name_vi', 'like', '%' . $searchValue . '%')
+            ->orwhere('mst', 'like', '%' . $searchValue . '%')
+            ->orWhere('dia_chi', 'like', '%' . $searchValue . '%')
+            ->orWhereHas('profile', function($query) use ($searchValue) {
+                $query->orwhere('profile_name', 'like', '%' . $searchValue . '%')
+                    ->orwhere('profile_ho_va_ten', 'like', '%' . $searchValue . '%')
+                    ->orwhere('profile_cccd', 'like', '%' . $searchValue . '%');
+            })
             ->count();
 
         // Get records, also we have included search filter as well
-        $records = Profile::orderBy($columnName, $columnSortOrder)
-            ->where('profile_name', 'like', '%' . $searchValue . '%')
-            ->orwhere('profile_ho_ten', 'like', '%' . $searchValue . '%')
-            ->orwhere('profile_sdt', 'like', '%' . $searchValue . '%')
-            ->orWhere('profile_dia_chi', 'like', '%' . $searchValue . '%')
-            ->orWhere('profile_cccd', 'like', '%' . $searchValue . '%')
+        $records = ProfileCompany::with('profile')
+            ->orderBy($columnName, $columnSortOrder)
+            ->where('name_en', 'like', '%' . $searchValue . '%')
+            ->orwhere('name_vi', 'like', '%' . $searchValue . '%')
+            ->orwhere('mst', 'like', '%' . $searchValue . '%')
+            ->orWhere('dia_chi', 'like', '%' . $searchValue . '%')
+            ->orWhereHas('profile', function($query) use ($searchValue) {
+                $query->where('profile_name', 'like', '%' . $searchValue . '%')
+                    ->orwhere('profile_ho_va_ten', 'like', '%' . $searchValue . '%')
+                    ->orwhere('profile_cccd', 'like', '%' . $searchValue . '%');
+            })
             ->skip($start)
             ->take($rowperpage)
             ->get();
-
-
         $data_arr = array();
         foreach ($records as $record) {
             $btn = ' <a href="javascript:void(0)" onclick="editProfile('.$record->id.')" class="btn btn-warning"><i class="ti-pencil-alt"></i></a>';
             $btn = $btn.' <a href="javascript:void(0)" data-toggle="tooltip"  data-id="'.$record->id.'" data-original-title="Delete" class="btn btn-danger deleteProfile"><i class="ti-trash"></i></a>';
             $data_arr[] = array(
-                "profile_logo" => $record->profile_logo,
-                "profile_name" => $record->profile_name. '<p style="margin: auto"class="text-muted ">'.$record->profile_ho_ten.'</p>',
-                "profile_sdt" => $record->profile_sdt,
-                "profile_dia_chi" => $record->profile_dia_chi,
-                "profile_cccd" => $record->profile_cccd,
-                "profile_file" => '<a href="uploads/profile/file/'.$record->profile_file.'" >'.$record->profile_file.'</a>',
+                "ma_profile" => $record->profile->profile_name.' - '.$record->profile->profile_ho_va_ten. ' - '.$record->profile->profile_cccd. ' - '.$record->profile->profile_sex. ' - '.$record->profile->profile_add ,
+                "name_en" => $record->name_en. '<p class="text-muted">'.$record->name_vi .'</p>',
+                "mst" => $record->mst,
+                "dia_chi" => $record->dia_chi,
+                "ngay_thanh_lap" => $record->ngay_thanh_lap,
                 "action"=> $btn,
             );
         }
@@ -231,22 +240,57 @@ class ProfileController extends Controller
 
     public function create_v2(Request $request)
     {
-        $data = $request->data;
-        foreach ($data as $item){
-            [$name,$cccd,$ho_ten, $birth, $sex, $add, $ngay_cap] = explode('|',$item);
-             ProfileV2::updateOrCreate(
-                [
-                    'profile_name' => $name
-                ],
-                [
-                    'profile_ho_va_ten' => $ho_ten,
-                    'profile_cccd' => $cccd,
-                    'profile_ngay_cap' => $ngay_cap,
-                    'profile_ngay_sinh' => $birth,
-                    'profile_sex' => $sex,
-                    'profile_add' => $add,
-                ]
-            );
+        if($request->attribute1 ==1){
+            $data = explode("\r\n",$request->profile_multiple);
+            foreach ($data as $item){
+                try {
+                    [$name,$cccd,$ho_ten, $birth, $sex, $add, $ngay_cap] = explode('|',$item);
+
+                    ProfileV2::updateOrCreate(
+                        [
+                            'profile_name' => $name
+                        ],
+                        [
+                            'profile_ho_va_ten' => $ho_ten,
+                            'profile_cccd' => $cccd,
+                            'profile_ngay_cap' => $ngay_cap[0].$ngay_cap[1].'/'.$ngay_cap[2].$ngay_cap[3].'/'.$ngay_cap[4].$ngay_cap[5].$ngay_cap[6].$ngay_cap[7],
+                            'profile_ngay_sinh' => $birth[0].$birth[1].'/'.$birth[2].$birth[3].'/'.$birth[4].$birth[5].$birth[6].$birth[7],
+                            'profile_sex' => $sex,
+                            'profile_add' => $add,
+                        ]
+                    );
+                }catch (\Exception $exception) {
+                    Log::error('Message:' . $exception->getMessage() . '--- insert Multiple Profile: ---' . $exception->getLine());
+                }
+            }
+        }
+        if($request->attribute1 == 0){
+            $data = explode("\r\n",$request->profile_multiple);
+            foreach ($data as $item){
+                try {
+                    [$name,$name_vi,$name_en, $mst, $ngay_thanh_lap, $dia_chi] = explode('|',$item);
+
+                    $id_name = ProfileV2::where('profile_name',$name)->first();
+                    try {
+                        ProfileCompany::updateOrCreate(
+                            [
+                                'ma_profile' => $id_name->id,
+                                'mst' => $mst,
+                            ],
+                            [
+                                'name_vi' => $name_vi,
+                                'name_en' => $name_en,
+                                'ngay_thanh_lap' => $ngay_thanh_lap,
+                                'dia_chi' => $dia_chi,
+                            ]
+                        );
+                    }catch (\Exception $exception) {
+                        Log::error('Message:' . $exception->getMessage() . '--- insert No Profile: ---' . $exception->getLine());
+                    }
+                }catch (\Exception $exception) {
+                    Log::error('Message:' . $exception->getMessage() . '--- insert Multiple Company: ---' . $exception->getLine());
+                }
+            }
         }
         return response()->json([
             'success'=>'Thêm mới thành công',

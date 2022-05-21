@@ -98,8 +98,26 @@
             <div class="modal-body">
                 <form id="ProfileMultipleForm" name="ProfileMultipleForm" class="form-horizontal">
                     <div class="row">
+                        <div class="form-group col-lg-4">
+                            <div class="custom-control custom-radio custom-control-inline">
+                                <input type="radio" id="company1" name="attribute1" class="custom-control-input" onchange="getit();" value="0">
+                                <label class="custom-control-label" for="company1">Công ty</label>
+                            </div>
+                            <div class="custom-control custom-radio custom-control-inline">
+                                <input type="radio" id="individual1" name="attribute1" class="custom-control-input" onchange="getit();" value="1" checked="">
+                                <label class="custom-control-label" for="individual1">Cá nhân</label>
+                            </div>
+
+                        </div>
+                    </div>
+                    <div class="row">
                         <div class="form-group col-lg-12">
-                            <label for="name">Địa chỉ</label>
+                            <p id="getit" class="text-muted">{Mã ID Profile} | {số cccd hoặc cmt} | {Họ tên} | {ngày tháng năm sinh} | {giới tính} | {quê quán} | {ngày cấp} </p>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="form-group col-lg-12">
+                            <label for="name">Data</label>
                             <textarea id="profile_multiple" name="profile_multiple" class="form-control" rows="10"></textarea>
                         </div>
                     </div>
