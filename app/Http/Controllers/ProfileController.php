@@ -225,15 +225,15 @@ class ProfileController extends Controller
     }
     public function delete($id)
     {
-        $profile = Profile::find($id);
-        if($profile->profile_logo){
-            $path_image =   public_path('uploads/profile/logo/').$profile->profile_logo;
-            unlink($path_image);
-        }
-        if($profile->profile_file){
-            $path_file  =   public_path('uploads/profile/file/').$profile->profile_file;
-            unlink($path_file);
-        }
+        $profile = ProfileCompany::find($id);
+//        if($profile->profile_logo){
+//            $path_image =   public_path('uploads/profile/logo/').$profile->profile_logo;
+//            unlink($path_image);
+//        }
+//        if($profile->profile_file){
+//            $path_file  =   public_path('uploads/profile/file/').$profile->profile_file;
+//            unlink($path_file);
+//        }
         $profile->delete();
         return response()->json(['success'=>'Xóa thành công.']);
     }
