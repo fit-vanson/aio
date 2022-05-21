@@ -308,7 +308,7 @@ class ProfileController extends Controller
         if (isset($request->profileID)){
             $profile = ProfileV2::with('company')->where('profile_name',$request->profileID)->first();
             if(isset($profile)){
-                return view('profile.show', compact('profile',$profile));
+                return view('profile.show', ['profile'=>$profile]);
             }else{
                 echo 'sai mã';
             }
