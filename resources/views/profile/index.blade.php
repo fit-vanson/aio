@@ -23,7 +23,7 @@
     </div>
     <div class="col-sm-6">
         <div class="float-right">
-            <a class="btn btn-success" href="javascript:void(0)" id="createNewProfile"> Create New</a>
+{{--            <a class="btn btn-success" href="javascript:void(0)" id="createNewProfile"> Create New</a>--}}
             <a class="btn btn-secondary" href="javascript:void(0)" id="createNewProfileMultiple"> Create Multiple</a>
         </div>
     </div>
