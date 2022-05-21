@@ -38,12 +38,12 @@
                     <table class="table table-bordered dt-responsive nowrap data-table" style="border-collapse: collapse; border-spacing: 0; width: 100%;">
                         <thead>
                         <tr>
-                            <th>Logo</th>
-                            <th>Name</th>
-                            <th>Số điện thoại</th>
-                            <th>Địa chỉ</th>
-                            <th>CCCD/CMND </th>
-                            <th>File </th>
+{{--                            <th>Logo</th>--}}
+                            <th>Người đại diện </th>
+                            <th>Tên công ty</th>
+                            <th>Mã số thuế</th>
+                            <th>Địa chỉ </th>
+                            <th>Ngày thành lập </th>
                             <th>Action</th>
                         </tr>
                         </thead>
@@ -85,6 +85,38 @@
                     'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
                 }
             });
+            {{--var table = $('.data-table').DataTable({--}}
+            {{--    processing: true,--}}
+            {{--    serverSide: true,--}}
+            {{--    ajax: {--}}
+            {{--        url: "{{ route('profile.getIndex') }}",--}}
+            {{--        type: "post"--}}
+            {{--    },--}}
+            {{--    columns: [--}}
+            {{--        {data: 'profile_logo'},--}}
+            {{--        {data: 'profile_name'},--}}
+            {{--        {data: 'profile_sdt'},--}}
+            {{--        {data: 'profile_dia_chi'},--}}
+            {{--        {data: 'profile_cccd'},--}}
+            {{--        {data: 'profile_file'},--}}
+            {{--        {data: 'action', className: "text-center",name: 'action', orderable: false, searchable: false},--}}
+            {{--    ],--}}
+            {{--    columnDefs: [--}}
+
+            {{--        {--}}
+            {{--            targets: 0,--}}
+            {{--            orderable: false,--}}
+            {{--            responsivePriority: 0,--}}
+            {{--            render: function (data, type, full, meta) {--}}
+            {{--                var $output ='<img src="{{asset('uploads/profile/logo')}}/'+data+'" alt="logo" height="100px">';--}}
+            {{--                return $output;--}}
+            {{--            }--}}
+            {{--        },--}}
+            {{--    ],--}}
+            {{--    order:[1,'asc']--}}
+            {{--});--}}
+            var groupColumn = 0;
+
             var table = $('.data-table').DataTable({
                 processing: true,
                 serverSide: true,
@@ -93,29 +125,60 @@
                     type: "post"
                 },
                 columns: [
-                    {data: 'profile_logo'},
-                    {data: 'profile_name'},
-                    {data: 'profile_sdt'},
-                    {data: 'profile_dia_chi'},
-                    {data: 'profile_cccd'},
-                    {data: 'profile_file'},
+                    {data: 'ma_profile'},
+                    {data: 'name_en'},
+                    {data: 'mst'},
+                    {data: 'dia_chi'},
+                    {data: 'ngay_thanh_lap'},
                     {data: 'action', className: "text-center",name: 'action', orderable: false, searchable: false},
                 ],
-                columnDefs: [
+                rowGroup: {
+                    dataSrc: 0
+                },
+                columnDefs: [{ visible: false, targets: groupColumn }],
+                drawCallback: function (settings) {
+                    var api = this.api();
+                    var rows = api.rows({ page: 'current' }).nodes();
+                    var last = null;
 
-                    {
-                        targets: 0,
-                        orderable: false,
-                        responsivePriority: 0,
-                        render: function (data, type, full, meta) {
-                            var $output ='<img src="{{asset('uploads/profile/logo')}}/'+data+'" alt="logo" height="100px">';
-                            return $output;
-                        }
-                    },
+                    api
+                        .column(groupColumn, { page: 'current' })
+                        .data()
+                        .each(function (group, i) {
+                            if (last !== group) {
+                                $(rows)
+                                    .eq(i)
+                                    .before('<tr class="group"><td colspan="5">' + group + '</td></tr>');
 
-                ],
-                order:[1,'asc']
+                                last = group;
+                            }
+                        });
+                },
+                {{--columnDefs: [--}}
+
+                {{--    {--}}
+                {{--        targets: 0,--}}
+                {{--        orderable: false,--}}
+                {{--        responsivePriority: 0,--}}
+                {{--        render: function (data, type, full, meta) {--}}
+                {{--            var $output ='<img src="{{asset('uploads/profile/logo')}}/'+data+'" alt="logo" height="100px">';--}}
+                {{--            return $output;--}}
+                {{--        }--}}
+                {{--    },--}}
+                {{--],--}}
+                // order:[1,'asc']
+
             });
+            $('.data-table tbody').on('click', 'tr.group', function () {
+                var currentOrder = table.order()[0];
+                if (currentOrder[0] === groupColumn && currentOrder[1] === 'asc') {
+                    table.order([groupColumn, 'desc']).draw();
+                } else {
+                    table.order([groupColumn, 'asc']).draw();
+                }
+            });
+
+
             $('#createNewProfile').click(function () {
                 $('#saveBtn').val("create");
                 $('#id').val('');
@@ -194,13 +257,18 @@
 
             $('#ProfileMultipleForm').on('submit',function (event){
                 event.preventDefault();
-                var data = $('textarea#profile_multiple').val()
-                var myArray = data.split("\n");
+                var formData = new FormData($("#ProfileMultipleForm")[0]);
+                console.log(formData)
+                // var data = $('textarea#profile_multiple').val()
+                // var check = $('textarea#profile_multiple').val()
+                // var myArray = data.split("\n");
                 $.ajax({
-                    data:  {data: myArray},
+                    data:  formData,
                     url: "{{ route('profile.create_v2') }}",
                     type: "POST",
                     dataType: 'json',
+                    processData: false,
+                    contentType: false,
                     success: function (data) {
                         if(data.errors){
                             for( var count=0 ; count <data.errors.length; count++){
@@ -247,6 +315,8 @@
                         swal("Đã xóa!", "Your imaginary file has been deleted.", "success");
                     });
             });
+
+
         });
     </script>
     <script>
@@ -292,6 +362,14 @@
                     $('body').addClass('modal-open');
                 });
             })
+        }
+        function getit(){
+            var select = document.querySelector('input[name="attribute1"]:checked').value;
+            if(select == 1) {
+                $('#getit').text('{Mã ID Profile} | {số cccd hoặc cmt} | {Họ tên} | {ngày tháng năm sinh} | {giới tính} | {quê quán} | {ngày cấp} ');
+            }else {
+                $('#getit').text('{Mã Profile} | {Tên công ty tiếng việt} | { Tên công ty tiếng Anh} | {Mã số công ty} | {Ngày thành lập} | {địa chỉ cty} ');
+            }
         }
     </script>
 
