@@ -154,29 +154,16 @@
                             }
                         });
                 },
-                {{--columnDefs: [--}}
-
-                {{--    {--}}
-                {{--        targets: 0,--}}
-                {{--        orderable: false,--}}
-                {{--        responsivePriority: 0,--}}
-                {{--        render: function (data, type, full, meta) {--}}
-                {{--            var $output ='<img src="{{asset('uploads/profile/logo')}}/'+data+'" alt="logo" height="100px">';--}}
-                {{--            return $output;--}}
-                {{--        }--}}
-                {{--    },--}}
-                {{--],--}}
-                // order:[1,'asc']
 
             });
-            $('.data-table tbody').on('click', 'tr.group', function () {
-                var currentOrder = table.order()[0];
-                if (currentOrder[0] === groupColumn && currentOrder[1] === 'asc') {
-                    table.order([groupColumn, 'desc']).draw();
-                } else {
-                    table.order([groupColumn, 'asc']).draw();
-                }
-            });
+            // $('.data-table tbody').on('click', 'tr.group', function () {
+            //     var currentOrder = table.order()[0];
+            //     if (currentOrder[0] === groupColumn && currentOrder[1] === 'asc') {
+            //         table.order([groupColumn, 'desc']).draw();
+            //     } else {
+            //         table.order([groupColumn, 'asc']).draw();
+            //     }
+            // });
 
 
             $('#createNewProfile').click(function () {
