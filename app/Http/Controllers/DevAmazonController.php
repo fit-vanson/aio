@@ -8,6 +8,7 @@ use App\Models\Dev_Amazon;
 use App\Models\Ga;
 use App\Models\Ga_dev;
 use App\Models\Profile;
+use App\Models\ProfileV2;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
@@ -22,7 +23,7 @@ class DevAmazonController extends Controller
 //        dd(1);
         $ga_name = Ga::latest('id')->get();
         $ga_dev = Ga_dev::latest('id')->get();
-        $profiles = Profile::orderBy('profile_name','asc')->get();
+        $profiles = ProfileV2::orderBy('profile_name','asc')->get();
         return view('dev-amazon.index',compact(['ga_name','ga_dev','profiles']));
     }
     public function getIndex(Request $request)
@@ -108,7 +109,7 @@ class DevAmazonController extends Controller
                 "amazon_store_name" => $record->amazon_store_name,
                 "amazon_email"=>$record->gadev->gmail . '<p style="margin: auto" class="text-muted ">'.$record->amazon_pass .'</p>',
                 "amazon_status"=>$status,
-                "amazon_note"=>$record->amazon_note,
+                "amazon_note"=>$record->amazon_note ? substr($record->amazon_note, 0, 20) . '...' : "",
                 "action"=> $btn,
             );
         }
@@ -164,7 +165,6 @@ class DevAmazonController extends Controller
     }
     public function update(Request $request)
     {
-
         $id = $request->id;
         $rules = [
             'amazon_store_name' =>'unique:ngocphandang_dev_amazon,amazon_store_name,'.$id.',id',

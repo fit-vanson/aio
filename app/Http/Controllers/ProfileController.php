@@ -315,6 +315,16 @@ class ProfileController extends Controller
             }else{
                 return response()->json(['error'=>'sai ma']);
             }
+        }elseif (isset($request->ID)){
+            $profile = ProfileV2::with('company')->find($request->ID);
+            if(isset($profile)){
+                return response()->json([
+                    'success'=>'Thành công.',
+                    'profile'=> $profile,
+                ]);
+            }else{
+                return response()->json(['error'=>'sai ma']);
+            }
         }else{
             return view('profile.show'  );
         }

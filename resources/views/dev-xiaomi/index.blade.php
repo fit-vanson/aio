@@ -232,6 +232,45 @@
             })
         }
 
+        $('select').on('change', function() {
+            var select = document.querySelector('input[name="attribute"]:checked').value;
+            if(select != 1){
+                if(this.value !=0){
+                    $.get('{{asset('profile/show?ID=')}}'+this.value,function (data) {
+                        var html = '';
+                        if(data.profile.company[0]){
+                            html = data.profile.company[0].name_en;
+                            $('#xiaomi_company').val(html);
+                        }else {
+                            html = 'Cá nhân sở hữu công ty';
+                            $('#xiaomi_company').val(html);
+                        }
+                    });
+                }
+            }else {
+                $('#xiaomi_company').val('');
+            }
+        });
+
+        function getit(){
+            var select = $('#xiaomi_profile_info').val();
+            var radio = document.querySelector('input[name="attribute"]:checked').value;
+            if(radio == 1) {
+                $('#xiaomi_company').val('');
+            }else {
+                $.get('{{asset('profile/show?ID=')}}'+select,function (data) {
+                    var html = '';
+                    if(data.profile.company[0]){
+                        html = data.profile.company[0].name_en;
+                        $('#xiaomi_company').val(html);
+                    }else {
+                        html = 'Cá nhân sở hữu công ty';
+                        $('#xiaomi_company').val(html);
+                    }
+                });
+            }
+        }
+
     </script>
 
     <script>

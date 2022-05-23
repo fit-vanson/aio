@@ -123,6 +123,7 @@
                 $('#gmail_gadev_chinh').select2();
                 $('#gmail_gadev_phu_1').select2();
                 $('#gmail_gadev_phu_2').select2();
+                $('#profile_info').select2();
 
             });
             $('#devForm').on('submit',function (event){
@@ -240,10 +241,14 @@
                 $('#status').val(data.status);
                 $('#note').val(data.note);
 
-                if(data.thuoc_tinh != 0){
-                    $("#individual").prop('checked', true);
+                if(data.thuoc_tinh == 1){
+                    $('.thuoc_tinh').show();
+                    $('.dia_chi').hide();
+                    $("#individual1").prop('checked', true);
                 }else{
-                    $("#company").prop('checked', true);
+                    $('.thuoc_tinh').show();
+                    $('.dia_chi').show();
+                    $("#company1").prop('checked', true);
                 }
 
                 $('#modelHeading').html("Edit");
@@ -289,13 +294,41 @@
                 }
             });
         });
+        function getit(){
+            var select = document.querySelector('input[name="attribute1"]:checked').value;
+            if(select == 1) {
+                $('.dia_chi').hide();
+            }else {
+                $('.dia_chi').show();
+
+            }
+        }
+
+        $('select').on('change', function() {
+            if(this.value !=0){
+                $.get('{{asset('profile/show?ID=')}}'+this.value,function (data) {
+                    var html = '';
+                    if(data.profile.company[0]){
+                        console.log(data.profile.company[0])
+                        html = data.profile.company[0].mst + ' - '+data.profile.company[0].name_en + ' - '+ data.profile.company[0].dia_chi ;
+
+                        $('#info_andress').val(html);
+                    }else {
+                        html = 'Cá nhân sở hữu công ty';
+                        $('#info_andress').val(html);
+                    }
+                });
+                $('.thuoc_tinh').show();
+            }else {
+                $('.thuoc_tinh').hide();
+            }
+
+        });
 
     </script>
     <script>
         function rebuildMailOption(mails){
             var elementSelect = $("#amazon_email");
-
-
             if(elementSelect.length <= 0){
                 return false;
             }

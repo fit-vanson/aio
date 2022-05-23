@@ -7,6 +7,7 @@ use App\Models\Dev;
 use App\Models\Ga;
 use App\Models\Ga_dev;
 use App\Models\Profile;
+use App\Models\ProfileV2;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Response;
@@ -20,7 +21,7 @@ class DevController extends Controller
     {
         $ga_name = Ga::orderBy('ga_name','asc')->get();
         $ga_dev = Ga_dev::orderBy('gmail','asc')->get();
-        $profiles = Profile::orderBy('profile_name','asc')->get();
+        $profiles = ProfileV2::orderBy('profile_name','asc')->get();
         return view('dev.index',compact(['ga_name','ga_dev','profiles']));
     }
     public function getIndex(Request $request)
@@ -193,7 +194,7 @@ class DevController extends Controller
         $data['info_phone'] = $request->info_phone;
         $data['pass'] = $request->pass;
         $data['profile_info'] = $request->profile_info;
-        $data['info_andress'] = $request->info_andress;
+        $data['info_andress'] = $request->attribute1 == 0 ? $request->info_andress :'';
         $data['note'] = $request->note;
         $data['info_url'] = $request->info_url;
         $data['info_logo'] = $request->info_logo;
@@ -201,7 +202,7 @@ class DevController extends Controller
         $data['info_policydev'] = $request->info_policydev;
         $data['info_fanpage'] = $request->info_fanpage;
         $data['info_web'] = $request->info_web;
-        $data['thuoc_tinh'] = $request->thuoc_tinh;
+        $data['thuoc_tinh'] = $request->attribute1;
         $data['status'] = 0;
         $data->save();
         return response()->json([
@@ -245,9 +246,9 @@ class DevController extends Controller
         $data->info_phone = $request->info_phone;
         $data->pass = $request->pass;
         $data->profile_info = $request->profile_info;
-        $data->info_andress= $request->info_andress;
+        $data->info_andress=  $request->attribute1 == 0 ? $request->info_andress :'';
         $data->note= $request->note;
-        $data->thuoc_tinh= $request->thuoc_tinh;
+        $data->thuoc_tinh= $request->attribute1;
         $data->info_url = $request->info_url;
         $data->info_logo = $request->info_logo;
         $data->info_banner = $request->info_banner;

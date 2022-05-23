@@ -61,26 +61,6 @@
                                 <input type="text" id="samsung_phone" name="samsung_phone" class="form-control" >
                             </div>
                             <div class="form-group col-lg-6">
-                                <label for="name">Profile Info </label>
-{{--                                <input type="text" id="samsung_profile_info" name="samsung_profile_info" class="form-control" >--}}
-                                <select class="form-control select2js" id="samsung_profile_info" name="samsung_profile_info">
-                                    <option value="0">---Vui lòng chọn---</option>
-                                    @foreach($profiles as $item)
-                                        <option value="{{$item->id}}">{{$item->profile_name}} -  ({{$item->profile_ho_ten}} - {{$item->profile_dia_chi}})</option>
-                                    @endforeach
-                                </select>
-                            </div>
-                        </div>
-
-
-
-                        <div data-repeater-item="" class="row">
-                            <div class="form-group col-lg-6 ">
-                                <label for="name">Mật khẩu</label>
-                                <input type="text" id="samsung_pass" name="samsung_pass" class="form-control">
-                            </div>
-
-                            <div class="form-group col-lg-6">
                                 <label for="name">Trạng thái </label>
                                 <div class="inner row">
                                     <div class="col-md-12 col-12">
@@ -93,6 +73,27 @@
                                     </div>
                                 </div>
                             </div>
+
+                        </div>
+
+
+
+                        <div data-repeater-item="" class="row">
+                            <div class="form-group col-lg-6 ">
+                                <label for="name">Mật khẩu</label>
+                                <input type="text" id="samsung_pass" name="samsung_pass" class="form-control">
+                            </div>
+
+                            <div class="form-group col-lg-6">
+                                <label for="name">Profile Info </label>
+                                {{--                                <input type="text" id="samsung_profile_info" name="samsung_profile_info" class="form-control" >--}}
+                                <select class="form-control select2js" id="samsung_profile_info" name="samsung_profile_info">
+                                    <option value="0">---Vui lòng chọn---</option>
+                                    @foreach($profiles as $item)
+                                        <option value="{{$item->id}}">{{$item->profile_name}} -  ({{$item->profile_ho_va_ten}} - {{$item->profile_add}})</option>
+                                    @endforeach
+                                </select>
+                            </div>
                         </div>
 
                         <div data-repeater-item="" class="row">
@@ -103,11 +104,11 @@
                             <div class="form-group col-lg-4">
                                 <label class="d-block mb-3">Thuộc tính :</label>
                                 <div class="custom-control custom-radio custom-control-inline">
-                                    <input type="radio" id="company" name="attribute" class="custom-control-input" value="0">
+                                    <input type="radio" id="company" name="attribute" class="custom-control-input" onchange="getit();" value="0">
                                     <label class="custom-control-label" for="company">Công ty</label>
                                 </div>
                                 <div class="custom-control custom-radio custom-control-inline">
-                                    <input type="radio" id="individual" name="attribute" class="custom-control-input" value="1" checked>
+                                    <input type="radio" id="individual" name="attribute" class="custom-control-input" onchange="getit();" value="1" checked="">
                                     <label class="custom-control-label" for="individual">Cá nhân</label>
                                 </div>
                             </div>

@@ -130,7 +130,7 @@
                                 <select class="form-control select2js" id="profile_info" name="profile_info">
                                     <option value="0">---Vui lòng chọn---</option>
                                     @foreach($profiles as $item)
-                                        <option value="{{$item->id}}">{{$item->profile_name}} -  ({{$item->profile_ho_ten}} - {{$item->profile_dia_chi}})</option>
+                                        <option value="{{$item->id}}">{{$item->profile_name}} -  ({{$item->profile_ho_va_ten}} - {{$item->profile_add}})</option>
                                     @endforeach
                                 </select>
 
@@ -152,28 +152,32 @@
                         </div>
 
 
-                        <div data-repeater-item="" class="row">
+
+
+
+                        <div class="row thuoc_tinh" style="display:none;">
                             <div class="form-group col-lg-4">
-                                <label class="d-block mb-3">Thuộc tính :</label>
                                 <div class="custom-control custom-radio custom-control-inline">
-                                    <input type="radio" id="company" name="thuoc_tinh" class="custom-control-input" value="0">
-                                    <label class="custom-control-label" for="company">Công ty</label>
+                                    <input type="radio" id="company1" name="attribute1" class="custom-control-input" onchange="getit();" value="0">
+                                    <label class="custom-control-label" for="company1">Công ty</label>
                                 </div>
                                 <div class="custom-control custom-radio custom-control-inline">
-                                    <input type="radio" id="individual" name="thuoc_tinh" class="custom-control-input" value="1" checked>
-                                    <label class="custom-control-label" for="individual">Cá nhân</label>
+                                    <input type="radio" id="individual1" name="attribute1" class="custom-control-input" onchange="getit();" value="1" checked="">
+                                    <label class="custom-control-label" for="individual1">Cá nhân</label>
                                 </div>
+
                             </div>
                         </div>
 
-                        <div data-repeater-item="" class="row">
-                            <div class="form-group col-lg-6 ">
-                                <label for="name">Địa chỉ</label>
-                                <textarea id="info_andress" name="info_andress" class="form-control" rows="4" ></textarea>
-                            </div>
+                        <div class="row" >
+
                             <div class="form-group col-lg-6 ">
                                 <label for="name">Ghi chú</label>
                                 <textarea id="note" name="note" class="form-control" rows="4" ></textarea>
+                            </div>
+                            <div class="form-group col-lg-6 dia_chi" style="display: none">
+                                <label for="name">Địa chỉ</label>
+                                <textarea id="info_andress" name="info_andress" class="form-control" rows="4" ></textarea>
                             </div>
                         </div>
 
@@ -230,7 +234,6 @@
                         <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
                     </div>
                 </form>
-
             </div>
 
         </div>

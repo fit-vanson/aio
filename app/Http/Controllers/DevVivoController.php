@@ -8,6 +8,7 @@ use App\Models\Dev_Vivo;
 use App\Models\Ga;
 use App\Models\Ga_dev;
 use App\Models\Profile;
+use App\Models\ProfileV2;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
@@ -21,7 +22,7 @@ class DevVivoController extends Controller
     {
         $ga_name = Ga::latest('id')->get();
         $ga_dev = Ga_dev::latest('id')->get();
-        $profiles = Profile::orderBy('profile_name','asc')->get();
+        $profiles = ProfileV2::orderBy('profile_name','asc')->get();
         return view('dev-vivo.index',compact(['ga_name','ga_dev','profiles']));
     }
     public function getIndex(Request $request)

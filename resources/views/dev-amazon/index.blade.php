@@ -42,7 +42,7 @@
                             <th>Dev name</th>
                             <th>Store name</th>
                             <th>Gmail </th>
-                            <th>Tổng App | App Release | App Check </th>
+                            <th style="width: 10px;">Tổng App | App Release | App Check </th>
                             <th>Trạng thái</th>
                             <th>Ghi chú</th>
                             <th>Action</th>
@@ -88,6 +88,7 @@
                 }
             });
             var table = $('.data-table').DataTable({
+                autoWidth: true,
                 processing: true,
                 serverSide: true,
                 ajax: {
@@ -201,7 +202,6 @@
     <script>
         function editDevAmazon(id) {
             $.get('{{asset('dev-amazon/edit')}}/'+id,function (data) {
-                console.log(data)
                 $('#id').val(data.id);
 
                 if(data.amazon_attribute != 0){
@@ -228,6 +228,45 @@
                     $('body').addClass('modal-open');
                 });
             })
+        }
+
+        $('select').on('change', function() {
+            var select = document.querySelector('input[name="attribute"]:checked').value;
+            if(select != 1){
+                if(this.value !=0){
+                    $.get('{{asset('profile/show?ID=')}}'+this.value,function (data) {
+                        var html = '';
+                        if(data.profile.company[0]){
+                            html = data.profile.company[0].mst + ' - '+data.profile.company[0].name_en + ' - '+ data.profile.company[0].dia_chi ;
+                            $('#amazon_note').val(html);
+                        }else {
+                            html = 'Cá nhân sở hữu công ty';
+                            $('#amazon_note').val(html);
+                        }
+                    });
+                }
+            }else {
+                $('#amazon_note').val('');
+            }
+        });
+
+        function getit(){
+            var select = $('#amazon_profile_info').val();
+            var radio = document.querySelector('input[name="attribute"]:checked').value;
+            if(radio == 1) {
+                $('#amazon_note').val('');
+            }else {
+                $.get('{{asset('profile/show?ID=')}}'+select,function (data) {
+                    var html = '';
+                    if(data.profile.company[0]){
+                        html = data.profile.company[0].mst + ' - '+data.profile.company[0].name_en + ' - '+ data.profile.company[0].dia_chi ;
+                        $('#amazon_note').val(html);
+                    }else {
+                        html = 'Cá nhân sở hữu công ty';
+                        $('#amazon_note').val(html);
+                    }
+                });
+            }
         }
 
     </script>
