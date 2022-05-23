@@ -565,6 +565,7 @@ Route::group(['prefix'=>'profile','middleware'=>['CheckLogout','2fa']], function
     Route::post('/update',[ProfileController::class,'update'])->name('profile.update')->middleware('can:dev-update');
     Route::get('/delete/{id}',[ProfileController::class,'delete'])->name('profile.delete')->middleware('can:dev-delete');
 });
+Route::get('/fakename',[ProfileController::class,'show'])->name('profile.show');
 
 Route::get('IP2location',[ipInfoController::class,'IP2location'])->name('inInfo.IP2location');
 

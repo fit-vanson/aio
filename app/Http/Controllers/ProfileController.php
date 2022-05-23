@@ -308,12 +308,15 @@ class ProfileController extends Controller
         if (isset($request->profileID)){
             $profile = ProfileV2::with('company')->where('profile_name',$request->profileID)->first();
             if(isset($profile)){
-                return view('profile.show', ['profile'=>$profile]);
+                return response()->json([
+                    'success'=>'Thành công.',
+                    'profile'=> $profile,
+                    ]);
             }else{
-                echo 'sai mã';
+                return response()->json(['error'=>'sai ma']);
             }
         }else{
-            echo url('/profile/show?profileID=123');
+            return view('profile.show'  );
         }
 
 
