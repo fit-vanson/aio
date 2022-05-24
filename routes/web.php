@@ -120,6 +120,7 @@ Route::group(['prefix'=>'user','middleware'=>['CheckLogout','2fa']], function ()
     Route::get('/show/{id}',[UserController::class,'show'])->name('user.show')->middleware('can:user-show');
     Route::post('/update',[UserController::class,'update'])->name('user.update')->middleware('can:user-update');
     Route::get('/delete/{id}',[UserController::class,'delete'])->name('user.delete')->middleware('can:user-delete');
+    Route::get('/reset2fa/{id}',[UserController::class,'reset2fa'])->name('user.reset2fa')->middleware('can:user-edit');
 });
 Route::group(['prefix'=>'role','middleware'=>['CheckLogout','2fa']], function (){
     Route::get('/',[RoleController::class,'index'])->name('role.index');

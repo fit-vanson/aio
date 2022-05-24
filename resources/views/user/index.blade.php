@@ -191,6 +191,32 @@
                     swal("Đã xóa!", "Your imaginary file has been deleted.", "success");
                 });
         });
+
+        $(document).on('click','.reset2FAUser', function (data){
+            var user_id = $(this).data("id");
+            swal({
+                    title: "Reset 2FA?",
+                    text: "Your will not be able to recover this imaginary file!",
+                    type: "warning",
+                    showCancelButton: true,
+                    confirmButtonClass: "btn-danger",
+                    confirmButtonText: "Xác nhận!",
+                    closeOnConfirm: false
+                },
+                function(){
+                    $.ajax({
+                        type: "get",
+                        url: "{{ asset("user/reset2fa") }}/" + user_id,
+                        success: function (data) {
+                            table.draw();
+                        },
+                        error: function (data) {
+                            console.log('Error:', data);
+                        }
+                    });
+                    swal("Đã xóa!", "Your imaginary file has been deleted.", "success");
+                });
+        });
     });
 
     function editUser(id) {

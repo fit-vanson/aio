@@ -42,6 +42,7 @@ class UserController extends Controller
 
                     $btn = '<a href="javascript:void(0)" onclick="editUser('.$row->id.')" class="btn btn-warning"><i class="ti-pencil-alt"></i></a>';
                     $btn = $btn.' <a href="javascript:void(0)" data-toggle="tooltip"  data-id="'.$row->id.'" data-original-title="Delete" class="btn btn-danger deleteUser"><i class="ti-trash"></i></a>';
+                    $btn = $btn.' <a href="javascript:void(0)" data-toggle="tooltip"  data-id="'.$row->id.'" data-original-title="Reset" class="btn btn-secondary reset2FAUser"><i class="mdi mdi-lock-reset"></i></a>';
 
                     return $btn;
                 })
@@ -207,6 +208,14 @@ class UserController extends Controller
 
         User::find($id)->delete();
         return response()->json(['success'=>'Xóa người dùng.']);
+    }
+
+    public function reset2fa($id)
+    {
+        $user= User::find($id);
+        $user->secret_code = null;
+        $user->save();
+        return response()->json(['success'=>'Reset 2FA thành công.']);
     }
 
     public function callAction($method, $parameters)
