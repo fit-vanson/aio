@@ -22,8 +22,8 @@ class GaController extends Controller
                 ->addIndexColumn()
                 ->addColumn('action', function($row){
                     $btn = ' <a href="javascript:void(0)" onclick="editGa('.$row->id.')" class="btn btn-warning"><i class="ti-pencil-alt"></i></a>';
-                    $btn = $btn. ' <a href="javascript:void(0)" onclick="showGa('.$row->id.')" class="btn btn-success"><i class="ti-eye"></i></a>';
-//                    $btn = $btn. ' <a href="/ga/show?id='.$row->id.'" target="_blank" class="btn btn-success"><i class="ti-eye"></i></a>';
+//                    $btn = $btn. ' <a href="javascript:void(0)" onclick="showGa('.$row->id.')" class="btn btn-success"><i class="ti-eye"></i></a>';
+                    $btn = $btn. ' <a href="/ga/show?id='.$row->id.'" target="_blank" class="btn btn-success"><i class="ti-eye"></i></a>';
                     $btn = $btn.' <a href="javascript:void(0)" data-toggle="tooltip"  data-id="'.$row->id.'" data-original-title="Delete" class="btn btn-danger deleteProject"><i class="ti-trash"></i></a>';
                     return $btn;
                 })
