@@ -155,11 +155,12 @@ class GaController extends Controller
         if (isset($request->id)){
             $ga_detail = Ga::with(
                 'gadev','gadev1','gadev2',
-                'dev.gadev','dev_amazon.gadev','dev_samsung.gadev','dev_xiaomi.gadev','dev_oppo.gadev','dev_vivo.gadev','dev_huawei.gadev',
+                'dev.gadev','dev_amazon.gadev','dev_samsung.gadev','dev_xiaomi.gadev','dev_oppo.gadev','dev_vivo.ga_dev','dev_huawei.gadev',
                 'dev.project','dev_amazon.project','dev_samsung.project','dev_xiaomi.project','dev_oppo.project','dev_vivo.project','dev_huawei.project',
                 'dev.project','dev_amazon.project','dev_samsung.project','dev_xiaomi.project','dev_oppo.project','dev_vivo.project','dev_huawei.project'
             )->find($request->id);
         }
+//        dd($ga_detail);
         return view('ga.show',compact('ga_detail'));
 
 

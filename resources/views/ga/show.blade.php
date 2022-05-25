@@ -318,7 +318,7 @@
                                         <p style="margin: auto" class="text-muted ">{{$dev_vivo->vivo_store_name}}</p>
                                     </td>
                                     <td>
-                                        <span>{{$dev_vivo->gadev->gmail}} - {{$dev_vivo->pass ? $dev_vivo->pass : 'null' }}</span>
+                                        <span>{{$dev_vivo->ga_dev->gmail}} - {{$dev_vivo->pass ? $dev_vivo->pass : 'null' }}</span>
                                     </td>
                                     <td>
                                         @if($dev_vivo->vivo_attribute ==1) <span class="badge badge-secondary">Cá nhân</span> @endif
