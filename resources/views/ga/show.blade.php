@@ -63,44 +63,335 @@
                                 </tbody></table>
                         <br>
                         <h5 class="card-title-desc">Thông tin DEV</h5>
-                        <h6 class="card-title-desc">Ch-Play</h6>
-                            <table class="table table-bordered table-striped mb-0">
+                        @if(count($ga_detail->dev)>0)
+                        <h6 class="card-title-desc"> <img src="img/icon/google.png"> Ch-Play </h6>
+                        <table class="table table-bordered table-striped mb-0">
                                 <thead>
                                 <tr>
-                                    <th class="text-center">Dev Name</th>
-                                    <th class="text-center">Gmail - Pass</th>
-                                    <th class="text-center">Profile Info</th>
-                                    <th class="text-center">Tổng app</th>
-                                    <th class="text-center">Trạng thái</th>
+                                    <th>Dev Name</th>
+                                    <th>Gmail - Pass</th>
+                                    <th>Profile Info</th>
+                                    <th>Tổng app</th>
+                                    <th>Trạng thái</th>
                                 </tr>
                                 </thead>
                                 <tbody>
                                 @foreach($ga_detail->dev as $dev_chplay)
                                     <tr>
                                         <td>
-                                            <button type="button" class="btn btn-light waves-effect button" id="detail_dev_chplay_name">
-                                                <span>{{$dev_chplay->dev_name}}</span>
-                                                <p style="margin: auto" class="text-muted ">{{$dev_chplay->store_name}}</p>
-                                            </button>
+                                            <span>{{$dev_chplay->dev_name}}</span>
+                                            <p style="margin: auto" class="text-muted ">{{$dev_chplay->store_name}}</p>
                                         </td>
                                         <td>
-                                            <button type="button" class="btn btn-light waves-effect button" id="detail_dev_chplay_gmail">
-                                                <span>{{$dev_chplay->gadev->gmail}} - {{$dev_chplay->pass ? $dev_chplay->pass : 'null' }}</span>
-                                            </button>
+                                            <span>{{$dev_chplay->gadev->gmail}} - {{$dev_chplay->pass ? $dev_chplay->pass : 'null' }}</span>
                                         </td>
                                         <td>
-                                            <button type="button" class="btn btn-light waves-effect button" id="detail_dev_chplay_profile">
+                                            @if($dev_chplay->thuoc_tinh ==1) <span class="badge badge-secondary">Cá nhân</span> @endif
+                                            @if($dev_chplay->thuoc_tinh ==0) <span class="badge badge-success">Công ty</span>
+                                                <p style="margin: auto" class="text-muted ">{{$dev_chplay->info_company}}</p>
+                                                @endif
+                                                <p style="margin: auto" class="text-muted ">{{$dev_chplay->info_andress}}</p>
+                                        </td>
+                                        <td>
+                                            <span>{{count($dev_chplay->project)}}</span>
 
-                                            </button>
                                         </td>
-                                        <td><button type="button" class="btn btn-light waves-effect button" id="detail_dev_chplay_name"></button></td>
-                                        <td><button type="button" class="btn btn-light waves-effect button" id="detail_dev_chplay_name"></button></td>
+                                        <td>
+                                            @if($dev_chplay->status == 0 )  <span class="badge badge-dark">Chưa xử dụng</span> @endif
+                                            @if($dev_chplay->status == 1 )  <span class="badge badge-primary">Đang phát triển</span> @endif
+                                            @if($dev_chplay->status == 2 )  <span class="badge badge-warning">Đóng</span> @endif
+                                            @if($dev_chplay->status == 3 )  <span class="badge badge-danger">Suspend</span> @endif
+
+                                        </td>
                                     <tr>
                                 @endforeach
 
 
                                 </tbody>
                             </table>
+                        @endif
+                        @if(count($ga_detail->dev_amazon)>0)
+                        <h6 class="card-title-desc"> <img src="img/icon/amazon.png"> Amazon </h6>
+                        <table class="table table-bordered table-striped mb-0">
+                            <thead>
+                            <tr>
+                                <th>Dev Name</th>
+                                <th>Gmail - Pass</th>
+                                <th>Profile Info</th>
+                                <th>Tổng app</th>
+                                <th>Trạng thái</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            @foreach($ga_detail->dev_amazon as $dev_amazon)
+                                <tr>
+                                    <td>
+                                        <span>{{$dev_amazon->amazon_dev_name}}</span>
+                                        <p style="margin: auto" class="text-muted ">{{$dev_amazon->amazon_store_name}}</p>
+                                    </td>
+                                    <td>
+                                        <span>{{$dev_amazon->gadev->gmail}} - {{$dev_amazon->amazon_pass ? $dev_amazon->amazon_pass : 'null' }}</span>
+                                    </td>
+                                    <td>
+                                        @if($dev_amazon->amazon_attribute ==1) <span class="badge badge-secondary">Cá nhân</span> @endif
+                                        @if($dev_amazon->amazon_attribute ==0) <span class="badge badge-success">Công ty</span>
+                                        <p style="margin: auto" class="text-muted ">{{$dev_amazon->amazon_company}}</p>
+                                        @endif
+                                        <p style="margin: auto" class="text-muted ">{{$dev_amazon->amazon_add}}</p>
+                                    </td>
+                                    <td>
+                                        <span>{{count($dev_amazon->project)}}</span>
+
+                                    </td>
+                                    <td>
+                                        @if($dev_amazon->amazon_status == 0 )  <span class="badge badge-dark">Chưa xử dụng</span> @endif
+                                        @if($dev_amazon->amazon_status == 1 )  <span class="badge badge-primary">Đang phát triển</span> @endif
+                                        @if($dev_amazon->amazon_status == 2 )  <span class="badge badge-warning">Đóng</span> @endif
+                                        @if($dev_amazon->amazon_status == 3 )  <span class="badge badge-danger">Suspend</span> @endif
+
+                                    </td>
+                                <tr>
+                            @endforeach
+
+
+                            </tbody>
+                        </table>
+                        @endif
+                        @if(count($ga_detail->dev_samsung)>0)
+                        <h6 class="card-title-desc"> <img src="img/icon/samsung.png"> Samsung </h6>
+                        <table class="table table-bordered table-striped mb-0">
+                            <thead>
+                            <tr>
+                                <th>Dev Name</th>
+                                <th>Gmail - Pass</th>
+                                <th>Profile Info</th>
+                                <th>Tổng app</th>
+                                <th>Trạng thái</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            @foreach($ga_detail->dev_samsung as $dev_samsung)
+                                <tr>
+                                    <td>
+                                        <span>{{$dev_samsung->samsung_dev_name}}</span>
+                                        <p style="margin: auto" class="text-muted ">{{$dev_samsung->samsung_store_name}}</p>
+                                    </td>
+                                    <td>
+                                        <span>{{$dev_samsung->gadev->gmail}} - {{$dev_samsung->samsung_pass ? $dev_amazon->samsung_pass : 'null' }}</span>
+                                    </td>
+                                    <td>
+                                        @if($dev_samsung->samsung_attribute ==1) <span class="badge badge-secondary">Cá nhân</span> @endif
+                                        @if($dev_samsung->samsung_attribute ==0) <span class="badge badge-success">Công ty</span>
+                                        <p style="margin: auto" class="text-muted ">{{$dev_samsung->samsung_company}}</p>
+                                        @endif
+                                        <p style="margin: auto" class="text-muted ">{{$dev_samsung->samsung_add}}</p>
+                                    </td>
+                                    <td>
+                                        <span>{{count($dev_samsung->project)}}</span>
+
+                                    </td>
+                                    <td>
+                                        @if($dev_samsung->samsung_status == 0 )  <span class="badge badge-dark">Chưa xử dụng</span> @endif
+                                        @if($dev_samsung->samsung_status == 1 )  <span class="badge badge-primary">Đang phát triển</span> @endif
+                                        @if($dev_samsung->samsung_status == 2 )  <span class="badge badge-warning">Đóng</span> @endif
+                                        @if($dev_samsung->samsung_status == 3 )  <span class="badge badge-danger">Suspend</span> @endif
+
+                                    </td>
+                                <tr>
+                            @endforeach
+
+
+                            </tbody>
+                        </table>
+                        @endif
+                        @if(count($ga_detail->dev_xiaomi) >0)
+                        <h6 class="card-title-desc"> <img src="img/icon/xiaomi.png"> Xiaomi </h6>
+                        <table class="table table-bordered table-striped mb-0">
+                            <thead>
+                            <tr>
+                                <th>Dev Name</th>
+                                <th>Gmail - Pass</th>
+                                <th>Profile Info</th>
+                                <th>Tổng app</th>
+                                <th>Trạng thái</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            @foreach($ga_detail->dev_xiaomi as $dev_xiaomi)
+                                <tr>
+                                    <td>
+                                        <span>{{$dev_xiaomi->xiaomi_dev_name}}</span>
+                                        <p style="margin: auto" class="text-muted ">{{$dev_xiaomi->xiaomi_store_name}}</p>
+                                    </td>
+                                    <td>
+                                        <span>{{$dev_xiaomi->gadev->gmail}} - {{$dev_xiaomi->pass ? $dev_xiaomi->pass : 'null' }}</span>
+                                    </td>
+                                    <td>
+                                        @if($dev_xiaomi->xiaomi_attribute ==1) <span class="badge badge-secondary">Cá nhân</span> @endif
+                                        @if($dev_xiaomi->xiaomi_attribute ==0) <span class="badge badge-success">Công ty</span>
+                                        <p style="margin: auto" class="text-muted ">{{$dev_xiaomi->xiaomi_company}}</p>
+                                        @endif
+                                        <p style="margin: auto" class="text-muted ">{{$dev_xiaomi->xiaomi_add}}</p>
+                                    </td>
+                                    <td>
+                                        <span>{{count($dev_xiaomi->project)}}</span>
+
+                                    </td>
+                                    <td>
+                                        @if($dev_xiaomi->xiaomi_status == 0 )  <span class="badge badge-dark">Chưa xử dụng</span> @endif
+                                        @if($dev_xiaomi->xiaomi_status == 1 )  <span class="badge badge-primary">Đang phát triển</span> @endif
+                                        @if($dev_xiaomi->xiaomi_status == 2 )  <span class="badge badge-warning">Đóng</span> @endif
+                                        @if($dev_xiaomi->xiaomi_status == 3 )  <span class="badge badge-danger">Suspend</span> @endif
+
+                                    </td>
+                                <tr>
+                            @endforeach
+
+
+                            </tbody>
+                        </table>
+                        @endif
+                        @if(count($ga_detail->dev_oppo)>0)
+                        <h6 class="card-title-desc"> <img src="img/icon/oppo.png"> Oppo </h6>
+                        <table class="table table-bordered table-striped mb-0">
+                            <thead>
+                            <tr>
+                                <th>Dev Name</th>
+                                <th>Gmail - Pass</th>
+                                <th>Profile Info</th>
+                                <th>Tổng app</th>
+                                <th>Trạng thái</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            @foreach($ga_detail->dev_oppo as $dev_oppo)
+                                <tr>
+                                    <td>
+                                        <span>{{$dev_oppo->oppo_dev_name}}</span>
+                                        <p style="margin: auto" class="text-muted ">{{$dev_oppo->oppo_store_name}}</p>
+                                    </td>
+                                    <td>
+                                        <span>{{$dev_oppo->gadev->gmail}} - {{$dev_oppo->pass ? $dev_oppo->pass : 'null' }}</span>
+                                    </td>
+                                    <td>
+                                        @if($dev_oppo->oppo_attribute ==1) <span class="badge badge-secondary">Cá nhân</span> @endif
+                                        @if($dev_oppo->oppo_attribute ==0) <span class="badge badge-success">Công ty</span>
+                                        <p style="margin: auto" class="text-muted ">{{$dev_oppo->oppo_company}}</p>
+                                        @endif
+                                        <p style="margin: auto" class="text-muted ">{{$dev_oppo->oppo_add}}</p>
+                                    </td>
+                                    <td>
+                                        <span>{{count($dev_oppo->project)}}</span>
+
+                                    </td>
+                                    <td>
+                                        @if($dev_oppo->oppo_status == 0 )  <span class="badge badge-dark">Chưa xử dụng</span> @endif
+                                        @if($dev_oppo->oppo_status == 1 )  <span class="badge badge-primary">Đang phát triển</span> @endif
+                                        @if($dev_oppo->oppo_status == 2 )  <span class="badge badge-warning">Đóng</span> @endif
+                                        @if($dev_oppo->oppo_status == 3 )  <span class="badge badge-danger">Suspend</span> @endif
+
+                                    </td>
+                                <tr>
+                            @endforeach
+
+
+                            </tbody>
+                        </table>
+                        @endif
+                        @if(count($ga_detail->dev_vivo)>0)
+                        <h6 class="card-title-desc"> <img src="img/icon/vivo.png"> Vivo </h6>
+                        <table class="table table-bordered table-striped mb-0">
+                            <thead>
+                            <tr>
+                                <th>Dev Name</th>
+                                <th>Gmail - Pass</th>
+                                <th>Profile Info</th>
+                                <th>Tổng app</th>
+                                <th>Trạng thái</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            @foreach($ga_detail->dev_vivo as $dev_vivo)
+                                <tr>
+                                    <td>
+                                        <span>{{$dev_vivo->vivo_dev_name}}</span>
+                                        <p style="margin: auto" class="text-muted ">{{$dev_vivo->vivo_store_name}}</p>
+                                    </td>
+                                    <td>
+                                        <span>{{$dev_vivo->gadev->gmail}} - {{$dev_vivo->pass ? $dev_vivo->pass : 'null' }}</span>
+                                    </td>
+                                    <td>
+                                        @if($dev_vivo->vivo_attribute ==1) <span class="badge badge-secondary">Cá nhân</span> @endif
+                                        @if($dev_vivo->vivo_attribute ==0) <span class="badge badge-success">Công ty</span>
+                                        <p style="margin: auto" class="text-muted ">{{$dev_vivo->vivo_company}}</p>
+                                        @endif
+                                        <p style="margin: auto" class="text-muted ">{{$dev_vivo->vivo_add}}</p>
+                                    </td>
+                                    <td>
+                                        <span>{{count($dev_vivo->project)}}</span>
+
+                                    </td>
+                                    <td>
+                                        @if($dev_vivo->vivo_status == 0 )  <span class="badge badge-dark">Chưa xử dụng</span> @endif
+                                        @if($dev_vivo->vivo_status == 1 )  <span class="badge badge-primary">Đang phát triển</span> @endif
+                                        @if($dev_vivo->vivo_status == 2 )  <span class="badge badge-warning">Đóng</span> @endif
+                                        @if($dev_vivo->vivo_status == 3 )  <span class="badge badge-danger">Suspend</span> @endif
+
+                                    </td>
+                                <tr>
+                            @endforeach
+
+
+                            </tbody>
+                        </table>
+                        @endif
+                        @if(count($ga_detail->dev_huawei)>0)
+                        <h6 class="card-title-desc"> <img src="img/icon/huawei.png"> Huawei </h6>
+                        <table class="table table-bordered table-striped mb-0">
+                            <thead>
+                            <tr>
+                                <th>Dev Name</th>
+                                <th>Gmail - Pass</th>
+                                <th>Profile Info</th>
+                                <th>Tổng app</th>
+                                <th>Trạng thái</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            @foreach($ga_detail->dev_huawei as $dev_huawei)
+                                <tr>
+                                    <td>
+                                        <span>{{$dev_huawei->huawei_dev_name}}</span>
+                                        <p style="margin: auto" class="text-muted ">{{$dev_huawei->huawei_store_name}}</p>
+                                    </td>
+                                    <td>
+                                        <span>{{$dev_huawei->gadev->gmail}} - {{$dev_huawei->pass ? $dev_huawei->pass : 'null' }}</span>
+                                    </td>
+                                    <td>
+                                        @if($dev_huawei->huawei_attribute ==1) <span class="badge badge-secondary">Cá nhân</span> @endif
+                                        @if($dev_huawei->huawei_attribute ==0) <span class="badge badge-success">Công ty</span>
+                                        <p style="margin: auto" class="text-muted ">{{$dev_huawei->huawei_company}}</p>
+                                        @endif
+                                        <p style="margin: auto" class="text-muted ">{{$dev_huawei->huawei_add}}</p>
+                                    </td>
+                                    <td>
+                                        <span>{{count($dev_huawei->project)}}</span>
+
+                                    </td>
+                                    <td>
+                                        @if($dev_huawei->huawei_status == 0 )  <span class="badge badge-dark">Chưa xử dụng</span> @endif
+                                        @if($dev_huawei->huawei_status == 1 )  <span class="badge badge-primary">Đang phát triển</span> @endif
+                                        @if($dev_huawei->huawei_status == 2 )  <span class="badge badge-warning">Đóng</span> @endif
+                                        @if($dev_huawei->huawei_status == 3 )  <span class="badge badge-danger">Suspend</span> @endif
+
+                                    </td>
+                                <tr>
+                            @endforeach
+
+
+                            </tbody>
+                        </table>
+                        @endif
 
                     </div>
                 </div>

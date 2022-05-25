@@ -160,7 +160,6 @@ class GaController extends Controller
                 'dev.project','dev_amazon.project','dev_samsung.project','dev_xiaomi.project','dev_oppo.project','dev_vivo.project','dev_huawei.project'
             )->find($request->id);
         }
-        dd($ga_detail);
         return view('ga.show',compact('ga_detail'));
 
 
