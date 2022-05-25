@@ -401,6 +401,7 @@ Route::group(['prefix'=>'ga','middleware'=>['CheckLogout','2fa']], function (){
     Route::post('/create',[GaController::class,'create'])->name('ga.create')->middleware('can:ga-add');
     Route::get('/edit/{id}',[GaController::class,'edit'])->name('ga.edit')->middleware('can:ga-edit');
     Route::get('/showDev/{id}',[GaController::class,'showDev'])->name('ga.showDev')->middleware('can:ga-show');
+    Route::get('/show',[GaController::class,'show'])->name('ga.show')->middleware('can:ga-show');
     Route::post('/update',[GaController::class,'update'])->name('ga.update')->middleware('can:ga-update');
     Route::get('/delete/{id}',[GaController::class,'delete'])->name('ga.delete')->middleware('can:ga-delete');
 });

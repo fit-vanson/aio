@@ -234,42 +234,37 @@
         }
 
         $('select').on('change', function() {
-            var select = document.querySelector('input[name="attribute"]:checked').value;
-            if(select != 1){
-                if(this.value !=0){
-                    $.get('{{asset('profile/show?ID=')}}'+this.value,function (data) {
-                        var html = '';
-                        if(data.profile.company[0]){
-                            html = data.profile.company[0].name_en;
-                            $('#huawei_company').val(html);
-                        }else {
-                            html = 'Cá nhân sở hữu công ty';
-                            $('#huawei_company').val(html);
-                        }
-                    });
+            var radio = document.querySelector('input[name="attribute"]:checked').value;
+            $.get('{{asset('profile/show?ID=')}}'+this.value,function (data) {
+                if(radio != 1){
+                    if (data.profile.company[0]) {
+                        $('#huawei_company').val(data.profile.company[0].name_en);
+                        $('#huawei_add').val(data.profile.company[0].dia_chi);
+                    } else {
+                        $('#huawei_company').val('');
+                        $('#huawei_add').val(data.profile.profile_add);
+                    }
+                }else {
+                    $('#huawei_company').val('');
+                    $('#huawei_add').val(data.profile.profile_add);
                 }
-            }else {
-                $('#huawei_company').val('');
-            }
+            });
         });
 
         function getit(){
             var select = $('#huawei_profile_info').val();
             var radio = document.querySelector('input[name="attribute"]:checked').value;
-            if(radio == 1) {
-                $('#huawei_company').val('');
-            }else {
-                $.get('{{asset('profile/show?ID=')}}'+select,function (data) {
-                    var html = '';
+            $.get('{{asset('profile/show?ID=')}}'+select,function (data) {
+                if(radio == 1) {
+                    $('#huawei_company').val('');
+                    $('#huawei_add').val(data.profile.profile_add);
+                }else {
                     if(data.profile.company[0]){
-                        html = data.profile.company[0].name_en;
-                        $('#huawei_company').val(html);
-                    }else {
-                        html = 'Cá nhân sở hữu công ty';
-                        $('#huawei_company').val(html);
+                        $('#huawei_company').val(data.profile.company[0].name_en);
+                        $('#huawei_add').val(data.profile.company[0].dia_chi);
                     }
-                });
-            }
+                }
+            });
         }
 
     </script>

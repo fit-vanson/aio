@@ -61,6 +61,25 @@
                                 <label for="name">Số điện thoại </label>
                                 <input type="text" id="amazon_phone" name="amazon_phone" class="form-control" >
                             </div>
+                            <div class="form-group col-lg-6 ">
+                                <label for="name">Mật khẩu</label>
+                                <input type="text" id="amazon_pass" name="amazon_pass" class="form-control">
+                            </div>
+
+                        </div>
+
+                        <div data-repeater-item="" class="row">
+                            <div class="form-group col-lg-6">
+                                <label for="name">Profile Info </label>
+                                {{--                                <input type="text" id="amazon_profile_info" name="amazon_profile_info" class="form-control" >--}}
+                                <select class="form-control select2js" id="amazon_profile_info" name="amazon_profile_info">
+                                    <option value="0">---Vui lòng chọn---</option>
+                                    @foreach($profiles as $item)
+                                        <option value="{{$item->id}}">{{$item->profile_name}} -  ({{$item->profile_ho_va_ten}} - {{$item->profile_add}})</option>
+                                    @endforeach
+                                </select>
+                            </div>
+
                             <div class="form-group col-lg-6">
                                 <label for="name">Trạng thái </label>
                                 <div class="inner row">
@@ -75,34 +94,11 @@
                                 </div>
                             </div>
 
+
                         </div>
 
                         <div data-repeater-item="" class="row">
-                            <div class="form-group col-lg-6 ">
-                                <label for="name">Mật khẩu</label>
-                                <input type="text" id="amazon_pass" name="amazon_pass" class="form-control">
-                            </div>
                             <div class="form-group col-lg-6">
-                                <label for="name">Profile Info </label>
-                                {{--                                <input type="text" id="amazon_profile_info" name="amazon_profile_info" class="form-control" >--}}
-                                <select class="form-control select2js" id="amazon_profile_info" name="amazon_profile_info">
-                                    <option value="0">---Vui lòng chọn---</option>
-                                    @foreach($profiles as $item)
-                                        <option value="{{$item->id}}">{{$item->profile_name}} -  ({{$item->profile_ho_va_ten}} - {{$item->profile_add}})</option>
-                                    @endforeach
-                                </select>
-                            </div>
-
-
-                        </div>
-
-                        <div data-repeater-item="" class="row">
-                            <div class="form-group col-lg-6 ">
-                                <label for="name">Ghi chú</label>
-                                <textarea id="amazon_note" name="amazon_note" class="form-control" rows="4" ></textarea>
-                            </div>
-
-                            <div class="form-group col-lg-4">
                                 <label class="d-block mb-3">Thuộc tính :</label>
                                 <div class="custom-control custom-radio custom-control-inline">
                                     <input type="radio" id="company" name="attribute" class="custom-control-input" onchange="getit();" value="0">
@@ -113,6 +109,22 @@
                                     <label class="custom-control-label" for="individual">Cá nhân</label>
                                 </div>
                             </div>
+
+                            <div class="form-group col-lg-6 ">
+                                <label for="name">Công ty đăng ký</label>
+                                <input id="amazon_company" name="amazon_company" class="form-control"  />
+                            </div>
+
+                            <div class="form-group col-lg-6 ">
+                                <label for="name">Địa chỉ</label>
+                                <textarea id="amazon_add" name="amazon_add" class="form-control" rows="4" ></textarea>
+                            </div>
+                            <div class="form-group col-lg-6 ">
+                                <label for="name">Ghi chú</label>
+                                <textarea id="amazon_note" name="amazon_note" class="form-control" rows="4" ></textarea>
+                            </div>
+
+
 
                         </div>
 

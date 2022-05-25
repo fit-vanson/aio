@@ -224,6 +224,8 @@
                 $('#samsung_profile_info').val(data.samsung_profile_info);
                 $('#samsung_profile_info').select2();
                 $('#samsung_dev_name').val(data.samsung_dev_name);
+                $('#samsung_company').val(data.samsung_company);
+                $('#samsung_add').val(data.samsung_add);
                 $('#modelHeading').html("Edit");
                 $('#saveBtn').val("edit");
                 $('#ajaxModelDev').modal('show');
@@ -234,42 +236,37 @@
         }
 
         $('select').on('change', function() {
-            var select = document.querySelector('input[name="attribute"]:checked').value;
-            if(select != 1){
-                if(this.value !=0){
-                    $.get('{{asset('profile/show?ID=')}}'+this.value,function (data) {
-                        var html = '';
-                        if(data.profile.company[0]){
-                            html = data.profile.company[0].mst + ' - '+data.profile.company[0].name_en + ' - '+ data.profile.company[0].dia_chi ;
-                            $('#samsung_note').val(html);
-                        }else {
-                            html = 'Cá nhân sở hữu công ty';
-                            $('#samsung_note').val(html);
-                        }
-                    });
+            var radio = document.querySelector('input[name="attribute"]:checked').value;
+            $.get('{{asset('profile/show?ID=')}}'+this.value,function (data) {
+                if(radio != 1){
+                    if (data.profile.company[0]) {
+                        $('#samsung_company').val(data.profile.company[0].name_en);
+                        $('#samsung_add').val(data.profile.company[0].dia_chi);
+                    } else {
+                        $('#samsung_company').val('');
+                        $('#samsung_add').val(data.profile.profile_add);
+                    }
+                }else {
+                    $('#samsung_company').val('');
+                    $('#samsung_add').val(data.profile.profile_add);
                 }
-            }else {
-                $('#samsung_note').val('');
-            }
+            });
         });
 
         function getit(){
             var select = $('#samsung_profile_info').val();
             var radio = document.querySelector('input[name="attribute"]:checked').value;
-            if(radio == 1) {
-                $('#samsung_note').val('');
-            }else {
-                $.get('{{asset('profile/show?ID=')}}'+select,function (data) {
-                    var html = '';
+            $.get('{{asset('profile/show?ID=')}}'+select,function (data) {
+                if(radio == 1) {
+                    $('#samsung_company').val('');
+                    $('#samsung_add').val(data.profile.profile_add);
+                }else {
                     if(data.profile.company[0]){
-                        html = data.profile.company[0].mst + ' - '+data.profile.company[0].name_en + ' - '+ data.profile.company[0].dia_chi ;
-                        $('#samsung_note').val(html);
-                    }else {
-                        html = 'Cá nhân sở hữu công ty';
-                        $('#samsung_note').val(html);
+                        $('#samsung_company').val(data.profile.company[0].name_en);
+                        $('#samsung_add').val(data.profile.company[0].dia_chi);
                     }
-                });
-            }
+                }
+            });
         }
 
     </script>

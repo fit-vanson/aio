@@ -165,19 +165,22 @@
                                     <input type="radio" id="individual1" name="attribute1" class="custom-control-input" onchange="getit();" value="1" checked="">
                                     <label class="custom-control-label" for="individual1">Cá nhân</label>
                                 </div>
+                            </div>
 
+                            <div class="form-group col-lg-8 info_company" style="display: none">
+                                <label for="name">Công ty đăng ký</label>
+                                <input id="info_company" name="info_company" class="form-control"/>
                             </div>
                         </div>
 
                         <div class="row" >
-
+                            <div class="form-group col-lg-6 dia_chi">
+                                <label for="name">Địa chỉ</label>
+                                <textarea id="info_andress" name="info_andress" class="form-control" rows="4" ></textarea>
+                            </div>
                             <div class="form-group col-lg-6 ">
                                 <label for="name">Ghi chú</label>
                                 <textarea id="note" name="note" class="form-control" rows="4" ></textarea>
-                            </div>
-                            <div class="form-group col-lg-6 dia_chi" style="display: none">
-                                <label for="name">Địa chỉ</label>
-                                <textarea id="info_andress" name="info_andress" class="form-control" rows="4" ></textarea>
                             </div>
                         </div>
 

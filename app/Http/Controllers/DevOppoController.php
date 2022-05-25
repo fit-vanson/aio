@@ -163,6 +163,7 @@ class DevOppoController extends Controller
         $data['oppo_phone'] = $request->oppo_phone;
         $data['oppo_profile_info'] = $request->oppo_profile_info;
         $data['oppo_company'] = $request->oppo_company;
+        $data['oppo_add'] = $request->oppo_add;
         $data['oppo_pass'] = $request->oppo_pass;
         $data['oppo_status'] = $request->oppo_status;
         $data['oppo_note'] = $request->oppo_note;
@@ -206,6 +207,7 @@ class DevOppoController extends Controller
         $data->oppo_phone = $request->oppo_phone;
         $data->oppo_profile_info = $request->oppo_profile_info;
         $data->oppo_company = $request->oppo_company;
+        $data->oppo_add = $request->oppo_add;
         $data->oppo_pass = $request->oppo_pass;
         $data->oppo_status = $request->oppo_status;
         $data->oppo_note = $request->oppo_note;

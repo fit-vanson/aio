@@ -149,6 +149,8 @@ class DevAmazonController extends Controller
         $data['amazon_store_name'] = $request->amazon_store_name;
         $data['amazon_phone'] = $request->amazon_phone;
         $data['amazon_profile_info'] = $request->amazon_profile_info;
+        $data['amazon_company'] = $request->amazon_company;
+        $data['amazon_add'] = $request->amazon_add;
         $data['amazon_pass'] = $request->amazon_pass;
         $data['amazon_status'] = $request->amazon_status;
         $data['amazon_note'] = $request->amazon_note;
@@ -189,6 +191,8 @@ class DevAmazonController extends Controller
         $data->amazon_profile_info = $request->amazon_profile_info;
         $data->amazon_pass = $request->amazon_pass;
         $data->amazon_status = $request->amazon_status;
+        $data->amazon_add = $request->amazon_add;
+        $data->amazon_company = $request->amazon_company;
         $data->amazon_note = $request->amazon_note;
         $data->amazon_attribute = $request->attribute;
         $data->save();

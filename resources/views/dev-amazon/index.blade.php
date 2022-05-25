@@ -220,6 +220,8 @@
                 $('#amazon_profile_info').val(data.amazon_profile_info);
                 $('#amazon_profile_info').select2();
                 $('#amazon_phone').val(data.amazon_phone);
+                $('#amazon_company').val(data.amazon_company);
+                $('#amazon_add').val(data.amazon_add);
                 $('#amazon_dev_name').val(data.amazon_dev_name);
                 $('#modelHeading').html("Edit");
                 $('#saveBtn').val("edit");
@@ -231,42 +233,38 @@
         }
 
         $('select').on('change', function() {
-            var select = document.querySelector('input[name="attribute"]:checked').value;
-            if(select != 1){
-                if(this.value !=0){
-                    $.get('{{asset('profile/show?ID=')}}'+this.value,function (data) {
-                        var html = '';
-                        if(data.profile.company[0]){
-                            html = data.profile.company[0].mst + ' - '+data.profile.company[0].name_en + ' - '+ data.profile.company[0].dia_chi ;
-                            $('#amazon_note').val(html);
-                        }else {
-                            html = 'Cá nhân sở hữu công ty';
-                            $('#amazon_note').val(html);
-                        }
-                    });
+            var radio = document.querySelector('input[name="attribute"]:checked').value;
+            $.get('{{asset('profile/show?ID=')}}'+this.value,function (data) {
+                if(radio != 1){
+                    if (data.profile.company[0]) {
+                        $('#amazon_company').val(data.profile.company[0].name_en);
+                        $('#amazon_add').val(data.profile.company[0].dia_chi);
+                    } else {
+                        $('#amazon_company').val('');
+                        $('#amazon_add').val(data.profile.profile_add);
+                    }
+                }else {
+                    $('#amazon_company').val('');
+                    $('#amazon_add').val(data.profile.profile_add);
                 }
-            }else {
-                $('#amazon_note').val('');
-            }
+            });
         });
 
         function getit(){
             var select = $('#amazon_profile_info').val();
             var radio = document.querySelector('input[name="attribute"]:checked').value;
-            if(radio == 1) {
-                $('#amazon_note').val('');
-            }else {
-                $.get('{{asset('profile/show?ID=')}}'+select,function (data) {
-                    var html = '';
+            $.get('{{asset('profile/show?ID=')}}'+select,function (data) {
+                if(radio == 1) {
+                    $('#amazon_company').val('');
+                    $('#amazon_add').val(data.profile.profile_add);
+                }else {
                     if(data.profile.company[0]){
-                        html = data.profile.company[0].mst + ' - '+data.profile.company[0].name_en + ' - '+ data.profile.company[0].dia_chi ;
-                        $('#amazon_note').val(html);
-                    }else {
-                        html = 'Cá nhân sở hữu công ty';
-                        $('#amazon_note').val(html);
+                        $('#amazon_company').val(data.profile.company[0].name_en);
+                        $('#amazon_add').val(data.profile.company[0].dia_chi);
                     }
-                });
-            }
+                }
+            });
+
         }
 
     </script>

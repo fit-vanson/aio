@@ -230,6 +230,7 @@
                 $('#info_phone').val(data.info_phone);
                 $('#pass').val(data.pass);
                 $('#info_andress').val(data.info_andress);
+                $('#info_company').val(data.info_company);
                 $('#profile_info').val(data.profile_info);
                 $('#profile_info').select2();
                 $('#info_url').val(data.info_url);
@@ -243,11 +244,12 @@
 
                 if(data.thuoc_tinh == 1){
                     $('.thuoc_tinh').show();
-                    $('.dia_chi').hide();
+                    $('.info_company').hide();
                     $("#individual1").prop('checked', true);
                 }else{
                     $('.thuoc_tinh').show();
-                    $('.dia_chi').show();
+                    $('.info_company').show();
+
                     $("#company1").prop('checked', true);
                 }
 
@@ -295,34 +297,44 @@
             });
         });
         function getit(){
-            var select = document.querySelector('input[name="attribute1"]:checked').value;
-            if(select == 1) {
-                $('.dia_chi').hide();
+            var select = $('#profile_info').val();
+            var radio = document.querySelector('input[name="attribute1"]:checked').value;
+            if(radio == 1) {
+                $.get('{{asset('profile/show?ID=')}}'+select,function (data) {
+                    $('#info_company').val('');
+                    $('.info_company').hide();
+                    $('#info_andress').val(data.profile.profile_add);
+                });
             }else {
-                $('.dia_chi').show();
-
+                $.get('{{asset('profile/show?ID=')}}'+select,function (data) {
+                    if(data.profile.company[0]){
+                        $('.info_company').show();
+                        $('#info_company').val(data.profile.company[0].name_en);
+                        $('#info_andress').val(data.profile.company[0].dia_chi);
+                    }
+                });
             }
         }
 
         $('select').on('change', function() {
-            if(this.value !=0){
-                $.get('{{asset('profile/show?ID=')}}'+this.value,function (data) {
-                    var html = '';
-                    if(data.profile.company[0]){
-                        console.log(data.profile.company[0])
-                        html = data.profile.company[0].mst + ' - '+data.profile.company[0].name_en + ' - '+ data.profile.company[0].dia_chi ;
-
-                        $('#info_andress').val(html);
-                    }else {
-                        html = 'Cá nhân sở hữu công ty';
-                        $('#info_andress').val(html);
+            var radio = document.querySelector('input[name="attribute1"]:checked').value;
+            $.get('{{asset('profile/show?ID=')}}' + this.value, function (data) {
+                if(radio != 1){
+                    if (data.profile.company[0]) {
+                        $('.info_company').show();
+                        $('#info_company').val(data.profile.company[0].name_en);
+                        $('#info_andress').val(data.profile.company[0].dia_chi);
+                    } else {
+                        $('.info_company').hide();
+                        $('#info_company').val('');
+                        $('#info_andress').val(data.profile.profile_add);
                     }
-                });
-                $('.thuoc_tinh').show();
-            }else {
-                $('.thuoc_tinh').hide();
-            }
-
+                }else {
+                    $('.info_company').hide();
+                    $('#info_company').val('');
+                    $('#info_andress').val(data.profile.profile_add);
+                }
+            });
         });
 
     </script>

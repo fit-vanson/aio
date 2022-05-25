@@ -174,6 +174,7 @@ class DevHuaweiController extends Controller
         $data['huawei_phone'] = $request->huawei_phone;
         $data['huawei_profile_info'] = $request->huawei_profile_info;
         $data['huawei_company'] = $request->huawei_company;
+        $data['huawei_add'] = $request->huawei_add;
         $data['huawei_pass'] = $request->huawei_pass;
         $data['huawei_status'] = $request->huawei_status;
         $data['huawei_note'] = $request->huawei_note;
@@ -217,6 +218,7 @@ class DevHuaweiController extends Controller
         $data->huawei_profile_info = $request->huawei_profile_info;
         $data->huawei_phone = $request->huawei_phone;
         $data->huawei_company = $request->huawei_company;
+        $data->huawei_add = $request->huawei_add;
         $data->huawei_pass = $request->huawei_pass;
         $data->huawei_status = $request->huawei_status;
         $data->huawei_note = $request->huawei_note;

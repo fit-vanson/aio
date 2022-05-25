@@ -234,42 +234,38 @@
         }
 
         $('select').on('change', function() {
-            var select = document.querySelector('input[name="attribute"]:checked').value;
-            if(select != 1){
-                if(this.value !=0){
-                    $.get('{{asset('profile/show?ID=')}}'+this.value,function (data) {
-                        var html = '';
-                        if(data.profile.company[0]){
-                            html = data.profile.company[0].name_en;
-                            $('#oppo_company').val(html);
-                        }else {
-                            html = 'Cá nhân sở hữu công ty';
-                            $('#oppo_company').val(html);
-                        }
-                    });
+            var radio = document.querySelector('input[name="attribute"]:checked').value;
+            $.get('{{asset('profile/show?ID=')}}'+this.value,function (data) {
+                if(radio != 1){
+                    if (data.profile.company[0]) {
+                        $('#oppo_company').val(data.profile.company[0].name_en);
+                        $('#oppo_add').val(data.profile.company[0].dia_chi);
+                    } else {
+                        $('#oppo_company').val('');
+                        $('#oppo_add').val(data.profile.profile_add);
+                    }
+                }else {
+                    $('#oppo_company').val('');
+                    $('#oppo_add').val(data.profile.profile_add);
                 }
-            }else {
-                $('#oppo_company').val('');
-            }
+            });
+
         });
 
         function getit(){
             var select = $('#oppo_profile_info').val();
             var radio = document.querySelector('input[name="attribute"]:checked').value;
-            if(radio == 1) {
-                $('#oppo_company').val('');
-            }else {
-                $.get('{{asset('profile/show?ID=')}}'+select,function (data) {
-                    var html = '';
+            $.get('{{asset('profile/show?ID=')}}'+select,function (data) {
+                if(radio == 1) {
+                    $('#oppo_company').val('');
+                    $('#oppo_add').val(data.profile.profile_add);
+                }else {
                     if(data.profile.company[0]){
-                        html = data.profile.company[0].name_en;
-                        $('#oppo_company').val(html);
-                    }else {
-                        html = 'Cá nhân sở hữu công ty';
-                        $('#oppo_company').val(html);
+                        $('#oppo_company').val(data.profile.company[0].name_en);
+                        $('#oppo_add').val(data.profile.company[0].dia_chi);
                     }
-                });
-            }
+                }
+            });
         }
 
     </script>

@@ -103,7 +103,7 @@
                             </div>
                         </div>
                         <div class="row">
-                            <div class="form-group col-lg-4">
+                            <div class="form-group col-lg-6">
                                 <label class="d-block mb-3">Thuộc tính :</label>
                                 <div class="custom-control custom-radio custom-control-inline">
                                     <input type="radio" id="company" name="attribute" class="custom-control-input" onchange="getit();" value="0">
@@ -114,13 +114,17 @@
                                     <label class="custom-control-label" for="individual">Cá nhân</label>
                                 </div>
                             </div>
+                            <div class="form-group col-lg-6">
+                                <label for="name">Công ty đăng ký </label>
+                                <input id="huawei_company" name="huawei_company" class="form-control" />
+                            </div>
                         </div>
 
 
                         <div data-repeater-item="" class="row">
                             <div class="form-group col-lg-6">
-                                <label for="name">Công ty đăng ký </label>
-                                <textarea id="huawei_company" name="huawei_company" class="form-control" rows="4" ></textarea>
+                                <label for="name">Địa chỉ </label>
+                                <textarea id="huawei_add" name="huawei_add" class="form-control" rows="4" ></textarea>
                             </div>
                             <div class="form-group col-lg-6 ">
                                 <label for="name">Ghi chú</label>

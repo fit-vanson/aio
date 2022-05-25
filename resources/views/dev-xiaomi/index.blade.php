@@ -222,6 +222,7 @@
                 $('#xiaomi_profile_info').val(data.xiaomi_profile_info);
                 $('#xiaomi_profile_info').select2();
                 $('#xiaomi_company').val(data.xiaomi_company);
+                $('#xiaomi_add').val(data.xiaomi_add);
                 $('#xiaomi_dev_name').val(data.xiaomi_dev_name);
                 $('#modelHeading').html("Edit");
                 $('#saveBtn').val("edit");
@@ -233,42 +234,37 @@
         }
 
         $('select').on('change', function() {
-            var select = document.querySelector('input[name="attribute"]:checked').value;
-            if(select != 1){
-                if(this.value !=0){
-                    $.get('{{asset('profile/show?ID=')}}'+this.value,function (data) {
-                        var html = '';
-                        if(data.profile.company[0]){
-                            html = data.profile.company[0].name_en;
-                            $('#xiaomi_company').val(html);
-                        }else {
-                            html = 'Cá nhân sở hữu công ty';
-                            $('#xiaomi_company').val(html);
-                        }
-                    });
+            var radio = document.querySelector('input[name="attribute"]:checked').value;
+            $.get('{{asset('profile/show?ID=')}}'+this.value,function (data) {
+                if(radio != 1){
+                    if (data.profile.company[0]) {
+                        $('#xiaomi_company').val(data.profile.company[0].name_en);
+                        $('#xiaomi_add').val(data.profile.company[0].dia_chi);
+                    } else {
+                        $('#xiaomi_company').val('');
+                        $('#xiaomi_add').val(data.profile.profile_add);
+                    }
+                }else {
+                    $('#xiaomi_company').val('');
+                    $('#xiaomi_add').val(data.profile.profile_add);
                 }
-            }else {
-                $('#xiaomi_company').val('');
-            }
+            });
         });
 
         function getit(){
             var select = $('#xiaomi_profile_info').val();
             var radio = document.querySelector('input[name="attribute"]:checked').value;
-            if(radio == 1) {
-                $('#xiaomi_company').val('');
-            }else {
-                $.get('{{asset('profile/show?ID=')}}'+select,function (data) {
-                    var html = '';
+            $.get('{{asset('profile/show?ID=')}}'+select,function (data) {
+                if(radio == 1) {
+                    $('#xiaomi_company').val('');
+                    $('#xiaomi_add').val(data.profile.profile_add);
+                }else {
                     if(data.profile.company[0]){
-                        html = data.profile.company[0].name_en;
-                        $('#xiaomi_company').val(html);
-                    }else {
-                        html = 'Cá nhân sở hữu công ty';
-                        $('#xiaomi_company').val(html);
+                        $('#xiaomi_company').val(data.profile.company[0].name_en);
+                        $('#xiaomi_add').val(data.profile.company[0].dia_chi);
                     }
-                });
-            }
+                }
+            });
         }
 
     </script>

@@ -194,7 +194,8 @@ class DevController extends Controller
         $data['info_phone'] = $request->info_phone;
         $data['pass'] = $request->pass;
         $data['profile_info'] = $request->profile_info;
-        $data['info_andress'] = $request->attribute1 == 0 ? $request->info_andress :'';
+        $data['info_andress'] = $request->info_andress;
+        $data['info_company'] = $request->info_company;
         $data['note'] = $request->note;
         $data['info_url'] = $request->info_url;
         $data['info_logo'] = $request->info_logo;
@@ -246,7 +247,8 @@ class DevController extends Controller
         $data->info_phone = $request->info_phone;
         $data->pass = $request->pass;
         $data->profile_info = $request->profile_info;
-        $data->info_andress=  $request->attribute1 == 0 ? $request->info_andress :'';
+        $data->info_andress=  $request->info_andress ;
+        $data->info_company=  $request->info_company ;
         $data->note= $request->note;
         $data->thuoc_tinh= $request->attribute1;
         $data->info_url = $request->info_url;
