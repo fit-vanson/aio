@@ -33,6 +33,14 @@
     <div class="row">
         <div class="col-12">
             <div class="card">
+                @can('keystore-add')
+                    <div class="card-body">
+                        <div class="button-items console_status_button">
+                            <button type="button" class="btn btn-primary waves-effect waves-light" id="createMultiple">Multiple</button>
+
+                        </div>
+                    </div>
+                @endcan
                 <div class="card-body">
 
                      <table class="table table-bordered dt-responsive nowrap data-table" style="border-collapse: collapse; border-spacing: 0; width: 100%;">
@@ -202,6 +210,38 @@
                     });
                     swal("Đã xóa!", "Your imaginary file has been deleted.", "success");
                 });
+        });
+
+        $('#createMultiple').on('click', function () {
+            $('#addKeystoreMultiple').modal('show');
+            $('.modal').on('hidden.bs.modal', function (e) {
+                $('body').addClass('modal-open');
+            });
+        });
+
+
+        $('#KeystoreMultipleForm button').click(function (event){
+            event.preventDefault();
+            $.ajax({
+                data: $('#KeystoreMultipleForm').serialize(),
+                url: "{{ route('keystore.updateMultiple')}}",
+                type: "post",
+                dataType: 'json',
+                success: function (data) {
+                    if(data.errors){
+                        $.notify(data.errors, "error");
+                    }
+                    if(data.success){
+                        $.notify(data.success, "success");
+                        $('#KeystoreMultipleForm').trigger("reset");
+                        $('#addKeystoreMultiple').modal('hide');
+                        table.draw();
+                    }
+                },
+            });
+
+
+
         });
     });
 </script>

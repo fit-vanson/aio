@@ -554,6 +554,7 @@ Route::group(['prefix'=>'keystore','middleware'=>['CheckLogout','2fa']], functio
     Route::get('/edit/{id}',[KeystoreController::class,'edit'])->name('keystore.edit')->middleware('can:keystore-edit');
     Route::get('/show/{id}',[KeystoreController::class,'edit'])->name('keystore.show')->middleware('can:keystore-show');
     Route::post('/update',[KeystoreController::class,'update'])->name('keystore.update')->middleware('can:keystore-update');
+    Route::post('/updateMultiple',[KeystoreController::class,'updateMultiple'])->name('keystore.updateMultiple')->middleware('can:keystore-update');
     Route::get('/delete/{id}',[KeystoreController::class,'delete'])->name('keystore.delete')->middleware('can:keystore-delete');
 });
 

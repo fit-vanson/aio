@@ -260,6 +260,26 @@ class KeystoreController extends Controller
         return response()->json(['success'=>'Xóa thành công.']);
     }
 
+    public function updateMultiple(Request $request)
+    {
+        $data = explode("\r\n",$request->KeystoreMultiple);
+        foreach (array_filter($data) as $item){
+            [$nameKeystore, $passKeystore, $Aliases, $passAliases, $sha256] = explode("|",$item);
+
+            Keystore::updateOrCreate(
+                [
+                    "name_keystore" => trim($nameKeystore),
+                ],
+                [
+                    "pass_keystore" => trim($passKeystore),
+                    'aliases_keystore' => trim($Aliases),
+                    'pass_aliases' => trim($passAliases),
+                    'SHA_256_keystore' => trim($sha256),
+                ]);
+        }
+        return response()->json(['success'=>'Thêm mới thành công.']);
+    }
+
     public function callAction($method, $parameters)
     {
         return parent::callAction($method, array_values($parameters));
