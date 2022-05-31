@@ -32,7 +32,7 @@ class Apk_ProcessController extends Controller
                 $searchValue = $search_arr['value']; // Search value
 
                 // Total records
-                $totalRecords = Apk_Process::select('count(*) as allcount')->count();
+                $totalRecords = Apk_Process::select('count(*) as allcount')->where('category',$request->id )->count();
                 $totalRecordswithFilter = Apk_Process::orderBy($columnName, $columnSortOrder)
                     ->where('category',$request->id )
                     ->where('appid', 'like', '%' . $searchValue . '%')
