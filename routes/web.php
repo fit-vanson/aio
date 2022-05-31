@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\Apk_ProcessController;
 use App\Http\Controllers\BuildPreviewController;
 use App\Http\Controllers\CategoryTemplateController;
 use App\Http\Controllers\CategoryTemplateFrameController;
@@ -568,6 +569,18 @@ Route::group(['prefix'=>'profile','middleware'=>['CheckLogout','2fa']], function
     Route::post('/update',[ProfileController::class,'update'])->name('profile.update')->middleware('can:dev-update');
     Route::get('/delete/{id}',[ProfileController::class,'delete'])->name('profile.delete')->middleware('can:dev-delete');
 });
+
+
+Route::group(['prefix'=>'apk_process'], function (){
+    Route::get('{id}',[Apk_ProcessController::class,'index'])->name('apk_process.index');
+    Route::post('getIndex',[Apk_ProcessController::class,'getIndex'])->name('apk_process.getIndex');
+    Route::get('/gen_imei',[Apk_ProcessController::class,'gen_imei'])->name('imei.gen_imei');
+    Route::get('/show_imei',[Apk_ProcessController::class,'show_imei'])->name('imei.show_imei');
+    Route::get('/getBrand',[Apk_ProcessController::class,'getBrand'])->name('imei.getBrand');
+    Route::get('/delete/{id}',[Apk_ProcessController::class,'delete']);
+    Route::get('/update_pss/{id}',[Apk_ProcessController::class,'update_pss']);
+});
+
 Route::get('/fakename',[ProfileController::class,'show'])->name('profile.show');
 
 Route::get('IP2location',[ipInfoController::class,'IP2location'])->name('inInfo.IP2location');

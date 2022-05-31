@@ -63,17 +63,17 @@ class HomeController extends Controller
 
         session(["secret_code" => $secretCode]);
         return view("index", compact(
-            "qrCodeUrl",
-            "project",
-            "projectLastMonth",
-            "projectInMonth",
-            "Chplay_status",
-            "Amazon_status",
-            "Samsung_status",
-            "Xiaomi_status",
-            "Oppo_status",
-            "Vivo_status",
-            "Huawei_status"
+            "qrCodeUrl"
+//            "project",
+//            "projectLastMonth",
+//            "projectInMonth",
+//            "Chplay_status",
+//            "Amazon_status",
+//            "Samsung_status",
+//            "Xiaomi_status",
+//            "Oppo_status",
+//            "Vivo_status",
+//            "Huawei_status"
         ));
 
     }
