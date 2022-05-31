@@ -35,10 +35,7 @@ class Apk_ProcessController extends Controller
                 $totalRecords = Apk_Process::select('count(*) as allcount')->count();
                 $totalRecordswithFilter = Apk_Process::orderBy($columnName, $columnSortOrder)
                     ->where('category',$request->id )
-//                    ->where('category',10 )
                     ->where('appid', 'like', '%' . $searchValue . '%')
-                    ->orwhere('package', 'like', '%' . $searchValue . '%')
-                    ->orwhere('title', 'like', '%' . $searchValue . '%')
                     ->count();
 
 
@@ -46,7 +43,6 @@ class Apk_ProcessController extends Controller
                 $records = Apk_Process::orderBy($columnName, $columnSortOrder)
                     ->where('category',$request->id )
                     ->where('appid', 'like', '%' . $searchValue . '%')
-
                     ->skip($start)
                     ->take($rowperpage)
                     ->get();
