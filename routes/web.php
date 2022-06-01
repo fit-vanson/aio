@@ -572,7 +572,7 @@ Route::group(['prefix'=>'profile','middleware'=>['CheckLogout','2fa']], function
 
 
 Route::group(['prefix'=>'apk_process'], function (){
-    Route::get('{id}',[Apk_ProcessController::class,'index'])->name('apk_process.index');
+    Route::get('/{id}/{cate_id}',[Apk_ProcessController::class,'index'])->name('apk_process.index');
     Route::post('getIndex',[Apk_ProcessController::class,'getIndex'])->name('apk_process.getIndex');
     Route::get('/gen_imei',[Apk_ProcessController::class,'gen_imei'])->name('imei.gen_imei');
     Route::get('/show_imei',[Apk_ProcessController::class,'show_imei'])->name('imei.show_imei');

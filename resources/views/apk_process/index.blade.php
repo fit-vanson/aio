@@ -36,16 +36,17 @@
                 <div class="card-body">
                     <div class="button-items">
                         @foreach($categories as $category)
-                            <button type="button" class="btn btn-light waves-effect" onclick="category('{{$category->id}}')">{{$category->name}}</button>
+                            <a href="{{route('apk_process.index',['id'=>$category['type'],'cate_id'=>$category['id']])}}" class="btn btn-light waves-effect"> {{$category['name']}}</a>
+{{--                            <button type="button" class="btn btn-light waves-effect" onclick="category('{{$category['id']}}')">{{$category['name']}}</button>--}}
                         @endforeach
                     </div>
                 </div>
-                <div class="card-body">
+                <div class="card-body scrolling-pagination ">
 
                     <table class="table table-bordered dt-responsive data-table apk-process" style="border-collapse: collapse; border-spacing: 0; width: 100%;">
                         <thead>
                         <tr>
-                            <th>Logo</th>
+{{--                            <th>Logo</th>--}}
                             <th style="width: 10%">Logo</th>
                             <th style="width: 50%">Preview</th>
                             <th style="word-wrap: break-word;width: 30%">Description</th>
@@ -53,8 +54,42 @@
                         </tr>
                         </thead>
                         <tbody>
+                        @foreach($apk_process as $item)
+                            <tr role="row" class="odd">
+                                <td tabindex="0">
+                                    <img class="rounded mx-auto d-block" height="100px" src="{{$item->icon}}">
+                                </td>
+                                <td><p class="bold">{{$item->title}}</p>
+                                    <div class="">
+                                        <?php
+                                        $screenshots = explode(';',$item->screenshot);
+                                        ?>
+                                       @foreach ($screenshots as $sc)
+                                            <img class="rounded mr-2 mo-mb-2" alt="200x200" style="height:100px  " src="{{$sc}}" data-holder-rendered="true">
+                                       @endforeach
+                                    </div>
+                                </td>
+                                <td>
+                                    <button type="button" class="btn waves-effect button" style="text-align: left">{{$item->description}}</button>
+                                </td>
+                                <td class=" text-center">
+                                    <a href="javascript:void(0)" data-toggle="tooltip" data-id="{{$item->id}}" data-original-title="Delete" class="btn btn-danger deleteApk_process"><i class="ti-trash"></i></a>
+                                    @if($item->pss_console == 0 )
+                                    <a href="javascript:void(0)" data-toggle="tooltip" data-id="{{$item->id}}" class="btn btn-secondary actionApk_process">Mặc định</a>
+                                    @elseif($item->pss_console == 1 )
+                                        <span class="btn btn-info">Xử lý</span>
+                                    @elseif($item->pss_console == 2 )
+                                        <span class="btn btn-warning">Đang xử lý</span>';
+                                    @elseif($item->pss_console == 3 )
+                                        <span class="btn btn-success">Xong</span>';
+                                    @endif
+                                </td>
+                            </tr>
+                        @endforeach
                         </tbody>
                     </table>
+                    {{ $apk_process->links() }}
+{{--                    {{ $apk_process->links() }}--}}
                 </div>
             </div>
         </div> <!-- end col -->
@@ -80,39 +115,14 @@
     <!-- Datatable init js -->
     <script src="assets/pages/datatables.init.js"></script>
 
+{{--    <script type="text/javascript" src="https://cdn.datatables.net/scroller/2.0.6/js/dataTables.scroller.min.js"></script>--}}
+{{--    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>--}}
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jscroll/2.4.1/jquery.jscroll.min.js"></script>
+
 
     <script src="plugins/select2/js/select2.min.js"></script>
-    <script type="text/javascript">
-        $(function () {
 
-            $.ajaxSetup({
-                headers: {
-                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-                }
-            });
-            var table = $('.apk-process').DataTable({
-                processing: false,
-                serverSide: true,
-                ajax: {
-                    url: "{{ route('apk_process.getIndex',['id'=>$category->id])}}",
-                    type: "post"
-                },
-                columns: [
-                    {data: 'appid'},
-                    {data: 'icon',"width": "10%"},
-                    {data: 'screenshot',"width": "50%"},
-                    {data: 'description' ,"width": "30%"},
-                    {data: 'action', className: "text-center",name: 'action', orderable: false, searchable: false},
-                ],
-                columnDefs: [
-                    {
-                        "targets": [ 0 ],
-                        "visible": false,
-                        "searchable": false
-                    },
-                ],
-                order:[1,'asc']
-            });
+    <script type="text/javascript">
             $(document).on('click','.deleteApk_process', function (data){
                 var id = $(this).data("id");
                 var parent = $(this).parent().parent();
@@ -130,22 +140,18 @@
                         console.log('Error:', data);
                     }
                 });
-
             });
-
 
             $(document).on('click','.actionApk_process', function (data){
                 var id = $(this).data("id");
                 var btn = $(this).parent();
-                console.log(btn)
 
                 $.ajax({
                     type: "get",
                     url: "{{ asset("apk_process/update_pss") }}/" + id,
                     success: function (data) {
-                        console.log(parent);
                         if(data.success){
-                           var  html = '<a href="javascript:void(0)" data-toggle="tooltip" data-id="'+id+'" data-original-title="Delete" class="btn btn-danger deleteApk_process"><i class="ti-trash"></i></a> <span class="btn btn-info">Xử lý</i></span>';
+                           var  html = '<a href="javascript:void(0)" data-toggle="tooltip" data-id="'+id+'" data-original-title="Delete" class="btn btn-danger deleteApk_process"><i class="ti-trash"></i></a> <span class="btn btn-info">Xử lý</span>';
                             btn.html(html)
                         }
                     },
@@ -153,7 +159,6 @@
                         console.log('Error:', data);
                     }
                 });
-
             });
             $(document).on("click", ".button", function(){
                 var copyText = this.innerText;
@@ -167,41 +172,19 @@
                 document.execCommand('copy');
                 document.body.removeChild(textarea);
             });
-        });
-
-        function category(id){
-            var aa=  $('.data-table').DataTable({
-                processing: false,
-                serverSide: true,
-
-                ajax: {
-                    url: "{{ route('apk_process.getIndex')}}?id="+id,
-                    type: "post"
-                },
-                columns: [
-                    {data: 'appid'},
-                    {data: 'icon',"width": "10%"},
-                    {data: 'screenshot',"width": "50%"},
-                    {data: 'description' ,"width": "30%"},
-                    {data: 'action', className: "text-center",name: 'action', orderable: false, searchable: false},
-                ],
-                columnDefs: [
-                    {
-                        "targets": [ 0 ],
-                        "visible": false,
-                        "searchable": false
-                    },
-                ],
-                order:[1,'asc'],
-                stateSave: true,
-                "bDestroy": true,
+        $('ul.pagination').hide();
+        $(function() {
+            $('.scrolling-pagination').jscroll({
+                autoTrigger: true,
+                padding: 0,
+                nextSelector: '.pagination li.active + li a',
+                contentSelector: 'div.scrolling-pagination',
+                callback: function() {
+                    $('ul.pagination').remove();
+                }
             });
-
-
-
-        }
+        });
     </script>
-
 @endsection
 
 

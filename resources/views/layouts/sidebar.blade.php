@@ -1,12 +1,4 @@
       <!-- ========== Left Sidebar Start ========== -->
-<!--      --><?php
-//          $categories = \App\Models\Market_category::select('type')->distinct()->get();
-////          dd($categories);
-////          $games = \App\Models\Market_category::where('type',2)->get();
-////          $apps = \App\Models\Market_category::where('type',1)->get();
-////          $others = \App\Models\Market_category::where('type',0)->get();
-//
-//      ?>
             <div class="left side-menu">
                 <div class="slimscroll-menu" id="remove-scroll">
 
@@ -54,13 +46,44 @@
                                 <a href="javascript:void(0);" class="waves-effect"><i class="ti-image"></i> <span> Apk process<span class="float-right menu-arrow"><i class="mdi mdi-chevron-right"></i></span> </span> </a>
                                 <ul class="submenu">
 
-                                        <li><a href="{{route('apk_process.index',['id'=>2])}}">Game</a></li>
-                                        <li><a href="{{route('apk_process.index',['id'=>1])}}">App</a></li>
-                                        <li><a href="{{route('apk_process.index',['id'=>0])}}">Other</a></li>
 
+                                        <li>
+                                            <a href="javascript:void(0);" class="waves-effect"><i class="ti-package"></i> <span> Game <span class="float-right menu-arrow"><i class="mdi mdi-chevron-right"></i></span> </span> </a>
+                                            <ul class="submenu">
+                                                <?php
+                                                    $arr = App\Models\Market_category::where('type',2)->get();
+                                                ?>
+                                                @foreach($arr as $item)
+                                                <li><a href="{{route('apk_process.index',['id'=>$item['type'],'cate_id'=>$item['id']])}}">{{$item['name']}}</a></li>
+                                                @endforeach
+                                            </ul>
+                                        </li>
+
+                                    <li>
+                                        <a href="javascript:void(0);" class="waves-effect"><i class="ti-package"></i> <span> App <span class="float-right menu-arrow"><i class="mdi mdi-chevron-right"></i></span> </span> </a>
+                                        <ul class="submenu">
+                                            <?php
+                                            $arr = App\Models\Market_category::where('type',1)->get();
+                                            ?>
+                                            @foreach($arr as $item)
+                                                <li><a href="{{route('apk_process.index',['id'=>$item['type'],'cate_id'=>$item['id']])}}">{{$item['name']}}</a></li>
+                                            @endforeach
+                                        </ul>
+                                    </li>
+
+                                    <li>
+                                        <a href="javascript:void(0);" class="waves-effect"><i class="ti-package"></i> <span> Other <span class="float-right menu-arrow"><i class="mdi mdi-chevron-right"></i></span> </span> </a>
+                                        <ul class="submenu">
+                                            <?php
+                                            $arr = App\Models\Market_category::where('type',0)->get();
+                                            ?>
+                                            @foreach($arr as $item)
+                                                <li><a href="{{route('apk_process.index',['id'=>$item['type'],'cate_id'=>$item['id']])}}">{{$item['name']}}</a></li>
+                                            @endforeach
+                                        </ul>
+                                    </li>
                                 </ul>
                             </li>
-
 
 
                             <li>
