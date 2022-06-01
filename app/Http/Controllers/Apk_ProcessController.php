@@ -30,7 +30,6 @@ class Apk_ProcessController extends Controller
 //    }
 
     public function index(Request $request,$id,$cate_id){
-//        dd($request->all());
         $categories = Market_category::where('type',$id)->get()->toArray();
         $apk_process = Apk_Process::where('category',array_rand($categories))->paginate(10);
         if(isset($request->cate_id)){
@@ -130,13 +129,13 @@ class Apk_ProcessController extends Controller
         }
     }
 
-    public function delete($id){
+    public function delete($type, $cate, $id){
         $apk = Apk_Process::find($id);
         $apk->delete();
         return response()->json(['success'=>'Xóa thành công.']);
     }
 
-    public function update_pss($id){
+    public function update_pss($type, $cate,$id){
         $apk = Apk_Process::find($id);
         $apk->pss_console = 1;
         $apk->save();

@@ -574,11 +574,11 @@ Route::group(['prefix'=>'profile','middleware'=>['CheckLogout','2fa']], function
 Route::group(['prefix'=>'apk_process'], function (){
     Route::get('/{id}/{cate_id}',[Apk_ProcessController::class,'index'])->name('apk_process.index');
     Route::post('getIndex',[Apk_ProcessController::class,'getIndex'])->name('apk_process.getIndex');
-    Route::get('/gen_imei',[Apk_ProcessController::class,'gen_imei'])->name('imei.gen_imei');
-    Route::get('/show_imei',[Apk_ProcessController::class,'show_imei'])->name('imei.show_imei');
-    Route::get('/getBrand',[Apk_ProcessController::class,'getBrand'])->name('imei.getBrand');
-    Route::get('/delete/{id}',[Apk_ProcessController::class,'delete']);
-    Route::get('/update_pss/{id}',[Apk_ProcessController::class,'update_pss']);
+    Route::get('/gen_imei',[Apk_ProcessController::class,'gen_imei'])->name('apk_process.gen_imei');
+    Route::get('/show_imei',[Apk_ProcessController::class,'show_imei'])->name('apk_process.show_imei');
+    Route::get('/getBrand',[Apk_ProcessController::class,'getBrand'])->name('apk_process.getBrand');
+    Route::get('{type}/{cate_id}/delete/{id}',[Apk_ProcessController::class,'delete'])->name('apk_process.delete');
+    Route::get('{type}/{cate_id}/update_pss/{id}',[Apk_ProcessController::class,'update_pss'])->name('apk_process.update_pss');
 });
 
 Route::get('/fakename',[ProfileController::class,'show'])->name('profile.show');

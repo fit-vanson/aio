@@ -124,11 +124,14 @@
 
     <script type="text/javascript">
             $(document).on('click','.deleteApk_process', function (data){
+                var url = window.location.href;
                 var id = $(this).data("id");
                 var parent = $(this).parent().parent();
+                console.log(url)
                 $.ajax({
                     type: "get",
-                    url: "{{ asset("apk_process/delete") }}/" + id,
+                    {{--url: "{{ asset("apk_process/delete") }}/" + id,--}}
+                    url: url+'/delete/' + id,
                     success: function (data) {
                         if(data.success){
                             parent.slideUp(300,function() {
@@ -145,10 +148,11 @@
             $(document).on('click','.actionApk_process', function (data){
                 var id = $(this).data("id");
                 var btn = $(this).parent();
+                var url = window.location.href;
 
                 $.ajax({
                     type: "get",
-                    url: "{{ asset("apk_process/update_pss") }}/" + id,
+                    url: url +"/update_pss/" + id,
                     success: function (data) {
                         if(data.success){
                            var  html = '<a href="javascript:void(0)" data-toggle="tooltip" data-id="'+id+'" data-original-title="Delete" class="btn btn-danger deleteApk_process"><i class="ti-trash"></i></a> <span class="btn btn-info">Xử lý</span>';
