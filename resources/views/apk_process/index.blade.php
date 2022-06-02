@@ -58,6 +58,8 @@
                             <tr role="row" class="odd">
                                 <td tabindex="0">
                                     <img class="rounded mx-auto d-block" height="100px" src="{{$item->icon}}">
+
+                                    <a href="{{$item->download}}" target="_blank" data-toggle="tooltip" data-original-title="Download" class="btn btn-outline-success"><i class="ti-download"></i></a>
                                 </td>
                                 <td><p class="bold">{{$item->title}}</p>
                                     <div class="">
