@@ -16,27 +16,20 @@ class Apk_ProcessController extends Controller
 
 {
 
-
-
-//    public function __construct()
-//    {
-//        $this->elasticsearch = ClientBuilder::create()->build();
-//        $elasticaConfig = [
-//            'host' => 'localhost',
-//            'port' => 9200,
-//            'index' => 'apk_process',
-//        ];
-//        $this->elastica = new ElaticaClient($elasticaConfig);
-//    }
-
     public function index(Request $request,$id,$cate_id){
-        $categories = Market_category::where('type',$id)->get()->toArray();
-        $apk_process = Apk_Process::where('category',array_rand($categories))->paginate(10);
-        if(isset($request->cate_id)){
-            $apk_process = Apk_Process::where('category',$request->cate_id)->paginate(10);
+        if (isset($id)){
+            $categories = Market_category::where('type',$id)->get()->toArray();
+            $apk_process = Apk_Process::where('category',array_rand($categories))->paginate(10);
+            if(isset($request->cate_id)){
+                $apk_process = Apk_Process::where('category',$request->cate_id)->paginate(10);
+            }
+
+            return view('apk_process.index',compact(['categories','apk_process']));
+        }else{
+            return view('apk_process.index');
         }
 
-        return view('apk_process.index',compact(['categories','apk_process']));
+
     }
 
     public function getIndex(Request $request){

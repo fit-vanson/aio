@@ -4522,6 +4522,59 @@ class ProjectController extends Controller
 
     }
 
+    public function changeKeystoreMultiple(Request $request){
+        $data = explode("\r\n",$request->changeKeystoreMultiple);
+
+
+//        $project = ProjectModel::whereIN('projectname',$data)->get();
+
+        foreach ($data as $item){
+            try {
+                [$ID_Project, $Key_C, $Key_A, $Key_S, $Key_X, $Key_O, $Key_V, $Key_H ] = explode("|",$item);
+                ProjectModel::updateOrCreate(
+                    [
+                        "projectname" => $ID_Project,
+                    ],
+                    [
+                        "Chplay_keystore_profile" => $Key_C,
+                        "Amazon_keystore_profile" => $Key_A,
+                        "Samsung_keystore_profile" => $Key_S,
+                        "Xiaomi_keystore_profile" => $Key_X,
+                        "Vivo_keystore_profile" => $Key_V,
+                        "Oppo_keystore_profile" => $Key_O,
+                        "Huawei_keystore_profile" => $Key_H,
+                    ]);
+
+                Keystore::updateorcreate([
+                    'name_keystore' => $Key_C
+                ]);
+                Keystore::updateorcreate([
+                    'name_keystore' => $Key_A
+                ]);
+                Keystore::updateorcreate([
+                    'name_keystore' => $Key_S
+                ]);
+                Keystore::updateorcreate([
+                    'name_keystore' => $Key_X
+                ]);
+                Keystore::updateorcreate([
+                    'name_keystore' => $Key_O
+                ]);
+                Keystore::updateorcreate([
+                    'name_keystore' => $Key_V
+                ]);
+                Keystore::updateorcreate([
+                    'name_keystore' => $Key_H
+                ]);
+            }catch (\Exception $exception) {
+                \Illuminate\Support\Facades\Log::error('Message:' . $exception->getMessage() . '--- chang key : ' . $exception->getLine());
+            }
+
+        }
+        return response()->json(['success'=>'Cập nhật thành công ']);
+
+    }
+
 //    public function select_chplay_buildinfo_keystore(Request $request){
 //            $keystore = $request->buildinfo_keystore;
 //            $buildinfo_keystore = Keystore::where('name_keystore',$keystore)->first();

@@ -9,6 +9,7 @@
     <style>
         .tooltip-inner {
             max-width: 1000px !important;
+            text-align:left;
         }
     </style>
 
@@ -59,64 +60,64 @@
                         </tr>
                         </thead>
                         <tbody>
-                        @foreach($apk_process as $item)
-                            <tr role="row" class="odd">
-                                <td tabindex="0">
-                                    <img class="rounded mx-auto d-block" height="100px" src="{{$item->icon}}">
+                        @if(isset($apk_process))
+                            @foreach($apk_process as $item)
+                                <tr role="row" class="odd">
+                                    <td tabindex="0">
+                                        <img class="rounded mx-auto d-block" height="100px" src="{{$item->icon}}">
 
-                                    <a href="{{$item->download}}" target="_blank" data-toggle="tooltip" data-original-title="Download" class="btn btn-outline-success"><i class="ti-download"></i></a>
-                                </td>
-                                <td><p class="bold">{{$item->title}}</p>
-                                    <div class="">
-                                        <?php
-                                        $screenshots = explode(';',$item->screenshot);
-                                        ?>
-                                       @foreach ($screenshots as $sc)
-                                            <img class="rounded mr-2 mo-mb-2" alt="200x200" style="height:100px  " src="{{$sc}}" data-holder-rendered="true">
-                                       @endforeach
-                                    </div>
-                                </td>
-                                <td>
-                                    <button type="button" class="btn waves-effect button" style="text-align: left" data-toggle="tooltip" data-html="true" data-original-title="{!! $item->description !!}" data-placement="left" data-container="body">{!!  strlen($item->description) > 300 ? substr($item->description,0,300)." ..." : $item->description !!}  </button>
-                                </td>
-                                <td class=" text-center">
-                                    <a href="javascript:void(0)" data-toggle="tooltip" data-id="{{$item->id}}" data-original-title="Delete" class="btn btn-danger deleteApk_process"><i class="ti-trash"></i></a>
-                                    @if($item->pss_console == 0 )
-                                    <a href="javascript:void(0)" data-toggle="tooltip" data-id="{{$item->id}}" class="btn btn-secondary actionApk_process">Mặc định</a>
-                                    @elseif($item->pss_console == 1 )
-                                        <span class="btn btn-info">Xử lý</span>
-                                    @elseif($item->pss_console == 2 )
-                                        <span class="btn btn-warning">Đang xử lý</span>';
-                                    @elseif($item->pss_console == 3 )
-                                        <?php
-                                        $pss_aab = $item->pss_aab !=0  ? 'pss_aab: <span class="badge badge-success"><i class="ti-check"></i></span>' : 'pss_aab: <span class="badge badge-danger"><i class="ti-close"></i></span>';
-                                        $pss_rebuild    = $item->pss_rebuild !=0  ? 'pss_rebuild: <span class="badge badge-success"><i class="ti-check"></i></span>' : 'pss_rebuild: <span class="badge badge-danger"><i class="ti-close"></i></span>';
-                                        $pss_chplay     = $item->pss_chplay? 'pss chplay: '.$item->pss_chplay : '';
-                                        $pss_huawei    = $item->pss_huawei ? 'pss huawei: '.$item->pss_huawei : '';
-                                        $pss_sdk    = $item->pss_sdk ? 'pss sdk: '.$item->pss_sdk : '';
-                                        $result = '';
-                                        if(isset($item->pss_ads)){
-                                            $pss_ads = json_decode($item->pss_ads,true);
-                                            foreach ($pss_ads as $key=>$ads){
-                                                $result .= $ads != 0 ? $key.': <span class="badge badge-success"><i class="ti-check"></i></span><br>'  : $key.': <span class="badge badge-danger"><i class="ti-close"></i></span><br>';
+                                        <a href="{{$item->download}}" target="_blank" data-toggle="tooltip" data-original-title="Download" class="btn btn-outline-success"><i class="ti-download"></i></a>
+                                    </td>
+                                    <td><p class="bold">{{$item->title}}</p>
+                                        <div class="">
+                                            <?php
+                                            $screenshots = explode(';',$item->screenshot);
+                                            ?>
+                                           @foreach ($screenshots as $sc)
+                                                <img class="rounded mr-2 mo-mb-2" alt="200x200" style="height:100px  " src="{{$sc}}" data-holder-rendered="true">
+                                           @endforeach
+                                        </div>
+                                    </td>
+                                    <td>
+                                        <button type="button" class="btn waves-effect button" style="text-align: left" data-toggle="tooltip" data-html="true" data-original-title="<div class='text-justify'>{!! $item->description !!}</div>" data-placement="left" data-container="body">{!!  strlen($item->description) > 300 ? substr($item->description,0,300)." ..." : $item->description !!}  </button>
+                                    </td>
+                                    <td class=" text-center">
+                                        <a href="javascript:void(0)" data-toggle="tooltip" data-id="{{$item->id}}" data-original-title="Delete" class="btn btn-danger deleteApk_process"><i class="ti-trash"></i></a>
+                                        @if($item->pss_console == 0 )
+                                        <a href="javascript:void(0)" data-toggle="tooltip" data-id="{{$item->id}}" class="btn btn-secondary actionApk_process">Mặc định</a>
+                                        @elseif($item->pss_console == 1 )
+                                            <span class="btn btn-info">Xử lý</span>
+                                        @elseif($item->pss_console == 2 )
+                                            <span class="btn btn-warning">Đang xử lý</span>';
+                                        @elseif($item->pss_console == 3 )
+                                            <?php
+                                            $pss_aab = $item->pss_aab !=0  ? 'pss_aab: <span class="badge badge-success"><i class="ti-check"></i></span>' : 'pss_aab: <span class="badge badge-danger"><i class="ti-close"></i></span>';
+                                            $pss_rebuild    = $item->pss_rebuild !=0  ? 'pss_rebuild: <span class="badge badge-success"><i class="ti-check"></i></span>' : 'pss_rebuild: <span class="badge badge-danger"><i class="ti-close"></i></span>';
+                                            $pss_chplay     = $item->pss_chplay? 'pss chplay: '.$item->pss_chplay : '';
+                                            $pss_huawei    = $item->pss_huawei ? 'pss huawei: '.$item->pss_huawei : '';
+                                            $pss_sdk    = $item->pss_sdk ? 'pss sdk: '.$item->pss_sdk : '';
+                                            $result = '<br>';
+                                            if(isset($item->pss_ads)){
+                                                $pss_ads = json_decode($item->pss_ads,true);
+                                                foreach ($pss_ads as $key=>$ads){
+                                                    $result .= $ads != 0 ? $key.': <span class="badge badge-success"><i class="ti-check"></i></span><br>'  : $key.': <span class="badge badge-danger"><i class="ti-close"></i></span><br>';
+                                                }
                                             }
-                                        }
-                                        $out =
-                                            '<p>'.$pss_aab.' </p>'.
-                                            '<p>'.$pss_rebuild.' </p>'.
-                                            '<p>'.$pss_chplay.' </p>'.
-                                            '<p>'.$pss_huawei.' </p>'.
-                                            '<p>'.$pss_sdk.' </p>'.
-                                            '<p> Ads: '.$result.' </p>'
-                                        ;
-
-                                        ?>
-                                            <button type="button" class="btn btn-success waves-effect waves-light" data-toggle="popover" data-trigger="focus" data-html="true" data-placement="right"  data-content="{{$out}}">Xong</button>
-
-                                    @endif
-                                </td>
-                            </tr>
-                        @endforeach
+                                            $out =
+                                                '<p>'.$pss_aab.' </p>'.
+                                                '<p>'.$pss_rebuild.' </p>'.
+                                                '<p>'.$pss_chplay.' </p>'.
+                                                '<p>'.$pss_huawei.' </p>'.
+                                                '<p>'.$pss_sdk.' </p>'.
+                                                '<p> Ads: '.$result.' </p>'
+                                            ;
+                                            ?>
+                                                <button type="button" class="btn btn-success waves-effect waves-light" style="text-align: left" data-toggle="tooltip" data-html="true" title="<div class='text-justify'>{{$out }}</div>" data-placement="left" data-container="body">Xong  </button>
+                                        @endif
+                                    </td>
+                                </tr>
+                            @endforeach
+                        @endif
                         </tbody>
                     </table>
                     {{ $apk_process->links() }}
@@ -156,6 +157,7 @@
     <script type="text/javascript">
         $(document).ready(function() {
             $("body").tooltip({ selector: '[data-toggle=tooltip]' });
+            $("body").tooltip({ selector: '[data-toggle=popover]' });
 
             $(document).on('click','.deleteApk_process', function (data){
                 var url = window.location.href;

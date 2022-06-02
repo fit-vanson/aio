@@ -43,21 +43,21 @@
                             </li>
 
                             <li>
-                                <a href="javascript:void(0);" class="waves-effect"><i class="ti-image"></i> <span> Apk process<span class="float-right menu-arrow"><i class="mdi mdi-chevron-right"></i></span> </span> </a>
+                                <a href="javascript:void(0);" class="waves-effect"><i class="ti-image"></i> <span> APK Analysis<span class="float-right menu-arrow"><i class="mdi mdi-chevron-right"></i></span> </span> </a>
                                 <ul class="submenu">
 
 
-                                        <li>
-                                            <a href="javascript:void(0);" class="waves-effect"><i class="ti-package"></i> <span> Game <span class="float-right menu-arrow"><i class="mdi mdi-chevron-right"></i></span> </span> </a>
-                                            <ul class="submenu">
-                                                <?php
-                                                    $arr = App\Models\Market_category::where('type',2)->get();
-                                                ?>
-                                                @foreach($arr as $item)
-                                                <li><a href="{{route('apk_process.index',['id'=>$item['type'],'cate_id'=>$item['id']])}}">{{$item['name']}}</a></li>
-                                                @endforeach
-                                            </ul>
-                                        </li>
+                                    <li>
+                                        <a href="javascript:void(0);" class="waves-effect"><i class="ti-game"></i> <span> Game <span class="float-right menu-arrow"><i class="mdi mdi-chevron-right"></i></span> </span> </a>
+                                        <ul class="submenu">
+                                            <?php
+                                                $arr = App\Models\Market_category::where('type',2)->get();
+                                            ?>
+                                            @foreach($arr as $item)
+                                            <li><a href="{{route('apk_process.index',['id'=>$item['type'],'cate_id'=>$item['id']])}}">&emsp;&emsp;{{$item['name']}}</a></li>
+                                            @endforeach
+                                        </ul>
+                                    </li>
 
                                     <li>
                                         <a href="javascript:void(0);" class="waves-effect"><i class="ti-package"></i> <span> App <span class="float-right menu-arrow"><i class="mdi mdi-chevron-right"></i></span> </span> </a>
@@ -66,22 +66,33 @@
                                             $arr = App\Models\Market_category::where('type',1)->get();
                                             ?>
                                             @foreach($arr as $item)
-                                                <li><a href="{{route('apk_process.index',['id'=>$item['type'],'cate_id'=>$item['id']])}}">{{$item['name']}}</a></li>
+                                                <li><a href="{{route('apk_process.index',['id'=>$item['type'],'cate_id'=>$item['id']])}}">&emsp;&emsp;{{$item['name']}}</a></li>
                                             @endforeach
                                         </ul>
                                     </li>
 
                                     <li>
-                                        <a href="javascript:void(0);" class="waves-effect"><i class="ti-package"></i> <span> Other <span class="float-right menu-arrow"><i class="mdi mdi-chevron-right"></i></span> </span> </a>
+                                        <a href="javascript:void(0);" class="waves-effect"><i class="ti-layout-list-thumb"></i> <span> Other <span class="float-right menu-arrow"><i class="mdi mdi-chevron-right"></i></span> </span> </a>
                                         <ul class="submenu">
                                             <?php
                                             $arr = App\Models\Market_category::where('type',0)->get();
                                             ?>
                                             @foreach($arr as $item)
-                                                <li><a href="{{route('apk_process.index',['id'=>$item['type'],'cate_id'=>$item['id']])}}">{{$item['name']}}</a></li>
+                                                <li><a href="{{route('apk_process.index',['id'=>$item['type'],'cate_id'=>$item['id']])}}">&emsp;&emsp;{{$item['name']}}</a></li>
                                             @endforeach
                                         </ul>
                                     </li>
+
+                                    <li>
+{{--                                        <a href="javascript:void(0);" class="waves-effect"><i class="ti-receipt"></i> <span> Trạng thái <span class="float-right menu-arrow"><i class="mdi mdi-chevron-right"></i></span> </span> </a>--}}
+                                        <a href="{{route('apk_process.index',['id'=>$item['type'],'cate_id'=>$item['id']])}}">{{$item['name']}}</a>
+{{--                                        <ul class="submenu">--}}
+{{--                                            @for($i= 0; $i<=4 ; $i++)--}}
+{{--                                                <li><a href="{{route('apk_process.index',['id'=>$item['type'],'cate_id'=>$item['id']])}}">{{$item['name']}}</a></li>--}}
+{{--                                            @endfor--}}
+{{--                                        </ul>--}}
+                                    </li>
+
                                 </ul>
                             </li>
 

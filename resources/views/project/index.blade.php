@@ -58,8 +58,9 @@
                 @can('project-add')
                 <div class="card-body">
                     <div class="button-items console_status_button">
-                        <button type="button" class="btn btn-primary waves-effect waves-light" id="buildandcheck">Build and Check</button>
+                        <button type="button" class="btn btn-secondary waves-effect waves-light" id="buildandcheck">Build and Check</button>
                         <button type="button" class="btn btn-secondary waves-effect waves-light" id="dev_status">Update Dev and Status</button>
+                        <button type="button" class="btn btn-secondary waves-effect waves-light" id="change_keystore">Keystore</button>
                     </div>
                 </div>
                 @endcan
@@ -493,6 +494,16 @@
             });
         });
 
+        $('#change_keystore').on('click', function () {
+
+            $('#changeKeystoreMultiple').modal('show');
+            $('.modal').on('hidden.bs.modal', function (e) {
+                $('body').addClass('modal-open');
+            });
+        });
+
+
+
         $('#buildcheckForm button').click(function (event){
             event.preventDefault();
             var data = $('textarea#buildinfo_vernum').val()
@@ -571,6 +582,31 @@
                         }
                     },
                 });
+
+
+
+        });
+
+        $('#changeKeystoreMultipleForm button').click(function (event){
+            event.preventDefault();
+            $.ajax({
+                data: $('#changeKeystoreMultipleForm').serialize(),
+                url: "{{ route('project.changeKeystoreMultiple')}}",
+                type: "post",
+                dataType: 'json',
+                success: function (data) {
+                    console.log(data)
+                    if(data.errors){
+                        $.notify(data.errors, "error");
+                    }
+                    if(data.success){
+                        $.notify(data.success, "success");
+                        $('#changeKeystoreMultipleForm').trigger("reset");
+                        $('#changeKeystoreMultiple').modal('hide');
+                        table.draw();
+                    }
+                },
+            });
 
 
 
