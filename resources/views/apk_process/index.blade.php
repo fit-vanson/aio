@@ -6,6 +6,11 @@
     <link href="plugins/datatables/buttons.bootstrap4.min.css" rel="stylesheet" type="text/css" />
     <!-- Responsive datatable examples -->
     <link href="plugins/datatables/responsive.bootstrap4.min.css" rel="stylesheet" type="text/css" />
+    <style>
+        .tooltip-inner {
+            max-width: 1000px !important;
+        }
+    </style>
 
 
 
@@ -72,7 +77,7 @@
                                     </div>
                                 </td>
                                 <td>
-                                    <button type="button" class="btn waves-effect button" style="text-align: left">{{$item->description}}</button>
+                                    <button type="button" class="btn waves-effect button" style="text-align: left" data-toggle="tooltip" data-html="true" data-original-title="{!! $item->description !!}" data-placement="left" data-container="body">{!!  strlen($item->description) > 300 ? substr($item->description,0,300)." ..." : $item->description !!}  </button>
                                 </td>
                                 <td class=" text-center">
                                     <a href="javascript:void(0)" data-toggle="tooltip" data-id="{{$item->id}}" data-original-title="Delete" class="btn btn-danger deleteApk_process"><i class="ti-trash"></i></a>
@@ -83,7 +88,31 @@
                                     @elseif($item->pss_console == 2 )
                                         <span class="btn btn-warning">Đang xử lý</span>';
                                     @elseif($item->pss_console == 3 )
-                                        <span class="btn btn-success">Xong</span>';
+                                        <?php
+                                        $pss_aab = $item->pss_aab !=0  ? 'pss_aab: <span class="badge badge-success"><i class="ti-check"></i></span>' : 'pss_aab: <span class="badge badge-danger"><i class="ti-close"></i></span>';
+                                        $pss_rebuild    = $item->pss_rebuild !=0  ? 'pss_rebuild: <span class="badge badge-success"><i class="ti-check"></i></span>' : 'pss_rebuild: <span class="badge badge-danger"><i class="ti-close"></i></span>';
+                                        $pss_chplay     = $item->pss_chplay? 'pss chplay: '.$item->pss_chplay : '';
+                                        $pss_huawei    = $item->pss_huawei ? 'pss huawei: '.$item->pss_huawei : '';
+                                        $pss_sdk    = $item->pss_sdk ? 'pss sdk: '.$item->pss_sdk : '';
+                                        $result = '';
+                                        if(isset($item->pss_ads)){
+                                            $pss_ads = json_decode($item->pss_ads,true);
+                                            foreach ($pss_ads as $key=>$ads){
+                                                $result .= $ads != 0 ? $key.': <span class="badge badge-success"><i class="ti-check"></i></span><br>'  : $key.': <span class="badge badge-danger"><i class="ti-close"></i></span><br>';
+                                            }
+                                        }
+                                        $out =
+                                            '<p>'.$pss_aab.' </p>'.
+                                            '<p>'.$pss_rebuild.' </p>'.
+                                            '<p>'.$pss_chplay.' </p>'.
+                                            '<p>'.$pss_huawei.' </p>'.
+                                            '<p>'.$pss_sdk.' </p>'.
+                                            '<p> Ads: '.$result.' </p>'
+                                        ;
+
+                                        ?>
+                                            <button type="button" class="btn btn-success waves-effect waves-light" data-toggle="popover" data-trigger="focus" data-html="true" data-placement="right"  data-content="{{$out}}">Xong</button>
+
                                     @endif
                                 </td>
                             </tr>
@@ -125,14 +154,15 @@
     <script src="plugins/select2/js/select2.min.js"></script>
 
     <script type="text/javascript">
+        $(document).ready(function() {
+            $("body").tooltip({ selector: '[data-toggle=tooltip]' });
+
             $(document).on('click','.deleteApk_process', function (data){
                 var url = window.location.href;
                 var id = $(this).data("id");
                 var parent = $(this).parent().parent();
-                console.log(url)
                 $.ajax({
                     type: "get",
-                    {{--url: "{{ asset("apk_process/delete") }}/" + id,--}}
                     url: url+'/delete/' + id,
                     success: function (data) {
                         if(data.success){
@@ -167,7 +197,7 @@
                 });
             });
             $(document).on("click", ".button", function(){
-                var copyText = this.innerText;
+                var copyText = $(this).data("original-title");
                 var textarea = document.createElement('textarea');
                 textarea.id = 'temp_element';
                 textarea.style.height = 0;
@@ -178,16 +208,17 @@
                 document.execCommand('copy');
                 document.body.removeChild(textarea);
             });
-        $('ul.pagination').hide();
-        $(function() {
-            $('.scrolling-pagination').jscroll({
-                autoTrigger: true,
-                padding: 0,
-                nextSelector: '.pagination li.active + li a',
-                contentSelector: 'div.scrolling-pagination',
-                callback: function() {
-                    $('ul.pagination').remove();
-                }
+            $('ul.pagination').hide();
+            $(function() {
+                $('.scrolling-pagination').jscroll({
+                    autoTrigger: true,
+                    padding: 0,
+                    nextSelector: '.pagination li.active + li a',
+                    contentSelector: 'div.scrolling-pagination',
+                    callback: function() {
+                        $('ul.pagination').remove();
+                    }
+                });
             });
         });
     </script>
