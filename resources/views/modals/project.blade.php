@@ -129,37 +129,34 @@
                                                     <input type="text" id="buildinfo_verstr" name="buildinfo_verstr" class="form-control" required >
                                                 </div>
                                             </div>
-                                            <div data-repeater-item="" class="row">
-
-                                            </div>
                                             <div data-repeater-item="" class="row input_buildinfo">
 
                                                 <div class="form-group col-lg-4 ">
                                                     <label for="name">App Name (APP_NAME_X)</label>
                                                     <input type="text" id="buildinfo_app_name_x" name="buildinfo_app_name_x" class="form-control" >
                                                 </div>
-                                                <div class="form-group col-lg-4 ">
-                                                    <label for="name">Keystore Profile </label>
-                                                    <div class="inner row">
-                                                        <div class="col-md-10 col-10">
-                                                            <select class="form-control select2" id="buildinfo_keystore" name="buildinfo_keystore">
-                                                                <option value="0">---Vui lòng chọn---</option>
-                                                                @foreach($keystore as $item)
-                                                                    <option value="{{$item->name_keystore}}">{{$item->name_keystore}}</option>
-                                                                @endforeach
-                                                            </select>
-                                                        </div>
-                                                        <div class="col-md-2 col-4">
-                                                            <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#addKeystore" style="border-radius: 0 3px 3px 0; box-shadow: none;">...
-                                                            </button>
-                                                        </div>
-                                                    </div>
+{{--                                                <div class="form-group col-lg-4 ">--}}
+{{--                                                    <label for="name">Keystore Profile </label>--}}
+{{--                                                    <div class="inner row">--}}
+{{--                                                        <div class="col-md-10 col-10">--}}
+{{--                                                            <select class="form-control select2" id="buildinfo_keystore" name="buildinfo_keystore">--}}
+{{--                                                                <option value="0">---Vui lòng chọn---</option>--}}
+{{--                                                                @foreach($keystore as $item)--}}
+{{--                                                                    <option value="{{$item->name_keystore}}">{{$item->name_keystore}}</option>--}}
+{{--                                                                @endforeach--}}
+{{--                                                            </select>--}}
+{{--                                                        </div>--}}
+{{--                                                        <div class="col-md-2 col-4">--}}
+{{--                                                            <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#addKeystore" style="border-radius: 0 3px 3px 0; box-shadow: none;">...--}}
+{{--                                                            </button>--}}
+{{--                                                        </div>--}}
+{{--                                                    </div>--}}
 {{--                                                    <input type="text" id="buildinfo_keystore" name="buildinfo_keystore" class="form-control" >--}}
-                                                </div>
-                                                <div class="form-group col-lg-4 ">
-                                                    <label for="name">SDK </label>
-                                                    <input type="text" id="buildinfo_sdk" name="buildinfo_sdk" class="form-control" >
-                                                </div>
+{{--                                                </div>--}}
+{{--                                                <div class="form-group col-lg-4 ">--}}
+{{--                                                    <label for="name">SDK </label>--}}
+{{--                                                    <input type="text" id="buildinfo_sdk" name="buildinfo_sdk" class="form-control" >--}}
+{{--                                                </div>--}}
                                             </div>
                                             <div data-repeater-item="" class="row input_buildinfo">
                                                 <div class="form-group col-lg-4 ">
