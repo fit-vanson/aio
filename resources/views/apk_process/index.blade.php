@@ -47,12 +47,12 @@
                         @endforeach
                     </div>
                 </div>
-                <div class="card-body scrolling-pagination ">
 
+                <div class="card-body scrolling-pagination ">
                     <table class="table table-bordered dt-responsive data-table apk-process" style="border-collapse: collapse; border-spacing: 0; width: 100%;">
                         <thead>
                         <tr>
-{{--                            <th>Logo</th>--}}
+                            {{--                            <th>Logo</th>--}}
                             <th style="width: 10%">Logo</th>
                             <th style="width: 50%">Preview</th>
                             <th style="word-wrap: break-word;width: 30%">Description</th>
@@ -67,16 +67,19 @@
                                     <td tabindex="0">
                                         <a href="{{$item->download}}" target="_blank" ><img class="rounded mx-auto d-block" height="100px" src="{{$item->icon}}"></a>
 
-{{--                                        <a href="{{$item->download}}" target="_blank" data-toggle="tooltip" data-original-title="Download" class="btn btn-outline-success"><i class="ti-download"></i></a>--}}
+                                        {{--                                        <a href="{{$item->download}}" target="_blank" data-toggle="tooltip" data-original-title="Download" class="btn btn-outline-success"><i class="ti-download"></i></a>--}}
                                     </td>
-                                    <td><p class="bold">{{$item->title}}</p>
+                                    <td>
+                                        <p style="line-height:0.5;font-weight: bold">{{$item->title}}</p>
+                                        <p class="text-muted" style="line-height:0.5">{{$item->package}}</p>
+                                        <p class="text-muted" style="line-height:0.5">{{$item->uptime}}</p>
                                         <div class="">
                                             <?php
                                             $screenshots = explode(';',$item->screenshot);
                                             ?>
-                                           @foreach ($screenshots as $sc)
+                                            @foreach ($screenshots as $sc)
                                                 <img class="rounded mr-2 mo-mb-2" alt="200x200" style="height:100px  " src="{{$sc}}" data-holder-rendered="true">
-                                           @endforeach
+                                            @endforeach
                                         </div>
                                     </td>
                                     <td>
@@ -85,7 +88,7 @@
                                     <td class=" text-center">
                                         <a href="javascript:void(0)" data-toggle="tooltip" data-id="{{$item->id}}" data-original-title="Delete" class="btn btn-danger deleteApk_process"><i class="ti-trash"></i></a>
                                         @if($item->pss_console == 0 )
-                                        <a href="javascript:void(0)" data-toggle="tooltip" data-id="{{$item->id}}" class="btn btn-secondary actionApk_process">Mặc định</a>
+                                            <a href="javascript:void(0)" data-toggle="tooltip" data-id="{{$item->id}}" class="btn btn-secondary actionApk_process">Mặc định</a>
                                         @elseif($item->pss_console == 1 )
                                             <span class="btn btn-info">Xử lý</span>
                                         @elseif($item->pss_console == 2 )
@@ -113,7 +116,7 @@
                                                 '<p> Ads: '.$result.' </p>'
                                             ;
                                             ?>
-                                                <button type="button" class="btn btn-success waves-effect waves-light" style="text-align: left" data-toggle="tooltip" data-html="true" title="<div class='text-justify'>{{$out }}</div>" data-placement="left" data-container="body">Xong  </button>
+                                            <button type="button" class="btn btn-success waves-effect waves-light" style="text-align: left" data-toggle="tooltip" data-html="true" title="<div class='text-justify'>{{$out }}</div>" data-placement="left" data-container="body">Xong  </button>
                                         @endif
                                     </td>
                                 </tr>
@@ -122,8 +125,9 @@
                         </tbody>
                     </table>
                     {{ $apk_process->links() }}
-{{--                    {{ $apk_process->links() }}--}}
                 </div>
+
+
             </div>
         </div> <!-- end col -->
     </div> <!-- end row -->
