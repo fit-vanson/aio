@@ -61,7 +61,7 @@
                         </thead>
                         <tbody>
                         @if(isset($apk_process))
-                            Page: {{$apk_process->currentPage()-1}}
+                            Page: {{$apk_process->currentPage()}}
                             @foreach($apk_process as $item)
                                 <tr role="row" class="odd">
                                     <td tabindex="0">
