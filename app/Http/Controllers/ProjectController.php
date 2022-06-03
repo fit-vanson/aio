@@ -963,7 +963,7 @@ class ProjectController extends Controller
                 }
                 $status = $statusChplay.$statusAmazon.$statusSamsung.$statusXiaomi. $statusOppo.$statusVivo.$statusHuawei;
                 $keystore_profile =
-                    '<div>
+                    '<div> Key:
                 <span class="badge badge-primary" style="font-size: 12px">C: '.$record->Chplay_keystore_profile.'</span>
                 <span class="badge badge-success"style="font-size: 12px">A: '.$record->Amazon_keystore_profile.'</span>
                 <span class="badge badge-info"style="font-size: 12px">S: '.$record->Samsung_keystore_profile.'</span>
@@ -971,6 +971,18 @@ class ProjectController extends Controller
                 <span class="badge badge-danger"style="font-size: 12px">O: '.$record->Oppo_keystore_profile.'</span>
                 <span class="badge badge-dark"style="font-size: 12px">V: '.$record->Vivo_keystore_profile.'</span>
                 <span class="badge badge-primary"style="font-size: 12px">H: '.$record->Huawei_keystore_profile.'</span>
+            </div>';
+
+
+                $sdk_profile =
+                    '<div>Sdk:
+                <span class="badge badge-primary" style="font-size: 12px">C: '.$record->Chplay_sdk.'</span>
+                <span class="badge badge-success"style="font-size: 12px">A: '.$record->Amazon_sdk.'</span>
+                <span class="badge badge-info"style="font-size: 12px">S: '.$record->Samsung_sdk.'</span>
+                <span class="badge badge-warning"style="font-size: 12px">X: '.$record->Xiaomi_sdk.'</span>
+                <span class="badge badge-danger"style="font-size: 12px">O: '.$record->Oppo_sdk.'</span>
+                <span class="badge badge-dark"style="font-size: 12px">V: '.$record->Vivo_sdk.'</span>
+                <span class="badge badge-primary"style="font-size: 12px">H: '.$record->Huawei_sdk.'</span>
             </div>';
 
                 if(isset($record->logo)){
@@ -1008,7 +1020,7 @@ class ProjectController extends Controller
                     "log" => $full_mess,
                     "name_projectname"=>$record->projectname,
                     "template"=>$data_template,
-                    "projectname"=>$data_projectname. $project_file.$data_template.$data_ma_da.$data_title_app.$abc.$keystore_profile.$des_en. $des_vn,
+                    "projectname"=>$data_projectname. $project_file.$data_template.$data_ma_da.$data_title_app.$abc.$sdk_profile.$keystore_profile.$des_en. $des_vn,
                     "Chplay_package" =>$package_chplay.$package_amazon.$package_samsung.$package_xiaomi.$package_oppo.$package_vivo.$package_Huawei,
                     "status" => $status,
                     'Chplay_buildinfo_store_name_x' => $dev_name_chplay,
@@ -4524,10 +4536,6 @@ class ProjectController extends Controller
 
     public function changeKeystoreMultiple(Request $request){
         $data = explode("\r\n",$request->changeKeystoreMultiple);
-
-
-//        $project = ProjectModel::whereIN('projectname',$data)->get();
-
         foreach ($data as $item){
             try {
                 [$ID_Project, $Key_C, $Key_A, $Key_S, $Key_X, $Key_O, $Key_V, $Key_H ] = explode("|",$item);
@@ -4568,6 +4576,34 @@ class ProjectController extends Controller
                 ]);
             }catch (\Exception $exception) {
                 \Illuminate\Support\Facades\Log::error('Message:' . $exception->getMessage() . '--- chang key : ' . $exception->getLine());
+            }
+
+        }
+        return response()->json(['success'=>'Cập nhật thành công ']);
+
+    }
+
+    public function changeSdkMultiple(Request $request){
+        $data = explode("\r\n",$request->changeSdkMultiple);
+        foreach ($data as $item){
+            try {
+                [$ID_Project, $Sdk_C, $Sdk_A, $Sdk_S, $Sdk_X, $Sdk_O, $Sdk_V, $Sdk_H ] = explode("|",$item);
+                ProjectModel::updateOrCreate(
+                    [
+                        "projectname" => $ID_Project,
+                    ],
+                    [
+                        "Chplay_sdk" =>trim($Sdk_C),
+                        "Amazon_sdk" => trim($Sdk_A),
+                        "Samsung_sdk" => trim($Sdk_S),
+                        "Xiaomi_sdk" => trim($Sdk_X),
+                        "Oppo_sdk" =>trim($Sdk_O),
+                        "Vivo_sdk" => trim($Sdk_V),
+                        "Huawei_sdk" => trim($Sdk_H),
+                    ]);
+
+            }catch (\Exception $exception) {
+                \Illuminate\Support\Facades\Log::error('Message:' . $exception->getMessage() . '--- chang sdk : ' . $exception->getLine());
             }
 
         }

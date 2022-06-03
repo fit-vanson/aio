@@ -217,6 +217,7 @@ Route::group(['prefix'=>'project','middleware'=>['CheckLogout','2fa']], function
     Route::post('/updateBuildCheck',[ProjectController::class,'updateBuildCheck'])->name('project.updateBuildCheck')->middleware('can:project-update');
     Route::post('/updateDev_status',[ProjectController::class,'updateDevStatus'])->name('project.updateDev_status')->middleware('can:project-update');
     Route::post('/changeKeystoreMultiple',[ProjectController::class,'changeKeystoreMultiple'])->name('project.changeKeystoreMultiple')->middleware('can:project-update');
+    Route::post('/changeSdkMultiple',[ProjectController::class,'changeSdkMultiple'])->name('project.changeSdkMultiple')->middleware('can:project-update');
 
 
 

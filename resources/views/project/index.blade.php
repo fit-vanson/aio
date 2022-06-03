@@ -61,6 +61,7 @@
                         <button type="button" class="btn btn-secondary waves-effect waves-light" id="buildandcheck">Build and Check</button>
                         <button type="button" class="btn btn-secondary waves-effect waves-light" id="dev_status">Update Dev and Status</button>
                         <button type="button" class="btn btn-secondary waves-effect waves-light" id="change_keystore">Keystore</button>
+                        <button type="button" class="btn btn-secondary waves-effect waves-light" id="change_sdk">Sdk</button>
                     </div>
                 </div>
                 @endcan
@@ -502,7 +503,13 @@
             });
         });
 
+        $('#change_sdk').on('click', function () {
 
+            $('#changeSdkMultiple').modal('show');
+            $('.modal').on('hidden.bs.modal', function (e) {
+                $('body').addClass('modal-open');
+            });
+        });
 
         $('#buildcheckForm button').click(function (event){
             event.preventDefault();
@@ -610,6 +617,28 @@
 
 
 
+        });
+
+        $('#changeSdkMultipleForm button').click(function (event){
+            event.preventDefault();
+            $.ajax({
+                data: $('#changeSdkMultipleForm').serialize(),
+                url: "{{ route('project.changeSdkMultiple')}}",
+                type: "post",
+                dataType: 'json',
+                success: function (data) {
+                    console.log(data)
+                    if(data.errors){
+                        $.notify(data.errors, "error");
+                    }
+                    if(data.success){
+                        $.notify(data.success, "success");
+                        $('#changeSdkMultipleForm').trigger("reset");
+                        $('#changeSdkMultiple').modal('hide');
+                        table.draw();
+                    }
+                },
+            });
         });
 
     });
