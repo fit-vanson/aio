@@ -58,10 +58,10 @@
                 @can('project-add')
                 <div class="card-body">
                     <div class="button-items console_status_button">
-                        <button type="button" class="btn btn-secondary waves-effect waves-light" id="buildandcheck">Build and Check</button>
-                        <button type="button" class="btn btn-secondary waves-effect waves-light" id="dev_status">Update Dev and Status</button>
-                        <button type="button" class="btn btn-secondary waves-effect waves-light" id="change_keystore">Keystore</button>
-                        <button type="button" class="btn btn-secondary waves-effect waves-light" id="change_sdk">Sdk</button>
+                        <button type="button" class="btn btn-success waves-effect waves-light" id="buildandcheck">Build and Check</button>
+                        <button type="button" class="btn btn-success waves-effect waves-light" id="dev_status">Update Dev and Status</button>
+                        <button type="button" class="btn btn-success waves-effect waves-light" id="change_keystore">Keystore</button>
+                        <button type="button" class="btn btn-success waves-effect waves-light" id="change_sdk">Sdk</button>
                     </div>
                 </div>
                 @endcan
