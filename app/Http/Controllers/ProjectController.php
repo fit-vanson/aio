@@ -3837,7 +3837,6 @@ class ProjectController extends Controller
 
     public function getInfofake(Request $request){
         $result = $request->all();
-//        dd($result);
         if($request->action == 'dashboard'){
             return view('fake_dashboard',compact('result'));
         }
