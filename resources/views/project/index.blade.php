@@ -463,6 +463,68 @@
                     swal("Đã xóa!", "Your imaginary file has been deleted.", "success");
                 });
         });
+
+        $(document).on('click','.fakeProject', function (data){
+            var project_id = $(this).data("id");
+
+            $('#modelFakeHeading').html("Fake Image Project");
+            $('#saveBtn').val("fake-project");
+            $('#fakeProjectModel').modal('show');
+            $('.modal').on('hidden.bs.modal', function (e) {
+                $('body').addClass('modal-open');
+            });
+
+            $.ajax({
+                type: "get",
+                url: "{{ asset("project/fake") }}/" + project_id,
+                success: function (data) {
+                    console.log(data)
+                    $("#avatar_fake").attr("src","../uploads/project/"+data.projectname+"/thumbnail/"+data.logo);
+                    $("#project_id_fake").val(data.projectid);
+                    $("#title_app_fake").val(data.title_app);
+                    $("#buildinfo_vernum_fake").val(data.buildinfo_vernum);
+                    $("#buildinfo_verstr_fake").val(data.buildinfo_verstr);
+                    $("#buildinfo_app_name_x_fake").val(data.buildinfo_app_name_x);
+                    $("#Chplay_package_fake").val(data.Chplay_package);
+                },
+                error: function (data) {
+                    console.log('Error:', data);
+                }
+            });
+
+        });
+
+
+        $("a.dashboard").on("click",function(){
+            var  form = $('#fakeprojectForm').serialize();
+            window.open('/fakeimage?action=dashboard&'+form,'_blank');
+        });
+
+
+        {{--$(document).on('click','.dashboard', function (data){--}}
+        {{--    var  form = $('#fakeprojectForm').serialize();--}}
+        {{--    /--}}
+
+        {{--    --}}{{--$.ajax({--}}
+        {{--    --}}{{--    type: "get",--}}
+        {{--    --}}{{--    url: "{{ asset("project/fake") }}/" + project_id,--}}
+        {{--    --}}{{--    success: function (data) {--}}
+
+        {{--    --}}{{--        $("#avatar_fake").attr("src","../uploads/project/"+data.projectname+"/thumbnail/"+data.logo);--}}
+        {{--    --}}{{--        $("#project_id_fake").val(data.projectid);--}}
+        {{--    --}}{{--        $("#title_app_fake").val(data.title_app);--}}
+        {{--    --}}{{--        $("#buildinfo_vernum_fake").val(data.buildinfo_vernum);--}}
+        {{--    --}}{{--        $("#buildinfo_verstr_fake").val(data.buildinfo_verstr);--}}
+        {{--    --}}{{--        $("#buildinfo_app_name_x_fake").val(data.buildinfo_app_name_x);--}}
+        {{--    --}}{{--        $("#Chplay_package_fake").val(data.Chplay_package);--}}
+        {{--    --}}{{--    },--}}
+        {{--    --}}{{--    error: function (data) {--}}
+        {{--    --}}{{--        console.log('Error:', data);--}}
+        {{--    --}}{{--    }--}}
+        {{--    --}}{{--});--}}
+
+        {{--});--}}
+
         $(document).on('click','.showLog_Project', e=>{
             const row = table.row(e.target.closest('tr'));
             const rowData = row.data();
@@ -640,6 +702,7 @@
                 },
             });
         });
+
 
     });
 
@@ -1468,6 +1531,8 @@
             });
         })
     }
+
+
 
     function editProject_partTime(id) {
         $.get('{{asset('project/edit')}}/'+id,function (data) {
