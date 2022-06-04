@@ -537,15 +537,20 @@ class ProjectController extends Controller
 //                }
 
                 if (isset($record->link_store_vietmmo)){
-                    $data_template =  '<a href="'.$record->link_store_vietmmo.'" target="_blank" ><p class="text-muted" style="line-height:0.5">Template: '.$record->template.'</p></a>';
+                    $data_template =  '<a href="'.$record->link_store_vietmmo.'" target="_blank" ><span class="text-muted" style="line-height:0.5">'.$record->template.'</span></a>';
                 }else{
-                    $data_template =  '<p class="text-muted" style="line-height:0.5">Template: '.$record->template.'</p>';
+                    $data_template =  '<span class="text-muted" style="line-height:0.5">'.$record->template.'</span>';
                 }
 
                 if(isset($record->projectname)) {
                     $data_projectname =   '<span style="line-height:3">Mã Project: ' . $record->projectname . '</span>';
                 }else{
                     $data_projectname='';
+                }
+                if(isset($record->buildinfo_app_name_x)) {
+                    $buildinfo_app_name_x =   '<p class="text-muted" style="line-height:0.5">App Name: '.$record->buildinfo_app_name_x.'</p>';
+                }else{
+                    $buildinfo_app_name_x='';
                 }
 
                 if(isset($record->title_app)) {
@@ -1020,7 +1025,7 @@ class ProjectController extends Controller
                     "log" => $full_mess,
                     "name_projectname"=>$record->projectname,
                     "template"=>$data_template,
-                    "projectname"=>$data_projectname. $project_file.$data_template.$data_title_app.$abc.$sdk_profile.$keystore_profile.$des_en. $des_vn,
+                    "projectname"=>$data_projectname.' ('.$data_template.')'. $project_file.$data_title_app.$buildinfo_app_name_x.$abc.$sdk_profile.$keystore_profile.$des_en. $des_vn,
                     "Chplay_package" =>$package_chplay.$package_amazon.$package_samsung.$package_xiaomi.$package_oppo.$package_vivo.$package_Huawei,
                     "status" => $status,
                     'Chplay_buildinfo_store_name_x' => $dev_name_chplay,
