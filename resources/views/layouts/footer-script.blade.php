@@ -25,6 +25,7 @@
             reader.onload = function(e){
 //Thay đổi đường dẫn ảnh
                 $('#avatar').attr('src',e.target.result);
+                $('#avatar_fake').attr('src',e.target.result);
             }
             reader.readAsDataURL(input.files[0]);
         }
@@ -32,6 +33,9 @@
     $(document).ready(function() {
         $('#avatar').click(function(){
             $('#logo').click();
+        });
+        $('#avatar_fake').click(function(){
+            $('#logo_fake').click();
         });
     });
 </script>

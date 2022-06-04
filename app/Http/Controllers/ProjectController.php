@@ -442,6 +442,7 @@ class ProjectController extends Controller
                     $btn = $btn. '   <a href="javascript:void(0)" onclick="quickEditProject('.$record->projectid.')" class="btn btn-success"><i class="mdi mdi-android-head"></i></a>';
                 }
                 $btn = $btn.'<br><br> <a href="javascript:void(0)" data-toggle="tooltip"  data-id="'.$record->projectid.'" data-original-title="Delete" class="btn btn-danger deleteProject"><i class="ti-trash"></i></a>';
+                $btn = $btn.' <a href="javascript:void(0)" data-toggle="tooltip"  data-id="'.$record->projectid.'"  class="btn btn-info fakeProject"><i class="ti-info-alt"></i></a>';
                 if(isset($record->log)){
 //                $btn .= '   <a href="javascript:void(0)" data-toggle="tooltip"  data-id="'.$record->projectid.'" data-original-title="Log" class="btn btn-secondary showLog_Project"><i class="mdi mdi-file"></i></a>';
                     $btn .= '   <a href="../../project/showlog/'.$record->projectid.'" data-toggle="tooltip" class="btn btn-secondary"><i class="mdi mdi-file"></i></a>';
@@ -529,12 +530,6 @@ class ProjectController extends Controller
                     $dev_name_huawei = '';
                     $ga_name_huawei = '';
                 }
-
-//                if (isset($record->link_store_vietmmo)){
-//                    $data_ma_da = '<a href="'.$record->link_store_vietmmo.'" target="_blank" > <p class="text-muted" style="line-height:0.5">Mã Dự án: '.$record->ma_da.'</p></a>';
-//                }else{
-//                    $data_ma_da = '<p class="text-muted" style="line-height:0.5">Mã Dự án: '.$record->ma_da.'</p>';
-//                }
 
                 if (isset($record->link_store_vietmmo)){
                     $data_template =  '<a href="'.$record->link_store_vietmmo.'" target="_blank" ><span class="text-muted" style="line-height:0.5">'.$record->template.'</span></a>';
@@ -3833,6 +3828,28 @@ class ProjectController extends Controller
             $keystore,$keystore_chplay,$keystore_amazon,$keystore_samsung,$keystore_xiaomi,$keystore_oppo,$keystore_vivo,$keystore_huawei
         ]);
     }
+
+    public function fake($id)
+    {
+        $project = ProjectModel::find($id);
+        return response()->json($project);
+    }
+
+    public function getInfofake(Request $request){
+        $result = $request->all();
+//        dd($result);
+        if($request->action == 'dashboard'){
+            return view('fake_dashboard',compact('result'));
+        }
+
+
+
+    }
+
+
+
+
+
 
     public function editDesEN($id)
     {

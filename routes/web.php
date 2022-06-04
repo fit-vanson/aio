@@ -96,6 +96,11 @@ Route::get('/updateapp', function()
 //    echo 'dump-autoload complete';
 });
 
+
+Route::group(['prefix'=>'fake111'], function (){
+    Route::get('/',[HomeController::class,'fake']);
+
+});
 Route::group(['prefix'=>'login','middleware'=>'CheckUser'], function (){
     Route::get('/',[HomeController::class,'getLogin']);
     Route::post('/',[HomeController::class,'postLogin'])->name('login');
@@ -141,6 +146,7 @@ Route::group(['prefix'=>'permission','middleware'=>['CheckLogout','2fa']], funct
 });
 
 
+Route::get('/fakeimage',[ProjectController::class,'getInfofake'])->name('project.getInfofake')->middleware('can:project-index');
 
 Route::group(['prefix'=>'project','middleware'=>['CheckLogout','2fa']], function (){
 
@@ -151,6 +157,8 @@ Route::group(['prefix'=>'project','middleware'=>['CheckLogout','2fa']], function
     Route::post('/getIndexBuild',[ProjectController::class,'getIndexBuild'])->name('project.getIndexBuild')->middleware('can:project-index');
     Route::post('/create',[ProjectController::class,'create'])->name('project.create')->middleware('can:project-add');
     Route::get('/edit/{id}',[ProjectController::class,'edit'])->name('project.edit')->middleware('can:project-edit');
+    Route::get('/fake/{id}',[ProjectController::class,'fake'])->name('project.fake')->middleware('can:project-index');
+
 
 
     Route::get('/editDes_EN/{id}',[ProjectController::class,'editDesEN'])->name('project.editDesEN')->middleware('can:project-edit');

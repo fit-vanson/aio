@@ -2287,6 +2287,70 @@
 
 
 
+<div class="modal fade bd-example-modal-xl" id="fakeProjectModel"  role="dialog">
+    <div class="modal-dialog modal-xl">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title" id="modelFakeHeading"></h4>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+            </div>
+            <div class="modal-body">
+                <form id="fakeprojectForm" name="fakeprojectForm" class="form-horizontal" enctype="multipart/form-data">
+                    <input type="hidden" name="project_id_fake" id="project_id_fake">
+                    <div data-repeater-item="" class="row">
+                        <div class="form-group col-lg-4">
+                            <label>Logo</label><p></p>
+                            <input  id="logo_fake" type="file" name="logo_fake" class="form-control" hidden onchange="changeImg(this)" accept="image/*">
+                            <img id="avatar_fake" class="thumbnail" width="100px" src="img/logo.png">
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-lg-12">
+                            <div class="card">
+                                <div class="card-body">
+                                    <div data-repeater-item="" class="row">
+                                        <div class="form-group col-lg-4">
+                                            <label for="name">Tiêu đề ứng dụng  </label>
+                                            <input type="text" id="title_app_fake" name="title_app_fake" class="form-control" required >
+                                        </div>
+                                        <div class="form-group col-lg-4">
+                                            <label for="name">Version Number </label>
+                                            <input type="number" id="buildinfo_vernum_fake" name="buildinfo_vernum_fake" class="form-control" required >
+                                        </div>
+                                        <div class="form-group col-lg-4">
+                                            <label for="name">Version String</label>
+                                            <input type="text" id="buildinfo_verstr_fake" name="buildinfo_verstr_fake" class="form-control" required >
+                                        </div>
+                                        <div class="form-group col-lg-4 ">
+                                            <label for="name">App Name (APP_NAME_X)</label>
+                                            <input type="text" id="buildinfo_app_name_x_fake" name="buildinfo_app_name_x_fake" class="form-control" >
+                                        </div>
+
+                                        <div class="form-group col-lg-8 input_package">
+                                            <label for="name">Tên Package CH-Play </label>
+                                            <input type="text" id="Chplay_package_fake"  placeholder=""  name="Chplay_package_fake" class="form-control">
+                                        </div>
+                                    </div>
+
+
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-sm-offset-2 col-sm-10">
+                            <a href="javascript:void(0)" class="btn btn-primary dashboard">Dashboard </a>
+{{--                            <button type="submit" class="btn btn-primary" id="saveBtn" value="create">Save changes</button>--}}
+                            <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
 
 
 
