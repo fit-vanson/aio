@@ -530,11 +530,11 @@ class ProjectController extends Controller
                     $ga_name_huawei = '';
                 }
 
-                if (isset($record->link_store_vietmmo)){
-                    $data_ma_da = '<a href="'.$record->link_store_vietmmo.'" target="_blank" > <p class="text-muted" style="line-height:0.5">Mã Dự án: '.$record->ma_da.'</p></a>';
-                }else{
-                    $data_ma_da = '<p class="text-muted" style="line-height:0.5">Mã Dự án: '.$record->ma_da.'</p>';
-                }
+//                if (isset($record->link_store_vietmmo)){
+//                    $data_ma_da = '<a href="'.$record->link_store_vietmmo.'" target="_blank" > <p class="text-muted" style="line-height:0.5">Mã Dự án: '.$record->ma_da.'</p></a>';
+//                }else{
+//                    $data_ma_da = '<p class="text-muted" style="line-height:0.5">Mã Dự án: '.$record->ma_da.'</p>';
+//                }
 
                 if (isset($record->link_store_vietmmo)){
                     $data_template =  '<a href="'.$record->link_store_vietmmo.'" target="_blank" ><p class="text-muted" style="line-height:0.5">Template: '.$record->template.'</p></a>';
@@ -994,7 +994,7 @@ class ProjectController extends Controller
                 }else{
                     $logo = '<img class="rounded mx-auto d-block" width="100px" height="100px" src="assets\images\logo-sm.png">';
                 }
-                $abc = '<p class="text-muted" style="line-height:0.5">'.$record->buildinfo_keystore. '   |   '.$record->buildinfo_vernum.'   |   '.$record->buildinfo_verstr.'</p>';
+                $abc = '<p class="text-muted" style="line-height:0.5">Ver: '.$record->buildinfo_vernum.'   |   '.$record->buildinfo_verstr.'</p>';
 
                 $project_file  = $record->project_file ?  "    <a href='/file-manager/ProjectData/$record->project_file' target='_blank' <i style='color:green;' class='mdi mdi-check-circle-outline'></i></a>" : '';
 
@@ -1020,7 +1020,7 @@ class ProjectController extends Controller
                     "log" => $full_mess,
                     "name_projectname"=>$record->projectname,
                     "template"=>$data_template,
-                    "projectname"=>$data_projectname. $project_file.$data_template.$data_ma_da.$data_title_app.$abc.$sdk_profile.$keystore_profile.$des_en. $des_vn,
+                    "projectname"=>$data_projectname. $project_file.$data_template.$data_title_app.$abc.$sdk_profile.$keystore_profile.$des_en. $des_vn,
                     "Chplay_package" =>$package_chplay.$package_amazon.$package_samsung.$package_xiaomi.$package_oppo.$package_vivo.$package_Huawei,
                     "status" => $status,
                     'Chplay_buildinfo_store_name_x' => $dev_name_chplay,
