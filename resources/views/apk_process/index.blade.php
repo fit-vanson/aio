@@ -65,14 +65,14 @@
                             @foreach($apk_process as $item)
                                 <tr role="row" class="odd">
                                     <td tabindex="0">
+                                        <button type="button" class="btn waves-effect button" data-original-title="{{ $item->appid }}" >{{$item->appid}} </button>
                                         <a href="{{$item->download}}" target="_blank" ><img class="rounded mx-auto d-block" height="100px" src="{{$item->icon}}"></a>
-
-                                        {{--                                        <a href="{{$item->download}}" target="_blank" data-toggle="tooltip" data-original-title="Download" class="btn btn-outline-success"><i class="ti-download"></i></a>--}}
+                                        <br>
+                                        <p class="text-muted" style="line-height:0.5; text-align: center">{{\Carbon\Carbon::parse($item->upptime)->format('Y-m-d')}}</p>
                                     </td>
                                     <td>
                                         <p style="line-height:0.5;font-weight: bold">{{$item->title}}</p>
                                         <p class="text-muted" style="line-height:0.5">{{$item->package}}</p>
-                                        <p class="text-muted" style="line-height:0.5">{{$item->uptime}}</p>
                                         <div class="">
                                             <?php
                                             $screenshots = explode(';',$item->screenshot);
@@ -83,7 +83,7 @@
                                         </div>
                                     </td>
                                     <td>
-                                        <button type="button" class="btn waves-effect button" style="text-align: left" data-toggle="tooltip" data-html="true" data-original-title="<div class='text-justify'>{!! $item->description !!}</div>" data-placement="left" data-container="body">{!!  strlen($item->description) > 300 ? substr($item->description,0,300)." ..." : $item->description !!}  </button>
+                                        <button type="button" class="btn waves-effect button" style="text-align: left" data-toggle="tooltip"  data-original-title="{{ $item->description }}" data-placement="left" data-container="body">{!!  strlen($item->description) > 300 ? substr($item->description,0,300)." ..." : $item->description !!}  </button>
                                     </td>
                                     <td class=" text-center">
                                         <a href="javascript:void(0)" data-toggle="tooltip" data-id="{{$item->id}}" data-original-title="Delete" class="btn btn-danger deleteApk_process"><i class="ti-trash"></i></a>

@@ -479,7 +479,7 @@
                 url: "{{ asset("project/fake") }}/" + project_id,
                 success: function (data) {
                     console.log(data)
-                    $("#avatar_fake").attr("src","../uploads/project/"+data.projectname+"/thumbnail/"+data.logo);
+                    $("#avatar_fake").attr("src","/uploads/project/"+data.projectname+"/thumbnail/"+data.logo);
                     $("#project_id_fake").val(data.projectid);
                     $("#title_app_fake").val(data.title_app);
                     $("#buildinfo_vernum_fake").val(data.buildinfo_vernum);
@@ -497,7 +497,8 @@
 
         $("a.dashboard").on("click",function(){
             var  form = $('#fakeprojectForm').serialize();
-            window.open('/fakeimage?action=dashboard&'+form,'_blank');
+            var img = $('#avatar_fake').attr('src');
+            window.open('/fakeimage?action=dashboard&'+form+'&img='+img,'_blank');
         });
 
 
