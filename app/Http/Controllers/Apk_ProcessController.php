@@ -58,36 +58,37 @@ class Apk_ProcessController extends Controller
         $totalRecords = Apk_Process::select('count(*) as allcount')->count();
         $totalRecordswithFilter =Apk_Process::select('count(*) as allcount')->where('pss_console','<>',0 )->count();
 
-//        $records = Apk_Process::orderBy($columnName, $columnSortOrder)
-////                ->where('pss_console','<>',0 )
-//            ->skip($start)
-//            ->take($rowperpage)
-//            ->get();
-////                ->paginate(25);
-//
-//
-//
-//        foreach ($records as $record)
-//        {
-//            $data_arr = array();
-//            $pss_console = $record->pss_console;
+        $records = Apk_Process::orderBy($columnName, $columnSortOrder)
+            ->where('pss_console','<>',0 )
+            ->skip($start)
+            ->take($rowperpage)
+            ->get();
+//                ->paginate(25);
+
+
+        $data_arr = array();
+        foreach ($records as $record)
+        {
+
+            $pss_console = $record->pss_console;
 //            if ($pss_console != 0) {
-//                $ads = json_decode($record->pss_ads,true);
-//
-//                $data_arr[] = array(
-//                    "id" => $record->id,
-//                    "appid" => $record->appid,
-//                    "pss_ads->Admob" => $record->pss_ads ? $ads['Admob'] : '',
-//                    "pss_ads->Facebook" =>  $record->pss_ads ? $ads['Facebook'] : '',
-//                    "pss_ads->StartApp" => $record->pss_ads ? $ads['StartApp'] :'',
-//                    "pss_ads->Huawei" => $record->pss_ads ?$ads['Huawei']  : '',
-//                    "pss_ads->Iron" => $record->pss_ads ? $ads['Iron'] : '',
-//                    "pss_ads->Applovin" =>  $record->pss_ads ? $ads['Applovin'] :'',
-//                    "pss_ads->Appbrain" => $record->pss_ads ?$ads['Appbrain']:'',
-//                    "pss_ads->Unity3d" => $record->pss_ads ?  $ads['Unity3d'] :''
-//                );
+                $ads = json_decode($record->pss_ads,true);
+
+                $data_arr[] = array(
+                    "id" => $record->id,
+                    'pss_console' => $record->pss_console,
+                    "appid" => $record->appid,
+                    "pss_ads->Admob" => $record->pss_ads ? $ads['Admob'] ?  '<span class="badge badge-success"><i class="mdi mdi-check"></i></span>':  '<span class="badge badge-danger"><i class="mdi mdi-close"></i></span>' : '',
+                    "pss_ads->Facebook" =>  $record->pss_ads ? $ads['Facebook']  ?  '<span class="badge badge-success"><i class="mdi mdi-check"></i></span>':  '<span class="badge badge-danger"><i class="mdi mdi-close"></i></span>' : '',
+                    "pss_ads->StartApp" => $record->pss_ads ? $ads['StartApp']  ?  '<span class="badge badge-success"><i class="mdi mdi-check"></i></span>':  '<span class="badge badge-danger"><i class="mdi mdi-close"></i></span>' : '',
+                    "pss_ads->Huawei" => $record->pss_ads ?$ads['Huawei']   ?  '<span class="badge badge-success"><i class="mdi mdi-check"></i></span>':  '<span class="badge badge-danger"><i class="mdi mdi-close"></i></span>' : '',
+                    "pss_ads->Iron" => $record->pss_ads ? $ads['Iron'] ?  '<span class="badge badge-success"><i class="mdi mdi-check"></i></span>':  '<span class="badge badge-danger"><i class="mdi mdi-close"></i></span>' : '',
+                    "pss_ads->Applovin" =>  $record->pss_ads ? $ads['Applovin'] ?  '<span class="badge badge-success"><i class="mdi mdi-check"></i></span>':  '<span class="badge badge-danger"><i class="mdi mdi-close"></i></span>' : '',
+                    "pss_ads->Appbrain" => $record->pss_ads ?$ads['Appbrain'] ?  '<span class="badge badge-success"><i class="mdi mdi-check"></i></span>':  '<span class="badge badge-danger"><i class="mdi mdi-close"></i></span>' : '',
+                    "pss_ads->Unity3d" => $record->pss_ads ?  $ads['Unity3d']  ?  '<span class="badge badge-success"><i class="mdi mdi-check"></i></span>':  '<span class="badge badge-danger"><i class="mdi mdi-close"></i></span>' : '',
+                );
 //            }
-//        }
+        }
 //        echo "<pre>";
 //        print_r($data_arr);
 //        echo "</pre>";
@@ -95,31 +96,31 @@ class Apk_ProcessController extends Controller
 //        dd($data_arr);
 //
 //        $regions = array();
-        $data_arr = array();
-
-        Apk_Process::chunk(1000, function($records) use (&$data_arr ) {
-            foreach ($records as $record)
-            {
-                $pss_console = $record->pss_console;
-                if ($pss_console != 0){
-                    $ads = json_decode($record->pss_ads,true);
-                    $data_arr[] = array(
-                        "id" => $record->id,
-                        'pss_console' => $record->pss_console,
-                        "appid" => $record->appid,
-                        "pss_ads->Admob" => $record->pss_ads ? $ads['Admob'] ?  '<span class="badge badge-success"><i class="mdi mdi-check"></i></span>':  '<span class="badge badge-danger"><i class="mdi mdi-close"></i></span>' : '',
-                        "pss_ads->Facebook" =>  $record->pss_ads ? $ads['Facebook']  ?  '<span class="badge badge-success"><i class="mdi mdi-check"></i></span>':  '<span class="badge badge-danger"><i class="mdi mdi-close"></i></span>' : '',
-                        "pss_ads->StartApp" => $record->pss_ads ? $ads['StartApp']  ?  '<span class="badge badge-success"><i class="mdi mdi-check"></i></span>':  '<span class="badge badge-danger"><i class="mdi mdi-close"></i></span>' : '',
-                        "pss_ads->Huawei" => $record->pss_ads ?$ads['Huawei']   ?  '<span class="badge badge-success"><i class="mdi mdi-check"></i></span>':  '<span class="badge badge-danger"><i class="mdi mdi-close"></i></span>' : '',
-                        "pss_ads->Iron" => $record->pss_ads ? $ads['Iron'] ?  '<span class="badge badge-success"><i class="mdi mdi-check"></i></span>':  '<span class="badge badge-danger"><i class="mdi mdi-close"></i></span>' : '',
-                        "pss_ads->Applovin" =>  $record->pss_ads ? $ads['Applovin'] ?  '<span class="badge badge-success"><i class="mdi mdi-check"></i></span>':  '<span class="badge badge-danger"><i class="mdi mdi-close"></i></span>' : '',
-                        "pss_ads->Appbrain" => $record->pss_ads ?$ads['Appbrain'] ?  '<span class="badge badge-success"><i class="mdi mdi-check"></i></span>':  '<span class="badge badge-danger"><i class="mdi mdi-close"></i></span>' : '',
-                        "pss_ads->Unity3d" => $record->pss_ads ?  $ads['Unity3d']  ?  '<span class="badge badge-success"><i class="mdi mdi-check"></i></span>':  '<span class="badge badge-danger"><i class="mdi mdi-close"></i></span>' : '',
-                    );
-                }
-            }
-            return $data_arr;
-        });
+//        $data_arr = array();
+//
+//        Apk_Process::chunk(1000, function($records) use (&$data_arr ) {
+//            foreach ($records as $record)
+//            {
+//                $pss_console = $record->pss_console;
+//                if ($pss_console != 0){
+//                    $ads = json_decode($record->pss_ads,true);
+//                    $data_arr[] = array(
+//                        "id" => $record->id,
+//                        'pss_console' => $record->pss_console,
+//                        "appid" => $record->appid,
+//                        "pss_ads->Admob" => $record->pss_ads ? $ads['Admob'] ?  '<span class="badge badge-success"><i class="mdi mdi-check"></i></span>':  '<span class="badge badge-danger"><i class="mdi mdi-close"></i></span>' : '',
+//                        "pss_ads->Facebook" =>  $record->pss_ads ? $ads['Facebook']  ?  '<span class="badge badge-success"><i class="mdi mdi-check"></i></span>':  '<span class="badge badge-danger"><i class="mdi mdi-close"></i></span>' : '',
+//                        "pss_ads->StartApp" => $record->pss_ads ? $ads['StartApp']  ?  '<span class="badge badge-success"><i class="mdi mdi-check"></i></span>':  '<span class="badge badge-danger"><i class="mdi mdi-close"></i></span>' : '',
+//                        "pss_ads->Huawei" => $record->pss_ads ?$ads['Huawei']   ?  '<span class="badge badge-success"><i class="mdi mdi-check"></i></span>':  '<span class="badge badge-danger"><i class="mdi mdi-close"></i></span>' : '',
+//                        "pss_ads->Iron" => $record->pss_ads ? $ads['Iron'] ?  '<span class="badge badge-success"><i class="mdi mdi-check"></i></span>':  '<span class="badge badge-danger"><i class="mdi mdi-close"></i></span>' : '',
+//                        "pss_ads->Applovin" =>  $record->pss_ads ? $ads['Applovin'] ?  '<span class="badge badge-success"><i class="mdi mdi-check"></i></span>':  '<span class="badge badge-danger"><i class="mdi mdi-close"></i></span>' : '',
+//                        "pss_ads->Appbrain" => $record->pss_ads ?$ads['Appbrain'] ?  '<span class="badge badge-success"><i class="mdi mdi-check"></i></span>':  '<span class="badge badge-danger"><i class="mdi mdi-close"></i></span>' : '',
+//                        "pss_ads->Unity3d" => $record->pss_ads ?  $ads['Unity3d']  ?  '<span class="badge badge-success"><i class="mdi mdi-check"></i></span>':  '<span class="badge badge-danger"><i class="mdi mdi-close"></i></span>' : '',
+//                    );
+//                }
+//            }
+//            return $data_arr;
+//        });
         $response = array(
             "draw" => intval($draw),
             "iTotalRecords" => $totalRecords,
