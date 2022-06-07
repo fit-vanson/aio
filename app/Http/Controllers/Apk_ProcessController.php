@@ -7,6 +7,7 @@ use App\Models\Market_category;
 
 use Elasticsearch\ClientBuilder;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 
 //use Elastica\Client as ElaticaClient;
 
@@ -28,99 +29,106 @@ class Apk_ProcessController extends Controller
         }else{
             return view('apk_process.index');
         }
-
-
     }
 
-    public function getIndex(Request $request){
+    public function success(){
+        return view('apk_process.success');
+    }
 
-        if (isset($request->id)){
-            {
-//                dd($request->all());
-                $draw = $request->get('draw');
-                $start = $request->get("start");
-                $rowperpage = $request->get("length"); // total number of rows per page
+    public function getIndex(Request $request)
+    {
+        ini_set('max_execution_time', -1);
+
+        $draw = $request->get('draw');
+        $start = $request->get("start");
+        $rowperpage = $request->get("length"); // total number of rows per page
 //
-                $columnIndex_arr = $request->get('order');
-                $columnName_arr = $request->get('columns');
-                $order_arr = $request->get('order');
-                $search_arr = $request->get('search');
+        $columnIndex_arr = $request->get('order');
+        $columnName_arr = $request->get('columns');
+        $order_arr = $request->get('order');
+        $search_arr = $request->get('search');
 
-                $columnIndex = $columnIndex_arr[0]['column']; // Column index
-                $columnName = $columnName_arr[$columnIndex]['data']; // Column name
-                $columnSortOrder = $order_arr[0]['dir']; // asc or desc
-                $searchValue = $search_arr['value']; // Search value
+        $columnIndex = $columnIndex_arr[0]['column']; // Column index
+        $columnName = $columnName_arr[$columnIndex]['data']; // Column name
+        $columnSortOrder = $order_arr[0]['dir']; // asc or desc
+        $searchValue = $search_arr['value']; // Search value
 
-                // Total records
-                $totalRecords = Apk_Process::select('count(*) as allcount')->where('category',$request->id )->count();
-                $totalRecordswithFilter =Apk_Process::search($searchValue)
-                    ->where('category',$request->id)
-                    ->get()
-                    ->count();
+            // Total records
 
-//                 Get records, also we have included search filter as well
-//                $records = Apk_Process::orderBy($columnName, $columnSortOrder)
-//                    ->where('category',$request->id )
-//                    ->where('appid', 'like', '%' . $searchValue . '%')
-//                    ->skip($start)
-//                    ->take($rowperpage)
-//                    ->get();
+        $totalRecords = Apk_Process::select('count(*) as allcount')->count();
+        $totalRecordswithFilter =Apk_Process::select('count(*) as allcount')->where('pss_console','<>',0 )->count();
 
+//        $records = Apk_Process::orderBy($columnName, $columnSortOrder)
+////                ->where('pss_console','<>',0 )
+//            ->skip($start)
+//            ->take($rowperpage)
+//            ->get();
+////                ->paginate(25);
+//
+//
+//
+//        foreach ($records as $record)
+//        {
+//            $data_arr = array();
+//            $pss_console = $record->pss_console;
+//            if ($pss_console != 0) {
+//                $ads = json_decode($record->pss_ads,true);
+//
+//                $data_arr[] = array(
+//                    "id" => $record->id,
+//                    "appid" => $record->appid,
+//                    "pss_ads->Admob" => $record->pss_ads ? $ads['Admob'] : '',
+//                    "pss_ads->Facebook" =>  $record->pss_ads ? $ads['Facebook'] : '',
+//                    "pss_ads->StartApp" => $record->pss_ads ? $ads['StartApp'] :'',
+//                    "pss_ads->Huawei" => $record->pss_ads ?$ads['Huawei']  : '',
+//                    "pss_ads->Iron" => $record->pss_ads ? $ads['Iron'] : '',
+//                    "pss_ads->Applovin" =>  $record->pss_ads ? $ads['Applovin'] :'',
+//                    "pss_ads->Appbrain" => $record->pss_ads ?$ads['Appbrain']:'',
+//                    "pss_ads->Unity3d" => $record->pss_ads ?  $ads['Unity3d'] :''
+//                );
+//            }
+//        }
+//        echo "<pre>";
+//        print_r($data_arr);
+//        echo "</pre>";
+//
+//        dd($data_arr);
+//
+//        $regions = array();
+        $data_arr = array();
 
-
-                $records = Apk_Process::search($searchValue)
-                    ->orderBy($columnName, $columnSortOrder)
-                    ->where('category',$request->id)
-//                    ->take($rowperpage)
-//                    ->get();
-                    ->paginate(10);
-//                dd($records);
-
-                $data_arr = array();
-                foreach ($records as $record) {
-//                    $btn = ' <a href="javascript:void(0)" onclick="editKeytore('.$record->id.')" class="btn btn-danger"><i class="ti-trash"></i></a>';
-                    $btn = ' <a href="javascript:void(0)" data-toggle="tooltip"  data-id="'.$record->id.'" data-original-title="Delete" class="btn btn-danger deleteApk_process"><i class="ti-trash"></i></a>';
-
-                    if ($record->pss_console == 0){
-                        $btn .= ' <a href="javascript:void(0)" data-toggle="tooltip"  data-id="'.$record->id.'" class="btn btn-secondary actionApk_process">Mặc định</a>';
-                    }elseif ($record->pss_console == 1){
-                        $btn .= ' <span class="btn btn-info">Xử lý</i></span>';
-                    }elseif ($record->pss_console == 2){
-                        $btn .= ' <span class="btn btn-warning">Đang xử lý</i></span>';
-                    }elseif ($record->pss_console == 3){
-                        $btn .= ' <span class="btn btn-success">Xong</i></span>';
-                    }
-
-
-                    $screenshots = explode(';',$record->screenshot);
-                    $data ='<div class="">';
-                    foreach ($screenshots as $screenshot){
-                        $data .=  '<img class="rounded mr-2 mo-mb-2" alt="200x200" min-width="200px" height="100px" src="'.$screenshot.'" data-holder-rendered="true">';
-                    }
-                    $data .='</div>';
-
-
-                    $data_arr[] = array(//
+        Apk_Process::chunk(1000, function($records) use (&$data_arr ) {
+            foreach ($records as $record)
+            {
+                $pss_console = $record->pss_console;
+                if ($pss_console != 0){
+                    $ads = json_decode($record->pss_ads,true);
+                    $data_arr[] = array(
                         "id" => $record->id,
-                        "category" => $record->category,
+                        'pss_console' => $record->pss_console,
                         "appid" => $record->appid,
-                        "icon" => '<img class="rounded mx-auto d-block" height="100px" src="'.$record->icon.'">',
-                        "screenshot" =>'<p class="bold">'.$record->title.'</p>'.$data,
-                        "description" => '<button type="button" class="btn waves-effect button" style="text-align: left">' .substr($record->description,0,50).'... </button>' ,
-                        "action"=> $btn,
+                        "pss_ads->Admob" => $record->pss_ads ? $ads['Admob'] ?  '<span class="badge badge-success"><i class="mdi mdi-check"></i></span>':  '<span class="badge badge-danger"><i class="mdi mdi-close"></i></span>' : '',
+                        "pss_ads->Facebook" =>  $record->pss_ads ? $ads['Facebook']  ?  '<span class="badge badge-success"><i class="mdi mdi-check"></i></span>':  '<span class="badge badge-danger"><i class="mdi mdi-close"></i></span>' : '',
+                        "pss_ads->StartApp" => $record->pss_ads ? $ads['StartApp']  ?  '<span class="badge badge-success"><i class="mdi mdi-check"></i></span>':  '<span class="badge badge-danger"><i class="mdi mdi-close"></i></span>' : '',
+                        "pss_ads->Huawei" => $record->pss_ads ?$ads['Huawei']   ?  '<span class="badge badge-success"><i class="mdi mdi-check"></i></span>':  '<span class="badge badge-danger"><i class="mdi mdi-close"></i></span>' : '',
+                        "pss_ads->Iron" => $record->pss_ads ? $ads['Iron'] ?  '<span class="badge badge-success"><i class="mdi mdi-check"></i></span>':  '<span class="badge badge-danger"><i class="mdi mdi-close"></i></span>' : '',
+                        "pss_ads->Applovin" =>  $record->pss_ads ? $ads['Applovin'] ?  '<span class="badge badge-success"><i class="mdi mdi-check"></i></span>':  '<span class="badge badge-danger"><i class="mdi mdi-close"></i></span>' : '',
+                        "pss_ads->Appbrain" => $record->pss_ads ?$ads['Appbrain'] ?  '<span class="badge badge-success"><i class="mdi mdi-check"></i></span>':  '<span class="badge badge-danger"><i class="mdi mdi-close"></i></span>' : '',
+                        "pss_ads->Unity3d" => $record->pss_ads ?  $ads['Unity3d']  ?  '<span class="badge badge-success"><i class="mdi mdi-check"></i></span>':  '<span class="badge badge-danger"><i class="mdi mdi-close"></i></span>' : '',
                     );
                 }
-                $response = array(
-                    "draw" => intval($draw),
-                    "iTotalRecords" => $totalRecords,
-                    "iTotalDisplayRecords" => $totalRecordswithFilter,
-                    "aaData" => $data_arr,
-                );
-
-                return json_encode($response);
             }
-        }
+            return $data_arr;
+        });
+        $response = array(
+            "draw" => intval($draw),
+            "iTotalRecords" => $totalRecords,
+            "iTotalDisplayRecords" => $totalRecordswithFilter,
+            "aaData" => $data_arr,
+        );
+        return json_encode($response);
     }
+
 
     public function delete($type, $cate, $id){
         $apk = Apk_Process::find($id);

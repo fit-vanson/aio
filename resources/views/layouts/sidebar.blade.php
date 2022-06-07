@@ -85,7 +85,7 @@
 
                                     <li>
 {{--                                        <a href="javascript:void(0);" class="waves-effect"><i class="ti-receipt"></i> <span> Trạng thái <span class="float-right menu-arrow"><i class="mdi mdi-chevron-right"></i></span> </span> </a>--}}
-                                        <a href="{{route('apk_process.index',['id'=>$item['type'],'cate_id'=>$item['id']])}}">{{$item['name']}}</a>
+                                        <a href="{{route('apk_process.success')}}">Đã xử lý</a>
 {{--                                        <ul class="submenu">--}}
 {{--                                            @for($i= 0; $i<=4 ; $i++)--}}
 {{--                                                <li><a href="{{route('apk_process.index',['id'=>$item['type'],'cate_id'=>$item['id']])}}">{{$item['name']}}</a></li>--}}

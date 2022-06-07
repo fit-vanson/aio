@@ -43,6 +43,8 @@ class Apk_Process extends Model
             'package' => $this->package,
             'title' => $this->title,
             'description' => $this->description,
+            'pss_ads' => $this->pss_ads,
+            'pss_console' => $this->pss_console,
         ];
     }
 

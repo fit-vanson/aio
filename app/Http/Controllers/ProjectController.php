@@ -3840,6 +3840,9 @@ class ProjectController extends Controller
         if($request->action == 'dashboard'){
             return view('fake_dashboard',compact('result'));
         }
+        if($request->action == 'app'){
+            return view('fake_app',compact('result'));
+        }
 
 
 
