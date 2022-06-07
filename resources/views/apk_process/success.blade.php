@@ -117,7 +117,7 @@
                 serverSide: true,
                 ajax: {
                     url: "{{ route('apk_process.getIndex') }}",
-                    type: "get"
+                    type: "post"
                 },
                 columns: [
                     {data: 'appid'},
