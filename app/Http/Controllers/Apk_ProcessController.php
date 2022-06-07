@@ -56,22 +56,11 @@ class Apk_ProcessController extends Controller
             // Total records
 
         $totalRecords = Apk_Process::select('count(*) as allcount')->count();
-        $totalRecordswithFilter =Apk_Process::select('count(*) as allcount')->where('pss_console',3 )->count();
+        $totalRecordswithFilter =Apk_Process::select('count(*) as allcount')->where('pss_console','<>',0 )->count();
 
 
-        $records = Apk_Process::search()
-            ->within('pss_console')
-//            ->orderBy($columnName, $columnSortOrder)
-
-            ->where('pss_console',3)
-//            ->skip($start)
-//            ->take($rowperpage)
-            ->get();
-//                ->paginate(25);
-
-
-
-
+        $records = Apk_Process::
+            search()->whereIn('pss_console',[1,2,3])->get();
         $data_arr = array();
         foreach ($records as $record)
         {
