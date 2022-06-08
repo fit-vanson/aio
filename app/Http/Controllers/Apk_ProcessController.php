@@ -71,7 +71,7 @@ class Apk_ProcessController extends Controller
             $data_arr[] = array(
                 "id" => $record->id,
                 'pss_console' => $record->pss_console,
-                'icon' => '<img class="rounded mx-auto d-block" height="100px" src="'.$record->icon.'">',
+                'icon' => '<p class="card-title">'.$record->package.'</p><img class="rounded mx-auto d-block" height="100px" src="'.$record->icon.'">',
                 "appid" => $record->appid,
                 "pss_ads->Admob" => $record->pss_ads ? $ads['Admob'] ?  '<span class="badge badge-success"><i class="mdi mdi-check"></i></span>':  '<span class="badge badge-danger"><i class="mdi mdi-close"></i></span>' : '',
                 "pss_ads->Facebook" =>  $record->pss_ads ? $ads['Facebook']  ?  '<span class="badge badge-success"><i class="mdi mdi-check"></i></span>':  '<span class="badge badge-danger"><i class="mdi mdi-close"></i></span>' : '',
