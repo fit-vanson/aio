@@ -25,7 +25,7 @@
 @endsection
 @section('breadcrumb')
     <div class="col-sm-6">
-        <h4 class="page-title">Apk Process</h4>
+        <h4 class="page-title">Apk Process | {{$categories->name}}</h4>
     </div>
     <div class="col-sm-6">
         <div class="float">
@@ -39,14 +39,6 @@
     <div class="row">
         <div class="col-12">
             <div class="card">
-                <div class="card-body">
-                    <div class="button-items">
-                        @foreach($categories as $category)
-                            <a href="{{route('apk_process.index',['id'=>$category['type'],'cate_id'=>$category['id']])}}" class="btn btn-light waves-effect"> {{$category['name']}}</a>
-{{--                            <button type="button" class="btn btn-light waves-effect" onclick="category('{{$category['id']}}')">{{$category['name']}}</button>--}}
-                        @endforeach
-                    </div>
-                </div>
 
                 <div class="card-body scrolling-pagination ">
                     <table class="table table-bordered dt-responsive data-table apk-process" style="border-collapse: collapse; border-spacing: 0; width: 100%;">
@@ -60,6 +52,8 @@
                         </tr>
                         </thead>
                         <tbody>
+
+
                         @if(isset($apk_process))
                             Page: {{$apk_process->currentPage()}}
                             @foreach($apk_process as $item)
@@ -122,9 +116,13 @@
                                 </tr>
                             @endforeach
                         @endif
+
+
                         </tbody>
                     </table>
-                    {{ $apk_process->links() }}
+
+                    {{ $apk_process->appends(request()->query())->links() }}
+
                 </div>
 
 
@@ -161,8 +159,49 @@
 
     <script type="text/javascript">
         $(document).ready(function() {
+
+            $.ajaxSetup({
+                headers: {
+                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                }
+            });
             $("body").tooltip({ selector: '[data-toggle=tooltip]' });
             $("body").tooltip({ selector: '[data-toggle=popover]' });
+
+
+            var param = window.location.search;
+            {{--var table = $('.apk-process').DataTable({--}}
+
+
+            {{--    processing: true,--}}
+            {{--    serverSide: true,--}}
+            {{--    ajax: {--}}
+            {{--        url: "{{ route('apk_process.getIndex') }}"+param,--}}
+            {{--        type: "post"--}}
+            {{--    },--}}
+            {{--    columns: [--}}
+            {{--        {data: 'icon'},--}}
+            {{--        {data: 'screenshot'},--}}
+            {{--        {data: 'description'},--}}
+            {{--        {data: 'action'},--}}
+
+            {{--    ],--}}
+            {{--    --}}{{--columnDefs: [--}}
+
+            {{--        --}}{{--    {--}}
+            {{--        --}}{{--        targets: 0,--}}
+            {{--        --}}{{--        orderable: false,--}}
+            {{--        --}}{{--        responsivePriority: 0,--}}
+            {{--        --}}{{--        render: function (data, type, full, meta) {--}}
+            {{--        --}}{{--            var $output ='<img src="{{asset('uploads/profile/logo')}}/'+data+'" alt="logo" height="100px">';--}}
+            {{--        --}}{{--            return $output;--}}
+            {{--        --}}{{--        }--}}
+            {{--        --}}{{--    },--}}
+            {{--        --}}{{--],--}}
+            {{--    order:[0,'asc']--}}
+            {{--});--}}
+
+
 
             $(document).on('click','.deleteApk_process', function (data){
                 var url = window.location.href;
@@ -170,7 +209,7 @@
                 var parent = $(this).parent().parent();
                 $.ajax({
                     type: "get",
-                    url: url+'/delete/' + id,
+                    url: '/apk_process/delete/' + id,
                     success: function (data) {
                         if(data.success){
                             parent.slideUp(300,function() {
@@ -183,7 +222,6 @@
                     }
                 });
             });
-
             $(document).on('click','.actionApk_process', function (data){
                 var id = $(this).data("id");
                 var btn = $(this).parent();
@@ -191,7 +229,7 @@
 
                 $.ajax({
                     type: "get",
-                    url: url +"/update_pss/" + id,
+                    url: "/apk_process/update_pss/" + id,
                     success: function (data) {
                         if(data.success){
                            var  html = '<a href="javascript:void(0)" data-toggle="tooltip" data-id="'+id+'" data-original-title="Delete" class="btn btn-danger deleteApk_process"><i class="ti-trash"></i></a> <span class="btn btn-info">Xử lý</span>';

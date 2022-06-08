@@ -64,6 +64,7 @@
                             <th style="width: 5px">Unity3d</th>
                             <th style="width: 5px">Rebuild</th>
                             <th style="width: 5px">Aab</th>
+                            <th></th>
                         </tr>
                         </thead>
                         <tbody>
@@ -131,6 +132,7 @@
                     {data: 'pss_ads->Unity3d',"className": "text-center"},
                     {data: 'pss_ads->Unity3d',"className": "text-center"},
                     {data: 'pss_ads->Unity3d',"className": "text-center"},
+                    {data: 'action',"className": "text-center"},
                 ],
                 {{--columnDefs: [--}}
 
@@ -146,88 +148,26 @@
                 {{--],--}}
                 order:[0,'asc']
             });
-            {{--var groupColumn = 0;--}}
 
-            {{--var table = $('.data-table').DataTable({--}}
-            {{--    processing: true,--}}
-            {{--    serverSide: true,--}}
-            {{--    ajax: {--}}
-            {{--        url: "{{ route('profile.getIndex') }}",--}}
-            {{--        type: "post"--}}
-            {{--    },--}}
-            {{--    columns: [--}}
-            {{--        {data: 'ma_profile'},--}}
-            {{--        {data: 'name_en'},--}}
-            {{--        {data: 'mst'},--}}
-            {{--        {data: 'dia_chi'},--}}
-            {{--        {data: 'ngay_thanh_lap'},--}}
-            {{--        {data: 'action', className: "text-center",name: 'action', orderable: false, searchable: false},--}}
-            {{--    ],--}}
-            {{--    rowGroup: {--}}
-            {{--        dataSrc: 0--}}
-            {{--    },--}}
-            {{--    columnDefs: [{ visible: false, targets: groupColumn }],--}}
-            {{--    drawCallback: function (settings) {--}}
-            {{--        var api = this.api();--}}
-            {{--        var rows = api.rows({ page: 'current' }).nodes();--}}
-            {{--        var last = null;--}}
-
-            {{--        api--}}
-            {{--            .column(groupColumn, { page: 'current' })--}}
-            {{--            .data()--}}
-            {{--            .each(function (group, i) {--}}
-            {{--                if (last !== group) {--}}
-            {{--                    $(rows)--}}
-            {{--                        .eq(i)--}}
-            {{--                        .before('<tr class="group"><td colspan="5">' + group + '</td></tr>');--}}
-
-            {{--                    last = group;--}}
-            {{--                }--}}
-            {{--            });--}}
-            {{--    },--}}
-
-            {{--});--}}
-            {{--// $('.data-table tbody').on('click', 'tr.group', function () {--}}
-            {{--//     var currentOrder = table.order()[0];--}}
-            {{--//     if (currentOrder[0] === groupColumn && currentOrder[1] === 'asc') {--}}
-            {{--//         table.order([groupColumn, 'desc']).draw();--}}
-            {{--//     } else {--}}
-            {{--//         table.order([groupColumn, 'asc']).draw();--}}
-            {{--//     }--}}
-            {{--// });--}}
-
-
-
-
-
-
-            $(document).on('click','.deleteProfile', function (data){
+            $(document).on('click','.deleteApk_process', function (data){
+                var url = window.location.href;
                 var id = $(this).data("id");
-
-                swal({
-                        title: "Bạn có chắc muốn xóa?",
-                        text: "Your will not be able to recover this imaginary file!",
-                        type: "warning",
-                        showCancelButton: true,
-                        confirmButtonClass: "btn-danger",
-                        confirmButtonText: "Xác nhận xóa!",
-                        closeOnConfirm: false
+                var parent = $(this).parent().parent();
+                $.ajax({
+                    type: "get",
+                    url: '/apk_process/delete/' + id,
+                    success: function (data) {
+                        if(data.success){
+                            parent.slideUp(300,function() {
+                                parent.remove();
+                            })
+                        }
                     },
-                    function(){
-                        $.ajax({
-                            type: "get",
-                            url: "{{ asset("profile/delete") }}/" + id,
-                            success: function (data) {
-                                table.draw();
-                            },
-                            error: function (data) {
-                                console.log('Error:', data);
-                            }
-                        });
-                        swal("Đã xóa!", "Your imaginary file has been deleted.", "success");
-                    });
+                    error: function (data) {
+                        console.log('Error:', data);
+                    }
+                });
             });
-
 
         });
     </script>

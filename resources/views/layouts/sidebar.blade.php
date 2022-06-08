@@ -42,56 +42,44 @@
                                 </ul>
                             </li>
 
-                            <li>
-                                <a href="javascript:void(0);" class="waves-effect"><i class="ti-image"></i> <span> APK Analysis<span class="float-right menu-arrow"><i class="mdi mdi-chevron-right"></i></span> </span> </a>
+                            <li {{ Route::currentRouteName() == 'apk_process.index'  ? 'class=mm-active' :'' }}>
+                                <a {{ Route::currentRouteName() == 'apk_process.index'  ? 'class=mm-active' :'' }} href="javascript:void(0);" class="waves-effect"><i class="ti-image"></i> <span> APK Analysis<span class="float-right menu-arrow"><i class="mdi mdi-chevron-right"></i></span> </span> </a>
                                 <ul class="submenu">
-
-
-                                    <li>
+                                    <li {{@$_GET['type'] == 2 ?'class=mm-active' :'' }} >
                                         <a href="javascript:void(0);" class="waves-effect"><i class="ti-game"></i> <span> Game <span class="float-right menu-arrow"><i class="mdi mdi-chevron-right"></i></span> </span> </a>
-                                        <ul class="submenu">
+                                        <ul class="submenu" >
                                             <?php
                                                 $arr = App\Models\Market_category::where('type',2)->get();
                                             ?>
                                             @foreach($arr as $item)
-                                            <li><a href="{{route('apk_process.index',['id'=>$item['type'],'cate_id'=>$item['id']])}}">&emsp;&emsp;{{$item['name']}}</a></li>
+                                            <li {{@$_GET['category'] == $item['id'] ? 'class=mm-active' :'' }}><a  {{@$_GET['category'] == $item['id'] ? 'class=mm-active' :'' }} href="{{route('apk_process.index',['type'=>$item['type'],'category'=>$item['id']])}}">&emsp;&emsp;{{$item['name']}}</a></li>
                                             @endforeach
                                         </ul>
                                     </li>
 
-                                    <li>
+                                    <li {{@$_GET['type'] == 1 ?'class=mm-active' :'' }} >
                                         <a href="javascript:void(0);" class="waves-effect"><i class="ti-package"></i> <span> App <span class="float-right menu-arrow"><i class="mdi mdi-chevron-right"></i></span> </span> </a>
-                                        <ul class="submenu">
+                                        <ul class="submenu" >
                                             <?php
                                             $arr = App\Models\Market_category::where('type',1)->get();
                                             ?>
                                             @foreach($arr as $item)
-                                                <li><a href="{{route('apk_process.index',['id'=>$item['type'],'cate_id'=>$item['id']])}}">&emsp;&emsp;{{$item['name']}}</a></li>
+                                                <li {{@$_GET['category'] == $item['id'] ? 'class=mm-active' :'' }}><a  {{@$_GET['category'] == $item['id'] ? 'class=mm-active' :'' }} href="{{route('apk_process.index',['type'=>$item['type'],'category'=>$item['id']])}}">&emsp;&emsp;{{$item['name']}}</a></li>
                                             @endforeach
                                         </ul>
                                     </li>
-
-                                    <li>
-                                        <a href="javascript:void(0);" class="waves-effect"><i class="ti-layout-list-thumb"></i> <span> Other <span class="float-right menu-arrow"><i class="mdi mdi-chevron-right"></i></span> </span> </a>
-                                        <ul class="submenu">
+                                    <li {{@$_GET['type'] ===0 ?'class=mm-active' :'' }} >
+                                        <a href="javascript:void(0);" class="waves-effect"><i class="ti-receipt"></i> <span> Other <span class="float-right menu-arrow"><i class="mdi mdi-chevron-right"></i></span> </span> </a>
+                                        <ul class="submenu" >
                                             <?php
                                             $arr = App\Models\Market_category::where('type',0)->get();
                                             ?>
                                             @foreach($arr as $item)
-                                                <li><a href="{{route('apk_process.index',['id'=>$item['type'],'cate_id'=>$item['id']])}}">&emsp;&emsp;{{$item['name']}}</a></li>
+                                                <li {{@$_GET['category'] == $item['id'] ? 'class=mm-active' :'' }}><a  {{@$_GET['category'] == $item['id'] ? 'class=mm-active' :'' }} href="{{route('apk_process.index',['type'=>$item['type'],'category'=>$item['id']])}}">&emsp;&emsp;{{$item['name']}}</a></li>
                                             @endforeach
                                         </ul>
                                     </li>
-
-                                    <li>
-{{--                                        <a href="javascript:void(0);" class="waves-effect"><i class="ti-receipt"></i> <span> Trạng thái <span class="float-right menu-arrow"><i class="mdi mdi-chevron-right"></i></span> </span> </a>--}}
-                                        <a href="{{route('apk_process.success')}}">Đã xử lý</a>
-{{--                                        <ul class="submenu">--}}
-{{--                                            @for($i= 0; $i<=4 ; $i++)--}}
-{{--                                                <li><a href="{{route('apk_process.index',['id'=>$item['type'],'cate_id'=>$item['id']])}}">{{$item['name']}}</a></li>--}}
-{{--                                            @endfor--}}
-{{--                                        </ul>--}}
-                                    </li>
+                                    <li {{@$_GET['pss_console'] == 3 ? 'class=mm-active' :'' }}><a href="{{route('apk_process.index',['pss_console'=>3])}}">Đã xử lý</a></li>
 
                                 </ul>
                             </li>

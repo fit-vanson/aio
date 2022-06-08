@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Apk_Process;
 use App\Models\Market_category;
 
+use Carbon\Carbon;
 use Elasticsearch\ClientBuilder;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
@@ -17,17 +18,20 @@ class Apk_ProcessController extends Controller
 
 {
 
-    public function index(Request $request,$id,$cate_id){
-        if (isset($id)){
-            $categories = Market_category::where('type',$id)->get()->toArray();
-            $apk_process = Apk_Process::where('category',array_rand($categories))->paginate(10);
-            if(isset($request->cate_id)){
-                $apk_process = Apk_Process::where('category',$request->cate_id)->paginate(10);
-            }
+//    public function index(Request $request,$id,$cate_id){
+    public function index(Request $request){
 
-            return view('apk_process.index',compact(['categories','apk_process']));
-        }else{
-            return view('apk_process.index');
+
+//        dd($request->all());
+
+        if (isset($request->category) || isset($request->type)){
+
+            $apk_process = Apk_Process::where('category',$request->category)->paginate(10);
+            $categories = Market_category::where('id',$request->category)->first();
+            return view('apk_process.index',compact(['apk_process','categories']));
+        }
+        if(isset($request->pss_console)){
+            return view('apk_process.success');
         }
     }
 
@@ -38,7 +42,6 @@ class Apk_ProcessController extends Controller
     public function getIndex(Request $request)
     {
         ini_set('max_execution_time', -1);
-
         $draw = $request->get('draw');
         $start = $request->get("start");
         $rowperpage = $request->get("length"); // total number of rows per page
@@ -55,34 +58,73 @@ class Apk_ProcessController extends Controller
 
             // Total records
 
-        $totalRecords = Apk_Process::select('count(*) as allcount')->count();
-        $totalRecordswithFilter = Apk_Process::select('count(*) as allcount')->where('pss_console',3 )->count();
-        $records = Apk_Process::orderBy($columnName, $columnSortOrder)
-//        search()
-            ->where('pss_console',3)
-            ->skip($start)
-            ->take($rowperpage)
-            ->get();
-        $data_arr = array();
-        foreach ($records as $record)
-        {
+        if(isset($request->category)){
+            $totalRecords = Apk_Process::select('count(*) as allcount')->where('category',$request->category)->count();
+            $totalRecordswithFilter = Apk_Process::select('count(*) as allcount')->where('category',$request->category)->count();
+            $records = Apk_Process::orderBy($columnName, $columnSortOrder)
+                ->where('category',$request->category)
+                ->skip($start)
+                ->take($rowperpage)
+                ->get();
+            foreach ($records as $record)
+            {
+                $btn = ' <a href="javascript:void(0)" data-toggle="tooltip" data-id="'.$record->id.'" data-original-title="Delete" class="btn btn-danger deleteApk_process"><i class="ti-trash"></i></a>';
 
-            $ads = json_decode($record->pss_ads,true);
-            $data_arr[] = array(
-                "id" => $record->id,
-                'pss_console' => $record->pss_console,
-                'icon' => '<p class="card-title">'.$record->package.'</p><img class="rounded mx-auto d-block" height="100px" src="'.$record->icon.'">',
-                "appid" => $record->appid,
-                "pss_ads->Admob" => $record->pss_ads ? $ads['Admob'] ?  '<span class="badge badge-success"><i class="mdi mdi-check"></i></span>':  '<span class="badge badge-danger"><i class="mdi mdi-close"></i></span>' : '',
-                "pss_ads->Facebook" =>  $record->pss_ads ? $ads['Facebook']  ?  '<span class="badge badge-success"><i class="mdi mdi-check"></i></span>':  '<span class="badge badge-danger"><i class="mdi mdi-close"></i></span>' : '',
-                "pss_ads->StartApp" => $record->pss_ads ? $ads['StartApp']  ?  '<span class="badge badge-success"><i class="mdi mdi-check"></i></span>':  '<span class="badge badge-danger"><i class="mdi mdi-close"></i></span>' : '',
-                "pss_ads->Huawei" => $record->pss_ads ?$ads['Huawei']   ?  '<span class="badge badge-success"><i class="mdi mdi-check"></i></span>':  '<span class="badge badge-danger"><i class="mdi mdi-close"></i></span>' : '',
-                "pss_ads->Iron" => $record->pss_ads ? $ads['Iron'] ?  '<span class="badge badge-success"><i class="mdi mdi-check"></i></span>':  '<span class="badge badge-danger"><i class="mdi mdi-close"></i></span>' : '',
-                "pss_ads->Applovin" =>  $record->pss_ads ? $ads['Applovin'] ?  '<span class="badge badge-success"><i class="mdi mdi-check"></i></span>':  '<span class="badge badge-danger"><i class="mdi mdi-close"></i></span>' : '',
-                "pss_ads->Appbrain" => $record->pss_ads ?$ads['Appbrain'] ?  '<span class="badge badge-success"><i class="mdi mdi-check"></i></span>':  '<span class="badge badge-danger"><i class="mdi mdi-close"></i></span>' : '',
-                "pss_ads->Unity3d" => $record->pss_ads ?  $ads['Unity3d']  ?  '<span class="badge badge-success"><i class="mdi mdi-check"></i></span>':  '<span class="badge badge-danger"><i class="mdi mdi-close"></i></span>' : '',
-            );
+                $logo = '<button type="button" class="btn waves-effect button" data-original-title="'.$record->id.'" >'.$record->id.' </button>
+                                       <a href="'.$record->download.'" target="_blank" ><img class="rounded mx-auto d-block" height="100px" src="'.$record->icon.'"></a>
+                                       <br>
+                                       <p class="text-muted" style="line-height:0.5; text-align: center">'.Carbon::parse($record->upptime)->format('Y-m-d').'</p>';
+
+                $screenshots = explode(';',$record->screenshot);
+
+                foreach ($screenshots as $sc){
+                    $img = '<img class="rounded mr-2 mo-mb-2" alt="200x200" style="height:100px  " src="'.$sc.'" data-holder-rendered="true">';
+                }
+
+                $data_arr[] = array(
+                    "id" => $record->id,
+                    'pss_console' => $record->pss_console,
+                    'icon' => $logo,
+                    "screenshot" => $img,
+                    "description" => '<button type="button" class="btn waves-effect button" style="text-align: left" data-toggle="tooltip" data-original-title="'.$record->description.'" data-placement="left" data-container="body">'.substr($record->description,0,300).'</button>',
+//                    "description" => '<button type="button" class="btn waves-effect button" style="text-align: left" data-toggle="tooltip"  data-original-title="'.$record->description.'" data-placement="left" data-container="body">'.strlen($record->description) > 300 ? substr($record->description,0,300)." ..." : $record->description.'</button>',
+                    "action" =>$btn
+                );
+            }
         }
+
+        else{
+            $totalRecords = Apk_Process::select('count(*) as allcount')->count();
+            $totalRecordswithFilter = Apk_Process::select('count(*) as allcount')->where('pss_console',3 )->count();
+            $records = Apk_Process::orderBy($columnName, $columnSortOrder)
+                ->where('pss_console',3)
+                ->skip($start)
+                ->take($rowperpage)
+                ->get();
+            $data_arr = array();
+            foreach ($records as $record)
+            {
+                $btn = ' <a href="javascript:void(0)" data-toggle="tooltip" data-id="'.$record->id.'" data-original-title="Delete" class="btn btn-danger deleteApk_process"><i class="ti-trash"></i></a>';
+                $ads = json_decode($record->pss_ads,true);
+                $data_arr[] = array(
+                    "id" => $record->id,
+                    'pss_console' => $record->pss_console,
+                    'icon' => '<p class="card-title">'.$record->package.'</p><img class="rounded mx-auto d-block" height="100px" src="'.$record->icon.'">',
+                    "appid" => $record->appid,
+                    "pss_ads->Admob" => $record->pss_ads ? $ads['Admob'] ?  '<span class="badge badge-success"><i class="mdi mdi-check"></i></span>':  '<span class="badge badge-danger"><i class="mdi mdi-close"></i></span>' : '',
+                    "pss_ads->Facebook" =>  $record->pss_ads ? $ads['Facebook']  ?  '<span class="badge badge-success"><i class="mdi mdi-check"></i></span>':  '<span class="badge badge-danger"><i class="mdi mdi-close"></i></span>' : '',
+                    "pss_ads->StartApp" => $record->pss_ads ? $ads['StartApp']  ?  '<span class="badge badge-success"><i class="mdi mdi-check"></i></span>':  '<span class="badge badge-danger"><i class="mdi mdi-close"></i></span>' : '',
+                    "pss_ads->Huawei" => $record->pss_ads ?$ads['Huawei']   ?  '<span class="badge badge-success"><i class="mdi mdi-check"></i></span>':  '<span class="badge badge-danger"><i class="mdi mdi-close"></i></span>' : '',
+                    "pss_ads->Iron" => $record->pss_ads ? $ads['Iron'] ?  '<span class="badge badge-success"><i class="mdi mdi-check"></i></span>':  '<span class="badge badge-danger"><i class="mdi mdi-close"></i></span>' : '',
+                    "pss_ads->Applovin" =>  $record->pss_ads ? $ads['Applovin'] ?  '<span class="badge badge-success"><i class="mdi mdi-check"></i></span>':  '<span class="badge badge-danger"><i class="mdi mdi-close"></i></span>' : '',
+                    "pss_ads->Appbrain" => $record->pss_ads ?$ads['Appbrain'] ?  '<span class="badge badge-success"><i class="mdi mdi-check"></i></span>':  '<span class="badge badge-danger"><i class="mdi mdi-close"></i></span>' : '',
+                    "pss_ads->Unity3d" => $record->pss_ads ?  $ads['Unity3d']  ?  '<span class="badge badge-success"><i class="mdi mdi-check"></i></span>':  '<span class="badge badge-danger"><i class="mdi mdi-close"></i></span>' : '',
+                    "action" =>$btn
+                );
+            }
+        }
+
+
         $response = array(
             "draw" => intval($draw),
             "iTotalRecords" => $totalRecords,
@@ -93,13 +135,13 @@ class Apk_ProcessController extends Controller
     }
 
 
-    public function delete($type, $cate, $id){
+    public function delete($id){
         $apk = Apk_Process::find($id);
         $apk->delete();
         return response()->json(['success'=>'Xóa thành công.']);
     }
 
-    public function update_pss($type, $cate,$id){
+    public function update_pss($id){
         $apk = Apk_Process::find($id);
         $apk->pss_console = 1;
         $apk->save();
