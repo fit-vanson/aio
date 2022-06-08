@@ -54,16 +54,16 @@
                         <tr>
                             {{--                            <th>Logo</th>--}}
                             <th>Logo</th>
-                            <th>Admob</th>
-                            <th>Facebook</th>
-                            <th>StartApp</th>
-                            <th>Huawei</th>
-                            <th>Iron</th>
-                            <th>Applovin</th>
-                            <th>Appbrain</th>
-                            <th>Unity3d</th>
-                            <th>Rebuild</th>
-                            <th>Aab</th>
+                            <th style="width: 5px">Admob</th>
+                            <th style="width: 5px">Facebook</th>
+                            <th style="width: 5px">StartApp</th>
+                            <th style="width: 5px">Huawei</th>
+                            <th style="width: 5px">Iron</th>
+                            <th style="width: 5px">Applovin</th>
+                            <th style="width: 5px">Appbrain</th>
+                            <th style="width: 5px">Unity3d</th>
+                            <th style="width: 5px">Rebuild</th>
+                            <th style="width: 5px">Aab</th>
                         </tr>
                         </thead>
                         <tbody>
@@ -120,17 +120,17 @@
                     type: "post"
                 },
                 columns: [
-                    {data: 'appid'},
-                    {data: 'pss_ads->Admob'},
-                    {data: 'pss_ads->Facebook'},
-                    {data: 'pss_ads->StartApp'},
-                    {data: 'pss_ads->Huawei'},
-                    {data: 'pss_ads->Iron'},
-                    {data: 'pss_ads->Applovin'},
-                    {data: 'pss_ads->Appbrain'},
-                    {data: 'pss_ads->Unity3d'},
-                    {data: 'pss_ads->Unity3d'},
-                    {data: 'pss_ads->Unity3d'},
+                    {data: 'icon'},
+                    {data: 'pss_ads->Admob',"className": "text-center",},
+                    {data: 'pss_ads->Facebook',"className": "text-center"},
+                    {data: 'pss_ads->StartApp',"className": "text-center"},
+                    {data: 'pss_ads->Huawei',"className": "text-center"},
+                    {data: 'pss_ads->Iron',"className": "text-center"},
+                    {data: 'pss_ads->Applovin',"className": "text-center"},
+                    {data: 'pss_ads->Appbrain',"className": "text-center"},
+                    {data: 'pss_ads->Unity3d',"className": "text-center"},
+                    {data: 'pss_ads->Unity3d',"className": "text-center"},
+                    {data: 'pss_ads->Unity3d',"className": "text-center"},
                 ],
                 {{--columnDefs: [--}}
 
