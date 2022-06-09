@@ -111,7 +111,7 @@ class Apk_ProcessController extends Controller
                     'pss_console' => $record->pss_console,
                     'icon' => '<p class="card-title">'.$record->package.'</p><a href="'.$record->download.'" target="_blank" ><img class="rounded mx-auto d-block" height="100px" src="'.$record->icon.'"></a>',
                     "appid" => $record->appid,
-                    "pss_ads_str" => $record->pss_ads_str,
+                    "pss_ads_str" => '<p class="card-title"  style="text-align: left">'.$record->pss_ads_str.'</p>',
                     "pss_ads->Admob" => $record->pss_ads ? $ads['Admob'] ?  '<span class="badge badge-success"><i class="mdi mdi-check"></i></span>':  '<span class="badge badge-danger"><i class="mdi mdi-close"></i></span>' : '',
                     "pss_ads->Facebook" =>  $record->pss_ads ? $ads['Facebook']  ?  '<span class="badge badge-success"><i class="mdi mdi-check"></i></span>':  '<span class="badge badge-danger"><i class="mdi mdi-close"></i></span>' : '',
                     "pss_ads->StartApp" => $record->pss_ads ? $ads['StartApp']  ?  '<span class="badge badge-success"><i class="mdi mdi-check"></i></span>':  '<span class="badge badge-danger"><i class="mdi mdi-close"></i></span>' : '',
