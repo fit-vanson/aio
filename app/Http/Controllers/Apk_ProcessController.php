@@ -104,14 +104,24 @@ class Apk_ProcessController extends Controller
             $data_arr = array();
             foreach ($records as $record)
             {
+                // Title, Package, pss_sdk, vercode, verStr
+
+
                 $btn = ' <a href="javascript:void(0)" data-toggle="tooltip" data-id="'.$record->id.'" data-original-title="Delete" class="btn btn-danger deleteApk_process"><i class="ti-trash"></i></a>';
                 $ads = json_decode($record->pss_ads,true);
                 $data_arr[] = array(
                     "id" => $record->id,
                     'pss_console' => $record->pss_console,
-                    'icon' => '<p class="card-title">'.$record->package.'</p><a href="'.$record->download.'" target="_blank" ><img class="rounded mx-auto d-block" height="100px" src="'.$record->icon.'"></a>',
+                    'icon' => '<button type="button" class="btn waves-effect button" data-original-title="'.$record->id.'">'.$record->id.'</button><a href="'.$record->download.'" target="_blank" ><img class="rounded mx-auto d-block" height="100px" src="'.$record->icon.'"></a><br><p class="text-muted" style="line-height:0.5; text-align: center">'.\Carbon\Carbon::parse($record->upptime)->format('Y-m-d').'</p>',
                     "appid" => $record->appid,
-                    "pss_ads_str" => '<p class="card-title"  style="text-align: left">'.$record->pss_ads_str.'</p>',
+                    "title" =>
+                        '<p class="card-title"  style="text-align: left;line-height:0.2">Title: '.$record->title.'</p><br>'.
+                        '<p class="text-muted"  style="text-align: left;line-height:0.2">Package: '.$record->package.'</p><br>'.
+                        '<p class="text-muted"  style="text-align: left;line-height:0.2">Pss sdk: '.$record->pss_sdk.'</p><br>'.
+                        '<p class="text-muted"  style="text-align: left;line-height:0.2">Vercode: '.$record->vercode.'</p><br>'.
+                        '<p class="text-muted"  style="text-align: left;line-height:0.2">VerStr: '.$record->verStr.'</p><br>'
+                ,
+                    "pss_ads_str" => '<p class="card-title"  style="text-align: left;word-wrap: break-word ">'.$record->pss_ads_str.'</p>',
                     "pss_ads->Admob" => $record->pss_ads ? $ads['Admob'] ?  '<span class="badge badge-success"><i class="mdi mdi-check"></i></span>':  '<span class="badge badge-danger"><i class="mdi mdi-close"></i></span>' : '',
                     "pss_ads->Facebook" =>  $record->pss_ads ? $ads['Facebook']  ?  '<span class="badge badge-success"><i class="mdi mdi-check"></i></span>':  '<span class="badge badge-danger"><i class="mdi mdi-close"></i></span>' : '',
                     "pss_ads->StartApp" => $record->pss_ads ? $ads['StartApp']  ?  '<span class="badge badge-success"><i class="mdi mdi-check"></i></span>':  '<span class="badge badge-danger"><i class="mdi mdi-close"></i></span>' : '',
@@ -123,6 +133,7 @@ class Apk_ProcessController extends Controller
                     "action" =>$btn
                 );
             }
+
         }
 
 
