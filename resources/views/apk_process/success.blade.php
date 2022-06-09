@@ -64,6 +64,7 @@
                             <th style="width: 5px">Unity3d</th>
                             <th style="width: 5px">Rebuild</th>
                             <th style="width: 5px">Aab</th>
+                            <th style="width: 5px">Ads Str</th>
                             <th></th>
                         </tr>
                         </thead>
@@ -132,6 +133,7 @@
                     {data: 'pss_ads->Unity3d',"className": "text-center"},
                     {data: 'pss_ads->Unity3d',"className": "text-center"},
                     {data: 'pss_ads->Unity3d',"className": "text-center"},
+                    {data: 'pss_ads_str',"className": "text-center"},
                     {data: 'action',"className": "text-center"},
                 ],
                 {{--columnDefs: [--}}

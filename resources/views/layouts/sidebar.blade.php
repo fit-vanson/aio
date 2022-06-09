@@ -79,7 +79,7 @@
                                             @endforeach
                                         </ul>
                                     </li>
-                                    <li {{@$_GET['pss_console'] == 3 ? 'class=mm-active' :'' }}><a href="{{route('apk_process.index',['pss_console'=>3])}}">Đã xử lý</a></li>
+                                    <li {{@$_GET['pss_console'] == 3 ? 'class=mm-active' :'' }}><a href="{{route('apk_process.index',['pss_console'=>3])}}"><i class="ti-check"></i>Đã xử lý</a></li>
 
                                 </ul>
                             </li>
