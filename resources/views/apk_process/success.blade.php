@@ -46,17 +46,18 @@
                         <tr>
                             {{--                            <th>Logo</th>--}}
                             <th style="width: 10%">Logo</th>
-                            <th style="width: 40%px">Thông tin</th>
-                            <th style="width: 5px">Admob</th>
-                            <th style="width: 5px">Facebook</th>
-                            <th style="width: 5px">StartApp</th>
-                            <th style="width: 5px">Huawei</th>
+                            <th style="width: 40px">Thông tin</th>
+                            <th style="width: 5px">Admo</th>
+                            <th style="width: 5px">Face</th>
+                            <th style="width: 5px">StaA</th>
+                            <th style="width: 5px">HuW</th>
                             <th style="width: 5px">Iron</th>
-                            <th style="width: 5px">Applovin</th>
-                            <th style="width: 5px">Appbrain</th>
-                            <th style="width: 5px">Unity3d</th>
-                            <th style="width: 5px">Rebuild</th>
+                            <th style="width: 5px">Alvo</th>
+                            <th style="width: 5px">Abra</th>
+                            <th style="width: 5px">Unit</th>
+                            <th style="width: 5px">Rebu</th>
                             <th style="width: 5px">Aab</th>
+                            <th style="width: 5px">Lauch</th>
                             <th >Ads Str</th>
                             <th></th>
                         </tr>
@@ -119,8 +120,6 @@
                 fixedHeader: true,
                 processing: true,
                 serverSide: true,
-
-
                 ajax: {
                     url: "{{ route('apk_process.getIndex') }}",
                     type: "post"
@@ -136,8 +135,10 @@
                     {data: 'pss_ads->Applovin',"className": "text-center"},
                     {data: 'pss_ads->Appbrain',"className": "text-center"},
                     {data: 'pss_ads->Unity3d',"className": "text-center"},
-                    {data: 'pss_ads->Unity3d',"className": "text-center"},
-                    {data: 'pss_ads->Unity3d',"className": "text-center"},
+
+                    {data: 'pss_rebuild',"className": "text-center"},
+                    {data: 'pss_aab',"className": "text-center"},
+                    {data: 'pss_lauch',"className": "text-center"},
                     {data: 'pss_ads_str',"className": "text-center"},
                     {data: 'action',"className": "text-center"},
                 ],

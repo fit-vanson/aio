@@ -41,9 +41,11 @@ class Apk_ProcessController extends Controller
 
     public function getIndex(Request $request)
     {
+//        dd($request->all());
         ini_set('max_execution_time', -1);
         $draw = $request->get('draw');
         $start = $request->get("start");
+//        $rowperpage = 10; // total number of rows per page
         $rowperpage = $request->get("length"); // total number of rows per page
 //
         $columnIndex_arr = $request->get('order');
@@ -63,6 +65,7 @@ class Apk_ProcessController extends Controller
             $totalRecordswithFilter = Apk_Process::select('count(*) as allcount')->where('category',$request->category)->count();
             $records = Apk_Process::orderBy($columnName, $columnSortOrder)
                 ->where('category',$request->category)
+//                ->paginate(10);
                 ->skip($start)
                 ->take($rowperpage)
                 ->get();
@@ -98,6 +101,7 @@ class Apk_ProcessController extends Controller
             $totalRecordswithFilter = Apk_Process::select('count(*) as allcount')->where('pss_console',3 )->count();
             $records = Apk_Process::orderBy($columnName, $columnSortOrder)
                 ->where('pss_console',3)
+
                 ->skip($start)
                 ->take($rowperpage)
                 ->get();
@@ -112,14 +116,14 @@ class Apk_ProcessController extends Controller
                 $data_arr[] = array(
                     "id" => $record->id,
                     'pss_console' => $record->pss_console,
-                    'icon' => '<button type="button" class="btn waves-effect button" data-original-title="'.$record->id.'">'.$record->id.'</button><a href="'.$record->download.'" target="_blank" ><img class="rounded mx-auto d-block" height="100px" src="'.$record->icon.'"></a><br><p class="text-muted" style="line-height:0.5; text-align: center">'.\Carbon\Carbon::parse($record->upptime)->format('Y-m-d').'</p>',
+                    'icon' => '<button type="button" class="btn waves-effect button" data-original-title="'.$record->id.'">'.$record->id.'</button><span class="text-muted"  style="text-align: left;">Pss sdk: '.$record->pss_sdk.'</span><a href="'.$record->download.'" target="_blank" ><img class="rounded mx-auto d-block" height="100px" src="'.$record->icon.'"></a><br><p class="text-muted" style="line-height:0.5; text-align: center">'.\Carbon\Carbon::parse($record->upptime)->format('Y-m-d').'</p>',
                     "appid" => $record->appid,
                     "title" =>
-                        '<p class="card-title"  style="text-align: left;line-height:0.2">Title: '.$record->title.'</p><br>'.
-                        '<p class="text-muted"  style="text-align: left;line-height:0.2">Package: '.$record->package.'</p><br>'.
-                        '<p class="text-muted"  style="text-align: left;line-height:0.2">Pss sdk: '.$record->pss_sdk.'</p><br>'.
-                        '<p class="text-muted"  style="text-align: left;line-height:0.2">Vercode: '.$record->vercode.'</p><br>'.
-                        '<p class="text-muted"  style="text-align: left;line-height:0.2">VerStr: '.$record->verStr.'</p><br>'
+                        '<p class="card-title"  style="text-align: left;">Title: '.$record->title.'</p><br>'.
+                        '<p class="text-muted"  style="text-align: left;">Package: '.$record->package.'</p><br>'.
+                        '<p class="text-muted"  style="text-align: left;">Vercode: '.$record->vercode.'</p><br>'.
+                        '<p class="text-muted"  style="text-align: left;">VerStr: '.$record->verStr.'</p><br>'.
+                        '<p class="text-muted"  style="text-align: left;">Pss Lib: '.$record->pss_lib.'</p><br>'
                 ,
                     "pss_ads_str" => '<p class="card-title"  style="text-align: left;word-wrap: break-word ">'.$record->pss_ads_str.'</p>',
                     "pss_ads->Admob" => $record->pss_ads ? $ads['Admob'] ?  '<span class="badge badge-success"><i class="mdi mdi-check"></i></span>':  '<span class="badge badge-danger"><i class="mdi mdi-close"></i></span>' : '',
@@ -130,6 +134,11 @@ class Apk_ProcessController extends Controller
                     "pss_ads->Applovin" =>  $record->pss_ads ? $ads['Applovin'] ?  '<span class="badge badge-success"><i class="mdi mdi-check"></i></span>':  '<span class="badge badge-danger"><i class="mdi mdi-close"></i></span>' : '',
                     "pss_ads->Appbrain" => $record->pss_ads ?$ads['Appbrain'] ?  '<span class="badge badge-success"><i class="mdi mdi-check"></i></span>':  '<span class="badge badge-danger"><i class="mdi mdi-close"></i></span>' : '',
                     "pss_ads->Unity3d" => $record->pss_ads ?  $ads['Unity3d']  ?  '<span class="badge badge-success"><i class="mdi mdi-check"></i></span>':  '<span class="badge badge-danger"><i class="mdi mdi-close"></i></span>' : '',
+
+                    "pss_aab" => $record->pss_aab != 0 ? '<span class="badge badge-success"><i class="mdi mdi-check"></i></span>':  '<span class="badge badge-danger"><i class="mdi mdi-close"></i></span>',
+                    "pss_rebuild" => $record->pss_rebuild != 0 ? '<span class="badge badge-success"><i class="mdi mdi-check"></i></span>':  '<span class="badge badge-danger"><i class="mdi mdi-close"></i></span>',
+                    "pss_lauch" => $record->pss_lauch != 0 ? '<span class="badge badge-success"><i class="mdi mdi-check"></i></span>':  '<span class="badge badge-danger"><i class="mdi mdi-close"></i></span>',
+
                     "action" =>$btn
                 );
             }
