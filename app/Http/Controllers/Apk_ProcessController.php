@@ -118,13 +118,20 @@ class Apk_ProcessController extends Controller
                     'pss_console' => $record->pss_console,
                     'icon' => '<button type="button" class="btn waves-effect button" data-original-title="'.$record->id.'">'.$record->id.'</button><span class="text-muted"  style="text-align: left;">Pss sdk: '.$record->pss_sdk.'</span><a href="'.$record->download.'" target="_blank" ><img class="rounded mx-auto d-block" height="100px" src="'.$record->icon.'"></a><br><p class="text-muted" style="line-height:0.5; text-align: center">'.\Carbon\Carbon::parse($record->upptime)->format('Y-m-d').'</p>',
                     "appid" => $record->appid,
-                    "title" =>
-                        '<p class="card-title"  style="text-align: left;">Title: '.$record->title.'</p><br>'.
-                        '<p class="text-muted"  style="text-align: left;">Package: '.$record->package.'</p><br>'.
-                        '<p class="text-muted"  style="text-align: left;">Vercode: '.$record->vercode.'</p><br>'.
-                        '<p class="text-muted"  style="text-align: left;">VerStr: '.$record->verStr.'</p><br>'.
-                        '<p class="text-muted"  style="text-align: left;">Pss Lib: '.$record->pss_lib.'</p><br>'
-                ,
+//                    "title" =>
+//                        '<p class="card-title"  style="text-align: left;">Title: '.$record->title.'</p><br>'.
+//                        '<p class="text-muted"  style="text-align: left;">Package: '.$record->package.'</p><br>'.
+//                        '<p class="text-muted"  style="text-align: left;">Vercode: '.$record->vercode.'</p><br>'.
+//                        '<p class="text-muted"  style="text-align: left;">VerStr: '.$record->verStr.'</p><br>'.
+//                        '<p class="text-muted"  style="text-align: left;">Pss Lib: '.$record->pss_lib.'</p><br>',
+
+                    "title" =>'<ul>
+                                    <li>Title: '.$record->title.'</li>
+                                    <li>Package: '.$record->package.'</li>
+                                    <li>Vercode: '.$record->vercode.'</li>
+                                    <li>VerStr: '.$record->verStr.'</li>
+                                    <li>Pss Lib: '.$record->pss_lib.'</li>
+                                </ul>',
                     "pss_ads_str" => '<p class="card-title"  style="text-align: left;word-wrap: break-word ">'.$record->pss_ads_str.'</p>',
                     "pss_ads->Admob" => $record->pss_ads ? $ads['Admob'] ?  '<span class="badge badge-success"><i class="mdi mdi-check"></i></span>':  '<span class="badge badge-danger"><i class="mdi mdi-close"></i></span>' : '',
                     "pss_ads->Facebook" =>  $record->pss_ads ? $ads['Facebook']  ?  '<span class="badge badge-success"><i class="mdi mdi-check"></i></span>':  '<span class="badge badge-danger"><i class="mdi mdi-close"></i></span>' : '',

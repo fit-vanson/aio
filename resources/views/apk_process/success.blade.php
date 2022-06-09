@@ -16,6 +16,9 @@
             max-width: 1000px !important;
             text-align:left;
         }
+        div.dataTables_wrapper div.dataTables_scrollBody {
+            min-height: 800px;
+        }
 
     </style>
 
@@ -145,8 +148,11 @@
 
                 deferRender:    true,
                 scrollY:        800,
+                scroller: true,
+                // scrollResize: true,
+
+                // scrollX: true,
                 scrollCollapse: true,
-                scroller:       true,
                 order:[0,'asc']
             });
 
