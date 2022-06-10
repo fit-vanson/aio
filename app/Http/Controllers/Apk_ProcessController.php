@@ -112,6 +112,7 @@ class Apk_ProcessController extends Controller
 
 
                 $btn = ' <a href="javascript:void(0)" data-toggle="tooltip" data-id="'.$record->id.'" data-original-title="Delete" class="btn btn-danger deleteApk_process"><i class="ti-trash"></i></a>';
+                $btn .= ' <a href="javascript:void(0)" data-toggle="tooltip" data-id="'.$record->id.'" data-original-title="check" class="btn btn-success actionApk_process"><i class="ion ion-md-checkmark-circle-outline"></i></a>';
                 $ads = json_decode($record->pss_ads,true);
                 $data_arr[] = array(
                     "id" => $record->id,

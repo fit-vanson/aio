@@ -62,7 +62,7 @@
                             <th style="width: 5px">Aab</th>
                             <th style="width: 5px">Lauch</th>
                             <th >Ads Str</th>
-                            <th></th>
+                            <th style="width: 8%" ></th>
                         </tr>
                         </thead>
                         <tbody>
@@ -175,6 +175,28 @@
                     }
                 });
             });
+
+
+            $(document).on('click','.actionApk_process', function (data){
+                    var id = $(this).data("id");
+                    var btn = $(this).parent().parent();
+                    console.log(btn)
+                    $.ajax({
+                        type: "get",
+                        url: "/apk_process/update_pss/" + id,
+                        success: function (data) {
+                            console.log(data)
+                            if(data.success){
+                                btn.remove()
+                                // var  html = '<a href="javascript:void(0)" data-toggle="tooltip" data-id="'+id+'" data-original-title="Delete" class="btn btn-danger deleteApk_process"><i class="ti-trash"></i></a> <span class="btn btn-info">Xử lý</span>';
+                                // btn.html(html)
+                            }
+                        },
+                        error: function (data) {
+                            console.log('Error:', data);
+                        }
+                    });
+                });
 
             $(document).on("click", ".button", function(){
                 var copyText = $(this).data("original-title");
