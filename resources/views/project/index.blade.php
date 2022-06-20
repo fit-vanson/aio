@@ -20,11 +20,27 @@
 @endsection
 
 @section('breadcrumb')
-<div class="col-sm-6">
+<div class="col-sm-2">
     <h4 class="page-title">Quản lý Project</h4>
+
+
+
+
+
+</div>
+
+<div class="col-sm-6">
+    @can('project-add')
+    <div class="button-items console_status_button float-left">
+        <button type="button" class="btn btn-success waves-effect waves-light" id="buildandcheck">Build and Check</button>
+        <button type="button" class="btn btn-success waves-effect waves-light" id="dev_status">Update Dev and Status</button>
+        <button type="button" class="btn btn-success waves-effect waves-light" id="change_keystore">Keystore</button>
+        <button type="button" class="btn btn-success waves-effect waves-light" id="change_sdk">Sdk</button>
+    </div>
+    @endcan
 </div>
 @can('project-add')
-<div class="col-sm-6">
+<div class="col-sm-3">
     <div class="float-right">
         <a class="btn btn-success" href="javascript:void(0)" id="createNewProject"> Create New Project</a>
     </div>
@@ -55,16 +71,7 @@
     <div class="row">
         <div class="col-12">
             <div class="card">
-                @can('project-add')
-                <div class="card-body">
-                    <div class="button-items console_status_button">
-                        <button type="button" class="btn btn-success waves-effect waves-light" id="buildandcheck">Build and Check</button>
-                        <button type="button" class="btn btn-success waves-effect waves-light" id="dev_status">Update Dev and Status</button>
-                        <button type="button" class="btn btn-success waves-effect waves-light" id="change_keystore">Keystore</button>
-                        <button type="button" class="btn btn-success waves-effect waves-light" id="change_sdk">Sdk</button>
-                    </div>
-                </div>
-                @endcan
+
                 <div class="card-body">
                     <table class="table table-bordered dt-responsive nowrap data-table" style="border-collapse: collapse; border-spacing: 0; width: 100%;">
                         <thead>
@@ -144,8 +151,11 @@
         var table = $('.data-table').DataTable({
             displayLength: 50,
             lengthMenu: [5, 10, 25, 50, 75, 100],
+            orderCellsTop: true,
+            fixedHeader: true,
             // processing: true,
             serverSide: true,
+
             ajax: {
                 url: "{{ route('project.getIndex')}}?"+hash,
                 type: "post"
@@ -165,6 +175,10 @@
                     "searchable": false
                 }
             ],
+            deferRender:    true,
+            scrollY:       '70vh',
+            scroller: true,
+            scrollCollapse: true,
             order: [[ 0, 'desc' ]]
         });
 
