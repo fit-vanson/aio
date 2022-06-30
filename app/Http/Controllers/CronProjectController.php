@@ -279,7 +279,7 @@ class CronProjectController extends Controller
                     }
                     array_multisort($data);
                     $data['time_bot'] = Carbon::now()->setTimezone('Asia/Ho_Chi_Minh')->toDateTimeString();
-                    $data['versionNumber'] = $appInfo ? ($appInfo['appInfo']['versionNumber'] ?$appInfo['appInfo']['versionNumber'] : 'N/A'):  "N/A" ;
+                    $data['versionNumber'] = $appInfo ? ($appInfo['appInfo']['versionNumber'] ? $appInfo['appInfo']['versionNumber'] : 'N/A'):  "N/A" ;
                     $data['message'] = $appInfo ? $appInfo['auditInfo']['auditOpinion']: 'Error';
                     $status = $appInfo ? $appInfo['appInfo']['releaseState']: 100;
                     $huawei = ProjectModel::updateOrCreate(
