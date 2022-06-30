@@ -17,6 +17,14 @@
     <link rel="stylesheet" href="plugins/summernote/summernote-bs4.css">
 
 
+    <style>
+        .dataTables_wrapper .button-items {
+            margin-bottom: 5px;
+        }
+
+    </style>
+
+
 @endsection
 
 {{--@section('breadcrumb')--}}
@@ -166,10 +174,10 @@
                     {data: 'action', name: 'action',className: "text-center", orderable: false, searchable: false},
                 ],
                 dom:
-                    '<"d-flex justify-content-between align-items-center header-actions mx-2 row mt-75"' +
+                    '<"d-flex justify-content-between mx-2 row mt-75"' +
                     // '<" col-sm-12 col-lg-4 d-flex justify-content-center justify-content-lg-start" l>' +
                     '<"button-items"B>'+
-                    '<"col-sm-12 col-lg-4 ps-xl-75 ps-0"<"dt-action-buttons d-flex align-items-center justify-content-center justify-content-lg-end flex-lg-nowrap flex-wrap"<"me-1"f>>>' +
+                    '<"col-sm-12 col-lg-4 ps-xl-75 ps-0"<" d-flex align-items-center justify-content-center justify-content-lg-end flex-lg-nowrap flex-wrap"<"me-1"f>>>' +
                     '>t' +
                     '<"d-flex justify-content-between mx-2 row mb-1"' +
                     '<"col-sm-12 col-md-3"l>' +
@@ -190,7 +198,7 @@
                     },
                     {
                         text: 'Buil and Check',
-                        className: 'btn btn-success',
+                        className: 'btn btn-success ',
                         attr: {
                             'id' : 'buildandcheck',
                         },
@@ -237,7 +245,7 @@
                     }
                 ],
                 deferRender:    true,
-                scrollY:       '79vh',
+                scrollY:       '78vh',
                 scroller: true,
                 scrollCollapse: true,
                 order: [[ 2, 'desc' ]]
