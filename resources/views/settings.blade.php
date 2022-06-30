@@ -34,7 +34,7 @@
                                 <label>Limit </label>
                                 <div>
                                     <input type="number" class="form-control" id="limit_cron" name="limit_cron" value="{{$data['limit_cron']}}"/>
-                                    <span class="text-muted">Number between 1 - 20</span>
+                                    <span class="text-muted">Number between 1 - 10</span>
                                 </div>
                             </div>
                             <div class="form-group col-lg-4">
