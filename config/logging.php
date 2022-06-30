@@ -43,13 +43,15 @@ return [
 
         'single' => [
             'driver' => 'single',
-            'path' => storage_path('logs/laravel.log'),
+//            'path' => storage_path('logs/laravel.log'),
+            'path' => storage_path('logs/laravel-' . (new \DateTime)->format('Y-m-d-H-i') . '.log'),
             'level' => 'debug',
         ],
 
         'daily' => [
             'driver' => 'daily',
-            'path' => storage_path('logs/laravel.log'),
+//            'path' => storage_path('logs/laravel.log'),
+            'path' => storage_path('logs/laravel-' . (new \DateTime)->format('Y-m-d-H-i') . '.log'),
             'level' => 'debug',
             'days' => 14,
         ],

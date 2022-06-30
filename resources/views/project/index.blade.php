@@ -209,7 +209,7 @@
                         }
                     },
                     {
-                        text: 'Keytore',
+                        text: 'Keystore',
                         className: 'btn btn-success',
                         attr: {
                             'id' : 'change_keystore',

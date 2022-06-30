@@ -38,10 +38,18 @@ class CronProjectController extends Controller
         $chplay = $huawei = $vivo = '';
         try {
             $chplay = $this->Chplay();
+        }catch (\Exception $exception) {
+            Log::error('Message:' . $exception->getMessage() . '--- Cron Project CHplay : ' . $exception->getLine());
+        }
+        try {
             $huawei = $this->Huawei();
+        }catch (\Exception $exception) {
+            Log::error('Message:' . $exception->getMessage() . '--- Cron Project Huawei : ' . $exception->getLine());
+        }
+        try {
             $vivo   = $this->Vivo();
         }catch (\Exception $exception) {
-            Log::error('Message:' . $exception->getMessage() . '--- Cron Project : ' . $exception->getLine());
+            Log::error('Message:' . $exception->getMessage() . '--- Cron Project Vivo : ' . $exception->getLine());
         }
 
         if($chplay !== false  || $vivo  !== false  || $huawei !== false  ){
@@ -56,6 +64,10 @@ class CronProjectController extends Controller
            ->where('bot_timecheck','<=',$timeCron)
            ->limit($time->limit_cron)
            ->get();
+
+
+
+
         echo '<br/>' .'=========== Chplay ==============' ;
         echo '<br/><b>'.'Yêu cầu:';
         echo '<br/>&emsp;'.'- Project có package Chplay'.'</b><br/><br/>';
@@ -73,10 +85,14 @@ class CronProjectController extends Controller
                        $log_status =  $appChplay->Chplay_status;
                    }
                }
+
+
                $appInfo = new GPlayApps();
                $existApp =  $appInfo->existsApp($package);
+//               $existApp =  $appInfo->existsApp('com.hrowallprofr.superherowallpaper');
                if($existApp){
                    $appInfo = $appInfo->getAppInfo($package);
+//                   dd($appInfo);
                    $status = 1;
                    $data = [
                        'installs' => $appInfo->getInstalls(),
@@ -91,29 +107,26 @@ class CronProjectController extends Controller
                        'logo' => $appInfo->getIcon()->getUrl(),
                        'log_status'=>$log_status,
                    ];
+                   $data = json_encode($data);
+                   ProjectModel::updateOrCreate(
+                       [
+                           "projectid" => $appChplay->projectid,
+                       ],
+                       [
+                           "Chplay_status" => $status,
+                           "Chplay_bot" => $data,
+                           'bot_timecheck' => time(),
+                       ]
+                   );
                }else{
                    $status = 6;
-                   $data = [
-                       'installs' => 0,
-                       'numberVoters' => 0,
-                       'numberReviews' => 0,
-                       'score' => 0,
-                       'appVersion' => 0,
-                       'privacyPoliceUrl' => 0,
-                       'released' => 0,
-                       'updated' => 0,
-                       'bot_name_dev' => 0,
-                       'log_status'=>$log_status,
-                   ];
                }
-               $data = json_encode($data);
                ProjectModel::updateOrCreate(
                    [
                        "projectid" => $appChplay->projectid,
                    ],
                    [
                        "Chplay_status" => $status,
-                       "Chplay_bot" => $data,
                        'bot_timecheck' => time(),
                    ]
                );
