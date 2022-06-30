@@ -296,11 +296,16 @@ class CronProjectController extends Controller
                             . "<b>Message: </b>\n"
                             . $data['message']. "\n"
                         ;
-                        Telegram::sendMessage([
-                            'chat_id' => env('TELEGRAM_CHANNEL_ID', ''),
-                            'parse_mode' => 'HTML',
-                            'text' => $text
-                        ]);
+
+
+                        $url = "https://api.telegram.org/bot" . env('TELEGRAM_BOT_TOKEN', '') . "/sendMessage?parse_mode=html&chat_id=" . env('TELEGRAM_CHANNEL_ID', '');
+                        $url = $url . "&text=" . urlencode($text);
+                        file_get_contents($url);
+//                        Telegram::sendMessage([
+//                            'chat_id' => env('TELEGRAM_CHANNEL_ID', ''),
+//                            'parse_mode' => 'HTML',
+//                            'text' => $text
+//                        ]);
                     }
                 }catch (\Exception $exception) {
                     Log::error('Message:' . $exception->getMessage() . '--- cronHuawei: '.$appHuawei->projectname.'---' . $exception->getLine());
