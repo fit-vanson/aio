@@ -230,7 +230,7 @@ class CronProjectController extends Controller
             })
             ->where('Huawei_bot->time_bot','<=',$timeCron)
             ->where('Huawei_package','<>',null)
-            ->where('projectname','DA148-02')
+//            ->where('projectname','DA148-02')
             ->limit($time->limit_cron)
             ->get();
 
