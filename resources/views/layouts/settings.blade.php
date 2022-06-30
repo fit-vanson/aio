@@ -1,4 +1,4 @@
-<div class="page-title-box">
+{{--<div class="page-title-box">--}}
     <div class="row align-items-center">
          @yield('breadcrumb')
 {{--            <div class="col-sm-3">--}}
@@ -17,7 +17,7 @@
 {{--                     </div>--}}
 {{--                 </div>--}}
 {{--            </div>--}}
-    </div>
+{{--    </div>--}}
 </div>
 <!-- end row -->
 
