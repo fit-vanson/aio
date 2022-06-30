@@ -24,7 +24,7 @@
         ?>
 
          <div class="content-page">
-            <div class="content">
+            <div class="content" style="margin-bottom: 10px;">
                 <div class="container-fluid">
                    @include('layouts.settings')
                    @yield('content')

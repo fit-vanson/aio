@@ -237,7 +237,7 @@
                     }
                 ],
                 deferRender:    true,
-                scrollY:       '73vh',
+                scrollY:       '79vh',
                 scroller: true,
                 scrollCollapse: true,
                 order: [[ 2, 'desc' ]]
