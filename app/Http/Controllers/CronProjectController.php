@@ -230,7 +230,7 @@ class CronProjectController extends Controller
             })
             ->where('Huawei_bot->time_bot','<=',$timeCron)
             ->where('Huawei_package','<>',null)
-//            ->where('projectname','DA148-02')
+            ->where('projectname','DA148-02')
             ->limit($time->limit_cron)
             ->get();
 
@@ -279,7 +279,7 @@ class CronProjectController extends Controller
                     }
                     array_multisort($data);
                     $data['time_bot'] = Carbon::now()->setTimezone('Asia/Ho_Chi_Minh')->toDateTimeString();
-                    $data['versionNumber'] = $appInfo ? ($appInfo['appInfo']['versionNumber'] ? $appInfo['appInfo']['versionNumber'] : 'N/A'):  "N/A" ;
+                    $data['versionNumber'] = $appInfo ? ( array_key_exists('versionNumber',$appInfo['appInfo']) ? $appInfo['appInfo']['versionNumber'] : 'N/A'):  "N/A" ;
                     $data['message'] = $appInfo ? $appInfo['auditInfo']['auditOpinion']: 'Error';
                     $status = $appInfo ? $appInfo['appInfo']['releaseState']: 100;
                     $huawei = ProjectModel::updateOrCreate(
@@ -303,8 +303,8 @@ class CronProjectController extends Controller
                         ;
 
 
-//                        $url = "https://api.telegram.org/bot" . env('TELEGRAM_BOT_TOKEN', '') . "/sendMessage?parse_mode=html&chat_id=" . env('TELEGRAM_CHANNEL_ID', '');
-                        $url = "https://api.telegram.org/bot" . env('TELEGRAM_BOT_TOKEN', '') . "/sendMessage?parse_mode=html&chat_id=-723495641";
+                        $url = "https://api.telegram.org/bot" . env('TELEGRAM_BOT_TOKEN', '') . "/sendMessage?parse_mode=html&chat_id=" . env('TELEGRAM_CHANNEL_ID', '');
+//                        $url = "https://api.telegram.org/bot" . env('TELEGRAM_BOT_TOKEN', '') . "/sendMessage?parse_mode=html&chat_id=-723495641";
                         $url = $url . "&text=" . urlencode($text);
                         file_get_contents($url);
 //                        Telegram::sendMessage([
