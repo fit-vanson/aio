@@ -37,7 +37,7 @@ class CronProjectController extends Controller
         Artisan::call('optimize:clear');
         $chplay = $huawei = $vivo = '';
         try {
-            $chplay = $this->Chplay();
+//            $chplay = $this->Chplay();
         }catch (\Exception $exception) {
             Log::error('Message:' . $exception->getMessage() . '--- Cron Project CHplay : ' . $exception->getLine());
         }
@@ -47,7 +47,7 @@ class CronProjectController extends Controller
             Log::error('Message:' . $exception->getMessage() . '--- Cron Project Huawei : ' . $exception->getLine());
         }
         try {
-            $vivo   = $this->Vivo();
+//            $vivo   = $this->Vivo();
         }catch (\Exception $exception) {
             Log::error('Message:' . $exception->getMessage() . '--- Cron Project Vivo : ' . $exception->getLine());
         }
@@ -230,8 +230,10 @@ class CronProjectController extends Controller
             })
             ->where('Huawei_bot->time_bot','<=',$timeCron)
             ->where('Huawei_package','<>',null)
+//            ->where('projectname','DA148-02')
             ->limit($time->limit_cron)
             ->get();
+
 
         echo '<br/><br/>';
         echo '<br/>' .'=========== Huawei ==============' ;
@@ -248,8 +250,11 @@ class CronProjectController extends Controller
                 $appInfo = [];
                 try {
                     try{
+
                         $appIDs = $this->AppInfoPackageHuawei($this->domain,$appHuawei->dev_huawei->token,$appHuawei->dev_huawei->huawei_dev_client_id,$appHuawei->Huawei_package);
+
                         $appInfo = $appIDs ? $this->AppInfoHuawei($this->domain,$appHuawei->dev_huawei->token,$appHuawei->dev_huawei->huawei_dev_client_id,$appIDs[0]->value) : false;
+
                         $reportApp = $appIDs ? $this->reportAppHuawei($this->domain,$appHuawei->dev_huawei->token,$appHuawei->dev_huawei->huawei_dev_client_id,$appIDs[0]->value) : false;
                         $file = $reportApp ? $this->readCSV($reportApp['fileURL'],array('delimiter' => ',')) : false;
                         $dataArr =[
@@ -274,7 +279,7 @@ class CronProjectController extends Controller
                     }
                     array_multisort($data);
                     $data['time_bot'] = Carbon::now()->setTimezone('Asia/Ho_Chi_Minh')->toDateTimeString();
-                    $data['versionNumber'] = $appInfo ? $appInfo['appInfo']['versionNumber'] : 'N/A';
+                    $data['versionNumber'] = $appInfo ? ($appInfo['appInfo']['versionNumber'] ?$appInfo['appInfo']['versionNumber'] : 'N/A'):  "N/A" ;
                     $data['message'] = $appInfo ? $appInfo['auditInfo']['auditOpinion']: 'Error';
                     $status = $appInfo ? $appInfo['appInfo']['releaseState']: 100;
                     $huawei = ProjectModel::updateOrCreate(
@@ -356,6 +361,7 @@ class CronProjectController extends Controller
             'Content-Type'=>'application/json',
         ];
         $endpoint = "/api/publish/v2/app-info?appid=".$appID;
+//        $endpoint = "/api/publish/v2/app-info?appid=105992825";
         try {
             $response = Http::withHeaders($dataArr)->get($domain . $endpoint);
             if ($response->successful()){
