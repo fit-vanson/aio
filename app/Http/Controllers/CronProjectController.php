@@ -58,6 +58,17 @@ class CronProjectController extends Controller
     }
     public function Chplay(){
 
+        $appInfo = new GPlayApps();
+        $existApp =  $appInfo->existsApp('com.beautifulgirl.koreancelebritywallpapers');
+        $appInfo = $appInfo->getAppInfo('com.beautifulgirl.koreancelebritywallpapers');
+
+        dd($existApp,$appInfo);
+
+        $appInfo = $appInfo->getAppInfo('com.selonilovesdevpro.chibiwallpapers');
+
+        dd($appInfo);
+
+
         $time =  Setting::first();
         $timeCron = Carbon::now()->subMinutes($time->time_cron)->setTimezone('Asia/Ho_Chi_Minh')->timestamp;
         $appsChplay = ProjectModel::where('Chplay_package','<>',null)
@@ -92,7 +103,7 @@ class CronProjectController extends Controller
 //               $existApp =  $appInfo->existsApp('com.hrowallprofr.superherowallpaper');
                if($existApp){
                    $appInfo = $appInfo->getAppInfo($package);
-//                   dd($appInfo);
+                   dd($appInfo);
                    $status = 1;
                    $data = [
                        'installs' => $appInfo->getInstalls(),
