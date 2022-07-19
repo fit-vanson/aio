@@ -4,6 +4,7 @@ use App\Http\Controllers\Apk_ProcessController;
 use App\Http\Controllers\BuildPreviewController;
 use App\Http\Controllers\CategoryTemplateController;
 use App\Http\Controllers\CategoryTemplateFrameController;
+use App\Http\Controllers\CheckApiController;
 use App\Http\Controllers\CocsimController;
 use App\Http\Controllers\CronProjectController;
 use App\Http\Controllers\DaController;
@@ -589,6 +590,18 @@ Route::group(['prefix'=>'apk_process'], function (){
     Route::get('/update_pss/{id}',[Apk_ProcessController::class,'update_pss'])->name('apk_process.update_pss');
 //    Route::get('/delete/{id}',[Apk_ProcessController::class,'delete']);
 });
+
+Route::group(['prefix'=>'checkapi','middleware'=>['CheckLogout','2fa']], function (){
+    Route::get('/',[CheckApiController::class,'index'])->name('checkapi.index');
+    Route::post('/getIndex',[CheckApiController::class,'getIndex'])->name('checkapi.getIndex');
+    Route::post('/create',[CheckApiController::class,'create'])->name('checkapi.create');
+    Route::get('/edit/{id}',[CheckApiController::class,'edit'])->name('checkapi.edit');
+
+    Route::post('/update',[CheckApiController::class,'update'])->name('checkapi.update');
+    Route::get('/delete/{id}',[CheckApiController::class,'delete'])->name('checkapi.delete');
+});
+Route::get('/{id}',[CheckApiController::class,'show'])->name('checkapi.show');
+
 
 Route::get('/fakename',[ProfileController::class,'show'])->name('profile.show');
 

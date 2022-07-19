@@ -204,6 +204,11 @@
 
                                 </ul>
                             </li>
+
+                            <li>
+                                <a href="{{route('checkapi.index')}}" class="waves-effect"><i class="ti-check-box"></i> <span> Check API <span class="float-right menu-arrow"></span> </span> </a>
+
+                            </li>
                             <li>
                                 <a href="javascript:void(0);" class="waves-effect"><i class="ti-archive"></i> <span> Quản trị phân quyền <span class="float-right menu-arrow"><i class="mdi mdi-chevron-right"></i></span> </span> </a>
                                 <ul class="submenu">
