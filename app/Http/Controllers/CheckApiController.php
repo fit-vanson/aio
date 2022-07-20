@@ -130,22 +130,4 @@ class CheckApiController extends Controller
         return response()->json(['success'=>'Xóa thành công.']);
 
     }
-
-    public function show($id) {
-        $data = CheckApi::where('checkapi_url',$id)->first();
-        if(isset($data)){
-            if($data->checkapi_type==0){
-                $result =  json_encode($data->checkapi_code);
-            }else{
-                $result =  ($data->checkapi_code);
-            }
-
-            return response()->view('errors.404',compact(['result']));
-        }else{
-            return response()->view('errors.404', compact($data), 404);
-        }
-
-
-
-    }
 }
