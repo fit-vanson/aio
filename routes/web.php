@@ -600,7 +600,7 @@ Route::group(['prefix'=>'checkapi','middleware'=>['CheckLogout','2fa']], functio
     Route::post('/update',[CheckApiController::class,'update'])->name('checkapi.update');
     Route::get('/delete/{id}',[CheckApiController::class,'delete'])->name('checkapi.delete');
 });
-Route::get('/{id}',[CheckApiController::class,'show'])->name('checkapi.show');
+
 
 
 Route::get('/fakename',[ProfileController::class,'show'])->name('profile.show');

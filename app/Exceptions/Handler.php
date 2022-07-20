@@ -2,7 +2,11 @@
 
 namespace App\Exceptions;
 
+use App\Models\CheckApi;
+use Exception;
 use Illuminate\Foundation\Exceptions\Handler as ExceptionHandler;
+use Symfony\Component\HttpKernel\Exception\MethodNotAllowedHttpException;
+use Throwable;
 
 class Handler extends ExceptionHandler
 {
@@ -33,5 +37,27 @@ class Handler extends ExceptionHandler
     public function register()
     {
         //
+    }
+
+    public function render($request, Throwable $exception)
+    {
+        $response = parent::render($request, $exception);
+
+        if ($response->status() === 404) {
+            $url = $_SERVER['REQUEST_URI'];
+            $data = CheckApi::where('checkapi_url',$url)->first();
+
+            if(isset($data)){
+                if($data->checkapi_type==0){
+                    return response()->json(json_decode($data->checkapi_code));
+                }else{
+                    $result =  $data->checkapi_code;
+                    return response()->view('errors.404',compact(['result']));
+                }
+            }
+
+        }
+
+        return $response;
     }
 }
