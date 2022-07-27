@@ -461,7 +461,7 @@
                                 $.notify(data.success, "success");
                                 $('#projectQuickForm').trigger("reset");
                                 $('#ajaxQuickModel').modal('hide');
-                                table.draw();
+                                // table.draw();
                             }
                         },
                     });
@@ -490,7 +490,7 @@
                             $.notify(data.success, "success");
                             $('#EditDesEN').trigger("reset");
                             $('#editDesEN').modal('hide');
-                            table.draw();
+                            // table.draw();
                         }
                     },
                 });
@@ -515,7 +515,7 @@
                             $.notify(data.success, "success");
                             $('#EditDesVN').trigger("reset");
                             $('#editDesVN').modal('hide');
-                            table.draw();
+                            // table.draw();
                         }
                     },
                 });
