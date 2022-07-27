@@ -404,7 +404,7 @@
                                 $.notify(data.success, "success");
                                 $('#projectForm2').trigger("reset");
                                 $('#ajaxModel').modal('hide');
-                                table.draw();
+                                // table.draw();
                             }
                         },
                     });
