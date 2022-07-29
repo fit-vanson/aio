@@ -20,4 +20,4 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
 });
 
 
-Route::get('/project-aio', [ProjectController::class, 'getProject']);
+Route::get('/project-aio/{id}', [ProjectController::class, 'getProject']);

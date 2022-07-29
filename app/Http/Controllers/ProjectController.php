@@ -4636,10 +4636,13 @@ class ProjectController extends Controller
     }
 
     public function getProject($id){
-        $project = ProjectModel::find($id);
-        return response()->json([
-            'project' => $project ,
-        ]);
+        $project = ProjectModel::where('projectname',$id)->get();
+        if (isset($project)){
+            return response()->json(['msg'=>'success','data'=>$project]);
+        }else{
+            return response()->json(['msg'=>'error']);
+        }
+
 
     }
 
