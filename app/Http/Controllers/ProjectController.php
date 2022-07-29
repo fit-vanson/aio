@@ -4635,6 +4635,14 @@ class ProjectController extends Controller
 
     }
 
+    public function getProject($id){
+        $project = ProjectModel::find($id);
+        return response()->json([
+            'project' => $project ,
+        ]);
+
+    }
+
 //    public function select_chplay_buildinfo_keystore(Request $request){
 //            $keystore = $request->buildinfo_keystore;
 //            $buildinfo_keystore = Keystore::where('name_keystore',$keystore)->first();
