@@ -26,37 +26,36 @@
             <a class="btn btn-success" href="javascript:void(0)" id="createNewBot"> Create New</a>
         </div>
     </div>
-    @include('modals.bot')
+    {{--    @include('modals.bot')--}}
 @endsection
-@section('content')
-    <div class="row">
-        <div class="col-12">
-            <div class="card">
-                <div class="card-body">
 
-                    <table class="table table-bordered dt-responsive nowrap data-table" style="border-collapse: collapse; border-spacing: 0; width: 100%;">
-                        <thead>
-                        <tr>
-{{--                            <th>IMG</th>--}}
-                            <th>Ga name</th>
-                            <th>Dev name</th>
-                            <th>Gmail </th>
-                            <th style="width: 10%">Tổng App | App Release | App Check </th>
-                            <th>Thuộc tính</th>
-{{--                            <th>Thuộc tính</th>--}}
-                            <th>Link | Web | Fanpage |Policy</th>
-                            <th>Trạng thái</th>
-                            <th>Action</th>
-                        </tr>
-                        </thead>
-                        <tbody>
-                        </tbody>
-                    </table>
+@section('content')
+
+
+    <div class="row">
+        <div class="col-lg-4">
+            <div class="card">
+                <h4 class="card-header mt-0" style="background-color: rgba(108,117,125,0.69)!important;">Featured</h4>
+                <div class="card-body">
+                    <blockquote class="card-blockquote mb-0">
+                        <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer posuere
+                            erat a ante.</p>
+                        <footer class="blockquote-footer font-12">
+                            Someone famous in <cite title="Source Title">Source Title</cite>
+                        </footer>
+                    </blockquote>
                 </div>
             </div>
-        </div> <!-- end col -->
-    </div> <!-- end row -->
+        </div>
+
+    </div>
+    <!-- end row -->
+
+
+
+
 @endsection
+
 @section('script')
     <!-- Required datatable js -->
     <script src="plugins/datatables/jquery.dataTables.min.js"></script>

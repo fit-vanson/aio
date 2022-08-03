@@ -5,20 +5,19 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class Bot extends Model
+class Botlog extends Model
 {
+
     public $timestamps = false;
-    protected $table = 'ngocphandang_bot';
+    protected $table = 'ngocphandang_botlog';
     protected $fillable = [
-        'botname',
-        'type',
-        'console',
+        'idbot',
+        'mess',
         'time',
     ];
     use HasFactory;
 
-
     public function botlog(){
-        return $this->hasMany(Botlog::class);
+        return $this->belongsTo(Bot::class,'idbot');
     }
 }
