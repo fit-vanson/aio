@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\Apk_ProcessController;
+use App\Http\Controllers\BotController;
 use App\Http\Controllers\BuildPreviewController;
 use App\Http\Controllers\CategoryTemplateController;
 use App\Http\Controllers\CategoryTemplateFrameController;
@@ -599,6 +600,16 @@ Route::group(['prefix'=>'checkapi','middleware'=>['CheckLogout','2fa']], functio
 
     Route::post('/update',[CheckApiController::class,'update'])->name('checkapi.update');
     Route::get('/delete/{id}',[CheckApiController::class,'delete'])->name('checkapi.delete');
+});
+
+Route::group(['prefix'=>'bot','middleware'=>['CheckLogout','2fa']], function (){
+    Route::get('/',[BotController::class,'index'])->name('bot.index');
+    Route::post('/getIndex',[BotController::class,'getIndex'])->name('bot.getIndex');
+    Route::post('/create',[BotController::class,'create'])->name('bot.create');
+    Route::get('/edit/{id}',[BotController::class,'edit'])->name('bot.edit');
+
+    Route::post('/update',[BotController::class,'update'])->name('bot.update');
+    Route::get('/delete/{id}',[BotController::class,'delete'])->name('bot.delete');
 });
 
 
